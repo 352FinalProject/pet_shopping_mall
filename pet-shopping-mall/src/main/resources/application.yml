@@ -1,0 +1,26 @@
+# application.yml
+# tomcat
+server:
+  port: 8080
+  servlet:
+    context-path: /pet
+    session:
+      timeout: 30m
+
+# spring
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: spring
+    password: spring
+
+# logback
+logging:
+  level:
+    root: info
+    '[com.sh.app]': debug

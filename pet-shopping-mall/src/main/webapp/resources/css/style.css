@@ -1,0 +1,401 @@
+@CHARSET "UTF-8";
+/* common */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+#canNotFindAnimal{
+	text-align: center;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+ol,
+ul {
+    list-style: none;
+}
+blockquote,
+q {
+    quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+.indexImg{
+	width:250px;
+	height:250px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+}
+footer{
+	margin-top: 20px; 
+}
+/* style */
+
+/* 폰트 */
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+@font-face {
+    font-family: "ImcreSoojin";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff")
+    format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: Noto Sans KR;
+}
+
+/* 로고 */
+.logo_img {
+    width: 200px;
+    margin-left: 170px;
+    display: flex; /* 수직 방향으로 가운데로 정렬 */
+    align-items: center; /* 수직 방향으로 가운데로 정렬 */
+}
+
+/* 메뉴바 */
+.nav {
+    background: #fff;
+    position: absolute;
+}
+
+.header {
+    width: 1902px;
+    height: 110px;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    border-bottom: 1px solid #dcdcdc;
+    background-color: white;
+    z-index: 999;
+}
+
+
+/* 메뉴 폰트 */
+.nav ul,
+.utility {
+    display: flex;
+}
+
+.nav ul {
+    font-size: 21px;
+    margin-left: -680px;
+    gap: 50px;
+}
+
+/* 회원가입, 로그인 버튼 */
+.utility {
+    margin-left: 830px;
+    gap: 25px;
+}
+
+/* 메뉴 폰트와 utility 컨테이너 */
+.menu-container {
+    display: flex;
+    align-items: center;
+}
+
+/* 홈 슬라이드 */
+.swiper-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 가로 스크롤 숨김 */
+}
+
+
+.swiper-slide {
+    width: 100%; /* 가로 방향으로 하나의 슬라이드만 보이도록 설정 */
+    height: 100%;
+}
+
+.swiper-pagination {
+    position: absolute;
+    padding-bottom: 50px;
+}
+
+
+/* section_1 홈 */
+
+.section_1 {
+    position: relative;
+    width: 1903px;
+}
+
+.section_1 h2.title {
+    position: absolute;
+    font-size: 53px;
+    font-family: "ImcreSoojin";
+    bottom: 320px;
+    left: 150px;
+    letter-spacing: 3px;
+    color: white;
+    z-index: 990;
+    text-shadow: 4px 4px 8px rgb(46, 46, 46);
+}
+
+.section_1 h3.sub_title {
+    position: absolute;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.3;
+    left: 150px;
+    bottom: 275px;
+    color: white;
+    z-index: 990;
+    text-shadow: 4px 4px 8px rgb(46, 46, 46);
+}
+
+.section_1 .go_click {
+    position: absolute;
+    margin-left: 630px;
+    bottom: 267px;
+    z-index: 990;
+    text-shadow: 4px 4px 8px rgb(46, 46, 46);
+}
+
+.section_1 .line {
+    width: 150px;
+    border-bottom: 1px solid white;
+    position: relative;
+    bottom: 270px;
+    left: 890px;
+    z-index: 990;
+}
+
+.section_1 span {
+    color: #77ccb3;
+}
+
+/* section1-2 홈 */
+.section_1_2 .title {
+    font-size: 40px;
+    font-family: "ImcreSoojin";
+    font-weight: 500;
+    padding-top: 150px;
+    margin-left: 245px;
+    letter-spacing: 1px;
+}
+
+/* 입양가능 슬라이드 */
+.gallery_wrap {
+    position: relative;
+    width: 1420px;
+    height: 500px;
+    overflow: hidden;
+    margin-left: 250px;
+    margin-top: 20px;
+}
+
+.gallery_wrap .gallery {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.gallery_wrap .gallery li {
+    width: 250px;
+    margin-right: 40px;
+    margin-top: 30px;
+}
+
+.gallery_text {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.section_1_2 span {
+    color: #77ccb3;
+}
+
+/* 입양 가능 사진 슬라이드 버튼 */
+.button_box {
+    margin-left: 400px;
+    cursor: pointer;
+}
+
+.prev_btn {
+    width: 25px;
+    position: absolute;
+    margin-top: -360px;
+    margin-left: -250px;
+}
+
+.next_btn {
+    width: 25px;
+    position: absolute;
+    margin-top: -360px;
+    margin-left: 1310px;
+}
+
+/* 카피라이터 */
+footer {
+    background-color: #ececec;
+    border-top: 1px solid #dcdcdc;
+    padding: 30px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+footer img {
+    width: 250px;
+    display: block;
+    margin: 0 auto;
+    color: #4d4d4d;
+}
+
+footer .copyright_line {
+    width: 700px;
+    border-bottom: 1px solid #9c9c9c;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+footer p {
+    text-align: center;
+    font-size: 14px;
+    color: #4d4d4d;
+    margin-top: 30px;
+}
+
+
+ .animal-list-container{
+     width: 1580px;
+     display: flex;
+     justify-content: center;
+     justify-self: center;
+ }
+
+ .side-menu{
+     flex: 2;
+ }
+ .animal-list-card{
+     flex : 8;
+ }
+
+ .animal_cards {
+    display: flex;
+}
+
+ main{
+     display: flex; 
+     justify-content: center;
+ }
+ 
