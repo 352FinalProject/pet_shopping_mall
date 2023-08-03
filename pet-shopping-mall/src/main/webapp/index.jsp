@@ -5,7 +5,7 @@
     <div class="swiper-container" id="my-swiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="/hairball/images/홈/home_2.jpg" alt="홈 배경" />
+          <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경" />
         </div>
         <div class="swiper-slide">
           <img src="/hairball/images/홈/몽이2.jpg" alt="홈 배경3" />
@@ -34,7 +34,9 @@
     </div>
   </div>
   <div class="section section_1_2" id="section_1_2">
-    <h2 class="title"><span>#</span> 입양가능</h2>
+    <h3 class="title"><span>사료</span> </h2>
+    <h3 class="title"><span>간식</span> </h2>
+    <h3 class="title"><span>용품</span> </h2>
     <h3 class="sub_title"></h3>
     <div class="gallery_wrap">
       <ul class="gallery">

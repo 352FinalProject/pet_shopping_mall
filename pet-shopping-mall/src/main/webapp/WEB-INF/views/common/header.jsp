@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="//css/index.css" />
-    <title>유기견/유기묘 입양 사이트</title>
+    <title>반려동물 쇼핑몰</title>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 
@@ -16,44 +16,47 @@
 
 <header>
     <div class="header">
-        <div class="logo_img">
-            <a href="<%= request.getContextPath() %>"><img src="/hairball/images/로고/메뉴바_로고.png" alt=""/></a>
-        </div>
         	<span id="notification"></span>
         <ul class="utility">
-             <li class="admin_li">
-                 <a href="<%= request.getContextPath() %>/animal/enroll">관리자</a>
-             </li>
             <li class="login_li">
                 <a href="<%= request.getContextPath() %>/member/login">로그인</a>
-            </li>
-            <li class="login_li">
-                <a href="<%= request.getContextPath() %>/member/memberDetail">마이페이지</a>
             </li>
             <li class="signup_li">
                 <a href="<%= request.getContextPath() %>/member/terms">회원가입</a>
             </li>
-			    <li class="logout_li">
-			        <a href="<%= request.getContextPath() %>/member/logout">로그아웃</a>
+			   	<li class="logout_li">
+			        <a href="<%= request.getContextPath() %>/member/logout">고객센터</a>
 			    </li>
         </ul>
+        <div class="logo_img">
+            <img src="${pageContext.request.contextPath }/resources/images/홈/logo.png" id="center-image" alt="로고" class="d-block mx-auto mt-5"/>
+        </div>
         <div class="menu-container">
             <ul class="nav">
                 <ul>
                     <li class="on">
-                        <a href="<%= request.getContextPath() %>" class="font">홈</a>
+                        <a href="#" class="font">사료</a>
                     </li>
                     <li>
-                        <a href="<%= request.getContextPath() %>/introduce/introduce1.jsp" class="font">소개</a>
+                        <a href="#" class="font">간식</a>
                     </li>
                     <li>
-                        <a href="<%= request.getContextPath() %>/animal/procedure" class="font">보호동물</a>
+                        <a href="#" class="font">패션용품</a>
                     </li>
                     <li>
-                        <a href="<%= request.getContextPath() %>/animal/animalAdoptionList" class="font">입양신청</a>
+                        <a href="#" class="font">산책용품</a>
                     </li>
                     <li>
-                        <a href="<%= request.getContextPath() %>/qnaBoard/questionIntro" class="font">참여소통</a>
+                        <a href="#" class="font">위생용품</a>
+                    </li>
+                     <li>
+                        <a href="#" class="font">장난감</a>
+                    </li>
+                    <li>
+                        <a href="#" class="font">고양이</a>
+                    </li>
+                     <li>
+                        <a href="#" class="font">기타용품</a>
                     </li>
                 </ul>
             </ul>
