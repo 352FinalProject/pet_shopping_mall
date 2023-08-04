@@ -17,17 +17,17 @@
 
 <header>
     <div class="header">
-        	<span id="notification"></span>
+        <span id="notification"></span>
         <ul class="utility">
             <li class="login_li">
-                <a href="<%= request.getContextPath() %>/member/login">로그인</a>
+                <a href="<%= request.getContextPath() %>/member/login.do">로그인</a>
             </li>
             <li class="signup_li">
                 <a href="<%= request.getContextPath() %>/member/terms">회원가입</a>
             </li>
-			   	<li class="logout_li">
+			<li class="logout_li">
 			        <a href="<%= request.getContextPath() %>/member/logout">고객센터</a>
-			    </li>
+			</li>
         </ul>
         <div class="logo_img">
             <img src="${pageContext.request.contextPath }/resources/images/홈/logo.png" id="center-image" alt="로고" class="d-block mx-auto mt-5"/>
