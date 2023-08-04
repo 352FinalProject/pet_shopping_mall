@@ -183,7 +183,6 @@ body {
 }
 
 .header {
-    height: 190px;
     position: relative;
     background-color: white;
     z-index: 999;
