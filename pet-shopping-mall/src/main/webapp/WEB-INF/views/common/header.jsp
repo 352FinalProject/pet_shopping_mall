@@ -10,6 +10,7 @@
     <title>반려동물 쇼핑몰</title>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
 
    
 <body>

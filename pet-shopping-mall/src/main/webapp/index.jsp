@@ -8,29 +8,15 @@
           <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경" />
         </div>
         <div class="swiper-slide">
-          <img src="/hairball/images/홈/몽이2.jpg" alt="홈 배경3" />
+          <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경3" />
         </div>
         <div class="swiper-slide">
-          <img src="/hairball/images/홈/몽이1.jpg" alt="홈 배경4" />
-        </div>
-        <div class="swiper-slide">
-          <img src="/hairball/images/홈/home_4.jpg" alt="홈 배경2" />
+          <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경4" />
         </div>
       </div>
       <div class="swiper-pagination1">
         <div class="swiper-pagination"></div>
       </div>
-    </div>
-    <h2 class="title">
-      혼자가 아닌 <span>함께</span>라서 <span>행복</span>한 순간
-    </h2>
-    <h3 class="sub_title">사랑스러운 아이들이 기다리고 있어요</h3>
-    <div class="go_click">
-      <a href="<%= request.getContextPath() %>/animal/list">
-        <img src="/hairball/images/홈/만나러가기.png"
-                alt="만나러 가기"
-        />
-      </a>
     </div>
   </div>
   <div class="section section_1_2" id="section_1_2">
@@ -107,4 +93,24 @@
     </div>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+	  const slide = new Swiper("#my-swiper", {
+	    slidesPerView: "auto", // 한 슬라이드에 보여줄 갯수
+	    // spaceBetween: 6, // 슬라이드 사이 여백
+	    loop: false, // 슬라이드 반복 여부
+	    loopAdditionalSlides: 1, // 슬라이드 반복 시 마지막 슬라이드에서 다음 슬라이드가 보여지지 않는 현상 수정
+	    pagination: false, // pager 여부
+	    autoplay: {
+	      // 자동 슬라이드 설정 , 비 활성화 시 false
+	      delay: 3000, // 시간 설정
+	      disableOnInteraction: false, // false로 설정하면 스와이프 후 자동 재생이 비활성화 되지 않음
+	    },
+	    pagination: {
+	      el: ".swiper-pagination",
+	      clickable: true,
+	    },
+	  });
+	});
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

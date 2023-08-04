@@ -191,8 +191,8 @@ body {
 }
 
 .menu-container {
-	margin-top:10px;
-	padding-bottom: 10px;
+	margin-top:11px;
+	padding-bottom: 11px;
 	border-bottom: 1px solid #e7e7e7;
 }
 
@@ -212,7 +212,7 @@ body {
 	max-width: 1200px;
 	justify-content: flex-end;
 	margin: 0 auto;
-    padding: 10px;
+    padding: 11px;
     gap: 25px;
 }
 
