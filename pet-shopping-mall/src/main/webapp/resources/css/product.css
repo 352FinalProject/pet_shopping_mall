@@ -99,13 +99,15 @@ select[name=product-option] {
 	border-radius: 5px;
 	border: none;
 	font-size: 15px;
+	color: #fff;
+	background: #c8c8c8;
 }
 
 .product-bottom {
 	width: 1903px;
 	display: flex;
 	position: fixed;
-	margin-top: -570px;
+	margin-top: -1570px;
 	background-color: #fff;
 	font-size: 15px;
 	justify-content: center;
@@ -114,15 +116,12 @@ select[name=product-option] {
 	padding: 11px;
 }
 
-.product-bottom2 {
-	display: flex;
-}
-
 .product-bottom div {
 	margin-top: 10px;
 }
 
 .btn2 {
+	color: #fff;
 	background: #58ACFA;
 }
 
@@ -131,9 +130,14 @@ select[name=product-option] {
 }
 
 .product-bottom2 {
+	display: flex;
 	width: 1200px;
 	margin: 0 auto;
 	justify-content: space-between
+}
+
+.heart-img {
+	margin-left: 650px;
 }
 
 .product-price-desc {

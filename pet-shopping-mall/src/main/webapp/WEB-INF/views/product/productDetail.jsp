@@ -178,7 +178,7 @@
 			<div>
 				<span id="product-bottom-title">제품명 나오는 곳</span> <br /> <span>11,000원</span>
 			</div>
-			<div>
+			<div class="heart-img">
 				<img
 					src="${pageContext.request.contextPath}/resources/images/product/pink_heart.png"
 					width="28px" /> <br /> <span>1,562</span>
