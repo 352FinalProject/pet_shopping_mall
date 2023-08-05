@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style>
 #menuicon {
 	display: none;
@@ -115,6 +118,10 @@
 </label>
 <div class="sidebar">
 	<ul class="sidebar-text">
+		<c:if test="${empty loginMember}">
+		<input type="button" value="로그인">
+		<hr>
+		</c:if>
 		<li><a href="#">사료</a>
 			<ul>
 				<li><a href="#">건식</a></li>
