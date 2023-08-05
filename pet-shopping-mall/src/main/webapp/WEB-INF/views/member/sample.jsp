@@ -11,7 +11,7 @@
     margin:100px;
 	}
 	.common-container {
-	width: 800px;
+	width: 1000px;
 	}
 	.product-div {
 	display: flex;
@@ -58,4 +58,5 @@
     		</div>
     	</div>
     </section>
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
