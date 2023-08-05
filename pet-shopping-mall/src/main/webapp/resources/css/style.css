@@ -185,7 +185,6 @@ body {
 .header {
     position: relative;
     background-color: white;
-    z-index: 999;
     margin: 0 auto;
 }
 
