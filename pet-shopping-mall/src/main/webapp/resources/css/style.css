@@ -1,0 +1,322 @@
+@CHARSET "UTF-8";
+/* common */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+#canNotFindAnimal{
+	text-align: center;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+ol,
+ul {
+    list-style: none;
+}
+blockquote,
+q {
+    quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+.indexImg{
+	width:250px;
+	height:250px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+}
+footer{
+	margin-top: 20px; 
+}
+/* style */
+
+/* 폰트 */
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+    font-family: Noto Sans KR;
+}
+
+/* 로고 */
+
+.logo_img img {
+	width: 1000px;
+	margin: 0 auto;
+    display: flex; /* 수직 방향으로 가운데로 정렬 */
+    align-items: center; /* 수직 방향으로 가운데로 정렬 */
+}
+
+/* 메뉴바 */
+.nav {
+    background: #fff;
+    margin: 0 auto;
+    display: flex; /* 추가: flexbox를 사용하여 가로 정렬 설정 */
+    justify-content: center; /* 추가: 메뉴를 가로 방향으로 가운데로 정렬 */
+    
+}
+
+.header {
+    position: relative;
+    background-color: white;
+    margin: 0 auto;
+}
+
+.logo_top_wrap {
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.logo_wrap {
+	max-width: 1200px;
+	margin: 0 auto;
+	display:flex;
+	align-items: center;
+}
+
+/* 햄버거 버튼 */
+.hamburger_top_btn img{
+	width: 35px;
+}
+
+/* 검색 버튼 */
+.search_top_btn img{
+	width: 28px;
+}
+
+/* 주문조회 버튼 */
+.order_checks_top_btn img{
+	width: 25px;
+}
+
+.cart_top_btn img{
+	width: 25px;
+}
+
+/* 검색, 주문조회, 장바구니 wap*/
+.cdt {
+	display:flex;
+	gap: 30px;
+	margin-left: 3px;
+}
+
+/* 메뉴 폰트 */
+.nav ul,
+.utility {
+    display: flex;
+}
+
+.nav ul {
+    font-size: 16px;
+    gap: 109px;
+}
+
+/* 회원가입, 로그인 버튼 */
+.utility {	
+	max-width: 1200px;
+	justify-content: flex-end;
+	margin: 0 auto;
+    padding: 11px;
+    gap: 25px;
+}
+
+/* 메뉴 폰트와 utility 컨테이너 */
+.menu-container {
+    display: flex;
+    align-items: center;
+    margin-top:11px;
+	padding-bottom: 11px;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+/* 홈 슬라이드 */
+.swiper-container {
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+    overflow: hidden; /* 가로 스크롤 숨김 */
+}
+
+.swiper-slide {
+    width: 100%; /* 가로 방향으로 하나의 슬라이드만 보이도록 설정 */
+    height: 100%;
+}
+
+.swiper-pagination {
+    position: absolute;
+    padding-bottom: 180px;
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 1200px;
+}
+
+/* 공통 스타일 */
+.common-section{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	   
+	margin:100px;
+}
+.common-container {
+	width:1000px;	
+}
+.common-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+   
+}
+.common-title {
+	font-size:24px;
+}
+
+/* section_1 홈 */
+
+/* 카피라이터 */
+footer {
+    background-color: #ececec;
+    border-top: 1px solid #dcdcdc;
+    padding: 30px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+footer img {
+    width: 250px;
+    display: block;
+    margin: 0 auto;
+    color: #4d4d4d;
+}
+
+footer .copyright_line {
+    width: 700px;
+    border-bottom: 1px solid #9c9c9c;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+footer p {
+    text-align: center;
+    font-size: 14px;
+    color: #4d4d4d;
+    margin-top: 30px;
+}
