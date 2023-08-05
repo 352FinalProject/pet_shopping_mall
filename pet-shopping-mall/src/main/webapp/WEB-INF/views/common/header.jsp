@@ -34,10 +34,6 @@
         </ul>
         <div class="logo_top_wrap">
 	        <div class="logo_wrap">
-	        	<!-- 햄버거 버튼 -->
-	        	<div class="hamburger_top_btn">
-	        		<img src="${pageContext.request.contextPath}/resources/images/home/hamburger.svg" id="center-image" alt="햄버거"/>
-	        	</div>
 	        	<!-- 로고 이미지 -->
 		        <div class="logo_img">
 		         	<a href="${pageContext.request.contextPath}/">

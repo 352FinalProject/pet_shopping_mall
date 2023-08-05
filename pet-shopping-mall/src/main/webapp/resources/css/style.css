@@ -1,178 +1,124 @@
 @CHARSET "UTF-8";
 /* common */
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font: inherit;
-    vertical-align: baseline;
-    box-sizing: border-box;
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	vertical-align: baseline;
+	box-sizing: border-box;
 }
-#canNotFindAnimal{
+
+#canNotFindAnimal {
 	text-align: center;
 }
 /* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-    display: block;
-}
-ol,
-ul {
-    list-style: none;
-}
-blockquote,
-q {
-    quotes: none;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-    content: "";
-    content: none;
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
 }
 
-.indexImg{
-	width:250px;
-	height:250px;
+ol, ul {
+	list-style: none;
 }
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: "";
+	content: none;
+}
+
+.indexImg {
+	width: 250px;
+	height: 250px;
+}
+
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
+
 a {
-    display: block;
-    text-decoration: none;
-    color: #000;
+	display: block;
+	text-decoration: none;
+	color: #000;
 }
-footer{
-	margin-top: 20px; 
+
+footer {
+	margin-top: 20px;
 }
 /* style */
 
-/* 폰트 */
 
+/* 폰트 */
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 .notosanskr * {
-    font-family: "Noto Sans KR", sans-serif;
+	font-family: "Noto Sans KR", sans-serif;
 }
 
 body {
-    font-family: Noto Sans KR;
+	font-family: Noto Sans KR;
 }
 
-/* 로고 */
+/* 공통 스타일 */
+.common-section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 100px;
+}
 
+.common-container {
+	width: 1000px;
+}
+
+.common-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.common-title {
+	font-size: 24px;
+}
+
+
+/* 로고 */
 .logo_img img {
 	width: 1000px;
 	margin: 0 auto;
-    display: flex; /* 수직 방향으로 가운데로 정렬 */
-    align-items: center; /* 수직 방향으로 가운데로 정렬 */
+}
+
+.logo_img {
+	margin-left: 100px; display : flex; /* 수직 방향으로 가운데로 정렬 */
+	align-items: center;
+	display: flex; /* 수직 방향으로 가운데로 정렬 */
 }
 
 /* 메뉴바 */
 .nav {
-    background: #fff;
-    margin: 0 auto;
-    display: flex; /* 추가: flexbox를 사용하여 가로 정렬 설정 */
-    justify-content: center; /* 추가: 메뉴를 가로 방향으로 가운데로 정렬 */
-    
+	background: #fff;
+	margin: 0 auto;
+	display: flex; /* 추가: flexbox를 사용하여 가로 정렬 설정 */
+	justify-content: center; /* 추가: 메뉴를 가로 방향으로 가운데로 정렬 */
 }
 
 .header {
-    position: relative;
-    background-color: white;
-    margin: 0 auto;
+	position: relative;
+	background-color: white;
+	margin: 0 auto;
 }
 
 .logo_top_wrap {
@@ -183,81 +129,74 @@ body {
 .logo_wrap {
 	max-width: 1200px;
 	margin: 0 auto;
-	display:flex;
+	display: flex;
 	align-items: center;
 }
 
-/* 햄버거 버튼 */
-.hamburger_top_btn img{
-	width: 35px;
-}
-
 /* 검색 버튼 */
-.search_top_btn img{
+.search_top_btn img {
 	width: 28px;
 }
 
 /* 주문조회 버튼 */
-.order_checks_top_btn img{
+.order_checks_top_btn img {
 	width: 25px;
 }
 
-.cart_top_btn img{
+.cart_top_btn img {
 	width: 25px;
 }
 
 /* 검색, 주문조회, 장바구니 wap*/
 .cdt {
-	display:flex;
+	display: flex;
 	gap: 30px;
-	margin-left: 15px;
+	margin-left: -51px;
 }
 
 /* 메뉴 폰트 */
-.nav ul,
-.utility {
-    display: flex;
+.nav ul, .utility {
+	display: flex;
 }
 
 .nav ul {
-    font-size: 16px;
-    gap: 109px;
+	font-size: 16px;
+	gap: 109px;
 }
 
 /* 회원가입, 로그인 버튼 */
-.utility {	
+.utility {
 	max-width: 1200px;
 	justify-content: flex-end;
 	margin: 0 auto;
-    padding: 11px;
-    gap: 25px;
+	padding: 11px;
+	gap: 25px;
 }
 
 /* 메뉴 폰트와 utility 컨테이너 */
 .menu-container {
-    display: flex;
-    align-items: center;
-    margin-top:11px;
+	display: flex;
+	align-items: center;
+	margin-top: 11px;
 	padding-bottom: 11px;
 	border-bottom: 1px solid #e7e7e7;
 }
 
 /* 홈 슬라이드 */
 .swiper-container {
-    width: 100%;
-    height: 100%;
-    margin-top: 50px;
-    overflow: hidden; /* 가로 스크롤 숨김 */
+	height: 530px; margin-top : 50px;
+	overflow: hidden;
+	margin-top: 50px; /* 가로 스크롤 숨김 */
 }
 
 .swiper-slide {
-    width: 100%; /* 가로 방향으로 하나의 슬라이드만 보이도록 설정 */
-    height: 100%;
+	width: 100%; /* 가로 방향으로 하나의 슬라이드만 보이도록 설정 */
+	height: 100%;
 }
 
 .swiper-pagination {
-    position: absolute;
-    padding-bottom: 180px;
+	position: absolute;
+	margin-bottom: 200px;
 }
 
 .container {
@@ -265,58 +204,141 @@ body {
 	max-width: 1200px;
 }
 
-/* 공통 스타일 */
-.common-section{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	   
-	margin:100px;
-}
-.common-container {
-	width:1000px;	
-}
-.common-div {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-   
-}
-.common-title {
-	font-size:24px;
+/* 하단 슬라이드 */
+.gallery_wrap {
+	position: relative;
+	height: 400px;
+	overflow: hidden;
+	margin-top: 20px;
 }
 
-/* section_1 홈 */
+.gallery_wrap .gallery {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	transition: transform 0.3s ease;
+}
+
+.gallery_wrap .gallery li {
+	width: 276px;
+	margin-right: 40px;
+	margin-top: 30px;
+}
+
+.gallery_text {
+	width: 250px;
+	font-size: 16px;
+	text-align: left;
+	margin-top: 10px;
+}
+
+/* 하단 슬라이드 버튼 */
+.button_box {
+	cursor: pointer;
+}
+
+.prev_btn img{
+	width: 25px;
+	height: 35px;
+	position: absolute;
+	margin-top: -260px;
+	margin-left: -50px;
+}
+
+.next_btn img{
+	width: 25px;
+	height: 35px;
+	position: absolute;
+	margin-top: -260px;
+	margin-left: 1219px;
+}
+
+/* section_2 */
+.section_2 {
+	margin-top: 20px;	
+}
+
+.kategorie_content_wrap {
+	display: flex;
+	justify-content: center; /* 가운데 정렬 */
+	margin-top: 50px;
+}
+
+.kategorie_content_wrap img {
+	width: 70px;
+	height: 70px;
+}
+
+.kategorie_content_wrap ul {
+	display: flex;
+	margin: 0 auto;
+}
+
+.kategorie_list_wrap {
+	display: flex;
+}
+
+.kategorie_list {
+	margin: 0 auto;
+}
+
+.kategorie_list ul {
+	height: 45px;
+	display: flex;
+	gap: 30px;
+	font-size: 15px;
+	background-color: #e7e7e7; /* 테두리 색상 설정 */
+	border-radius: 25px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+
+.title_desc {
+	font-size : 20px;
+	font-weight: 600;
+	margin-right: auto;
+}
+
+.title_plus {
+	font-size : 15px;
+	display: flex;
+	justify-content: flex-end;
+	cursor: pointer;
+	margin-bottom: -30px;
+	color: #828282;
+	gap: 5px;
+}
+
+.title_plus img {
+	width: 13px;
+	height: 15px;
+	margin-top: 2px;
+	color: #828282;
+}
 
 /* 카피라이터 */
 footer {
-    background-color: #ececec;
-    border-top: 1px solid #dcdcdc;
-    padding: 30px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
+	border-top: 1px solid #e7e7e7;
+	padding: 10px;
+	height: 180px;
+	display: flex;
+	flex-direction: column;
+	margin-top: 40px;
 }
 
 footer img {
-    width: 250px;
-    display: block;
-    margin: 0 auto;
-    color: #4d4d4d;
-}
-
-footer .copyright_line {
-    width: 700px;
-    border-bottom: 1px solid #9c9c9c;
-    padding: 5px;
-    margin: 0 auto;
+	width: 800px;
+	display: block;
+	margin: 0 auto;
+	color: #4d4d4d;
 }
 
 footer p {
-    text-align: center;
-    font-size: 14px;
-    color: #4d4d4d;
-    margin-top: 30px;
+	text-align: center;
+	font-size: 14px;
+	color: #4d4d4d;
 }
