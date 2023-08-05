@@ -1,6 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <div class="container">
   <div class="section section_1" id="section_1">
     <div class="swiper-container" id="my-swiper">
