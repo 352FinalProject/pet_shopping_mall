@@ -60,11 +60,12 @@
 	font-size: 22px;
 	font-weight: 500;
 	}
-	    .btn {
+	.btn {
 	width:150px;
 	height:50px;
 	border-radius: 5px;
 	border:none;
+	font-size: 15px;
 	}
 	.product-bottom {
 	display: flex;
