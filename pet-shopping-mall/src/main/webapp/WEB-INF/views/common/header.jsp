@@ -39,28 +39,28 @@
             <ul class="nav">
                 <ul>
                     <li class="on">
-                        <a href="#" class="font">사료</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">사료</a>
                     </li>
                     <li>
-                        <a href="#" class="font">간식</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">간식</a>
                     </li>
                     <li>
-                        <a href="#" class="font">패션용품</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">패션용품</a>
                     </li>
                     <li>
-                        <a href="#" class="font">산책용품</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">산책용품</a>
                     </li>
                     <li>
-                        <a href="#" class="font">위생용품</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">위생용품</a>
                     </li>
                      <li>
-                        <a href="#" class="font">장난감</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">장난감</a>
                     </li>
                     <li>
-                        <a href="#" class="font">고양이</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">고양이</a>
                     </li>
                      <li>
-                        <a href="#" class="font">기타용품</a>
+                        <a href="${pageContext.request.contextPath}/product/productList.do" class="font">기타용품</a>
                     </li>
                 </ul>
             </ul>
