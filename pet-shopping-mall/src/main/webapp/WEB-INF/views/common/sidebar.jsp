@@ -11,17 +11,19 @@
 	display: block;
 	margin: 30px;
 	width: 30px;
-	height: 30px;
+	height: 20px;
 	position: fixed;
 	z-index: 999;
 	cursor: pointer;
+	top: 80px;
+    left: 140px;
 }
 
 #menuicon+label span {
 	display: block;
 	position: absolute;
 	width: 100%;
-	height: 4px;
+	height: 1.5px;
 	border-radius: 30px;
 	background: #000;
 	transition: all .35s;
@@ -74,7 +76,7 @@
 }
 
 .sidebar-text {
-	top: 70px;
+	top: 105px;
 	position: relative;
 }
 
