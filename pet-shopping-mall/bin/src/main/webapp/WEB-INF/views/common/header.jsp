@@ -20,7 +20,7 @@
         <span id="notification"></span>
         <ul class="utility">
             <li class="login_li">
-                <a href="<%= request.getContextPath() %>/member/sample.do">샘플</a>
+                <a href="<%= request.getContextPath() %>/product/productDetail.do">샘플</a>
             </li>
             <li class="login_li">
                 <a href="<%= request.getContextPath() %>/member/login.do">로그인</a>
