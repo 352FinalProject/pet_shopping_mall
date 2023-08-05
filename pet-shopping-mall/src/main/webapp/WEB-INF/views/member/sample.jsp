@@ -11,7 +11,7 @@
     margin:100px;
 	}
 	.common-container {
-	width: 800px;
+	width: 1000px;
 	}
 	.product-div {
 	display: flex;
