@@ -147,24 +147,11 @@ footer{
     font-family: "Noto Sans KR", sans-serif;
 }
 
-@font-face {
-    font-family: "ImcreSoojin";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff")
-    format("woff");
-    font-weight: normal;
-    font-style: normal;
-}
-
 body {
     font-family: Noto Sans KR;
 }
 
 /* 로고 */
-
-.logo_img {
-	border-top: 1px solid #e7e7e7;
-	border-bottom: 1px solid #e7e7e7;
-}
 
 .logo_img img {
 	width: 1000px;
@@ -185,14 +172,45 @@ body {
 .header {
     position: relative;
     background-color: white;
-    z-index: 999;
     margin: 0 auto;
 }
 
-.menu-container {
-	margin-top:11px;
-	padding-bottom: 11px;
+.logo_top_wrap {
+	border-top: 1px solid #e7e7e7;
 	border-bottom: 1px solid #e7e7e7;
+}
+
+.logo_wrap {
+	max-width: 1200px;
+	margin: 0 auto;
+	display:flex;
+	align-items: center;
+}
+
+/* 햄버거 버튼 */
+.hamburger_top_btn img{
+	width: 35px;
+}
+
+/* 검색 버튼 */
+.search_top_btn img{
+	width: 28px;
+}
+
+/* 주문조회 버튼 */
+.order_checks_top_btn img{
+	width: 25px;
+}
+
+.cart_top_btn img{
+	width: 25px;
+}
+
+/* 검색, 주문조회, 장바구니 wap*/
+.cdt {
+	display:flex;
+	gap: 30px;
+	margin-left: 3px;
 }
 
 /* 메뉴 폰트 */
@@ -219,6 +237,9 @@ body {
 .menu-container {
     display: flex;
     align-items: center;
+    margin-top:11px;
+	padding-bottom: 11px;
+	border-bottom: 1px solid #e7e7e7;
 }
 
 /* 홈 슬라이드 */
@@ -236,12 +257,35 @@ body {
 
 .swiper-pagination {
     position: absolute;
-    padding-bottom: 50px;
+    padding-bottom: 180px;
 }
 
 .container {
 	margin: 0 auto;
 	max-width: 1200px;
+}
+
+/* 공통 스타일 */
+.common-section{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	   
+	margin:100px;
+}
+.common-container {
+	width:1000px;	
+}
+.common-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+   
+}
+.common-title {
+	font-size:24px;
 }
 
 /* section_1 홈 */

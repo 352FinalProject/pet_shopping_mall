@@ -7,19 +7,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     margin:100px;
     }
-    .common-container {
-
-    }
+	.common-container {
+	width: 1000px;
+	}
     .common-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+	}
 
-    }
     .common-title {
     font-size:24px;
     }
@@ -36,4 +35,5 @@
             </div>
         </div>
     </section>
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
