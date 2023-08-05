@@ -15,4 +15,5 @@ public class MemberController {
 
 	@GetMapping("/login.do")
 	public void memberLogin() {}
+	
 }

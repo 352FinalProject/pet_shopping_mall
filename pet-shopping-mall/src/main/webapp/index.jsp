@@ -20,9 +20,9 @@
     </div>
   </div>
   <div class="section section_1_2" id="section_1_2">
-    <h3 class="title"><span>사료</span> </h2>
-    <h3 class="title"><span>간식</span> </h2>
-    <h3 class="title"><span>용품</span> </h2>
+    <h3 class="title"><a href="${pageContext.request.contextPath}/product/productList.do" ><span>사료</span></a></h2>
+    <h3 class="title"><a href="${pageContext.request.contextPath}/product/productList.do" ><span>간식</span></a></h2>
+    <h3 class="title"><a href="${pageContext.request.contextPath}/product/productList.do" ><span>용품</span></a></h2>
     <h3 class="sub_title"></h3>
     <div class="gallery_wrap">
       <ul class="gallery">
