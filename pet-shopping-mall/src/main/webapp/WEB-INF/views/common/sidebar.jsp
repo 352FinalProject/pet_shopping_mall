@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <aside class="side-bar">
   <section class="side-bar__icon-box">
     <section class="side-bar__icon-1">
@@ -9,7 +10,7 @@
   </section>
   <ul>
     <li>
-      <a href="#"><i class="fa-solid fa-cat"></i> menu1</a>
+      <a href="#"><i class="fa-solid fa-cat"></i> 사료</a>
       <ul>
         <li><a href="#">text1</a></li>
         <li><a href="#">text2</a></li>
@@ -66,7 +67,6 @@ a {
   --side-bar-width: 270px;
   --side-bar-height: 90vh;
 }
-
 .side-bar {
   position: fixed;    /* 스크롤을 따라오도록 지정 */
   background-color: black;
