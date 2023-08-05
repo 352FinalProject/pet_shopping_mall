@@ -13,4 +13,12 @@ public class ProductController {
 
 	@GetMapping("/productDetail.do")
 	public void productDetail() {}
+	
+	@GetMapping("/productList.do")
+	public void productList() {
+		
+		
+		
+	}
+	
 }
