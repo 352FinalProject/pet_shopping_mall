@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.common-section{
+display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   
+   margin:100px;
+}
+.common-container {
+width: 800px;
+}
+.product-div {
+display: flex;
+   justify-content: center;
+   align-items: center;
+
+}
+#product-title {
+
+}
+#product-detail {
+
+}
+.util-div{
+height:50px;
+background-color: blue;
+}
+.common-container2 {
+display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
