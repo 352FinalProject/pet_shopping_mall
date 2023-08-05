@@ -21,76 +21,47 @@
     </div>
   </div>
   <div class="section section_1_2" id="section_1_2">
-    <h3 class="title"><a href="${pageContext.request.contextPath}/product/productList.do" ><span>사료</span></a></h2>
-    <h3 class="title"><a href="${pageContext.request.contextPath}/product/productList.do" ><span>간식</span></a></h2>
-    <h3 class="title"><a href="${pageContext.request.contextPath}/product/productList.do" ><span>용품</span></a></h2>
-    <h3 class="sub_title"></h3>
-    <div class="gallery_wrap">
-      <ul class="gallery">
-        <li>
-          <a href="#">
-            <img src="" class="indexImg"/>
-            <div class="gallery_text">
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img src="" class="indexImg"/>
-            <div class="gallery_text">
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img src="" class="indexImg"/>
-            <div class="gallery_text">
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img src="" class="indexImg"/>
-            <div class="gallery_text">
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img src="" class="indexImg"/>
-            <div class="gallery_text">
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img src="" class="indexImg"/>
-            <div class="gallery_text">
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <img src=""  class="indexImg"/>
-            <div class="gallery_text">
-            </div>
-          </a>
-        </li>
-      </ul>
+  	<div class="kategorie_list">
+  		<ul>
+  			<li>
+	    		<button class="btn_dog">사료</button>
+  			</li>
+  			<li>
+	    		<button class="btn_snack">간식</button>
+  			</li>
+  			<li>
+	   			<button class="btn_cat">고양이</button>  			
+  			</li>
+  		</ul>
     </div>
-    <div class="button_box">
-      <div class="prev_btn">
-        <img
-                src="/hairball/images/홈/left-arrow - 복사본.png"
-                alt="이전"
-        />
-      </div>
-      <div class="next_btn">
-        <img
-                src="/hairball/images/홈/right-arrow - 복사본.png"
-                alt="다음"
-        />
-      </div>
+    <div class="kategorie_content">
+    	<ul>
+    		<li>
+    			<a href="#">
+            		<img src="${pageContext.request.contextPath}/resources/images/home/퍼피.png" class="indexImg"/>
+            	</a>
+    		</li>
+    		<li>
+    			<a href="#">
+            		<img src="${pageContext.request.contextPath}/resources/images/home/퍼피.png" class="indexImg"/>
+            	</a>
+    		</li>
+    		<li>
+    			<a href="#">
+            		<img src="${pageContext.request.contextPath}/resources/images/home/퍼피.png" class="indexImg"/>
+            	</a>
+    		</li>
+    		<li>
+    			<a href="#">
+            		<img src="${pageContext.request.contextPath}/resources/images/home/퍼피.png" class="indexImg"/>
+            	</a>
+    		</li>
+    		<li>
+    			<a href="#">
+            		<img src="${pageContext.request.contextPath}/resources/images/home/퍼피.png" class="indexImg"/>
+            	</a>
+    		</li>
+    	</ul>
     </div>
   </div>
 </div>
