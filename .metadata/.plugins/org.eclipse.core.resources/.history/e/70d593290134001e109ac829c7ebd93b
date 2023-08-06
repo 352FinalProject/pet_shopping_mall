@@ -91,7 +91,7 @@ select[name=product-option] {
 }
 
 .btn {
-	width: 170px;
+	width: 150px;
 	height: 50px;
 	border-radius: 5px;
 	border: none;
@@ -137,7 +137,7 @@ select[name=product-option] {
 
 
 .heart-img {
-	margin-left: 620px; */
+	margin-left: 650px; */
 	
 }
 
