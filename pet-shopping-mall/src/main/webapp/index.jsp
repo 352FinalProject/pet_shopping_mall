@@ -102,8 +102,8 @@
 				<a href="#"></a>
 			</div>
 		</div>
-	<div class="gallery_wrap">
-	      <ul class="gallery">
+	<div class="gallery_wrap2">
+	      <ul class="gallery2">
 	        <li class="gallery_item1">
 	          <a href="#">
 	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
@@ -174,8 +174,8 @@
 				<a href="#"></a>
 			</div>
 		</div>
-	<div class="gallery_wrap">
-	      <ul class="gallery">
+	<div class="gallery_wrap3">
+	      <ul class="gallery3">
 	        <li class="gallery_item1">
 	          <a href="#">
 	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
@@ -239,6 +239,7 @@
 	</div>
 </div>
 <script>
+/* 배너 슬라이드 */
 document.addEventListener("DOMContentLoaded", function () {
 	  const slide = new Swiper("#my-swiper", {
 	    slidesPerView: "auto", // 한 슬라이드에 보여줄 갯수
@@ -257,36 +258,55 @@ document.addEventListener("DOMContentLoaded", function () {
 	    },
 	  });
 	});
-	
-$(document).ready(function () {
-	  // 문서 로드가 완료되었을 때 실행되는 함수
-	  let imgs = $(".gallery");
-	  let img_count = imgs.children().length;
-	  let img_position = 0; // img_position을 0으로 초기화하여 첫 이미지가 보이도록 함
 
-	  $(".prev_btn").click(function (e) {
-	    back();
-	  });
-	  $(".next_btn").click(function (e) {
-	    if (img_position < img_count - 5) {
-	      next();
-	    } else {
-	      e.preventDefault();
-	    }
-	  });
-	  function back() {
-	    if (img_position > 0) {
-	      img_position--; // img_position을 감소
-	      imgs.css("transform", `translateX(${-img_position * 290}px)`); // translateX를 사용하여 이미지 이동
-	    }
-	  }
-	  function next() {
-	    if (img_position < img_count - 5) {
-	      img_position++; // img_position을 증가
-	      imgs.css("transform", `translateX(${-img_position * 290}px)`); // translateX를 사용하여 이미지 이동
-	    }
-	  }
-	});
+/* 하단 슬라이드 1 */
+document.addEventListener("DOMContentLoaded", function() {
+    let imgs = document.querySelector(".gallery");
+    createSlider(imgs);
+});
+
+/* 하단 슬라이드 2 */
+document.addEventListener("DOMContentLoaded", function() {
+    let imgs = document.querySelector(".gallery2");
+    createSlider(imgs);
+});
+
+/* 하단 슬라이드 3 */
+document.addEventListener("DOMContentLoaded", function() {
+    let imgs = document.querySelector(".gallery3");
+    createSlider(imgs);
+});
+
+function createSlider(imgs) {
+    let img_count = imgs.childElementCount;
+    let img_position = 0;
+
+    imgs.parentNode.parentNode.querySelector(".prev_btn").addEventListener("click", function(e) {
+        back();
+    });
+
+    imgs.parentNode.parentNode.querySelector(".next_btn").addEventListener("click", function(e) {
+        if (img_position < img_count - 5) {
+            next();
+        } else {
+            e.preventDefault();
+        }
+    });
+
+    function back() {
+        if (img_position > 0) {
+            img_position--;
+            imgs.style.transform = "translateX(" + (-img_position * 316) + "px)";
+        }
+    }
+
+    function next() {
+        if (img_position < img_count - 5) {
+            img_position++;
+            imgs.style.transform = "translateX(" + (-img_position * 316) + "px)";
+        }
+    }
+}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

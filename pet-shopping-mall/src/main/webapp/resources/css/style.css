@@ -205,14 +205,14 @@ body {
 }
 
 /* 하단 슬라이드 */
-.gallery_wrap {
+.gallery_wrap, .gallery_wrap2, .gallery_wrap3 {
 	position: relative;
 	height: 400px;
 	overflow: hidden;
 	margin-top: 20px;
 }
 
-.gallery_wrap .gallery {
+.gallery_wrap .gallery, .gallery_wrap2 .gallery2, .gallery_wrap3 .gallery3 {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -220,7 +220,7 @@ body {
 	transition: transform 0.3s ease;
 }
 
-.gallery_wrap .gallery li {
+.gallery_wrap .gallery li, .gallery_wrap2 .gallery2 li, .gallery_wrap3 .gallery3 li {
 	width: 276px;
 	margin-right: 40px;
 	margin-top: 30px;
