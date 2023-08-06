@@ -3,10 +3,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR&family=Noto+Serif+KR:wght@200&display=swap');
+</style>
+<style>
+
 #menuicon {
 	display: none;
 	width: 30px;
 	height: 20px;
+	
 }
 
 #menuicon+label {
@@ -80,6 +85,7 @@
 .sidebar-text {
 	top: 105px;
 	position: relative;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 #menuicon:checked+label+div {
@@ -115,6 +121,13 @@
 .sidebar-text > li:hover ul {
   display: block;
 }
+
+.sidebar-title{
+	left:20px;
+	font-size: 30px;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 .overlay {
     display: none;
     position: fixed;
@@ -127,6 +140,24 @@
     background-color: rgba(0,0,0,0.5);
     z-index: 2;
 }
+
+.sidebar-loginbutton {
+	position: relative;
+  	left: 30px;
+	box-sizing: border-box;
+	border: 1.5px solid;
+	cursor: pointer;
+	background-color: white;
+	font-family: 'Noto Sans KR', sans-serif;
+	padding: 3px;
+	bottom: 6px
+}
+.sidebar-text > span{
+	position: relative;
+	left:20px;
+	font-size: 30px;
+}
+
 </style>
 <div id="myOverlay" class="overlay"></div>
 <input type="checkbox" id="menuicon">
@@ -135,9 +166,10 @@
 <div class="sidebar">
 	<ul class="sidebar-text">
 		<c:if test="${empty loginMember}">
-		<input type="button" value="로그인">
+		<span>MY</span><input type="button" class="sidebar-loginbutton" value="로그인">
 		<hr>
 		</c:if>
+		<li class="sidebar-title">카테고리</li>
 		<li><a href="#">사료</a>
 			<ul>
 				<li><a href="#">건식</a></li>
