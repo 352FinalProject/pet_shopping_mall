@@ -5,6 +5,8 @@
 <style>
 #menuicon {
 	display: none;
+	width: 30px;
+	height: 20px;
 }
 
 #menuicon+label {
@@ -12,7 +14,7 @@
 	margin: 30px;
 	width: 30px;
 	height: 20px;
-	position: fixed;
+	position: absolute;
 	z-index: 999;
 	cursor: pointer;
 	top: 80px;
@@ -23,7 +25,7 @@
 	display: block;
 	position: absolute;
 	width: 100%;
-	height: 1.5px;
+	height: 1.6px;
 	border-radius: 30px;
 	background: #000;
 	transition: all .35s;
@@ -65,14 +67,14 @@
 }
 
 .sidebar {
-	width: 200px;
+	width: 280px;
 	height: 100%;
 	position: fixed;
 	top: 0;
 	left: -300px;
-	z-index: 10;
+	z-index: 3;
 	transition: all .35s;
-	background-color: #ffffffc2;
+	background-color: #fff;
 }
 
 .sidebar-text {
@@ -113,8 +115,20 @@
 .sidebar-text > li:hover ul {
   display: block;
 }
-
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+}
 </style>
+<div id="myOverlay" class="overlay"></div>
 <input type="checkbox" id="menuicon">
 <label for="menuicon"> <span></span> <span></span> <span></span>
 </label>
@@ -194,4 +208,24 @@
 		</li>
 	</ul>
 </div>
+<script>
+/* 화면 어둡게 */
+document.getElementById('menuicon').addEventListener('change', function() {
+    document.getElementById('myOverlay').style.display = this.checked ? 'block' : 'none';
+});
 
+/* 화면 눌렀을 때 닫히는 기능 */
+const menuIcon = document.getElementById('menuicon');
+const overlay = document.getElementById('myOverlay');
+
+// 체크박스 상태 변경에 따른 오버레이 표시/숨김
+menuIcon.addEventListener('change', function() {
+    overlay.style.display = this.checked ? 'block' : 'none';
+});
+
+// 오버레이 클릭 시 체크박스 상태 변경 및 오버레이 숨김
+overlay.addEventListener('click', function() {
+    menuIcon.checked = false;
+    overlay.style.display = 'none';
+});
+</script>
