@@ -21,9 +21,6 @@
 	
 }
 
-#product-title {
-	
-}
 
 #product-detail {
 	
@@ -104,20 +101,29 @@ select[name=product-option] {
 }
 
 .product-bottom {
-	width: 1903px;
-	display: flex;
 	position: fixed;
-	margin-top: -1570px;
-	background-color: #fff;
-	font-size: 15px;
-	justify-content: center;
-	height: 120px;
-	border-top: 1px solid #e7e7e7;
-	padding: 11px;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: white;
+	padding: 10px 20px;
+	box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	display: flex;
+}
+.product-bottom2 {
+	display: flex;
+	width: 1200px;
+	margin: 0 auto;
+	justify-content: space-around;
 }
 
 .product-bottom div {
 	margin-top: 10px;
+	font-size: 16px;
+}
+
+.product-bottom2 div {
 }
 
 .btn2 {
@@ -129,15 +135,10 @@ select[name=product-option] {
 	font-size: 20px;
 }
 
-.product-bottom2 {
-	display: flex;
-	width: 1200px;
-	margin: 0 auto;
-	justify-content: space-between
-}
 
 .heart-img {
-	margin-left: 650px;
+	/* margin-left: 650px; */
+	
 }
 
 .product-price-desc {
@@ -167,46 +168,42 @@ select[name=product-option] {
 	color: #828282;
 }
 
-
-
 /* 아코디언 효과 */
-
-*{
-  box-sizing: border-box; 
-}
-  
-.que{
-  position: relative;
-  padding: 17px 0;
-  cursor: pointer;
-  font-size: 14px;
-  border-bottom: 1px solid #dddddd;
-  display: flex;
-  justify-content: space-around
-  
-}
-  
-.que::before{
-  display: inline-block;
-  font-size: 14px;
-  color: #5886d3;
-  margin: 0 5px;
+* {
+	box-sizing: border-box;
 }
 
-.que.on>span{
-  font-weight: bold;
+.que {
+	position: relative;
+	padding: 17px 0;
+	cursor: pointer;
+	font-size: 14px;
+	border-bottom: 1px solid #dddddd;
+	display: flex;
+	justify-content: space-around
 }
 
-.star_test{
+.que::before {
+	display: inline-block;
+	font-size: 14px;
+	color: #5886d3;
+	margin: 0 5px;
+}
+
+.que.on>span {
+	font-weight: bold;
+}
+
+.star_test {
 	padding: 3px;
 }
-  
+
 .anw {
-  display: none;
-  overflow: hidden;
-  font-size: 14px;
-  padding: 27px 0;
-  border-bottom: 1px solid #dddddd;
+	display: none;
+	overflow: hidden;
+	font-size: 14px;
+	padding: 27px 0;
+	border-bottom: 1px solid #dddddd;
 }
 
 .anw span {
@@ -219,13 +216,13 @@ select[name=product-option] {
 	margin-top: 30px;
 	margin-bottom: 30px;
 }
-  
+
 .anw::before {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: bold;
-  color: #666;
-  margin: 0 5px;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	color: #666;
+	margin: 0 5px;
 }
 
 .score_star img {
@@ -238,14 +235,13 @@ select[name=product-option] {
 }
 
 /* 교환 절차 */
-
 .processing-wrap {
-	margin-top: 70px;	
+	margin-top: 70px;
 }
 
 .processing-wrap span {
 	font-size: 17px;
-	font-weight: 600;	
+	font-weight: 600;
 }
 
 .change, .return, .refund, .procedure {
