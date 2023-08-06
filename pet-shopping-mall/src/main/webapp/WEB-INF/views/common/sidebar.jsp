@@ -16,7 +16,7 @@
 	z-index: 999;
 	cursor: pointer;
 	top: 80px;
-    left: 140px;
+    left: 325px;
 }
 
 #menuicon+label span {

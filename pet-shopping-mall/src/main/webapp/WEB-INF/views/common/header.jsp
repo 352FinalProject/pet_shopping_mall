@@ -6,11 +6,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="//css/index.css" />
     <title>반려동물 쇼핑몰</title>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
    
 <body>
@@ -34,10 +35,6 @@
         </ul>
         <div class="logo_top_wrap">
 	        <div class="logo_wrap">
-	        	<!-- 햄버거 버튼 -->
-	        	<div class="hamburger_top_btn">
-	        		<img src="${pageContext.request.contextPath}/resources/images/home/hamburger.svg" id="center-image" alt="햄버거"/>
-	        	</div>
 	        	<!-- 로고 이미지 -->
 		        <div class="logo_img">
 		         	<a href="${pageContext.request.contextPath}/">

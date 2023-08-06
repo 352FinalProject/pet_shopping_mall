@@ -11,7 +11,7 @@
 	display: flex;
 	width: 100%;
 	position:fixed;
-	margin-bottom: 430px;
+	margin-bottom: 730px;
 	background-color: #fff;
 	font-size:18px;
 	justify-content: center;
