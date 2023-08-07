@@ -16,4 +16,15 @@ public class MemberController {
 	@GetMapping("/login.do")
 	public void memberLogin() {}
 	
+	@GetMapping("/memberCreate.do")
+	public void memberCreate() {}
+	
+	@GetMapping("/memberCreateComplete.do")
+	public void memberCreateComplete() {}
+	
+	@GetMapping("/myPage.do")
+	public void myPage() {}
+	
+	@GetMapping("/petProfile.do")
+	public void petProfile() {}
 }
