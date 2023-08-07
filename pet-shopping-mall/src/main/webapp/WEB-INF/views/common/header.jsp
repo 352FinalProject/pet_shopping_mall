@@ -37,6 +37,9 @@
 			<li class="logout_li">
 			        <a href="<%= request.getContextPath() %>/servicecenter/service.do">고객센터</a>
 			</li>
+			<li class="admin_li">
+			        <a href="<%= request.getContextPath() %>/admin/admin.do">관리자페이지</a>
+			</li>
         </ul>
         <div class="logo_top_wrap">
 	        <div class="logo_wrap">
