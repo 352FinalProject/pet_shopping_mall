@@ -20,10 +20,10 @@ create table member (
     member_id varchar2(20),
     password varchar2(300) not null,
     name varchar2(50) not null,
-    phone char(20) not null,
+    phone varchar(11) not null,
     email varchar2(200),
     reg_date date default sysdate,
-    address varchar(100),
+    address varchar2(500),
     birthday date,
     member_role varchar(20) default 'ROLE_USER' not null,
     point number default 0,
@@ -36,8 +36,8 @@ create table member (
 create table question(
     id number,
     member_id number,
-    title varchar(50),
-    content varchar(4000),
+    title varchar2(500),
+    content varchar2(4000),
     reg_date date default sysdate,
     constraints pk_question_id primary key(id),
     constraints fk_question_member_id foreign key(member_id) references member(id) on delete cascade
@@ -59,5 +59,30 @@ create sequence seq_member_id;
 create sequence seq_answer_id;
 create sequence seq_question_id;
 
+select * from member;
 select * from question;
 select * from answer;
+
+--drop table member;
+--drop table question;
+--drop table answer;
+
+--drop sequence seq_member_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_question_id;
+
+------------------ member insert ---------------------------
+
+insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, field)
+values (seq_member_id.nextval, 'member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 석촌동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+
+insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, field)
+values (seq_member_id.nextval, 'admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
+
+------------------ qna insert ---------------------------
+insert into question (id, title, member_id, content, reg_date)
+values (seq_question_id.nextval, '우동친이 머에요?', 'member1', '우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요????', to_date('18/02/14', 'rr/mm/dd'));
+------------------ answer insert ---------------------------
+
+insert into answer (id, member_id, question_id, content, reg_date)
+values (seq_member_id.nextval, 1, 1, 'This is an answer to the sample question.', sysdate);
