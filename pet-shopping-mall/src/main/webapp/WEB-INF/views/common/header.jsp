@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
    
@@ -34,7 +35,7 @@
                 <a href="<%= request.getContextPath() %>/member/memberCreate.do">회원가입</a>
             </li>
 			<li class="logout_li">
-			        <a href="<%= request.getContextPath() %>/member/logout">고객센터</a>
+			        <a href="<%= request.getContextPath() %>/servicecenter/service.do">고객센터</a>
 			</li>
         </ul>
         <div class="logo_top_wrap">
