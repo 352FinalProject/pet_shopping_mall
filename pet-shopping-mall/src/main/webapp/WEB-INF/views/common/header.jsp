@@ -63,7 +63,7 @@
 		        </div>
 		        <!-- 장바구니 -->
 		        <div class="cart_top_btn">
-		       	 	<a href="<%= request.getContextPath() %>/member/logout.do">
+		       	 	<a href="<%= request.getContextPath() %>/cart/shoppingCart.do">
 		        		<img src="${pageContext.request.contextPath}/resources/images/home/cart.png" id="center-image" alt="장바구니"/>
 		       		</a>
 		       	</div>
