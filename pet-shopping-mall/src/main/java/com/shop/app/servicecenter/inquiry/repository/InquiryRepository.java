@@ -17,12 +17,12 @@ public interface InquiryRepository {
 	@Select("select id, member_id, title, content, reg_date from question")
 	List<Question> findQuestionAll(Question question);
 
+	// 1:1 목록 상세 조회 (예라)
 	@Select("select * from question where id = #{id}")
 	Question findQuestionById(Question question);
 
+	// 1:1 목록 답변 조회 (예라)
 	@Select("select * from answer where question_id = #{questionId}")
 	Answer findQuestionAnswersById(Answer answer);
-
-	// 1:1 목록 조회 답변 (예라)
 
 }
