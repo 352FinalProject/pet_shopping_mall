@@ -1,0 +1,21 @@
+package com.shop.app.servicecenter.inquiry.service;
+
+import java.util.List;
+
+import com.shop.app.servicecenter.inquiry.entity.Answer;
+import com.shop.app.servicecenter.inquiry.entity.Question;
+import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
+
+public interface InquiryService {
+
+	// 1:1 목록 조회 질문 (예라)
+	List<Question> findQuestionAll(Question question);
+
+
+	// 1:1 목록 답변 조회 (예라)
+
+	Question findQuestionById(Question question);
+
+	Answer findQuestionAnswersById(Answer answer);
+	
+}

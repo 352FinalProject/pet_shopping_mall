@@ -15,7 +15,7 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
+    url: jdbc:oracle:thin:@192.168.1.100:1521:xe
     username: pet
     password: pet
 
@@ -24,3 +24,10 @@ logging:
   level:
     root: info
     '[com.sh.app]': debug
+    
+# mybatis
+mybatis:
+  configuration:
+    jdbc-type-for-null: NULL
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
