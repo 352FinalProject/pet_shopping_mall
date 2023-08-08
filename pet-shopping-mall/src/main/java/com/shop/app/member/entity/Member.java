@@ -1,17 +1,17 @@
 package com.shop.app.member.entity;
 
-import java.util.Date;
-
+import java.sql.Date;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class Member {
 	private int id;
 	private String memberId;
@@ -21,7 +21,7 @@ public class Member {
 	private String email;
 	private Date enrollDate;
 	private String address;
-	private Date birthday;
+	private LocalDate birthday;
 	private MemberRole memberRole;
 	private int point;
 	private Subscribe subscribe;
