@@ -81,6 +81,14 @@
 				<li><a href="#">1:1문의</a></li>
 			</ul>
 		</div>
+		<div class="review-div">
+			<ul class="review-product-utility">
+				<li><a href="#">별점</a></li>
+				<li class="review-title"><a href="#">제목</a></li>
+				<li class="review-title-name"><a href="#">작성자</a></li>
+				<li class="review-regdate"><a href="#">등록일</a></li>
+			</ul>
+		</div>
 		<div id="Accordion_wrap">
 			<div class="que">
 				<div class="score_star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점"><span class="star_test">5.0</span></div>

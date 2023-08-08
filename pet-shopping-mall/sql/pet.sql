@@ -7,6 +7,7 @@ create user pet
 identified by pet
 default tablespace users;
 
+
 grant connect, resource to pet;
 
 grant create session to pet;
@@ -72,7 +73,6 @@ select * from answer;
 --drop sequence seq_question_id;
 
 ------------------ member insert ---------------------------
-
 insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, field)
 values (seq_member_id.nextval, 'member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 석촌동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
 
@@ -82,7 +82,7 @@ values (seq_member_id.nextval, 'admin', '1234', '관리자', '01011112222', 'adm
 ------------------ qna insert ---------------------------
 insert into question (id, title, member_id, content, reg_date)
 values (seq_question_id.nextval, '우동친이 머에요?', 'member1', '우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요????', to_date('18/02/14', 'rr/mm/dd'));
------------------- answer insert ---------------------------
 
+------------------ answer insert ---------------------------
 insert into answer (id, member_id, question_id, content, reg_date)
-values (seq_member_id.nextval, 1, 1, 'This is an answer to the sample question.', sysdate);
+values (seq_member_id.nextval, 1, 1, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
