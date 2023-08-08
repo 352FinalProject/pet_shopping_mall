@@ -1,0 +1,146 @@
+@charset "UTF-8";
+
+/* 문의 내역*/
+
+.service-util-div {
+	width: 1200px;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #e7e7e7;
+	height: 50px;
+	margin-top: 100px;
+	font-size: 15px;
+	padding: 13px;
+}
+
+.service-product-utility {
+	display: flex;
+	gap: 240px;
+	justify-content: center
+}
+
+#accordion_wrap {
+	width: 1200px;
+}
+
+.accordion_wrap li {
+	gap: 150px;
+}
+
+/* 문의 내역 메뉴바 */
+.service-product-utility {
+	justify-content: flex-start
+}
+
+/* 검색 버튼 */
+.service-search input{
+	height: 30px;
+ 	border: 1px solid lightgray;
+ 	background-color: white;
+ 	padding: 5px;
+ 	margin-top: 50px;
+}
+
+/* 검색 버튼 */
+
+
+.service-search img {
+	width: 28px;
+	margin-bottom: -8px;
+}
+
+/* 검색 폼 */
+
+#service-search {
+	width: 400px;
+	margin-left:5px;
+}
+
+/* 문의 내역 번호 */
+.qna-list-no {
+	margin-left: 100px;
+}
+
+/* 문의 내역 상태 */
+.qna-list-status {
+	margin-left: -90px;
+}
+
+/* 문의 내역 제목 */
+.qna-list-title {
+	margin-left: 80px;
+}
+
+/* 문의 내역 등록일 */
+.qna-list-date {
+	margin-left: 120px;
+}
+
+/* 문의 내역 번호-본문 */
+.qna-no {
+	margin-left: -5px;
+}
+
+/* 문의 내역 상태-본문 */
+.qna-status {
+	margin-left: -100px;
+}
+
+/* 문의 내역 제목-본문 */
+.qna-title {
+	margin-left: -15px;
+}
+
+/* 문의 내역 제목-등록일 */
+.qna-date {
+	margin-left: 65px;
+}
+
+/* 1:1 문의 답변 */
+
+.anw-desc {
+	margin-top: 15px;
+}
+.anw-desc span {
+	font-size: 18px;
+	margin-right: 8px;
+	color: #ebdb4b;
+}
+
+.qna-desc span {
+	font-size: 18px;
+	margin-right: 8px;
+	color: #58ACFA;
+}
+
+.btn-add {
+	position: absolute;
+	margin-left: 507px;
+	margin-top: 30px;
+	background: #fff;
+	border: 1px solid lightgray;
+	padding: 8px;
+	cursor: pointer;
+}
+
+
+/* 1:1 문의 작성 */
+
+.qna-create {
+	margin-top: 30px;
+}
+
+.qna-create input[type="text"], .qna-create input[type="file"] {
+	width: 400px;
+	height: 30px;
+	margin:	10px;
+}
+
+.qna-create input[type="tel"] {
+	width: 114px;
+	height: 30px;
+	margin:	10px;
+}
+
+.qna-create th {
+	text-align: left;
+}
