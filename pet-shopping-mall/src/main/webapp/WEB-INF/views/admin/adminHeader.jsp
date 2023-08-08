@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 <body>
 
 	<header>
@@ -47,10 +48,10 @@
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
 						class="font">구독자관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminProductList.do"
 						class="font">상품관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminOrderList.do"
 						class="font">주문관리</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"

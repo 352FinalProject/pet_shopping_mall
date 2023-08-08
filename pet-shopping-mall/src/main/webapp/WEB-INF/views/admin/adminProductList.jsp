@@ -8,32 +8,32 @@
 <table class="table table-striped table-hover">
 	<thead class="table-dark">
 		<tr>
-			<th>회원번호</th>
-			<th>회원아이디</th>
-			<th>이름</th>
-			<th>전화번호</th>
-			<th>이메일</th>
-			<th>가입일</th>
-			<th>주소</th>
-			<th>생일</th>
+			<th>번호</th>
+			<th>이미지</th>
+			<th>상품코드</th>
+			<th>상품명</th>
+			<th>시중가</th>
+			<th>공급가</th>
+			<th>판매가</th>
 			<th>포인트</th>
-			<th>구독유무</th>
+			<th>재고</th>
+			<th>순위</th>
 			<th>관리</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach begin="0" end="20" step="1" varStatus="status">
 			<tr>
-				<td>member.id</td>
-				<td>member.memberId</td>
-				<td>member.name</td>
-				<td>member.phone</td>
-				<td>member.email</td>
-				<td>member.createAt</td>
-				<td>member.address</td>
-				<td>member.birthday</td>
-				<td>member.point</td>
-				<td>member.subscribe</td>
+				<th>번호</th>
+				<th><a href="#" />이미지</th>
+				<th><a href="#" />상품코드</th>
+				<th><a href="#" />상품명</th>
+				<th>시중가</th>
+				<th>공급가</th>
+				<th>판매가</th>
+				<th>포인트</th>
+				<th>재고</th>
+				<th>순위</th>
 				<td><button onclick="">수정</button> <button onclick="">삭제</button></td>
 			</tr>
 		</c:forEach>

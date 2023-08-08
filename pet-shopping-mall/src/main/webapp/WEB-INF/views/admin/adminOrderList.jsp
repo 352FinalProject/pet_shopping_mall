@@ -5,40 +5,46 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
+
 <table class="table table-striped table-hover">
 	<thead class="table-dark">
 		<tr>
-			<th>회원번호</th>
-			<th>회원아이디</th>
-			<th>이름</th>
-			<th>전화번호</th>
-			<th>이메일</th>
-			<th>가입일</th>
-			<th>주소</th>
-			<th>생일</th>
-			<th>포인트</th>
-			<th>구독유무</th>
-			<th>관리</th>
+			<th>번호</th>
+			<th>주문일시</th>
+			<th>주문번호</th>
+			<th>이미지</th>
+			<th>주문상품</th>
+			<th>수량</th>
+			<th>상품금액</th>
+			<th>배송비</th>
+			<th>주문상태</th>
+			<th>주문자</th>
+			<th>총주문액</th>
+			<th>결제방법</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach begin="0" end="20" step="1" varStatus="status">
 			<tr>
-				<td>member.id</td>
-				<td>member.memberId</td>
-				<td>member.name</td>
-				<td>member.phone</td>
-				<td>member.email</td>
-				<td>member.createAt</td>
-				<td>member.address</td>
-				<td>member.birthday</td>
-				<td>member.point</td>
-				<td>member.subscribe</td>
-				<td><button onclick="">수정</button> <button onclick="">삭제</button></td>
+				<th>${status.count}</th>
+				<th>주문일시</th>
+				<th><a href="#" />주문번호</th>
+				<th><a href="#" />이미지</th>
+				<th><a href="#" />주문상품</th>
+				<th>수량</th>
+				<th>상품금액</th>
+				<th>배송비</th>
+				<th>주문상태</th>
+				<th>주문자</th>
+				<th>총주문액</th>
+				<th>결제방법</th>
 			</tr>
 		</c:forEach>
+			
 	</tbody>
 </table>
+
+
 
 
 

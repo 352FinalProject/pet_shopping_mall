@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/* 문의 내역 (예라) */
+/* 문의 내역*/
 
 .service-util-div {
 	width: 1200px;
@@ -127,7 +127,6 @@
 
 .qna-create {
 	margin-top: 30px;
-	text-align: center;
 }
 
 .qna-create input[type="text"], .qna-create input[type="file"] {
@@ -144,22 +143,4 @@
 
 .qna-create th {
 	text-align: left;
-}
-
-.qna-create input[name="content"] {
-	width: 483px;
-	height: 270px;
-	border: 1px solid #c8c8c8;
-	margin: 0 auto;
-	display: block;
-}
-
-.input-container {
-  border: 1px solid #c8c8c8;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.content-container {
-  text-align: center;
 }
