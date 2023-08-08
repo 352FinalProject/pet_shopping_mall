@@ -32,7 +32,7 @@
 }
 
 /* 검색 버튼 */
-.common-div input{
+.service-search input{
 	height: 30px;
  	border: 1px solid lightgray;
  	background-color: white;
@@ -115,9 +115,32 @@
 .btn-add {
 	position: absolute;
 	margin-left: 507px;
+	margin-top: 30px;
 	background: #fff;
 	border: 1px solid lightgray;
-	padding: 7px;
+	padding: 8px;
 	cursor: pointer;
 }
 
+
+/* 1:1 문의 작성 */
+
+.qna-create {
+	margin-top: 30px;
+}
+
+.qna-create input[type="text"], .qna-create input[type="file"] {
+	width: 400px;
+	height: 30px;
+	margin:	10px;
+}
+
+.qna-create input[type="tel"] {
+	width: 114px;
+	height: 30px;
+	margin:	10px;
+}
+
+.qna-create th {
+	text-align: left;
+}
