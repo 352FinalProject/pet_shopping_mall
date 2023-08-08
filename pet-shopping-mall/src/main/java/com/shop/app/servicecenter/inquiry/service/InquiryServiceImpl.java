@@ -21,12 +21,14 @@ public class InquiryServiceImpl implements InquiryService {
 	public List<Question> findQuestionAll(Question question) {
 		return inquiryRepository.findQuestionAll(question);
 	}
-
+	
+	// 1:1 목록 상세 조회 (예라)
 	@Override
 	public Question findQuestionById(Question question) {
 		return inquiryRepository.findQuestionById(question);
 	}
-
+	
+	// 1:1 목록 답변 조회 (예라)
 	@Override
 	public Answer findQuestionAnswersById(Answer answer) {
 		return inquiryRepository.findQuestionAnswersById(answer);

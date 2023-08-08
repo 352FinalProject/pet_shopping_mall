@@ -11,11 +11,10 @@ public interface InquiryService {
 	// 1:1 목록 조회 질문 (예라)
 	List<Question> findQuestionAll(Question question);
 
-
-	// 1:1 목록 답변 조회 (예라)
-
+	// 1:1 목록 상세 조회 (예라)
 	Question findQuestionById(Question question);
-
+	
+	// 1:1 목록 답변 조회 (예라)
 	Answer findQuestionAnswersById(Answer answer);
 	
 }

@@ -38,17 +38,24 @@ public class InquiryController {
 		model.addAttribute("questions", questions);
 	}
 	
+	// 1:1 목록 상세 조회 + 답변 (예라)
 	@GetMapping("/inquiry/questionDetail.do")
 	public void questionDetail(@RequestParam int questionId, Model model) {
 	    
-	    Question question = new Question();
-	    question.setId(questionId);
+		// 1:1 상세 조회
+		Question question = Question
+				.builder()
+				.id(questionId)
+				.build();
 
 	    Question questions = inquiryService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
 	    
-	    Answer answer = new Answer();
-	    answer.setQuestionId(questionId);
+	    // 1:1 답변 조회
+	    Answer answer = Answer
+	    		.builder()
+	    		.questionId(questionId)
+	    		.build();
 
 	    Answer answers = inquiryService.findQuestionAnswersById(answer);
 	    model.addAttribute("answers", answers);
