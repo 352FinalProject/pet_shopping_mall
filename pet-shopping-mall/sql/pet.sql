@@ -7,6 +7,7 @@ create user pet
 identified by pet
 default tablespace users;
 
+
 grant connect, resource to pet;
 
 grant create session to pet;
@@ -85,4 +86,3 @@ values (seq_question_id.nextval, '우동친이 머에요?', 'member1', '우동�
 ------------------ answer insert ---------------------------
 insert into answer (id, member_id, question_id, content, reg_date)
 values (seq_member_id.nextval, 1, 1, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
-

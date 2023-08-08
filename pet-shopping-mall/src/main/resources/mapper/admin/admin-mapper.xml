@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.app.admin.repository.AdminRepository">
+	<!-- <select id="findAll" resultType="boardDetails">
+	select  
+	    b.*,
+	    (select count(*) from attachment where board_id = b.id) attach_count
+	from 
+	    board b
+	order by
+    	id desc
+	</select>
+	
+	<select id="findById" resultMap="boardDetailsMap">
+	select 
+	    b.*,
+	    a.id attach_id,
+	    a.board_id,
+	    a.original_filename,
+	    a.renamed_filename,
+	    a.created_at attach_created_at
+	from
+	    board b
+	       left join attachment a
+	            on b.id = a.board_id
+	where
+	    b.id = #{id}
+	
+	</select>
+	
+		1:n 관계의 테이블을 collection 태그를 통해 처리
+		1:1 관계의 테이블을 association 태그를 통해 처리
+		
+		id/result태그를 생략할 수 없다.
+	
+	<resultMap type="boardDetails" id="boardDetailsMap">
+		<id column="id" property="id"/>
+		<result column="title" property="title"/>
+		<result column="member_id" property="memberId"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<collection property="attachments" ofType="attachment">
+			<id column="attach_id" property="id"/>
+			<result column="board_id" property="boardId"/>
+			<result column="original_filename" property="originalFilename"/>
+			<result column="renamed_filename" property="renamedFilename"/>
+			<result column="attach_created_at" property="createdAt"/>
+		</collection>
+	</resultMap> -->
+</mapper>

@@ -16,8 +16,8 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
-    username: spring
-    password: spring
+    username: pet
+    password: pet
 
 # logback
 logging:
