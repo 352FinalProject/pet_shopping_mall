@@ -27,4 +27,8 @@ public class MemberController {
 	
 	@GetMapping("/petProfile.do")
 	public void petProfile() {}
+	
+	@GetMapping("/reviewWrite.do")
+	public void reviewWrite() {}
+	
 }
