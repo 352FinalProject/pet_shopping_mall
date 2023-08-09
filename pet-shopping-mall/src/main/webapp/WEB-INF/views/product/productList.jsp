@@ -54,9 +54,8 @@ ul.nav {
 	color: blue;
 }
 .product-gallery {
-	max-width: 1360px;
+	max-width: 1200px;
 	margin: 0 auto;
-	padding: 0px 5%;
 }
 .gallery {
 	display: flex;

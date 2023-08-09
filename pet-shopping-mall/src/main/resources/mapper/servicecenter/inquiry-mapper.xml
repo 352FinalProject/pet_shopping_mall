@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.app.servicecenter.inquiry.repository.InquiryRepository">
+
+    <select id="findQuestionAll" resultMap="questionResultMap">
+        select id, member_id, title, content, reg_date from question
+    </select>
+    
+    <resultMap type="Question" id="questionResultMap">
+        <id property="id" column="id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="regDate" column="reg_date"/>
+    </resultMap>
+</mapper>

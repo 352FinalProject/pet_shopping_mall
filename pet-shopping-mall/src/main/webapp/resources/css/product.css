@@ -1,16 +1,5 @@
 @charset "UTF-8";
 
-.common-section {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin: 100px;
-}
-
-.common-container {
-	max-width: 1200px;
-}
 
 .product-div {
 	display: flex;
@@ -36,6 +25,15 @@
 	border-top: 1px solid #e7e7e7;
 	height: 50px;
 	margin-top: 100px;
+	font-size: 15px;
+	padding: 13px;
+}
+
+.review-div {
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #e7e7e7;
+	height: 50px;
+	margin-top: 20px;
 	font-size: 15px;
 	padding: 13px;
 }
@@ -71,11 +69,34 @@
 	margin-right: 5px;
 }
 
+/* 하단 리뷰 */
+
 .product-utility {
 	display: flex;
 	gap: 200px;
 	justify-content: center
 }
+
+.review-product-utility{
+	display: flex;
+	gap: 200px;
+	justify-content: flex-start;
+	margin-left: 80px;
+	
+}
+
+.review-title{
+	margin-left: 150px;
+}
+
+.review-title-name{
+	margin-left: 150px;
+}
+
+.review-regdate {
+	margin-left: -20px;
+}
+
 
 select[name=product-option] {
 	width: 100%;
