@@ -2,6 +2,8 @@ package com.shop.app.servicecenter.inquiry.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
@@ -63,7 +66,14 @@ public class InquiryController {
 	
 	// 1:1 문의 작성 (예라)
 	@GetMapping("/inquiry/questionCreate.do")
-	public void questionCreate() {
+	public void questionCreate(@Valid QuestionCreateDto _question, Model model) {
+		
+		QuestionDetails question = QuestionDetails.builder()
+				.title(_question.getTitle())
+				.content(_question.getContent())
+				.build();
+		
+		int result = inquiryService.insertQuestion(question);
 		
 	}
 	

@@ -30,7 +30,7 @@
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><textarea name="qna-content" id="content" readonly style="width:400px; height: 170px; resize: none;">
+							<td><textarea name="qna-content" id="content" rows="10" cols="59" readonly style=" resize: none;">
 								${questions.content}</textarea></td>
 						</tr>
 					</table>
@@ -45,7 +45,7 @@
 						<th>A</th>
 						<td><textarea name="content" id="content" readonly
 								style="height: 160px; resize: none;">${answers.content}</textarea></td>
-						<td>
+						<td class="anw-regdate">
 							<br/>
 							<fmt:parseDate value="${answers.regDate}" pattern="yyyy-MM-dd'T'HH:mm" var="regDate" /> 답변 등록일
 							<fmt:formatDate value="${regDate}" pattern="yy/MM/dd" />
@@ -53,6 +53,12 @@
 					</tr>
 				</table>
 			</div>
+		</div>
+		<div class="qna-create-btn">
+			<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionList.do"
+				class="form-inline">
+				<button class="qna-btn-reset" type="submit">목록</button>
+			</form>
 		</div>
 	</div>
 </section>

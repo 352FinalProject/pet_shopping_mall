@@ -16,5 +16,8 @@ public interface InquiryService {
 	
 	// 1:1 목록 답변 조회 (예라)
 	Answer findQuestionAnswersById(Answer answer);
+
+	// 1:1 문의 작성 (예라)
+	int insertQuestion(QuestionDetails question);
 	
 }
