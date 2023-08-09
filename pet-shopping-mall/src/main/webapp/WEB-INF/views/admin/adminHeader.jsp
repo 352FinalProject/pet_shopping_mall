@@ -45,7 +45,7 @@
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
 						class="font">회원관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminSubscribeList.do"
 						class="font">구독자관리</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/adminProductList.do"

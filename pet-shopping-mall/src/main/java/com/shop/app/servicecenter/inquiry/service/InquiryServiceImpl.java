@@ -36,14 +36,8 @@ public class InquiryServiceImpl implements InquiryService {
 
 	// 1:1 문의 작성 (예라)
 	@Override
-	public int insertQuestion(QuestionDetails question) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertQuestion(Question question) {
+		return inquiryRepository.insertQuestion(question);
 	}
-
-
-
-	// 1:1 목록 상세 조회 (예라)
-
 
 }

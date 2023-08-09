@@ -18,6 +18,6 @@ public interface InquiryService {
 	Answer findQuestionAnswersById(Answer answer);
 
 	// 1:1 문의 작성 (예라)
-	int insertQuestion(QuestionDetails question);
+	int insertQuestion(Question question);
 	
 }
