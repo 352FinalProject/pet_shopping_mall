@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <%-- 1:1 문의 내역 (예라) --%>
-<section class="common-section" id="#">
+<section class="common-section" id="common-section-List">
 	<div class="common-title">1:1 문의 내역</div>
 	<div class="common-container">
 		<div class="common-div">

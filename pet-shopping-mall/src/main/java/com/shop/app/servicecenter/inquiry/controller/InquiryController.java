@@ -64,17 +64,19 @@ public class InquiryController {
 	    model.addAttribute("answers", answers);
 	}
 	
-	// 1:1 문의 작성 (예라)
+	// 1:1 문의 작성 연결 (예라)
 	@GetMapping("/inquiry/questionCreate.do")
-	public void questionCreate(@Valid QuestionCreateDto _question, Model model) {
+	public void questionCreate() {}
+	
+	// 1:1 문의 작성 (예라)
+	@PostMapping("/inquiry/questionCreate.do")
+	public String CreateQuestion(QuestionCreateDto _question) {
 		
-		QuestionDetails question = QuestionDetails.builder()
-				.title(_question.getTitle())
-				.content(_question.getContent())
-				.build();
+		log.debug("_question = {}", _question);
+		Question question = _question.toQuestion();
+		log.debug("question = {}", question);
 		
 		int result = inquiryService.insertQuestion(question);
-		
+		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
-	
 }

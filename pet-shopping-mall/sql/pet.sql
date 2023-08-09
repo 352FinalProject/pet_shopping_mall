@@ -143,4 +143,4 @@ values (seq_member_id.nextval, 'member1', 1000, '적립', 500, to_date('2023-08-
 insert into point (id, member_id, current_point, point_type, amount, point_date)
 values (seq_member_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
-delete from answer where id = '8';
+delete from question where id = '19';

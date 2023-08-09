@@ -16,6 +16,7 @@ public class Question {
 	
 	private int id;
 	private String memberId;
+	private int productId;
 	private String title;
 	private String content;
 	private LocalDateTime regDate;
