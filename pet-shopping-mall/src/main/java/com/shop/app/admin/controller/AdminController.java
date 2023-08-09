@@ -36,6 +36,11 @@ public class AdminController {
 //		model.addAttribute("members", members);
 	}
 	
+	@GetMapping("/adminSubscribeList.do")
+	public void adminMemberList() {
+		
+	}
+	
 	@GetMapping("/adminProductList.do")
 	public void adminProductList() {
 		
