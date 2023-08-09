@@ -1851,9 +1851,6 @@ pre code {
 	border-color: #95999c
 }
 
-.table-hover .table-dark:hover {
-	background-color: #b9bbbe
-}
 
 .table-hover .table-dark:hover>td, .table-hover .table-dark:hover>th {
 	background-color: #b9bbbe
