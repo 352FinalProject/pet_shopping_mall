@@ -10,11 +10,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class CartItemDetails extends CartItem {
 	private Member member;
 	private Map<Product, Integer> cartList; // 제품 객체와 구매 수량을 세팅
