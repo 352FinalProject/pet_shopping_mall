@@ -64,23 +64,24 @@
 
 /* 돌아가기 버튼 */
 .resetAndSubmit input[type="reset"] {
-	background-color: lightgray;
+	background-color: #c8c8c8;
 	margin-right: 10px;
 	width: 120px;
 	height: 40px;
 	border-radius: 20px;
 	color: white;
-	border: 1px solid lightgray;
+	border: 1px solid #e7e7e7;
 	margin-top: 30px;
 }
 
 /* 가입하기 버튼 */
 .resetAndSubmit input[type="submit"] {
-	background-color: skyblue;
+	background-color: #5886d3;
 	width: 120px;
 	height: 40px;
 	border-radius: 20px;
-	border: 1px solid lightgray;
+	border: 1px solid #e7e7e7;
+	color: white;
 }
 </style>
 <!-- 회원가입 (혜령) -->
