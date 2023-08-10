@@ -57,8 +57,9 @@
 		<div class="qna-create-btn">
 			<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionList.do"
 				class="form-inline">
-				<button class="qna-btn-reset" type="submit">목록</button>
+			        <button class="qna-btn-reset" type="submit">목록</button>
 			</form>
+			        <button class="qna-btn-reset" type="submit">삭제하기</button>
 		</div>
 	</div>
 </section>

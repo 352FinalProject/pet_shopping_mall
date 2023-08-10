@@ -124,10 +124,10 @@ values (seq_question_id.nextval, '배가 고파요', 'member1', 4, '배가 고�
 
 ------------------ answer insert ---------------------------
 insert into answer (id, admin_name, question_id, content, reg_date)
-values (seq_member_id.nextval, '관리자', 3, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
+values (seq_member_id.nextval, '관리자', 1, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
 
 insert into answer (id, admin_name, question_id, content, reg_date)
-values (seq_member_id.nextval, '관리자', 4, '배고프면 밥을 드세요', sysdate);
+values (seq_member_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
 
 ------------------ product insert ---------------------------
 insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
