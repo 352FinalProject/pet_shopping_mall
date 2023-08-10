@@ -59,9 +59,22 @@
 				class="form-inline">
 			        <button class="qna-btn-reset" type="submit">목록</button>
 			</form>
-			        <button class="qna-btn-reset" type="submit">삭제하기</button>
+	  			<button type="button" onclick="QuestionDelete();" class="qna-btn-reset">삭제하기</button>
 		</div>
 	</div>
 </section>
+<form 
+	name="QuestionDeleteFrm" 
+	action="${pageContext.request.contextPath}/servicecenter/inquiry/DeleteQuestion.do"
+	method="POST">
+	<input type="hidden" name="id" value="${questions.id}"/>
+</form>
+<script>
+const QuestionDelete = () => {
+	if(confirm("정말 삭제하시겠습니까?")) {
+		document.QuestionDeleteFrm.submit();
+	}
+};
+</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -39,5 +39,11 @@ public class InquiryServiceImpl implements InquiryService {
 	public int insertQuestion(Question question) {
 		return inquiryRepository.insertQuestion(question);
 	}
+	
+	// 1:1 문의 삭제 (예라)
+	@Override
+	public int deleteQuestion(int id) {
+		return inquiryRepository.deleteQuestion(id);
+	}
 
 }

@@ -47,16 +47,13 @@
 			            </table>
 			        </div>
 			    </div>
-			    </form>
 			    <div class="qna-create-btn">
-				    <form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionList.do"
-						class="form-inline">
-				        <button class="qna-btn-reset" type="submit">목록</button>
-				    </form>
-			        	<button class="qna-btn-create" type="submit">작성하기</button>
+			        <button class="qna-btn-reset" type="reset">초기화</button>
+			        <button class="qna-btn-create" type="submit">작성하기</button>
 			    </div>
 		    </div>
 		</div>
+	</form>
 </section>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

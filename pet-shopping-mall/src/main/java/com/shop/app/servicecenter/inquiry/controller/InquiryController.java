@@ -72,11 +72,18 @@ public class InquiryController {
 	@PostMapping("/inquiry/questionCreate.do")
 	public String CreateQuestion(QuestionCreateDto _question) {
 		
-		log.debug("_question = {}", _question);
 		Question question = _question.toQuestion();
-		log.debug("question = {}", question);
-		
 		int result = inquiryService.insertQuestion(question);
+		
+		return "redirect:/servicecenter/inquiry/questionList.do";
+	}
+	
+	// 1:1 문의 삭제 (예라)
+	@PostMapping("/inquiry/DeleteQuestion.do")
+	public String DeleteQuestion(@RequestParam int id) {
+		
+		int result = inquiryService.deleteQuestion(id);
+		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
 }

@@ -2,13 +2,13 @@ package com.shop.app.servicecenter.inquiry.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
-import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 
 @Mapper
 public interface InquiryRepository {
@@ -29,5 +29,9 @@ public interface InquiryRepository {
 	// 1:1 목록 작성 (예라)
 	@Insert("insert into question values(seq_question_id.nextval, #{memberId}, #{productId}, #{title}, #{content}, default)")
 	int insertQuestion(Question question);
+
+	// 1:1 목록 삭제 (예라)
+	@Delete("delete from question where id = #{id}")
+	int deleteQuestion(int id);
 
 }

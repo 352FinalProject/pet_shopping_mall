@@ -19,5 +19,8 @@ public interface InquiryService {
 
 	// 1:1 문의 작성 (예라)
 	int insertQuestion(Question question);
+
+	// 1:1 문의 삭제 (예라)
+	int deleteQuestion(int id);
 	
 }
