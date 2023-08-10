@@ -1,120 +1,63 @@
 @charset "UTF-8";
 
-/* 문의 내역*/
-
+/* 문의 내역 (예라) */
 .service-util-div {
 	width: 1200px;
-	border-bottom: 1px solid #e7e7e7;
-	border-top: 1px solid #e7e7e7;
 	height: 50px;
-	margin-top: 100px;
+	margin-top: 70px;
 	font-size: 15px;
 	padding: 13px;
 }
 
+#common-section-List {
+	margin-bottom: 300px;
+}
+
 .service-product-utility {
-	display: flex;
-	gap: 240px;
-	justify-content: center
+	width: 100%;
+	margin-bottom: 200px;
 }
 
-#accordion_wrap {
-	width: 1200px;
+.service-product-utility th, .service-product-utility td {
+	text-align: left; 
+	padding: 12px;
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
 }
 
-.accordion_wrap li {
-	gap: 150px;
+.service-product-utility th {
+	border-bottom: 2px solid #e7e7e7;
 }
 
-/* 문의 내역 메뉴바 */
-.service-product-utility {
-	justify-content: flex-start
+.service-product-utility td {
+	cursor: pointer;
 }
 
 /* 검색 버튼 */
-.service-search input{
+.service-search input {
 	height: 30px;
- 	border: 1px solid lightgray;
- 	background-color: white;
- 	padding: 5px;
- 	margin-top: 50px;
+	border: 1px solid lightgray;
+	background-color: white;
+	padding: 5px;
+	margin-top: 50px;
 }
 
 /* 검색 버튼 */
-
-
 .service-search img {
 	width: 28px;
 	margin-bottom: -8px;
 }
 
 /* 검색 폼 */
-
 #service-search {
 	width: 400px;
-	margin-left:5px;
+	margin-left: 5px;
 }
 
-/* 문의 내역 번호 */
-.qna-list-no {
-	margin-left: 100px;
-}
-
-/* 문의 내역 상태 */
-.qna-list-status {
-	margin-left: -90px;
-}
-
-/* 문의 내역 제목 */
-.qna-list-title {
-	margin-left: 80px;
-}
-
-/* 문의 내역 등록일 */
-.qna-list-date {
-	margin-left: 120px;
-}
-
-/* 문의 내역 번호-본문 */
-.qna-no {
-	margin-left: -5px;
-}
-
-/* 문의 내역 상태-본문 */
-.qna-status {
-	margin-left: -100px;
-}
-
-/* 문의 내역 제목-본문 */
-.qna-title {
-	margin-left: -15px;
-}
-
-/* 문의 내역 제목-등록일 */
-.qna-date {
-	margin-left: 65px;
-}
-
-/* 1:1 문의 답변 */
-
-.anw-desc {
-	margin-top: 15px;
-}
-.anw-desc span {
-	font-size: 18px;
-	margin-right: 8px;
-	color: #ebdb4b;
-}
-
-.qna-desc span {
-	font-size: 18px;
-	margin-right: 8px;
-	color: #58ACFA;
-}
 
 .btn-add {
 	position: absolute;
-	margin-left: 507px;
+	margin-left: 493px;
 	margin-top: 30px;
 	background: #fff;
 	border: 1px solid lightgray;
@@ -124,23 +67,157 @@
 
 
 /* 1:1 문의 작성 */
-
 .qna-create {
 	margin-top: 30px;
+	text-align: center;
 }
 
-.qna-create input[type="text"], .qna-create input[type="file"] {
-	width: 400px;
+/**/
+.anw-create {
+	margin-top: 30px;
+	text-align: center;
+	margin-left: -10px;
+}
+
+/**/
+.anw-create [name="content"] {
+	width: 700px;
+	border: 1px solid #c8c8c8;
 	height: 30px;
-	margin:	10px;
+	margin: 10px;
+	padding: 10px;
 }
 
+/**/
+.anw-create th {
+	color: #ebdb4b;
+}
+
+/*1:1 상세 내역 조회 답변 등록일*/
+.anw-create td {
+	display: flex;
+	height: 30px;
+	justify-content: flex-start;
+	align-items: flex-end;
+	font-size: 14px;
+}
+
+/*1:1 상세 내역 조회 아이디 폼, 파일 폼*/
+.qna-create input[type="text"], .qna-create input[type="file"] {
+	width: 450px;
+	border: 1px solid #c8c8c8;
+	height: 30px;
+	margin: 10px;
+	padding: 9px;
+}
+
+.anw-regdate {
+	margin-left: 10px;
+	color: #828282;
+}
+
+/*1:1 상세 내역 조회 내용*/
+
+/**/
 .qna-create input[type="tel"] {
+	border: 1px solid #c8c8c8;
 	width: 114px;
 	height: 30px;
-	margin:	10px;
+	margin: 10px;
+}
+
+/**/
+.qna-create input[name="content"] {
+	height: 210px;
 }
 
 .qna-create th {
 	text-align: left;
+	font-size: 15px;
+	vertical-align: middle;
+}
+
+.qna-create textarea[name="content"] {
+	width: 700px;
+	height: 270px;
+	border: 1px solid #c8c8c8;
+	display: block;
+	resize: none;
+}
+
+.input-container {
+	border: 1px solid #c8c8c8;
+	padding: 20px;
+	margin-bottom: 20px;
+	width: 700px;
+    text-align: center; /* 가운데 정렬 */
+}
+
+.input-container table {
+    margin: 0 auto; /* 테이블을 가로 가운데 정렬 */
+}
+
+.content-container {
+	display: flex;
+	justify-content: center;
+	margin-top: -30px;
+}
+
+/* 파일첨부 버튼 */
+.btn-upload {
+	font-size: 14px;
+	width: 90px;
+	height: 30px;
+	background: #fff;
+	border: 1px solid #c8c8c8;
+	font-weight: 500;
+	cursor: pointer;
+	display: flex;
+	margin-left: 10px;
+	align-items: center;
+	justify-content: center; &: hover { background : #58ACFA;
+	color: #fff;
+}
+
+}
+#file {
+	display: none;
+}
+
+.qna-create textarea {
+	padding: 10px;
+	border: 1px solid #c8c8c8;
+	
+}
+
+/* 1:1 작성 버튼 2개*/
+.qna-create-btn{
+	display: flex;
+	justify-content: center;
+	gap: 15px;	
+	margin-top: 30px;
+}
+
+/* 1:1 작성 목록 버튼*/
+.qna-btn-reset {
+	width: 150px;
+	height: 50px;
+	border-radius: 5px;
+	border: none;
+	font-size: 15px;
+	color: #fff;
+	background: #c8c8c8;
+	cursor: pointer;
+}
+
+/* 1:1 작성 작성하기 버튼*/
+.qna-btn-create {
+	width: 150px;
+	height: 50px;
+	border-radius: 5px;
+	border: none;
+	font-size: 15px;
+	color: #fff;
+	background: #58ACFA;
+	cursor: pointer;
 }

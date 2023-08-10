@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<!-- CSS link -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
 <style>
 section.product-board {
 	display: flex;
@@ -57,9 +54,8 @@ ul.nav {
 	color: blue;
 }
 .product-gallery {
-	max-width: 1360px;
+	max-width: 1200px;
 	margin: 0 auto;
-	padding: 0px 5%;
 }
 .gallery {
 	display: flex;
