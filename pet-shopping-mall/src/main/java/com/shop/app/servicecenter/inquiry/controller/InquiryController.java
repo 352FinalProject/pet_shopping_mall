@@ -1,5 +1,8 @@
 package com.shop.app.servicecenter.inquiry.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.app.common.HelloSpringUtils;
+import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.IsDeleted;
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionUpdateDto;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
+import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.servicecenter.inquiry.service.InquiryService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -74,9 +83,44 @@ public class InquiryController {
 	
 	// 1:1 문의 작성 (예라)
 	@PostMapping("/inquiry/questionCreate.do")
-	public String CreateQuestion(QuestionCreateDto _question) {
+	public String CreateQuestion(QuestionCreateDto _question, 
+			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles) 
+					throws IllegalStateException, IOException {
 		
-		Question questions = _question.toQuestion();
+		// 1. 파일 저장
+		List<Attachment> attachments = new ArrayList<>();
+		for(MultipartFile upFile : upFiles) {			
+		    if(!upFile.isEmpty()) {
+		        String originalFilename = upFile.getOriginalFilename();
+		        String renamedFilename = HelloSpringUtils.getRenameFilename(originalFilename); 
+		        File destFile = new File(renamedFilename); 
+		        upFile.transferTo(destFile);	
+
+		        int imageType = 1; 
+
+		        Attachment attach = 
+		            Attachment.builder()
+		            .originalFilename(originalFilename)
+		            .renamedFilename(renamedFilename)
+		            .imageType(imageType)
+		            .thumbnail(Thumbnail.N) 
+		            .fileSize(upFile.getSize())
+		            .isDeleted(IsDeleted.N)
+		            .build();
+
+		        log.debug("attach = {}", attach);
+		        attachments.add(attach);
+		    }
+		}	
+		// 2. db 저장
+		QuestionDetails questions = QuestionDetails.builder()
+				.memberId(_question.getMemberId())
+				.productId(_question.getProductId())
+				.title(_question.getTitle())
+				.content(_question.getContent())
+				.attachments(attachments)
+				.build();
+		
 		int result = inquiryService.insertQuestion(questions);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";

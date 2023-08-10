@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.shop.app.common.entity.Attachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 
@@ -30,6 +31,10 @@ public interface InquiryRepository {
 	// 1:1 목록 작성 (예라)
 	@Insert("insert into question values(seq_question_id.nextval, #{memberId}, #{productId}, #{title}, #{content}, default)")
 	int insertQuestion(Question question);
+	
+	// 1:1 문의 파일 첨부 (예라)
+	@Insert("insert into image_attachment values(seq_image_attachment_id.nextval, #{imageType}, #{itemId}, #{originalFilename}, #{renamedFilename}, #{thumbnail}, #{fileSize}, default, #{isDeleted})")
+	int insertAttachment(Attachment attach);
 
 	// 1:1 목록 삭제 (예라)
 	@Delete("delete from question where id = #{id}")

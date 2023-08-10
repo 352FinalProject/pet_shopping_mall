@@ -21,8 +21,7 @@
 							<tr>
 								<th>사진첨부</th>
 								<td><label for="file">
-										<div class="btn-upload">파일 첨부</div>
-								</label> <input type="file" name="file" id="file"></td>
+								</label> <input type="file" name="upFile" id="file"></td>
 							</tr>
 							<tr>
 								<th>상품코드</th>

@@ -57,6 +57,20 @@ create table answer(
    constraints fk_answer_question_id foreign key (question_id) references question(id) on delete cascade
 );
 
+-- 파일 테이블
+create table image_attachment (
+    id number,
+    image_type number,
+    item_id number,
+    original_filename varchar2(500),
+    renamed_filename varchar2(500),
+    thumbnail char(1),
+    file_size number,
+    created_at timestamp default systimestamp,
+    is_deleted char(1),
+    constraint pk_image_attachment_id primary key(id)
+);
+
 -- 포인트 테이블
 create table point (
     id number,
@@ -85,29 +99,34 @@ create table product (
     constraints uq_product_product_code unique(product_code)
 );
 
+
 create sequence seq_member_id;
 create sequence seq_answer_id;
 create sequence seq_question_id;
 create sequence seq_point_id;
 create sequence seq_product_id;
+create sequence seq_image_attachment_id;
 
 select * from member;
 select * from question;
 select * from answer;
 select * from point;
 select * from product;
+select * from image_attachment;
 
 --drop table member;
 --drop table question;
 --drop table answer;
 --drop table point;
 --drop table product;
---
+--drop table image_attachment;
+
 --drop sequence seq_member_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_question_id;
 --drop sequence seq_point_id;
 --drop sequence seq_product_id;
+--drop sequence seq_image_attachment_id;
 
 ------------------ member insert ---------------------------
 insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, field)
@@ -144,3 +163,9 @@ insert into point (id, member_id, current_point, point_type, amount, point_date)
 values (seq_member_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 delete from question where id = '19';
+
+SELECT * FROM product WHERE id = 3;
+
+select * from question where id = '4';
+
+select * from question where member_id = 'member1';

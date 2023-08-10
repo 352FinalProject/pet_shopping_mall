@@ -20,9 +20,12 @@
 						</tr>
 						<tr>
 							<th>사진첨부</th>
-							<td><label for="file">
-									<div class="btn-upload">파일 첨부</div>
-							</label> <input type="file" name="file" id="file"></td>
+							<td><%-- <c:forEach items="${questions.attachments}" var="attach" varStatus="vs">
+								<button type="button" class="btn btn-outline-success btn-block"
+								onclick="location.href = '${pageContext.request.contextPath}/servicecenter/inquiry/fileDownload.do?id=${attach.id}';">
+									첨부파일${vs.count} - ${attach.originalFilename}
+								</button>
+							</c:forEach> --%></td>
 						</tr>
 						<tr>
 							<th>제목</th>

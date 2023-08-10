@@ -10,7 +10,8 @@
 	<div class="common-title">1:1 문의 작성</div>
 	<div class="common-container">
 		<div class="common-div">
-			<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do" method="post">
+			<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do" 
+			enctype="multipart/form-data" method="post">
 				<div class="qna-create">
 					<div class="input-container">
 						<table>
@@ -22,12 +23,16 @@
 							<tr>
 								<th>사진첨부</th>
 								<td><label for="file">
-										<div class="btn-upload">파일 첨부</div>
-								</label> <input type="file" name="file" id="file"></td>
+								</label> <input type="file" name="upFile" id="file"></td>
 							</tr>
 							<tr>
 								<th>상품코드</th>
 								<td><input type="text" name="productId" id="productId"
+									required></td>
+							</tr>
+							<tr>
+								<th>사진타입</th>
+								<td><input type="text" name="imageType" id="imageType"
 									required></td>
 							</tr>
 							<tr>
@@ -59,5 +64,19 @@
 		</div>
 	</form>
 </section>
+<script>
+document.querySelectorAll("[name=file]").forEach((input) => {
+	input.onchange = (e) => {
+		const label = e.target.previousElementSibling;
+		const files = e.target.files;
+		if(files[0]) {
+			label.innerHTML = files[0].name;
+		}
+		else {
+			label.innerHTML = "파일을 선택하세요";
+		}
+	}
+});
+</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

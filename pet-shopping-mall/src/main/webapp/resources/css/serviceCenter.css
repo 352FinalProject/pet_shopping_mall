@@ -1,3 +1,4 @@
+
 @charset "UTF-8";
 
 /* 문의 내역 (예라) */
@@ -103,12 +104,16 @@
 }
 
 /*1:1 상세 내역 조회 아이디 폼, 파일 폼*/
-.qna-create input[type="text"], .qna-create input[type="file"] {
+.qna-create input[type="text"]{
 	width: 450px;
 	border: 1px solid #c8c8c8;
 	height: 30px;
 	margin: 10px;
 	padding: 9px;
+}
+
+.qna-create input[type="file"] {
+	margin-left: -197px;
 }
 
 .anw-regdate {
@@ -173,15 +178,10 @@
 	font-weight: 500;
 	cursor: pointer;
 	display: flex;
-	margin-left: 10px;
 	align-items: center;
 	justify-content: center; &: hover { background : #58ACFA;
 	color: #fff;
 }
-
-}
-#file {
-	display: none;
 }
 
 .qna-create textarea {
