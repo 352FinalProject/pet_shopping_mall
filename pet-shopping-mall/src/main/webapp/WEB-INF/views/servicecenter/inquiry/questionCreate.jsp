@@ -17,7 +17,7 @@
 							<tr>
 								<th>아이디</th>
 								<td><input type="text" name="memberId" id="memberId"
-									value="" required /></td>
+									value="${questions.memberId}" required /></td>
 							</tr>
 							<tr>
 								<th>사진첨부</th>

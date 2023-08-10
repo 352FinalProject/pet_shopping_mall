@@ -52,10 +52,12 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryRepository.updateQuestion(question);
 	}
 
-	// 1:1 퀘스쳔 아이디 검색 (예라)
+	
+	// 1:1 문의 member_id 검색 (예라)
 	@Override
-	public Question findById(int id) {
-		return inquiryRepository.findById(id);
+	public Question findQuestionByMemberId(String memberId) {
+		return inquiryRepository.findQuestionByMemberId(memberId);
 	}
+
 
 }

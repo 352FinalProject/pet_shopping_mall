@@ -61,9 +61,9 @@
 			        <button class="qna-btn-reset" type="submit">목록</button>
 			</form>
 	  			<button type="button" onclick="QuestionDelete();" class="qna-btn-reset">삭제하기</button>
-	  		<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionUpdate.do"
-				class="form-inline">
-			        <button class="qna-btn-create" type="submit">수정하기</button>
+			<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionUpdate.do?questionId=${questions.id}">
+			    <input type="hidden" name="id" value="${questions.id}">
+			    <button class="qna-btn-create" type="submit">수정하기</button>
 			</form>
 		</div>
 	</div>

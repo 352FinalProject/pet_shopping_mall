@@ -16,8 +16,7 @@
 						<table>
 							<tr>
 								<th>아이디</th>
-								<td><input type="text" name="memberId" id="memberId"
-									value="${question.memberId}" required /></td>
+								<td><input type="text" name="memberId" id="memberId" value="${questions.memberId}" required /></td>
 							</tr>
 							<tr>
 								<th>사진첨부</th>
@@ -27,13 +26,11 @@
 							</tr>
 							<tr>
 								<th>상품코드</th>
-								<td><input type="text" name="productId" id="productId" value="${question.productId}"
-									value="${question.productId}" required></td>
+								<td><input type="text" name="productId" id="productId" value="${questions.productId}" required /></td>
 							</tr>
 							<tr>
 								<th>제목</th>
-								<td><input type="text" name="title" id="title"
-									value="${question.title}" required></td>
+								<td><input type="text" name="title" id="title" value="${questions.title}" required /></td>
 							</tr>
 						</table>
 					</div>
@@ -45,7 +42,7 @@
 			                <tr>
 			                    <th></th>
 			                    <td>
-			                        <textarea name="content" rows="4" cols="50" placeholder="상세 내용 (필수)" required>${question.content}</textarea>
+			                        <textarea name="content" rows="4" cols="50" placeholder="상세 내용 (필수)" required>${questions.content}</textarea>
 			                    </td>
 			                </tr>
 			            </table>
@@ -53,11 +50,14 @@
 			    </div>
 			    <div class="qna-create-btn">
 			        <button class="qna-btn-reset" type="reset">초기화</button>
+			        <input type="hidden" name="id" value="${questions.id}">
 			        <button class="qna-btn-create" type="submit">수정하기</button>
 			    </div>
 		    </div>
 		</div>
 	</form>
 </section>
+<script>
+</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

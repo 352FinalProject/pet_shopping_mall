@@ -39,8 +39,8 @@ public interface InquiryRepository {
 	@Update("update question set member_id = #{memberId}, title = #{title}, content = #{content} where id = #{id}")
 	int updateQuestion(Question question);
 
-	// 1:1 퀘스쳔 아이디 검색 (예라)
-	@Select("select * from question where id = #{id}")
-	Question findById(int id);
+	// 1:1 문의 member_id 검색 (예라)
+	@Select("select * from question where member_id = #{memberId}")
+	Question findQuestionByMemberId(String memberId);
 
 }

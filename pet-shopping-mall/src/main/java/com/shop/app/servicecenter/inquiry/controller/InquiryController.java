@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionUpdateDto;
@@ -62,16 +64,20 @@ public class InquiryController {
 	    model.addAttribute("answers", answers);
 	}
 	
-	// 1:1 문의 작성 연결 (예라)
+	// 1:1 문의 작성 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionCreate.do")
-	public void CreateQuestion() {}
+	public void CreateQuestion(Question question, Model model) {
+
+		Question questions = inquiryService.findQuestionById(question);
+	    model.addAttribute("questions", questions);
+	}
 	
 	// 1:1 문의 작성 (예라)
 	@PostMapping("/inquiry/questionCreate.do")
 	public String CreateQuestion(QuestionCreateDto _question) {
 		
-		Question question = _question.toQuestion();
-		int result = inquiryService.insertQuestion(question);
+		Question questions = _question.toQuestion();
+		int result = inquiryService.insertQuestion(questions);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
@@ -85,24 +91,22 @@ public class InquiryController {
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
 	
-	// 1:1 문의 수정 연결 (예라)
+	// 1:1 문의 수정 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionUpdate.do")
-	public void UpdateQuestion(@RequestParam int id, Model model) {
-		Question question = inquiryService.findById(id);
-		
-		model.addAttribute("question", question);
+	public void UpdateQuestion(Question question, Model model) {
+
+		Question questions = inquiryService.findQuestionById(question);
+	    model.addAttribute("questions", questions);
 	}
 	
 	// 1:1 문의 수정 (예라)
 	@PostMapping("/inquiry/questionUpdate.do")
 	public String UpdateQuestion(QuestionUpdateDto _question) {
 		
-		Question question = _question.toQuestion();
-		log.debug("question = {}", question);
-		int result = inquiryService.updateQuestion(question);
+		Question questions = _question.toQuestion();
+		int result = inquiryService.updateQuestion(questions);
 		
-		return "redirect:/servicecenter/inquiry/questionList.do";
-//		return "redirect:/servicecenter/inquiry/questionDetail.do?id=";
+		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getId();
 	}
 	
 }

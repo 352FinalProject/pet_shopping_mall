@@ -4,7 +4,12 @@ import javax.validation.constraints.NotBlank;
 
 import com.shop.app.servicecenter.inquiry.entity.Question;
 
+import lombok.Data;
+
+@Data
 public class QuestionUpdateDto {
+
+	private int id;
 	
 	@NotBlank(message = "아이디는 필수로 입력해야합니다.")
 	private String memberId;
@@ -20,6 +25,7 @@ public class QuestionUpdateDto {
 	
 	public Question toQuestion() {
 		return Question.builder()
+				.id(id)
 				.memberId(memberId)
 				.productId(productId)
 				.title(title)
