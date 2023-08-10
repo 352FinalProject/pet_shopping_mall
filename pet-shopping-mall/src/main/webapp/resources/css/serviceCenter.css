@@ -178,6 +178,7 @@
 	font-weight: 500;
 	cursor: pointer;
 	display: flex;
+	margin-left: -100px;
 	align-items: center;
 	justify-content: center; &: hover { background : #58ACFA;
 	color: #fff;
