@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-
 <%-- 1:1 문의 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
 	<div class="common-title">1:1 문의 내역</div>

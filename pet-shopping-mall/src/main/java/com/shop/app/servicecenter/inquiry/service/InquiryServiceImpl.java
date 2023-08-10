@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shop.app.common.entity.Attachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
@@ -37,7 +38,37 @@ public class InquiryServiceImpl implements InquiryService {
 	// 1:1 문의 작성 (예라)
 	@Override
 	public int insertQuestion(Question question) {
-		return inquiryRepository.insertQuestion(question);
+		int result = 0;
+		result = inquiryRepository.insertQuestion(question);
+		
+		List<Attachment> attachments = ((QuestionDetails) question).getAttachments();
+		if(attachments != null && !attachments.isEmpty()) {
+			for(Attachment attach : attachments) {
+				attach.setItemId(question.getId());
+				result = inquiryRepository.insertAttachment(attach);
+			}
+		}
+		return  result;
 	}
+	
+	// 1:1 문의 삭제 (예라)
+	@Override
+	public int deleteQuestion(int id) {
+		return inquiryRepository.deleteQuestion(id);
+	}
+
+	// 1:1 문의 수정 (예라)
+	@Override
+	public int updateQuestion(Question question) {
+		return inquiryRepository.updateQuestion(question);
+	}
+
+	
+	// 1:1 문의 member_id 검색 (예라)
+	@Override
+	public Question findQuestionByMemberId(String memberId) {
+		return inquiryRepository.findQuestionByMemberId(memberId);
+	}
+
 
 }

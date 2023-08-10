@@ -2,13 +2,15 @@ package com.shop.app.servicecenter.inquiry.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import com.shop.app.common.entity.Attachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
-import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 
 @Mapper
 public interface InquiryRepository {
@@ -29,5 +31,21 @@ public interface InquiryRepository {
 	// 1:1 목록 작성 (예라)
 	@Insert("insert into question values(seq_question_id.nextval, #{memberId}, #{productId}, #{title}, #{content}, default)")
 	int insertQuestion(Question question);
+	
+	// 1:1 문의 파일 첨부 (예라)
+	@Insert("insert into image_attachment values(seq_image_attachment_id.nextval, #{imageType}, #{itemId}, #{originalFilename}, #{renamedFilename}, #{thumbnail}, #{fileSize}, default, #{isDeleted})")
+	int insertAttachment(Attachment attach);
+
+	// 1:1 목록 삭제 (예라)
+	@Delete("delete from question where id = #{id}")
+	int deleteQuestion(int id);
+
+	// 1:1 목록 수정 (예라)
+	@Update("update question set member_id = #{memberId}, title = #{title}, content = #{content} where id = #{id}")
+	int updateQuestion(Question question);
+
+	// 1:1 문의 member_id 검색 (예라)
+	@Select("select * from question where member_id = #{memberId}")
+	Question findQuestionByMemberId(String memberId);
 
 }
