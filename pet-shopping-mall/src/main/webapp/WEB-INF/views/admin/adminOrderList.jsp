@@ -8,7 +8,7 @@
     <form method="GET" class="admin-order-search">
         <label for="searchKeyword">검색어:</label>
         <select name="searchCategory">
-            <option value="productName">상품명ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</option>
+            <option value="productName">상품명</option>
             <option value="productCode">주문코드</option>
         </select>
         <input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드"><br>
