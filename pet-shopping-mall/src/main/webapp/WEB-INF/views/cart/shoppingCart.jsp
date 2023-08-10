@@ -55,6 +55,7 @@ font-size:24px;
 #order-btn {
 	margin-top:20px;
 	width:100%;
+	cursor: pointer;
 }
 </style>
     <section class="common-section" id="#">
@@ -136,7 +137,7 @@ const checkAll = document.querySelector("#checkAll");
 
 console.log(products);
 
-products.forEach(term => {
+/* products.forEach(term => {
 	products.addEventListener("change", () => {
         updateButtonColor();
     });
@@ -146,7 +147,7 @@ const updateButtonColor = () => {
     products.forEach(product => {
     	product.checked ? orderButton.classList.add("active") : orderButton.classList.remove("active");
     })
-};
+}; */
 
 const payment = () => {
 	window.location.href = '${pageContext.request.contextPath}/payment/paymentInfo.do';

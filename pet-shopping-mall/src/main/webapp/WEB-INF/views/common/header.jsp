@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
    
