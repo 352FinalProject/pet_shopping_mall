@@ -46,4 +46,16 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryRepository.deleteQuestion(id);
 	}
 
+	// 1:1 문의 수정 (예라)
+	@Override
+	public int updateQuestion(Question question) {
+		return inquiryRepository.updateQuestion(question);
+	}
+
+	// 1:1 퀘스쳔 아이디 검색 (예라)
+	@Override
+	public Question findById(int id) {
+		return inquiryRepository.findById(id);
+	}
+
 }

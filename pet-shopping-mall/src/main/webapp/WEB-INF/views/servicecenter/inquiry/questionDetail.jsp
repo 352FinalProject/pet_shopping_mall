@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<%-- 1:1 문의 작성 (예라) --%>
+
+<%-- 1:1 문의 상세 조회 (예라) --%>
 <section class="common-section" id="#">
 	<div class="common-title">1:1 문의 상세 내역</div>
 	<div class="common-container">
@@ -60,6 +61,10 @@
 			        <button class="qna-btn-reset" type="submit">목록</button>
 			</form>
 	  			<button type="button" onclick="QuestionDelete();" class="qna-btn-reset">삭제하기</button>
+	  		<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionUpdate.do"
+				class="form-inline">
+			        <button class="qna-btn-create" type="submit">수정하기</button>
+			</form>
 		</div>
 	</div>
 </section>

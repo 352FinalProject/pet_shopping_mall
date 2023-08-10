@@ -22,5 +22,11 @@ public interface InquiryService {
 
 	// 1:1 문의 삭제 (예라)
 	int deleteQuestion(int id);
+
+	// 1:1 문의 수정 (예라)
+	int updateQuestion(Question question);
+
+	// 1:1 퀘스쳔 아이디 검색 (예라)
+	Question findById(int id);
 	
 }
