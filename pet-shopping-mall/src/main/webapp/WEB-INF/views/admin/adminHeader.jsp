@@ -54,7 +54,7 @@
 						href="${pageContext.request.contextPath}/admin/adminOrderList.do"
 						class="font">주문관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminStatistics.do"
 						class="font">통계분석</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"

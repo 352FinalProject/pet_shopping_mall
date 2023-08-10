@@ -45,10 +45,15 @@ public class AdminController {
 	public void adminProductList() {
 		
 	}
+	
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList() {
 		
 	}
 	
+	@GetMapping("/adminStatistics.do")
+	public void adminStatistics() {
+		
+	}
 	
 }
