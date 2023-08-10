@@ -116,7 +116,7 @@
 			 		</td>
 		 		</tr>
                 <tr>
-                    <th>제목</th>
+                    <th>제목트트트트</th>
                     <td>
                     	<input type="text" id="" name="" required/>
                     </td>

@@ -7,7 +7,7 @@ section.product-board {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 50px 100px 0px 100px;
+    margin: 50px 0px 0px 0px;
     padding: 0 0 60px 0;
     border-bottom: 1px solid #e7e7e7;
 }
@@ -30,9 +30,11 @@ ul.nav {
     /* justify-content: center; */
     gap: 8px;
     justify-content: flex-end;
-    margin: 0 100px;
+    margin: 0 10px;
 }
-
+.product-sort ul.nav .font{
+	color : #828282;
+}
 .board-title {
     text-align: center;
     font-size: 30px;
@@ -61,9 +63,6 @@ ul.nav {
 	display: flex;
     flex-wrap: wrap;
     position: relative;
-    border-color: #051619;
-    border-style: solid;
-    border-width: 0 0 0 1px;
     z-index: 10px;
 }
 .product-card {
@@ -72,9 +71,6 @@ ul.nav {
     text-decoration: none;
     display: block;
     width: 25%;
-    /* color: #051619; */
-    /* border: 1px solid #051619; */
-    /* border-width: 0 1px 1px 0; */
     cursor: pointer;
     padding: 5px;
 }
@@ -97,6 +93,7 @@ ul.nav {
 }
 .product-card .product-desc {
     padding: 1.5rem 1.75rem;
+    color : #828282;
     box-sizing: border-box;
 }
 .product-card .product-desc .product-name {
@@ -106,118 +103,132 @@ ul.nav {
 .product-card .product-desc .product-price {
     margin: 0 0 0.5rem;
     font-size: 1.25rem;
+    font-weight: 500;
 }
-.product-card .product-desc .review-star {
-
+.product-card .product-desc .review-star img {
+    width: 15px;
+    height: 15px;
+    margin-right: 4px;
 }
 .product-card .product-desc .review-cnt {
     margin: 0 0 0.5rem;
     font-size: 0.9rem;
+    font-weight: 400;
 }
 
 </style>
-	
-	<section class="product-board">
-        <div class="board-title"">
-	        <span>사료</span>
-        </div>
-        <div class="board-category">
-            <ul class="nav">
-                   <li class="on">
-                       <a href="#" class="font">건식</a>
-                   </li>
-                   <li>
-					<a href="#" class="font">화식</a>
-                   </li>
-                   <li>
-					<a href="#" class="font">습식</a>
-                   </li>
-                   <li>
-					<a href="#" class="font">생식</a>
-                   </li>
-                   <li>
-					<a href="#" class="font">고양이</a>
-                   </li>
-            </ul>
-        </div>
-	</section>
-	<!-- 정렬 선택란 -->
-	<div class="product-sort">
-		<ul class="nav">
-			<li>
-				<a href="#" class="font">신상품</a>
-			</li>
-			<li>
-				<a href="#" class="font">낮은가격</a>
-			</li>
-			<li>
-				<a href="#" class="font">높은가격</a>
-			</li>
-			<li>
-				<a href="#" class="font">리뷰많은순</a>
-			</li>
-			<li>
-				<a href="#" class="font">판매량순</a>
-			</li>
-		</ul>
-	</div>
-	<!-- 상품사진 갤러리 -->
-	<div class="product-gallery">
-		<ul class="gallery">
-			<div class="product-card">
-				<a href="${pageContext.request.contextPath}/product/productDetail.do">
-				<figure class="product-thumbnail">
-					<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
-				</figure>
-				<div class="product-desc">
-					<p class="product-name">강아지 리드줄 목줄</p>
-					<p class="product-price">10,000원</p>
-					<span class="reviewstar">⭐</span> | 
-					<span class="review-cnt">후기 113건</span>
+<div class="common-section">
+
+	<!-- 컨테이너 -->
+	<div class="common-container">
+		<section class="product-board">
+			<!-- 게시판 이름 -->
+	        <div class="board-title"">
+		        <span>사료</span>
+	        </div>
+	        <!-- 게시판 카테고리 -->
+	        <div class="board-category">
+	            <ul class="nav">
+	                   <li class="on">
+	                       <a href="#" class="font">건식</a>
+	                   </li>
+	                   <li>
+						<a href="#" class="font">화식</a>
+	                   </li>
+	                   <li>
+						<a href="#" class="font">습식</a>
+	                   </li>
+	                   <li>
+						<a href="#" class="font">생식</a>
+	                   </li>
+	                   <li>
+						<a href="#" class="font">고양이</a>
+	                   </li>
+	            </ul>
+	        </div>
+		</section>
+		<!-- 정렬 선택란 -->
+		<div class="product-sort">
+			<ul class="nav">
+				<li>
+					<a href="#" class="font">신상품</a>
+				</li>
+				<li>
+					<a href="#" class="font">낮은가격</a>
+				</li>
+				<li>
+					<a href="#" class="font">높은가격</a>
+				</li>
+				<li>
+					<a href="#" class="font">리뷰많은순</a>
+				</li>
+				<li>
+					<a href="#" class="font">판매량순</a>
+				</li>
+			</ul>
+		</div>
+		<!-- 상품사진 갤러리 -->
+		<div class="product-gallery">
+			<ul class="gallery">
+				<div class="product-card">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do">
+					<figure class="product-thumbnail">
+						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+					</figure>
+					<div class="product-desc">
+						<p class="product-name">강아지 리드줄 목줄</p>
+						<p class="product-price">10,000원</p>
+						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+						<span> &nbsp;|&nbsp; </span>
+						<span class="review-cnt">후기 113건</span>
+					</div>
+					</a>
 				</div>
-				</a>
-			</div>
-			<div class="product-card">
-				<a href="${pageContext.request.contextPath}/product/productDetail.do">
-				<figure class="product-thumbnail">
-					<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
-				</figure>
-				<div class="product-desc">
-					<p class="product-name">강아지 리드줄 목줄</p>
-					<p class="product-price">10,000원</p>
-					<span class="reviewstar">⭐</span> | 
-					<span class="review-cnt">후기 113건</span>
+				<div class="product-card">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do">
+					<figure class="product-thumbnail">
+						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+					</figure>
+					<div class="product-desc">
+						<p class="product-name">강아지 리드줄 목줄</p>
+						<p class="product-price">10,000원</p>
+						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+						<span> &nbsp;|&nbsp; </span>
+						<span class="review-cnt">후기 113건</span>
+					</div>
+					</a>
 				</div>
-				</a>
-			</div>
-			<div class="product-card">
-				<a href="${pageContext.request.contextPath}/product/productDetail.do">
-				<figure class="product-thumbnail">
-					<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
-				</figure>
-				<div class="product-desc">
-					<p class="product-name">강아지 리드줄 목줄</p>
-					<p class="product-price">10,000원</p>
-					<span class="reviewstar">⭐</span> | 
-					<span class="review-cnt">후기 113건</span>
+				<div class="product-card">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do">
+					<figure class="product-thumbnail">
+						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+					</figure>
+					<div class="product-desc">
+						<p class="product-name">강아지 리드줄 목줄</p>
+						<p class="product-price">10,000원</p>
+						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+						<span> &nbsp;|&nbsp; </span>
+						<span class="review-cnt">후기 113건</span>
+					</div>
+					</a>
 				</div>
-				</a>
-			</div>
-			<div class="product-card">
-				<a href="${pageContext.request.contextPath}/product/productDetail.do">
-				<figure class="product-thumbnail">
-					<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
-				</figure>
-				<div class="product-desc">
-					<p class="product-name">강아지 리드줄 목줄</p>
-					<p class="product-price">10,000원</p>
-					<span class="review-star">⭐</span> | 
-					<span class="review-cnt">후기 113건</span>
+				<div class="product-card">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do">
+					<figure class="product-thumbnail">
+						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+					</figure>
+					<div class="product-desc">
+						<p class="product-name">강아지 리드줄 목줄</p>
+						<p class="product-price">10,000원</p>
+						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+						<span> &nbsp;|&nbsp; </span>
+						<span class="review-cnt">후기 113건</span>
+					</div>
+					</a>
 				</div>
-				</a>
-			</div>
-		</ul>
+			</ul>
+		</div>
 	</div>
 
-
+</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
