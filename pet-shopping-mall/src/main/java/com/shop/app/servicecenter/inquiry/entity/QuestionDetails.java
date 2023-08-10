@@ -1,7 +1,8 @@
 package com.shop.app.servicecenter.inquiry.entity;
 
-import java.time.LocalDateTime;
 import java.util.List;
+
+import com.shop.app.common.entity.Attachment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,6 @@ public class QuestionDetails extends Question{
 	private int questionId;
 
 	List<Answer> answers;
+	private List<Attachment> attachments;
 	
 }
