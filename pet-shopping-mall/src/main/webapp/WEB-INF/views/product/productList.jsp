@@ -151,7 +151,7 @@ ul.nav {
 		<div class="product-sort">
 			<ul class="nav">
 				<li>
-					<a href="#" class="font">신상품입니다</a>
+					<a href="#" class="font">신상품</a>
 				</li>
 				<li>
 					<a href="#" class="font">낮은가격</a>
