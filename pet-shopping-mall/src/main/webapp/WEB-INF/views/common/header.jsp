@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
@@ -29,7 +29,7 @@
                 <a href="<%= request.getContextPath() %>/member/petProfile.do">펫프로필등록</a>
             </li>
             <li class="login_li">
-                <a href="<%= request.getContextPath() %>/member/login.do">로그인</a>
+                <a href="<%= request.getContextPath() %>/member/memberLogin.do">로그인</a>
             </li>
             <li class="signup_li">
                 <a href="<%= request.getContextPath() %>/member/memberCreate.do">회원가입</a>

@@ -22,7 +22,9 @@ public interface MemberRepository {
 	@Update("update member set birthday =")
 	int updateMember(Member member);
 	
-	@Delete("delete memeber where id = #{memberId}")
-	int deleteMember(Member member);
+//	@Delete("delete memeber where id = #{memberId}")
+//	int deleteMember(Member member);
+
+//	UserDetails loadUserByUsername(String username);
 
 }

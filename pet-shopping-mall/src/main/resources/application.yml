@@ -24,3 +24,5 @@ logging:
   level:
     root: info
     '[com.sh.app]': debug
+
+      

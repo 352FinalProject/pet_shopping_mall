@@ -15,10 +15,10 @@ public interface AdminRepository {
 	@Select("select * from member where member_id = #{memberId}")
 	List<Member> findMemberById(String memberId);
 	
-//	@Insert("insert into member values ()")
+	@Insert("insert into member values ()")
 	int insertMember(Member member);
 	
-//	@Update("update member set birthday =")
+	@Update("update member set birthday =")
 	int updateMember(Member member);
 	
 	@Delete("delete memeber where id = #{memberId}")

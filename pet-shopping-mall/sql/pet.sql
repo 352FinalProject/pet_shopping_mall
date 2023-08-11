@@ -1,6 +1,16 @@
 --==============================
 -- 관리자 계정 - pet 계정 생성
 --==============================
+create user pet
+identified by pet
+default tablespace users;
+
+grant connect, resource to pet;
+
+grant create session,
+grant create table to pet;
+
+alter user pet quota unlimited on users;
 
 alter session set "_oracle_script" = true;
 create user pet
