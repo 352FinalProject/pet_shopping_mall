@@ -144,23 +144,23 @@
 				</tr>
 				<tr>
 					<td>
+					<div class="login-modal">
 						<div class="login-input">
 							<input type="text" id="inputId" class="form-control"
-								required="required" placeholder="아이디"
-								value="${sessionScope.saveok==null?"":sessionScope.myid }">
+								required="required" placeholder="아이디"/>
 						</div>
 						<div class="login-input">
 							<input type="password" id="inputPassword" class="form-control2"
 								required="required" placeholder="비밀번호">
 						</div>
+					</div>	
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<div class="save-search">
 							<label for="saveId"> <input type="checkbox"
-								class="saveId" ${sessionScope.saveok==null?"":"checked" }>아이디
-								저장
+								class="saveId">아이디저장
 							</label>
 							<button type="button" class="search" id="searchId">아이디찾기</button>
 							<button type="button" class="search" id="searchPasword">비밀번호찾기</button>
@@ -170,8 +170,7 @@
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<button type="button" name="id" id="loginButton"
-								class="login-btn">로그인</button>
+							<button type="button" name="id" id="loginButton" class="login-btn" >로그인</button>
 						</div>
 					</td>
 				</tr>
