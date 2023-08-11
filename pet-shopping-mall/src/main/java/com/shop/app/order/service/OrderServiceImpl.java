@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.shop.app.order.repository.OrderRepository;
 
-@Service
+//@Service
 public class OrderServiceImpl implements OrderService {
 	
-	@Autowired
+//	@Autowired
 	private OrderRepository orderRepository;
 }
