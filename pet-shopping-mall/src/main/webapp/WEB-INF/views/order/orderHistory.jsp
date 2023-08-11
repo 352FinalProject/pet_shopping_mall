@@ -2,6 +2,61 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
+section.order-header {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border-bottom: 1px solid #e7e7e7;
+}
+section.order-header .order-title {
+    text-align: center;
+    font-size: 30px;
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+section.order-header select.sort-option {
+    width: 100%;
+    font-size: 15px;
+    heiht: 40px;
+    padding: 10px;
+    margin-top: 30px;
+}
+section.order-header .my-reviews {
+	margin-bottom: 25px;
+	font-size: 18px;
+    padding-top: 25px;
+	float: right;
+}
+
+section.order-body {
+}
+section.order-body order-history-tbl{
+}
+section.order-body order-history-tbl thead{
+}
+section.order-body order-history-tbl thead th{
+	text-align: left;
+    padding: 12px;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+section.order-body order-history-tbl tbody{
+}
+section.order-body order-history-tbl tbody img{
+	display: block;
+    width: 10em;
+}
+section.order-body order-history-tbl tbody td{
+	text-align: left;
+    padding: 12px;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+section.order-body order-history-tbl tbody td product-desc{
+	display: inline;
+}
 
 </style>
 <div class="common-section">
@@ -11,12 +66,12 @@
 	<section class="order-header">
 		<div class="order-title">주문내역</div>
 		
-		<input type="range" name="sort-order" id="sort-order">
-		<label for="sort-order">최근 1주일</label>
-		<label for="sort-order">최근 한달</label>
-		<label for="sort-order">최근 6개월</label>
-		<label for="sort-order">최근 9개월</label>
-		<label for="sort-order">최근 1년</label>
+		<select name="sort-option" id="sort-option">
+			<option value>1개월</option>
+			<option value>3개월</option>
+			<option value>6개월</option>
+			<option value>12개월</option>
+		</select>
 		
 		<span class="my-reviews"><a href="${pageContext.request.contextPath}/member/reviews.do?memberId=">내가 쓴 상품 후기></a></span>
 	</section>
