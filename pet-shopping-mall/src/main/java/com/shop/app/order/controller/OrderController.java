@@ -13,4 +13,9 @@ public class OrderController {
 	@GetMapping("/orderHistory.do")
 	public void orderHistory() {}
 	
+	@GetMapping("/orderCancle.do")
+	public void orderCancle() {}
+	
+	
+	
 }
