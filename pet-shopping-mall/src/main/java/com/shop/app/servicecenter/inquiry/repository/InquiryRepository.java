@@ -48,4 +48,8 @@ public interface InquiryRepository {
 	@Select("select * from question where member_id = #{memberId}")
 	Question findQuestionByMemberId(String memberId);
 
+	// 1:1 문의 답변 내용 조회 (예라)
+	@Select("select * from answer where content = #{content}")
+	Answer findAnswersByContent(String content);
+
 }

@@ -45,9 +45,13 @@ public class InquiryController {
 	
 	// 1:1 목록 조회 (예라)
 	@GetMapping("/inquiry/questionList.do")
-	public void questionList(Question question, Model model) {
+	public void questionList(Question question, @RequestParam String content, Model model) {
 		List<Question> questions = inquiryService.findQuestionAll(question);
 		model.addAttribute("questions", questions);
+		
+		Answer answers = inquiryService.findAnswersByContent(content);
+		model.addAttribute("answers", answers);
+		
 	}
 	
 	// 1:1 목록 상세 조회 + 답변 (예라)

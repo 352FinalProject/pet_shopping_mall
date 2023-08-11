@@ -34,8 +34,8 @@
 								</td>
 								<td>
 									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.id}">
-									<c:if test="${question.id eq 0}">답변대기</c:if>
-									<c:if test="${question.id gt 0}">답변완료</c:if></a>
+								<c:if test="${empty answers.content}">답변대기</c:if>
+								<c:if test="${not empty answers.content}">답변완료</c:if></a>
 								</td>
 								<td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.id}">${question.title}</a></td>
 								<td class="qna-date">
