@@ -72,8 +72,8 @@ public class InquiryServiceImpl implements InquiryService {
 
 	// 1:1 문의 답변 조회 (예라)
 	@Override
-	public Answer findAnswersByContent(String content) {
-		return inquiryRepository.findAnswersByContent(content);
+	public Answer findAnswersByContent(Answer answer) {
+		return inquiryRepository.findAnswersByContent(answer);
 	}
 
 

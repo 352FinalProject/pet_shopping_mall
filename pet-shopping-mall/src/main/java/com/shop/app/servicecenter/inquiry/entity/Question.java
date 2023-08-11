@@ -1,6 +1,7 @@
 package com.shop.app.servicecenter.inquiry.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,8 @@ public class Question {
 	private String title;
 	private String content;
 	private LocalDateTime regDate;
+	private int answerCnt;
+	
+	List<Answer> answers;
 
 }

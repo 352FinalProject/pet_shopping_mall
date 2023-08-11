@@ -20,7 +20,6 @@ public class QuestionDetails extends Question{
 	private int answerCount;
 	private int questionId;
 
-	List<Answer> answers;
 	private List<Attachment> attachments;
 	
 }

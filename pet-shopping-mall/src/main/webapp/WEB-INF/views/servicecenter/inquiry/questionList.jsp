@@ -34,8 +34,10 @@
 								</td>
 								<td>
 									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.id}">
-								<c:if test="${empty answers.content}">답변대기</c:if>
-								<c:if test="${not empty answers.content}">답변완료</c:if></a>
+								<input type="hidden" name="content" value="${answers.content}">
+								<c:if test="${question.answerCnt == 0}">답변대기</c:if>
+								<c:if test="${question.answerCnt == 1}">답변완료</c:if>
+								<c:out value="${question.answerCnt}"></c:out>
 								</td>
 								<td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.id}">${question.title}</a></td>
 								<td class="qna-date">

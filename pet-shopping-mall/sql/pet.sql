@@ -61,7 +61,7 @@ create table answer(
 create table image_attachment (
     id number,
     image_type number,
-    item_id number,
+    image_category char(1),
     original_filename varchar2(500),
     renamed_filename varchar2(500),
     thumbnail char(1),

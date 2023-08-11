@@ -30,6 +30,6 @@ public interface InquiryService {
 	Question findQuestionByMemberId(String memberId);
 
 	// 1:1 문의 답변 조회 (예라)
-	Answer findAnswersByContent(String content);
+	Answer findAnswersByContent(Answer answer);
 	
 }
