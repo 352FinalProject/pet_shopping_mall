@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>반려동물 쇼핑몰 관리자페이지</title>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -45,16 +45,16 @@
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
 						class="font">회원관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminSubscribeList.do"
 						class="font">구독자관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminProductList.do"
 						class="font">상품관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminOrderList.do"
 						class="font">주문관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
+						href="${pageContext.request.contextPath}/admin/adminStatistics.do"
 						class="font">통계분석</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"

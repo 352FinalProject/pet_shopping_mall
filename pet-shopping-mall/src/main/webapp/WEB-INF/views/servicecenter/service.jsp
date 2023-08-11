@@ -118,7 +118,7 @@
         </h3>
         <ul class="sub_menu">
             <li><a href="<%= request.getContextPath() %>/servicecenter/">1:1 채팅</a></li>
-            <li><a href="<%= request.getContextPath() %>/servicecenter/questionList.do">1:1 문의</a></li>
+            <li><a href="<%= request.getContextPath() %>/servicecenter/inquiry/questionList.do">1:1 문의</a></li>
         </ul>
         <div class="questions">
             <div class="question_top">

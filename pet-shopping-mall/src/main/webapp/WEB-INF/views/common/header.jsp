@@ -7,12 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>반려동물 쇼핑몰</title>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
    
@@ -67,7 +72,7 @@
 		        </div>
 		        <!-- 장바구니 -->
 		        <div class="cart_top_btn">
-		       	 	<a href="<%= request.getContextPath() %>/member/logout.do">
+		       	 	<a href="<%= request.getContextPath() %>/cart/shoppingCart.do">
 		        		<img src="${pageContext.request.contextPath}/resources/images/home/cart.png" id="center-image" alt="장바구니"/>
 		       		</a>
 		       	</div>

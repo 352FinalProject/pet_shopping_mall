@@ -68,6 +68,7 @@ public class MemberController {
 	@GetMapping("/memberLogin.do")
 	public void memberLogin(){}
 	
+<<<<<<< HEAD
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted(){}
 	
@@ -97,6 +98,35 @@ public class MemberController {
 //		
 //		return "redirect:/";
 //	}
+=======
+
+	@PostMapping("/memberLogin.do")
+	public String memberLogin(
+			@Valid MemberLoginDto _member, 
+			BindingResult bindingResult, 
+			Model model) {
+		log.debug("_member = {}", _member);
+		
+		// 1. 아이디로 Member 조회
+		Member member = memberService.findMemberById(_member.getMemberId());
+		log.debug("member = {}", member);
+		log.debug("temp = {}", passwordEncoder.encode("1234"));
+		
+		// 2. 로그인 성공(세션에 로그인객체 저장)/실패(에러메세지 전달)
+		if(member != null && passwordEncoder.matches(_member.getPassword(), member.getPassword())) {
+			// 로그인 성공
+			// 클래스레벨 @SessionAttributes({"loginMember"}) 작성후 session scope 저장
+			model.addAttribute("loginMember", member);
+		}
+		else {
+			// 로그인 실패
+			return "redirect:/member/memberLogin.do?error";
+		}
+		
+		
+		return "redirect:/";
+	}
+>>>>>>> c33df414c5286ffa848788a7a5d0279fda07164d
 	
 	@GetMapping("/memberLogout.do")
 	public String memberLogout(SessionStatus sessionStatus) {
@@ -104,6 +134,18 @@ public class MemberController {
 			sessionStatus.setComplete();
 		return "redirect:/";
 	}
+<<<<<<< HEAD
+=======
+
+	@GetMapping("/petProfile.do")
+	public void petProfile() {}
+	
+	@GetMapping("/reviewWrite.do")
+	public void reviewWrite() {}
+	
+	@GetMapping("/myReview.do")
+	public void myReview() {}
+>>>>>>> c33df414c5286ffa848788a7a5d0279fda07164d
 	
 
 }
