@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 <script>
 const ctx = document.getElementById('myChart').getContext('2d');
+console.log(ctx);
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
