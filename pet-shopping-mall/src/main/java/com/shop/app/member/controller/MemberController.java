@@ -57,6 +57,7 @@ public class MemberController {
 	@GetMapping("/memberLogin.do")
 	public void memberLogin() {}
 	
+
 	@PostMapping("/memberLogin.do")
 	public String memberLogin(
 			@Valid MemberLoginDto _member, 
@@ -90,4 +91,15 @@ public class MemberController {
 			sessionStatus.setComplete();
 		return "redirect:/";
 	}
+
+	@GetMapping("/petProfile.do")
+	public void petProfile() {}
+	
+	@GetMapping("/reviewWrite.do")
+	public void reviewWrite() {}
+	
+	@GetMapping("/myReview.do")
+	public void myReview() {}
+	
+
 }

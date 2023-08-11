@@ -61,23 +61,24 @@
 
 /* 메인 버튼 */
 .button-main {
-	background-color: lightgray;
+	background-color: #c8c8c8;
 	margin-right: 10px;
 	width: 120px;
 	height: 40px;
 	border-radius: 20px;
 	color: white;
-	border: 1px solid lightgray;
+	border: 1px solid #e7e7e7;
 
 }
 
 /* 로그인 버튼 */
 .button-login {
-	background-color: skyblue;
+	background-color: #5886d3;
+	color: white;
 	width: 120px;
 	height: 40px;
 	border-radius: 20px;
-	border: 1px solid lightgray;
+	border: 1px solid #e7e7e7;
 }
 </style>
 

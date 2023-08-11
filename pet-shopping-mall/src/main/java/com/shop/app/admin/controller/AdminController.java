@@ -16,11 +16,10 @@ import com.shop.app.member.entity.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Validated
 @RequestMapping("/admin")
 @Controller
-public class adminController {
+public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
@@ -33,7 +32,28 @@ public class adminController {
 	@GetMapping("/adminMemberList.do")
 	public void adminMemberList(@Valid Member member, Model model) {
 		
-		List<Member> members = adminService.findAllByMemberId(member.getMemberId());
-		model.addAttribute("members", members);
+//		List<Member> members = adminService.findAllByMemberId(member.getMemberId());
+//		model.addAttribute("members", members);
 	}
+	
+	@GetMapping("/adminSubscribeList.do")
+	public void adminMemberList() {
+		
+	}
+	
+	@GetMapping("/adminProductList.do")
+	public void adminProductList() {
+		
+	}
+	
+	@GetMapping("/adminOrderList.do")
+	public void adminOrderList() {
+		
+	}
+	
+	@GetMapping("/adminStatistics.do")
+	public void adminStatistics() {
+		
+	}
+	
 }
