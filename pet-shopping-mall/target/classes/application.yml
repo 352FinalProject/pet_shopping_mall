@@ -23,11 +23,6 @@ spring:
 logging:
   level:
     root: info
-<<<<<<< HEAD
-    '[com.sh.app]': debug
-
-      
-=======
     '[com.shop.app]': debug
     
 # mybatis
@@ -36,4 +31,3 @@ mybatis:
     jdbc-type-for-null: NULL
     map-underscore-to-camel-case: true
     call-setters-on-nulls: true
->>>>>>> c33df414c5286ffa848788a7a5d0279fda07164d
