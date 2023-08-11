@@ -47,13 +47,11 @@ create table member (
 create table question (
     id number,
     member_id varchar2(20),
-    product_id number,
     title varchar2(500),
     content varchar2(4000),
-    reg_date date default sysdate,
+    created_at date default sysdate,
     constraints pk_question_id primary key(id),
     constraints fk_question_member_writer foreign key(member_id) references member(member_id) on delete cascade,
-    constraints fk_question_product_id foreign key(product_id) references product(id)
 );
 
 -- qna 답변 테이블
@@ -62,7 +60,7 @@ create table answer(
    admin_name varchar2(20) default '관리자',
    question_id number,
    content varchar2(4000),
-   reg_date date default sysdate,
+   created_at date default sysdate,
    constraints pk_answer_id primary key(id),
    constraints fk_answer_question_id foreign key (question_id) references question(id) on delete cascade
 );
