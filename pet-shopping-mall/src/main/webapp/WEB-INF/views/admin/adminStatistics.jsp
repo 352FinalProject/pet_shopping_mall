@@ -7,6 +7,7 @@
 <canvas id="myChart" width="400" height="400"></canvas>
 <script>
 const ctx = document.getElementById('myChart').getContext('2d');
+console.log(ctx);
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
