@@ -32,30 +32,35 @@ section.order-header .my-reviews {
 
 section.order-body {
 }
-section.order-body order-history-tbl{
+table.order-history-tbl{
+	display: flex;
+	justify-content: center;
 }
-section.order-body order-history-tbl thead{
+table.order-history-tbl thead{
 }
-section.order-body order-history-tbl thead th{
+table.order-history-tbl thead th{
 	text-align: left;
     padding: 12px;
     border-top: 1px solid #e7e7e7;
     border-bottom: 1px solid #e7e7e7;
 }
-section.order-body order-history-tbl tbody{
+table.order-history-tbl tbody{
 }
-section.order-body order-history-tbl tbody img{
-	display: block;
+table.order-history-tbl img.product-img{
+	display: flex;
     width: 10em;
+    align-items: center;
 }
-section.order-body order-history-tbl tbody td{
-	text-align: left;
-    padding: 12px;
-    border-top: 1px solid #e7e7e7;
-    border-bottom: 1px solid #e7e7e7;
+table.order-history-tbl tbody td{
+
 }
-section.order-body order-history-tbl tbody td product-desc{
-	display: inline;
+div.product-desc{
+	display: flex;
+    align-items: center
+}
+div.product-desc span{
+	display: flex;
+    align-items: center
 }
 
 </style>
@@ -110,44 +115,43 @@ section.order-body order-history-tbl tbody td product-desc{
 				<td>7,990원</td>
 				<td class="order-status">주문완료</td>
 			</tr>
-			<tr colspan="5" class="order-detail">
-				<div class="order-detail-wrapper">
-					<!-- 주문자 -->
-					<div class="order-info client">
-						<div class="title">주문자</div>
-						<div class="info-details"></div>
-						<div class="info-details"></div>
-						
-					</div>
-					<!-- 배송지 -->
-					<div class="order-info delivery-location">
-						<div class="title">배송지</div>
-						<div class="info-details"></div>
-						<div class="info-details"></div>
-					
-					</div>
-					<!-- 배송현황 -->
-					<div class="order-info delivery-status">
-						<div class="title">배송현황</div>
-						<div class="info-details"></div>
-						<div class="info-details"></div>
-						
-					</div>
-					<!-- 결제금액 -->
-					<div class="order-info total-price">
-						<div class="title">결제금액</div>
-						
-					</div>
-					<!-- 주문결제정보 -->
-					<div class="order-info details">
-						<div class="title">주문결제정보</div>
-						
-					</div>
-				</div>
-			</tr>
 		</tbody>
 		</table>
-		
+		<div class="order-detail">
+			<div class="order-detail-wrapper">
+				<!-- 주문자 -->
+				<div class="order-info client">
+					<div class="title">주문자</div>
+					<div class="info-details"></div>
+					<div class="info-details"></div>
+					
+				</div>
+				<!-- 배송지 -->
+				<div class="order-info delivery-location">
+					<div class="title">배송지</div>
+					<div class="info-details"></div>
+					<div class="info-details"></div>
+				
+				</div>
+				<!-- 배송현황 -->
+				<div class="order-info delivery-status">
+					<div class="title">배송현황</div>
+					<div class="info-details"></div>
+					<div class="info-details"></div>
+					
+				</div>
+				<!-- 결제금액 -->
+				<div class="order-info total-price">
+					<div class="title">결제금액</div>
+					
+				</div>
+				<!-- 주문결제정보 -->
+				<div class="order-info details">
+					<div class="title">주문결제정보</div>
+					
+				</div>
+			</div>
+		</div>
 		
 	</section>
 
