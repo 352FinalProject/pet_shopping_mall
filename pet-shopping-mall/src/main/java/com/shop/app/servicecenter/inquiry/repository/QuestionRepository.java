@@ -13,11 +13,11 @@ import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 
 @Mapper
-public interface InquiryRepository {
+public interface QuestionRepository {
 	
 
 	// 1:1 목록 조회 질문 (예라)
-	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q")
+	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc")
 	List<Question> findQuestionAll(Question question);
 
 	// 1:1 목록 상세 조회 (예라)

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.member.entity.Member;
+import com.shop.app.servicecenter.inquiry.entity.Question;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,4 +37,12 @@ public class AdminController {
 		List<Member> members = adminService.findAllByMemberId(member.getMemberId());
 		model.addAttribute("members", members);
 	}
+	
+	// 관리자 1:1 문의 전체 내역 조회 (예라)
+	@GetMapping("/adminQuestionist.do")
+	public void adminQuestionist(Question question, Model model) {
+		List<Question> questions = adminService.findQuestionAll(question);
+		model.addAttribute("questions", questions);
+	}
+	
 }

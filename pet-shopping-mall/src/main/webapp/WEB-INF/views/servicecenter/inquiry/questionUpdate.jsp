@@ -18,16 +18,25 @@
 							<tr>
 								<th>아이디</th>
 								<td><input type="text" name="questionMemberId" id="questionMemberId"
-									value="${questions.questionMemberId}" required /></td>
+									value="${questions.questionMemberId}" required readonly /></td>
+							</tr>
+							<tr>
+								<th>분류</th>
+								<td class="questionCategory">
+								  <select name="questionCategory">
+								    <option value="-선택-" ${questions.questionCategory eq '-선택-' ? 'selected' : ''}>-선택-</option>
+								    <option value="상품" ${questions.questionCategory eq '상품' ? 'selected' : ''}>상품</option>
+								    <option value="배송" ${questions.questionCategory eq '배송' ? 'selected' : ''}>배송</option>
+								    <option value="주문" ${questions.questionCategory eq '주문' ? 'selected' : ''}>주문</option>
+								    <option value="교환" ${questions.questionCategory eq '교환' ? 'selected' : ''}>교환</option>
+								    <option value="취소" ${questions.questionCategory eq '취소' ? 'selected' : ''}>취소</option>
+								    <option value="기타" ${questions.questionCategory eq '기타' ? 'selected' : ''}>기타</option>
+								  </select>
+								</td>
 							</tr>
 							<tr>
 								<th>이메일</th>
 								<td><input type="email" name="questionEmail" id="questionEmail" value="${questions.questionEmail}"
-									required></td>
-							</tr>
-							<tr>
-								<th>카테고리</th>
-								<td><input type="text" name="questionCategory" id="questionCategory" value="${questions.questionCategory}"
 									required></td>
 							</tr>
 							<tr>
@@ -45,7 +54,7 @@
 				</div>
 			    <!-- 내용 섹션 -->
 			    <div class="content-container">
-			        <div class="qna-create">
+			        <div class="qna-create-update">
 			            <table>
 			                <tr>
 			                    <th></th>

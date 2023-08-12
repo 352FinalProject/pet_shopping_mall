@@ -23,7 +23,9 @@ public class Question {
 	private String questionCategory;
 	private LocalDateTime questionCreatedAt;
 	private int awnserCount;
+	private int imageId;
 	
 	List<Answer> answers;
+	
 
 }

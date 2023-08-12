@@ -1,27 +1,24 @@
 package com.shop.app.servicecenter.inquiry.entity;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.shop.app.common.entity.Attachment;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@AllArgsConstructor
+@ToString(callSuper = true)
 @NoArgsConstructor
-@SuperBuilder
-public class Answer {
-	
-	private int answerId;
-	private String answerAdminName;
+@AllArgsConstructor
+@SuperBuilder 
+public class AnswerDetails extends Question{
+
 	private int answerQuestionId;
 	private String answerContent;
-	private LocalDateTime answerCreatedAt;
-
-	private int questionId;
+	private String answerAdminName;
+	
 }

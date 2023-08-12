@@ -16,22 +16,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.Attachment;
+import com.shop.app.servicecenter.inquiry.dto.AnswerCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionUpdateDto;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
-import com.shop.app.servicecenter.inquiry.service.InquiryService;
+import com.shop.app.servicecenter.inquiry.service.QuestionService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequestMapping("/servicecenter")
 @Controller
-public class InquiryController {
+public class QuestionController {
 
 	@Autowired
-	private InquiryService inquiryService;
+	private QuestionService questionService;
 	
 	// 고객센터 (선모)
 	@GetMapping("/service.do")
@@ -42,7 +43,7 @@ public class InquiryController {
 	// 1:1 목록 조회 (예라)
 	@GetMapping("/inquiry/questionList.do")
 	public void questionList(Question question, Model model) {
-		List<Question> questions = inquiryService.findQuestionAll(question);
+		List<Question> questions = questionService.findQuestionAll(question);
 		log.debug("questions = {}", questions);
 		model.addAttribute("questions", questions);
 	}
@@ -57,7 +58,7 @@ public class InquiryController {
 				.questionId(questionId)
 				.build();
 
-	    Question questions = inquiryService.findQuestionById(question);
+	    Question questions = questionService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
 	    
 	    // 1:1 답변 조회
@@ -66,7 +67,7 @@ public class InquiryController {
 	    		.answerQuestionId(questionId)
 	    		.build();
 
-	    Answer answers = inquiryService.findQuestionAnswersById(answer);
+	    Answer answers = questionService.findQuestionAnswersById(answer);
 	    model.addAttribute("answers", answers);
 	}
 	
@@ -74,7 +75,7 @@ public class InquiryController {
 	@GetMapping("/inquiry/questionCreate.do")
 	public void CreateQuestion(Question question, Model model) {
 
-		Question questions = inquiryService.findQuestionById(question);
+		Question questions = questionService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
 	}
 	
@@ -117,7 +118,7 @@ public class InquiryController {
 				.attachments(attachments)
 				.build();
 		
-		int result = inquiryService.insertQuestion(questions);
+		int result = questionService.insertQuestion(questions);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
@@ -126,7 +127,7 @@ public class InquiryController {
 	@PostMapping("/inquiry/DeleteQuestion.do")
 	public String DeleteQuestion(@RequestParam int id) {
 		
-		int result = inquiryService.deleteQuestion(id);
+		int result = questionService.deleteQuestion(id);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
@@ -140,7 +141,7 @@ public class InquiryController {
 				.questionId(questionId)
 				.build();
 
-	    Question questions = inquiryService.findQuestionById(question);
+	    Question questions = questionService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
 	}
 	
@@ -149,8 +150,7 @@ public class InquiryController {
 	public String UpdateQuestion(QuestionUpdateDto _question) {
 		
 		Question questions = _question.toQuestion();
-		log.debug("questions = {}", questions);
-		int result = inquiryService.updateQuestion(questions);
+		int result = questionService.updateQuestion(questions);
 		
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}

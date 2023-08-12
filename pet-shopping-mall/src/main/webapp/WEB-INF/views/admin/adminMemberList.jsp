@@ -3,9 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="admin-member-search-container">
-    <form method="GET" class="admin-member-search">
+    <form:form method="GET" class="admin-member-search">
         <label for="searchKeyword">회원검색:</label>
         <select name="searchCategory">
             <option value="memberName">회원명</option>
@@ -13,7 +14,7 @@
         </select>
         <input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
         <button type="submit">검색</button>
-    </form>
+    </form:form>
 </div>
 
 <table class="table table-striped table-hover">

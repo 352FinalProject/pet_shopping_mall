@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.member.entity.Member;
+import com.shop.app.servicecenter.inquiry.entity.Question;
 @Mapper
 public interface AdminRepository {
 	
@@ -23,5 +24,9 @@ public interface AdminRepository {
 	
 	@Delete("delete memeber where id = #{memberId}")
 	int deleteMember(Member member);
+
+	// 관리자 1:1 문의 전체 내역 조회 (예라)
+	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc")
+	List<Question> findQuestionAll(Question question);
 
 }

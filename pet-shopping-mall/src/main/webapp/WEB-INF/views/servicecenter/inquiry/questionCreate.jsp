@@ -19,13 +19,13 @@
 						<tr>
 								<th>분류</th>
 								<td class="questionCategory"><select name="questionCategory">
-										<option value>-선택-</option>
-										<option value>상품</option>
-										<option value>배송</option>
-										<option value>주문</option>
-										<option value>교환</option>
-										<option value>취소</option>
-										<option value>기타</option>
+										<option value="-선택-">-선택-</option>
+										<option value="상품">상품</option>
+										<option value="배송"">배송</option>
+										<option value="주문">주문</option>
+										<option value="교환">교환</option>
+										<option value="취소">취소</option>
+										<option value="기타">기타</option>
 									</select></td>
 							</tr>
 							<tr>
@@ -53,7 +53,7 @@
 				</div>
 			    <!-- 내용 섹션 -->
 			    <div class="content-container">
-			        <div class="qna-create">
+			        <div class="qna-create2">
 			            <table>
 			                <tr>
 			                    <th></th>

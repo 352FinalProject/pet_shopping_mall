@@ -60,8 +60,8 @@
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
 						class="font">디자인관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
-						class="font">씨발</a></li>
+						href="${pageContext.request.contextPath}/admin/adminQuestionist.do"
+						class="font">문의관리</a></li>
 				</ul>
 			</ul>
 		</div>
