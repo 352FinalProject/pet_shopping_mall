@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.app.admin.service.AdminService;
@@ -52,6 +53,26 @@ public class AdminController {
 	    }
 		
 		model.addAttribute("members", members);
+	}
+	
+	@GetMapping("/adminMemberSearchByNameOrId.do")
+	public String adminMemberSearchByNameOrId(
+	        @RequestParam(required = false) String searchKeyword,
+	        Model model) {
+
+	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
+	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
+
+	        for (Member member : members) {
+		        String roleString = member.getMemberRole().toString(); // 데이터베이스에서 받은 열 값
+		        MemberRole memberRole = MemberRole.valueOf(roleString); // Enum 값으로 변환
+		        member.setMemberRole(memberRole); // 변환된 Enum 값을 Member 객체에 설정
+		    }
+
+	        model.addAttribute("members", members);
+	    }
+
+	    return "admin/adminMemberList"; 
 	}
 	
 

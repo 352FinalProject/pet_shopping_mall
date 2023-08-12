@@ -16,6 +16,8 @@ public interface AdminService {
 
 	int deleteMember(Member member);
 
+	List<Member> adminMemberSearchByNameOrId(String searchKeyword);
+
 	
 
 }

@@ -27,7 +27,12 @@ public class AdminServiceImpl implements AdminService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return adminRepository.adminMemberList(rowBounds);
 	}
-
+	
+	@Override
+	public List<Member> adminMemberSearchByNameOrId(String searchKeyword) {
+	    return adminRepository.adminMemberSearchByNameOrId(searchKeyword);
+	}	
+	
 	@Override
 	public int insertMember(Member member) {
 		return adminRepository.insertMember(member);
@@ -42,6 +47,11 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteMember(Member member) {
 		return adminRepository.deleteMember(member);
 	}
+
+
+
+
+	
 
 	
 

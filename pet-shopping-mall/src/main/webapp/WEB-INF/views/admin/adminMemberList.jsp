@@ -5,20 +5,24 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="admin-member-search-container">
-    <form method="GET" class="admin-member-search">
+    <form:form
+		name="adminMemberSearchFrm" 
+		action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
+		method="get">
         <label for="searchKeyword">회원검색:</label>
         <select name="searchCategory">
             <option value="memberName">회원명</option>
             <option value="memberId">아이디</option>
         </select>
         <input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
-        <button type="submit">검색</button>
-    </form>
+        <input type="submit" value="검색">
+   	</form:form>
 </div>
 
 <table class="table table-striped table-hover">
 	<thead class="table-dark">
 		<tr>
+			<th>no</th>
 			<th>회원번호</th>
 			<th>회원아이디</th>
 			<th>이름</th>
@@ -34,12 +38,13 @@
 	<tbody>
 		<c:if test="${empty members}">
 			<tr>
-				<td colspan="5" class="text-center">조회된 게시글이 없습니다.</td>
+				<td colspan="5" class="text-center">조회된 회원이 없습니다.</td>
 			</tr>
 		</c:if>
 		<c:if test="${not empty members}">
 			<c:forEach items="${members}" var="members" varStatus="vs">
 				<tr>
+					<td>${vs.count}</td>
 					<td>${members.id}</td>
 					<td>${members.memberId}</td>
 					<td>${members.name}</td>
@@ -49,7 +54,7 @@
 					<td>${members.address}</td>
 					<td>${members.birthday}</td>
 					<td>${members.point}</td>
-					<td><button onclick="">수정</button></td>
+					<td><button onclick="submit">수정</button></td>
 				</tr>
 			</c:forEach>
 		</c:if>
@@ -57,20 +62,52 @@
 </table>
 
 
+<c:if test="${not empty members}">
+    <div class="pagination justify-content-center">
+        <ul class="pagination">
+            <c:choose>
+                <c:when test="${page > 1}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${page - 1}">이전</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">이전</a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
 
+            <c:forEach var="pageNum" begin="1" end="${totalPages}" step="1">
+                <c:choose>
+                    <c:when test="${page eq pageNum}">
+                        <li class="page-item active">
+                            <a class="page-link" href="#">${pageNum}</a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item">
+                            <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${pageNum}">${pageNum}</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
 
-
-
-
-
-
-
-
-
-
-
-
-
+            <c:choose>
+                <c:when test="${page < totalPages}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${page + 1}">다음</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">다음</a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+        </ul>
+    </div>
+</c:if>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

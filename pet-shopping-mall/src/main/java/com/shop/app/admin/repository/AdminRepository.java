@@ -16,6 +16,8 @@ public interface AdminRepository {
 	@Select("select * from member order by id desc")
 	List<Member> adminMemberList(RowBounds rowBounds);
 	
+	List<Member> adminMemberSearchByNameOrId(String searchKeyword);
+	
 	@Insert("insert into member values ()")
 	int insertMember(Member member);
 	
@@ -24,6 +26,7 @@ public interface AdminRepository {
 	
 	@Delete("delete memeber where id = #{memberId}")
 	int deleteMember(Member member);
+
 
 	
 
