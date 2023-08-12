@@ -33,9 +33,9 @@ create table member (
     name varchar2(50) not null,
     phone varchar2(11) not null,
     email varchar2(200),
-    enroll_date date default sysdate,
+    enroll_date timestamp default sysdate,
     address varchar2(500),
-    birthday date,
+    birthday timestamp,
     member_role varchar(20) default 'ROLE_USER' not null,
     point number default 0,
     field char(1),
@@ -128,7 +128,7 @@ select * from image_attachment;
 --drop table point;
 --drop table product;
 --drop table image_attachment;
-
+--
 --drop sequence seq_member_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_question_id;
