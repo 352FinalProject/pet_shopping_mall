@@ -71,3 +71,17 @@ create sequence seq_member_id;
 create sequence seq_product_id;
 
 
+-- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
+create table orderTbl (
+    id number,
+    order_no varchar2(20),
+    member_id varchar2(20),
+    order_date timestamp default sysdate,
+    order_state number default 0,
+    payment_state number default 0,
+    total_price number,
+    delivery_fee number,
+    discount number,
+    amount number
+);
+-- 할인코드는 미추가 상태입니다.
