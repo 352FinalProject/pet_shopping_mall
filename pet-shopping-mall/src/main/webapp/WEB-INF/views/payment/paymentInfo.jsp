@@ -64,6 +64,24 @@ display: flex;
 .active {
 	background-color: #5886d3;
 }
+
+.paybtn input[type="radio"] {
+	display: none;
+}
+.paybtn input[type="radio"]+span {
+    display: inline-block;
+    border: 1px solid #c8c8c8;
+    background-color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+}
+.paybtn input[type="radio"]:checked+span {
+    background-color: #5886d3;
+    color: #ffffff;
+}
 </style>
     <section class="common-section" id="#">
         <div class="common-title">
@@ -77,7 +95,7 @@ display: flex;
 	                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
 	                		<div>
 	                			<div>
-	                				<p>리드줄 목줄 소형견 리드줄</p>
+	                				<p id="buy-title">리드줄 목줄 소형견 리드줄</p>
 	                			</div>
 	                			<div>
 	                				<div id="cart-option">
@@ -103,18 +121,24 @@ display: flex;
 	                		<div class="flex-box">
 	                			<p class="order-info-title">배송지</p><button class="cart-btn">수정</button>
 	                		</div>
-	                		<p>홍길동</p>
-	                		<p>010-1234-1234</p>
-	                		<p>[우편번호] KH정보교육원</p>
+	                		<p id="">홍길동</p>
+	                		<p id="phone">010-1234-1234</p>
+	                		<p>[<span id="zip-code">818181</span>]<span id="address">KH정보교육원</span></p>
 	                	</div>
 	                	<div>
 	                		<div class="order-info-title">결제수단</div>
 	                		<div>
-	                			<button id="pay-by-cash" class="btn btn1">무통장입금</button>
-	                			<button id="pay-by-card" class="btn btn1">카드결제</button>
+	                			<label class="paybtn">
+							    	<input type="radio" name="paymethod" value="cash">
+							    	<span>무통장입금</span>
+								</label>
+							 
+								<label class="paybtn">
+							    	<input type="radio" name="paymethod" value="card">
+							    	<span>카드결제</span>
+								</label>
 	                		</div>
 	                	</div>
-	                	
 	                </div>
 	                <div class="payment-right">
 						<span>결제금액</span>
@@ -122,22 +146,22 @@ display: flex;
 							<div>
 								<div class="product-price">
 									<span class="price"><strong>상품금액</strong></span>
-									<p>11,100원</p>
+									<p><span id="total-price">11,100</span>원</p>
 								</div>
 								<div class="product-price">
 									<span>배송비</span>
-									<p><span>(+)</span>3,000원</p>
+									<p><span>(+)</span><span id="delivery-fee">3,000</span>원</p>
 								</div>
 								<div class="product-price">
-									<span>쿠폰 및 정립금</span>
-									<p><span>(-)</span>3,000원</p>
+									<span>쿠폰 및 포인트</span>
+									<p><span>(-)</span><span id="discount">3,000</span>원</p>
 								</div>
 							</div>
 						</div>
 						<div class="payment-info">
 							<div class="product-price">
 								<strong class="price">최종 결제 금액</strong>
-								<p class="price">11,100원</p>
+								<p class="price"><span id="amount">11,100</span>원</p>
 							</div>
 						</div>
 						<div>
@@ -147,7 +171,7 @@ display: flex;
 							<input type="checkbox" name="terms"/><label>개인정보 제 3자 제공 동의<span class="essential-check">(필수)</span></label><br />
 						</div>
 						<div>
-							<button class="btn btn1" id="order-btn">결제하기</button>
+							<button class="btn btn1" id="order-btn" onclick="proceedPay();">결제하기</button>
 						</div>          
 	                </div>
                 </div>
@@ -155,6 +179,8 @@ display: flex;
         </div>
     </section>
 <script>
+
+/* 이용약관 버튼 색상 조정 */
 const checkAll = document.getElementById("checkAll");
 const terms = document.getElementsByName("terms");
 const orderButton = document.getElementById("order-btn");
@@ -184,6 +210,87 @@ terms.forEach(term => {
 const updateButtonColor = () => {
     checkAll.checked ? orderButton.classList.add("active") : orderButton.classList.remove("active")
 };
+
+
+/* 결제 관련 js */
+
+let orderCnt = 100;
+
+const orderNumber = () => {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear().toString().slice(-2);
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = currentDate.getDate().toString().padStart(2, '0');
+
+  return `\${year}\${month}\${day}` + (orderCnt++);
+	
+}
+
+/* 결제 전 주문 페이지에 주문 정보를 담는다 */
+
+const proceedPay = () => {
+	/* 주문 테이블에 들어갈 값 */
+	const data = {
+		orderNo: orderNumber(),
+		memberId: 'honggd',
+		totalPrice: 11000,
+		deliveryFee: 3000,
+		discount: 3000,
+		amount: 11000
+	}
+	$.ajax({
+		url: '${pageContext.request.contextPath}/payment/proceed.do',
+		type: 'POST',
+		async: true,
+		contentType:'application/json',
+		data : JSON.stringify(data),
+		success(response) {
+			console.log(response);
+			if(response.result > 0){
+				alert('주문 ㄱㄱ?');
+				requestPaymentByCard(data)
+			} else {
+				alert(response.msg);
+			}
+		}
+	});
+
+};
+
+
+const requestPaymentByCard = (data) => {
+	const {IMP} = window;
+	IMP.init('imp60204862');
+	
+	/* 2. 결제 데이터 정의 */
+	IMP.request_pay({
+		pg: 'html5_inicis',                           // PG사
+        pay_method: 'card', 
+        merchant_uid: data.orderNo,  // 주문번호
+        amount: 100,                                 // 결제금액
+        name: '테스트입니다요',                   // 주문명
+        buyer_name: '김담희',                           // 구매자 이름
+        buyer_tel: '010-1234-1234',                     // 구매자 전화번호
+        buyer_email: 'dami@naver.com',               // 구매자 이메일
+        buyer_addr: '모현읍ㅎ',                    // 구매자 주소
+        buyer_postcode: '12031',                      // 구매자 우편번호
+	}, 
+	function (response) {
+		// 콜백 함수
+        if(response.success) {
+        	alert('결제에 성공하셨습니다.');
+        }
+        else {
+        	alert(`결제 실패 : \${error_msg}`);
+        }
+	});
+};
+
+
+
+
+
+
 
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>

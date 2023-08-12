@@ -146,12 +146,11 @@
 					<td>
 						<div class="login-input">
 							<input type="text" id="inputId" class="form-control"
-								required="required" placeholder="아이디"
-								value="${sessionScope.saveok==null?"":sessionScope.myid }">
+								required placeholder="아이디">
 						</div>
 						<div class="login-input">
 							<input type="password" id="inputPassword" class="form-control2"
-								required="required" placeholder="비밀번호">
+								required placeholder="비밀번호">
 						</div>
 					</td>
 				</tr>
@@ -196,7 +195,6 @@
 						</div>
 					</td>
 				</tr>
-
 			</table>
 		</form>
 	</div>
@@ -223,11 +221,7 @@
 	// 초기 상태를 설정하기 위해 함수를 처음에 한 번 호출
 	checkInputs();
 
-
-	
-
 	
 	</script>
-</section>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
