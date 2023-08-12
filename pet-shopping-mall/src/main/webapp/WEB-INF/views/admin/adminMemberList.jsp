@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="admin-member-search-container">
-    <form:form
+       <form:form
 		name="adminMemberSearchFrm" 
 		action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
 		method="get">
@@ -61,53 +61,6 @@
 	</tbody>
 </table>
 
-
-<c:if test="${not empty members}">
-    <div class="pagination justify-content-center">
-        <ul class="pagination">
-            <c:choose>
-                <c:when test="${page > 1}">
-                    <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${page - 1}">이전</a>
-                    </li>
-                </c:when>
-                <c:otherwise>
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">이전</a>
-                    </li>
-                </c:otherwise>
-            </c:choose>
-
-            <c:forEach var="pageNum" begin="1" end="${totalPages}" step="1">
-                <c:choose>
-                    <c:when test="${page eq pageNum}">
-                        <li class="page-item active">
-                            <a class="page-link" href="#">${pageNum}</a>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${pageNum}">${pageNum}</a>
-                        </li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-
-            <c:choose>
-                <c:when test="${page < totalPages}">
-                    <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${page + 1}">다음</a>
-                    </li>
-                </c:when>
-                <c:otherwise>
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">다음</a>
-                    </li>
-                </c:otherwise>
-            </c:choose>
-        </ul>
-    </div>
-</c:if>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

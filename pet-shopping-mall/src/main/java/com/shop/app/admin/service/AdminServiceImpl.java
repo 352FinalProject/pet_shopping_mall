@@ -1,4 +1,4 @@
-package com.shop.app.admin.service;
+ package com.shop.app.admin.service;
 
 import java.util.List;
 import java.util.Map;
@@ -47,12 +47,4 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteMember(Member member) {
 		return adminRepository.deleteMember(member);
 	}
-
-
-
-
-	
-
-	
-
 }

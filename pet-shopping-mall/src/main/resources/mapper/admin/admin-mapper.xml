@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.admin.repository.AdminRepository">
-	
+
 	<select id="adminMemberSearchByNameOrId" resultType="com.shop.app.member.entity.Member">
     SELECT *
     FROM member
