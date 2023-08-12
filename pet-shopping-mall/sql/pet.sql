@@ -44,51 +44,50 @@ create table member (
 );
 
 -- qna 질문 테이블
-create table question (
-    id number,
-    member_id varchar2(20),
-    title varchar2(500),
-    content varchar2(4000),
-    created_at date default sysdate,
-    constraints pk_question_id primary key(id),
-    constraints fk_question_member_writer foreign key(member_id) references member(member_id) on delete cascade,
+    question_id number,
+    question_member_id varchar2(20),
+    question_category varchar2(50),
+    question_email varchar2(200),
+    question_title varchar2(500),
+    question_content varchar2(4000),
+    question_created_at timestamp default sysdate,
+    constraints pk_question_id primary key(question_id),
+    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
 
 -- qna 답변 테이블
 create table answer(
-   id number,
-   admin_name varchar2(20) default '관리자',
-   question_id number,
-   content varchar2(4000),
-   created_at date default sysdate,
-   constraints pk_answer_id primary key(id),
-   constraints fk_answer_question_id foreign key (question_id) references question(id) on delete cascade
+   answer_id number,
+   answer_admin_name varchar2(20) default '관리자',
+   answer_question_id number,
+   answer_content varchar2(4000),
+   answer_created_at timestamp default sysdate,
+   constraints pk_answer_id primary key(answer_id),
+   constraints fk_answer_question_id foreign key (answer_question_id) references question(question_id) on delete cascade
 );
 
 -- 파일 테이블
 create table image_attachment (
-    id number,
+    image_id number,
     image_type number,
     image_category char(1),
-    original_filename varchar2(500),
-    renamed_filename varchar2(500),
-    thumbnail char(1),
-    file_size number,
-    created_at timestamp default systimestamp,
-    is_deleted char(1),
-    constraint pk_image_attachment_id primary key(id)
+    image_original_filename varchar2(500),
+    image_renamed_filename varchar2(500),
+    image_file_size number,
+    image_created_at timestamp default systimestamp,
+    constraint pk_image_attachment_id primary key(image_id)
 );
 
 -- 포인트 테이블
 create table point (
-    id number,
-    member_id varchar2(20),
-    current_point number,
+    point_id number,
+    point_member_id varchar2(20),
+    point_current number,
     point_type varchar2(100),
-    amount number not null,
-    point_date date default sysdate,
-    constraint pk_point_id primary key (id),
-    constraint fk_point_member_id foreign key (member_id) references member(member_id)
+    point_amount number not null,
+    point_date timestamp default sysdate,
+    constraint pk_point_id primary key (point_id),
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id)
 );
 
 -- 상품 테이블
@@ -107,13 +106,11 @@ create table product (
     constraints uq_product_product_code unique(product_code)
 );
 
-
 create sequence seq_member_id;
-create sequence seq_answer_id;
-create sequence seq_question_id;
-create sequence seq_point_id;
-create sequence seq_product_id;
-create sequence seq_image_attachment_id;
+create sequence seq_answer_answer_id;
+create sequence seq_question_question_id;
+create sequence seq_image_attachment_image_id;
+create sequence seq_point_point_id;
 
 select * from member;
 select * from question;
@@ -129,12 +126,10 @@ select * from image_attachment;
 --drop table product;
 --drop table image_attachment;
 --
---drop sequence seq_member_id;
---drop sequence seq_answer_id;
---drop sequence seq_question_id;
---drop sequence seq_point_id;
---drop sequence seq_product_id;
---drop sequence seq_image_attachment_id;
+--drop sequence seq_answer_answer_id;
+--drop sequence seq_question_question_id;
+--drop sequence seq_point_point_id;
+--drop sequence seq_image_attachment_image_id;
 
 ------------------ member insert ---------------------------
 insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
@@ -186,17 +181,17 @@ insert into member (id, member_id, password, name, phone, email, address, birthd
 values (seq_member_id.nextval, 'honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
 
 ------------------ qna insert ---------------------------
-insert into question (id, title, member_id, product_id, content, reg_date)
-values (seq_question_id.nextval, '우동친이 머에요?', 'member1', 3, '우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요????', to_date('18/02/14', 'rr/mm/dd'));
-insert into question (id, title, member_id, product_id, content, reg_date)
-values (seq_question_id.nextval, '배가 고파요', 'member1', 4, '배가 고프다', to_date('18/02/14', 'rr/mm/dd'));
+insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
+values (seq_question_question_id.nextval, '우동친이 머에요?', '상품' ,'member1', 'kh@naver.com', '우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요????', to_date('18/02/14', 'rr/mm/dd'));
+insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
+values (seq_question_question_id.nextval, '배가 고파요', '배송', 'member1', 'kh@daum.net', '배가 고프다', to_date('18/02/14', 'rr/mm/dd'));
 
 ------------------ answer insert ---------------------------
-insert into answer (id, admin_name, question_id, content, reg_date)
-values (seq_member_id.nextval, '관리자', 1, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
+insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
+values (seq_answer_answer_id.nextval, '관리자', 1, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
 
-insert into answer (id, admin_name, question_id, content, reg_date)
-values (seq_member_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
+insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
+values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
 
 ------------------ product insert ---------------------------
 insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
@@ -206,11 +201,13 @@ insert into product (id, product_code, product_category, product_name, product_p
 values (seq_member_id.nextval, 102, '하네스', '말랑 하네스', 15000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
 
 ------------------ point insert ---------------------------
-insert into point (id, member_id, current_point, point_type, amount, point_date)
-values (seq_member_id.nextval, 'member1', 1000, '적립', 500, to_date('2023-08-09', 'yyyy-mm-dd'));
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_point_id.nextval, 'member1', 1000, '적립', 500, to_date('2023-08-09', 'yyyy-mm-dd'));
 
-insert into point (id, member_id, current_point, point_type, amount, point_date)
-values (seq_member_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
+
+
 
 delete from question where id = '19';
 

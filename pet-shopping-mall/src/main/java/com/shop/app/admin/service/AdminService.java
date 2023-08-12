@@ -20,7 +20,6 @@ public interface AdminService {
 	// 관리자 1:1 문의 전체 내역 조회 (예라)
 	List<Question> findQuestionAll(Question question);
 
-}
 
 	List<Member> adminMemberSearchByNameOrId(String searchKeyword);
 
