@@ -177,3 +177,7 @@ SELECT * FROM product WHERE id = 3;
 select * from question where id = '4';
 
 select * from question where member_id = 'member1';
+
+select * from member where name like '이' or member_id like'k';
+
+
