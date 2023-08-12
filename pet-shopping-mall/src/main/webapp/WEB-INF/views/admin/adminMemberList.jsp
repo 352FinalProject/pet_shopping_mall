@@ -39,22 +39,22 @@
 	<tbody>
 		<c:if test="${empty members}">
 			<tr>
-				<td colspan="5" class="text-center">조회된 회원이 없습니다.</td>
+				<td colspan="11" class="text-center">조회된 회원이 없습니다.</td>
 			</tr>
 		</c:if>
 		<c:if test="${not empty members}">
-			<c:forEach items="${members}" var="members" varStatus="vs">
+			<c:forEach items="${members}" var="member" varStatus="vs">
 				<tr>
-					<td>${vs.count}</td>
-					<td>${members.id}</td>
-					<td>${members.memberId}</td>
-					<td>${members.name}</td>
-					<td>${members.phone}</td>
-					<td>${members.email}</td>
-					<td>${members.enrollDate}</td>
-					<td>${members.address}</td>
-					<td>${members.birthday}</td>
-					<td>${members.point}</td>
+					 <td>${members.size() - vs.index}</td>
+					<td>${member.id}</td>
+					<td>${member.memberId}</td>
+					<td>${member.name}</td>
+					<td>${member.phone}</td>
+					<td>${member.email}</td>
+					<td>${member.enrollDate}</td>
+					<td>${member.address}</td>
+					<td>${member.birthday}</td>
+					<td>${member.point}</td>
 					<td><button onclick="submit">수정</button></td>
 				</tr>
 			</c:forEach>
