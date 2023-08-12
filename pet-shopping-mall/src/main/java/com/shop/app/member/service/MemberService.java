@@ -2,11 +2,13 @@ package com.shop.app.member.service;
 
 
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
 
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
 
 	int insertMember(MemberCreateDto member);
@@ -15,7 +17,6 @@ public interface MemberService {
 
 	int updateMember(Member member);
 
-	Member deleteMember(String memberId);
-
+	int deleteMember(Member member);
 
 }

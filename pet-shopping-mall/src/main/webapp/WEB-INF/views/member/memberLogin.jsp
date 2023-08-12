@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>	
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .table-bordered {
@@ -28,7 +29,7 @@
 	justify-content: center;
 	margin: 20px auto;
 	height: 70px;
-	border-radius: 35px; 
+	border-radius: 35px;
 	font-size: 20px;
 }
 
@@ -39,7 +40,7 @@
 	justify-content: center;
 	margin: 20px auto;
 	height: 70px;
-	border-radius: 35px; 
+	border-radius: 35px;
 	font-size: 20px;
 }
 
@@ -48,7 +49,7 @@
 	margin-bottom: 20px;
 }
 
-.saveId { /* ���̵����� */
+.saveId { /*    ̵      */
 	margin-right: 50px;
 	font-size: 25px;
 	width: 25px;
@@ -60,16 +61,16 @@
 
 .search {
 	margin-left: 50px;
-	border: none !important; 
+	border: none !important;
 	font-size: 18px;
 	background-color: white;
 	border: none !important;
 }
 
-.login-btnAll { 
+.login-btnAll {
 	display: flex;
 	text-align: center;
-	border: none !important; 
+	border: none !important;
 	justify-content: center;
 	font-size: 70px;
 	margin: 10px auto;
@@ -79,9 +80,9 @@
 	background-color: #c8c8c8;;
 	width: 400px;
 	height: 70px;
-	border-radius: 35px; 
-	border: none !important; 
-	color: white; 
+	border-radius: 35px;
+	border: none !important;
+	color: white;
 	font-size: 25px;
 }
 
@@ -89,9 +90,9 @@
 	background-color: #ffeb00;
 	width: 400px;
 	height: 70px;
-	border-radius: 35px; 
-	border: none !important; 
-	color: white; 
+	border-radius: 35px;
+	border: none !important;
+	color: white;
 	font-size: 25px;
 }
 
@@ -99,9 +100,9 @@
 	background-color: #00c577;
 	width: 400px;
 	height: 70px;
-	border-radius: 35px; 
-	border: none !important; 
-	color: white; 
+	border-radius: 35px;
+	border: none !important;
+	color: white;
 	font-size: 25px;
 }
 
@@ -109,22 +110,22 @@
 	background: #c8c8c8;
 	width: 400px;
 	height: 70px;
-	border-radius: 35px; 
-	border: none !important; 
-	color: white; 
+	border-radius: 35px;
+	border: none !important;
+	color: white;
 	font-size: 25px;
 }
 
-.login-btn2 { 
+.login-btn2 {
 	display: flex;
 	text-align: center;
 	background-color: #c8c8c8;
-	border: none !important; 
+	border: none !important;
 	margin: 0 auto;
 	justify-content: center;
 }
 
-.login-btn.active { 
+.login-btn.active {
 	text-align: center;
 	background-color: #5886d3;
 	margin: 0 auto;
@@ -133,7 +134,7 @@
 </style>
 <section class="common-section" id="#">
 	<div class="common-container">
-		<form action="login" method="post">
+		<form:form action="${pageContext.request.contextPath}/member/memberLogin.do" method="post">
 			<table class="table-bordered">
 				<tr>
 					<td>
@@ -144,16 +145,16 @@
 				</tr>
 				<tr>
 					<td>
-					<div class="login-modal">
-						<div class="login-input">
-							<input type="text" id="inputId" class="form-control"
-								required="required" placeholder="아이디"/>
+						<div class="login-modal">
+							<div class="login-input">
+								<input type="text" id="inputId" class="form-control"
+									required="required" placeholder="아이디" />
+							</div>
+							<div class="login-input">
+								<input type="password" id="inputPassword" class="form-control2"
+									required="required" placeholder="비밀번호">
+							</div>
 						</div>
-						<div class="login-input">
-							<input type="password" id="inputPassword" class="form-control2"
-								required="required" placeholder="비밀번호">
-						</div>
-					</div>	
 					</td>
 				</tr>
 				<tr>
@@ -170,7 +171,8 @@
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<button type="button" name="id" id="loginButton" class="login-btn" >로그인</button>
+							<button type="submit" name="id" id="loginButton"
+								class="login-btn">로그인</button>
 						</div>
 					</td>
 				</tr>
@@ -197,29 +199,43 @@
 				</tr>
 
 			</table>
-		</form>
+		</form:form>
 	</div>
 </section>
 <script>
-	const checkInputs = () => {
-	    const id = document.getElementById('inputId').value;
-	    const password = document.getElementById('inputPassword').value;
-	    const loginButton = document.getElementById('loginButton');
+/* document.getElementById('loginButton').addEventListener('click', function() {
+	  const id = document.getElementById('inputId').value;
+	  const password = document.getElementById('inputPassword').value;
 
-	    if (id && password) {
-	        loginButton.style.backgroundColor = '#5886d3';
-	        loginButton.disabled = false; // 버튼 활성화
-	    } else {
-	        loginButton.style.backgroundColor = '#c8c8c8';
-	        loginButton.disabled = true; // 버튼 비활성화
-	    }
+	  // 아이디와 비밀번호 유효성 검사
+	  if (id && password) {
+	    // 여기서 로그인 처리를 수행합니다.
+	    // 예를 들어, 서버로 요청을 보내거나 다른 페이지로 리다이렉트 할 수 있습니다.
+	    console.log('로그인 성공!');
+	  } else {
+	    alert('아이디와 비밀번호를 입력해주세요.');
+	  }
+	});
+ */
+ const checkInputs = () => {
+	  const id = document.getElementById('inputId').value;
+	  const password = document.getElementById('inputPassword').value;
+	  const loginButton = document.getElementById('loginButton');
+
+	  if (id && password) {
+	    loginButton.style.backgroundColor = '#5886d3';
+	    loginButton.disabled = false; // 버튼 활성화
+	  } else {
+	    loginButton.style.backgroundColor = '#c8c8c8';
+	    loginButton.disabled = true; // 버튼 비활성화
+	  }
 	};
 
-	// ID와 비밀번호 입력란에 이벤트 리스너를 추가하여 값이 변경될 때마다 checkInputs 함수를 호출
+	// ID와 비밀번호 필드에 대한 값 변경시 checkInputs 함수를 호출하도록 이벤트 리스너 추가
 	document.getElementById('inputId').addEventListener('input', checkInputs);
 	document.getElementById('inputPassword').addEventListener('input', checkInputs);
 
-	// 초기 상태를 설정하기 위해 함수를 처음에 한 번 호출
+	// 초기 상태 설정을 위해 함수를 한 번 호출
 	checkInputs();
 
 
@@ -227,6 +243,5 @@
 
 	
 	</script>
-</section>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

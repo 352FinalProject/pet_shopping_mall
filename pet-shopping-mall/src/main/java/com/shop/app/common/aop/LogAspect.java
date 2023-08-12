@@ -28,7 +28,7 @@ public class LogAspect {
 	/**
 	 * joinPoint 지정하는 표현식
 	 */
-	@Pointcut("execution(* com.sh.app..*(..))")
+	@Pointcut("execution(* com.shop.app..*(..))")
 	public void pointcut() {} 
 	
 	/**
