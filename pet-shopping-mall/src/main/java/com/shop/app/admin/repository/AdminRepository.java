@@ -7,13 +7,14 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.member.entity.Member;
 @Mapper
 public interface AdminRepository {
 	
-	@Select("select * from member where member_id = #{memberId}")
-	List<Member> findMemberById(String memberId);
+	@Select("select * from member order by id desc")
+	List<Member> adminMemberList(RowBounds rowBounds);
 	
 	@Insert("insert into member values ()")
 	int insertMember(Member member);
@@ -23,5 +24,7 @@ public interface AdminRepository {
 	
 	@Delete("delete memeber where id = #{memberId}")
 	int deleteMember(Member member);
+
+	
 
 }

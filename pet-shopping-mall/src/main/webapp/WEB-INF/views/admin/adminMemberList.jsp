@@ -35,16 +35,16 @@
 	<tbody>
 		<c:forEach begin="0" end="20" step="1" varStatus="status">
 			<tr>
-				<td>member.id</td>
-				<td>member.memberId</td>
-				<td>member.name</td>
-				<td>member.phone</td>
-				<td>member.email</td>
-				<td>member.createAt</td>
-				<td>member.address</td>
-				<td>member.birthday</td>
-				<td>member.point</td>
-				<td>member.subscribe</td>
+				<td>${member.id}</td>
+				<td>${member.memberId}</td>
+				<td>${member.name}</td>
+				<td>${member.phone}</td>
+				<td>${member.email}</td>
+				<td>${member.enrollDate}</td>
+				<td>${member.address}</td>
+				<td>${member.birthday}</td>
+				<td>${member.point}</td>
+				<td>${member.subscribe}</td>
 				<td><button onclick="">수정</button></td>
 			</tr>
 		</c:forEach>
