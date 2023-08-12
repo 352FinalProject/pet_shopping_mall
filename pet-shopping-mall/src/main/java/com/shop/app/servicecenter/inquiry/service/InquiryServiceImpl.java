@@ -70,5 +70,11 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryRepository.findQuestionByMemberId(memberId);
 	}
 
+	// 1:1 문의 답변 조회 (예라)
+	@Override
+	public Answer findAnswersByContent(Answer answer) {
+		return inquiryRepository.findAnswersByContent(answer);
+	}
+
 
 }

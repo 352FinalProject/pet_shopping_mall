@@ -113,5 +113,8 @@ public class MemberController {
 	@GetMapping("/myReview.do")
 	public void myReview() {}
 	
+	@GetMapping("/myPage.do")
+	public void myPage() {}
+	
 
 }

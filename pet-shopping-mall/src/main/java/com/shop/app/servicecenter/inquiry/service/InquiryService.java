@@ -28,5 +28,8 @@ public interface InquiryService {
 
 	// 1:1 문의 member_id 검색 (예라)
 	Question findQuestionByMemberId(String memberId);
+
+	// 1:1 문의 답변 조회 (예라)
+	Answer findAnswersByContent(Answer answer);
 	
 }

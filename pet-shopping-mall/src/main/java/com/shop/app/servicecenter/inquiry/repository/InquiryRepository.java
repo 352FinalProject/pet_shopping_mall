@@ -17,7 +17,7 @@ public interface InquiryRepository {
 	
 
 	// 1:1 목록 조회 질문 (예라)
-	@Select("select id, member_id, product_id, title, content, reg_date from question")
+	@Select("select q.*, (select count(*) from answer where question_id = q.id) awnser_count from question q")
 	List<Question> findQuestionAll(Question question);
 
 	// 1:1 목록 상세 조회 (예라)
@@ -47,5 +47,9 @@ public interface InquiryRepository {
 	// 1:1 문의 member_id 검색 (예라)
 	@Select("select * from question where member_id = #{memberId}")
 	Question findQuestionByMemberId(String memberId);
+
+	// 1:1 문의 답변 내용 조회 (예라)
+	@Select("select * from answer where content = #{content}")
+	Answer findAnswersByContent(Answer answer);
 
 }

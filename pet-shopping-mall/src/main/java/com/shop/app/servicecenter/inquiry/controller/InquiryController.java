@@ -47,6 +47,8 @@ public class InquiryController {
 	@GetMapping("/inquiry/questionList.do")
 	public void questionList(Question question, Model model) {
 		List<Question> questions = inquiryService.findQuestionAll(question);
+		log.debug("questions = {}", questions);
+		
 		model.addAttribute("questions", questions);
 	}
 	
