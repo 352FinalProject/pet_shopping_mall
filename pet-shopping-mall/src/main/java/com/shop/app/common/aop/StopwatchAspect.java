@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StopwatchAspect {
 
-	@Pointcut("execution(* com.sh.app..*Controller.create*(..))")
+	@Pointcut("execution(* com.shop.app..*Controller.create*(..))")
 	public void pointcut() {}
 	
 	@Around("pointcut()")
