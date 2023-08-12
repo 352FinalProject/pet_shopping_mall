@@ -30,6 +30,7 @@ public interface AdminRepository {
 	int deleteMember(Member member);
 
 
+
 	
 
 }

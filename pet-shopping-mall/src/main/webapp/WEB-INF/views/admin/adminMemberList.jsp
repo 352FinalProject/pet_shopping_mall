@@ -33,19 +33,20 @@
 			<th>주소</th>
 			<th>생일</th>
 			<th>포인트</th>
+			<th>구독</th>
 			<th>관리</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:if test="${empty members}">
 			<tr>
-				<td colspan="11" class="text-center">조회된 회원이 없습니다.</td>
+				<td colspan="12" class="text-center">조회된 회원이 없습니다.</td>
 			</tr>
 		</c:if>
 		<c:if test="${not empty members}">
 			<c:forEach items="${members}" var="member" varStatus="vs">
 				<tr>
-					 <td>${members.size() - vs.index}</td>
+					<td>${members.size() - vs.index}</td>
 					<td>${member.id}</td>
 					<td>${member.memberId}</td>
 					<td>${member.name}</td>
@@ -55,6 +56,7 @@
 					<td>${member.address}</td>
 					<td>${member.birthday}</td>
 					<td>${member.point}</td>
+					<td>${member.subscribe}</td>
 					<td><button onclick="submit">수정</button></td>
 				</tr>
 			</c:forEach>
@@ -62,6 +64,27 @@
 	</tbody>
 </table>
 
+<!-- 페이지 바 -->
+<div class="pagination">
+    <c:if test="${page > 1}">
+        <a href="?page=1">처음</a>
+        <a href="?page=${page - 1}">이전</a>
+    </c:if>
+    <c:forEach var="pageNumber" begin="${startPage}" end="${endPage}">
+        <c:choose>
+            <c:when test="${pageNumber == page}">
+                <span class="current">${pageNumber}</span>
+            </c:when>
+            <c:otherwise>
+                <a href="?page=${pageNumber}">${pageNumber}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:if test="${page < totalPages}">
+        <a href="?page=${page + 1}">다음</a>
+        <a href="?page=${totalPages}">끝</a>
+    </c:if>
+</div>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -1,5 +1,6 @@
 package com.shop.app.admin.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberRole;
+import com.shop.app.member.entity.Subscribe;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +33,7 @@ public class AdminController {
 	@GetMapping("/admin.do")
 	public void admin() {}
 	
-	@GetMapping("/adminMemberList.do")
+	@GetMapping({"/adminMemberList.do", "/adminSubscribeList.do"})
 	public void adminMemberList(@RequestParam(defaultValue = "1") int page,
 			Model model) {
 		
@@ -48,14 +50,20 @@ public class AdminController {
 	    for (Member member : members) {
 	        String roleString = member.getMemberRole().toString(); // 데이터베이스에서 받은 열 값
 	        MemberRole memberRole = MemberRole.valueOf(roleString); // Enum 값으로 변환
+	        
+	        String subscribeString = member.getSubscribe().toString(); 
+	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
+	        
+	        
 	        member.setMemberRole(memberRole); // 변환된 Enum 값을 Member 객체에 설정
+	        member.setSubscribe(subscribe);
 	    }
 		
 		model.addAttribute("members", members);
 	}
 	
 	@GetMapping("/adminMemberSearchByNameOrId.do")
-	public String adminMemberSearchByNameOrId(
+	public void adminMemberSearchByNameOrId(
 	        @RequestParam(required = false) String searchKeyword,
 	        Model model) {
 
@@ -63,15 +71,20 @@ public class AdminController {
 	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
 
 	        for (Member member : members) {
-		        String roleString = member.getMemberRole().toString(); // 데이터베이스에서 받은 열 값
-		        MemberRole memberRole = MemberRole.valueOf(roleString); // Enum 값으로 변환
-		        member.setMemberRole(memberRole); // 변환된 Enum 값을 Member 객체에 설정
+		        String roleString = member.getMemberRole().toString(); 
+		        MemberRole memberRole = MemberRole.valueOf(roleString); 
+		        
+		        String subscribeString = member.getSubscribe().toString(); 
+		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
+		        
+		        member.setMemberRole(memberRole); 
+		        member.setSubscribe(subscribe);
 		    }
 
 	        model.addAttribute("members", members);
+	    } else {
+	        model.addAttribute("members", new ArrayList<Member>()); // 빈 리스트 추가
 	    }
-
-	    return "admin/adminMemberList"; 
 	}
 	
 
@@ -84,8 +97,6 @@ public class AdminController {
 	@GetMapping("/adminStatistics.do")
 	public void adminStatistics() {}
 	
-	@GetMapping("/adminSubscribeList.do")
-	public void adminSubscribeList() {}
 	
 	
 }
