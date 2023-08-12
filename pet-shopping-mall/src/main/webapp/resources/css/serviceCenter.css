@@ -81,7 +81,7 @@
 }
 
 /**/
-.anw-create [name="content"] {
+.anw-create [name="answerContent"] {
 	width: 700px;
 	border: 1px solid #c8c8c8;
 	height: 30px;
@@ -104,7 +104,7 @@
 }
 
 /*1:1 상세 내역 조회 아이디 폼, 파일 폼*/
-.qna-create input[type="text"]{
+.qna-create input[type="text"], .qna-create input[type="email"]{
 	width: 450px;
 	border: 1px solid #c8c8c8;
 	height: 30px;
@@ -124,14 +124,6 @@
 /*1:1 상세 내역 조회 내용*/
 
 /**/
-.qna-create input[type="tel"] {
-	border: 1px solid #c8c8c8;
-	width: 114px;
-	height: 30px;
-	margin: 10px;
-}
-
-/**/
 .qna-create input[name="content"] {
 	height: 210px;
 }
@@ -142,7 +134,7 @@
 	vertical-align: middle;
 }
 
-.qna-create textarea[name="content"] {
+.qna-create textarea[name="questionContent"] {
 	width: 700px;
 	height: 270px;
 	border: 1px solid #c8c8c8;
@@ -221,4 +213,15 @@
 	color: #fff;
 	background: #58ACFA;
 	cursor: pointer;
+}
+
+/* 카테고리 선택 버튼 */
+.custom-select {
+	width: 100px;
+}
+
+.questionCategory {
+	display: flex;
+	margin-left: 10px;
+	
 }

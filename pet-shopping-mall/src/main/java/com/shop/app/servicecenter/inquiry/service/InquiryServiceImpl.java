@@ -44,7 +44,7 @@ public class InquiryServiceImpl implements InquiryService {
 		List<Attachment> attachments = ((QuestionDetails) question).getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(Attachment attach : attachments) {
-				attach.setItemId(question.getId());
+				attach.setImageId(question.getQuestionId());
 				result = inquiryRepository.insertAttachment(attach);
 			}
 		}

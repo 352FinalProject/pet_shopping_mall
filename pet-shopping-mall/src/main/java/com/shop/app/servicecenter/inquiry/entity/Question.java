@@ -15,13 +15,14 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Question {
 	
-	private int id;
-	private String memberId;
-	private int productId;
-	private String title;
-	private String content;
-	private LocalDateTime regDate;
-	private int answerCnt;
+	private int questionId;
+	private String questionMemberId;
+	private String questionEmail;
+	private String questionTitle;
+	private String questionContent;
+	private String questionCategory;
+	private LocalDateTime questionCreatedAt;
+	private int awnserCount;
 	
 	List<Answer> answers;
 

@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Answer {
 	
-	private int id;
-	private String adminName;
-	private int questionId;
-	private String content;
-	private LocalDateTime regDate;
+	private int answerId;
+	private String answerAdminName;
+	private int answerQuestionId;
+	private String answerContent;
+	private LocalDateTime answerCreatedAt;
 
 }

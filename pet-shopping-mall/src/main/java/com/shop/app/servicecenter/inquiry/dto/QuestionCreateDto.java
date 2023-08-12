@@ -10,23 +10,27 @@ import lombok.Data;
 public class QuestionCreateDto {
 	
 	@NotBlank(message = "아이디는 필수로 입력해야합니다.")
-	private String memberId;
-	
-	@NotBlank(message = "상품코드는 필수로 입력해야합니다.")
-	private int productId;
+	private String questionMemberId;
 	
 	@NotBlank(message = "제목은 필수로 입력해야합니다.")
-	private String title;
+	private String questionTitle;
+	
+	@NotBlank(message = "카테고리는 필수로 입력해야합니다.")
+	private String questionCategory;
+	
+	@NotBlank(message = "이메일은 필수로 입력해야합니다.")
+	private String questionEmail;
 	
 	@NotBlank(message = "내용은 필수로 입력해야합니다.")
-	private String content;
+	private String questionContent;
 	
 	public Question toQuestion() {
 		return Question.builder()
-				.memberId(memberId)
-				.productId(productId)
-				.title(title)
-				.content(content)
+				.questionMemberId(questionMemberId)
+				.questionTitle(questionTitle)
+				.questionContent(questionContent)
+				.questionCategory(questionCategory)
+				.questionEmail(questionEmail)
 				.build();
 	}
 }

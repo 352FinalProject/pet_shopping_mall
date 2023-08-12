@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder 
 public class QuestionDetails extends Question{
 
-	private int answerCount;
 	private int questionId;
 
 	private List<Attachment> attachments;

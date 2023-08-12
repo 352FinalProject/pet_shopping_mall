@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <%-- 1:1 문의 상세 조회 (예라) --%>
@@ -15,9 +16,19 @@
 					<table>
 						<tr>
 							<th>아이디</th>
-							<td><input type="text" name="memberId" id="memberId"
-								value="${questions.memberId}" required readonly /></td>
+							<td><input type="text" name="questionMemberId" id="questionMemberId"
+								value="${questions.questionMemberId}" required readonly /></td>
 						</tr>
+						<tr>
+								<th>이메일</th>
+								<td><input type="email" name="questionEmail" id="questionEmail" value="${questions.questionEmail}"
+									required></td>
+							</tr>
+							<tr>
+								<th>카테고리</th>
+								<td><input type="text" name="questionCategory" id="questionCategory" value="${questions.questionCategory}"
+									required></td>
+							</tr>
 						<tr>
 							<th>사진첨부</th>
 							<td><%-- <c:forEach items="${questions.attachments}" var="attach" varStatus="vs">
@@ -29,13 +40,13 @@
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td><input type="text" name="title" id="title" readonly
-								value="${questions.title}" required></td>
+							<td><input type="text" name="questionTitle" id="questionTitle" readonly
+								value="${questions.questionTitle}" required></td>
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><textarea name="qna-content" id="content" rows="10" cols="59" readonly style=" resize: none;">
-								${questions.content}</textarea></td>
+							<td><textarea name="qna-content" id="questionContent" rows="10" cols="59" readonly style=" resize: none;">
+								${questions.questionContent}</textarea></td>
 						</tr>
 					</table>
 				</div>
@@ -47,12 +58,12 @@
 				<table>
 					<tr>
 						<th>A</th>
-						<td><textarea name="content" id="content" readonly
-								style="height: 160px; resize: none;">${answers.content}</textarea></td>
+						<td><textarea name="answerContent" id="answerContent" readonly
+								style="height: 160px; resize: none;">${answers.answerContent}</textarea></td>
 						<td class="anw-regdate">
 							<br/>
-							<fmt:parseDate value="${answers.regDate}" pattern="yyyy-MM-dd'T'HH:mm" var="regDate" /> 답변 등록일
-							<fmt:formatDate value="${regDate}" pattern="yy/MM/dd" />
+							<fmt:parseDate value="${answers.answerCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="answerCreatedAt" /> 답변 등록일
+							<fmt:formatDate value="${answerCreatedAt}" pattern="yy/MM/dd" />
 						</td>
 					</tr>
 				</table>
@@ -64,9 +75,9 @@
 			        <button class="qna-btn-reset" type="submit">목록</button>
 			</form>
 	  			<button type="button" onclick="QuestionDelete();" class="qna-btn-reset">삭제하기</button>
-	  		<c:if test="${empty answers.content}">
-				<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionUpdate.do?questionId=${questions.id}">
-				    <input type="hidden" name="id" value="${questions.id}">
+	  		<c:if test="${empty answers.answerContent}">
+				<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionUpdate.do?questionId=${questions.questionId}">
+				    <input type="hidden" name="questionId" value="${questions.questionId}">
 				    <button class="qna-btn-create" type="submit">수정하기</button>
 				</form>
 			</c:if>
@@ -77,7 +88,7 @@
 	name="QuestionDeleteFrm" 
 	action="${pageContext.request.contextPath}/servicecenter/inquiry/DeleteQuestion.do"
 	method="POST">
-	<input type="hidden" name="id" value="${questions.id}"/>
+	<input type="hidden" name="id" value="${questions.questionId}"/>
 </form>
 <script>
 const QuestionDelete = () => {
