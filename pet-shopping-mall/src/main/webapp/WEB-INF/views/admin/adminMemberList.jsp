@@ -33,21 +33,28 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach begin="0" end="20" step="1" varStatus="status">
+		<c:if test="${empty members}">
 			<tr>
-				<td>${member.id}</td>
-				<td>${member.memberId}</td>
-				<td>${member.name}</td>
-				<td>${member.phone}</td>
-				<td>${member.email}</td>
-				<td>${member.enrollDate}</td>
-				<td>${member.address}</td>
-				<td>${member.birthday}</td>
-				<td>${member.point}</td>
-				<td>${member.subscribe}</td>
-				<td><button onclick="">수정</button></td>
+				<td colspan="5" class="text-center">조회된 게시글이 없습니다.</td>
 			</tr>
-		</c:forEach>
+		</c:if>
+		<c:if test="${not empty members}">
+			<c:forEach items="${members}" var="members" varStatus="vs">
+				<tr>
+					<td>${member.id}</td>
+					<td>${member.memberId}</td>
+					<td>${member.name}</td>
+					<td>${member.phone}</td>
+					<td>${member.email}</td>
+					<td>${member.enrollDate}</td>
+					<td>${member.address}</td>
+					<td>${member.birthday}</td>
+					<td>${member.point}</td>
+					<td>${member.subscribe}</td>
+					<td><button onclick="">수정</button></td>
+				</tr>
+			</c:forEach>
+		</c:if>
 	</tbody>
 </table>
 
