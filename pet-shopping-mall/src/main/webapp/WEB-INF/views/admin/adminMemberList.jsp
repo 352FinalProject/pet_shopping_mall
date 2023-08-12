@@ -28,7 +28,6 @@
 			<th>주소</th>
 			<th>생일</th>
 			<th>포인트</th>
-			<th>구독유무</th>
 			<th>관리</th>
 		</tr>
 	</thead>
@@ -41,16 +40,15 @@
 		<c:if test="${not empty members}">
 			<c:forEach items="${members}" var="members" varStatus="vs">
 				<tr>
-					<td>${member.id}</td>
-					<td>${member.memberId}</td>
-					<td>${member.name}</td>
-					<td>${member.phone}</td>
-					<td>${member.email}</td>
-					<td>${member.enrollDate}</td>
-					<td>${member.address}</td>
-					<td>${member.birthday}</td>
-					<td>${member.point}</td>
-					<td>${member.subscribe}</td>
+					<td>${members.id}</td>
+					<td>${members.memberId}</td>
+					<td>${members.name}</td>
+					<td>${members.phone}</td>
+					<td>${members.email}</td>
+					<td>${members.enrollDate}</td>
+					<td>${members.address}</td>
+					<td>${members.birthday}</td>
+					<td>${members.point}</td>
 					<td><button onclick="">수정</button></td>
 				</tr>
 			</c:forEach>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberRole;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,14 @@ public class AdminController {
 		// MemberDetails로 바꿔야댐
 		List<Member> members = adminService.adminMemberList(params);
 		// log.debug("members = {}", members);
+		
+		// EnumTypeHandler 사용하여 enum 값 매핑
+	    for (Member member : members) {
+	        String roleString = member.getMemberRole().toString(); // 데이터베이스에서 받은 열 값
+	        MemberRole memberRole = MemberRole.valueOf(roleString); // Enum 값으로 변환
+	        member.setMemberRole(memberRole); // 변환된 Enum 값을 Member 객체에 설정
+	    }
+		
 		model.addAttribute("members", members);
 	}
 	

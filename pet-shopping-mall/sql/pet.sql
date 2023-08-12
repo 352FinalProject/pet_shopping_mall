@@ -33,7 +33,7 @@ create table member (
     name varchar2(50) not null,
     phone varchar2(11) not null,
     email varchar2(200),
-    reg_date date default sysdate,
+    enroll_date date default sysdate,
     address varchar2(500),
     birthday date,
     member_role varchar(20) default 'ROLE_USER' not null,
