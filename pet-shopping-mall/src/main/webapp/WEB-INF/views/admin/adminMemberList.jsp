@@ -2,24 +2,28 @@
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="admin-member-search-container">
-    <form:form method="GET" class="admin-member-search">
+       <form:form
+		name="adminMemberSearchFrm" 
+		action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
+		method="get">
         <label for="searchKeyword">회원검색:</label>
         <select name="searchCategory">
             <option value="memberName">회원명</option>
             <option value="memberId">아이디</option>
         </select>
         <input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
-        <button type="submit">검색</button>
-    </form:form>
+        <input type="submit" value="검색">
+   	</form:form>
 </div>
 
 <table class="table table-striped table-hover">
 	<thead class="table-dark">
 		<tr>
+			<th>no</th>
 			<th>회원번호</th>
 			<th>회원아이디</th>
 			<th>이름</th>
@@ -29,44 +33,58 @@
 			<th>주소</th>
 			<th>생일</th>
 			<th>포인트</th>
-			<th>구독유무</th>
+			<th>구독</th>
 			<th>관리</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach begin="0" end="20" step="1" varStatus="status">
+		<c:if test="${empty members}">
 			<tr>
-				<td>member.id</td>
-				<td>member.memberId</td>
-				<td>member.name</td>
-				<td>member.phone</td>
-				<td>member.email</td>
-				<td>member.createAt</td>
-				<td>member.address</td>
-				<td>member.birthday</td>
-				<td>member.point</td>
-				<td>member.subscribe</td>
-				<td><button onclick="">수정</button></td>
+				<td colspan="12" class="text-center">조회된 회원이 없습니다.</td>
 			</tr>
-		</c:forEach>
+		</c:if>
+		<c:if test="${not empty members}">
+			<c:forEach items="${members}" var="member" varStatus="vs">
+				<tr>
+					<td>${members.size() - vs.index}</td>
+					<td>${member.id}</td>
+					<td>${member.memberId}</td>
+					<td>${member.name}</td>
+					<td>${member.phone}</td>
+					<td>${member.email}</td>
+					<td>${member.enrollDate}</td>
+					<td>${member.address}</td>
+					<td>${member.birthday}</td>
+					<td>${member.point}</td>
+					<td>${member.subscribe}</td>
+					<td><button onclick="submit">수정</button></td>
+				</tr>
+			</c:forEach>
+		</c:if>
 	</tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- 페이지 바 -->
+<div class="pagination">
+    <c:if test="${page > 1}">
+        <a href="?page=1">처음</a>
+        <a href="?page=${page - 1}">이전</a>
+    </c:if>
+    <c:forEach var="pageNumber" begin="${startPage}" end="${endPage}">
+        <c:choose>
+            <c:when test="${pageNumber == page}">
+                <span class="current">${pageNumber}</span>
+            </c:when>
+            <c:otherwise>
+                <a href="?page=${pageNumber}">${pageNumber}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:if test="${page < totalPages}">
+        <a href="?page=${page + 1}">다음</a>
+        <a href="?page=${totalPages}">끝</a>
+    </c:if>
+</div>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

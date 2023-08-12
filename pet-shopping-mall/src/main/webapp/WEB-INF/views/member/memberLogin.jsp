@@ -197,7 +197,6 @@
 						</div>
 					</td>
 				</tr>
-
 			</table>
 		</form:form>
 	</div>
@@ -237,9 +236,6 @@
 
 	// 초기 상태 설정을 위해 함수를 한 번 호출
 	checkInputs();
-
-
-	
 
 	
 	</script>
