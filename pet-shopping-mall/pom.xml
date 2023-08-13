@@ -18,7 +18,7 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-	  	<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -87,25 +87,23 @@
 			<!-- scope: compile(기본값)/runtime/provided(컴파일때 사용, 런타임때 사용안함) -->
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-
-		<dependencies>
-			<dependency>
-				<groupId>com.github.iamport</groupId>
-				<artifactId>iamport-rest-client-java</artifactId>
-				<version>0.2.22</version>
-			</dependency>
-		</dependencies>
-
+		<!-- 결제 아임포트 REST API 연동 모듈 -->
+		<dependency>
+			<groupId>com.github.iamport</groupId>
+			<artifactId>iamport-rest-client-java</artifactId>
+			<version>0.2.23</version>
+		</dependency>
 	</dependencies>
 
+	<!-- 결제 아임포트 REST API 연동 모듈 -->
 	<repositories>
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
-	
-	
+
+
 	<build>
 		<plugins>
 			<plugin>

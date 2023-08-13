@@ -276,13 +276,17 @@ const requestPaymentByCard = (data) => {
         buyer_postcode: '12031',                      // 구매자 우편번호
 	}, 
 	function (response) {
-		// 콜백 함수
-        if(response.success) {
-        	alert('결제에 성공하셨습니다.');
-        }
-        else {
-        	alert(`결제 실패 : \${error_msg}`);
-        }
+		// 결제 검증
+		$.ajax({
+			type: 'POST',
+			url : '${pageContext.request.contextPath}/verifyIamport/' + response.imp_uid
+		}).done((data) =>  {
+			if(response.paid_amount == data.response.amount) {
+				alert("결제 완료");
+			} else {
+				alert("결제 실패")
+			}
+		})
 	});
 };
 

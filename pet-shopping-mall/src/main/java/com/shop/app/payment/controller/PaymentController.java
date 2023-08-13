@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
+import com.siot.IamportRestClient.IamportClient;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +31,10 @@ public class PaymentController {
 
 	@Autowired
 	OrderService orderService;
+	
+	private IamportClient iamportClient;
+	
+	
 	
 	@GetMapping("/paymentInfo.do")
 	public void payment() {}
@@ -55,4 +60,7 @@ public class PaymentController {
 	    
 	    return resultMap;
 	}
+	
+//	public IamportResponse<Payment> paymne
+	
 }
