@@ -44,6 +44,7 @@
         </c:if>
         <c:if test="${not empty members}">
             <c:forEach items="${members}" var="member" varStatus="vs">
+            	<c:if test="${member.subscribe == 'Y'}">
                     <tr>
                         <td>${members.size() - vs.index}</td>
                         <td>${member.id}</td>
@@ -57,6 +58,7 @@
                         <td>${member.point}</td>
                         <td><button onclick="">수정</button></td>
                     </tr>
+            	</c:if>
             </c:forEach>
         </c:if>
     </tbody>
