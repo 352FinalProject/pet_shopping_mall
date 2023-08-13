@@ -22,9 +22,9 @@ import com.shop.app.member.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
-@Validated
-@RequestMapping("/member")
+//@Controller
+//@Validated
+//@RequestMapping("/member")
 //@SessionAttributes({ "loginMember" })
 @Slf4j
 public class MemberController {

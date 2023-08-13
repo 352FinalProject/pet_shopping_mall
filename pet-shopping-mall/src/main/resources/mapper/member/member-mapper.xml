@@ -19,10 +19,11 @@
       <id column="member_id" property="memberId"/>
       <result column="password" property="password"/>
       <result column="name" property="name"/>
-      <result column="gender" property="gender"/>
-      <result column="birthday" property="birthday"/>
+      <result column="phone" property="phone"/>
       <result column="email" property="email"/>
-      <result column="created_at" property="createdAt"/>
+      <result column="enroll_date" property="enrollDate"/>
+      <result column="address" property="address"/>
+      <result column="birthday" property="birthday"/>
       <collection property="authorities"
                   ofType="simpleGrantedAuthority">
           <constructor>
