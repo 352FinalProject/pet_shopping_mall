@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/point.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
    
@@ -62,7 +63,7 @@
 		        </div>
 		        <!-- 주문조회 -->
 		        <div class="order_checks_top_btn">
-		        	<a href="<%= request.getContextPath() %>/member/myPage.do">
+		        	<a href="${pageContext.request.contextPath}/member/myPage.do">
 		        		<img src="${pageContext.request.contextPath}/resources/images/home/login.png" id="center-image" alt="주문조회"/>
 		        	</a>
 		        </div>

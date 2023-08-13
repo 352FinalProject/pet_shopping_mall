@@ -105,7 +105,7 @@
 <!-- 마이페이지 (혜령) -->
 <!-- 아이디, 이름, 생일 수정X -->
     <section class="common-section" id="#">
-    	<div class="common-title">마이페이지</div>
+    	<div class="common-title">회원정보 수정</div>
     	<br>
     	<div class="common-container">
     		<div class="common-div">
