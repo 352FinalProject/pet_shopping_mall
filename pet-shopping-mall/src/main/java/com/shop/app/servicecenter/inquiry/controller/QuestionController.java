@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.Attachment;
+import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberRole;
+import com.shop.app.member.entity.Subscribe;
 import com.shop.app.servicecenter.inquiry.dto.AnswerCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionUpdateDto;
@@ -40,10 +44,22 @@ public class QuestionController {
 		
 	}
 	
-	// 1:1 목록 조회 (예라)
+	// 1:1 목록 조회 + 페이징바 (예라)
 	@GetMapping("/inquiry/questionList.do")
-	public void questionList(Question question, Model model) {
-		List<Question> questions = questionService.findQuestionAll(question);
+	public void questionList(@RequestParam(defaultValue = "1") int page, Question question, Model model) {
+		int limit = 5;
+		
+		Map<String, Object> params = Map.of(
+				"page", page,
+				"limit", limit
+			);
+		
+		int totalCount = questionService.findTotalQuestionCount();
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		model.addAttribute("totalPages", totalPages);
+		
+		List<Question> questions = questionService.findQuestionAll(params);
+		log.debug("params = {}", params);
 		log.debug("questions = {}", questions);
 		model.addAttribute("questions", questions);
 	}
@@ -154,5 +170,28 @@ public class QuestionController {
 		
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}
+	
+	// 1:1 문의 검색 (예라)
+	@GetMapping("/inquiry/questionSearch.do")
+	public String questionSearch(
+	        @RequestParam(required = false) String searchKeyword,
+	        Model model) {
+
+	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
+	        List<Question> questions = questionService.questionSearch(searchKeyword);
+
+	        for (Question question : questions) {
+		        String titleString = question.getQuestionTitle(); 
+		        String contentString = question.getQuestionContent(); 
+		        
+	        	question.setQuestionTitle(titleString); 
+	        	question.setQuestionContent(contentString);
+		    }
+
+	        model.addAttribute("questions", questions);
+	    }
+	    return "/servicecenter/inquiry/questionList";
+	}
+	
 	
 }

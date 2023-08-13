@@ -1,7 +1,7 @@
 package com.shop.app.servicecenter.inquiry.service;
 
 import java.util.List;
-
+import java.util.Map;
 
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
@@ -9,7 +9,7 @@ import com.shop.app.servicecenter.inquiry.entity.Question;
 public interface QuestionService {
 
 	// 1:1 목록 조회 질문 (예라)
-	List<Question> findQuestionAll(Question question);
+	List<Question> findQuestionAll(Map<String, Object> params);
 
 	// 1:1 목록 상세 조회 (예라)
 	Question findQuestionById(Question question);
@@ -31,5 +31,11 @@ public interface QuestionService {
 
 	// 1:1 문의 답변 조회 (예라)
 	Answer findAnswersByContent(Answer answer);
+
+	// 1:1 문의 제목, 내용 검색 (예라)
+	List<Question> questionSearch(String searchKeyword);
+
+	// 1:1 문의 전체 카운트
+	int findTotalQuestionCount();
 	
 }

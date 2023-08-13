@@ -1,7 +1,9 @@
 package com.shop.app.servicecenter.inquiry.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +22,12 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	// 1:1 목록 조회 질문 (예라)
 	@Override
-	public List<Question> findQuestionAll(Question question) {
-		return questionRepository.findQuestionAll(question);
+	public List<Question> findQuestionAll(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return questionRepository.findQuestionAll(rowBounds);
 	}
 	
 	// 1:1 목록 상세 조회 (예라)
@@ -76,5 +82,18 @@ public class QuestionServiceImpl implements QuestionService {
 	public Answer findAnswersByContent(Answer answer) {
 		return questionRepository.findAnswersByContent(answer);
 	}
+
+	// 1:1 문의 제목, 내용 검색 (예라)
+	@Override
+	public List<Question> questionSearch(String searchKeyword) {
+		return questionRepository.questionSearch(searchKeyword);
+	}
+
+	// 1:1 문의 전체 카운트 (예라)
+	@Override
+	public int findTotalQuestionCount() {
+		return questionRepository.findTotalQuestionCount();
+	}
+	
 
 }

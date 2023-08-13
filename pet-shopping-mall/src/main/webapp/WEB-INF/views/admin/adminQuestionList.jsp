@@ -4,16 +4,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
 <%-- 1:1 문의 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
 	<div class="common-title">1:1 문의 내역 (관리자)</div>
 	<div class="common-container">
 		<div class="common-div">
-			<div class="service-search">
-				<img src="${pageContext.request.contextPath}/resources/images/home/search.png" alt="">
-				<input type="text" name="service-search" id="service-search" value="" placeholder="제목, 내용" required>
+			<form:form name="questionSearchFrm" 
+				action="${pageContext.request.contextPath}/admin/adminQuestionSearch.do" method="get">
+				<div class="service-search">
+					<img src="${pageContext.request.contextPath}/resources/images/home/search.png" alt="">
+					<input type="text" name="searchKeyword" id="searchKeyword" value="" placeholder="제목 또는 내용" required>
+				<div class="searchKeyword2">
+       			<input type="submit" id="searchKeyword2" value="검색">
+       			</div>
 			</div>
+			</form:form>
 			<div class="service-util-div">
 				<table class="service-product-utility-admin">
 					<thead>
@@ -50,6 +56,17 @@
 			</div>
 		</div>
 	</div>
+<nav aria-label="...">
+ 	<ul class="pagination pagination-sm">
+    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+        <li class="page-item ${page == pageNumber ? 'active' : ''}">
+            <a class="page-link" href="${pageContext.request.contextPath}/servicecenter/inquiry/questionList.do?page=${pageNumber}">
+                   <span class="page-number">${pageNumber}</span>
+               </a>
+        </li>
+    </c:forEach>
+</ul>
+</nav>
 </section>
 <script>
 </script>

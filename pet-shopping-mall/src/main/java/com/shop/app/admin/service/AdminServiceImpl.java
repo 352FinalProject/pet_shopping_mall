@@ -51,8 +51,23 @@ public class AdminServiceImpl implements AdminService {
 
 	// 관리자 1:1 문의 전체 내역 조회 (예라)
 	@Override
-	public List<Question> findQuestionAll(Question question) {
-		return adminRepository.findQuestionAll(question);
+	public List<Question> findQuestionAll(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return adminRepository.findQuestionAll(rowBounds);
+	}
+
+	// 관리자 1:1 문의 제목, 내용 검색 (예라)
+	@Override
+	public List<Question> questionSearch(String searchKeyword) {
+		return adminRepository.questionSearch(searchKeyword);
+	}
+
+	@Override
+	public int findTotalQuestionCount() {
+		return adminRepository.findTotalQuestionCount();
 	}
 
 	

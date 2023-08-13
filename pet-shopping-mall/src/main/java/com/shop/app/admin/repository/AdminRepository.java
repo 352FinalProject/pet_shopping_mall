@@ -30,9 +30,17 @@ public interface AdminRepository {
 	@Delete("delete memeber where id = #{memberId}")
 	int deleteMember(Member member);
 
-	// 관리자 1:1 문의 전체 내역 조회 (예라)
+	// 관리자 1:1 문의 전체 내역 조회 + 페이징바(예라)
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc")
-	List<Question> findQuestionAll(Question question);
+	List<Question> findQuestionAll(RowBounds rowBounds);
+
+	// 관리자 1:1 문의 전체 카운트 (예라)
+	@Select("select count (*) from question")
+	int findTotalQuestionCount();
+	
+	@Select("select * from question where question_title like '%' || #{searchKeyword} || '%' or question_content like '%' || #{searchKeyword} || '%'")
+	List<Question> questionSearch(String searchKeyword);
+
 
 }
 

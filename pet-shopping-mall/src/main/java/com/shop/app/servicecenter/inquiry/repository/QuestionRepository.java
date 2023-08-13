@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.common.entity.Attachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
@@ -18,7 +19,7 @@ public interface QuestionRepository {
 
 	// 1:1 목록 조회 질문 (예라)
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc")
-	List<Question> findQuestionAll(Question question);
+	List<Question> findQuestionAll(RowBounds rowBounds);
 
 	// 1:1 목록 상세 조회 (예라)
 	@Select("select * from question where question_id = #{questionId}")
@@ -51,5 +52,13 @@ public interface QuestionRepository {
 	// 1:1 문의 답변 내용 조회 (예라)
 	@Select("select * from answer where answer_content = #{answerContent}")
 	Answer findAnswersByContent(Answer answer);
+
+	// 1:1 문의 제목, 내용 검색 (예라)
+	@Select("select * from question where question_title like '%' || #{searchKeyword} || '%' or question_content like '%' || #{searchKeyword} || '%'")
+	List<Question> questionSearch(String searchKeyword);
+
+	// 1:1 문의 전체 카운트 (예라)
+	@Select("select count (*) from question")
+	int findTotalQuestionCount();
 
 }

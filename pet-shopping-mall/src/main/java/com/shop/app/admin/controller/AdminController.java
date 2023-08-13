@@ -64,12 +64,49 @@ public class AdminController {
 	}
 	
 
-	// 관리자 1:1 문의 전체 내역 조회 (예라)
+	// 관리자 1:1 문의 전체 내역 조회 + 페이징바 (예라)
 	@GetMapping("/adminQuestionList.do")
-	public void adminQuestionList(Question question, Model model) {
-		List<Question> questions = adminService.findQuestionAll(question);
+	public void adminQuestionList(@RequestParam(defaultValue = "1") int page, Question question, Model model) {
+		int limit = 5;
+		
+		Map<String, Object> params = Map.of(
+				"page", page,
+				"limit", limit
+			);
+		
+		int totalCount = adminService.findTotalQuestionCount();
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		model.addAttribute("totalPages", totalPages);
+		
+		List<Question> questions = adminService.findQuestionAll(params);
+		log.debug("params = {}", params);
+		log.debug("questions = {}", questions);
 		model.addAttribute("questions", questions);
 	}
+	
+	
+	// 관리자 1:1 문의 제목, 내용 검색 (예라)
+	@GetMapping("/adminQuestionSearch.do")
+	public String questionSearch(
+	        @RequestParam(required = false) String searchKeyword,
+	        Model model) {
+
+	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
+	        List<Question> questions = adminService.questionSearch(searchKeyword);
+
+	        for (Question question : questions) {
+		        String titleString = question.getQuestionTitle(); 
+		        String contentString = question.getQuestionContent(); 
+		        
+	        	question.setQuestionTitle(titleString); 
+	        	question.setQuestionContent(contentString);
+		    }
+
+	        model.addAttribute("questions", questions);
+	    }
+	    return "admin/adminQuestionList";
+	}
+	
 
 	@GetMapping("/adminMemberSearchByNameOrId.do")
 	public String adminMemberSearchByNameOrId(
