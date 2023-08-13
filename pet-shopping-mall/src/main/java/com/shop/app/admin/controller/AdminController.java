@@ -72,7 +72,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/adminMemberSearchByNameOrId.do")
-	public void adminMemberSearchByNameOrId(
+	public String adminMemberSearchByNameOrId(
 	        @RequestParam(required = false) String searchKeyword,
 	        Model model) {
 
@@ -91,9 +91,35 @@ public class AdminController {
 		    }
 
 	        model.addAttribute("members", members);
-	    } else {
-	        model.addAttribute("members", new ArrayList<Member>()); // 빈 리스트 추가
 	    }
+	    return "admin/adminMemberList";
+	}
+	
+	@GetMapping("/adminSubscribeSearchByNameOrId.do")
+	public String adminSubscribeSearchByNameOrId(
+	        @RequestParam(required = false) String searchKeyword,
+	        Model model) {
+
+	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
+	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
+	        List<Member> subscribedMembers = new ArrayList<>();
+	        for (Member member : members) {
+		        String roleString = member.getMemberRole().toString(); 
+		        MemberRole memberRole = MemberRole.valueOf(roleString); 
+		        
+		        String subscribeString = member.getSubscribe().toString(); 
+		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
+		        
+		        member.setMemberRole(memberRole); 
+		        member.setSubscribe(subscribe);
+	        
+		        if (member.getSubscribe() == Subscribe.Y) {
+	                subscribedMembers.add(member);
+		        }
+	        }
+	        model.addAttribute("members", subscribedMembers);
+	    }
+	    return "admin/adminSubscribeList";
 	}
 	
 
