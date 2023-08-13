@@ -8,7 +8,7 @@
 <div class="admin-member-search-container">
     <form:form
         name="adminMemberSearchFrm" 
-        action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
+        action="${pageContext.request.contextPath}/admin/adminSubscribeSearchByNameOrId.do"
         method="get">
         <label for="searchKeyword">회원검색:</label>
         <select name="searchCategory">
@@ -44,7 +44,6 @@
         </c:if>
         <c:if test="${not empty members}">
             <c:forEach items="${members}" var="member" varStatus="vs">
-                <c:if test="${member.subscribe == 'Y'}">
                     <tr>
                         <td>${members.size() - vs.index}</td>
                         <td>${member.id}</td>
@@ -58,7 +57,6 @@
                         <td>${member.point}</td>
                         <td><button onclick="">수정</button></td>
                     </tr>
-                </c:if>
             </c:forEach>
         </c:if>
     </tbody>

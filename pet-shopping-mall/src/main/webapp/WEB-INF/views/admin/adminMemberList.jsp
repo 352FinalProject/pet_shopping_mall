@@ -64,25 +64,4 @@
 	</tbody>
 </table>
 
-<!-- 페이지 바 -->
-<div class="pagination">
-    <c:if test="${page > 1}">
-        <a href="?page=1">처음</a>
-        <a href="?page=${page - 1}">이전</a>
-    </c:if>
-    <c:forEach var="pageNumber" begin="${startPage}" end="${endPage}">
-        <c:choose>
-            <c:when test="${pageNumber == page}">
-                <span class="current">${pageNumber}</span>
-            </c:when>
-            <c:otherwise>
-                <a href="?page=${pageNumber}">${pageNumber}</a>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
-    <c:if test="${page < totalPages}">
-        <a href="?page=${page + 1}">다음</a>
-        <a href="?page=${totalPages}">끝</a>
-    </c:if>
-</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
