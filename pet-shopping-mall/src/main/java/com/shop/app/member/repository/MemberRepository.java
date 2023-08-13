@@ -28,6 +28,9 @@ public interface MemberRepository {
 	int deleteMember(Member member);
 
 
+//	@Select("SELECT * FROM users WHERE username = #{username}")
+//    User loadUserByUsername(String username);
+//	
 	MemberDetails loadUserByUsername(String username);
 
 }

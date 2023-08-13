@@ -7,9 +7,15 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberCreateDto {
 	@NotBlank(message = "아이디는 필수입니다.")
 	@Pattern(regexp = "\\w{4,}", message = "아이디는 영문자/숫자 4글자이상이어야 합니다.")

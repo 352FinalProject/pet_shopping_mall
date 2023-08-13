@@ -18,7 +18,12 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-	  	<dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+			<version>5.4.5</version> <!-- 버전은 해당 프로젝트에 맞게 조정하세요 -->
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -26,7 +31,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 		</dependency>
-	  	<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -87,7 +92,7 @@
 			<!-- scope: compile(기본값)/runtime/provided(컴파일때 사용, 런타임때 사용안함) -->
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-		
+
 	</dependencies>
 
 	<build>

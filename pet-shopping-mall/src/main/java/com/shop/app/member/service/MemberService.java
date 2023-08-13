@@ -10,7 +10,6 @@ import com.shop.app.member.entity.Member;
 
 public interface MemberService extends UserDetailsService {
 
-
 	int insertMember(MemberCreateDto member);
 
 	Member findMemberById(String memberId);
