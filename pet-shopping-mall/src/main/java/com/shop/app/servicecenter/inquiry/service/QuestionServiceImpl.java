@@ -4,48 +4,49 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.entity.Attachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
-import com.shop.app.servicecenter.inquiry.repository.InquiryRepository;
+import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
 
 @Service
-public class InquiryServiceImpl implements InquiryService {
+public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
-	private InquiryRepository inquiryRepository;
+	private QuestionRepository questionRepository;
 	
 	// 1:1 목록 조회 질문 (예라)
 	@Override
 	public List<Question> findQuestionAll(Question question) {
-		return inquiryRepository.findQuestionAll(question);
+		return questionRepository.findQuestionAll(question);
 	}
 	
 	// 1:1 목록 상세 조회 (예라)
 	@Override
 	public Question findQuestionById(Question question) {
-		return inquiryRepository.findQuestionById(question);
+		return questionRepository.findQuestionById(question);
 	}
 	
 	// 1:1 목록 답변 조회 (예라)
 	@Override
 	public Answer findQuestionAnswersById(Answer answer) {
-		return inquiryRepository.findQuestionAnswersById(answer);
+		return questionRepository.findQuestionAnswersById(answer);
 	}
 
 	// 1:1 문의 작성 (예라)
 	@Override
 	public int insertQuestion(Question question) {
 		int result = 0;
-		result = inquiryRepository.insertQuestion(question);
+		result = questionRepository.insertQuestion(question);
 		
 		List<Attachment> attachments = ((QuestionDetails) question).getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(Attachment attach : attachments) {
-				attach.setItemId(question.getId());
-				result = inquiryRepository.insertAttachment(attach);
+				attach.setImageId(question.getQuestionId());
+				result = questionRepository.insertAttachment(attach);
 			}
 		}
 		return  result;
@@ -54,27 +55,26 @@ public class InquiryServiceImpl implements InquiryService {
 	// 1:1 문의 삭제 (예라)
 	@Override
 	public int deleteQuestion(int id) {
-		return inquiryRepository.deleteQuestion(id);
+		return questionRepository.deleteQuestion(id);
 	}
 
 	// 1:1 문의 수정 (예라)
 	@Override
 	public int updateQuestion(Question question) {
-		return inquiryRepository.updateQuestion(question);
+		return questionRepository.updateQuestion(question);
 	}
 
 	
 	// 1:1 문의 member_id 검색 (예라)
 	@Override
 	public Question findQuestionByMemberId(String memberId) {
-		return inquiryRepository.findQuestionByMemberId(memberId);
+		return questionRepository.findQuestionByMemberId(memberId);
 	}
 
 	// 1:1 문의 답변 조회 (예라)
 	@Override
 	public Answer findAnswersByContent(Answer answer) {
-		return inquiryRepository.findAnswersByContent(answer);
+		return questionRepository.findAnswersByContent(answer);
 	}
-
 
 }

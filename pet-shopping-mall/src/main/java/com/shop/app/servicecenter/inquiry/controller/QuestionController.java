@@ -8,34 +8,31 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.Attachment;
-import com.shop.app.common.entity.IsDeleted;
-import com.shop.app.common.entity.Thumbnail;
+import com.shop.app.servicecenter.inquiry.dto.AnswerCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionUpdateDto;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
-import com.shop.app.servicecenter.inquiry.service.InquiryService;
+import com.shop.app.servicecenter.inquiry.service.QuestionService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequestMapping("/servicecenter")
 @Controller
-public class InquiryController {
+public class QuestionController {
 
 	@Autowired
-	private InquiryService inquiryService;
+	private QuestionService questionService;
 	
 	// 고객센터 (선모)
 	@GetMapping("/service.do")
@@ -46,9 +43,8 @@ public class InquiryController {
 	// 1:1 목록 조회 (예라)
 	@GetMapping("/inquiry/questionList.do")
 	public void questionList(Question question, Model model) {
-		List<Question> questions = inquiryService.findQuestionAll(question);
+		List<Question> questions = questionService.findQuestionAll(question);
 		log.debug("questions = {}", questions);
-		
 		model.addAttribute("questions", questions);
 	}
 	
@@ -59,19 +55,19 @@ public class InquiryController {
 		// 1:1 상세 조회
 		Question question = Question
 				.builder()
-				.id(questionId)
+				.questionId(questionId)
 				.build();
 
-	    Question questions = inquiryService.findQuestionById(question);
+	    Question questions = questionService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
 	    
 	    // 1:1 답변 조회
 	    Answer answer = Answer
 	    		.builder()
-	    		.questionId(questionId)
+	    		.answerQuestionId(questionId)
 	    		.build();
 
-	    Answer answers = inquiryService.findQuestionAnswersById(answer);
+	    Answer answers = questionService.findQuestionAnswersById(answer);
 	    model.addAttribute("answers", answers);
 	}
 	
@@ -79,7 +75,7 @@ public class InquiryController {
 	@GetMapping("/inquiry/questionCreate.do")
 	public void CreateQuestion(Question question, Model model) {
 
-		Question questions = inquiryService.findQuestionById(question);
+		Question questions = questionService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
 	}
 	
@@ -93,21 +89,19 @@ public class InquiryController {
 		List<Attachment> attachments = new ArrayList<>();
 		for(MultipartFile upFile : upFiles) {			
 		    if(!upFile.isEmpty()) {
-		        String originalFilename = upFile.getOriginalFilename();
-		        String renamedFilename = HelloSpringUtils.getRenameFilename(originalFilename); 
-		        File destFile = new File(renamedFilename); 
+		        String imageOriginalFilename = upFile.getOriginalFilename();
+		        String imageRenamedfilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename); 
+		        File destFile = new File(imageRenamedfilename); 
 		        upFile.transferTo(destFile);	
 
 		        int imageType = 1; 
 
 		        Attachment attach = 
 		            Attachment.builder()
-		            .originalFilename(originalFilename)
-		            .renamedFilename(renamedFilename)
+		            .imageOriginalFilename(imageOriginalFilename)
+		            .imageRenamedfilename(imageRenamedfilename)
 		            .imageType(imageType)
-		            .thumbnail(Thumbnail.N) 
-		            .fileSize(upFile.getSize())
-		            .isDeleted(IsDeleted.N)
+		            .imageFileSize(upFile.getSize())
 		            .build();
 
 		        log.debug("attach = {}", attach);
@@ -116,14 +110,15 @@ public class InquiryController {
 		}	
 		// 2. db 저장
 		QuestionDetails questions = QuestionDetails.builder()
-				.memberId(_question.getMemberId())
-				.productId(_question.getProductId())
-				.title(_question.getTitle())
-				.content(_question.getContent())
+				.questionMemberId(_question.getQuestionMemberId())
+				.questionTitle(_question.getQuestionTitle())
+				.questionContent(_question.getQuestionContent())
+				.questionCategory(_question.getQuestionCategory())
+				.questionEmail(_question.getQuestionEmail())
 				.attachments(attachments)
 				.build();
 		
-		int result = inquiryService.insertQuestion(questions);
+		int result = questionService.insertQuestion(questions);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
@@ -132,16 +127,21 @@ public class InquiryController {
 	@PostMapping("/inquiry/DeleteQuestion.do")
 	public String DeleteQuestion(@RequestParam int id) {
 		
-		int result = inquiryService.deleteQuestion(id);
+		int result = questionService.deleteQuestion(id);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
 	
 	// 1:1 문의 수정 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionUpdate.do")
-	public void UpdateQuestion(Question question, Model model) {
+	public void UpdateQuestion(@RequestParam int questionId, Model model) {
 
-		Question questions = inquiryService.findQuestionById(question);
+		Question question = Question
+				.builder()
+				.questionId(questionId)
+				.build();
+
+	    Question questions = questionService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
 	}
 	
@@ -150,9 +150,9 @@ public class InquiryController {
 	public String UpdateQuestion(QuestionUpdateDto _question) {
 		
 		Question questions = _question.toQuestion();
-		int result = inquiryService.updateQuestion(questions);
+		int result = questionService.updateQuestion(questions);
 		
-		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getId();
+		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}
 	
 }

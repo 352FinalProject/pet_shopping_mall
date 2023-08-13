@@ -20,7 +20,6 @@
 }
 
 .service-product-utility th, .service-product-utility td {
-	text-align: left; 
 	padding: 12px;
 	border-top: 1px solid #e7e7e7;
 	border-bottom: 1px solid #e7e7e7;
@@ -32,6 +31,7 @@
 
 .service-product-utility td {
 	cursor: pointer;
+	text-align: center;
 }
 
 /* 검색 버튼 */
@@ -73,15 +73,19 @@
 	text-align: center;
 }
 
-/**/
+/* 1:1 상세 문의 내용 */
 .anw-create {
 	margin-top: 30px;
 	text-align: center;
 	margin-left: -10px;
 }
 
+.qna-create2 {
+	margin-top: 30px;
+}
+
 /**/
-.anw-create [name="content"] {
+.anw-create [name="answerContent"] {
 	width: 700px;
 	border: 1px solid #c8c8c8;
 	height: 30px;
@@ -103,33 +107,39 @@
 	font-size: 14px;
 }
 
+/* 마진을 적용할 클래스 */
+.td-with-margin {
+  	margin-top: 12px;
+	margin-bottom: 12px;
+	margin-right: 10px;
+	margin-left: 40px;
+}
+
 /*1:1 상세 내역 조회 아이디 폼, 파일 폼*/
-.qna-create input[type="text"]{
+.qna-create input[type="text"], .qna-create input[type="email"]{
 	width: 450px;
 	border: 1px solid #c8c8c8;
 	height: 30px;
-	margin: 10px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	margin-right: 10px;
+	margin-left: 40px;
 	padding: 9px;
 }
 
 .qna-create input[type="file"] {
-	margin-left: -197px;
+	margin-left: -167px;
 }
 
 .anw-regdate {
-	margin-left: 10px;
+	text-align: left;
+	font-size: 14px;
+	margin-bottom: 15px;
+	margin-left: 18px;
 	color: #828282;
 }
 
 /*1:1 상세 내역 조회 내용*/
-
-/**/
-.qna-create input[type="tel"] {
-	border: 1px solid #c8c8c8;
-	width: 114px;
-	height: 30px;
-	margin: 10px;
-}
 
 /**/
 .qna-create input[name="content"] {
@@ -142,7 +152,23 @@
 	vertical-align: middle;
 }
 
-.qna-create textarea[name="content"] {
+.qna-create2 th {
+	text-align: left;
+	font-size: 15px;
+	vertical-align: middle;
+}
+
+/* 1:1 상세 내역 내용 style */
+.qna-create textarea[name="questionContent"] {
+	width: 700px;
+	height: 270px;
+	border: 1px solid #c8c8c8;
+	display: block;
+	resize: none;
+}
+
+/* 1:1 작성 내용 style */
+.qna-create2 textarea[name="questionContent"] {
 	width: 700px;
 	height: 270px;
 	border: 1px solid #c8c8c8;
@@ -159,7 +185,7 @@
 }
 
 .input-container table {
-    margin: 0 auto; /* 테이블을 가로 가운데 정렬 */
+
 }
 
 .content-container {
@@ -188,7 +214,37 @@
 .qna-create textarea {
 	padding: 10px;
 	border: 1px solid #c8c8c8;
+	margin-left: 30px;
 	
+}
+
+.qna-create textarea {
+	padding: 10px;
+	border: 1px solid #c8c8c8;
+	
+}
+
+#questionContent {
+	margin-top: 11px;	
+}
+
+/* 1:1 수정 내용*/
+
+.qna-create-update {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.qna-create-update input[name="content"] {
+	height: 210px;
+}
+
+.qna-create-update textarea[name="questionContent"] {
+	width: 700px;
+	height: 270px;
+	border: 1px solid #c8c8c8;
+	display: block;
+	resize: none;
 }
 
 /* 1:1 작성 버튼 2개*/
@@ -218,6 +274,127 @@
 	border-radius: 5px;
 	border: none;
 	font-size: 15px;
+	color: #fff;
+	background: #58ACFA;
+	cursor: pointer;
+}
+
+/* 카테고리 선택 버튼 */
+.custom-select {
+	width: 100px;
+}
+
+/* 카테고리 선택 버튼 */
+.questionCategory {
+	display: flex;
+	margin-left: 40px;
+	
+}
+
+/* 답변대기 */
+.question-row span {
+	color: #c8c8c8;
+}
+
+.service-product-utility th:nth-child(1),
+.service-product-utility td:nth-child(1) {
+  width: 120px;
+}
+
+.service-product-utility th:nth-child(2),
+.service-product-utility td:nth-child(2) {
+	width: 170px;
+}
+
+.service-product-utility th:nth-child(4),
+.service-product-utility td:nth-child(4) {
+	width: 170px;
+}
+
+/* 관리자 문의 내역 */
+.service-product-utility-admin {
+	width: 100%;
+	margin-bottom: 200px;
+}
+
+.service-product-utility-admin th, .service-product-utility-admin td {
+	padding: 12px;
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.service-product-utility-admin th {
+	border-bottom: 2px solid #e7e7e7;
+}
+
+.service-product-utility-admin td {
+	cursor: pointer;
+	text-align: center; 
+}
+
+/* 관리자 페이지 */
+
+.service-product-utility-admin th:nth-child(1),
+.service-product-utility-admin td:nth-child(1) {
+  width: 100px;
+}
+
+.service-product-utility-admin th:nth-child(2),
+.service-product-utility-admin td:nth-child(2) {
+	width: 150px;
+}
+
+.service-product-utility-admin th:nth-child(3),
+.service-product-utility-admin td:nth-child(3) {
+	width: 150px;
+}
+
+.service-product-utility-admin th:nth-child(5),
+.service-product-utility-admin td:nth-child(5) {
+	width: 150px;
+}
+
+/* 댓글 버튼 */
+.anw-create-btn {
+	display:flex;
+	justify-content: flex-end;
+	gap: 15px;	
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.anw-btn-reset, .anw-btn-create {
+	width: 75px;
+	height: 30px;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	background: #c8c8c8;
+	cursor: pointer;
+}
+
+/* 1:1 상세 내역 댓글 작성 */
+.anw-create2 {
+	text-align: right;
+}
+
+.anw-btn-create2 {
+	width: 75px;
+	height: 30px;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	background: #58ACFA;
+	cursor: pointer;
+	margin-right: 14px;
+}
+
+/* 관리자 댓글 수정완료 버튼 */
+.editComment {
+	width: 75px;
+	height: 30px;
+	border: none;
+	border-radius: 5px;
 	color: #fff;
 	background: #58ACFA;
 	cursor: pointer;

@@ -15,10 +15,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder 
-public class QuestionDetails extends Question{
+public class AnswerDetails extends Question{
 
-	private int questionId;
-
-	private List<Attachment> attachments;
+	private int answerQuestionId;
+	private String answerContent;
+	private String answerAdminName;
 	
 }

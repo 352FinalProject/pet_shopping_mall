@@ -7,22 +7,20 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <%-- 1:1 문의 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
-	<div class="common-title">1:1 문의 내역</div>
+	<div class="common-title">1:1 문의 내역 (관리자)</div>
 	<div class="common-container">
 		<div class="common-div">
 			<div class="service-search">
 				<img src="${pageContext.request.contextPath}/resources/images/home/search.png" alt="">
 				<input type="text" name="service-search" id="service-search" value="" placeholder="제목, 내용" required>
 			</div>
-			<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do" class="form-inline">
-				<button class="btn-add">1:1문의 쓰기</button>
-			</form>
 			<div class="service-util-div">
-				<table class="service-product-utility">
+				<table class="service-product-utility-admin">
 					<thead>
 						<tr>
 							<th>번호</th>
 							<th>상태</th>
+							<th>아이디</th>
 							<th>제목</th>
 							<th>등록일</th>
 						</tr>
@@ -38,6 +36,7 @@
 								<c:if test="${question.awnserCount <= 0}"><span>답변대기</span></c:if>
 								<c:if test="${question.awnserCount >= 1}">답변완료</c:if>
 								</td>
+								<td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionMemberId}</a></td>
 								<td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
 								<td class="qna-date">
 									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">

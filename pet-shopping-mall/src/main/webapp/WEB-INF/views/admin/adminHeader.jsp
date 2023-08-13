@@ -11,8 +11,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 <body>
 
@@ -60,8 +61,8 @@
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
 						class="font">디자인관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
-						class="font">씨발</a></li>
+						href="${pageContext.request.contextPath}/admin/adminQuestionist.do"
+						class="font">문의관리</a></li>
 				</ul>
 			</ul>
 		</div>
