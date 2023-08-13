@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>	
+<%-- <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>	 --%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .table-bordered {
@@ -134,7 +134,7 @@
 </style>
 <section class="common-section" id="#">
 	<div class="common-container">
-		<form:form action="${pageContext.request.contextPath}/member/memberLogin.do" method="post">
+		<form action="${pageContext.request.contextPath}/member/memberLogin.do" method="post">
 			<table class="table-bordered">
 				<tr>
 					<td>
@@ -147,11 +147,11 @@
 					<td>
 						<div class="login-modal">
 							<div class="login-input">
-								<input type="text" id="inputId" class="form-control"
+								<input type="text" name="memberId" id="member_id" class="form-control"
 									required="required" placeholder="아이디" />
 							</div>
 							<div class="login-input">
-								<input type="password" id="inputPassword" class="form-control2"
+								<input type="password" name="password" id="inputPassword" class="form-control2"
 									required="required" placeholder="비밀번호">
 							</div>
 						</div>
@@ -198,7 +198,7 @@
 					</td>
 				</tr>
 			</table>
-		</form:form>
+		</form>
 	</div>
 </section>
 <script>

@@ -43,6 +43,21 @@ create table member (
     constraints uq_member_member_id unique (member_id)
 );
 
+create table authority(
+    member_id varchar2(20),
+    auth varchar2(50),
+    constraints pk_authority primary key(member_id, auth),
+    constraints fk_authority_member_id foreign key(member_id)
+                references member(member_id)
+                on delete cascade
+);
+
+insert into authority values ('abcde', 'ROLE_USER');
+insert into authority values ('qwerty', 'ROLE_USER');
+insert into authority values ('admin', 'ROLE_USER');
+insert into authority values ('admin', 'ROLE_ADMIN');
+insert into authority values ('honggd', 'ROLE_USER');
+
 -- qna 질문 테이블
 create table question(
     question_id number,
@@ -119,6 +134,7 @@ select * from answer;
 select * from point order by point_id desc;
 select * from product;
 select * from image_attachment;
+select * from authority;
 
 --drop table member;
 --drop table question;
