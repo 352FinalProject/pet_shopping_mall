@@ -87,17 +87,29 @@
 			<!-- scope: compile(기본값)/runtime/provided(컴파일때 사용, 런타임때 사용안함) -->
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-
-		<dependencies>
+		
+		<!--  이메일 인증 api -->
+			<dependency>
+			    <groupId>com.sun.mail</groupId>
+			    <artifactId>javax.mail</artifactId>
+			    <version>1.6.2</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+			<dependency>
+			    <groupId>javax.mail</groupId>
+			    <artifactId>javax.mail-api</artifactId>
+			    <version>1.6.2</version>
+			</dependency>
+		    
 			<dependency>
 				<groupId>com.github.iamport</groupId>
 				<artifactId>iamport-rest-client-java</artifactId>
 				<version>0.2.22</version>
 			</dependency>
+			
 		</dependencies>
-
-	</dependencies>
-
+		
 	<repositories>
 		<repository>
 			<id>jitpack.io</id>

@@ -43,7 +43,7 @@ public class AnswerController {
 	
 	// 관리자 1:1 문의 댓글 작성 (예라)
 	@PostMapping("/inquiry/answerCreate.do")
-	public String AnswerCreate(@RequestParam int questionId, AnswerCreateDto _answer) {
+	public String adminAnswerCreate(@RequestParam int questionId, AnswerCreateDto _answer) {
 		
 		// 관리자 답변 등록
 		AnswerDetails answers = AnswerDetails.builder()
@@ -64,7 +64,7 @@ public class AnswerController {
 	
 	// 관리자 1:1 문의 댓글 삭제 (예라)
 	@PostMapping("/inquiry/answerDelete.do")
-	public String answerDelete(@RequestParam int answerId, @RequestParam int questionId) {
+	public String adminAnswerDelete(@RequestParam int answerId, @RequestParam int questionId) {
 		
 		int result = answerService.deleteAnswer(answerId);
 		
@@ -73,7 +73,7 @@ public class AnswerController {
 	
 	// 관리자 1:1 문의 댓글 수정 (예라)
 	@PostMapping("/inquiry/answerUpdate.do")
-	public String answerUpdate(AnswerUpdateDto _answer, QuestionUpdateDto _question) {
+	public String adminAnswerUpdate(AnswerUpdateDto _answer, QuestionUpdateDto _question) {
 		
 		Answer answers = _answer.toAnswer();
 		int result = answerService.updateAnswer(answers);

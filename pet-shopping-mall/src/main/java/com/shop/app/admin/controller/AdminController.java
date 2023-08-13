@@ -65,8 +65,8 @@ public class AdminController {
 	
 
 	// 관리자 1:1 문의 전체 내역 조회 (예라)
-	@GetMapping("/adminQuestionist.do")
-	public void adminQuestionist(Question question, Model model) {
+	@GetMapping("/adminQuestionList.do")
+	public void adminQuestionList(Question question, Model model) {
 		List<Question> questions = adminService.findQuestionAll(question);
 		model.addAttribute("questions", questions);
 	}

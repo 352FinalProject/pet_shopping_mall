@@ -44,6 +44,7 @@ create table member (
 );
 
 -- qna 질문 테이블
+create table question(
     question_id number,
     question_member_id varchar2(20),
     question_category varchar2(50),
@@ -125,7 +126,8 @@ select * from image_attachment;
 --drop table point;
 --drop table product;
 --drop table image_attachment;
---
+
+--drop sequence seq_member_id;
 --drop sequence seq_answer_answer_id;
 --drop sequence seq_question_question_id;
 --drop sequence seq_point_point_id;

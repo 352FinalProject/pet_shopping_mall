@@ -73,7 +73,7 @@ public class QuestionController {
 	
 	// 1:1 문의 작성 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionCreate.do")
-	public void CreateQuestion(Question question, Model model) {
+	public void qreateCuestion(Question question, Model model) {
 
 		Question questions = questionService.findQuestionById(question);
 	    model.addAttribute("questions", questions);
@@ -81,7 +81,7 @@ public class QuestionController {
 	
 	// 1:1 문의 작성 (예라)
 	@PostMapping("/inquiry/questionCreate.do")
-	public String CreateQuestion(QuestionCreateDto _question, 
+	public String questionCreate(QuestionCreateDto _question, 
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles) 
 					throws IllegalStateException, IOException {
 		
@@ -125,7 +125,7 @@ public class QuestionController {
 	
 	// 1:1 문의 삭제 (예라)
 	@PostMapping("/inquiry/DeleteQuestion.do")
-	public String DeleteQuestion(@RequestParam int id) {
+	public String questionDelete(@RequestParam int id) {
 		
 		int result = questionService.deleteQuestion(id);
 		
@@ -134,7 +134,7 @@ public class QuestionController {
 	
 	// 1:1 문의 수정 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionUpdate.do")
-	public void UpdateQuestion(@RequestParam int questionId, Model model) {
+	public void questionUpdate(@RequestParam int questionId, Model model) {
 
 		Question question = Question
 				.builder()
@@ -147,7 +147,7 @@ public class QuestionController {
 	
 	// 1:1 문의 수정 (예라)
 	@PostMapping("/inquiry/questionUpdate.do")
-	public String UpdateQuestion(QuestionUpdateDto _question) {
+	public String updateQuestion(QuestionUpdateDto _question) {
 		
 		Question questions = _question.toQuestion();
 		int result = questionService.updateQuestion(questions);
