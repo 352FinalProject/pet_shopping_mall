@@ -276,10 +276,10 @@ const requestPaymentByCard = (data) => {
         buyer_postcode: '12031',                      // 구매자 우편번호
 	}, 
 	function (response) {
-		// 결제 검증
-		$.ajax({
+		console.log(response)
+ 		$.ajax({
 			type: 'POST',
-			url : '${pageContext.request.contextPath}/verifyIamport/' + response.imp_uid
+			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid
 		}).done((data) =>  {
 			if(response.paid_amount == data.response.amount) {
 				alert("결제 완료");
