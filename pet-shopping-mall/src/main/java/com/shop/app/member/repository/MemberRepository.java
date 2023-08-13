@@ -1,6 +1,8 @@
 package com.shop.app.member.repository;
 
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,7 +19,7 @@ public interface MemberRepository {
 	Member findMemberById(String memberId);
 	
 	@Insert("insert into member (id, member_id, password, name, phone, email, address, birthday, point) " +
-	        "values (seq_question_question_id.nextval, #{memberId}, #{password}, #{name}, #{phone}, #{email}, " +
+	        "values (seq_member_id.nextval, #{memberId}, #{password}, #{name}, #{phone}, #{email}, " +
 	        "#{address}, #{birthday, jdbcType=DATE}, #{point})")
 	int insertMember(MemberCreateDto member);
 	
@@ -27,10 +29,11 @@ public interface MemberRepository {
 	@Delete("delete from member where member_id= #{memberId}")
 	int deleteMember(Member member);
 
+	}
+
 //	@Select("select * from member where member_id = #{username}")
 //	MemberDetails loadUserByUsername(String username);
 	
 //	@Select("select * from member M left join authority A on M.member_id = A.member_id where M.member_id = #{username}")
 //	MemberDetails loadUserByUsername(String username);
 
-}

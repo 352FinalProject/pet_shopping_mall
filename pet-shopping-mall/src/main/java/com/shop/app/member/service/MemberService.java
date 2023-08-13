@@ -2,6 +2,8 @@ package com.shop.app.member.service;
 
 
 
+import javax.validation.Valid;
+
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.shop.app.member.dto.MemberCreateDto;

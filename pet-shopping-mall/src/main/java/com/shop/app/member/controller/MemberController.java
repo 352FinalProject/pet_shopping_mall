@@ -19,7 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberLoginDto;
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.repository.MemberRepository;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +35,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private PointService pointService;
 	
 //	@Autowired
 //	private PasswordEncoder passwordEncoder;
@@ -58,8 +64,23 @@ public class MemberController {
 //		log.debug("{} -> {}", rawPassword, encodedPassword);
 //		member.setPassword(encodedPassword);
 		
+		
+		// 회원가입시 포인트 3000원 적립 (예라)
+		member.setPoint(3000);
 		int result = memberService.insertMember(member);
+		
+		// 포인트 테이블에 디비 저장 (예라)
+		Point point = new Point();
+        point.setPointMemberId(member.getMemberId());
+        point.setPointCurrent(3000);
+        point.setPointType("회원가입");
+        point.setPointAmount(3000);
+        
+        int resultPoint = pointService.givePointsForSignUp(point);
+		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
+		
+		
 		return "redirect:/";
 	}
 

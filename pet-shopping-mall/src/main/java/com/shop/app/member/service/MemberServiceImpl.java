@@ -39,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteMember(Member member) {
 		return memberRepository.deleteMember(member);
 	}
-
+	
 //	@Override
 //	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //		UserDetails memberDetails = memberRepository.loadUserByUsername(username);
