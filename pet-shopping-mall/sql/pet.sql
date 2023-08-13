@@ -59,7 +59,6 @@ insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('honggd', 'ROLE_USER');
 
 -- qna 질문 테이블
-create table question(
     question_id number,
     question_member_id varchar2(20),
     question_category varchar2(50),
@@ -98,9 +97,9 @@ create table image_attachment (
 create table point (
     point_id number,
     point_member_id varchar2(20),
+    point_current number,
     point_type varchar2(100),
     point_amount number not null,
-    point_current number,
     point_date timestamp default sysdate,
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id)
@@ -131,7 +130,7 @@ create sequence seq_point_point_id;
 select * from member;
 select * from question;
 select * from answer;
-select * from point order by point_id desc;
+select * from point;
 select * from product;
 select * from image_attachment;
 select * from authority;
@@ -142,8 +141,7 @@ select * from authority;
 --drop table point;
 --drop table product;
 --drop table image_attachment;
-
---drop sequence seq_member_id;
+--
 --drop sequence seq_answer_answer_id;
 --drop sequence seq_question_question_id;
 --drop sequence seq_point_point_id;
@@ -219,11 +217,11 @@ insert into product (id, product_code, product_category, product_name, product_p
 values (seq_member_id.nextval, 102, '하네스', '말랑 하네스', 15000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
 
 ------------------ point insert ---------------------------
-insert into point (point_id, point_member_id, point_type, point_amount, point_current, point_date)
-values (seq_point_point_id.nextval, 'member1', '회원가입', 3000, 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_point_id.nextval, 'member1', 1000, '적립', 500, to_date('2023-08-09', 'yyyy-mm-dd'));
 
-insert into point (point_id, point_member_id, point_type, point_amount, point_current, point_date)
-values (seq_point_point_id.nextval, 'member1', '구매', -1000, 2000, to_date('2023-08-09', 'yyyy-mm-dd'));
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
 
@@ -235,5 +233,11 @@ select * from question where id = '4';
 
 select * from member;
 
-select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
 
+select * from member M left join authority A on M.member_id = A.member_id where M.member_id = '4';
+
+
+@Insert("insert into member (member_id, password, name, phone, email, address, birthday, point) " +
+        "values (#{member.memberId}, #{member.password}, #{member.name}, #{member.phone}, #{member.email}, " +
+        "#{member.address}, #{member.birthday, jdbcType=DATE}, #{member.point})")
+int insertMember(@Param("member") MemberCreateDto member);

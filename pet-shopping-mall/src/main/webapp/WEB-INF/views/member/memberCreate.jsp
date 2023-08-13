@@ -120,7 +120,7 @@
     				<tr>
     					<th>핸드폰 번호</th>
     					<td>
-    						<input type="tel" name="tel" id="tel" value="" required>
+    						<input type="tel" name="phone" id="tel" value="" required>
     						<input type="button" value="핸드폰 인증" onclick="telCheck()">
     					</td>
     				</tr>
