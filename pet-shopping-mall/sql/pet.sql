@@ -167,7 +167,7 @@ create table product (
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
--- order_id : 230814(날짜)-001 이런식으로 만들거여서 varchar2
+-- order_no : 230814(날짜)-001 이런식으로 만들거여서 varchar2
 create table orderTbl (
     order_id number,
     order_no varchar2(20) not null,
