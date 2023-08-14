@@ -42,6 +42,9 @@
 			<li class="admin_li">
 			        <a href="<%= request.getContextPath() %>/admin/admin.do">관리자페이지</a>
 			</li>
+			<li class="community_li">
+			        <a href="<%= request.getContextPath() %>/community/community.do">펫스토리</a>
+			</li>
         </ul>
         <div class="logo_top_wrap">
 	        <div class="logo_wrap">

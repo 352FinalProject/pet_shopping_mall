@@ -20,12 +20,15 @@
 --drop table image_attachment;
 --drop table point;
 --drop table product;
+drop table community;
+drop table review;
 
 --drop sequence seq_member_id;
 --drop sequence seq_answer_answer_id;
 --drop sequence seq_question_question_id;
 --drop sequence seq_image_attachment_image_id;
 --drop sequence seq_point_point_id;
+drop sequence seq_community_community_id;
 
 --==============================
 -- 테이블 생성
@@ -93,7 +96,7 @@ create table point (
     point_current number,
     point_date timestamp default sysdate,
     constraint pk_point_id primary key (point_id),
-    constraint fk_point_member_id foreign key (point_member_id) references member(member_id)
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
 
 -- 상품 테이블
@@ -109,7 +112,7 @@ create table product (
     like_cnt number default 0,
     views number default 0,
     constraints pk_product_id primary key(id),
-    constraints uq_product_product_code unique(product_code)
+    constraints uq_product_product_code unique(product_code) 
 );
 
 -- 주문테이블
@@ -118,7 +121,7 @@ create table product (
 create table orderTbl (
     id number,
     order_no varchar2(20),
-    member_id varchar2(20),
+    member_id varchar2(50),
     order_date timestamp default sysdate,
     order_state number default 0,
     payment_state number default 0,
@@ -128,12 +131,40 @@ create table orderTbl (
     amount number
 );
 
+-- 커뮤니티 테이블
+create table community (
+    community_id number,
+    community_member_id varchar2(50),
+    community_title varchar2(100),
+    community_content varchar2(4000),
+    community_created_at timestamp default sysdate,
+    constraint pk_community_id primary key (community_id),
+    constraint fk_community_member_id foreign key (community_member_id) references member(member_id) on delete cascade
+);
+
+-- 리뷰테이블
+create table review (
+    review_id number,
+    pet_id number,
+    order_id number,
+    review_no number,
+    review_title varchar2(50),
+    review_content varchar2(3000),
+    review_star_rate number default 1,
+    review_created_at timestamp default sysdate,
+    constraint pk_review_id primary key (review_id),
+    constraint fk_review_member_id foreign key (community_member_id) references member(member_id) on delete cascade
+
+);
+
+
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_answer_id;
 create sequence seq_question_question_id;
 create sequence seq_image_attachment_image_id;
 create sequence seq_point_point_id;
+create sequence seq_community_community_id;
 
 select * from member;
 select * from question;
@@ -232,4 +263,12 @@ commit;
 --select * from member;
 --select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
 
+--drop table community;
+--
+--select * from community where community_member_id = 'admin';
+--
+--select * from member;
+--
+--insert into community (community_id, community_member_id, community_title, community_content, community_created_at)
+--values (seq_answer_answer_id.nextval, 'admin', '이거되냐', '커뮤니티 인서트 되냐~', sysdate);
 
