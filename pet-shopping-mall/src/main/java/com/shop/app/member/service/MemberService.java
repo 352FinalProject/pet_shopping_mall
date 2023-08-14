@@ -4,13 +4,15 @@ package com.shop.app.member.service;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
 
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
 	int insertMember(MemberCreateDto member);
 
