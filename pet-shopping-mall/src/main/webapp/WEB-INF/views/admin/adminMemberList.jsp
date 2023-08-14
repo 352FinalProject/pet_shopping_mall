@@ -5,17 +5,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="admin-member-search-container">
-       <form:form
-		name="adminMemberSearchFrm" 
-		action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
-		method="get">
-        <label for="searchKeyword">회원검색:</label>
-        <select name="searchCategory">
-            <option value="memberName">회원명</option>
-            <option value="memberId">아이디</option>
-        </select>
-        <input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
-        <input type="submit" value="검색">
+	<form:form
+	name="adminMemberSearchFrm" 
+	action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
+	method="get">
+		<label for="searchKeyword">회원검색:</label>
+		<select name="searchCategory">
+		    <option value="memberName">회원명</option>
+		    <option value="memberId">아이디</option>
+		</select>
+		<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
+		<input type="submit" value="검색">
         <div id="searchResults"></div>
    	</form:form>
 </div>
@@ -57,11 +57,23 @@
 					<td>${member.birthday}</td>
 					<td>${member.point}</td>
 					<td>${member.subscribe}</td>
-					<td><button onclick="submit">수정</button></td>
+					<td><button onclick="submit">포인트관리</button></td>
 				</tr>
 			</c:forEach>
 		</c:if>
 	</tbody>
 </table>
+<nav aria-label="...">
+ 	<ul class="pagination pagination-sm">
+    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+        <li class="page-item ${page == pageNumber ? 'active' : ''}">
+            <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${pageNumber}">
+                   <span class="page-number">${pageNumber}</span>
+               </a>
+        </li>
+    </c:forEach>
+</ul>
+</nav>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
