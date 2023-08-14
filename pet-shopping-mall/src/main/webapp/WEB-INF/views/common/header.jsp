@@ -25,22 +25,22 @@
         <span id="notification"></span>
         <ul class="utility">
              <li class="login_li">
-                <a href="<%= request.getContextPath() %>/member/memberCreateComplete.do">회원가입완료</a>
+                <a href="${pageContext.request.contextPath}/member/memberCreateComplete.do">회원가입완료</a>
             </li>
             <li class="login_li">
-                <a href="<%= request.getContextPath() %>/member/petProfile.do">펫프로필등록</a>
+                <a href="${pageContext.request.contextPath}/member/petProfile.do">펫프로필등록</a>
             </li>
             <li class="login_li">
-                <a href="<%= request.getContextPath() %>/member/memberLogin.do">로그인</a>
+                <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
             </li>
             <li class="signup_li">
-                <a href="<%= request.getContextPath() %>/member/memberCreate.do">회원가입</a>
+                <a href="${pageContext.request.contextPath}/member/memberCreate.do">회원가입</a>
             </li>
 			<li class="logout_li">
-			        <a href="<%= request.getContextPath() %>/servicecenter/service.do">고객센터</a>
+			        <a href="${pageContext.request.contextPath}/servicecenter/service.do">고객센터</a>
 			</li>
 			<li class="admin_li">
-			        <a href="<%= request.getContextPath() %>/admin/admin.do">관리자페이지</a>
+			        <a href="${pageContext.request.contextPath}/admin/admin.do">관리자페이지</a>
 			</li>
         </ul>
         <div class="logo_top_wrap">

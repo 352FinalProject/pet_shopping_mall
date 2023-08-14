@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <style>
 .common-section{
 	display: flex;
@@ -109,7 +110,7 @@
     	<br>
     	<div class="common-container">
     		<div class="common-div">
-    			<form name="memberCreateFrm" action="" method="POST">
+    			<form:form name="memberCreateFrm" action="" method="POST">
     			<table>
 					<tr>
 		                <th>아이디</th>
@@ -186,6 +187,6 @@
 			    		</td>
     				</tr>
     			</table>
-    			</form>
+    			</form:form>
     </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

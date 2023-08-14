@@ -31,6 +31,8 @@ import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,6 +47,9 @@ public class MemberSecurityController {
 	
 	@Autowired // 비밀번호 암호화 도구 자동 주입
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private PointService pointService; // 회원가입시 포인트 3000원 적립 
 	
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
@@ -74,8 +79,20 @@ public class MemberSecurityController {
 		log.debug("{} -> {}", rawPassword, encodedPassword);
 		member.setPassword(encodedPassword);
 		
+		// 포인트 테이블에 디비 저장 (예라)
+		member.setPoint(3000);
+		
 		// 회원 정보 DB에 저장
 		int result = memberService.insertMember(member);
+		
+		Point point = new Point();
+		point.setPointMemberId(member.getMemberId());
+		point.setPointCurrent(3000);
+		point.setPointType("회원가입");
+		point.setPointAmount(3000);
+		
+		int resultPoint = pointService.givePointsForSignUp(point);
+		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/";
 	}

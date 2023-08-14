@@ -7,7 +7,7 @@
     <!-- 회원 로그인을 위한 쿼리 -->
     <select id="loadUserByUsername" resultMap="memberAuthMap">
 
-	    "SELECT * FROM users WHERE member = #{memberId}"
+	    "SELECT * FROM member WHERE member_id = #{memberId}"
   </select>
 
   
