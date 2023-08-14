@@ -45,7 +45,6 @@ create table member (
     constraints pk_member_id primary key(member_id)
 );
 
-
 -- 권한 테이블
 create table authority(
     member_id varchar2(20),
@@ -412,6 +411,12 @@ values ('hon5ggd', '1234', '조로', '01015344328', 'hongz1gd@naver.com', '서�
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('hon6ggd', '1234', '루피', '01015342328', 'hon334ggd@naver.com', '서울시 송파구 베베베동', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hosoggd', '1234', '홍당무', '01015232328', 'honjjggd@naver.com', '서울시 송파구 홍동', to_date('2000-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('honcha', '1234', '홍차차', '01015778328', 'hon778ggd@naver.com', '서울시 송파구 홍차동', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
 insert into authority values ('honggd', 'ROLE_USER');

@@ -61,7 +61,7 @@ table {
 			<c:if test="${members != null}">
 				<c:forEach items="${members}" var="member" varStatus="vs">
 					<tr>
-						<td>${members.size() - vs.index}</td>
+						<td>${totalCount - vs.index}</td>
 						<td>${member.memberId}</td>
 						<td>${member.name}</td>
 						<td>${member.phone}</td>

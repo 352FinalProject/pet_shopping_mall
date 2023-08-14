@@ -3,13 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style>
+.chart-Statistics {
+width=400px; 
+height=400px;
+}
 
-<canvas id="myChart" width="400" height="400"></canvas>
+</style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<div clss = "chart-Statistics"><canvas id="myChart" width="400" height="400"></canvas></div>
 <script>
-const ctx = document.getElementById('myChart').getContext('2d');
-console.log(ctx);
-const myChart = new Chart(ctx, {
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -37,9 +42,11 @@ const myChart = new Chart(ctx, {
     },
     options: {
         scales: {
-            y: {
-                beginAtZero: true
-            }
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
         }
     }
 });

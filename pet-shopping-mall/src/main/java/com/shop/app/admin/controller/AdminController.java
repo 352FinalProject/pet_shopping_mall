@@ -34,7 +34,12 @@ public class AdminController {
 	@GetMapping("/admin.do")
 	public void admin() {}
 	
-	@GetMapping({"/adminMemberList.do", "/adminSubscribeList.do"})
+	/**
+	 * 회원목록
+	 * @param page
+	 * @param model
+	 */
+	@GetMapping("/adminMemberList.do")
 	public void adminMemberList(@RequestParam(defaultValue = "1") int page,
 			Model model) {
 		int limit = 10;
@@ -45,7 +50,7 @@ public class AdminController {
 		
 		// MemberDetails로 바꿔야댐
 		List<Member> members = adminService.adminMemberList(params);
-		log.debug("members = {}", members);
+//		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
 	    for (Member member : members) {
@@ -56,16 +61,56 @@ public class AdminController {
 	        member.setSubscribe(subscribe);
 	    }
 	    
-	    int totalCount = members.size();
+	    int totalCount = adminService.findTotalAdminCount();
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		
 		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("members", members);
+	}
+	
+	/**
+	 * 구독자목록
+	 * @param page
+	 * @param model
+	 */
+	@GetMapping("/adminSubscribeList.do")
+	public void adminSubscribeList(@RequestParam(defaultValue = "1") int page,
+			Model model) {
+		int limit = 10;
+		Map<String, Object> params = Map.of(
+				"page", page,
+				"limit", limit
+			);
 		
+		// MemberDetails로 바꿔야댐
+		List<Member> members = adminService.adminSubscribeList(params);
+//		log.debug("members = {}", members);
+		
+		// EnumTypeHandler 사용하여 enum 값 매핑
+	    for (Member member : members) {
+	        
+	        String subscribeString = member.getSubscribe().toString(); 
+	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
+	        
+	        member.setSubscribe(subscribe);
+	    }
+	    
+	    int totalCount = adminService.findTotalubscribeCount();
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("members", members);
 	}
 	
 
-	// 관리자 1:1 문의 전체 내역 조회 + 페이징바 (예라)
+	/**
+	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바 (예라)
+	 * @param page
+	 * @param question
+	 * @param model
+	 */
 	@GetMapping("/adminQuestionList.do")
 	public void adminQuestionList(@RequestParam(defaultValue = "1") int page, Question question, Model model) {
 		int limit = 5;
@@ -86,7 +131,12 @@ public class AdminController {
 	}
 	
 	
-	// 관리자 1:1 문의 제목, 내용 검색 (예라)
+	/**
+	 *  관리자 1:1 문의 제목, 내용 검색 (예라)
+	 * @param searchKeyword
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/adminQuestionSearch.do")
 	public String questionSearch(
 	        @RequestParam(required = false) String searchKeyword,
@@ -108,33 +158,46 @@ public class AdminController {
 	    return "admin/adminQuestionList";
 	}
 	
-
+	/**
+	 *  전체회원 이름,아이디 검색
+	 *  ************페이지 바 손봐야 한다 쌤한테 물어봐서 하기(하다만거)*****************
+	 * @param searchKeyword
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/adminMemberSearchByNameOrId.do")
 	public String adminMemberSearchByNameOrId(
 	        @RequestParam(required = false) String searchKeyword,
 	        Model model) {
-
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
 	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
-
+	        
 	        for (Member member : members) {
 		        String subscribeString = member.getSubscribe().toString(); 
 		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
 		        
 		        member.setSubscribe(subscribe);
 		    }
-	        model.addAttribute("members", members);
+			model.addAttribute("members", members);
 	    }
 	    return "admin/adminMemberList";
 	}
 	
+	/**
+	 *  구독자 이름,아이디 검색
+	 *  ************페이지 바 손봐야 한다 쌤한테 물어봐서 하기(하다만거)*****************
+	 * @param searchKeyword
+	 * @param page
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/adminSubscribeSearchByNameOrId.do")
 	public String adminSubscribeSearchByNameOrId(
 	        @RequestParam(required = false) String searchKeyword,
 	        Model model) {
-
+		
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
-	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
+	        List<Member> members = adminService.adminSubscribeSearchByNameOrId(searchKeyword);
 	        List<Member> subscribedMembers = new ArrayList<>();
 	        for (Member member : members) {
 		        
@@ -149,6 +212,7 @@ public class AdminController {
 	        }
 	        model.addAttribute("members", subscribedMembers);
 	    }
+			
 	    return "admin/adminSubscribeList";
 	}
 	
@@ -163,7 +227,6 @@ public class AdminController {
 	public void adminStatistics() {}
 	
 	// 상품 추가
-	
 	@GetMapping("/addProduct.do")
 	public void adminAddProduct() {}
 	

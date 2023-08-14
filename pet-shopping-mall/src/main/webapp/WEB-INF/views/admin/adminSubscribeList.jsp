@@ -58,19 +58,17 @@ table {
         </c:if>
         <c:if test="${not empty members}">
             <c:forEach items="${members}" var="member" varStatus="vs">
-            	<c:if test="${member.subscribe == 'Y'}">
-                    <tr>
-                        <td>${members.size() - vs.index}</td>
-                        <td>${member.memberId}</td>
-                        <td>${member.name}</td>
-                        <td>${member.phone}</td>
-                        <td>${member.email}</td>
-                        <td>${member.enrollDate}</td>
-                        <td>${member.address}</td>
-                        <td>${member.birthday}</td>
-                        <td><button onclick="">수정</button></td>
-                    </tr>
-            	</c:if>
+				<tr>
+				    <td>${totalCount - vs.index}</td>
+				    <td>${member.memberId}</td>
+				    <td>${member.name}</td>
+				    <td>${member.phone}</td>
+				    <td>${member.email}</td>
+				    <td>${member.enrollDate}</td>
+				    <td>${member.address}</td>
+				    <td>${member.birthday}</td>
+				    <td><button onclick="">수정</button></td>
+				</tr>
             </c:forEach>
         </c:if>
     </tbody>

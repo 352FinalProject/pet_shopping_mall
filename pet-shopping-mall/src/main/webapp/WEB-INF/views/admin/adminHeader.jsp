@@ -57,7 +57,7 @@
 						class="font">통계분석</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
-						class="font">디자인관리</a></li>
+						class="font">기능미정</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/adminQuestionList.do"
 						class="font">문의관리</a></li>

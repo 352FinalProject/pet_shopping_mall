@@ -11,6 +11,9 @@ public interface AdminService {
 
 	List<Member> adminMemberList(Map<String, Object> params);
 	
+	List<Member> adminSubscribeList(Map<String, Object> params);
+
+	
 	int insertMember(Member member);
 
 	int updateMember(Member member);
@@ -27,8 +30,14 @@ public interface AdminService {
 	int findTotalQuestionCount();
 	
 	List<Member> adminMemberSearchByNameOrId(String searchKeyword);
+	
+	List<Member> adminSubscribeSearchByNameOrId(String searchKeyword);
 
 	int findTotalAdminCount();
+	
+	int findTotalubscribeCount();
+
+	
 
 
 
