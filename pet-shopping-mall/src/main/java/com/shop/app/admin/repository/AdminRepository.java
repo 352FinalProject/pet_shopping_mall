@@ -41,6 +41,9 @@ public interface AdminRepository {
 	@Select("select * from question where question_title like '%' || #{searchKeyword} || '%' or question_content like '%' || #{searchKeyword} || '%'")
 	List<Question> questionSearch(String searchKeyword);
 
+	@Select("select count (*) from member")
+	int findTotalAdminCount();
+
 
 }
 

@@ -147,10 +147,10 @@ create table persistent_logins (
 
 create table image_attachment_mapping (
     mapping_id number,
-    mapping_type number,
+    ref_table varchar2(50),
+    ref_id number,
     image_id number,
     constraint pk_question_image_mapping_id primary key(mapping_id),
-    constraint fk_question_id foreign key(question_id) references question(question_id) on delete cascade,
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
 
@@ -176,6 +176,10 @@ select * from authority;
 --drop table answer;
 --drop table point;
 --drop table image_attachment;
+--drop table orderTbl;
+--drop table persistent_logins;
+--drop table product;
+--drop table authority;
 --
 --drop sequence seq_answer_answer_id;
 --drop sequence seq_question_question_id;

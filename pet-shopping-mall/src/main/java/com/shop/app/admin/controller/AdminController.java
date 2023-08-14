@@ -45,13 +45,14 @@ public class AdminController {
 				"limit", limit
 			);
 		
-		int totalCount = adminService.findTotalQuestionCount();
+		int totalCount = adminService.findTotalAdminCount();
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 		
 		// MemberDetails로 바꿔야댐
 		List<Member> members = adminService.adminMemberList(params);
-		// log.debug("members = {}", members);
+		log.debug("params = {}", params);
+		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
 	    for (Member member : members) {

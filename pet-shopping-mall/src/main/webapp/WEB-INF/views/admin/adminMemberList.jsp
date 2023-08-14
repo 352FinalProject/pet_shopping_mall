@@ -69,7 +69,7 @@
         <li class="page-item ${page == pageNumber ? 'active' : ''}">
             <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${pageNumber}">
                    <span class="page-number">${pageNumber}</span>
-               </a>
+            </a>
         </li>
     </c:forEach>
 </ul>
