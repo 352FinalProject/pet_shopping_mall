@@ -45,7 +45,7 @@ public class AdminController {
 				"limit", limit
 			);
 		
-		int totalCount = adminService.findTotalQuestionCount();
+		int totalCount = adminService.adminMemberList();
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 		
