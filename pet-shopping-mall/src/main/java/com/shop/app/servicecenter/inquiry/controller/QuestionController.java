@@ -141,9 +141,9 @@ public class QuestionController {
 	
 	// 1:1 문의 삭제 (예라)
 	@PostMapping("/inquiry/DeleteQuestion.do")
-	public String questionDelete(@RequestParam int id) {
+	public String questionDelete(@RequestParam int questionId) {
 		
-		int result = questionService.deleteQuestion(id);
+		int result = questionService.deleteQuestion(questionId);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}

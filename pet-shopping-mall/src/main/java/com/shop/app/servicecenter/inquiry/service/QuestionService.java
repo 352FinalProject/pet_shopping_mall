@@ -21,7 +21,7 @@ public interface QuestionService {
 	int insertQuestion(Question question);
 
 	// 1:1 문의 삭제 (예라)
-	int deleteQuestion(int id);
+	int deleteQuestion(int questionId);
 
 	// 1:1 문의 수정 (예라)
 	int updateQuestion(Question question);
