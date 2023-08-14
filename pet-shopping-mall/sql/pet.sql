@@ -103,7 +103,7 @@ create table point (
     point_amount number not null,
     point_date timestamp default sysdate,
     constraint pk_point_id primary key (point_id),
-    constraint fk_point_member_id foreign key (point_member_id) references member(member_id)
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
 
 -- 상품 테이블
@@ -137,6 +137,24 @@ create table orderTbl (
     discount number,
     amount number
 );
+
+create table persistent_logins (
+    username varchar(64) not null,
+    series varchar(64) primary key, -- pk
+    token varchar(64) not null, -- username, password, expiry time을 hasing한 값
+    last_used timestamp not null
+);
+
+create table image_attachment_mapping (
+    mapping_id number,
+    mapping_type number,
+    image_id number,
+    constraint pk_question_image_mapping_id primary key(mapping_id),
+    constraint fk_question_id foreign key(question_id) references question(question_id) on delete cascade,
+    constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
+);
+
+select * from persistent_logins;
 
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
