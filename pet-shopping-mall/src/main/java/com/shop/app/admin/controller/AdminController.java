@@ -50,14 +50,10 @@ public class AdminController {
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
 	    for (Member member : members) {
-	        String roleString = member.getMemberRole().toString(); // 데이터베이스에서 받은 열 값
-	        MemberRole memberRole = MemberRole.valueOf(roleString); // Enum 값으로 변환
 	        
 	        String subscribeString = member.getSubscribe().toString(); 
 	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
 	        
-	        
-	        member.setMemberRole(memberRole); // 변환된 Enum 값을 Member 객체에 설정
 	        member.setSubscribe(subscribe);
 	    }
 	    
@@ -123,13 +119,9 @@ public class AdminController {
 	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
 
 	        for (Member member : members) {
-		        String roleString = member.getMemberRole().toString(); 
-		        MemberRole memberRole = MemberRole.valueOf(roleString); 
-		        
 		        String subscribeString = member.getSubscribe().toString(); 
 		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
 		        
-		        member.setMemberRole(memberRole); 
 		        member.setSubscribe(subscribe);
 		    }
 	        model.addAttribute("members", members);
@@ -146,13 +138,10 @@ public class AdminController {
 	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
 	        List<Member> subscribedMembers = new ArrayList<>();
 	        for (Member member : members) {
-		        String roleString = member.getMemberRole().toString(); 
-		        MemberRole memberRole = MemberRole.valueOf(roleString); 
 		        
 		        String subscribeString = member.getSubscribe().toString(); 
 		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
 		        
-		        member.setMemberRole(memberRole); 
 		        member.setSubscribe(subscribe);
 	        
 		        if (member.getSubscribe() == Subscribe.Y) {
