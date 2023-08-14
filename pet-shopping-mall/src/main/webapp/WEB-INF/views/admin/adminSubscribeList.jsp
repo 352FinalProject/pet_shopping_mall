@@ -4,7 +4,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style>
+section {
+    text-align: center;
+    margin: 30px auto;
+    width: 80%; /* Adjust the width as needed */
+}
 
+/* Center-align the table within the section */
+table {
+    margin: 30px auto;
+}
+.pagination {
+	justify-content: center;
+	margin: 30px auto;
+}
+</style>
+<section>
 <div class="admin-member-search-container">
     <form:form
         name="adminMemberSearchFrm" 
@@ -63,5 +79,17 @@
         </c:if>
     </tbody>
 </table>
+<nav aria-label="...">
+	<ul class="pagination pagination-sm">
+		<c:forEach begin="1" end="${totalPages}" var="pageNumber">
+			<li class="page-item ${page == pageNumber ? 'active' : ''}"><a
+				class="page-link"
+				href="${pageContext.request.contextPath}/admin/adminSubscribeList.do?page=${pageNumber}">
+					<span class="page-number">${pageNumber}</span>
+			</a></li>
+		</c:forEach>
+	</ul>
+</nav>
+</section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

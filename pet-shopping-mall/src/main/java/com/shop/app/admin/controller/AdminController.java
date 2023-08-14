@@ -38,20 +38,14 @@ public class AdminController {
 	@GetMapping({"/adminMemberList.do", "/adminSubscribeList.do"})
 	public void adminMemberList(@RequestParam(defaultValue = "1") int page,
 			Model model) {
-		
 		int limit = 10;
 		Map<String, Object> params = Map.of(
 				"page", page,
 				"limit", limit
 			);
 		
-		int totalCount = adminService.findTotalAdminCount();
-		int totalPages = (int) Math.ceil((double) totalCount / limit);
-		model.addAttribute("totalPages", totalPages);
-		
 		// MemberDetails로 바꿔야댐
 		List<Member> members = adminService.adminMemberList(params);
-		log.debug("params = {}", params);
 		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
@@ -66,6 +60,11 @@ public class AdminController {
 	        member.setMemberRole(memberRole); // 변환된 Enum 값을 Member 객체에 설정
 	        member.setSubscribe(subscribe);
 	    }
+	    
+	    int totalCount = members.size();
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		
+		model.addAttribute("totalPages", totalPages);
 		
 		model.addAttribute("members", members);
 	}
@@ -133,7 +132,6 @@ public class AdminController {
 		        member.setMemberRole(memberRole); 
 		        member.setSubscribe(subscribe);
 		    }
-
 	        model.addAttribute("members", members);
 	    }
 	    return "admin/adminMemberList";
