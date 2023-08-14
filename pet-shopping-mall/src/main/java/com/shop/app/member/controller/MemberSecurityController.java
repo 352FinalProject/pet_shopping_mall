@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.dto.MemberCreateDto;
@@ -94,12 +93,6 @@ public class MemberSecurityController {
 			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
 		log.debug("memberService = {}", memberService);
 		log.debug("authentication = {}", authentication);
-		// UsernamePasswordAuthenticationToken [
-		// 	Principal=MemberDetails(super=Member(memberId=honggd, password=$2a$10$pupH/6vQYLxBdHmRNfJgWe9IvCx8xW3WWEP.I1f8/luO4vJ5ejqBG, name=홍길동, birthday=1999-09-09, email=honggd@naver.com, createdAt=2023-08-02T11:23:48), authorities=[ROLE_USER]), 
-		// 	Credentials=[PROTECTED], 
-		// 	Authenticated=true, 
-		// 	Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=3D3DBE152CBE700582FDCF31D77692C2], 
-		//  Granted Authorities=[ROLE_USER]]
 		
 		// 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
 		// 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
@@ -177,6 +170,8 @@ public class MemberSecurityController {
 				.body(Map.of("available", available, "memberId", memberId));
 	}
 	
+	@GetMapping("/terms.do")
+	public void getTerms() {}
 	
 	
 }

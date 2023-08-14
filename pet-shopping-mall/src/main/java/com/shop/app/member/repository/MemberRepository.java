@@ -7,11 +7,11 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
+
 @Mapper
 public interface MemberRepository {
 	
