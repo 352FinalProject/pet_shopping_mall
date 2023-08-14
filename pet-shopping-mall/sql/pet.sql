@@ -1,15 +1,15 @@
 --==============================
 -- pet계정 생성 @관리자
 --==============================
---alter session set "_oracle_script" = true;
---
---create user pet
---identified by pet
---default tablespace users;
---
---grant connect, resource to pet;
---
---alter user pet quota unlimited on users;
+alter session set "_oracle_script" = true;
+
+create user pet
+identified by pet
+default tablespace users;
+
+grant connect, resource to pet;
+
+alter user pet quota unlimited on users;
 
 --==============================
 -- 초기화 블럭
@@ -22,12 +22,6 @@
 --drop table product_category;
 --drop table product;
 
-grant connect, resource to pet;
-
-grant create session to pet;
-grant create table to pet;
-
-alter user pet quota unlimited on users;
 
 --drop sequence seq_member_id;
 --drop sequence seq_answer_answer_id;
@@ -142,6 +136,7 @@ create table product_category (
     constraints pk_category_id primary key(category_id)
 );
 select * from product_category;
+
 -- 상품 테이블
 create table product (
     product_id number,
@@ -158,14 +153,17 @@ create table product (
     constraints uq_product_code unique(product_code),
     constraints fk_product_category_id foreign key(product_category_id) references product_category(category_id) on delete cascade
 );
+
 -- 상품재고테이블
-create table product (
-    product
-	`product_code`	varchar2(100)	NOT NULL,
-	`option_id`	number	NOT NULL,
-	`stock`	number	NOT NULL	DEFAULT 0,
-	`sale_state`	number	NOT NULL	COMMENT '0: 판매대기
-);
+--create table product (
+--    product
+--	`product_code`	varchar2(100)	NOT NULL,
+--	`option_id`	number	NOT NULL,
+--	`stock`	number	NOT NULL	DEFAULT 0,
+--	`sale_state`	number	NOT NULL	COMMENT '0: 판매대기
+--);
+
+
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
@@ -201,6 +199,47 @@ create table image_attachment_mapping (
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
 
+-- 주문상세 테이블
+create table order_detail (
+    order_id number,
+    product_detail_id number,
+    product_amount number not null default 1,
+    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade,
+    constraint fk_product_detail_id foreign key(product_detail_id) references order_detail(product_detail_id) on delete cascade
+);
+
+-- 리뷰테이블
+create table review (
+    review_id number,
+    pet_id number,
+    order_id number,
+    review_title varchar2(50),
+    review_content varchar2(3000),
+    review_star_rate number default 1 not null,
+    review_created_at timestamp default sysdate,
+    constraint pk_review_id primary key(review_id),
+    constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
+    constraint fk_order_id foreign key(order_id) references order_detail(order_id) on delete cascade,
+    constraint ck_review_review_star_rate check(1 <= review_star_rate <= 5)
+);
+
+create table community (
+    community_id number,
+    community_member_id varchar2(50),
+    community_title varchar2(500),
+    community_content varchar2(4000),
+    community_created_at timestamp default sysdate,
+    constraint pk_community_id primary key(community_id),
+    constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
+);
+
+
+
+
+
+
+
+
 select * from persistent_logins;
 
 
@@ -214,6 +253,9 @@ create sequence seq_pet_pet_id;
 create sequence seq_wishlist_wishlist_id;
 create sequence seq_product_category_id;
 create sequence seq_product_id;
+create sequence seq_review_id;
+
+
 
 select * from member;
 select * from question;
