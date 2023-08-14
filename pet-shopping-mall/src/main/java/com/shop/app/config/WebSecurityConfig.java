@@ -60,15 +60,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	// 인증 정보를 구성하는 메서드
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//			auth.inMemoryAuthentication()
-//				.passwordEncoder(passwordEncoder())
-//				.withUser("sinsa")
-//				.password(passwordEncoder().encode("1234"))
-//				.authorities("ROLE_USER")
-//				.and()
-//				.withUser("admin")
-//				.password(passwordEncoder().encode("1234"))
-//				.authorities("ROLE_USER", "ROLE_ADMIN");
 			
 			auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
 
@@ -90,9 +81,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 
 			.antMatchers("/", "/index.jsp").permitAll()  // 모든 사용자 허용
+			.antMatchers("/member/reviewWrite.do", "/member/terms.do", "/servicecenter/service.do").permitAll()
 			.antMatchers("/member/memberCreate.do", "/member/checkIdDuplicate.do").anonymous()  // 비로그인 사용자만 허용
-			.antMatchers("/board/boardList.do").permitAll()
 //			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/product/**").permitAll()
 			.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 			.anyRequest().authenticated(); // 나머지 요청은 인증 필요
 		

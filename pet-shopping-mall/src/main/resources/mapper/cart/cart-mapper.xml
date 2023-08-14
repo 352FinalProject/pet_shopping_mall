@@ -1,19 +1,20 @@
- <?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cart">
-  <select id="findAll" resultType="cartDto">
+<mapper namespace="com.shop.app.cart.repository.CartRepository">
+
+ <!-- <select id="findAll" resultType="cartDto">
     select
     	* 
     from 
     	Blog 
     order by
     	id desc
-  </select>
+  </select> -->
   
   
-  	<resultMap type="boardDetails" id="boardDetailsMap">
+  	 <!-- <resultMap type="boardDetails" id="boardDetailsMap">
 		<id column="id" property="id"/>
 		<result column="title" property="title"/>
 		<result column="member_id" property="memberId"/>
@@ -32,5 +33,5 @@
 			<result column="renamed_filename" property="renamedFilename"/>
 			<result column="attach_created_at" property="createdAt"/>
 		</collection>
-	</resultMap>
+	</resultMap> -->
 </mapper>

@@ -29,10 +29,10 @@
     </delete> -->
 
     <!-- 회원 로그인을 위한 쿼리 -->
-    <select id="loadUserByUsername" resultMap="memberAuthMap">
+<!--     <select id="loadUserByUsername" resultMap="memberAuthMap">
 
 	    "SELECT * FROM member WHERE member_id = #{memberId}"
-  </select>
+  </select> -->
 
   
  <resultMap id="memberAuthMap" type="memberDetails">
