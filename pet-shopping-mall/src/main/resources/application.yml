@@ -31,3 +31,12 @@ mybatis:
     jdbc-type-for-null: NULL
     map-underscore-to-camel-case: true
     call-setters-on-nulls: true
+
+# iamport
+external:
+  api:
+    name: iamport
+    key: 8436154361367252
+    secret: KFOGi0l3xtHvta03STsSgbxGPTUEdoQ8nvwXsPiS86MffGCYzXUoYvX7SL5V7P4NDyu5rGHirJXjbXA3
+
+  
