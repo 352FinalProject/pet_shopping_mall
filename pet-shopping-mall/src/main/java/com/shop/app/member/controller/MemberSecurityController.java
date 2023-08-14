@@ -205,8 +205,5 @@ public class MemberSecurityController {
 	@GetMapping("/myPage.do")
 	public void myPage() {}
 	
-	@GetMapping("/terms.do")
-	public void terms() {}
-	
 }
 
