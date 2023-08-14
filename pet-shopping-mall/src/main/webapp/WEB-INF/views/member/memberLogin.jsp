@@ -210,20 +210,7 @@
 	</div>
 </section>
 <script>
-/* document.getElementById('loginButton').addEventListener('click', function() {
-	  const id = document.getElementById('inputId').value;
-	  const password = document.getElementById('inputPassword').value;
 
-	  // 아이디와 비밀번호 유효성 검사
-	  if (id && password) {
-	    // 여기서 로그인 처리를 수행합니다.
-	    // 예를 들어, 서버로 요청을 보내거나 다른 페이지로 리다이렉트 할 수 있습니다.
-	    console.log('로그인 성공!');
-	  } else {
-	    alert('아이디와 비밀번호를 입력해주세요.');
-	  }
-	});
- */
  const checkInputs = () => {
 	  const id = document.getElementById('inputId').value;
 	  const password = document.getElementById('inputPassword').value;

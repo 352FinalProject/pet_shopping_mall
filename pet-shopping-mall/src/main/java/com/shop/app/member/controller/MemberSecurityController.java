@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,8 @@ import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.entity.MemberRole;
+import com.shop.app.member.entity.Subscribe;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
@@ -54,7 +57,7 @@ public class MemberSecurityController {
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
 	
-
+	
 	@PostMapping("/memberCreate.do") // 회원 생성 처리
 	public String create(
 			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
@@ -79,9 +82,6 @@ public class MemberSecurityController {
 		log.debug("{} -> {}", rawPassword, encodedPassword);
 		member.setPassword(encodedPassword);
 		
-		// 포인트 테이블에 디비 저장 (예라)
-		member.setPoint(3000);
-		
 		// 회원 정보 DB에 저장
 		int result = memberService.insertMember(member);
 		
@@ -104,10 +104,10 @@ public class MemberSecurityController {
 	// 로그아웃처리하는 요청 작성 X
 	
 	// 멤버 상세 조회
-	@GetMapping("/memberDetail.do")
+	@GetMapping("/myPage.do")
 	public void memberDetail(
 			Authentication authentication, 
-			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
+			@AuthenticationPrincipal MemberDetails _member, Model model) { // 현재 인증 객체
 		log.debug("memberService = {}", memberService);
 		log.debug("authentication = {}", authentication);
 		
@@ -116,11 +116,12 @@ public class MemberSecurityController {
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
 		Object credentials = authentication.getCredentials(); // 열람불가
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		log.debug("principal = {}", principal);
-		log.debug("credentials = {}", credentials);
-		log.debug("authorities = {}", authorities);
+		String memberId = _member.getMemberId();
+		Member member = memberService.findMemberById(memberId);
 		
-		log.debug("member = {}", member);
+		model.addAttribute("loginMember", member);
+		log.debug("member = {} ", member);
+		
 	}
 	
 	// 멤버 정보 업데이트
@@ -187,7 +188,7 @@ public class MemberSecurityController {
 				.body(Map.of("available", available, "memberId", memberId));
 	}
 	
-	@GetMapping("/terms.do")
+	@GetMapping("/terms.do") // 약관동의
 	public void getTerms() {}
 	
 	
