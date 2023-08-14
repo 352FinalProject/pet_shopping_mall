@@ -151,8 +151,8 @@
 			    		</td>
     				</tr>
     			</table>
-    			</form:form>
-    		</div>
-    	</div>
-    </section>
+			</form:form>
+		</div>
+	</div>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

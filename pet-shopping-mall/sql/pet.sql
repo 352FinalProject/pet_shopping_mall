@@ -56,7 +56,7 @@ insert into authority values ('abcde', 'ROLE_USER');
 insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
-insert into authority values ('honggd', 'ROLE_USER');
+insert into authority values ('member1', 'ROLE_USER');
 
 -- qna 질문 테이블
     question_id number,
@@ -225,7 +225,7 @@ values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('202
 
 
 
-delete from question where id = '19';
+delete from member where id = '1';
 
 SELECT * FROM product WHERE id = 3;
 
