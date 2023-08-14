@@ -117,6 +117,16 @@ create table image_attachment (
     constraint pk_image_attachment_id primary key(image_id)
 );
 
+-- 이미지 파일 매핑 테이블
+create table image_attachment_mapping (
+    mapping_id number,
+    ref_table varchar2(50),
+    ref_id number,
+    image_id number,
+    constraint pk_question_image_mapping_id primary key(mapping_id),
+    constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
+);
+
 -- 포인트 테이블
 create table point (
     point_id number,
@@ -149,22 +159,23 @@ create table product (
     like_cnt number, -- 좋아요수
     view_cnt number, -- 조회수
     constraints pk_product_id primary key(product_id),
-    constraints uq_product_code unique(product_code),
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade,
-    constraints fk_thumbnail_img foreign key(thumbnail_img) references image_attachment_mapping(mapping_id) on delete cascade,
-    constraints fk_product_img foreign key(product_img) references image_attachment_mapping(mapping_id) on delete cascade
+    constraints fk_thumbnail_img foreign key(thumbnail_img) references image_attachment_mapping(mapping_id)
+--    constraints fk_product_img foreign key(product_img) references image_attachment_mapping(mapping_id)
 );
 
--- 상품재고테이블
---create table product (
---    product
---	`product_code`	varchar2(100)	NOT NULL,
---	`option_id`	number	NOT NULL,
---	`stock`	number	NOT NULL	DEFAULT 0,
---	`sale_state`	number	NOT NULL	COMMENT '0: 판매대기
---);
-
-
+-- 상품상세 테이블
+create table product_detail (
+    product_detail_id number, -- pk
+	product_id number, -- fk
+    option_name varchar2(100), -- 옵션명
+    option_value varchar2(200), -- 옵션속성
+    additional_price number, -- 옵션에 따른 추가금
+    stock number default 0,
+    sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
+    constraints pk_product_detail_id primary key(product_detail_id),
+    constraints fk_product_id foreign key(product_id) references product(product_id)
+);
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
@@ -203,15 +214,6 @@ create table persistent_logins (
     last_used timestamp not null
 );
 
--- 이미지 파일 매핑 테이블
-create table image_attachment_mapping (
-    mapping_id number,
-    ref_table varchar2(50),
-    ref_id number,
-    image_id number,
-    constraint pk_question_image_mapping_id primary key(mapping_id),
-    constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
-);
 
 -- 주문상세 테이블
 create table order_detail (
@@ -303,6 +305,7 @@ create sequence seq_pet_pet_id;
 create sequence seq_wishlist_wishlist_id;
 create sequence seq_product_category_id;
 create sequence seq_product_id;
+create sequence seq_product_detail_id;
 create sequence seq_review_id;
 create sequence seq_refund_id;
 create sequence seq_payment_id;
@@ -314,7 +317,9 @@ select * from member;
 select * from question;
 select * from answer;
 select * from point order by point_id desc;
+select * from product_category;
 select * from product;
+select * from product_detail;
 select * from image_attachment;
 
 --drop table member;
