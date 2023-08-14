@@ -28,6 +28,8 @@ public interface AdminService {
 	
 	List<Member> adminMemberSearchByNameOrId(String searchKeyword);
 
+	int findTotalAdminCount();
+
 
 
 

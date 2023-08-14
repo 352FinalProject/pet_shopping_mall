@@ -69,6 +69,11 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepository.findTotalQuestionCount();
 	}
 
+	@Override
+	public int findTotalAdminCount() {
+		return adminRepository.findTotalAdminCount();
+	}
+
 	
 
 }
