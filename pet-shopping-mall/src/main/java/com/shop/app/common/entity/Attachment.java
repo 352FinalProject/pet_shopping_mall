@@ -13,14 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Attachment {
 	
-	private int id;
+	private int imageId;
 	private int imageType;
-	private int itemId;
-	private String originalFilename;
-	private String renamedFilename;
-	private Thumbnail thumbnail;
-	private Long fileSize;
-	private LocalDateTime createdAt;
-	private IsDeleted isDeleted;
+	private int imageCategory;
+	private String imageOriginalFilename;
+	private String imageRenamedfilename;
+	private Long imageFileSize;
+	private LocalDateTime imageCreatedAt;
 	
 }

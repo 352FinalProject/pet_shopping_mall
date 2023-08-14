@@ -6,7 +6,8 @@
 <div class="sidebar2">
 	<ul class="sidebar2-text">
 		<li class="sidebar2-title">마이페이지</li>
-		<li class="sidebar2-mysp"><span>마이 쇼핑</span></a>
+		<li class="sidebar2-mysp">
+			<h2 class="sidebar2-title2">마이 쇼핑</h2></a>
 			<ul>
 				<li><a href="#">주문내역</a></li>
 				<li><a href="#">취소/반품</a></li>
@@ -14,15 +15,17 @@
 				<li><a href="#">내가 쓴 문의</a></li>
 			</ul>
 		</li>
-		<li class="sidebar2-mybe"><span>마이 혜택</span></a>
+		<li class="sidebar2-mybe">
+			<h2 class="sidebar2-title2">마이 혜택</h2></a>
 			<ul>
-				<li><a href="#">쿠폰</a></li>
+				<li><a href="${pageContext.request.contextPath}/point/pointList.do">포인트 내역</a></li>
 				<li><a href="#">내가 쓴 리뷰</a></li>
 			</ul>
 		</li>
-		<li class="sidebar2-pro"><span>마이 정보</span></a>
+		<li class="sidebar2-pro">
+			<h2 class="sidebar2-title2">마이 정보</h2></a>
 			<ul>
-				<li><a href="#">회원정보 수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/myPage.do">회원정보 수정</a></li>
 				<li><a href="#">펫정보 수정</a></li>
 			</ul>
 		</li>

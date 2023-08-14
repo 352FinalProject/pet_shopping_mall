@@ -227,21 +227,30 @@ body {
 .sidebar2 {
 	display: flex;
 	position: absolute;
+	line-height: 2;
+	margin-left: 350px;
 }
 
 .sidebar2-text {
 	margin-top: 105px;
+	width: 300px;
 }
 
 .sidebar2-title {
 	font-size: 25px;
 }
 
-.sidebar2 span {
+.sidebar2-title2 {
+	width : 200px;
 	font-size: 20px;
+	border-bottom: 1px solid #e7e7e7;
 }
 
 .sidebar2-mysp a, .sidebar2-mybe a, .sidebar2-pro a {
 	color: #828282;
+}
+
+.sidebar2-mysp, .sidebar2-mybe, .sidebar2-pro {
+	margin-top: 25px;
 }
 

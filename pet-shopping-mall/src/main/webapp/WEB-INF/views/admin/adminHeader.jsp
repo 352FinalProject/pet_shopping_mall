@@ -3,17 +3,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>반려동물 쇼핑몰 관리자페이지</title>
 </head>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/style.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/swiper.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/product.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 <body>
 
 	<header>
@@ -60,8 +68,8 @@
 						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
 						class="font">디자인관리</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/adminMemberList.do"
-						class="font">씨발</a></li>
+						href="${pageContext.request.contextPath}/admin/adminQuestionList.do"
+						class="font">문의관리</a></li>
 				</ul>
 			</ul>
 		</div>

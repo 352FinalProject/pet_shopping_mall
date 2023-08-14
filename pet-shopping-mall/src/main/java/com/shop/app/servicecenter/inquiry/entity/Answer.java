@@ -1,22 +1,27 @@
 package com.shop.app.servicecenter.inquiry.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.shop.app.common.entity.Attachment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class Answer {
 	
-	private int id;
-	private String adminName;
-	private int questionId;
-	private String content;
-	private LocalDateTime regDate;
+	private int answerId;
+	private String answerAdminName;
+	private int answerQuestionId;
+	private String answerContent;
+	private LocalDateTime answerCreatedAt;
 
+	private int questionId;
 }

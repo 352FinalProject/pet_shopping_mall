@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <%-- 1:1 문의 작성 (예라) --%>
@@ -10,15 +11,32 @@
 	<div class="common-title">1:1 문의 작성</div>
 	<div class="common-container">
 		<div class="common-div">
-			<form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do" 
+			<form:form action="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do" 
 			enctype="multipart/form-data" method="post">
 				<div class="qna-create">
 					<div class="input-container">
 						<table>
+						<tr>
+								<th>분류</th>
+								<td class="questionCategory"><select name="questionCategory">
+										<option value="-선택-">-선택-</option>
+										<option value="상품">상품</option>
+										<option value="배송"">배송</option>
+										<option value="주문">주문</option>
+										<option value="교환">교환</option>
+										<option value="취소">취소</option>
+										<option value="기타">기타</option>
+									</select></td>
+							</tr>
 							<tr>
 								<th>아이디</th>
-								<td><input type="text" name="memberId" id="memberId"
-									value="${questions.memberId}" required /></td>
+								<td><input type="text" name="questionMemberId" id="questionMemberId"
+									value="" required /></td>
+							</tr>
+							<tr>
+								<th>이메일</th>
+								<td><input type="email" name="questionEmail" id="questionEmail"
+									required></td>
 							</tr>
 							<tr>
 								<th>사진첨부</th>
@@ -26,18 +44,8 @@
 								</label> <input type="file" name="upFile" id="file"></td>
 							</tr>
 							<tr>
-								<th>상품코드</th>
-								<td><input type="text" name="productId" id="productId"
-									required></td>
-							</tr>
-							<tr>
-								<th>사진타입</th>
-								<td><input type="text" name="imageType" id="imageType"
-									required></td>
-							</tr>
-							<tr>
 								<th>제목</th>
-								<td><input type="text" name="title" id="title"
+								<td><input type="text" name="questionTitle" id="questionTitle"
 									required></td>
 							</tr>
 						</table>
@@ -45,12 +53,12 @@
 				</div>
 			    <!-- 내용 섹션 -->
 			    <div class="content-container">
-			        <div class="qna-create">
+			        <div class="qna-create2">
 			            <table>
 			                <tr>
 			                    <th></th>
 			                    <td>
-			                        <textarea name="content" rows="4" cols="50" placeholder="상세 내용 (필수)" required></textarea>
+			                        <textarea name="questionContent" rows="4" cols="50" placeholder="상세 내용 (필수)" required></textarea>
 			                    </td>
 			                </tr>
 			            </table>
@@ -62,7 +70,7 @@
 			    </div>
 		    </div>
 		</div>
-	</form>
+	</form:form>
 </section>
 <script>
 document.querySelectorAll("[name=file]").forEach((input) => {
