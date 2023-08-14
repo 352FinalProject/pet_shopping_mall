@@ -191,6 +191,20 @@ public class MemberSecurityController {
 	@GetMapping("/terms.do") // 약관동의
 	public void getTerms() {}
 	
+	@GetMapping("/paymentCompleted.do")
+	public void paymentCompleted(){}
+	
+	@GetMapping("/petProfile.do")
+	public void petProfile() {}
+	
+	@GetMapping("/reviewWrite.do")
+	public void reviewWrite() {}
+	
+	@GetMapping("/myReview.do")
+	public void myReview() {}
+	
+	@GetMapping("/myPage.do")
+	public void myPage() {}
 	
 }
 

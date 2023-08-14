@@ -18,6 +18,11 @@ spring:
     url: jdbc:oracle:thin:@localhost:1521:xe
     username: pet
     password: pet
+  servlet:
+   multipart:
+     max-file-size: 10MB
+     max-request-size: 50MB
+     location: C:/Workspaces/spring_workspace/hello-springboot/src/main/webapp/resources/upload/board
 
 # logback
 logging:
@@ -31,6 +36,9 @@ mybatis:
     jdbc-type-for-null: NULL
     map-underscore-to-camel-case: true
     call-setters-on-nulls: true
+  type-aliases-package: com.shop.app, org.springframework.security.core.authority
+  type-handlers-package: com.shop.app.common.typehandler
+  mapper-locations: classpath:mapper/**/*-mapper.xml
 
 # iamport
 external:
@@ -38,5 +46,3 @@ external:
     name: iamport
     key: 8436154361367252
     secret: KFOGi0l3xtHvta03STsSgbxGPTUEdoQ8nvwXsPiS86MffGCYzXUoYvX7SL5V7P4NDyu5rGHirJXjbXA3
-
-  

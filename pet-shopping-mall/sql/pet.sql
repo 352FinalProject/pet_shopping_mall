@@ -191,26 +191,24 @@ select * from product;
 select * from image_attachment;
 select * from authority;
 
---drop table member;
---drop table question;
---drop table answer;
---drop table point;
---drop table image_attachment;
---drop table orderTbl;
---drop table persistent_logins;
---drop table product;
---drop table authority;
---drop table pet;
---drop table wishlist;
+drop table member;
+drop table question;
+drop table answer;
+drop table point;
+drop table image_attachment;
+drop table orderTbl;
+drop table persistent_logins;
+drop table product;
+drop table authority;
+drop table pet;
+drop table wishlist;
 
-
-
---drop sequence seq_answer_answer_id;
---drop sequence seq_question_question_id;
---drop sequence seq_point_point_id;
---drop sequence seq_image_attachment_image_id;
---drop sequence seq_product_product_id;
---drop sequence seq_wishlist_wishlist_id;
+drop sequence seq_answer_answer_id;
+drop sequence seq_question_question_id;
+drop sequence seq_point_point_id;
+drop sequence seq_image_attachment_image_id;
+drop sequence seq_product_product_id;
+drop sequence seq_wishlist_wishlist_id;
 
 
 ------------------ member insert ---------------------------

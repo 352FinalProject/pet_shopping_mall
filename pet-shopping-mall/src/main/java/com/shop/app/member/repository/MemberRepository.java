@@ -20,7 +20,7 @@ public interface MemberRepository {
 	
 	@Insert("insert into member (member_id, password, name, phone, email, address, birthday) " +
 	        "values (#{memberId}, #{password}, #{name}, #{phone}, #{email}, " +
-	        "#{address}, #{birthday, jdbcType=DATE}, #{point})")
+	        "#{address}, #{birthday, jdbcType=DATE})")
 	int insertMember(MemberCreateDto member);
 	
 	@Update("update member set birthday =")
