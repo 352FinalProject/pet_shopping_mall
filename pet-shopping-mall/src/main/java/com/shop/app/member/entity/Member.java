@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-	private int id;
 	private String memberId;
 	private String password;
 	private String name;
@@ -22,8 +21,6 @@ public class Member {
 	private Date enrollDate;
 	private String address;
 	private LocalDate birthday;
-	private MemberRole memberRole;
-	private int point;
 	private Subscribe subscribe;
 	
 }
