@@ -60,8 +60,8 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	// 1:1 문의 삭제 (예라)
 	@Override
-	public int deleteQuestion(int id) {
-		return questionRepository.deleteQuestion(id);
+	public int deleteQuestion(int questionId) {
+		return questionRepository.deleteQuestion(questionId);
 	}
 
 	// 1:1 문의 수정 (예라)

@@ -39,7 +39,7 @@ public interface QuestionRepository {
 
 	// 1:1 목록 삭제 (예라)
 	@Delete("delete from question where question_id = #{questionId}")
-	int deleteQuestion(int id);
+	int deleteQuestion(int questionId);
 
 	// 1:1 목록 수정 (예라)
 	@Update("update question set question_member_id = #{questionMemberId}, question_title = #{questionTitle}, question_category = #{questionCategory}, question_email = #{questionEmail}, question_content = #{questionContent} where question_id = #{questionId}")
