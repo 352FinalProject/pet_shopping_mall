@@ -168,18 +168,31 @@ create table product (
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
--- 할인코드는 미추가 상태입니다.
+-- order_no : 230814(날짜)-001 이런식으로 만들거여서 varchar2
 create table orderTbl (
-    id number,
-    order_no varchar2(20),
+    order_id number,
+    order_no varchar2(20) not null,
     member_id varchar2(50),
     order_date timestamp default sysdate,
-    order_state number default 0,
-    payment_state number default 0,
-    total_price number,
-    delivery_fee num`ber,
-    discount number,
-    amount number
+    order_status number default 0,
+    payment_status number default 0,
+    total_price number not null,
+    delivery_fee number default 3000,
+    discount number default 0,
+    amount number not null,
+    discount_code varchar2,
+    constraint pk_order_id primary key(order_id),
+    constraint fk_member_id foreign key(member_id) references member(member_id) on delete cascade
+);
+
+create table cancel_order (
+    cancel_id number,
+    request_date timestamp default sysdate,
+    receipt_date timestamp,
+    cancel_status number default 0,
+    order_id number,
+    constraint pk_cancel_id primary key(cancel_id),
+    connect fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
 -- 대충 시큐리티 테이블 없으면 오류남
@@ -204,7 +217,7 @@ create table image_attachment_mapping (
 create table order_detail (
     order_id number,
     product_detail_id number,
-    product_amount number not null default 1,
+    quantity number not null default 1,
     constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade,
     constraint fk_product_detail_id foreign key(product_detail_id) references order_detail(product_detail_id) on delete cascade
 );
@@ -234,10 +247,46 @@ create table community (
     constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
 );
 
+create table payment (
+    payment_id number,
+    payment_method number not null,
+    payment_date timestamp default sysdate,
+    amount number not null,
+    order_id number,
+    constraint pk_payment_id primary key(payment_id),
+    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+);
 
+create table refund (
+    refund_id number,
+    receipt_date timestamp default sysdate,
+    complete_date timestamp,
+    refund_status number default 0,
+    refund_price number not null,
+    refund_method number not null,
+    refund_account varchar2,
+    account_name varchar2,
+    bank varchar2
+    order_id number,
+    constraint pk_refund_id primary key(refund_id),
+    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+);
 
+create table cart (
+    cart_id number,
+    member_id varchar2(50)
+    constraint pk_cart_id primary key(cart_id),
+    constraint fk_member_id foreign key(member_id) references member(member_id) on delete cascade
+);
 
-
+create table cartitem (
+    cartitem_id number,
+    cart_id number,
+    product_code varchar2(100) not null,
+    quantity number default 1,
+    constraint pk_cartitem_id primary key(cancel_id),
+    constraint fk_cart_id foreign key(cart_id) references cart(cart_id)
+);
 
 
 
@@ -255,8 +304,11 @@ create sequence seq_wishlist_wishlist_id;
 create sequence seq_product_category_id;
 create sequence seq_product_id;
 create sequence seq_review_id;
-
-
+create sequence seq_refund_id;
+create sequence seq_payment_id;
+create sequence seq_cancel_id;
+create sequence seq_cart_id;
+create sequence seq_cartitem_id;
 
 select * from member;
 select * from question;
