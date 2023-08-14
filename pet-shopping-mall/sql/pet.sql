@@ -135,23 +135,24 @@ create table product_category (
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
-select * from product_category;
 
 -- 상품 테이블
 create table product (
-    product_id number,
-    product_code number,
-    product_category_id number,
+    product_id number, -- pk
+    category_id number, -- fk
     product_name varchar2(200) not null,
     product_price number not null,
-    product_stock number not null,
-    product_date timestamp default sysdate,
-    expire_date timestamp default sysdate,
-    like_cnt number,
-    views number,
+    thumbnail_img number, -- 썸네일 이미지(fk)
+    product_img number, -- 제품상세 이미지(fk)
+    product_date timestamp default sysdate, -- 등록일
+    expire_date timestamp default sysdate, -- 유통기한
+    like_cnt number, -- 좋아요수
+    view_cnt number, -- 조회수
     constraints pk_product_id primary key(product_id),
     constraints uq_product_code unique(product_code),
-    constraints fk_product_category_id foreign key(product_category_id) references product_category(category_id) on delete cascade
+    constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade,
+    constraints fk_thumbnail_img foreign key(thumbnail_img) references image_attachment_mapping(mapping_id) on delete cascade,
+    constraints fk_product_img foreign key(product_img) references image_attachment_mapping(mapping_id) on delete cascade
 );
 
 -- 상품재고테이블
