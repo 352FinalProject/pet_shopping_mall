@@ -4,30 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.member.repository.MemberRepository">
 <!-- 
-    회원 추가
-    <insert id="insertMember">
-        INSERT INTO member (id, member_id, password, name, phone, email, reg_date, address, birthday, member_role, point, field)
-        VALUES (#{id}, #{memberId}, #{password}, #{name}, #{phone}, #{email}, #{regDate, jdbcType=DATE}, #{address}, #{birthday, jdbcType=DATE}, #{memberRole}, #{point}, #{field})
-    </insert>
-
-    회원 정보 조회
-    <select id="findMemberById" resultType="com.shop.app.member.model.Member">
-        SELECT * FROM member WHERE id = #{id}
-    </select>
-
-    회원 정보 수정
-    <update id="updateMember">
-        UPDATE member
-        SET member_id = #{memberId}, password = #{password}, name = #{name}, phone = #{phone}, email = #{email},
-            address = #{address}, birthday = #{birthday, jdbcType=DATE}, member_role = #{memberRole}, point = #{point}, field = #{field}
-        WHERE id = #{id}
-    </update>
-
-    회원 정보 삭제
-    <delete id="deleteMember">
-        DELETE FROM member WHERE id = #{id}
-    </delete> -->
-
     <!-- 회원 로그인을 위한 쿼리 -->
 <!--     <select id="loadUserByUsername" resultMap="memberAuthMap">
 

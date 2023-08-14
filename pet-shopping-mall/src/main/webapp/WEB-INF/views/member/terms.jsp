@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/templates/header.jsp"%>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 <section class="terms-section">
 	<div>
 		<form action="" id="joinForm">
@@ -47,8 +48,8 @@
 				<ul class="footBtwrap clearfix">
 					<li><button id="disabled-button" type="button" disabled
 							class="fpmgBt1" onclick="next();">동의</button></li>
-					<!--  <li><button type="button" class="fpmgBt1"
-					onclick="location.href= '<%=request.getContextPath()%>/';">비동의</button></li> -->
+					<li><button type="button" class="fpmgBt1"
+					onclick="location.href= '${contextPath.request.contextpath}/';">비동의</button></li>
 				</ul>
 		</form>
 	</div>
@@ -75,7 +76,7 @@ const next = () => {
 	const box2 = document.querySelector("#checkBox2");
 	
 	if(box1.checked && box2.checked ){
-		location.href = '<%=request.getContextPath()%>/member/memberCreate';
+		location.href = '${pageContext.request.contextPath}/member/memberCreate.do';
 	} else{
 		alert("필수항목 체크해주세요");
 	}
@@ -93,4 +94,4 @@ const toggleCheckBox = () => {
 	
 };
 </script>
-<%@ include file="/WEB-INF/views/templates/footer.jsp"%>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

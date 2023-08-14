@@ -74,5 +74,4 @@ public class MemberDetails extends Member implements UserDetails { //OAuth2User 
 	}
 
 
-
 }

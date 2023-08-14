@@ -200,7 +200,7 @@
 					<td>
 						<div class="login-btnAll">
 							<button type="submit" class="signUp-btn"
-							 onclick="location.href='${pageContext.request.contextPath}/member/terms'"
+							 onclick="location.href='${pageContext.request.contextPath}/member/terms.do'"
 							>회원가입</button>
 						</div>
 					</td>
