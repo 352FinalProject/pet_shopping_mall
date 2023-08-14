@@ -92,10 +92,10 @@
 			</table>
 		</div>
 		<div class="payment-main-button">
-			<form action="<%=request.getContextPath()%>/main" method="get">
+			<form action="<%=request.getContextPath()%>/" method="get">
 				<button id="payment-btn1" type="submit">메인으로 가기</button>
 			</form>
-			<form action="<%=request.getContextPath()%>/main" method="get">
+			<form action="<%=request.getContextPath()%>/orderHistory" method="get">
 				<!-- 주문 조회 URL을 수정하실 수 있습니다 -->
 				<button type="submit">주문 조회</button>
 			</form>

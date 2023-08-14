@@ -69,7 +69,8 @@ insert into member values(seq_member_id.nextval, 'honggd', '1234', '홍길동');
 
 create sequence seq_member_id;
 create sequence seq_product_id;
-
+create sequence seq_orderTbl_id;
+select * from orderTbl;
 
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
 create table orderTbl (

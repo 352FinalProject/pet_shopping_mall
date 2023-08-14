@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .common-section{
@@ -90,7 +91,7 @@
     	<br>
     	<div class="common-container">
     		<div class="common-div">
-    			<form name="memberCreateFrm" action="" method="POST">
+    			<form:form name="memberCreateFrm" action="" method="POST">
     			<table>
     				<tr>
     					<th>아이디<span>*</span></th>
@@ -120,7 +121,7 @@
     				<tr>
     					<th>핸드폰 번호</th>
     					<td>
-    						<input type="tel" name="tel" id="tel" value="" required>
+    						<input type="tel" name="phone" id="tel" value="" required>
     						<input type="button" value="핸드폰 인증" onclick="telCheck()">
     					</td>
     				</tr>
@@ -150,8 +151,8 @@
 			    		</td>
     				</tr>
     			</table>
-    			</form>
-    		</div>
-    	</div>
-    </section>
+			</form:form>
+		</div>
+	</div>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
