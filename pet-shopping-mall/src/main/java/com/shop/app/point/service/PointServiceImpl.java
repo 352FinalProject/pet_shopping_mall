@@ -19,4 +19,10 @@ public class PointServiceImpl implements PointService {
 		return pointRepository.findPointAll(point);
 	}
 
+	// 회원가입 포인트 저장 (예라)
+	@Override
+	public int givePointsForSignUp(Point point) {
+		return pointRepository.givePointsForSignUp(point);
+	}
+
 }

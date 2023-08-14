@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.dto.MemberCreateDto;
@@ -32,6 +31,8 @@ import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +47,9 @@ public class MemberSecurityController {
 	
 	@Autowired // 비밀번호 암호화 도구 자동 주입
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private PointService pointService; // 회원가입시 포인트 3000원 적립 
 	
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
@@ -75,8 +79,20 @@ public class MemberSecurityController {
 		log.debug("{} -> {}", rawPassword, encodedPassword);
 		member.setPassword(encodedPassword);
 		
+		// 포인트 테이블에 디비 저장 (예라)
+		member.setPoint(3000);
+		
 		// 회원 정보 DB에 저장
 		int result = memberService.insertMember(member);
+		
+		Point point = new Point();
+		point.setPointMemberId(member.getMemberId());
+		point.setPointCurrent(3000);
+		point.setPointType("회원가입");
+		point.setPointAmount(3000);
+		
+		int resultPoint = pointService.givePointsForSignUp(point);
+		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/";
 	}
@@ -94,12 +110,6 @@ public class MemberSecurityController {
 			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
 		log.debug("memberService = {}", memberService);
 		log.debug("authentication = {}", authentication);
-		// UsernamePasswordAuthenticationToken [
-		// 	Principal=MemberDetails(super=Member(memberId=honggd, password=$2a$10$pupH/6vQYLxBdHmRNfJgWe9IvCx8xW3WWEP.I1f8/luO4vJ5ejqBG, name=홍길동, birthday=1999-09-09, email=honggd@naver.com, createdAt=2023-08-02T11:23:48), authorities=[ROLE_USER]), 
-		// 	Credentials=[PROTECTED], 
-		// 	Authenticated=true, 
-		// 	Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=3D3DBE152CBE700582FDCF31D77692C2], 
-		//  Granted Authorities=[ROLE_USER]]
 		
 		// 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
 		// 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
@@ -177,7 +187,23 @@ public class MemberSecurityController {
 				.body(Map.of("available", available, "memberId", memberId));
 	}
 	
+	@GetMapping("/terms.do")
+	public void getTerms() {}
 	
+	@GetMapping("/paymentCompleted.do")
+	public void paymentCompleted(){}
+	
+	@GetMapping("/petProfile.do")
+	public void petProfile() {}
+	
+	@GetMapping("/reviewWrite.do")
+	public void reviewWrite() {}
+	
+	@GetMapping("/myReview.do")
+	public void myReview() {}
+	
+	@GetMapping("/myPage.do")
+	public void myPage() {}
 	
 }
 

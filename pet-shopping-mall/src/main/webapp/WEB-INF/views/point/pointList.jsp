@@ -30,6 +30,7 @@
 								<td>${point.pointAmount}</td>
 								<td>${point.pointCurrent}</td>
 								<td class="qna-date">
+									<input type="hidden" name="pointDate" value="${point.pointDate}" />
 									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${point.pointDate}">
 									<fmt:parseDate value="${point.pointDate}" pattern="yyyy-MM-dd'T'HH:mm" var="pointDate" />
 									<fmt:formatDate value="${pointDate}" pattern="yy/MM/dd" /></a>

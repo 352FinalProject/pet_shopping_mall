@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -169,7 +170,16 @@ public class AdminController {
 	@GetMapping("/adminStatistics.do")
 	public void adminStatistics() {}
 	
+	// 상품 추가
 	
+	@GetMapping("/addProduct.do")
+	public void adminAddProduct() {}
+	
+//	@PostMapping("/addProduct.do")
+//	public String adminAddProduct() {
+//		
+//		return "";
+//	}
 
 }
 
