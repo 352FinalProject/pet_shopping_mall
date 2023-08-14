@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,26 +21,39 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/point.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
-
    
 <body>
-
+<sec:authorize access="isAuthenticated()">
+	<form:form 
+		name="memberLogoutFrm" 
+		action="${pageContext.request.contextPath}/member/memberLogout.do" 
+		method="POST">
+	</form:form>
+</sec:authorize>
 <header>
     <div class="header">
         <span id="notification"></span>
         <ul class="utility">
-            <li class="login_li">
-                <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
-            </li>
-            <li class="signup_li">
-                <a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>
-            </li>
-			<li class="logout_li">
-			        <a href="${pageContext.request.contextPath}/servicecenter/service.do">고객센터</a>
-			</li>
+	        <%-- <sec:authentication property="principal.username"/> --%>
+        	<sec:authorize access="isAnonymous()">
+	            <li class="login_li">
+	                <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
+	            </li>
+	            <li class="signup_li">
+	                <a href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>
+	            </li>
+			</sec:authorize>
+				<li class="logout_li">
+				        <a href="${pageContext.request.contextPath}/servicecenter/service.do">고객센터</a>
+				</li>
 			<li class="admin_li">
 			        <a href="${pageContext.request.contextPath}/admin/admin.do">관리자페이지</a>
 			</li>
+			<sec:authorize access="isAuthenticated()">
+			<li>
+				<button class="" type="button" onclick="document.memberLogoutFrm.submit();">로그아웃</button>
+			</li>
+			</sec:authorize>
         </ul>
         <div class="logo_top_wrap">
 	        <div class="logo_wrap">
