@@ -12,7 +12,6 @@ import com.shop.app.member.entity.Member;
 
 public interface MemberService {
 
-
 	int insertMember(MemberCreateDto member);
 
 	Member findMemberById(String memberId);

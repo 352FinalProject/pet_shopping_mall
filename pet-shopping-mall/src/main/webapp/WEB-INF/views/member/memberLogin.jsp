@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>	 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .table-bordered {
@@ -134,7 +134,9 @@
 </style>
 <section class="common-section" id="#">
 	<div class="common-container">
-		<form action="${pageContext.request.contextPath}/member/memberLogin.do" method="post">
+		<form:form
+			action="${pageContext.request.contextPath}/member/memberLogin.do"
+			method="post">
 			<table class="table-bordered">
 				<tr>
 					<td>
@@ -147,12 +149,12 @@
 					<td>
 						<div class="login-modal">
 							<div class="login-input">
-								<input type="text" name="memberId" id="member_id" class="form-control"
-									required="required" placeholder="아이디" />
+								<input type="text" id="inputId" class="form-control"
+									name="memberId" required="required" placeholder="아이디" />
 							</div>
 							<div class="login-input">
-								<input type="password" name="password" id="inputPassword" class="form-control2"
-									required="required" placeholder="비밀번호">
+								<input type="password" id="inputPassword" class="form-control2"
+									name="password" required="required" placeholder="비밀번호">
 							</div>
 						</div>
 					</td>
@@ -171,7 +173,7 @@
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<button type="submit" name="id" id="loginButton"
+							<button type="submit" name="btn -outline-success" id="loginButton"
 								class="login-btn">로그인</button>
 						</div>
 					</td>
@@ -179,26 +181,32 @@
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<button type="submit" class="kakao-btn">카카오 로그인</button>
+							 <button type="submit" class="kakao-btn"
+							 onclick="location.href='${pageContext.request.contextPath}/oauth2/authorization/kakao'"
+							 >카카오 로그인</button>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<button type="submit" class="naver-btn">네이버 로그인</button>
+							<button type="submit" class="naver-btn"
+							 onclick="location.href='${pageContext.request.contextPath}/'"
+							>네이버 로그인</button>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<button type="submit" class="signUp-btn">회원가입</button>
+							<button type="submit" class="signUp-btn"
+							 onclick="location.href='${pageContext.request.contextPath}/terms'"
+							>회원가입</button>
 						</div>
 					</td>
 				</tr>
 			</table>
-		</form>
+		</form:form>
 	</div>
 </section>
 <script>

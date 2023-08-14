@@ -3,7 +3,7 @@ package com.shop.app.member.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,24 +12,20 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberLoginDto;
 import com.shop.app.member.entity.Member;
-import com.shop.app.member.repository.MemberRepository;
 import com.shop.app.member.service.MemberService;
-import com.shop.app.point.entity.Point;
-import com.shop.app.point.service.PointService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
-@Validated
-@RequestMapping("/member")
-@SessionAttributes({ "loginMember" })
+//@Controller
+//@Validated
+//@RequestMapping("/member")
+//@SessionAttributes({ "loginMember" })
 @Slf4j
 public class MemberController {
 
@@ -37,10 +33,7 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
-	private PointService pointService;
-	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/memberCreate.do")
 	public void memberCreate() {}
@@ -64,23 +57,8 @@ public class MemberController {
 //		log.debug("{} -> {}", rawPassword, encodedPassword);
 //		member.setPassword(encodedPassword);
 		
-		
-		// 회원가입시 포인트 3000원 적립 (예라)
-		member.setPoint(3000);
 		int result = memberService.insertMember(member);
-		
-		// 포인트 테이블에 디비 저장 (예라)
-		Point point = new Point();
-        point.setPointMemberId(member.getMemberId());
-        point.setPointCurrent(3000);
-        point.setPointType("회원가입");
-        point.setPointAmount(3000);
-        
-        int resultPoint = pointService.givePointsForSignUp(point);
-		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
-		
-		
 		return "redirect:/";
 	}
 
@@ -97,10 +75,10 @@ public class MemberController {
 		// 1. 아이디로 Member 조회
 		Member member = memberService.findMemberById(_member.getMemberId());
 		log.debug("member = {}", member);
-		log.debug("temp = {}", "1234");
+		log.debug("temp = {}", passwordEncoder.encode("1234"));
 		
 		// 2. 로그인 성공(세션에 로그인객체 저장)/실패(에러메세지 전달)
-		if (member != null && _member.getPassword().equals(member.getPassword())) {
+		if(member != null && passwordEncoder.matches(_member.getPassword(), member.getPassword())) {
 			// 로그인 성공
 			// 클래스레벨 @SessionAttributes({"loginMember"}) 작성후 session scope 저장
 			model.addAttribute("loginMember", member);
