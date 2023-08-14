@@ -1,10 +1,15 @@
 package com.shop.app.pet.repository;
 
-import com.shop.app.pet.entity.Pet;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface PetRepository extends JpaRepository<Pet, Long> {
-    // 필요한 추가적인 메서드 정의 가능
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+
+import com.shop.app.pet.dto.PetCreateDto;
+
+@Mapper
+public interface PetRepository {
+
+	@Insert("")
+	int petCreate(PetCreateDto pet);
+   
 }
