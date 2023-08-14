@@ -167,6 +167,9 @@
                 </div>
                 <br>
                 <p>국민 1111-11-11111 우리집동물친구</p>
+                <br>
+                <br>
+               
                 <p>교환 6,000원 | 반품 3,000원</p>
                 <div class="btn">
                     <button class="btn1">돌아가기</button>

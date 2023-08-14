@@ -205,5 +205,9 @@ public class MemberSecurityController {
 	@GetMapping("/myPage.do")
 	public void myPage() {}
 	
+	@GetMapping("/myWishlist.do")
+	public void myWishlist() {}
+	
+
 }
 

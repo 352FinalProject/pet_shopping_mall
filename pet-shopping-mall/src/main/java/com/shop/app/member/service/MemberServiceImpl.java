@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
-import com.shop.app.member.repository.MemberRepository;
+import com.shop.app.pet.repository.PetRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
-	private MemberRepository memberRepository;
+	private PetRepository memberRepository;
 
 	@Override
 	public int insertMember(MemberCreateDto member) {
