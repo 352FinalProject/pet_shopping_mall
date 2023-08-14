@@ -28,12 +28,6 @@
     <div class="header">
         <span id="notification"></span>
         <ul class="utility">
-             <li class="login_li">
-                <a href="${pageContext.request.contextPath}/member/memberCreateComplete.do">회원가입완료</a>
-            </li>
-            <li class="login_li">
-                <a href="${pageContext.request.contextPath}/member/petProfile.do">펫프로필등록</a>
-            </li>
             <li class="login_li">
                 <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
             </li>

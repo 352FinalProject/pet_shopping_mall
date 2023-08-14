@@ -59,6 +59,7 @@ insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
 
 -- qna 질문 테이블
+create table question(
     question_id number,
     question_member_id varchar2(20),
     question_category varchar2(50),
@@ -152,17 +153,16 @@ select * from product;
 select * from image_attachment;
 select * from authority;
 
---drop table member;
---drop table question;
---drop table answer;
---drop table point;
---drop table product;
---drop table image_attachment;
---
---drop sequence seq_answer_answer_id;
---drop sequence seq_question_question_id;
---drop sequence seq_point_point_id;
---drop sequence seq_image_attachment_image_id;
+drop table member;
+drop table question;
+drop table answer;
+drop table point;
+drop table image_attachment;
+
+drop sequence seq_answer_answer_id;
+drop sequence seq_question_question_id;
+drop sequence seq_point_point_id;
+drop sequence seq_image_attachment_image_id;
 
 ------------------ member insert ---------------------------
 insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
@@ -252,7 +252,7 @@ select * from member;
 
 
 select * from member M left join authority A on M.member_id = A.member_id where M.member_id = '4';
-
+select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
 
 @Insert("insert into member (member_id, password, name, phone, email, address, birthday, point) " +
         "values (#{member.memberId}, #{member.password}, #{member.name}, #{member.phone}, #{member.email}, " +

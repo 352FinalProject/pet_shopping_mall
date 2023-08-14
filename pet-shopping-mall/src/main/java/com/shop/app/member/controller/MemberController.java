@@ -102,8 +102,6 @@
 //	@GetMapping("/paymentCompleted.do")
 //	public void paymentCompleted(){}
 //	
-//	
-//
 //	@GetMapping("/petProfile.do")
 //	public void petProfile() {}
 //	
