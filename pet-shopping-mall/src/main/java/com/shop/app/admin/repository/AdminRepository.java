@@ -15,7 +15,7 @@ import com.shop.app.servicecenter.inquiry.entity.Question;
 @Mapper
 public interface AdminRepository {
 	
-	@Select("select * from member order by id desc")
+	@Select("select * from member order by enroll_date desc")
 	List<Member> adminMemberList(RowBounds rowBounds);
 	
 	@Select("select * from member where name like '%' || #{searchKeyword} || '%' or member_id like '%' || #{searchKeyword} || '%'")

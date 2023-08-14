@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.member.entity.Member;
 import com.shop.app.servicecenter.inquiry.entity.Question;
-import com.shop.app.member.entity.MemberRole;
 import com.shop.app.member.entity.Subscribe;
 
 import lombok.extern.slf4j.Slf4j;

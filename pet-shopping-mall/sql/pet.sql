@@ -21,8 +21,8 @@ alter user pet quota unlimited on users;
 --drop table point;
 --drop table product_category;
 --drop table product;
-
-
+--
+--
 --drop sequence seq_member_id;
 --drop sequence seq_answer_answer_id;
 --drop sequence seq_question_question_id;
@@ -268,7 +268,7 @@ create table refund (
     refund_method number not null,
     refund_account varchar2,
     account_name varchar2,
-    bank varchar2
+    bank varchar2,
     order_id number,
     constraint pk_refund_id primary key(refund_id),
     constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
@@ -276,7 +276,7 @@ create table refund (
 
 create table cart (
     cart_id number,
-    member_id varchar2(50)
+    member_id varchar2(50),
     constraint pk_cart_id primary key(cart_id),
     constraint fk_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
@@ -350,8 +350,8 @@ values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울�
 --sample data 생성
 --==============================
 -- member insert
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('sinsa', '1234', '신사임당', '01012345678', 'kim@naver.com', '서울시 송파구 마마동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
@@ -396,11 +396,26 @@ insert into member (member_id, password, name, phone, email, address, birthday, 
 values ('member14', '1234', '고모훈', '01012244238', 'qwewkim@naver.com', '서울시 송파구 석비촌동', to_date('1999-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+values ('honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('honggd2', '1234', '홍우솝', '01015234328', 'hong124gd@naver.com', '서울시 송파구 석나니촌동', to_date('1978-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('honggd3', '1234', '홍나루토', '01012314328', 'hong112gd@naver.com', '서울시 송파구 석카동', to_date('1987-01-01', 'YYYY-MM-DD'), 'N');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hong4gd', '1234', '홍쌍디', '01012314328', 'hong55gd@naver.com', '서울시 송파구 석재동', to_date('1998-05-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hon5ggd', '1234', '조로', '01015344328', 'hongz1gd@naver.com', '서울시 송파구 석라라동', to_date('1993-03-01', 'YYYY-MM-DD'), 'N');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hon6ggd', '1234', '루피', '01015342328', 'hon334ggd@naver.com', '서울시 송파구 베베베동', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
-insert into authority values ('abcde', 'ROLE_USER');
-insert into authority values ('qwerty', 'ROLE_USER');
+insert into authority values ('honggd', 'ROLE_USER');
+insert into authority values ('sinsa', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
@@ -427,10 +442,10 @@ values (seq_member_id.nextval, 102, '하네스', '말랑 하네스', 15000, 100,
 
 -- point insert 
 insert into point (point_id, point_member_id, point_type, point_amount, point_current, point_date)
-values (seq_point_point_id.nextval, 'member1', '회원가입', 3000, 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_point_id.nextval, 'honggd', '회원가입', 3000, 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 insert into point (point_id, point_member_id, point_type, point_amount, point_current, point_date)
-values (seq_point_point_id.nextval, 'member1', '구매', -1000, 2000, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_point_id.nextval, 'honggd', '구매', -1000, 2000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
 

@@ -40,7 +40,6 @@ table {
     <thead class="table-dark">
         <tr>
             <th>no</th>
-            <th>회원번호</th>
             <th>회원아이디</th>
             <th>이름</th>
             <th>전화번호</th>
@@ -48,7 +47,6 @@ table {
             <th>가입일</th>
             <th>주소</th>
             <th>생일</th>
-            <th>포인트</th>
             <th>관리</th>
         </tr>
     </thead>
@@ -63,7 +61,6 @@ table {
             	<c:if test="${member.subscribe == 'Y'}">
                     <tr>
                         <td>${members.size() - vs.index}</td>
-                        <td>${member.id}</td>
                         <td>${member.memberId}</td>
                         <td>${member.name}</td>
                         <td>${member.phone}</td>
@@ -71,7 +68,6 @@ table {
                         <td>${member.enrollDate}</td>
                         <td>${member.address}</td>
                         <td>${member.birthday}</td>
-                        <td>${member.point}</td>
                         <td><button onclick="">수정</button></td>
                     </tr>
             	</c:if>
