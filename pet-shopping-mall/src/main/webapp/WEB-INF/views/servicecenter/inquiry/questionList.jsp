@@ -4,9 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <%-- 1:1 문의 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
+
 	<div class="common-title">1:1 문의 내역</div>
 	<div class="common-container">
 		<div class="common-div">
@@ -35,22 +38,24 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${questions}" var="question" varStatus="vs">
-							<tr class="question-row">
-								<td>
-									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionId}</a>
-								</td>
-								<td>
-									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
-								<c:if test="${question.awnserCount <= 0}"><span>답변대기</span></c:if>
-								<c:if test="${question.awnserCount >= 1}">답변완료</c:if>
-								</td>
-								<td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
-								<td class="qna-date">
-									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
-									<fmt:parseDate value="${question.questionCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="questionCreatedAt" />
-									<fmt:formatDate value="${questionCreatedAt}" pattern="yy/MM/dd" /></a>
-								</td>
-							</tr>
+						<sec:authentication var="currentUsername" property="principal.username"/>
+							<c:if test="${question.questionMemberId == currentUsername}">
+						        <tr class="question-row">
+						            <td>
+						                <a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionId}</a>
+						            </td>
+						            <td>
+						                <a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
+						                <c:if test="${question.awnserCount <= 0}"><span>답변대기</span></c:if>
+						                <c:if test="${question.awnserCount >= 1}">답변완료</c:if>
+						            </td>
+						            <td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
+						            <td class="qna-date">
+						              	<fmt:parseDate value="${question.questionCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="questionCreatedAt" />
+										<fmt:formatDate value="${questionCreatedAt}" pattern="yy/MM/dd" />
+						            </td>
+						        </tr>
+						    </c:if>
 						</c:forEach>
 					</tbody>
 				</table>
