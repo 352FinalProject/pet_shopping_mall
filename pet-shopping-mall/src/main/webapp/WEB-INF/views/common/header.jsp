@@ -53,6 +53,9 @@
 				<button class="" type="button" onclick="document.memberLogoutFrm.submit();">로그아웃</button>
 			</li>
 			</sec:authorize>
+			<li class="community_li">
+			        <a href="<%= request.getContextPath() %>/community/community.do">펫스토리</a>
+			</li>
         </ul>
         <div class="logo_top_wrap">
 	        <div class="logo_wrap">
