@@ -147,12 +147,12 @@
 					<td>
 						<div class="login-modal">
 							<div class="login-input">
-								<input type="text" id="inputId" class="form-control"
-									required="required" placeholder="아이디" />
+								<input type="text" name="memberId" class="form-control"
+									required placeholder="아이디" />
 							</div>
 							<div class="login-input">
-								<input type="password" id="inputPassword" class="form-control2"
-									required="required" placeholder="비밀번호">
+								<input type="password" name="Password" class="form-control2"
+									required placeholder="비밀번호">
 							</div>
 						</div>
 					</td>
