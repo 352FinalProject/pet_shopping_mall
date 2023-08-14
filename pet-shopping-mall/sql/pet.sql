@@ -1,30 +1,35 @@
 --==============================
--- 관리자 계정 - pet 계정 생성
+-- pet계정 생성 @관리자
 --==============================
-create user pet
-identified by pet
-default tablespace users;
+--alter session set "_oracle_script" = true;
+--
+--create user pet
+--identified by pet
+--default tablespace users;
+--
+--grant connect, resource to pet;
+--
+--alter user pet quota unlimited on users;
 
-grant connect, resource to pet;
+--==============================
+-- 초기화 블럭
+--==============================
+--drop table member;
+--drop table question;
+--drop table answer;
+--drop table image_attachment;
+--drop table point;
+--drop table product;
 
-grant create session,
-grant create table to pet;
+--drop sequence seq_member_id;
+--drop sequence seq_answer_answer_id;
+--drop sequence seq_question_question_id;
+--drop sequence seq_image_attachment_image_id;
+--drop sequence seq_point_point_id;
 
-alter user pet quota unlimited on users;
-
-alter session set "_oracle_script" = true;
-create user pet
-identified by pet
-default tablespace users;
-
-
-grant connect, resource to pet;
-
-grant create session to pet;
-grant create table to pet;
-
-alter user pet quota unlimited on users;
-
+--==============================
+-- 테이블 생성
+--==============================
 -- 멤버 테이블
 create table member (
     id number,
@@ -120,20 +125,11 @@ select * from point order by point_id desc;
 select * from product;
 select * from image_attachment;
 
---drop table member;
---drop table question;
---drop table answer;
---drop table point;
---drop table product;
---drop table image_attachment;
 
---drop sequence seq_member_id;
---drop sequence seq_answer_answer_id;
---drop sequence seq_question_question_id;
---drop sequence seq_point_point_id;
---drop sequence seq_image_attachment_image_id;
-
------------------- member insert ---------------------------
+--==============================
+--sample data 생성
+--==============================
+-- member insert
 insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
 values (seq_member_id.nextval, 'admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
 
@@ -182,27 +178,27 @@ values (seq_member_id.nextval, 'member14', '1234', '고모훈', '01012244238', '
 insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
 values (seq_member_id.nextval, 'honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
 
------------------- qna insert ---------------------------
+-- qna insert
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
 values (seq_question_question_id.nextval, '우동친이 머에요?', '상품' ,'member1', 'kh@naver.com', '우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요????', to_date('18/02/14', 'rr/mm/dd'));
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
 values (seq_question_question_id.nextval, '배가 고파요', '배송', 'member1', 'kh@daum.net', '배가 고프다', to_date('18/02/14', 'rr/mm/dd'));
 
------------------- answer insert ---------------------------
+-- answer insert 
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 1, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
 
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
 
------------------- product insert ---------------------------
+-- product insert 
 insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
 values (seq_member_id.nextval, 101, '사료', '오리젠 퍼피', 32000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
 
 insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
 values (seq_member_id.nextval, 102, '하네스', '말랑 하네스', 15000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
 
------------------- point insert ---------------------------
+-- point insert 
 insert into point (point_id, point_member_id, point_type, point_amount, point_current, point_date)
 values (seq_point_point_id.nextval, 'member1', '회원가입', 3000, 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
@@ -210,14 +206,13 @@ insert into point (point_id, point_member_id, point_type, point_amount, point_cu
 values (seq_point_point_id.nextval, 'member1', '구매', -1000, 2000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
+commit;
 
-delete from question where id = '19';
 
-SELECT * FROM product WHERE id = 3;
+--delete from question where id = '19';
+--SELECT * FROM product WHERE id = 3;
+--select * from question where id = '4';
+--select * from member;
+--select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
 
-select * from question where id = '4';
-
-select * from member;
-
-select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
 
