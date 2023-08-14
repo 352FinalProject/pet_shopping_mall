@@ -7,21 +7,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>반려동물 쇼핑몰 관리자페이지</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/product.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 </head>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/swiper.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/product.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 <body>
 
 	<header>

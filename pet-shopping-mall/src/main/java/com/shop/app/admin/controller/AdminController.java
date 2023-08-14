@@ -44,6 +44,11 @@ public class AdminController {
 				"page", page,
 				"limit", limit
 			);
+		
+		int totalCount = adminService.findTotalQuestionCount();
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		model.addAttribute("totalPages", totalPages);
+		
 		// MemberDetails로 바꿔야댐
 		List<Member> members = adminService.adminMemberList(params);
 		// log.debug("members = {}", members);
