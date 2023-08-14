@@ -17,8 +17,8 @@
 		<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
 		<input type="submit" value="검색">
         <div id="searchResults"></div>
-   	</form:form>
-</div>
+   		</form:form>
+	</div>
 
 <table class="table table-striped table-hover">
 	<thead class="table-dark">
@@ -68,7 +68,7 @@
     <c:forEach begin="1" end="${totalPages}" var="pageNumber">
         <li class="page-item ${page == pageNumber ? 'active' : ''}">
             <a class="page-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do?page=${pageNumber}">
-                   <span class="page-number">${pageNumber}</span>
+                <span class="page-number">${pageNumber}</span>
             </a>
         </li>
     </c:forEach>

@@ -17,7 +17,6 @@ create user pet
 identified by pet
 default tablespace users;
 
-
 grant connect, resource to pet;
 
 grant create session to pet;
@@ -27,7 +26,6 @@ alter user pet quota unlimited on users;
 
 -- 멤버 테이블
 create table member (
-    id number,
     member_id varchar2(20),
     password varchar2(300) not null,
     name varchar2(50) not null,
@@ -36,13 +34,12 @@ create table member (
     enroll_date timestamp default sysdate,
     address varchar2(500),
     birthday timestamp,
-    member_role varchar(20) default 'ROLE_USER' not null,
-    point number default 0,
     subscribe char(1) default 'N' not null,
-    constraints pk_member_id primary key(id),
-    constraints uq_member_member_id unique (member_id)
+    constraints pk_member_id primary key(member_id)
 );
 
+
+-- 권한 테이블
 create table authority(
     member_id varchar2(20),
     auth varchar2(50),
@@ -52,11 +49,30 @@ create table authority(
                 on delete cascade
 );
 
-insert into authority values ('abcde', 'ROLE_USER');
-insert into authority values ('qwerty', 'ROLE_USER');
-insert into authority values ('admin', 'ROLE_USER');
-insert into authority values ('admin', 'ROLE_ADMIN');
-insert into authority values ('member1', 'ROLE_USER');
+-- 펫 테이블
+CREATE TABLE pet (
+    pet_id number,
+    pet_member_id varchar2(20),
+    pet_name VARCHAR2(50) NOT NULL,
+    pet_DofB DATE,
+    pet_kind VARCHAR2(50),
+    pet_breed VARCHAR2(50),
+    pet_adoption NUMBER,
+    pet_gender CHAR(1),
+    constraints pk_pet_id primary key(pet_id),
+    constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade
+);
+
+-- 찜한 목록 테이블
+create table wishlist(
+    wishlist_id number,
+    wishlist_member_id varchar2(20),
+    wishlist_product_id number,
+    wishlist_created_at timestamp default sysdate,
+    constraints pk_wishlist_id primary key(wishlist_id),
+    constraints fk_wishlist_member_id foreign key(wishlist_member_id) references member(member_id) on delete cascade,
+    constraints fk_wishlist_product_id foreign key(wishlist_product_id) references product(product_id) on delete cascade
+);
 
 -- qna 질문 테이블
 create table question(
@@ -82,7 +98,7 @@ create table answer(
    constraints fk_answer_question_id foreign key (answer_question_id) references question(question_id) on delete cascade
 );
 
--- 파일 테이블
+-- 이미지 파일 테이블
 create table image_attachment (
     image_id number,
     image_type number,
@@ -108,7 +124,7 @@ create table point (
 
 -- 상품 테이블
 create table product (
-    id number,
+    product_id number,
     product_code number,
     product_category varchar2(50),
     product_name varchar2(100),
@@ -118,7 +134,7 @@ create table product (
     expire_date date,
     like_cnt number default 0,
     views number default 0,
-    constraints pk_product_id primary key(id),
+    constraints pk_product_id primary key(product_id),
     constraints uq_product_product_code unique(product_code)
 );
 
@@ -133,11 +149,12 @@ create table orderTbl (
     order_state number default 0,
     payment_state number default 0,
     total_price number,
-    delivery_fee number,
+    delivery_fee num`ber,
     discount number,
     amount number
 );
 
+-- 대충 시큐리티 테이블 없으면 오류남
 create table persistent_logins (
     username varchar(64) not null,
     series varchar(64) primary key, -- pk
@@ -145,6 +162,7 @@ create table persistent_logins (
     last_used timestamp not null
 );
 
+-- 이미지 파일 매핑 테이블
 create table image_attachment_mapping (
     mapping_id number,
     ref_table varchar2(50),
@@ -162,6 +180,8 @@ create sequence seq_answer_answer_id;
 create sequence seq_question_question_id;
 create sequence seq_image_attachment_image_id;
 create sequence seq_point_point_id;
+create sequence seq_pet_pet_id;
+create sequence seq_wishlist_wishlist_id;
 
 select * from member;
 select * from question;
@@ -171,69 +191,81 @@ select * from product;
 select * from image_attachment;
 select * from authority;
 
---drop table member;
---drop table question;
---drop table answer;
---drop table point;
---drop table image_attachment;
---drop table orderTbl;
---drop table persistent_logins;
---drop table product;
---drop table authority;
---
---drop sequence seq_answer_answer_id;
---drop sequence seq_question_question_id;
---drop sequence seq_point_point_id;
---drop sequence seq_image_attachment_image_id;
+drop table member;
+drop table question;
+drop table answer;
+drop table point;
+drop table image_attachment;
+drop table orderTbl;
+drop table persistent_logins;
+drop table product;
+drop table authority;
+drop table pet;
+drop table wishlist;
+
+drop sequence seq_answer_answer_id;
+drop sequence seq_question_question_id;
+drop sequence seq_point_point_id;
+drop sequence seq_image_attachment_image_id;
+drop sequence seq_product_product_id;
+drop sequence seq_wishlist_wishlist_id;
+
 
 ------------------ member insert ---------------------------
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member2', '1234', '대한훈', '01028283939', 'ghjwf@naver.com', '서울시 송파구 마니동', to_date('1995-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member2', '1234', '대한훈', '01028283939', 'ghjwf@naver.com', '서울시 송파구 마니동', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member3', '1234', '건곤훈', '01011223344', 'qwerrt@naver.com', '서울시 송파구 베내동', to_date('1998-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member3', '1234', '건곤훈', '01011223344', 'qwerrt@naver.com', '서울시 송파구 베내동', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member4', '1234', '덩셍훈', '010133663344', 'dfhdfg@naver.com', '서울시 송파구 메메동', to_date('1987-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member4', '1234', '덩셍훈', '010133663344', 'dfhdfg@naver.com', '서울시 송파구 메메동', to_date('1987-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member5', '1234', '누나훈', '01012347755', 'kim@naver.com', '서울시 송파구 차차동', to_date('1993-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member5', '1234', '누나훈', '01012347755', 'kim@naver.com', '서울시 송파구 차차동', to_date('1993-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member6', '1234', '삼촌훈', '01099007766', 'fghew@naver.com', '서울시 송파구 재재동', to_date('1992-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member6', '1234', '삼촌훈', '01099007766', 'fghew@naver.com', '서울시 송파구 재재동', to_date('1992-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member7', '1234', '할멈훈', '01088776655', 'rtyhm@naver.com', '서울시 송파구 어어동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member7', '1234', '할멈훈', '01088776655', 'rtyhm@naver.com', '서울시 송파구 어어동', to_date('1991-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member8', '1234', '할아버지훈', '01012123232', 'kdfhim@naver.com', '서울시 송파구 하하동', to_date('1994-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member8', '1234', '할아버지훈', '01012123232', 'kdfhim@naver.com', '서울시 송파구 하하동', to_date('1994-01-01', 'YYYY-MM-DD'), 'Y');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member9', '1234', '딸훈', '01011556633', 'kinjmm@naver.com', '서울시 송파구 매매동', to_date('1997-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member9', '1234', '딸훈', '01011556633', 'kinjmm@naver.com', '서울시 송파구 매매동', to_date('1997-01-01', 'YYYY-MM-DD'), 'Y');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member10', '1234', '아들훈', '01012322678', 'kixvm@naver.com', '서울시 송파구 내내동', to_date('1999-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member10', '1234', '아들훈', '01012322678', 'kixvm@naver.com', '서울시 송파구 내내동', to_date('1999-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member11', '1234', '아빠훈', '01012552278', 'kewim@naver.com', '서울시 송파구 배배동', to_date('1993-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member11', '1234', '아빠훈', '01012552278', 'kewim@naver.com', '서울시 송파구 배배동', to_date('1993-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member12', '1234', '엄마훈', '01012342238', 'ghjkim@naver.com', '서울시 송파구 마자동', to_date('1994-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member12', '1234', '엄마훈', '01012342238', 'ghjkim@naver.com', '서울시 송파구 마자동', to_date('1994-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member13', '1234', '이모훈', '01012123418', 'svxkim@naver.com', '서울시 송파구 우동', to_date('1996-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'N');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member13', '1234', '이모훈', '01012123418', 'svxkim@naver.com', '서울시 송파구 우동', to_date('1996-01-01', 'YYYY-MM-DD'), 'N');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'member14', '1234', '고모훈', '01012244238', 'qwewkim@naver.com', '서울시 송파구 석비촌동', to_date('1999-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('member14', '1234', '고모훈', '01012244238', 'qwewkim@naver.com', '서울시 송파구 석비촌동', to_date('1999-01-01', 'YYYY-MM-DD'), 'Y');
 
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+
+------------------ authority insert ---------------------------
+insert into authority values ('abcde', 'ROLE_USER');
+insert into authority values ('qwerty', 'ROLE_USER');
+insert into authority values ('admin', 'ROLE_USER');
+insert into authority values ('admin', 'ROLE_ADMIN');
+insert into authority values ('member1', 'ROLE_USER');
 
 ------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
@@ -264,7 +296,9 @@ values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('202
 
 
 
-delete from member where id = '1';
+update set member_role from member where member_id = 77;
+
+delete from member where id = '61';
 
 SELECT * FROM product WHERE id = 3;
 
@@ -280,3 +314,8 @@ select q.*, (select count(*) from answer where answer_question_id = q.question_i
         "values (#{member.memberId}, #{member.password}, #{member.name}, #{member.phone}, #{member.email}, " +
         "#{member.address}, #{member.birthday, jdbcType=DATE}, #{member.point})")
 int insertMember(@Param("member") MemberCreateDto member);
+
+
+update member
+set member_role = 'ROLE_ADMIN'
+where id = 77;
