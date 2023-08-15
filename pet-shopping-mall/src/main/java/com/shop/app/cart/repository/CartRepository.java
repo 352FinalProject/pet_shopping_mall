@@ -12,6 +12,9 @@ import com.shop.app.cart.entity.CartItem;
 public interface CartRepository {
 
 	@Select("select * from cart_item i left join cart c on i.cartitem_id = c.cartitem_id where c.member_id = #{memberId}")
-	List<CartItem> getCartList(String memberId);
+	List<CartItem> getCartList(int cartId);
+
+	@Select("select * from cart where member_id = #{memberId}")
+	int getMemberCart(String memberId);
 
 }
