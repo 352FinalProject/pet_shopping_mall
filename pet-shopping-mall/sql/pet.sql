@@ -68,11 +68,11 @@ create table wishlist(
 -- qna 질문 테이블
 create table question(
     question_id number,
-    question_member_id varchar2(20),
-    question_category varchar2(50),
+    question_member_id varchar2(20) not null,
+    question_category varchar2(50) not null,
     question_email varchar2(200),
-    question_title varchar2(500),
-    question_content varchar2(4000),
+    question_title varchar2(500) not null,
+    question_content varchar2(4000) not null,
     question_created_at timestamp default sysdate,
     constraints pk_question_id primary key(question_id),
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
@@ -82,8 +82,8 @@ create table question(
 create table answer(
    answer_id number,
    answer_admin_name varchar2(20) default '관리자',
-   answer_question_id number,
-   answer_content varchar2(4000),
+   answer_question_id number not null,
+   answer_content varchar2(4000) not null,
    answer_created_at timestamp default sysdate,
    constraints pk_answer_id primary key(answer_id),
    constraints fk_answer_question_id foreign key (answer_question_id) references question(question_id) on delete cascade
@@ -92,7 +92,7 @@ create table answer(
 -- 이미지 파일 테이블
 create table image_attachment (
     image_id number,
-    image_type number,
+    image_type number not null,
     image_category char(1),
     image_original_filename varchar2(500),
     image_renamed_filename varchar2(500),
@@ -104,9 +104,9 @@ create table image_attachment (
 -- 이미지 파일 매핑 테이블
 create table image_attachment_mapping (
     mapping_id number,
-    ref_table varchar2(50),
-    ref_id number,
-    image_id number,
+    ref_table varchar2(50) not null,
+    ref_id number not null,
+    image_id number not null,
     constraint pk_question_image_mapping_id primary key(mapping_id),
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
@@ -114,10 +114,10 @@ create table image_attachment_mapping (
 -- 포인트 테이블
 create table point (
     point_id number,
-    point_member_id varchar2(20),
-    point_current number,
-    point_type varchar2(100),
-    point_amount number not null,
+    point_member_id varchar2(20) not null,
+    point_current number not null,
+    point_type varchar2(100) not null,
+    point_amount number not null not null,
     point_date timestamp default sysdate,
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
@@ -161,7 +161,7 @@ create table product (
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
 -- 할인코드는 미추가 상태입니다.
 create table orderTbl (
-    id number,
+    order_id number,
     order_no varchar2(20),
     member_id varchar2(20),
     order_date timestamp default sysdate,
@@ -170,7 +170,7 @@ create table orderTbl (
     total_price number,
     delivery_fee number,
     discount number,
-    amount number
+    amount number,
 );
 
 -- 대충 시큐리티 테이블 없으면 오류남
@@ -185,9 +185,9 @@ create table persistent_logins (
 create table order_detail (
     order_id number,
     product_detail_id number,
-    product_amount number not null default 1,
-    constraint fk_order_id foreign key(order_id) references order_detail(order_id) on delete cascade,
-    constraint fk_product_detail_id foreign key(product_detail_id) references order_detail(product_detail_id) on delete cascade
+    product_amount number default 1 not null,
+    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade,
+    constraint fk_product_detail_id foreign key(product_detail_id) references product_detail(product_detail_id) on delete cascade
 );
 
 -- 리뷰테이블
@@ -347,13 +347,13 @@ insert into point (point_id, point_member_id, point_current, point_type, point_a
 values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
-select * from member;
+select * from pet;
 
 commit;
 
 update set member_role from member where member_id = 77;
 
-delete from member where id = '61';
+delete from pet where pet_id = '1';
 
 SELECT * FROM product WHERE id = 3;
 
