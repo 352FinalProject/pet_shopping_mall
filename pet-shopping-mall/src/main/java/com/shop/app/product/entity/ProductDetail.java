@@ -9,7 +9,7 @@ public class ProductDetail {
 	@NotNull
 	private int productDetailId;
 	@NotNull
-	private int product_id;
+	private int productId;
 	
 	private String option;
 	private String optionValue;

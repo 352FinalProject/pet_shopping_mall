@@ -138,6 +138,11 @@ select * from product_category;
 insert into product_category values(2, '옷');
 insert into product values(seq_product_id.nextval, 1, '에르메스 사료', 15000, 1, 1, systimestamp, systimestamp, 111, 111);
 insert into product values(seq_product_id.nextval, 2, '꼬까옷', 17000, 2, 2, systimestamp, systimestamp, 222, 222);
+
+select* from product;
+insert into product_detail values(seq_product_detail_id.nextval, 5, '추가1', '금칠 추가', 190000, 2, 1);
+insert into product_detail values(seq_product_detail_id.nextval, 6, '추가2', '빨간망토', 1900, 9, 1);
+
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 2);
 
 select 
@@ -146,3 +151,13 @@ from
     cartitem i left join cart c on i.cart_id = c.cart_id
 where
     c.member_id='honggd';
+    
+select * from product_detail;
+
+SELECT 
+    pd.*, 
+    p.product_price
+FROM 
+    product_detail pd
+JOIN 
+    product p ON pd.product_id = p.product_id;

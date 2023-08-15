@@ -1,22 +1,21 @@
-package com.shop.app.cart.entity;
+package com.shop.app.cart.dto;
 
 import java.util.List;
 import java.util.Map;
 
-import com.shop.app.member.entity.Member;
 import com.shop.app.product.entity.Product;
+import com.shop.app.product.entity.ProductDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-public class CartItemDetails extends CartItem {
-	// 상품 상세 / 상품 / 상품 이미지
-	//
+@Builder
+public class CartInfoDto{
+	Map<ProductDetail, Integer> productInfo;
+	Map<Product, Integer> priceInfo;
 }

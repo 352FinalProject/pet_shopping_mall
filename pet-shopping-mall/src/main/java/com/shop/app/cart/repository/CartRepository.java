@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.shop.app.cart.dto.CartDto;
+import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.entity.CartItem;
 
 @Mapper
