@@ -92,7 +92,7 @@ create table authority(
 );
 
 -- 펫 테이블
-CREATE TABLE pet (
+create table pet (
     pet_id number,
     pet_member_id varchar2(20),
     pet_name VARCHAR2(50) NOT NULL,
@@ -269,7 +269,7 @@ create table review (
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
     constraint fk_order_id foreign key(order_id) references order_detail(order_id) on delete cascade,
-    constraint ck_review_review_star_rate check(1 <= review_star_rate <= 5)
+    constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
 create table community (
