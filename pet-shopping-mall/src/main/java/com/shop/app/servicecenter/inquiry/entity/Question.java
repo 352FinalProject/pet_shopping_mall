@@ -3,6 +3,8 @@ package com.shop.app.servicecenter.inquiry.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.shop.app.common.entity.imageAttachmentMapping;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,5 @@ public class Question {
 	private int imageId;
 	
 	List<Answer> answers;
-	
 
 }

@@ -34,7 +34,7 @@
     <div class="header">
         <span id="notification"></span>
         <ul class="utility">
-	        <%-- <sec:authentication property="principal.username"/> --%>
+        <%-- <sec:authentication property="principal.username"/> --%>
         	<sec:authorize access="isAnonymous()">
 	            <li class="login_li">
 	                <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
@@ -54,6 +54,9 @@
 				<button class="" type="button" onclick="document.memberLogoutFrm.submit();">로그아웃</button>
 			</li>
 			</sec:authorize>
+			<li class="community_li">
+			        <a href="<%= request.getContextPath() %>/community/community.do">펫스토리</a>
+			</li>
         </ul>
         <div class="logo_top_wrap">
 	        <div class="logo_wrap">

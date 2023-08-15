@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberRole;
 import com.shop.app.member.entity.Subscribe;
@@ -85,7 +85,14 @@ public class QuestionController {
 
 	    Answer answers = questionService.findQuestionAnswersById(answer);
 	    model.addAttribute("answers", answers);
-	}
+	    
+	    // 이미지 파일 정보 조회
+	    
+	    QuestionDetails questionDetails = questionService.findImageAttachmentsByQuestionId(questionId);
+	    log.debug("questionDetails = {}", questionDetails);
+	    log.debug("Attachments = {}", questionDetails.getAttachments());
+	    model.addAttribute("attachments", questionDetails.getAttachments());
+}
 	
 	// 1:1 문의 작성 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionCreate.do")
@@ -102,20 +109,20 @@ public class QuestionController {
 					throws IllegalStateException, IOException {
 		
 		// 1. 파일 저장
-		List<Attachment> attachments = new ArrayList<>();
+		List<imageAttachment> attachments = new ArrayList<>();
 		for(MultipartFile upFile : upFiles) {			
 		    if(!upFile.isEmpty()) {
 		        String imageOriginalFilename = upFile.getOriginalFilename();
-		        String imageRenamedfilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename); 
-		        File destFile = new File(imageRenamedfilename); 
+		        String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename); 
+		        File destFile = new File(imageRenamedFilename); 
 		        upFile.transferTo(destFile);	
 
 		        int imageType = 1; 
 
-		        Attachment attach = 
-		            Attachment.builder()
+		        imageAttachment attach = 
+		            imageAttachment.builder()
 		            .imageOriginalFilename(imageOriginalFilename)
-		            .imageRenamedfilename(imageRenamedfilename)
+		            .imageRenamedFilename(imageRenamedFilename)
 		            .imageType(imageType)
 		            .imageFileSize(upFile.getSize())
 		            .build();
@@ -134,16 +141,17 @@ public class QuestionController {
 				.attachments(attachments)
 				.build();
 		
-		int result = questionService.insertQuestion(questions);
+		// 질문을 먼저 db에 저장
+		int questionId = questionService.insertQuestion(questions);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
 	
 	// 1:1 문의 삭제 (예라)
 	@PostMapping("/inquiry/DeleteQuestion.do")
-	public String questionDelete(@RequestParam int id) {
+	public String questionDelete(@RequestParam int questionId) {
 		
-		int result = questionService.deleteQuestion(id);
+		int result = questionService.deleteQuestion(questionId);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}

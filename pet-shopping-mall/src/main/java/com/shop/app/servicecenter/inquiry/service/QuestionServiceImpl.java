@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
@@ -45,23 +48,34 @@ public class QuestionServiceImpl implements QuestionService {
 	// 1:1 문의 작성 (예라)
 	@Override
 	public int insertQuestion(Question question) {
-		int result = 0;
-		result = questionRepository.insertQuestion(question);
-		
-		List<Attachment> attachments = ((QuestionDetails) question).getAttachments();
-		if(attachments != null && !attachments.isEmpty()) {
-			for(Attachment attach : attachments) {
-				attach.setImageId(question.getQuestionId());
-				result = questionRepository.insertAttachment(attach);
-			}
-		}
-		return  result;
+	    int result = 0;
+	    result = questionRepository.insertQuestion(question);
+	    
+	    int refId = question.getQuestionId();
+	    System.out.println("refId = " + refId);
+	    
+	    List<imageAttachment> attachments = ((QuestionDetails) question).getAttachments();
+	    if(attachments != null && !attachments.isEmpty()) {
+	        for(imageAttachment attach : attachments) {
+	            
+	            
+	            // 1. 이미지 파일 DB에 저장
+	            int result2 = questionRepository.insertAttachment(attach);
+	            
+	            // 2. 이미지 파일 DB 저장 후 생성된 이미지 ID를 가져온다
+	            int imageId = attach.getImageId(); 
+	            
+	            // 3. 질문 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
+	            int questionIdImageId = questionRepository.insertMapping(refId, imageId);
+	        }
+	    }
+	    return result;
 	}
 	
 	// 1:1 문의 삭제 (예라)
 	@Override
-	public int deleteQuestion(int id) {
-		return questionRepository.deleteQuestion(id);
+	public int deleteQuestion(int questionId) {
+		return questionRepository.deleteQuestion(questionId);
 	}
 
 	// 1:1 문의 수정 (예라)
@@ -94,6 +108,11 @@ public class QuestionServiceImpl implements QuestionService {
 	public int findTotalQuestionCount() {
 		return questionRepository.findTotalQuestionCount();
 	}
-	
+
+	// 이미지 파일 정보 조회 (예라)
+	@Override
+	public QuestionDetails findImageAttachmentsByQuestionId(int questionId) {
+		return questionRepository.findImageAttachmentsByQuestionId(questionId);
+	}
 
 }
