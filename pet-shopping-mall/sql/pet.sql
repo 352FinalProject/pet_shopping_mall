@@ -117,6 +117,16 @@ create table image_attachment (
     constraint pk_image_attachment_id primary key(image_id)
 );
 
+-- 이미지 파일 매핑 테이블
+create table image_attachment_mapping (
+    mapping_id number,
+    ref_table varchar2(50),
+    ref_id number,
+    image_id number,
+    constraint pk_question_image_mapping_id primary key(mapping_id),
+    constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
+);
+
 -- 포인트 테이블
 create table point (
     point_id number,
@@ -163,8 +173,6 @@ create table product (
 --	`sale_state`	number	NOT NULL	COMMENT '0: 판매대기
 --);
 
-
-
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
 -- 할인코드는 미추가 상태입니다.
@@ -189,22 +197,12 @@ create table persistent_logins (
     last_used timestamp not null
 );
 
--- 이미지 파일 매핑 테이블
-create table image_attachment_mapping (
-    mapping_id number,
-    ref_table varchar2(50),
-    ref_id number,
-    image_id number,
-    constraint pk_question_image_mapping_id primary key(mapping_id),
-    constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
-);
-
 -- 주문상세 테이블
 create table order_detail (
     order_id number,
     product_detail_id number,
     product_amount number not null default 1,
-    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade,
+    constraint fk_order_id foreign key(order_id) references order_detail(order_id) on delete cascade,
     constraint fk_product_detail_id foreign key(product_detail_id) references order_detail(product_detail_id) on delete cascade
 );
 
@@ -236,25 +234,20 @@ create table community (
 
 
 
-
-
-
-
 select * from persistent_logins;
 
 
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
-create sequence seq_answer_answer_id;
-create sequence seq_question_question_id;
-create sequence seq_image_attachment_image_id;
-create sequence seq_point_point_id;
-create sequence seq_pet_pet_id;
-create sequence seq_wishlist_wishlist_id;
-create sequence seq_product_category_id;
+create sequence seq_answer_id;
+create sequence seq_question_id;
+create sequence seq_image_attachment_id;
+create sequence seq_image_attachment_mapping_id;
+create sequence seq_point_id;
+create sequence seq_pet_id;
+create sequence seq_wishlist_id;
 create sequence seq_product_id;
 create sequence seq_review_id;
-
 
 
 select * from member;
@@ -263,12 +256,19 @@ select * from answer;
 select * from point order by point_id desc;
 select * from product;
 select * from image_attachment;
+select * from image_attachment_mapping;
+select * from authority;
+
+SELECT sequence_name, min_value, max_value, increment_by, last_number
+FROM user_sequences
+WHERE sequence_name = 'SEQ_IMAGE_ATTACHMENT_ID';
 
 --drop table member;
 --drop table question;
 --drop table answer;
 --drop table point;
 --drop table image_attachment;
+--drop table image_attachment_mapping;
 --drop table orderTbl;
 --drop table persistent_logins;
 --drop table product;
@@ -276,12 +276,19 @@ select * from image_attachment;
 --drop table pet;
 --drop table wishlist;
 --
---drop sequence seq_answer_answer_id;
---drop sequence seq_question_question_id;
---drop sequence seq_point_point_id;
---drop sequence seq_image_attachment_image_id;
---drop sequence seq_product_product_id;
---drop sequence seq_wishlist_wishlist_id;
+--drop sequence seq_member_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_question_id;
+--drop sequence seq_point_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_product_id;
+--drop sequence seq_review_id;
+--drop sequence seq_wishlist_id;
+--drop sequence seq_orderTbl_id;
+--drop sequence seq_pet_id;
+
+
 
 
 ------------------ member insert ---------------------------
@@ -292,8 +299,8 @@ values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울�
 --sample data 생성
 --==============================
 -- member insert
-insert into member (id, member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values (seq_member_id.nextval, 'admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
+values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
@@ -355,7 +362,7 @@ values (seq_question_question_id.nextval, '배가 고파요', '배송', 'member1
 
 -- answer insert 
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
-values (seq_answer_answer_id.nextval, '관리자', 1, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
+values (seq_answer_answer_id.nextval, '관리자', 47, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
 
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
@@ -376,14 +383,6 @@ values (seq_point_point_id.nextval, 'member1', '구매', -1000, 2000, to_date('2
 
 
 
-update set member_role from member where member_id = 77;
-
-delete from member where id = '61';
-
-SELECT * FROM product WHERE id = 3;
-
-select * from question where id = '4';
-
 select * from member;
 
 commit;
@@ -401,6 +400,17 @@ commit;
 int insertMember(@Param("member") MemberCreateDto member);
 
 
-update member
-set member_role = 'ROLE_ADMIN'
-where id = 77;
+SELECT
+    q.question_id,
+    q.question_title,
+    q.question_content,
+    ia.image_original_filename,
+    ia.image_renamed_filename
+FROM 
+    question q
+LEFT JOIN 
+    image_attachment_mapping iam ON q.question_id = iam.ref_id AND iam.ref_table = 'question'
+LEFT JOIN
+    image_attachment ia ON iam.image_id = ia.image_id
+WHERE 
+    q.question_id = 25;

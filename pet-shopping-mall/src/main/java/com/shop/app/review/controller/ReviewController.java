@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.review.dto.ReviewCreateDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,20 +47,20 @@ public class ReviewController {
 					throws IllegalStateException, IOException {
 						
 		// 1. 파일저장
-		List<Attachment> attachments = new ArrayList<>();
+		List<imageAttachment> attachments = new ArrayList<>();
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
-				String imageRenamedfilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
-				File destFile = new File(imageRenamedfilename);
+				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
+				File destFile = new File(imageRenamedFilename);
 				upFile.transferTo(destFile);
 				
 				int imageType = 1;
 				
-				Attachment attach =
-						Attachment.builder()
+				imageAttachment attach =
+						imageAttachment.builder()
 						.imageOriginalFilename(imageOriginalFilename)
-						.imageRenamedfilename(imageRenamedfilename)
+						.imageRenamedFilename(imageRenamedFilename)
 						.imageType(imageType)
 						.imageFileSize(upFile.getSize())
 						.build();
