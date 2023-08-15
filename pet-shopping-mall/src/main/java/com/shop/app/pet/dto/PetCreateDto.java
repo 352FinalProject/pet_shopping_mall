@@ -25,20 +25,20 @@ public class PetCreateDto {
 	@NotBlank(message = "펫 이름을 입력해주세요.")
     private String petName;    
 	
-	@NotBlank(message = "생년월일을 입력해주세요.")
+	@NotBlank(message = "생년월일을 선택해 주세요.")
     private LocalDateTime petDofB;
 	
-	@NotBlank(message = "생년월일을 입력해주세요.")
+	@NotBlank(message = "반려동물 종류를 입력해주세요.")
     private String petKind;
 	
-	@NotBlank(message = "생년월일을 입력해주세요.")
+	@NotBlank(message = "반려동물 품종을 입력해주세요.")
     private String petBreed;
 	
-	@NotBlank(message = "생년월일을 입력해주세요.")
+	@NotBlank(message = "반려동물 입양을을 선택해 주세요.")
     private LocalDateTime petAdoptionDate;
 	
 	@NotBlank(message = "생년월일을 입력해주세요.")
-    private PetGender petGender;
+    private char petGender;
 
-    // 생성자, getter, setter 메서드
+
 }

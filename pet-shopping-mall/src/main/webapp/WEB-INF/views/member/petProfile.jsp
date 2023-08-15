@@ -106,81 +106,98 @@
     document.addEventListener("DOMContentLoaded", function() {
         const genderButtons = document.querySelectorAll('input[type="button"][name="gender"]');
         const genderInput = document.getElementById("genderInput");
+        const successMessage = document.querySelector('.success-message');
+        const confirmButton = document.getElementById('confirmButton');
 
         genderButtons.forEach(button => {
             button.addEventListener("click", function() {
                 const selectedGender = this.value;
                 genderInput.value = selectedGender;
 
-                // 버튼 스타일 변경 (선택한 버튼 강조)
                 genderButtons.forEach(btn => btn.classList.remove("selected"));
                 this.classList.add("selected");
             });
         });
+
+        if (successMessage) {
+            confirmButton.addEventListener('click', function() {
+                location.href = "/member/petList.do";
+            });
+        }
     });
 </script>
 
 <!-- 펫 프로필 입력 (혜령) -->
-    <section class="common-section" id="#">
-    	<div class="common-title">펫 프로필 입력</div>
-    	<br>
-    	<div class="common-container">
-    		<div class="common-div">
-    			<form name="memberCreateFrm" action="" method="POST">
-				
-    			<table>
-    				<tr>
-    					<th>이름</th>
-    					<td>
-    						<input type="text" name="name" id="name" value="두부" required>
-    					</td>
-    				</tr>
-    				
-    				<tr>
-    					<th>생일</th>
-    					<td>
-    						<input type="date" name="birthday" id="birthday" required>
-						</td>
-    				</tr>
+<section class="common-section" id="#">
+    <div class="common-title">펫 프로필 입력</div>
+    <br>
+    <div class="common-container">
+        <div class="common-div">
+            <form name="memberCreateFrm" action="/member/petProfile" method="POST">
+            
+            <!-- 등록 성공시 메세지 -->
+                <c:if test="${not empty successMessage}">
+                    <div class="success-message">
+                        ${successMessage}
+                        <br>
+                        <button id="confirmButton">확인</button>
+                    </div>
+                </c:if>
 
-    				<tr>
-    					<th>타입</th>
-    					<td>
-    						<input type="text" placeholder="반려동물의 종류를 입력해 주세요.">
-    					</td>
-    				</tr>
- 				
-    				<tr>
-    					<th>품종</th>
-    					<td>
-    						<input type="text" placeholder="반려동물의 품종을 입력해 주세요.">
-    					</td>
-    				</tr>
-    				
-    				<tr>
-    					<th>입양일</th>
-    					<td>
-    						<input type="date" name="birthday" id="birthday" >
-						</td>
-    				</tr>
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <td>
+                            <input type="text" name="petName" id="petName" value="두부" required>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th>생일</th>
+                        <td>
+                            <input type="date" name="petDofB" id="petDofB" required>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>타입</th>
+                        <td>
+                            <input type="text" name="petKind" placeholder="반려동물의 종류를 입력해 주세요.">
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <th>품종</th>
+                        <td>
+                            <input type="text" name="petBreed" placeholder="반려동물의 품종을 입력해 주세요.">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th>입양일</th>
+                        <td>
+                            <input type="date" name="petAdoptionDate" id="petAdoptionDate">
+                        </td>
+                    </tr>
 
                     <tr>
                         <th>성별</th>
                         <td>
-                            <label><input type="button" name="gender" value="♂"></label>
-                            <label><input type="button" name="gender" value="♀"></label>
+                            <input type="hidden" name="petGender" id="genderInput">
+                            <input type="button" name="gender" value="♂">
+                            <input type="button" name="gender" value="♀">
                         </td>
                     </tr>
 
-					<tr>
-    					<td class="resetAndSubmit" colspan="2">
-			    			<input type="reset" value="돌아가기">
-			    			<input type="submit" value="등록하기">
-			    		</td>
-    				</tr>
-    			</table>
-    			</form>
-    		</div>
-    	</div>
-    </section>
+                    <tr>
+                        <td class="resetAndSubmit" colspan="2">
+                            <input type="reset" value="돌아가기">
+                            <input type="submit" value="등록하기">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

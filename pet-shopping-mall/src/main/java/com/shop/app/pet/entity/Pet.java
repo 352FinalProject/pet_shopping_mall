@@ -19,7 +19,7 @@ public class Pet {
     private String petKind;
     private String petBreed;
     private LocalDateTime petAdoptionDate;
-    private PetGender petGender;
+    private char petGender;
 
     
 }

@@ -60,7 +60,8 @@ CREATE TABLE pet (
     pet_adoption NUMBER,
     pet_gender CHAR(1),
     constraints pk_pet_id primary key(pet_id),
-    constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade
+    constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade,
+    CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
 
 -- 찜한 목록 테이블

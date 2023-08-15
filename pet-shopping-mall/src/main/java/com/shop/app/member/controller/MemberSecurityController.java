@@ -193,9 +193,6 @@ public class MemberSecurityController {
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted(){}
 	
-	@GetMapping("/petProfile.do")
-	public void petProfile() {}
-	
 	@GetMapping("/reviewWrite.do")
 	public void reviewWrite() {}
 	
@@ -207,6 +204,12 @@ public class MemberSecurityController {
 	
 	@GetMapping("/myWishlist.do")
 	public void myWishlist() {}
+	
+	@GetMapping("/petList.do")
+	public void petList() {}
+	
+	@GetMapping("/petProfile.do")
+	public void petProfile() {}
 	
 
 }
