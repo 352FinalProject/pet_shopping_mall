@@ -11,6 +11,9 @@ grant connect, resource to pet;
 
 alter user pet quota unlimited on users;
 
+-- 모든 테이블 조회
+SELECT *  FROM all_tables;
+
 --==============================
 -- 초기화 블럭
 --==============================
@@ -30,7 +33,12 @@ drop table refund;
 drop table cancel_order;
 drop table authority;
 drop table product_category;
-
+drop table pet;
+drop table review;
+drop table community;
+drop table wishlist;
+drop table persistent_logins;
+drop table image_attachment_mapping;
 
 drop sequence seq_orderTbl_id;
 drop sequence seq_member_id;
@@ -147,7 +155,7 @@ create table point (
     point_type varchar2(100),
     point_amount number not null,
     point_current number,
-    point_date timestamp default sysdate,
+    point_date timestamp default systimestamp,
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
@@ -237,11 +245,12 @@ create table image_attachment_mapping (
 );
 
 -- 주문상세 테이블
+-- 주문상세 테이블
 create table order_detail (
     order_id number,
     product_detail_id number,
-    quantity number not null default 1,
- constraint pk_order_detail primary key (order_id, product_detail_id),
+    quantity number default 1 not null,
+    constraint pk_order_detail primary key (order_id, product_detail_id),
     constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
     constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
 );
@@ -315,7 +324,7 @@ create table cartitem (
 
 
 select * from persistent_logins;
-
+SELECT *  FROM all_tables;
 
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
