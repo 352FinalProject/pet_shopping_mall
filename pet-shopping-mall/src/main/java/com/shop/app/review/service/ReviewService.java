@@ -11,12 +11,17 @@ public interface ReviewService {
 	// 리뷰 작성
 	int insertReview(Review review);
 
-	Review findReviewMemberById(Review review);
+	//Review findReviewMemberById(Review review);
+
+	// 리뷰 삭제
+	int reviewDelete(int reviewId);
 
 	// 리뷰 전체 카운트
-//	int findTotalReviewCount();
+	//int findTotalReviewCount();
 
 	// 내가 쓴 리뷰 목록 조회
-//	List<Review> findReviewAll(Map<String, Object> params);
+	//List<Review> findReviewAll(Map<String, Object> params);
+	
+	Review findReviewId(Review review);
 
 }
