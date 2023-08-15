@@ -21,6 +21,7 @@ drop table member;
 drop table question;
 drop table answer;
 drop table image_attachment;
+drop table image_attachment_mapping;
 drop table point;
 drop table product_category;
 drop table product;
@@ -33,25 +34,32 @@ drop table refund;
 drop table cancel_order;
 drop table authority;
 drop table product_category;
+drop table community;
+drop table wishlist;
+drop table pet;
+drop table persistent_logins;
 
 
-drop sequence seq_orderTbl_id;
 drop sequence seq_member_id;
-drop sequence seq_answer_answer_id;
-drop sequence seq_question_question_id;
-drop sequence seq_image_attachment_image_id;
-drop sequence seq_point_point_id;
-drop sequence seq_pet_pet_id;
-drop sequence seq_wishlist_wishlist_id;
+drop sequence seq_question_id;
+drop sequence seq_answer_id;
+drop sequence seq_image_attachment_id;
+drop sequence seq_image_attachment_mapping_id;
+drop sequence seq_point_id;
 drop sequence seq_product_category_id;
 drop sequence seq_product_id;
 drop sequence seq_product_detail_id;
-drop sequence seq_review_id;
-drop sequence seq_refund_id;
-drop sequence seq_payment_id;
-drop sequence seq_cancel_id;
 drop sequence seq_cart_id;
+drop sequence seq_payment_id;
 drop sequence seq_cartitem_id;
+drop sequence seq_ordertbl_id;
+drop sequence seq_refund_id;
+drop sequence seq_cancel_order_id;
+drop sequence seq_authority_id;
+drop sequence seq_community_id;
+drop sequence seq_wishlist_id;
+drop sequence seq_pet_id;
+drop sequence seq_persistent_logins_id;
 
 
 --==============================
@@ -161,7 +169,7 @@ create table point (
     point_member_id varchar2(20) not null,
     point_current number not null,
     point_type varchar2(100) not null,
-    point_amount number not null not null,
+    point_amount number not null,
     point_date timestamp default sysdate,
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
@@ -243,7 +251,7 @@ create table persistent_logins (
 create table order_detail (
     order_id number,
     product_detail_id number,
-    quantity number not null default 1,
+    quantity number default 1 not null,
     constraint pk_order_detail primary key (order_id, product_detail_id),
     constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
     constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
@@ -315,9 +323,6 @@ create table cartitem (
     constraint fk_cartitem_cart_id foreign key(cart_id) references cart(cart_id)
 );
 
-
-select * from persistent_logins;
-
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -343,20 +348,6 @@ select * from product;
 select * from image_attachment;
 select * from authority;
 select * from pet;
-
-drop table member;
-drop table question;
-drop table answer;
-drop table point;
-drop table image_attachment;
-drop table orderTbl;
-drop table persistent_logins;
-drop table product;
-drop table authority;
-drop table pet;
-drop table wishlist;
-
-
 
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
