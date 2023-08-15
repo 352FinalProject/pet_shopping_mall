@@ -208,8 +208,6 @@ public class MemberSecurityController {
 	@GetMapping("/petList.do")
 	public void petList() {}
 	
-	@GetMapping("/petProfile.do")
-	public void petProfile() {}
 	
 
 }

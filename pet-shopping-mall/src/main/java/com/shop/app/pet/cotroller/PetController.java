@@ -24,8 +24,11 @@ public class PetController {
 
 	// 1. 펫 디테일 클래스 만들기. 2.펫에 빌더 추가하기. 3.펫 컨트롤러에 빌더 가져오기. 4.인서트 쿼리문 작성 레파지토리에(했고)
 
-	@PostMapping("/petProfile")
-	public String petCreate(@Valid PetCreateDto pet, RedirectAttributes redirectAttributes) {
+	@GetMapping("/petProfile.do")
+	public void petProfile() {}
+	
+	@PostMapping("/petProfile.do") // 1. 이부분 .do 추가
+	public String petCreate(@ModelAttribute @Valid PetCreateDto pet, RedirectAttributes redirectAttributes) {
 	    // 펫 등록 db 저장
 	    int result = petService.petCreate(pet);
 	    
@@ -36,4 +39,16 @@ public class PetController {
 	    
 	    return "redirect:/member/petList.do"; // 등록 후 다시 폼으로 리다이렉트
 	}
+
+//	@PostMapping("/petUpdate")
+//	public String petUpdate(@Valid PetUpdateDto pet, RedirectAttributes redirectAttributes) {
+//	
+//		int result = petService.petUpdate(pet); // PetService에서 업데이트 로직 수행
+//
+//	    if (result > 0) { // 업데이트 성공 여부 확인
+//	        redirectAttributes.addFlashAttribute("successMessage", "수정완료!");
+//	    }
+//
+//	    return "redirect:/member/petList.do"; // 목록 페이지로 리다이렉트
+//	}
 }

@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberRole;
@@ -22,11 +25,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PetCreateDto {
 
+	private String petMemberId;
+	
 	@NotBlank(message = "펫 이름을 입력해주세요.")
     private String petName;    
 	
-	@NotBlank(message = "생년월일을 선택해 주세요.")
-    private LocalDateTime petDofB;
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // 이부분 추가
+    private LocalDate petDofB;
 	
 	@NotBlank(message = "반려동물 종류를 입력해주세요.")
     private String petKind;
@@ -34,11 +39,11 @@ public class PetCreateDto {
 	@NotBlank(message = "반려동물 품종을 입력해주세요.")
     private String petBreed;
 	
-	@NotBlank(message = "반려동물 입양을을 선택해 주세요.")
-    private LocalDateTime petAdoptionDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // 이부분 추가
+    private LocalDate petAdoption;
 	
-	@NotBlank(message = "생년월일을 입력해주세요.")
-    private char petGender;
+	@NotNull(message = "성별을 입력해주세요.")
+    private PetGender petGender;
 
 
 }
