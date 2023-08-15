@@ -11,7 +11,8 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 public class CartItem {
-	private String cartitemId;
-	private String productCode;
+	private Integer cartitemId;
+	private Integer cartId; // 참조하고 있는 장바구니 아이디
+	private Integer productDetailId;
 	private int quantity;
 }

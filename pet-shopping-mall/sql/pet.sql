@@ -20,50 +20,50 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
-drop table member;
-drop table question;
-drop table answer;
-drop table image_attachment;
-drop table image_attachment_mapping;
-drop table point;
-drop table product_category;
-drop table product;
-drop table product_detail;
-drop table cart;
-drop table payment;
-drop table cartitem;
-drop table orderTbl;
-drop table refund;
-drop table cancel_order;
-drop table authority;
-drop table product_category;
-drop table community;
-drop table wishlist;
-drop table pet;
-drop table persistent_logins;
-drop table image_attachment_mapping;
-
-
-drop sequence seq_member_id;
-drop sequence seq_question_id;
-drop sequence seq_answer_id;
-drop sequence seq_image_attachment_id;
-drop sequence seq_image_attachment_mapping_id;
-drop sequence seq_point_id;
-drop sequence seq_product_category_id;
-drop sequence seq_product_id;
-drop sequence seq_product_detail_id;
-drop sequence seq_cart_id;
-drop sequence seq_payment_id;
-drop sequence seq_cartitem_id;
-drop sequence seq_ordertbl_id;
-drop sequence seq_refund_id;
-drop sequence seq_cancel_order_id;
-drop sequence seq_authority_id;
-drop sequence seq_community_id;
-drop sequence seq_wishlist_id;
-drop sequence seq_pet_id;
-drop sequence seq_persistent_logins_id;
+--drop table member;
+--drop table question;
+--drop table answer;
+--drop table image_attachment;
+--drop table image_attachment_mapping;
+--drop table point;
+--drop table product_category;
+--drop table product;
+--drop table product_detail;
+--drop table cart;
+--drop table payment;
+--drop table cartitem;
+--drop table orderTbl;
+--drop table refund;
+--drop table cancel_order;
+--drop table authority;
+--drop table product_category;
+--drop table community;
+--drop table wishlist;
+--drop table pet;
+--drop table persistent_logins;
+--drop table image_attachment_mapping;
+--
+--
+--drop sequence seq_member_id;
+--drop sequence seq_question_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_image_attachment_mapping_id;
+--drop sequence seq_point_id;
+--drop sequence seq_product_category_id;
+--drop sequence seq_product_id;
+--drop sequence seq_product_detail_id;
+--drop sequence seq_cart_id;
+--drop sequence seq_payment_id;
+--drop sequence seq_cartitem_id;
+--drop sequence seq_ordertbl_id;
+--drop sequence seq_refund_id;
+--drop sequence seq_cancel_order_id;
+--drop sequence seq_authority_id;
+--drop sequence seq_community_id;
+--drop sequence seq_wishlist_id;
+--drop sequence seq_pet_id;
+--drop sequence seq_persistent_logins_id;
 
 
 --==============================
@@ -335,7 +335,7 @@ create table cart (
 create table cartitem (
     cartitem_id number,
     cart_id number,
-    product_code varchar2(100) not null,
+    product_detail_id number not null,
     quantity number default 1 not null,
     constraint pk_cartitem_id primary key(cartitem_id),
     constraint fk_cartitem_cart_id foreign key(cart_id) references cart(cart_id)
