@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.review.dto.ReviewCreateDto;
-import com.shop.app.review.dto.ReviewDetails;
 import com.shop.app.review.entity.Review;
+import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,30 +40,30 @@ public class ReviewController {
 	private ReviewService reviewService;
 	
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
-	@GetMapping("/reviewList.do")
-	public void reviewList(
-			@RequestParam(defaultValue = "1") int page,
-			Review review,
-			Model model) {
-		
-		int limit = 10;
-		
-		Map<String, Object> params = Map.of(
-				"page", page,
-				"limit", limit
-			);
-		
-		int totalCount = reviewService.findTotalReviewCount();
-		int totalPages = (int) Math.ceil((double) totalCount / limit);
-		model.addAttribute("totalPages", totalPages);
-		
-		List<Review> reviews = reviewService.findReviewAll(params);
-		model.addAttribute("reviews", reviews);
-		
-	}
+//	@GetMapping("/reviewList.do")
+//	public void reviewList(
+//			@RequestParam(defaultValue = "1") int page,
+//			Review review,
+//			Model model) {
+//		
+//		int limit = 10;
+//		
+//		Map<String, Object> params = Map.of(
+//				"page", page,
+//				"limit", limit
+//			);
+//		
+//		int totalCount = reviewService.findTotalReviewCount();
+//		int totalPages = (int) Math.ceil((double) totalCount / limit);
+//		model.addAttribute("totalPages", totalPages);
+//		
+//		List<Review> reviews = reviewService.findReviewAll(params);
+//		model.addAttribute("reviews", reviews);
+//		
+//	}
 	
 	// 리뷰 작성 페이지 불러오기
-	@GetMapping("reviewCreate.do")
+	@GetMapping("/reviewCreate.do")
 	public void reviewCreate() {}
 
 	// 리뷰 작성
@@ -100,6 +100,7 @@ public class ReviewController {
 		
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
+				.reviewMemberid(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
 				.reviewContent(_review.getReviewContent())
