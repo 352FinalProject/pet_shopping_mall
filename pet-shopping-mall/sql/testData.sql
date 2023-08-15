@@ -131,3 +131,18 @@ WHERE
 update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
+
+
+-- 장바구니 테스트 데이터
+select * from product_category;
+insert into product_category values(2, '옷');
+insert into product values(seq_product_id.nextval, 1, '에르메스 사료', 15000, 1, 1, systimestamp, systimestamp, 111, 111);
+insert into product values(seq_product_id.nextval, 2, '꼬까옷', 17000, 2, 2, systimestamp, systimestamp, 222, 222);
+insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 2);
+
+select 
+    *
+from
+    cartitem i left join cart c on i.cart_id = c.cart_id
+where
+    c.member_id='honggd';
