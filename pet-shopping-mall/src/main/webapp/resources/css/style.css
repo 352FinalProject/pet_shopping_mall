@@ -70,7 +70,7 @@ body {
 	font-family: Noto Sans KR;
 }
 
-/* 공통 스타일 */
+/* 공통 스타일/
 .common-section {
 	display: flex;
 	flex-direction: column;

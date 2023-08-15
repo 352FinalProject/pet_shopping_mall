@@ -1,5 +1,5 @@
 --==============================
--- pet계정 생성 @관리자
+-- 관리자 계정 - pet 계정 생성
 --==============================
 alter session set "_oracle_script" = true;
 
@@ -11,26 +11,9 @@ grant connect, resource to pet;
 
 alter user pet quota unlimited on users;
 
---==============================
--- 초기화 블럭
---==============================
---drop table member;
---drop table question;
---drop table answer;
---drop table image_attachment;
---drop table point;
---drop table product_category;
---drop table product;
+grant create session,
+grant create table to pet;
 
-
---drop sequence seq_member_id;
---drop sequence seq_answer_answer_id;
---drop sequence seq_question_question_id;
---drop sequence seq_image_attachment_image_id;
---drop sequence seq_point_point_id;
---==============================
--- 테이블 생성
---==============================
 -- 멤버 테이블
 create table member (
     member_id varchar2(20),
@@ -67,7 +50,8 @@ CREATE TABLE pet (
     pet_adoption NUMBER,
     pet_gender CHAR(1),
     constraints pk_pet_id primary key(pet_id),
-    constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade
+    constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade,
+    CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
 
 -- 찜한 목록 테이블
@@ -131,9 +115,9 @@ create table image_attachment_mapping (
 create table point (
     point_id number,
     point_member_id varchar2(20),
+    point_current number,
     point_type varchar2(100),
     point_amount number not null,
-    point_current number,
     point_date timestamp default sysdate,
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
@@ -179,12 +163,12 @@ create table product (
 create table orderTbl (
     id number,
     order_no varchar2(20),
-    member_id varchar2(50),
+    member_id varchar2(20),
     order_date timestamp default sysdate,
     order_state number default 0,
     payment_state number default 0,
     total_price number,
-    delivery_fee num`ber,
+    delivery_fee number,
     discount number,
     amount number
 );
@@ -236,7 +220,6 @@ create table community (
 
 select * from persistent_logins;
 
-
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -253,41 +236,22 @@ create sequence seq_review_id;
 select * from member;
 select * from question;
 select * from answer;
-select * from point order by point_id desc;
+select * from point;
 select * from product;
 select * from image_attachment;
-select * from image_attachment_mapping;
 select * from authority;
 
-SELECT sequence_name, min_value, max_value, increment_by, last_number
-FROM user_sequences
-WHERE sequence_name = 'SEQ_IMAGE_ATTACHMENT_ID';
-
---drop table member;
---drop table question;
---drop table answer;
---drop table point;
---drop table image_attachment;
---drop table image_attachment_mapping;
---drop table orderTbl;
---drop table persistent_logins;
---drop table product;
---drop table authority;
---drop table pet;
---drop table wishlist;
---
---drop sequence seq_member_id;
---drop sequence seq_answer_id;
---drop sequence seq_question_id;
---drop sequence seq_point_id;
---drop sequence seq_image_attachment_id;
---drop sequence seq_image_attachment_id;
---drop sequence seq_product_id;
---drop sequence seq_review_id;
---drop sequence seq_wishlist_id;
---drop sequence seq_orderTbl_id;
---drop sequence seq_pet_id;
-
+drop table member;
+drop table question;
+drop table answer;
+drop table point;
+drop table image_attachment;
+drop table orderTbl;
+drop table persistent_logins;
+drop table product;
+drop table authority;
+drop table pet;
+drop table wishlist;
 
 
 
@@ -354,45 +318,51 @@ insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
 
--- qna insert
+------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
 values (seq_question_question_id.nextval, '우동친이 머에요?', '상품' ,'member1', 'kh@naver.com', '우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요???? 우동친이 먼가요????', to_date('18/02/14', 'rr/mm/dd'));
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
 values (seq_question_question_id.nextval, '배가 고파요', '배송', 'member1', 'kh@daum.net', '배가 고프다', to_date('18/02/14', 'rr/mm/dd'));
 
--- answer insert 
+------------------ answer insert ---------------------------
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 47, '우동친은 우리집동물친구의 줄임말입니다~', sysdate);
 
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
 
--- product insert 
+------------------ product insert ---------------------------
 insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
 values (seq_member_id.nextval, 101, '사료', '오리젠 퍼피', 32000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
 
 insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
 values (seq_member_id.nextval, 102, '하네스', '말랑 하네스', 15000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
 
--- point insert 
-insert into point (point_id, point_member_id, point_type, point_amount, point_current, point_date)
-values (seq_point_point_id.nextval, 'member1', '회원가입', 3000, 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+------------------ point insert ---------------------------
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_point_id.nextval, 'member1', 1000, '적립', 500, to_date('2023-08-09', 'yyyy-mm-dd'));
 
-insert into point (point_id, point_member_id, point_type, point_amount, point_current, point_date)
-values (seq_point_point_id.nextval, 'member1', '구매', -1000, 2000, to_date('2023-08-09', 'yyyy-mm-dd'));
-
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
 select * from member;
 
 commit;
 
+update set member_role from member where member_id = 77;
 
---delete from question where id = '19';
---SELECT * FROM product WHERE id = 3;
---select * from question where id = '4';
---select * from member;
---select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
+delete from member where id = '61';
+
+SELECT * FROM product WHERE id = 3;
+
+select * from question where id = '4';
+
+select * from member;
+
+
+select * from member M left join authority A on M.member_id = A.member_id where M.member_id = '4';
+select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
 
 @Insert("insert into member (member_id, password, name, phone, email, address, birthday, point) " +
         "values (#{member.memberId}, #{member.password}, #{member.name}, #{member.phone}, #{member.email}, " +
@@ -414,3 +384,7 @@ LEFT JOIN
     image_attachment ia ON iam.image_id = ia.image_id
 WHERE 
     q.question_id = 25;
+
+update member
+set member_role = 'ROLE_ADMIN'
+where id = 77;
