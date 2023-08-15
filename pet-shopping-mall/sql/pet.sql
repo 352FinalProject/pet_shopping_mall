@@ -14,20 +14,41 @@ alter user pet quota unlimited on users;
 --==============================
 -- 초기화 블럭
 --==============================
---drop table member;
---drop table question;
---drop table answer;
---drop table image_attachment;
---drop table point;
---drop table product_category;
---drop table product;
+drop table member;
+drop table question;
+drop table answer;
+drop table image_attachment;
+drop table point;
+drop table product_category;
+drop table product;
+drop table cart;
+drop table payment;
+drop table cartitem;
+drop table orderTbl;
+drop table refund;
+drop table cancel_order;
+drop table authority;
+drop table product_category;
 
 
---drop sequence seq_member_id;
---drop sequence seq_answer_answer_id;
---drop sequence seq_question_question_id;
---drop sequence seq_image_attachment_image_id;
---drop sequence seq_point_point_id;
+drop sequence seq_orderTbl_id;
+drop sequence seq_member_id;
+drop sequence seq_answer_answer_id;
+drop sequence seq_question_question_id;
+drop sequence seq_image_attachment_image_id;
+drop sequence seq_point_point_id;
+drop sequence seq_pet_pet_id;
+drop sequence seq_wishlist_wishlist_id;
+drop sequence seq_product_category_id;
+drop sequence seq_product_id;
+drop sequence seq_review_id;
+drop sequence seq_refund_id;
+drop sequence seq_payment_id;
+drop sequence seq_cancel_id;
+drop sequence seq_cart_id;
+drop sequence seq_cartitem_id;
+
+
 --==============================
 -- 테이블 생성
 --==============================
@@ -117,16 +138,6 @@ create table image_attachment (
     constraint pk_image_attachment_id primary key(image_id)
 );
 
--- 이미지 파일 매핑 테이블
-create table image_attachment_mapping (
-    mapping_id number,
-    ref_table varchar2(50),
-    ref_id number,
-    image_id number,
-    constraint pk_question_image_mapping_id primary key(mapping_id),
-    constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
-);
-
 -- 포인트 테이블
 create table point (
     point_id number,
@@ -145,37 +156,35 @@ create table product_category (
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
+select * from product_category;
 
 -- 상품 테이블
 create table product (
-    product_id number, -- pk
-    category_id number, -- fk
+    product_id number,
+    product_code number,
+    product_category_id number,
     product_name varchar2(200) not null,
     product_price number not null,
-    thumbnail_img number, -- 썸네일 이미지(fk)
-    product_img number, -- 제품상세 이미지(fk)
-    product_date timestamp default sysdate, -- 등록일
-    expire_date timestamp default sysdate, -- 유통기한
-    like_cnt number, -- 좋아요수
-    view_cnt number, -- 조회수
+    product_stock number not null,
+    product_date timestamp default sysdate,
+    expire_date timestamp default sysdate,
+    like_cnt number,
+    views number,
     constraints pk_product_id primary key(product_id),
-    constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade,
-    constraints fk_thumbnail_img foreign key(thumbnail_img) references image_attachment_mapping(mapping_id)
---    constraints fk_product_img foreign key(product_img) references image_attachment_mapping(mapping_id)
+    constraints uq_product_code unique(product_code),
+    constraints fk_product_category_id foreign key(product_category_id) references product_category(category_id) on delete cascade
 );
 
--- 상품상세 테이블
-create table product_detail (
-    product_detail_id number, -- pk
-	product_id number, -- fk
-    option_name varchar2(100), -- 옵션명
-    option_value varchar2(200), -- 옵션속성
-    additional_price number, -- 옵션에 따른 추가금
-    stock number default 0,
-    sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
-    constraints pk_product_detail_id primary key(product_detail_id),
-    constraints fk_product_id foreign key(product_id) references product(product_id)
-);
+-- 상품재고테이블
+--create table product (
+--    product
+--	`product_code`	varchar2(100)	NOT NULL,
+--	`option_id`	number	NOT NULL,
+--	`stock`	number	NOT NULL	DEFAULT 0,
+--	`sale_state`	number	NOT NULL	COMMENT '0: 판매대기
+--);
+
+
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
@@ -191,9 +200,9 @@ create table orderTbl (
     delivery_fee number default 3000,
     discount number default 0,
     amount number not null,
-    discount_code varchar2,
+    discount_code varchar2(20),
     constraint pk_order_id primary key(order_id),
-    constraint fk_member_id foreign key(member_id) references member(member_id) on delete cascade
+    constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
 create table cancel_order (
@@ -203,7 +212,7 @@ create table cancel_order (
     cancel_status number default 0,
     order_id number,
     constraint pk_cancel_id primary key(cancel_id),
-    connect fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+    constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
 -- 대충 시큐리티 테이블 없으면 오류남
@@ -214,14 +223,24 @@ create table persistent_logins (
     last_used timestamp not null
 );
 
+-- 이미지 파일 매핑 테이블
+create table image_attachment_mapping (
+    mapping_id number,
+    ref_table varchar2(50),
+    ref_id number,
+    image_id number,
+    constraint pk_question_image_mapping_id primary key(mapping_id),
+    constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
+);
 
 -- 주문상세 테이블
 create table order_detail (
     order_id number,
     product_detail_id number,
     quantity number not null default 1,
-    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade,
-    constraint fk_product_detail_id foreign key(product_detail_id) references order_detail(product_detail_id) on delete cascade
+ constraint pk_order_detail primary key (order_id, product_detail_id),
+    constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
+    constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
 );
 
 -- 리뷰테이블
@@ -256,7 +275,7 @@ create table payment (
     amount number not null,
     order_id number,
     constraint pk_payment_id primary key(payment_id),
-    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+    constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
 create table refund (
@@ -266,19 +285,19 @@ create table refund (
     refund_status number default 0,
     refund_price number not null,
     refund_method number not null,
-    refund_account varchar2,
-    account_name varchar2,
-    bank varchar2
+    refund_account varchar2(20),
+    account_name varchar2(20),
+    bank varchar2(20),
     order_id number,
     constraint pk_refund_id primary key(refund_id),
-    constraint fk_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+    constraint fk_refund_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
 create table cart (
     cart_id number,
-    member_id varchar2(50)
+    member_id varchar2(50),
     constraint pk_cart_id primary key(cart_id),
-    constraint fk_member_id foreign key(member_id) references member(member_id) on delete cascade
+    constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
 create table cartitem (
@@ -286,8 +305,8 @@ create table cartitem (
     cart_id number,
     product_code varchar2(100) not null,
     quantity number default 1,
-    constraint pk_cartitem_id primary key(cancel_id),
-    constraint fk_cart_id foreign key(cart_id) references cart(cart_id)
+    constraint pk_cartitem_id primary key(cartitem_id),
+    constraint fk_cartitem_cart_id foreign key(cart_id) references cart(cart_id)
 );
 
 
@@ -305,7 +324,6 @@ create sequence seq_pet_pet_id;
 create sequence seq_wishlist_wishlist_id;
 create sequence seq_product_category_id;
 create sequence seq_product_id;
-create sequence seq_product_detail_id;
 create sequence seq_review_id;
 create sequence seq_refund_id;
 create sequence seq_payment_id;
@@ -317,9 +335,7 @@ select * from member;
 select * from question;
 select * from answer;
 select * from point order by point_id desc;
-select * from product_category;
 select * from product;
-select * from product_detail;
 select * from image_attachment;
 
 --drop table member;
