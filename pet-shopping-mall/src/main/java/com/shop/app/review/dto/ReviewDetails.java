@@ -1,9 +1,11 @@
-package com.shop.app.servicecenter.inquiry.entity;
+package com.shop.app.review.dto;
 
 import java.util.List;
 
 import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.common.entity.imageAttachmentMapping;
+import com.shop.app.review.entity.Review;
+import com.shop.app.servicecenter.inquiry.entity.Question;
+import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +17,12 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder 
-public class QuestionDetails extends Question{
-
-	private List<imageAttachment> attachments;
-	private List<imageAttachmentMapping> attachmentMapping;
+@SuperBuilder
+public class ReviewDetails extends Review {
 	
+	private int reviewId;
+	
+	private List<imageAttachment> attachments;
+	
+
 }

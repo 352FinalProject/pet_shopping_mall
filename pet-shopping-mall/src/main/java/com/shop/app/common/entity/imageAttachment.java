@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Attachment {
+public class imageAttachment {
 	
 	private int imageId;
 	private int imageType;
 	private int imageCategory;
 	private String imageOriginalFilename;
-	private String imageRenamedfilename;
+	private String imageRenamedFilename;
 	private Long imageFileSize;
 	private LocalDateTime imageCreatedAt;
 	

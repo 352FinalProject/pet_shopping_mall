@@ -2,26 +2,66 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shop.app.servicecenter.inquiry.repository.InquiryRepository">
+<mapper namespace="com.shop.app.servicecenter.inquiry.repository.QuestionRepository">
 
-    <select id="findQuestionAll" resultMap="questionResultMap">
-        select 
-        	id, 
-        	member_id, 
-        	product_id, 
-        	title, 
-        	content, 
-        	reg_date 
-        from 
-        	question
-    </select>
+	<insert id="insertQuestion" useGeneratedKeys="true" keyProperty="questionId" keyColumn="question_id">
+	insert into 
+		question 
+		values(seq_question_id.nextval, #{questionMemberId}, #{questionCategory}, #{questionEmail}, #{questionTitle}, #{questionContent}, default)
+	</insert>
     
+    <insert id="insertAttachment" useGeneratedKeys="true" keyProperty="imageId" keyColumn="image_id">
+    insert into 
+    	image_attachment 
+    	(image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, image_created_at) 
+    	values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)
+	</insert>
+	
+	<select id="findImageAttachmentsByQuestionId" resultMap="QuestionDetailsResultMap">
+	SELECT
+	    q.question_id,
+	    q.question_title,
+	    q.question_content,
+	    ia.image_original_filename,
+	    ia.image_renamed_filename
+	FROM 
+	    question q
+	LEFT JOIN 
+	    image_attachment_mapping iam ON q.question_id = iam.ref_id AND iam.ref_table = 'question'
+	LEFT JOIN
+	    image_attachment ia ON iam.image_id = ia.image_id
+	WHERE 
+    	q.question_id = #{questionId}
+	</select>
+
     <resultMap type="Question" id="questionResultMap">
-        <id property="id" column="id"/>
-        <result property="memberId" column="member_id"/>
-         <result property="productId" column="product_id"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="regDate" column="reg_date"/>
+        <id property="questionId" column="question_id"/>
+        <result property="memberId" column="question_member_id"/>
+        <result property="questionCategory" column="question_category"/>
+        <result property="questionEmail" column="question_email"/>
+        <result property="questionTitle" column="question_title"/>
+        <result property="questionContent" column="question_content"/>
+        <result property="questionCreatedAt" column="question_created_at"/>
     </resultMap>
+    
+<resultMap type="QuestionDetails" id="QuestionDetailsResultMap">
+    <id property="questionId" column="question_id"/>
+    <result property="memberId" column="question_member_id"/>
+    <result property="questionCategory" column="question_category"/>
+    <result property="questionEmail" column="question_email"/>
+    <result property="questionTitle" column="question_title"/>
+    <result property="questionContent" column="question_content"/>
+    <result property="questionCreatedAt" column="question_created_at"/>
+
+    <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
+    <collection property="attachments" ofType="imageAttachment">
+        <result property="imageId" column="image_id"/>
+        <result property="imageType" column="image_type"/>
+        <result property="imageCategory" column="image_category"/>
+        <result property="imageOriginalFilename" column="image_original_filename"/>
+        <result property="imageRenamedFilename" column="image_renamed_filename"/>
+        <result property="imageFileSize" column="image_file_size"/>
+        <result property="imageCreatedAt" column="image_created_at"/>
+    </collection>
+</resultMap>
 </mapper>
