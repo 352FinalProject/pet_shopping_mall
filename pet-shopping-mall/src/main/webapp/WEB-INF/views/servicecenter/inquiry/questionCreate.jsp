@@ -4,6 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <%-- 1:1 문의 작성 (예라) --%>
@@ -31,7 +33,7 @@
 							<tr>
 								<th>아이디</th>
 								<td><input type="text" name="questionMemberId" id="questionMemberId"
-									value="" required /></td>
+									value="<sec:authentication property="name"/>" required readonly/></td>
 							</tr>
 							<tr>
 								<th>이메일</th>

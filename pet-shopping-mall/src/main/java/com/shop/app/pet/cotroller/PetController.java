@@ -1,5 +1,7 @@
 package com.shop.app.pet.cotroller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService; // 패키지명 수정
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/member")
 public class PetController {
@@ -26,6 +32,22 @@ public class PetController {
 
 	@GetMapping("/petProfile.do")
 	public void petProfile() {}
+	
+	
+	@GetMapping("/petList.do")
+	public void petList(Pet pet, Model model) {
+		List<Pet> pets = petService.findPetByAll(pet);
+		
+		model.addAttribute("pets", pets);
+	}
+	
+	@PostMapping("/petDelete.do")
+	public String petDelete(@RequestParam int petId) {
+		int result = petService.findPetById(petId);
+		
+		return "redirect:/member/petList.do";
+	}
+	
 	
 	@PostMapping("/petProfile.do") // 1. 이부분 .do 추가
 	public String petCreate(@ModelAttribute @Valid PetCreateDto pet, RedirectAttributes redirectAttributes) {

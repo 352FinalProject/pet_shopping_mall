@@ -20,34 +20,31 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
+
 --drop table member;
 --drop table question;
 --drop table answer;
 --drop table image_attachment;
 --drop table image_attachment_mapping;
 --drop table point;
+--drop table product_category;
 --drop table product;
 --drop table product_detail;
---drop table product_category;
---drop table orderTbl;
---drop table order_Detail;
 --drop table cart;
 --drop table payment;
 --drop table cartitem;
+--drop table orderTbl;
 --drop table refund;
 --drop table cancel_order;
 --drop table authority;
+--drop table product_category;
 --drop table community;
+--drop table wishlist;
 --drop table pet;
 --drop table persistent_logins;
 --drop table image_attachment_mapping;
---drop table review;
---drop table wishlist;
---drop table product_category;
---drop table return;
---drop table ordertbl;
-
-
+--
+--
 --drop sequence seq_member_id;
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
@@ -68,9 +65,6 @@ SELECT *  FROM all_tables;
 --drop sequence seq_wishlist_id;
 --drop sequence seq_pet_id;
 --drop sequence seq_persistent_logins_id;
---drop sequence seq_cancel_id;
---drop sequence seq_review_id;
-
 
 --==============================
 -- 테이블 생성
@@ -82,14 +76,14 @@ create table member (
     password varchar2(300) not null,
     name varchar2(50) not null,
     phone varchar2(11) not null,
-    email varchar2(200) unique,
+    email varchar2(200),
     enroll_date timestamp default sysdate,
     address varchar2(500),
     birthday timestamp,
-    subscribe char(1) default 'N' not null constraint ck_subscribe check (subscribe IN ('Y', 'N')),
+    subscribe char(1) default 'N' not null,
     constraints pk_member_id primary key(member_id)
 );
-select * from member;
+
 
 -- 권한 테이블
 create table authority(
@@ -357,7 +351,7 @@ create table cart (
 create table cartitem (
     cartitem_id number,
     cart_id number,
-    product_code varchar2(100) not null,
+    product_detail_id number not null,
     quantity number default 1 not null,
     constraint pk_cartitem_id primary key(cartitem_id),
     constraint fk_cartitem_cart_id foreign key(cart_id) references cart(cart_id)
@@ -387,9 +381,19 @@ select * from answer;
 select * from point;
 select * from product;
 select * from image_attachment;
+select * from image_attachment_mapping;
 select * from authority;
 select * from pet;
+select * from review;
 
+-- 회원가입시 자동으로 장바구니가 생성되는 트리거
+create or replace trigger cart_create_trriger
+after insert on member
+for each row
+begin
+    insert into cart(cart_id, member_id) values(seq_cart_id.nextval, :NEW.member_id);
+end;
+/
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
@@ -520,10 +524,9 @@ LEFT JOIN
 WHERE 
     q.question_id = 25;
 
-select * from member;
-select * from point;
-
 update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
 
+
+select * from review where review_member_id = 'member1';

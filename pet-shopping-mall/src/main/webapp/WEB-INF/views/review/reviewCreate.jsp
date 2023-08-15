@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
 
@@ -84,25 +86,27 @@
 <br>
 	<div class="common-container">
     	<div class="common-div">
-        <form action="/reviews/new" method="post">
+        <form:form action="${pageContext.request.contextPath}/review/reviewCreate.do"
+        enctype="multipart/form-data" method="post">
             <table class="review-write-table">
                 <tr>
                     <th>작성자</th>
                     <td>
-                    	<input type="text" id="" name="" value="" required readonly/>
+                    	<input type="text" id="reviewMemberId" name="reviewMemberId" value="<sec:authentication property="name"/>" required readonly/>
                     </td>
                 </tr>
                 <tr>
-                    <th><label for="starRating">별점</label></th>
-                    <td>
-                        <div class="star-rating">
-                            <span class="star" onclick="setRating(1)">☆</span>
-                            <span class="star" onclick="setRating(2)">☆</span>
-                            <span class="star" onclick="setRating(3)">☆</span>
-                            <span class="star" onclick="setRating(4)">☆</span>
-                            <span class="star" onclick="setRating(5)">☆</span>
-                        </div>
-                    </td>
+					<th><label for="starRating">별점</label></th>
+					<td>
+					    <div class="star-rating">
+					        <input type="hidden" id="reviewStarRate" name="reviewStarRate">
+					        <span class="star" onclick="setRating(1)">☆</span>
+					        <span class="star" onclick="setRating(2)">☆</span>
+					        <span class="star" onclick="setRating(3)">☆</span>
+					        <span class="star" onclick="setRating(4)">☆</span>
+					        <span class="star" onclick="setRating(5)">☆</span>
+					    </div>
+					</td>
                 </tr>
                 <tr>
                 	<th>사진첨부</th>
@@ -118,7 +122,7 @@
                 <tr>
                     <th>제목트트트트</th>
                     <td>
-                    	<input type="text" id="" name="" required/>
+                    	<input type="text" id="reviewTitle" name="reviewTitle" required/>
                     </td>
                 </tr>
             </table>
@@ -126,7 +130,7 @@
             <table>
             	<tr>
                     <td>
-                        <textarea class="review-write-content" id="content" name="content" placeholder="리뷰 내용을 작성해주세요." required></textarea>
+                        <textarea class="review-write-content" id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -136,7 +140,7 @@
                     </td>
                 </tr>
             </table>
-        </form>
+        </form:form>
     </div>
 </div>
 </section>
@@ -144,7 +148,7 @@
 <script>
     function setRating(rating) {
         const stars = document.querySelectorAll('.star');
-        const starRatingInput = document.getElementById('starRatingInput');
+        const reviewStarRateInput = document.getElementById('reviewStarRate');
         
         for (let i = 0; i < stars.length; i++) {
             if (i < rating) {
@@ -153,7 +157,7 @@
                 stars[i].textContent = '☆';
             }
         }
-        starRatingInput.value = rating;
+        reviewStarRateInput.value = rating;
     }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
