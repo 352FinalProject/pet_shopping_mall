@@ -131,7 +131,7 @@ create table question(
     question_content varchar2(4000) not null,
     question_created_at timestamp default sysdate,
     constraints pk_question_id primary key(question_id),
-    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
+    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade question_member_id varchar2(20) not null,
 );
 
 -- qna 답변 테이블
@@ -268,6 +268,7 @@ create table review (
     review_id number,
     pet_id number,
     order_id number,
+    review_member_id varchar2(20) not null,
     review_title varchar2(50),
     review_content varchar2(3000),
     review_star_rate number default 1 not null,
@@ -275,6 +276,7 @@ create table review (
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
     constraint fk_order_id foreign key(order_id) references order_detail(order_id) on delete cascade,
+    constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
