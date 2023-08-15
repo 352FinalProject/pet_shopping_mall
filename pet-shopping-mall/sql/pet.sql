@@ -14,6 +14,9 @@ alter user pet quota unlimited on users;
 grant create session,
 grant create table to pet;
 
+-- 모든 테이블 조회
+SELECT *  FROM all_tables;
+
 --==============================
 -- 초기화 블럭
 --==============================
@@ -38,6 +41,7 @@ drop table community;
 drop table wishlist;
 drop table pet;
 drop table persistent_logins;
+drop table image_attachment_mapping;
 
 
 drop sequence seq_member_id;
@@ -171,6 +175,7 @@ create table point (
     point_type varchar2(100) not null,
     point_amount number not null,
     point_date timestamp default sysdate,
+
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
@@ -248,6 +253,7 @@ create table persistent_logins (
 );
 
 -- 주문상세 테이블
+-- 주문상세 테이블
 create table order_detail (
     order_id number,
     product_detail_id number,
@@ -324,6 +330,7 @@ create table cartitem (
     constraint pk_cartitem_id primary key(cartitem_id),
     constraint fk_cartitem_cart_id foreign key(cart_id) references cart(cart_id)
 );
+
 
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
