@@ -137,15 +137,6 @@
             <form:form action="${pageContext.request.contextPath}/member/petProfile.do" method="POST"> <!-- 2. 이부분 ${pageContext.request.contextPath} 추가 
             																								3. 상단에 시큐리티 태그 링크, form:form 추가 -->
             
-            <!-- 등록 성공시 메세지 -->
-                <c:if test="${not empty successMessage}">
-                    <div class="success-message">
-                        ${successMessage}
-                        <br>
-                        <button id="confirmButton">확인</button>
-                    </div>
-                </c:if>
-
                 <table>
                   <tr>
                         <th>아이디</th>

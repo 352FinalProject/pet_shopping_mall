@@ -1,20 +1,29 @@
 package com.shop.app.pet.cotroller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService; // 패키지명 수정
+import com.shop.app.servicecenter.inquiry.controller.QuestionController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/member")
 public class PetController {
@@ -34,12 +43,25 @@ public class PetController {
 	    
 	    if (result > 0) {
 	        // 펫 등록 로직 수행   	
-	        redirectAttributes.addFlashAttribute("successMessage", "펫이 성공적으로 등록되었습니다.");
+	        redirectAttributes.addFlashAttribute("successMessage", "등록성공!");
 	    }
 	    
 	    return "redirect:/member/petList.do"; // 등록 후 다시 폼으로 리다이렉트
 	}
 
+	@GetMapping("/petList.do")
+	public void petList(Pet pet, Model model) {
+		List<Pet> pets = petService.findPetByAll(pet); 
+		model.addAttribute("pets", pets);
+		}
+	
+	
+	   @PostMapping("/petDelete.do")
+	   public String petDelete(@RequestParam int petId) {
+	       int result = petService.petDelete(petId);
+	       return "redirect:/member/petList.do";
+	   }
+}
 //	@PostMapping("/petUpdate")
 //	public String petUpdate(@Valid PetUpdateDto pet, RedirectAttributes redirectAttributes) {
 //	
@@ -51,4 +73,3 @@ public class PetController {
 //
 //	    return "redirect:/member/petList.do"; // 목록 페이지로 리다이렉트
 //	}
-}
