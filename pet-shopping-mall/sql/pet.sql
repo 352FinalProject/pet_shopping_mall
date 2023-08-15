@@ -372,8 +372,10 @@ select * from answer;
 select * from point;
 select * from product;
 select * from image_attachment;
+select * from image_attachment_mapping;
 select * from authority;
 select * from pet;
+select * from review;
 
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
@@ -508,3 +510,6 @@ WHERE
 update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
+
+
+select * from review where review_member_id = 'member1';

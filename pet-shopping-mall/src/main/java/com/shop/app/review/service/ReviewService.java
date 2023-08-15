@@ -11,6 +11,8 @@ public interface ReviewService {
 	// 리뷰 작성
 	int insertReview(Review review);
 
+	Review findReviewMemberById(Review review);
+
 	// 리뷰 전체 카운트
 //	int findTotalReviewCount();
 

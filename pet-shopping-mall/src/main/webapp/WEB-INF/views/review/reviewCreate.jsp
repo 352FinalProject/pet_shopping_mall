@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
 
@@ -91,20 +92,21 @@
                 <tr>
                     <th>작성자</th>
                     <td>
-                    	<input type="text" id="reviewMemberId" name="reviewMemberId" value="${reviews.reviewMemberId}" required readonly/>
+                    	<input type="text" id="reviewMemberId" name="reviewMemberId" value="<sec:authentication property="name"/>" required readonly/>
                     </td>
                 </tr>
                 <tr>
-                    <th><label for="starRating">별점</label></th>
-                    <td>
-                        <div class="star-rating">
-                            <span class="star" onclick="setRating(1)">☆</span>
-                            <span class="star" onclick="setRating(2)">☆</span>
-                            <span class="star" onclick="setRating(3)">☆</span>
-                            <span class="star" onclick="setRating(4)">☆</span>
-                            <span class="star" onclick="setRating(5)">☆</span>
-                        </div>
-                    </td>
+					<th><label for="starRating">별점</label></th>
+					<td>
+					    <div class="star-rating">
+					        <input type="hidden" id="reviewStarRate" name="reviewStarRate">
+					        <span class="star" onclick="setRating(1)">☆</span>
+					        <span class="star" onclick="setRating(2)">☆</span>
+					        <span class="star" onclick="setRating(3)">☆</span>
+					        <span class="star" onclick="setRating(4)">☆</span>
+					        <span class="star" onclick="setRating(5)">☆</span>
+					    </div>
+					</td>
                 </tr>
                 <tr>
                 	<th>사진첨부</th>
@@ -146,7 +148,7 @@
 <script>
     function setRating(rating) {
         const stars = document.querySelectorAll('.star');
-        const starRatingInput = document.getElementById('starRatingInput');
+        const reviewStarRateInput = document.getElementById('reviewStarRate');
         
         for (let i = 0; i < stars.length; i++) {
             if (i < rating) {
@@ -155,7 +157,7 @@
                 stars[i].textContent = '☆';
             }
         }
-        starRatingInput.value = rating;
+        reviewStarRateInput.value = rating;
     }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

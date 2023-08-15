@@ -64,7 +64,9 @@ public class ReviewController {
 	
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
-	public void reviewCreate() {}
+	public void reviewCreate() {
+	
+	}
 
 	// 리뷰 작성
 	@PostMapping("/reviewCreate.do")
@@ -100,7 +102,7 @@ public class ReviewController {
 		
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
-				.reviewMemberid(_review.getReviewMemberId())
+				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
 				.reviewContent(_review.getReviewContent())

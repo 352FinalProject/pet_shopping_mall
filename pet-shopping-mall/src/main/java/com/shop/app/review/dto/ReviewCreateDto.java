@@ -22,7 +22,7 @@ public class ReviewCreateDto {
 	
 	public Review toReview() {
 		return Review.builder()
-				.reviewMemberid(reviewMemberId)
+				.reviewMemberId(reviewMemberId)
 				.reviewStarRate(reviewStarRate)
 				.reviewTitle(reviewTitle)
 				.reviewContent(reviewContent)

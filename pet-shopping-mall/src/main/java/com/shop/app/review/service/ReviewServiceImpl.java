@@ -53,6 +53,11 @@ public class ReviewServiceImpl implements ReviewService {
 		return result;
 	}
 
+	@Override
+	public Review findReviewMemberById(Review review) {
+		return reviewRepository.findReviewMemberById(review);
+	}
+
 //	@Override
 //	public int findTotalReviewCount() {
 //		return reviewRepository.findTotalReviewCount();
