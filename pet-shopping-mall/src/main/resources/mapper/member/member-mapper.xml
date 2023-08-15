@@ -14,11 +14,10 @@
       <id column="member_id" property="memberId"/>
       <result column="password" property="password"/>
       <result column="name" property="name"/>
+      <result column="phone" property="phone"/>
       <result column="email" property="email"/>
       <result column="address " property="address "/>
       <result column="birthday" property="birthday"/>
-      <result column="memberRole " property="memberRole "/>
-      <result column="point  " property="point  "/>
       <result column="subscribe " property="subscribe "/>
       <collection property="authorities"
                   ofType="simpleGrantedAuthority">

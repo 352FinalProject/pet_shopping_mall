@@ -23,9 +23,9 @@ public interface MemberRepository {
 	        "#{address}, #{birthday, jdbcType=DATE})")
 	int insertMember(MemberCreateDto member);
 	
-	@Update("update member set birthday =")
+	@Update("update member set name = #{name}, password = #{password}, email = #{email} where member_id = #{memberId}")
 	int updateMember(Member member);
-
+	
 	@Delete("delete from member where member_id= #{memberId}")
 	int deleteMember(Member member);
 

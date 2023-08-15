@@ -20,52 +20,56 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
-drop table member;
-drop table question;
-drop table answer;
-drop table image_attachment;
-drop table image_attachment_mapping;
-drop table point;
-drop table product;
-drop table product_detail;
-drop table product_category;
-drop table orderTbl;
-drop table order_Detail;
-drop table cart;
-drop table payment;
-drop table cartitem;
-drop table refund;
-drop table cancel_order;
-drop table authority;
-drop table community;
-drop table pet;
-drop table persistent_logins;
-drop table image_attachment_mapping;
-drop table review;
-drop table wishlist;
+--drop table member;
+--drop table question;
+--drop table answer;
+--drop table image_attachment;
+--drop table image_attachment_mapping;
+--drop table point;
+--drop table product;
+--drop table product_detail;
+--drop table product_category;
+--drop table orderTbl;
+--drop table order_Detail;
+--drop table cart;
+--drop table payment;
+--drop table cartitem;
+--drop table refund;
+--drop table cancel_order;
+--drop table authority;
+--drop table community;
+--drop table pet;
+--drop table persistent_logins;
+--drop table image_attachment_mapping;
+--drop table review;
+--drop table wishlist;
+--drop table product_category;
+--drop table return;
+--drop table ordertbl;
 
-drop sequence seq_member_id;
-drop sequence seq_question_id;
-drop sequence seq_answer_id;
-drop sequence seq_image_attachment_id;
-drop sequence seq_image_attachment_mapping_id;
-drop sequence seq_point_id;
-drop sequence seq_product_category_id;
-drop sequence seq_product_id;
-drop sequence seq_product_detail_id;
-drop sequence seq_cart_id;
-drop sequence seq_payment_id;
-drop sequence seq_cartitem_id;
-drop sequence seq_ordertbl_id;
-drop sequence seq_refund_id;
-drop sequence seq_cancel_order_id;
-drop sequence seq_authority_id;
-drop sequence seq_community_id;
-drop sequence seq_wishlist_id;
-drop sequence seq_pet_id;
-drop sequence seq_persistent_logins_id;
-drop sequence seq_cancel_id;
-drop sequence seq_review_id;
+
+--drop sequence seq_member_id;
+--drop sequence seq_question_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_image_attachment_mapping_id;
+--drop sequence seq_point_id;
+--drop sequence seq_product_category_id;
+--drop sequence seq_product_id;
+--drop sequence seq_product_detail_id;
+--drop sequence seq_cart_id;
+--drop sequence seq_payment_id;
+--drop sequence seq_cartitem_id;
+--drop sequence seq_ordertbl_id;
+--drop sequence seq_refund_id;
+--drop sequence seq_cancel_order_id;
+--drop sequence seq_authority_id;
+--drop sequence seq_community_id;
+--drop sequence seq_wishlist_id;
+--drop sequence seq_pet_id;
+--drop sequence seq_persistent_logins_id;
+--drop sequence seq_cancel_id;
+--drop sequence seq_review_id;
 
 
 --==============================
@@ -78,11 +82,11 @@ create table member (
     password varchar2(300) not null,
     name varchar2(50) not null,
     phone varchar2(11) not null,
-    email varchar2(200),
+    email varchar2(200) unique,
     enroll_date timestamp default sysdate,
     address varchar2(500),
     birthday timestamp,
-    subscribe char(1) default 'N' not null,
+    subscribe char(1) default 'N' not null constraint ck_subscribe check (subscribe IN ('Y', 'N')),
     constraints pk_member_id primary key(member_id)
 );
 
@@ -515,6 +519,8 @@ LEFT JOIN
     image_attachment ia ON iam.image_id = ia.image_id
 WHERE 
     q.question_id = 25;
+
+
 
 update member
 set member_role = 'ROLE_ADMIN'

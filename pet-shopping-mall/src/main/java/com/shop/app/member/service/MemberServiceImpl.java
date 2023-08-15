@@ -35,10 +35,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.updateMember(member);
 	}
 
-	@Override
-	public int deleteMember(Member member) {
-		return memberRepository.deleteMember(member);
-	}
+	
 
 
 	@Override
@@ -48,6 +45,12 @@ public class MemberServiceImpl implements MemberService {
 		if(memberDetails == null)
 			throw new UsernameNotFoundException(username);
 		return memberDetails;
+	}
+
+	@Override
+	public int deleteMember(String memberId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

@@ -115,7 +115,7 @@
 					<tr>
 		                <th>아이디</th>
 		                <td>
-		                    <input type="text" name="memberId" id="memberId" value="${loginMember.memberId}"  readonly />
+		                    <input type="text" name="memberId" id="memberId" value="${loginMember.memberId}"  readonly required/>
 		                </td>
 		                <td rowspan="2" class="pet-info-container">
 		                    <div class="pet-info">
@@ -127,7 +127,7 @@
 		            <tr>
 		                <th>이름</th>
 		                <td>
-		                    <input type="text" name="name" id="name" value="${loginMember.name}" readonly >
+		                    <input type="text" name="name" id="name" value="${loginMember.name}" required >
 		                </td>
 		            </tr>				
     				<tr>
@@ -164,7 +164,7 @@
     				<tr>
     					<th>생일</th>
     					<td>
-    						<input type="date" name="birthday" id="birthday" value="${loginMember.birthday}" readonly>
+    						<input type="date" name="birthday" id="birthday" value="${loginMember.birthday}" readonly required>
 						</td>
     				</tr>
     				<tr>
