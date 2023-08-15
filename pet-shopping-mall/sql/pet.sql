@@ -159,16 +159,14 @@ create table product (
     like_cnt number, -- 좋아요수
     view_cnt number, -- 조회수
     constraints pk_product_id primary key(product_id),
-    constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade,
-    constraints fk_thumbnail_img foreign key(thumbnail_img) references image_attachment_mapping(mapping_id)
---    constraints fk_product_img foreign key(product_img) references image_attachment_mapping(mapping_id)
+    constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
 -- 상품상세 테이블
 create table product_detail (
     product_detail_id number, -- pk
 	product_id number, -- fk
-    option_name varchar2(100), -- 옵션명
+    option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
     option_value varchar2(200), -- 옵션속성
     additional_price number, -- 옵션에 따른 추가금
     stock number default 0,
