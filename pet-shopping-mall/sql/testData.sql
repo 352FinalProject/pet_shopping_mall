@@ -1,4 +1,5 @@
 ------------------ member insert ---------------------------
+select * from member;
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 
@@ -6,8 +7,6 @@ values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울�
 --sample data 생성
 --==============================
 -- member insert
-insert into member (member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
@@ -16,7 +15,7 @@ insert into member (member_id, password, name, phone, email, address, birthday, 
 values ('member2', '1234', '대한훈', '01028283939', 'ghjwf@naver.com', '서울시 송파구 마니동', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member3', '1234', '건곤훈', '01011223344', 'qwerrt@naver.com', '서울시 송파구 베내동', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
+values ('member3', '1234', '건강훈', '01011223344', 'qwerrt@naver.com', '서울시 송파구 베내동', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('member4', '1234', '덩셍훈', '010133663344', 'dfhdfg@naver.com', '서울시 송파구 메메동', to_date('1987-01-01', 'YYYY-MM-DD'), 'N');
@@ -52,7 +51,20 @@ insert into member (member_id, password, name, phone, email, address, birthday, 
 values ('member14', '1234', '고모훈', '01012244238', 'qwewkim@naver.com', '서울시 송파구 석비촌동', to_date('1999-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+values ('honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('homgh1', '1234', '홍당무', '01015124328', 'homgh1@naver.com', '서울시 송파구 석동', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('h1vgd', '1234', '홍당근', '01015311228', 'h1vgd@naver.com', '서울시 송파구 니촌동', to_date('1992-01-01', 'YYYY-MM-DD'), 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hohrt1gd', '1234', '홍양파', '01125314328', 'hohrt1gd@naver.com', '서울시 송파구 촌동', to_date('1989-01-01', 'YYYY-MM-DD'), 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('h436hgd', '1234', '홍마늘', '01012345328', 'h436hgd@naver.com', '서울시 송파구 석나동', to_date('1988-01-01', 'YYYY-MM-DD'), 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('ho12gggd', '1234', '홍파', '01015314648', 'ho12gggd@naver.com', '서울시 송파구 니촌동', to_date('1987-01-01', 'YYYY-MM-DD'), 'Y');
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hocvgd', '1234', '홍무', '01015311348', 'hocvgd@naver.com', '서울시 송파구 나동', to_date('1986-01-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
 insert into authority values ('abcde', 'ROLE_USER');
@@ -129,5 +141,5 @@ WHERE
     q.question_id = 25;
 
 update member
-set member_role = 'ROLE_ADMIN'
-where id = 77;
+set password = '$2a$10$bQiaLSKn3Tn4hSEYyztD8OLoBGi3upiRXokASmoKBN.87KvWmy23i'
+where member_id = 'admin';

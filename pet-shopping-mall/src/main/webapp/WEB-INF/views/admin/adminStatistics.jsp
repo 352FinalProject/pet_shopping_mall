@@ -9,13 +9,9 @@
 
 
 <div style="width:60%">
-
 	<div>
-
 		<canvas id="canvas" height="450" width="600"></canvas>
-
 	</div>
-
 </div> 
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
