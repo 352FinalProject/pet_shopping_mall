@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
 
@@ -84,12 +85,13 @@
 <br>
 	<div class="common-container">
     	<div class="common-div">
-        <form action="/reviews/new" method="post">
+        <form:form action="${pageContext.request.contextPath}/review/reviewCreate.do"
+        enctype="multipart/form-data" method="post">
             <table class="review-write-table">
                 <tr>
                     <th>작성자</th>
                     <td>
-                    	<input type="text" id="" name="" value="" required readonly/>
+                    	<input type="text" id="reviewMemberId" name="reviewMemberId" value="${reviews.reviewMemberId}" required readonly/>
                     </td>
                 </tr>
                 <tr>
@@ -118,7 +120,7 @@
                 <tr>
                     <th>제목트트트트</th>
                     <td>
-                    	<input type="text" id="" name="" required/>
+                    	<input type="text" id="reviewTitle" name="reviewTitle" required/>
                     </td>
                 </tr>
             </table>
@@ -126,7 +128,7 @@
             <table>
             	<tr>
                     <td>
-                        <textarea class="review-write-content" id="content" name="content" placeholder="리뷰 내용을 작성해주세요." required></textarea>
+                        <textarea class="review-write-content" id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -136,7 +138,7 @@
                     </td>
                 </tr>
             </table>
-        </form>
+        </form:form>
     </div>
 </div>
 </section>

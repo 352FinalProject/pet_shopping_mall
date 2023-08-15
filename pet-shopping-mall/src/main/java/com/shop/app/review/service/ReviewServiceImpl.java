@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.review.dto.ReviewDetails;
 import com.shop.app.review.entity.Review;
+import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,29 +33,38 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		log.debug("reviews = {}", review);
 		
+		
+		int refId = review.getReviewId();
+		System.out.println("review refId = " + refId);
+		
 		// attachment 저장
 		List<imageAttachment> attachments = ((ReviewDetails) review).getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(imageAttachment attach : attachments) {
-				attach.setImageId(review.getReviewId());
-				result = reviewRepository.insertAttachment(attach);
+				
+				int result2 = reviewRepository.insertAttachment(attach);
+				
+				int imageId = attach.getImageId();
+				
+				int reviewIdImageId = reviewRepository.insertMapping(refId, imageId);
+				
 			}
 		}
 		return result;
 	}
 
-	@Override
-	public int findTotalReviewCount() {
-		return reviewRepository.findTotalReviewCount();
-	}
-
-	@Override
-	public List<Review> findReviewAll(Map<String, Object> params) {
-		int limit = (int) params.get("limit");
-		int page = (int) params.get("page");
-		int offset = (page - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return reviewRepository.findReviewAll(rowBounds);
-	}
+//	@Override
+//	public int findTotalReviewCount() {
+//		return reviewRepository.findTotalReviewCount();
+//	}
+//
+//	@Override
+//	public List<Review> findReviewAll(Map<String, Object> params) {
+//		int limit = (int) params.get("limit");
+//		int page = (int) params.get("page");
+//		int offset = (page - 1) * limit;
+//		RowBounds rowBounds = new RowBounds(offset, limit);
+//		return reviewRepository.findReviewAll(rowBounds);
+//	}
 
 }

@@ -19,10 +19,12 @@ public class Review {
 	private int reviewId;
 	private int petId;
 	private int orderId;
+	private int productDetailId;
+	private String reviewMemberid;
 	private String reviewTitle;
 	private String reviewContent;
 	private int reviewStarRate;
-	private Date reviewCreatedAt;
+	private LocalDateTime reviewCreatedAt;
 	
 	
 	
