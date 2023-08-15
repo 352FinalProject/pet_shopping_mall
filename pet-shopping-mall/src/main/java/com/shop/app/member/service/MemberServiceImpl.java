@@ -35,23 +35,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.updateMember(member);
 	}
 
-	
-
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails memberDetails = memberRepository.loadUserByUsername(username);
 		log.debug("memberDetails = {}", memberDetails);
-		if(memberDetails == null)
+		if (memberDetails == null)
 			throw new UsernameNotFoundException(username);
 		return memberDetails;
 	}
 
 	@Override
 	public int deleteMember(String memberId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberRepository.deleteMember(memberId);
 	}
-
 
 }

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.dto.MemberCreateDto;
@@ -91,14 +92,12 @@ public class MemberSecurityController {
 		point.setPointAmount(3000);
 
 		int resultPoint = pointService.givePointsForSignUp(point);
-
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/";
 	}
 
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
-	public void memberLogin() {
-	}
+	public void memberLogin(){}
 
 	// 로그인처리하는 요청 작성 X
 	// 로그아웃처리하는 요청 작성 X
@@ -132,6 +131,12 @@ public class MemberSecurityController {
 		String memberId = principal.getMemberId();
 		member.setMemberId(memberId);
 		
+		 // 새로운 비밀번호가 입력되었을 경우 암호화 처리
+	    if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
+	        String rawPassword = _member.getPassword();
+	        String encodedPassword = passwordEncoder.encode(rawPassword);
+	        member.setPassword(encodedPassword);
+	    }
 	    //  db수정요청
 		int result = memberService.updateMember(member);
 
@@ -146,7 +151,22 @@ public class MemberSecurityController {
 		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
 		return "redirect:/member/myPage.do";
 	}
+	
+	@DeleteMapping("/deleteMember.do")
+	public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr) {
+	    String memberId = principal.getMemberId(); // 현재 로그인한 회원의 ID를 가져옵니다.
+	    memberService.deleteMember(memberId);  // 회원 삭제 서비스 호출
+	    redirectAttr.addFlashAttribute("msg", "회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다.");
+	    return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
+	}
 
+
+	@GetMapping("memberLogout.do")
+	public String memberLogout(SessionStatus sessionStatus) {
+		if(!sessionStatus.isComplete())
+			sessionStatus.setComplete();
+		return "redirect:/";
+	}
 
 
 	// 중복 ID 검사

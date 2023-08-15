@@ -89,7 +89,7 @@ create table member (
     subscribe char(1) default 'N' not null constraint ck_subscribe check (subscribe IN ('Y', 'N')),
     constraints pk_member_id primary key(member_id)
 );
-
+select * from member;
 
 -- 권한 테이블
 create table authority(
@@ -520,8 +520,10 @@ LEFT JOIN
 WHERE 
     q.question_id = 25;
 
-
+select * from member;
+select * from point;
 
 update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
+

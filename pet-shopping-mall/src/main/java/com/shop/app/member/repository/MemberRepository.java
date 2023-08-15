@@ -14,20 +14,20 @@ import com.shop.app.member.entity.MemberDetails;
 
 @Mapper
 public interface MemberRepository {
-	
+
 	@Select("select * from member where member_id = #{memberId}")
 	Member findMemberById(String memberId);
-	
-	@Insert("insert into member (member_id, password, name, phone, email, address, birthday) " +
-	        "values (#{memberId}, #{password}, #{name}, #{phone}, #{email}, " +
-	        "#{address}, #{birthday, jdbcType=DATE})")
+
+	@Insert("insert into member (member_id, password, name, phone, email, address, birthday) "
+			+ "values (#{memberId}, #{password}, #{name}, #{phone}, #{email}, "
+			+ "#{address}, #{birthday, jdbcType=DATE})")
 	int insertMember(MemberCreateDto member);
-	
+
 	@Update("update member set name = #{name}, password = #{password}, email = #{email} where member_id = #{memberId}")
 	int updateMember(Member member);
-	
-	@Delete("delete from member where member_id= #{memberId}")
-	int deleteMember(Member member);
+
+	@Delete("delete from member where member_id = #{memberId}")
+	int deleteMember(String memberId);
 
 	@Select("SELECT * FROM member WHERE member_id = #{memberId}")
 	MemberDetails loadUserByUsername(String username);
