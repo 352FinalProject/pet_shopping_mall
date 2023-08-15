@@ -132,7 +132,7 @@ create table question(
     question_email varchar2(200),
     question_title varchar2(500) not null,
     question_content varchar2(4000) not null,
-    question_created_at timestamp default sysdate,
+    question_created_at timestamp default systimestamp,
     constraints pk_question_id primary key(question_id),
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade question_member_id varchar2(20) not null,
 );
@@ -143,7 +143,7 @@ create table answer(
    answer_admin_name varchar2(20) default '관리자',
    answer_question_id number not null,
    answer_content varchar2(4000) not null,
-   answer_created_at timestamp default sysdate,
+   answer_created_at timestamp default systimestamp,
    constraints pk_answer_id primary key(answer_id),
    constraints fk_answer_question_id foreign key (answer_question_id) references question(question_id) on delete cascade
 );
@@ -177,7 +177,7 @@ create table point (
     point_current number not null,
     point_type varchar2(100) not null,
     point_amount number not null,
-    point_date timestamp default sysdate,
+    point_date timestamp default systimestamp,
 
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
@@ -377,6 +377,7 @@ select * from authority;
 select * from pet;
 select * from review;
 
+<<<<<<< Updated upstream
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
@@ -513,3 +514,13 @@ where id = 77;
 
 
 select * from review where review_member_id = 'member1';
+=======
+-- 회원가입시 자동으로 장바구니가 생성되는 트리거
+create or replace trigger cart_create_trriger
+after insert on member
+for each row
+begin
+    insert into cart(cart_id, member_id) values(seq_cart_id.nextval, :NEW.member_id);
+end;
+/
+>>>>>>> Stashed changes
