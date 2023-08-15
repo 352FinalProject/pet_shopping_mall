@@ -221,11 +221,11 @@ create table orderTbl (
     order_id number,
     order_no varchar2(20) not null,
     member_id varchar2(50),
-    order_date timestamp default sysdate,
-    order_status number default 0,
+    order_date timestamp default systimestamp not null,
+    order_status number default 0 not null,
     payment_status number default 0,
     total_price number not null,
-    delivery_fee number default 3000,
+    delivery_fee number default 3000 not null,
     discount number default 0,
     amount number not null,
     discount_code varchar2(20),
@@ -235,9 +235,9 @@ create table orderTbl (
 
 create table cancel_order (
     cancel_id number,
-    request_date timestamp default sysdate,
+    request_date timestamp default systimestamp not null,
     receipt_date timestamp,
-    cancel_status number default 0,
+    cancel_status number default 0 not null,
     order_id number,
     constraint pk_cancel_id primary key(cancel_id),
     constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
@@ -252,7 +252,6 @@ create table persistent_logins (
     last_used timestamp not null
 );
 
--- 주문상세 테이블
 -- 주문상세 테이블
 create table order_detail (
     order_id number,
@@ -293,18 +292,31 @@ create table community (
 create table payment (
     payment_id number,
     payment_method number not null,
-    payment_date timestamp default sysdate,
+    payment_date timestamp default systimestamp not null,
     amount number not null,
     order_id number,
     constraint pk_payment_id primary key(payment_id),
     constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
+-- 반품테이블
+create table return (
+    return_id number,
+    return_status number default 0 not null,
+    request_date timestamp default systimestamp not null,
+    receipt_date timestamp,
+    withdraw_data timestamp,
+    order_id number,
+    constraint pk_return_id primary key(return_id),
+    constraint fk_return_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+);
+
+-- 환불테이블
 create table refund (
     refund_id number,
-    receipt_date timestamp default sysdate,
+    receipt_date timestamp default systimestamp not null,
     complete_date timestamp,
-    refund_status number default 0,
+    refund_status number default 0 not null,
     refund_price number not null,
     refund_method number not null,
     refund_account varchar2(20),
@@ -326,7 +338,7 @@ create table cartitem (
     cartitem_id number,
     cart_id number,
     product_code varchar2(100) not null,
-    quantity number default 1,
+    quantity number default 1 not null,
     constraint pk_cartitem_id primary key(cartitem_id),
     constraint fk_cartitem_cart_id foreign key(cart_id) references cart(cart_id)
 );
