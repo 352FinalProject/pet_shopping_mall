@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.review.dto.ReviewDetails;
 import com.shop.app.review.entity.Review;
 
@@ -20,7 +20,7 @@ public interface ReviewRepository {
 
 	// 리뷰 파일첨부
 	@Insert("insert into image_attachment values(seq_image_attachment_image_id.nextval, #{imageType}, #{imageCategory}, #{imageOriginalFilename}, #{imageRenamedfilename}, #{imageFileSize}, default)")
-	int insertAttachment(Attachment attach);
+	int insertAttachment(imageAttachment attach);
 
 	@Select("select count(*) from review")
 	int findTotalReviewCount();
