@@ -21,6 +21,7 @@ drop table image_attachment;
 drop table point;
 drop table product_category;
 drop table product;
+drop table product_detail;
 drop table cart;
 drop table payment;
 drop table cartitem;
@@ -41,6 +42,7 @@ drop sequence seq_pet_pet_id;
 drop sequence seq_wishlist_wishlist_id;
 drop sequence seq_product_category_id;
 drop sequence seq_product_id;
+drop sequence seq_product_detail_id;
 drop sequence seq_review_id;
 drop sequence seq_refund_id;
 drop sequence seq_payment_id;
@@ -150,26 +152,26 @@ create table point (
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
 
+
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
-select * from product_category;
 
 -- 상품 테이블
 create table product (
-    product_id number,
-    product_code number,
-    product_category_id number,
+    product_id number, -- pk
+    category_id number, -- fk
     product_name varchar2(200) not null,
     product_price number not null,
-    product_stock number not null,
-    product_date timestamp default sysdate,
-    expire_date timestamp default sysdate,
-    like_cnt number,
-    views number,
+    thumbnail_img number, -- 썸네일 이미지(fk)
+    product_img number, -- 제품상세 이미지(fk)
+    product_date timestamp default sysdate, -- 등록일
+    expire_date timestamp default sysdate, -- 유통기한
+    like_cnt number, -- 좋아요수
+    view_cnt number, -- 조회수
     constraints pk_product_id primary key(product_id),
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
@@ -325,6 +327,7 @@ create sequence seq_pet_pet_id;
 create sequence seq_wishlist_wishlist_id;
 create sequence seq_product_category_id;
 create sequence seq_product_id;
+create sequence seq_product_detail_id;
 create sequence seq_review_id;
 create sequence seq_refund_id;
 create sequence seq_payment_id;
