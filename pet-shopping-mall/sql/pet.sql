@@ -44,10 +44,10 @@ CREATE TABLE pet (
     pet_id number,
     pet_member_id varchar2(20),
     pet_name VARCHAR2(50) NOT NULL,
-    pet_DofB DATE,
+    pet_DofB timestamp,
     pet_kind VARCHAR2(50),
     pet_breed VARCHAR2(50),
-    pet_adoption NUMBER,
+    pet_adoption timestamp,
     pet_gender CHAR(1),
     constraints pk_pet_id primary key(pet_id),
     constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade,
@@ -240,6 +240,7 @@ select * from point;
 select * from product;
 select * from image_attachment;
 select * from authority;
+select * from pet;
 
 drop table member;
 drop table question;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .common-section{
@@ -133,7 +134,8 @@
     <br>
     <div class="common-container">
         <div class="common-div">
-            <form name="memberCreateFrm" action="/member/petProfile" method="POST">
+            <form:form action="${pageContext.request.contextPath}/member/petProfile.do" method="POST"> <!-- 2. 이부분 ${pageContext.request.contextPath} 추가 
+            																								3. 상단에 시큐리티 태그 링크, form:form 추가 -->
             
             <!-- 등록 성공시 메세지 -->
                 <c:if test="${not empty successMessage}">
@@ -145,8 +147,14 @@
                 </c:if>
 
                 <table>
+                  <tr>
+                        <th>아이디</th>
+                        <td>
+                            <input type="text" name="petMemberId" id="petMemberId" value="admin" required>
+                        </td>
+                    </tr>
                     <tr>
-                        <th>이름</th>
+                        <th>펫 이름</th>
                         <td>
                             <input type="text" name="petName" id="petName" value="두부" required>
                         </td>
@@ -162,33 +170,32 @@
                     <tr>
                         <th>타입</th>
                         <td>
-                            <input type="text" name="petKind" placeholder="반려동물의 종류를 입력해 주세요.">
+                            <input type="text" name="petKind" placeholder="반려동물의 종류를 입력해 주세요." value="개">
                         </td>
                     </tr>
                 
                     <tr>
                         <th>품종</th>
                         <td>
-                            <input type="text" name="petBreed" placeholder="반려동물의 품종을 입력해 주세요.">
+                            <input type="text" name="petBreed" placeholder="반려동물의 품종을 입력해 주세요." value="말티즈">
                         </td>
                     </tr>
                     
                     <tr>
                         <th>입양일</th>
                         <td>
-                            <input type="date" name="petAdoptionDate" id="petAdoptionDate">
+                            <input type="date" name="petAdoption" id="petAdoptionDate">
                         </td>
                     </tr>
 
                     <tr>
                         <th>성별</th>
-                        <td>
-                            <input type="hidden" name="petGender" id="genderInput">
-                            <input type="button" name="gender" value="♂">
-                            <input type="button" name="gender" value="♀">
-                        </td>
+	                        <td>
+							    <input type="hidden" name="petGender" id="genderInput">
+						        <input type="button" name="gender" value="M" onclick="selectGender('M')">
+						        <input type="button" name="gender" value="F" onclick="selectGender('F')">
+                        	</td>
                     </tr>
-
                     <tr>
                         <td class="resetAndSubmit" colspan="2">
                             <input type="reset" value="돌아가기">
@@ -196,8 +203,15 @@
                         </td>
                     </tr>
                 </table>
-            </form>
+            </form:form>
         </div>
     </div>
 </section>
+<script>
+// 펫 등록 젠더 선택
+function selectGender(gender) {
+    $("#genderInput").val(gender);
+    $("#selectedGender").text(gender === 'M' ? '♂' : '♀');
+}
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
