@@ -23,21 +23,22 @@ drop table answer;
 drop table image_attachment;
 drop table image_attachment_mapping;
 drop table point;
-drop table product_category;
 drop table product;
 drop table product_detail;
+drop table product_category;
+drop table orderTbl;
+drop table order_Detail;
 drop table cart;
 drop table payment;
 drop table cartitem;
-drop table orderTbl;
 drop table refund;
 drop table cancel_order;
 drop table authority;
-drop table product_category;
 drop table community;
-drop table wishlist;
 drop table pet;
 drop table persistent_logins;
+drop table review;
+drop table wishlist;
 
 
 drop sequence seq_member_id;
@@ -60,6 +61,8 @@ drop sequence seq_community_id;
 drop sequence seq_wishlist_id;
 drop sequence seq_pet_id;
 drop sequence seq_persistent_logins_id;
+drop sequence seq_cancel_id;
+drop sequence seq_review_id;
 
 
 --==============================
@@ -257,18 +260,34 @@ create table order_detail (
     constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
 );
 
+-- 상품상세 테이블
+create table product_detail (
+    product_detail_id number, -- pk
+	product_id number, -- fk
+    option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
+    option_value varchar2(200), -- 옵션속성
+    additional_price number, -- 옵션에 따른 추가금
+    stock number default 0,
+    sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
+    constraints pk_product_detail_id primary key(product_detail_id),
+    constraints fk_product_id foreign key(product_id) references product(product_id)
+);
+
 -- 리뷰테이블
 create table review (
     review_id number,
     pet_id number,
     order_id number,
+    review_member_id varchar(20) not null,
+    product_detail_id number,
     review_title varchar2(50),
     review_content varchar2(3000),
     review_star_rate number default 1 not null,
     review_created_at timestamp default sysdate,
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-    constraint fk_order_id foreign key(order_id) references order_detail(order_id) on delete cascade,
+    constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
+    constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
