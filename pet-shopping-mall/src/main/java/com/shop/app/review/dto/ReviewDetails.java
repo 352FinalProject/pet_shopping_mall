@@ -2,7 +2,7 @@ package com.shop.app.review.dto;
 
 import java.util.List;
 
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.review.entity.Review;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
@@ -22,7 +22,7 @@ public class ReviewDetails extends Review {
 	
 	private int reviewId;
 	
-	private List<Attachment> attachments;
+	private List<imageAttachment> attachments;
 	
 
 }

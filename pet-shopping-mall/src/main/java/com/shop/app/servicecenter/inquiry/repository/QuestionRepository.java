@@ -9,9 +9,10 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
+import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 
 @Mapper
 public interface QuestionRepository {
@@ -30,12 +31,10 @@ public interface QuestionRepository {
 	Answer findQuestionAnswersById(Answer answer);
 
 	// 1:1 목록 작성 (예라)
-	@Insert("insert into question values(seq_question_question_id.nextval, #{questionMemberId}, #{questionCategory}, #{questionEmail}, #{questionTitle}, #{questionContent}, default)")
 	int insertQuestion(Question question);
 	
 	// 1:1 문의 파일 첨부 (예라)
-	@Insert("insert into image_attachment values(seq_image_attachment_image_id.nextval, #{imageType}, #{imageCategory}, #{imageOriginalFilename}, #{imageRenamedfilename}, #{imageFileSize}, default)")
-	int insertAttachment(Attachment attach);
+	int insertAttachment(imageAttachment attach);
 
 	// 1:1 목록 삭제 (예라)
 	@Delete("delete from question where question_id = #{questionId}")
@@ -60,5 +59,12 @@ public interface QuestionRepository {
 	// 1:1 문의 전체 카운트 (예라)
 	@Select("select count (*) from question")
 	int findTotalQuestionCount();
+
+	// 질문 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장 (예라)
+	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'question', #{questionId}, #{imageId})")
+	int insertMapping(int questionId, int imageId);
+
+	// 이미지 파일 정보 조회 (예라)
+	QuestionDetails findImageAttachmentsByQuestionId(int questionId);
 
 }
