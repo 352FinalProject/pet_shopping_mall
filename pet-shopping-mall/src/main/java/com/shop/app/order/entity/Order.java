@@ -17,7 +17,7 @@ public class Order {
 	private Date orderDate;
 	private int orderState;
 	private int paymentState; // 0-결제 미완료 / 1-결제완료
-	private int totalPrice; // 상품 금액 + 배송비
+	private int totalPrice; // 상품 금액
 	private int deliveryFee; // 배송비 (고정 3000원)
 	private int discount; // 할인금액 (포인트 또는 쿠폰으로 발생한 차감액)
 	private int amount; // 실 결제 금액

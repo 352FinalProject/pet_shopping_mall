@@ -223,8 +223,15 @@ public class AdminController {
 	@GetMapping("/adminProductList.do")
 	public void adminProductList() {}
 	
+	/**
+	 * 판매량통계
+	 */
 	@GetMapping("/adminStatistics.do")
-	public void adminStatistics() {}
+	public void adminStatistics() {
+		
+		
+		
+	}
 	
 	// 상품 추가
 	@GetMapping("/addProduct.do")
