@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.review.dto.ReviewDetails;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.repository.ReviewRepository;
@@ -34,9 +34,9 @@ public class ReviewServiceImpl implements ReviewService {
 		log.debug("reviews = {}", review);
 		
 		// attachment 저장
-		List<Attachment> attachments = ((ReviewDetails) review).getAttachments();
+		List<imageAttachment> attachments = ((ReviewDetails) review).getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
-			for(Attachment attach : attachments) {
+			for(imageAttachment attach : attachments) {
 				attach.setImageId(review.getReviewId());
 				result = reviewRepository.insertAttachment(attach);
 			}

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.entity.Attachment;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetails;
 import com.shop.app.review.entity.Review;
@@ -75,24 +75,24 @@ public class ReviewController {
 					throws IllegalStateException, IOException {
 						
 		// 1. 파일저장
-		List<Attachment> attachments = new ArrayList<>();
-		for(MultipartFile upFile : upFiles) {			
-		    if(!upFile.isEmpty()) {
-		        String imageOriginalFilename = upFile.getOriginalFilename();
-		        String imageRenamedfilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename); 
-		        File destFile = new File(imageRenamedfilename); 
-		        upFile.transferTo(destFile);	
-
-		        int imageType = 1; 
-
-		        Attachment attach = 
-		            Attachment.builder()
-		            .imageOriginalFilename(imageOriginalFilename)
-		            .imageRenamedfilename(imageRenamedfilename)
-		            .imageType(imageType)
-		            .imageFileSize(upFile.getSize())
-		            .build();
+		List<imageAttachment> attachments = new ArrayList<>();
+		for(MultipartFile upFile : upFiles) {
+			if(!upFile.isEmpty()) {
+				String imageOriginalFilename = upFile.getOriginalFilename();
+				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
+				File destFile = new File(imageRenamedFilename);
+				upFile.transferTo(destFile);
 				
+				int imageType = 1;
+				
+				imageAttachment attach =
+						imageAttachment.builder()
+						.imageOriginalFilename(imageOriginalFilename)
+						.imageRenamedFilename(imageRenamedFilename)
+						.imageType(imageType)
+						.imageFileSize(upFile.getSize())
+						.build();
+						
 				log.debug("review attach = {}", attach);
 				attachments.add(attach);
 			}

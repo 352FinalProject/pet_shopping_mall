@@ -16,6 +16,15 @@ public class OrderController {
 	@GetMapping("/orderCancle.do")
 	public void orderCancle() {}
 	
+	@GetMapping("/orderDetails.do")
+	public void orderDetails() {}
+	
+	@GetMapping("/orderExchange.do")
+	public void orderExchange() {}
+	
+	@GetMapping("/orderList.do")
+	public void orderList() {}
+	
 	
 	
 }

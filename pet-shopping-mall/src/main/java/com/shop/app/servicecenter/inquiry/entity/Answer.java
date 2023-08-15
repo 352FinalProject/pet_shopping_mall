@@ -3,8 +3,6 @@ package com.shop.app.servicecenter.inquiry.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.shop.app.common.entity.Attachment;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
