@@ -213,6 +213,18 @@ create table product (
 --	`sale_state`	number	NOT NULL	COMMENT '0: 판매대기
 --);
 
+create table product_detail (
+    product_detail_id number, -- pk
+	product_id number, -- fk
+    option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
+    option_value varchar2(200), -- 옵션속성
+    additional_price number, -- 옵션에 따른 추가금
+    stock number default 0,
+    sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
+    constraints pk_product_detail_id primary key(product_detail_id),
+    constraints fk_product_id foreign key(product_id) references product(product_id)
+);
+
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.

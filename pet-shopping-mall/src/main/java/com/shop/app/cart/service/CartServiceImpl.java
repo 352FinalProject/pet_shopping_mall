@@ -38,11 +38,8 @@ public class CartServiceImpl implements CartService {
 		
 		// cartItem에 담긴 모든 product_detail_id를 가지고 product_detail 테이블을 조회해야 함
 		// Map<ProductDetail, 구매수량> 하면 될 것같음
-		
-		CartItemDetails cartItemDetails = 
-				CartItemDetails.builder()
-				.cartList(new HashMap<>())
-				.build();
+		// sql은 in으로 하면 될 듯
+
 		
 //		for(CartItem item : cartItemList) {
 //			product = productRepository.findProductByCode(item.getProductCode());
@@ -51,7 +48,7 @@ public class CartServiceImpl implements CartService {
 //			cartItemDetails.getCartList().put(product, item.getQuantity());
 //			log.debug("cartItemDetails = {}", cartItemDetails);
 //		}
-		return cartItemDetails;
+		return null;
 	}
 
 }
