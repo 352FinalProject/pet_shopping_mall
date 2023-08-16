@@ -34,6 +34,9 @@
     <div class="header">
         <span id="notification"></span>
         <ul class="utility">
+        	<sec:authorize access="isAuthenticated()">
+        		권한 : <sec:authentication property="authorities"/>  아이디 : <sec:authentication property="principal.username"/>
+        	</sec:authorize>
         	<sec:authorize access="isAnonymous()">
 	            <li class="login_li">
 	                <a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
@@ -50,12 +53,14 @@
 			</li>
 			<sec:authorize access="isAuthenticated()">
 			<li>
-			    권한 : <sec:authentication property="authorities"/>, 아이디 : <sec:authentication property="principal.username"/>
 				<button class="" type="button" onclick="document.memberLogoutFrm.submit();">로그아웃</button>
 			</li>
 			</sec:authorize>
 			<li class="community_li">
 			        <a href="<%= request.getContextPath() %>/community/community.do">펫스토리</a>
+			</li>
+			<li class="community_li">
+			        <a href="<%= request.getContextPath() %>/review/reviewCreate.do">리뷰작성</a>
 			</li>
         </ul>
         <div class="logo_top_wrap">

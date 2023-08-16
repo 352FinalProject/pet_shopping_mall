@@ -87,11 +87,9 @@ public class QuestionController {
 	    model.addAttribute("answers", answers);
 	    
 	    // 이미지 파일 정보 조회
-	    
 	    QuestionDetails questionDetails = questionService.findImageAttachmentsByQuestionId(questionId);
 	    log.debug("questionDetails = {}", questionDetails);
-	    log.debug("Attachments = {}", questionDetails.getAttachments());
-	    model.addAttribute("attachments", questionDetails.getAttachments());
+	    model.addAttribute("questionDetails", questionDetails);
 }
 	
 	// 1:1 문의 작성 연결 + 조회 (예라)
