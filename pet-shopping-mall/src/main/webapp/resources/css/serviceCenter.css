@@ -507,3 +507,10 @@
 	border-top-right-radius: .2rem;
 	border-bottom-right-radius: .2rem
 }
+
+/* 사진첨부 css */
+.detail-upload {
+	font-size: 13px;
+	text-align: left;
+	margin-left: 40px;
+}

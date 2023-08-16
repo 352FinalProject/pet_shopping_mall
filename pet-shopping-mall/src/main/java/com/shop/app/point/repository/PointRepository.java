@@ -15,8 +15,8 @@ public interface PointRepository {
 	@Select("select * from point order by point_id desc")
 	List<Point> findPointAll(Point point);
 
-	// 회원가입 포인트 저장 (예라)
+	// 회원가입, 리뷰 포인트 적립 (예라)
 	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
-	   int givePointsForSignUp(Point point);
+	int givePointsForSignUp(Point point);
 
 }
