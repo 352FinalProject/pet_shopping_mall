@@ -62,11 +62,13 @@ public class PetController {
 	    return "redirect:/member/petList.do";
 	    }
 	 
-		@GetMapping("/petDetail.do")
-		public void petDetail() {}
-		
-	 
-	 
+//	 @GetMapping("/member/petDetail.do")
+//	 public String petDetail(@RequestParam int petId, Model model) {
+//	     int pet = petService.findPetById(petId);
+//	     model.addAttribute("pet", pet);
+//	     return "redirect:/member/petDetail.do"; // 디렉토리 구조에 맞게 경로를 조정해야 합니다.
+//	 }
+//	 
 	 
 }
 //	@PostMapping("/petUpdate")

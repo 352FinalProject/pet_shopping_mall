@@ -21,7 +21,9 @@ public interface PetService {
 
 	int petDelete(int petId);
 
- 
+//	int petDetail(int petId);
+//	
+//	
 
 }
 

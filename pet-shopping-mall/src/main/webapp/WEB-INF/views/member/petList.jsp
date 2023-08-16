@@ -53,18 +53,19 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${pets}" var="pet" varStatus="vs">
-							<tr class="pet-row">
-								<td>${vs.index + 1}</td>
-								<td>${pet.petKind}</td>
-								<td>${pet.petBreed}</td>
-								<td>${pet.petGender == 'M' ? '수컷' : '암컷'}</td>
-								<td>${pet.petDofB}</td>
-								<td><a href="${pageContext.request.contextPath}/pet/detail/${pet.petId}">${pet.petName}</a></td>
-								<td><a href="${pageContext.request.contextPath}/pet/updateForm.do?petId=${pet.petId}"> 수정 </a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
+    <c:forEach items="${pets}" var="pet" varStatus="vs">
+        <tr class="pet-row">
+            <td>${vs.index + 1}</td>
+            <td>${pet.petKind}</td>
+            <td>${pet.petBreed}</td>
+            <td>${pet.petGender == 'M' ? '수컷' : '암컷'}</td>
+            <td>${pet.petDofB}</td>
+            <td><a href="${pageContext.request.contextPath}/member/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
+            <td><a href="${pageContext.request.contextPath}/pet/updateForm.do?petId=${pet.petId}"> 수정 </a></td>
+        </tr>
+    </c:forEach>
+</tbody>
+<!-- ... 이후 코드 ... 
 				</table>
 			</div>
 		</div>

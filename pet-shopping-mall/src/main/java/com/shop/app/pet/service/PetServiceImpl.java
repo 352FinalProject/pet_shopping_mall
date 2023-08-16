@@ -42,6 +42,11 @@ public class PetServiceImpl implements PetService {
     public int petDelete(int petId) {
         return petRepository.petDelete(petId);
     }
+    
+//    @Override
+//    public int petDetail(int petId) {
+//        return petRepository.petDetail(petId); 
+//    }
 }
 
 
