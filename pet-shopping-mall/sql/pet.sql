@@ -134,15 +134,17 @@ create table question(
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade question_member_id varchar2(20) not null
 );
 
--- qna 답변 테이블
-create table answer(
-   answer_id number,
-   answer_admin_name varchar2(20) default '관리자',
-   answer_question_id number not null,
-   answer_content varchar2(4000) not null,
-   answer_created_at timestamp default sysdate,
-   constraints pk_answer_id primary key(answer_id),
-   constraints fk_answer_question_id foreign key (answer_question_id) references question(question_id) on delete cascade
+-- qna 질문 테이블
+create table question(
+    question_id number,
+    question_member_id varchar2(20) not null,
+    question_category varchar2(50) not null,
+    question_email varchar2(200),
+    question_title varchar2(500) not null,
+    question_content varchar2(4000) not null,
+    question_created_at timestamp default systimestamp,
+    constraints pk_question_id primary key(question_id),
+    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
 
 -- 이미지 파일 테이블
