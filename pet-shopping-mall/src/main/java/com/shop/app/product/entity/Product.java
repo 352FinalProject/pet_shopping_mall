@@ -16,11 +16,11 @@ import lombok.NoArgsConstructor;
 public class Product {
 	@NotNull
 	private int productId;
-	@NotNull
+	@NotNull(message = "상품카테고리는 필수입력입니다.")
 	private ProductCategory productCategory;
-	@NotNull
+	@NotNull(message = "상품명은 필수입력입니다.")
 	private String ProductName;
-	@NotNull
+	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
 	
 	private Timestamp expireDate;
