@@ -21,11 +21,10 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 
---drop table member;
---drop table question;
---drop table answer;
 --drop table image_attachment;
 --drop table image_attachment_mapping;
+--drop table answer;
+--drop table question;
 --drop table point;
 --drop table product_category;
 --drop table product;
@@ -43,9 +42,8 @@ SELECT *  FROM all_tables;
 --drop table pet;
 --drop table persistent_logins;
 --drop table image_attachment_mapping;
+--drop table member;
 --
---
---drop sequence seq_member_id;
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
@@ -65,6 +63,7 @@ SELECT *  FROM all_tables;
 --drop sequence seq_wishlist_id;
 --drop sequence seq_pet_id;
 --drop sequence seq_persistent_logins_id;
+--drop sequence seq_member_id;
 
 --==============================
 -- 테이블 생성
@@ -88,7 +87,7 @@ create table member (
 -- 권한 테이블
 create table authority(
     member_id varchar2(20),
-    auth varchar2(50),
+    auth varchar2(50) default 'ROLE_USER',
     constraints pk_authority primary key(member_id, auth),
     constraints fk_authority_member_id foreign key(member_id)
                 references member(member_id)
@@ -110,16 +109,6 @@ create table pet (
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
 
--- 찜한 목록 테이블
-create table wishlist(
-    wishlist_id number,
-    wishlist_member_id varchar2(20),
-    wishlist_product_id number,
-    wishlist_created_at timestamp default sysdate,
-    constraints pk_wishlist_id primary key(wishlist_id),
-    constraints fk_wishlist_member_id foreign key(wishlist_member_id) references member(member_id) on delete cascade,
-    constraints fk_wishlist_product_id foreign key(wishlist_product_id) references product(product_id) on delete cascade
-);
 
 -- qna 질문 테이블
 create table question(
@@ -131,7 +120,7 @@ create table question(
     question_content varchar2(4000) not null,
     question_created_at timestamp default systimestamp,
     constraints pk_question_id primary key(question_id),
-    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade question_member_id varchar2(20) not null,
+    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
 
 -- qna 답변 테이블
@@ -175,7 +164,6 @@ create table point (
     point_type varchar2(100) not null,
     point_amount number not null,
     point_date timestamp default systimestamp,
-
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
@@ -252,16 +240,6 @@ create table persistent_logins (
     last_used timestamp not null
 );
 
--- 주문상세 테이블
-create table order_detail (
-    order_id number,
-    product_detail_id number,
-    quantity number default 1 not null,
-    constraint pk_order_detail primary key (order_id, product_detail_id),
-    constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
-    constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
-);
-
 -- 상품상세 테이블
 create table product_detail (
     product_detail_id number, -- pk
@@ -273,6 +251,27 @@ create table product_detail (
     sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id)
+);
+
+-- 주문상세 테이블
+create table order_detail (
+    order_id number,
+    product_detail_id number,
+    quantity number default 1 not null,
+    constraint pk_order_detail primary key (order_id, product_detail_id),
+    constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
+    constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
+);
+
+-- 찜한 목록 테이블
+create table wishlist(
+    wishlist_id number,
+    wishlist_member_id varchar2(20),
+    wishlist_product_id number,
+    wishlist_created_at timestamp default sysdate,
+    constraints pk_wishlist_id primary key(wishlist_id),
+    constraints fk_wishlist_member_id foreign key(wishlist_member_id) references member(member_id) on delete cascade,
+    constraints fk_wishlist_product_id foreign key(wishlist_product_id) references product(product_id) on delete cascade
 );
 
 -- 리뷰테이블
@@ -354,7 +353,7 @@ create table cartitem (
     product_detail_id number not null,
     quantity number default 1 not null,
     constraint pk_cartitem_id primary key(cartitem_id),
-    constraint fk_cartitem_cart_id foreign key(cart_id) references cart(cart_id)
+    constraint fk_cartitem_cart_id foreign key(cart_id) references cart (cart_id)
 );
 
 
