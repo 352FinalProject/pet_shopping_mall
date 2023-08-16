@@ -34,6 +34,8 @@ import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
+import com.shop.app.terms.entity.Terms;
+import com.shop.app.terms.service.TermsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,6 +53,9 @@ public class MemberSecurityController {
 	
 	@Autowired
 	private PointService pointService; // 회원가입시 포인트 3000원 적립 
+	
+	@Autowired
+	private TermsService termsService; // 회원가입시 약관동의
 	
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
@@ -93,6 +98,13 @@ public class MemberSecurityController {
 		point.setPointAmount(3000);
 		
 		int resultPoint = pointService.givePointsForSignUp(point);
+		
+		Terms terms = new Terms();
+		terms.setMemberId(member.getMemberId());
+		terms.setAcceptDate(null);
+		terms.setAccept(null);
+		
+		int resultTerms = termsService.insertTerms(terms);
 		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/";
