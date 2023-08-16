@@ -131,7 +131,7 @@ create table question(
     question_content varchar2(4000) not null,
     question_created_at timestamp default sysdate,
     constraints pk_question_id primary key(question_id),
-    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade question_member_id varchar2(20) not null,
+    constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade question_member_id varchar2(20) not null
 );
 
 -- qna 답변 테이블
@@ -179,8 +179,6 @@ create table point (
     constraint pk_point_id primary key (point_id),
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
-
-
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
@@ -204,15 +202,18 @@ create table product (
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
--- 상품재고테이블
---create table product (
---    product
---	`product_code`	varchar2(100)	NOT NULL,
---	`option_id`	number	NOT NULL,
---	`stock`	number	NOT NULL	DEFAULT 0,
---	`sale_state`	number	NOT NULL	COMMENT '0: 판매대기
---);
-
+-- 상품상세 테이블
+create table product_detail (
+    product_detail_id number, -- pk
+	product_id number, -- fk
+    option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
+    option_value varchar2(200), -- 옵션속성
+    additional_price number, -- 옵션에 따른 추가금
+    stock number default 0,
+    sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
+    constraints pk_product_detail_id primary key(product_detail_id),
+    constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
+);
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
@@ -367,6 +368,7 @@ create sequence seq_image_attachment_mapping_id;
 create sequence seq_point_id;
 create sequence seq_pet_id;
 create sequence seq_wishlist_id;
+create sequence seq_product_category_id;
 create sequence seq_product_id;
 create sequence seq_product_detail_id;
 create sequence seq_review_id;
