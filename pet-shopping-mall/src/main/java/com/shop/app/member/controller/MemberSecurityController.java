@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -104,7 +105,7 @@ public class MemberSecurityController {
 	// 로그아웃처리하는 요청 작성 X
 	
 	// 멤버 상세 조회
-	@GetMapping("/memberDetail.do")
+	@GetMapping("/myPage.do")
 	public void memberDetail(
 			Authentication authentication, 
 			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
@@ -134,6 +135,13 @@ public class MemberSecurityController {
 		Member member = _member.toMember();
 		String memberId = principal.getMemberId();
 		member.setMemberId(memberId);
+		
+		 // 새로운 비밀번호가 입력되었을 경우 암호화 처리
+	    if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
+	        String rawPassword = _member.getPassword();
+	        String encodedPassword = passwordEncoder.encode(rawPassword);
+	        member.setPassword(encodedPassword);
+	    }
 		// 1. db수정요청
 		int result = memberService.updateMember(member);
 		
@@ -148,30 +156,17 @@ public class MemberSecurityController {
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		
 		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
-		return "redirect:/member/memberDetail.do";
+		return "redirect:/member/myPage.do";
 	}
 	
-	/**
-	 * jsckson의존을 통해 json문자열로 자동변환후 응답메세지 출력
-	 * 
-	 * @param memberId
-	 * @return
-	 */
+	@DeleteMapping("/deleteMember.do")
+	public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr) {
+	    String memberId = principal.getMemberId(); // 현재 로그인한 회원의 ID를 가져옵니다.
+	    memberService.deleteMember(memberId);  // 회원 삭제 서비스 호출
+	    redirectAttr.addFlashAttribute("msg", "회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다.");
+	    return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
+	}
 
-	
-	/**
-	 * ReponseEntity를 반환
-	 * - @ResponseBody 기능 포함. 
-	 * - Generic을 통해 응답객체의 타입제어
-	 * 
-	 * - status code
-	 * - header
-	 * - body
-	 * 
-	 * 
-	 * @param memberId
-	 * @return
-	 */
 	
 	// 중복 ID 검사
 	public ResponseEntity<?> checkIdDuplicate(@RequestParam String memberId) {
@@ -198,9 +193,6 @@ public class MemberSecurityController {
 	
 	@GetMapping("/myReview.do")
 	public void myReview() {}
-	
-	@GetMapping("/myPage.do")
-	public void myPage() {}
 	
 	@GetMapping("/myWishlist.do")
 	public void myWishlist() {}

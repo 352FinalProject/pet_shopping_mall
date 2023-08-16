@@ -9,7 +9,7 @@
 		<version>2.7.14</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sh</groupId>
+	<groupId>com.shop</groupId>
 	<artifactId>hello-springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hello-springboot</name>
@@ -18,7 +18,11 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-	<dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -87,36 +91,36 @@
 			<!-- scope: compile(기본값)/runtime/provided(컴파일때 사용, 런타임때 사용안함) -->
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-		
-		<!--  이메일 인증 api -->
-			<dependency>
-			    <groupId>com.sun.mail</groupId>
-			    <artifactId>javax.mail</artifactId>
-			    <version>1.6.2</version>
-			</dependency>
-			
-			<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
-			<dependency>
-			    <groupId>javax.mail</groupId>
-			    <artifactId>javax.mail-api</artifactId>
-			    <version>1.6.2</version>
-			</dependency>
-		    
-			<dependency>
-				<groupId>com.github.iamport</groupId>
-				<artifactId>iamport-rest-client-java</artifactId>
-				<version>0.2.22</version>
-			</dependency>
-			
-		</dependencies>
-		
+
+		<!-- 이메일 인증 api -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.iamport</groupId>
+			<artifactId>iamport-rest-client-java</artifactId>
+			<version>0.2.22</version>
+		</dependency>
+
+	</dependencies>
+
 	<repositories>
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
-	
+
 	<build>
 		<plugins>
 			<plugin>

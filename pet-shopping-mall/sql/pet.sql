@@ -76,12 +76,13 @@ create table member (
     password varchar2(300) not null,
     name varchar2(50) not null,
     phone varchar2(11) not null,
-    email varchar2(200),
+    email varchar2(200) unique,
     enroll_date timestamp default sysdate,
     address varchar2(500),
     birthday timestamp,
     subscribe char(1) default 'N' not null,
-    constraints pk_member_id primary key(member_id)
+    constraints pk_member_id primary key(member_id),
+    constraints  chk_subscribe CHECK (subscribe IN ('Y', 'N'))
 );
 
 
@@ -528,5 +529,5 @@ update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
 
-
+select * from member;
 select * from review where review_member_id = 'member1';

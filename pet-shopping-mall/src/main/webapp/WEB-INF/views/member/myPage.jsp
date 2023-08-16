@@ -120,7 +120,7 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td><input type="text" name="memberId" id="memberId"
-							value="${loginMember.memberId}" readonly required /></td>
+							value="${loginMember.memberId}"  required /></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
@@ -188,11 +188,6 @@ button, input {
 							<input type="submit" value="수정하기"></td>
 					</tr>
 				</table>
-				<form action="/member/deleteMember.do" method="post"
-					onsubmit="return confirm('정말로 회원 탈퇴를 진행하시겠습니까?');">
-					<button type="submit">회원 탈퇴</button>
-				</form>
-
 			</form:form>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

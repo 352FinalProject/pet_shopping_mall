@@ -8,13 +8,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public class MemberDetails extends Member implements UserDetails { //OAuth2User 클래스 추가해야함
+public class MemberDetails extends Member implements UserDetails, OAuth2User  { //OAuth2User 클래스 추가해야함
 	
 	/**
 	 * WAS상에서 MemberDetails객체 단위로 입출력 진행시의 식별번호
