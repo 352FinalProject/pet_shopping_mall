@@ -3,6 +3,7 @@ package com.shop.app.point.service;
 import java.util.List;
 
 import com.shop.app.point.entity.Point;
+import com.shop.app.review.entity.ReviewDetails;
 
 public interface PointService {
 
@@ -13,10 +14,10 @@ public interface PointService {
 	int insertPoint(Point point);
 
 	// 리뷰 쓴 사용자 포인트 적립을 위해 아이디 조회 (예라)
-	Point findReviewPointMemberById(String reviewMemberId);
+	Point findReviewPointMemberById(ReviewDetails reviews);
 	
 	// 리뷰 포인트 적립 (예라)
-	int updatePoint(Point points);
+	int updatePoint(Point point);
 
 	
 }

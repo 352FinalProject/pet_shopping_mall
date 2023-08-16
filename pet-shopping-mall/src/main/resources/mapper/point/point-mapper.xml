@@ -5,13 +5,13 @@
 <mapper namespace="com.shop.app.point.repository.PointRepository">
 	
 	<!-- 리뷰 작성 업데이트문 -->
-    <update id="updatePoint">
+<!--     <update id="updatePoint">
         UPDATE point
         SET point_current = point_current + #{pointAmount},
             point_amount = #{pointAmount},
             point_type = '리뷰적립',
             point_date = SYSTIMESTAMP
         WHERE point_member_id = #{pointMemberId}
-    </update>
+    </update> -->
     
 </mapper>

@@ -395,3 +395,5 @@ begin
     insert into cart(cart_id, member_id) values(seq_cart_id.nextval, :NEW.member_id);
 end;
 /
+
+select * from (select * from review where review_member_id = 'member1' order by review_created_at desc) where rownum <= 1;

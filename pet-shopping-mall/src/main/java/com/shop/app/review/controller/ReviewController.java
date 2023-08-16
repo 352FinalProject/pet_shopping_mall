@@ -119,7 +119,10 @@ public class ReviewController {
 		int result = reviewService.insertReview(reviews);
 		
 		// 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
-		Point currentPoints = pointService.findReviewPointMemberById(_review.getReviewMemberId()); 
+		Point currentPoints = pointService.findReviewPointMemberById(reviews); 
+		
+		log.debug("ReviewDetails reviewMemberId = {}", reviews.getReviewMemberId());
+		log.debug("currentPoints = {}", currentPoints);
 		
 		// 4. 리뷰 작성하면 현재 포인트에 추가로 포인트 적립 (텍스트 500원, 이미지 1000원)
 		int pointAmount = 500;
@@ -131,8 +134,10 @@ public class ReviewController {
 		updatedPoint.setPointAmount(currentPoints.getPointCurrent() + pointAmount); // 현재 포인트와 새로운 포인트 합치기
 		updatedPoint.setPointMemberId(_review.getReviewMemberId());
 		updatedPoint.setPointType("리뷰적립");
-
+		
 		int pointResult = pointService.updatePoint(updatedPoint); // 수정된 포인트로 업데이트
+		
+		log.debug("pointResult = {} ", pointResult);
 		
 		return "redirect:/review/reviewCreate.do";
 	}
