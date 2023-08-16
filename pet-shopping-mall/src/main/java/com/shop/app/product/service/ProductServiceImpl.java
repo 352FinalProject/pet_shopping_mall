@@ -1,10 +1,13 @@
 package com.shop.app.product.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.product.entity.Product;
+import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +21,14 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository productRepository;
 
 	@Override
+	public List<ProductCategory> findAll() {
+		return productRepository.findAll();
+	}
+
+	@Override
 	public int insertProduct(Product product) {
 		return productRepository.insertProduct(product);
 	}
+
 
 }

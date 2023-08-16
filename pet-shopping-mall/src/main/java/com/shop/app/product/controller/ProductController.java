@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.shop.app.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Validated
 @RequestMapping("/product")
 @Controller
 public class ProductController {
@@ -36,19 +38,26 @@ public class ProductController {
 		
 	}
 	
-	@PostMapping("/product/addProduct.do")
-	public ResponseEntity<?> addProduct(
+	@GetMapping("/addProduct.do")
+	public void addProduct() {
+		
+	}
+	
+	@PostMapping("/addProduct.do")
+	public String addProduct(
 			@Valid ProductCreateDto _product,
 			BindingResult bindingResult,
 			@AuthenticationPrincipal MemberDetails member,
 			Model model){
+		log.debug("ProductCreateDto = {}", _product);
+		
 		Product product = _product.toProduct();
+		log.debug("product = {}", product);
 		
 		int result = productService.insertProduct(product);
 		
 		
-		
-		return null;
+		return "redirect:/admin/adminProductList.do";
 	}
 
 	

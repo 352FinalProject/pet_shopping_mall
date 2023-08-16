@@ -21,16 +21,22 @@
 						<table>
 						<tr>
 							<th>상품 카테고리</th>
-								<td class="productCategory"><select name="productCategory">
+								<td class="productCategory"><select name="categoryId" id="categoryId">
 										<option value="-선택-">-선택-</option>
-										<option value="사료">사료</option>
-										<option value="간식"">간식</option>
-										<option value="패션용품">패션용품</option>
-										<option value="산책용품">산책용품</option>
-										<option value="산책용품">산책용품</option>
-										<option value="위생용품">위생용품</option>
-										<option value="고양이">고양이</option>
-										<option value="기타용품">기타용품</option>
+										<c:if test="${empty categories}">
+											<option value="1">사료**</option>
+											<option value="2"">간식**</option>
+											<option value="3">패션용품**</option>
+											<option value="4">산책용품**</option>
+											<option value="5">위생용품**</option>
+											<option value="6">고양이**</option>
+											<option value="7">기타용품**</option>
+										</c:if>
+										<c:if test="${not empty categories}">
+											<c:forEach items="${categories}" var="category" varStatus="vs">
+												<option value="${category.categoryId}">${category.categoryName}</option>
+											</c:forEach>
+										</c:if>
 									</select></td>
 							</tr>
 							<tr>
@@ -46,7 +52,12 @@
 							<tr>
 								<th>썸네일(대표) 사진</th>
 								<td><label for="file">
-								</label> <input type="file" name="upFile" id="file"></td>
+								</label> <input type="file" name="upFile" id="file1"></td>
+							</tr>
+							<tr>
+								<th>제품 사진</th>
+								<td><label for="file">
+								</label> <input type="file" name="upFile" id="file2"></td>
 							</tr>
 						</table>
 					</div>
@@ -60,7 +71,7 @@
 		</div>
 </section>
 <script>
-document.querySelectorAll("[name=file]").forEach((input) => {
+document.querySelectorAll("[name=upFile]").forEach((input) => {
 	input.onchange = (e) => {
 		const label = e.target.previousElementSibling;
 		const files = e.target.files;

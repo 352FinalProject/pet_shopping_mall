@@ -15,12 +15,16 @@ public class ProductCreateDto {
 	private String ProductName;
 	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
+	private int thumbnailImg;
+	private int productImg;
 	
 	public Product toProduct() {
 		return Product.builder()
 				.productCategory(productCategory)
 				.ProductName(ProductName)
 				.productPrice(productPrice)
+				.thumbnailImg(thumbnailImg)
+				.productImg(productImg)
 				.build();
 	}
 }
