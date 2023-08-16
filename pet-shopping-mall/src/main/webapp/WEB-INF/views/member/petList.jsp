@@ -60,9 +60,8 @@
 								<td>${pet.petBreed}</td>
 								<td>${pet.petGender == 'M' ? '수컷' : '암컷'}</td>
 								<td>${pet.petDofB}</td>
-								<td>${pet.petName}</td>
-								<td><a
-									href="${pageContext.request.contextPath}/pet/updateForm.do?petId=${pet.petId}"> 수정 </a></td>
+								<td><a href="${pageContext.request.contextPath}/pet/detail/${pet.petId}">${pet.petName}</a></td>
+								<td><a href="${pageContext.request.contextPath}/pet/updateForm.do?petId=${pet.petId}"> 수정 </a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

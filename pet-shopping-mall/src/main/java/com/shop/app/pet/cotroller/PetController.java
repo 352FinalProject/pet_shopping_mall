@@ -56,11 +56,18 @@ public class PetController {
 		}
 	
 	
-	   @PostMapping("/petDelete.do")
-	   public String petDelete(@RequestParam int petId) {
-	       int result = petService.petDelete(petId);
-	       return "redirect:/member/petList.do";
-	   }
+	 @PostMapping("/petDelete.do")
+	 public String petDelete(@RequestParam int petId) {
+	    int result = petService.petDelete(petId);
+	    return "redirect:/member/petList.do";
+	    }
+	 
+		@GetMapping("/petDetail.do")
+		public void petDetail() {}
+		
+	 
+	 
+	 
 }
 //	@PostMapping("/petUpdate")
 //	public String petUpdate(@Valid PetUpdateDto pet, RedirectAttributes redirectAttributes) {
