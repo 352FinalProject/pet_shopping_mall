@@ -84,6 +84,7 @@ public class ReviewController {
 		// 1. 파일저장
 		List<imageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
+		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
