@@ -11,7 +11,6 @@
 <%-- 1:1 문의 상세 조회 (예라) --%>
 <section class="common-section" id="#">
 	<div class="common-title">1:1 문의 상세 내역</div>
-	<sec:authentication property="authorities" />
 	<div class="common-container">
 		<div class="common-div">
 			<div class="qna-create">
@@ -37,10 +36,12 @@
 								readonly></td>
 						</tr>
 						<tr>
-							<th>사진첨부</th>
-								<c:forEach items="${attachments}" var="attachment" varStatus="vs">
-									${attachment.imageOriginalFilename}
-								</c:forEach>
+						    <th>사진첨부</th>
+						    <td>
+						        <div class="detail-upload">
+						            ${questionDetails.attachments[0].imageOriginalFilename}
+						        </div>
+						    </td>
 						</tr>
 						<tr>
 							<th>제목</th>
@@ -76,41 +77,44 @@
 					</tr>
 				</table>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<!-- 댓글 기능 -->
-					<div class="anw-create-btn">
-						<!-- 댓글 삭제 -->
-						<button type="button" onclick="AnswerDelete();"
-							class="anw-btn-reset">댓글삭제</button>
-						<!-- 댓글 수정 -->
-						<button class="anw-btn-create" type="button"
-							onclick="showEditBox();">댓글수정</button>
+				<!-- 답변 1개 이상 달리면 댓글창 안 보이게 -->
+					<c:if test="${question.awnserCount >= 1}">
+				<!-- 댓글 기능 -->
+						<div class="anw-create-btn">
+				<!-- 댓글 삭제 -->
+							<button type="button" onclick="AnswerDelete();"
+								class="anw-btn-reset">댓글삭제</button>
+				<!-- 댓글 수정 -->
+							<button class="anw-btn-create" type="button"
+								onclick="showEditBox();">댓글수정</button>
+							<form:form
+								action="${pageContext.request.contextPath}/servicecenter/inquiry/answerUpdate.do?questionId=${questions.questionId}"
+								method="post">
+								<div class="hidden-textbox" style="display: none;">
+									<textarea id="editComment" name="answerContent"
+										style="position: absolute; border: 1px solid #c8c8c8; background: #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
+									<input type="hidden" name="questionId"
+										value="${questions.questionId}" /> <input type="hidden"
+										name="answerId" value="${answers.answerId}" />
+									<button onclick="submitEdit();" name="" class="editComment">수정하기</button>
+								</div>
+							</form:form>
+						</div>
+				<!-- 댓글 작성 -->
 						<form:form
-							action="${pageContext.request.contextPath}/servicecenter/inquiry/answerUpdate.do?questionId=${questions.questionId}"
+							action="${pageContext.request.contextPath}/servicecenter/inquiry/answerCreate.do"
 							method="post">
-							<div class="hidden-textbox" style="display: none;">
-								<textarea id="editComment" name="answerContent"
-									style="position: absolute; border: 1px solid #c8c8c8; background: #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
-								<input type="hidden" name="questionId"
-									value="${questions.questionId}" /> <input type="hidden"
-									name="answerId" value="${answers.answerId}" />
-								<button onclick="submitEdit();" name="" class="editComment">수정하기</button>
+							<td><textarea name="answerContent" id="answerContent"
+									style="height: 100px; resize: none;"></textarea></td>
+							<input type="hidden" name="questionId"
+								value="${questions.questionId}">
+							<input type="hidden" name="answerAdminName"
+								value="${answers.answerAdminName}">
+							<div class="anw-create2">
+								<button class="anw-btn-create2" type="submit">댓글작성</button>
 							</div>
 						</form:form>
-					</div>
-					<!-- 댓글 작성 -->
-					<form:form
-						action="${pageContext.request.contextPath}/servicecenter/inquiry/answerCreate.do"
-						method="post">
-						<td><textarea name="answerContent" id="answerContent"
-								style="height: 100px; resize: none;"></textarea></td>
-						<input type="hidden" name="questionId"
-							value="${questions.questionId}">
-						<input type="hidden" name="answerAdminName"
-							value="${answers.answerAdminName}">
-						<div class="anw-create2">
-							<button class="anw-btn-create2" type="submit">댓글작성</button>
-						</div>
-					</form:form>
+					</c:if>
 				</sec:authorize>
 			</div>
 		</div>

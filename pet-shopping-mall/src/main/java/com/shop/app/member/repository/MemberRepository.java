@@ -29,7 +29,6 @@ public interface MemberRepository {
 	@Delete("delete from member where member_id= #{memberId}")
 	int deleteMember(Member member);
 
-	@Select("SELECT * FROM member WHERE member_id = #{memberId}")
 	MemberDetails loadUserByUsername(String username);
 
 }

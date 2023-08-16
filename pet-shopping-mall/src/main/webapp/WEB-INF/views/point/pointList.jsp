@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp"></jsp:include>
 <%-- 1:1 문의 내역 (예라) --%>
@@ -24,18 +25,21 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${points}" var="point" varStatus="vs">
-							<tr class="question-row">
-								<td>${point.pointId}</td>
-								<td>${point.pointType}</td>
-								<td>${point.pointAmount}</td>
-								<td>${point.pointCurrent}</td>
-								<td class="qna-date">
-									<input type="hidden" name="pointDate" value="${point.pointDate}" />
-									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${point.pointDate}">
-									<fmt:parseDate value="${point.pointDate}" pattern="yyyy-MM-dd'T'HH:mm" var="pointDate" />
-									<fmt:formatDate value="${pointDate}" pattern="yy/MM/dd" /></a>
-								</td>
-							</tr>
+							<sec:authentication var="currentUsername" property="principal.username"/>
+								<c:if test="${point.pointMemberId == currentUsername}">
+									<tr class="question-row">
+										<td>${point.pointId}</td>
+										<td>${point.pointType}</td>
+										<td>${point.pointAmount}</td>
+										<td>${point.pointCurrent}</td>
+										<td class="qna-date">
+											<input type="hidden" name="pointDate" value="${point.pointDate}" />
+											<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${point.pointDate}">
+											<fmt:parseDate value="${point.pointDate}" pattern="yyyy-MM-dd'T'HH:mm" var="pointDate" />
+											<fmt:formatDate value="${pointDate}" pattern="yy/MM/dd" /></a>
+										</td>
+									</tr>
+								</c:if>
 						</c:forEach>
 					</tbody>
 				</table>
