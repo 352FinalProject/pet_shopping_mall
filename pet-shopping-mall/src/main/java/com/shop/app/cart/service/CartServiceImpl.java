@@ -14,6 +14,7 @@ import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.entity.CartItemDetails;
 import com.shop.app.cart.repository.CartRepository;
 import com.shop.app.member.entity.Member;
+import com.shop.app.product.dto.ProductPriceDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.repository.ProductRepository;
@@ -49,8 +50,8 @@ public class CartServiceImpl implements CartService {
 			productInfo.put(product, cartItemList.get(i).getQuantity());
 			
 			// 상품, 상품가격 가져와서 넣기~
-			// int price = productRepository.getPrice(product.getProductId());
-			
+			ProductPriceDto test = productRepository.getPrice(1);
+			log.debug("test = {}", test);
 			// priceInfo.put(productRepository.findProductDetailById(i), null);
 		}
 		

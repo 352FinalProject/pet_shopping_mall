@@ -19,4 +19,5 @@ import lombok.experimental.SuperBuilder;
 public class CartItemDetails extends CartItem {
 	// 상품 상세 / 상품 / 상품 이미지
 	//
+	int id;
 }

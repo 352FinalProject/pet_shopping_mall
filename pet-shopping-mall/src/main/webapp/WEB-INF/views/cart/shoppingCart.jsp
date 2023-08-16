@@ -74,14 +74,13 @@ font-size:24px;
 	                		<input type="checkbox" name="checkAll" id="checkAll">
 	                		<label for="checkAll">전체 선택</label>
 	                	</div>
-	                	
 	                	<c:forEach items="cart" var="product">
 	                	<div class="cart-product-info">
 	                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
 	                		<div>
 	                			<div>
 	                				<input type="checkbox" name="products">
-	                				<label>리드줄 목줄 소형견 리드줄</label>
+	                				<label>${product} ${cart}</label>
 	                			</div>
 	                			<div>
 	                				<div id="cart-option">
