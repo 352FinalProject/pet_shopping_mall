@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Product {
 	@NotNull
-	private int product_id;
+	private int productId;
 	@NotNull
 	private ProductCategory productCategory;
 	@NotNull
