@@ -1,11 +1,11 @@
 package com.shop.app.cart.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.entity.CartItem;
 
 @Mapper
@@ -16,5 +16,7 @@ public interface CartRepository {
 
 	@Select("select * from cart where member_id = #{memberId}")
 	int getMemberCart(String memberId);
+	
+	List<Map<String, Integer>> getPrice(int productId);
 
 }

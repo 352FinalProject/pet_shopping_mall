@@ -2,13 +2,15 @@ package com.shop.app.product.entity;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class ProductDetail {
-	@NotNull
 	private int productDetailId;
-	@NotNull
 	private int productId;
 	
 	private String option;

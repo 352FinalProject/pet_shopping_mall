@@ -39,24 +39,36 @@ public class CartServiceImpl implements CartService {
 		List<CartItem> cartItemList = cartRepository.getCartList(memberId);
 		log.debug("cartItem codeList = {}", cartItemList);
 		
-		// cartItem에 담긴 모든 product_detail_id를 가지고 product_detail 테이블을 조회해야 함
-		// Map<ProductDetail, 구매수량> 하면 될 것같음
-		// sql은 in으로 하면 될 듯
-		Map<ProductDetail, Integer> productInfo = new HashMap<>();
-		Map<Product, Integer> priceInfo = new HashMap<>();
-
+		// 걍 쪼인해서 가져오자 List로...
+		
+		List<CartInfoDto> cartInfoList = new ArrayList<>();
+		
+		
 		for(int i=0; i <cartItemList.size(); i++) {
-			ProductDetail product = productRepository.findProductDetailById(cartItemList.get(i).getProductDetailId());
-			productInfo.put(product, cartItemList.get(i).getQuantity());
+			// cartRepository.getProductList(cartItemList.get(i).getProductDetailId());
+
+			/*
+			 * 
+			 * select 
+    p.*,
+    pd.*
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+where 
+    ci.product_detail_id = 2;
+			 * 
+			 * 
+			 * 
+			 * */
 			
-			// 상품, 상품가격 가져와서 넣기~
-			ProductPriceDto test = productRepository.getPrice(1);
-			log.debug("test = {}", test);
-			// priceInfo.put(productRepository.findProductDetailById(i), null);
+			
+			//			product = productRepository.findProductDetailById(cartItemList.get(i).getProductDetailId());
+//			
+//			productInfo.put(product, cartItemList.get(i).getQuantity());
+////			priceList.add(map.of(cartRepository.getPrice(product.getProductId()));
+//			// 상품, 상품가격 가져와서 넣기~
 		}
-		
-		log.debug("productInfo = {}", productInfo);
-		
 
 		return null;
 	}

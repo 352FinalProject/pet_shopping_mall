@@ -30,7 +30,7 @@ public class CartController {
 	public void getCartList(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
 		CartInfoDto cart = cartService.getCartList(principal.getMemberId());
-		log.debug("cart = {}", cart);
+		
 		model.addAttribute("cart",cart);
 		
 	}

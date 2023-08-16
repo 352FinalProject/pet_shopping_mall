@@ -1,5 +1,8 @@
 package com.shop.app.product.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.validation.constraints.NotNull;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -15,9 +18,7 @@ public interface ProductRepository {
 	@Select("select * from product where product_code = #{productCode}")
 	Product findProductByCode(String productCode);
 
-	@Select("select* from product_detail where product_detail_id = #{productDetailId}")
+	@Select("select * from product_detail where product_detail_id = #{productDetailId}")
 	ProductDetail findProductDetailById(int productDetailId);
 
-	@Select("select product_name, product_price from product where product_ id in (#{productId})")
-	ProductPriceDto getPrice(int productId);
 }

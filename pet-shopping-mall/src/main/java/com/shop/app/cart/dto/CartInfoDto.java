@@ -16,6 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CartInfoDto{
-	Map<ProductDetail, Integer> productInfo;
-	Map<Product, Integer> priceInfo;
+	private int productDetailId; //product_detail
+	private String productName; // product
+	private String OptionName; // product_detail
+	private String OptionValue; // product_detail
+	private int totalPrice; // product.getProductPrice +  productDetail.additionalPrice
+	private int quantity; // cartitemId
+	
 }
