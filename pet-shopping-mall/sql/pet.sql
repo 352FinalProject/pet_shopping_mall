@@ -33,6 +33,7 @@ SELECT *  FROM all_tables;
 --drop table payment;
 --drop table cartitem;
 --drop table orderTbl;
+--drop table order_detail;
 --drop table refund;
 --drop table cancel_order;
 --drop table authority;
@@ -182,10 +183,10 @@ create table product (
     product_price number not null,
     thumbnail_img number, -- 썸네일 이미지(fk)
     product_img number, -- 제품상세 이미지(fk)
-    product_date timestamp default sysdate, -- 등록일
+    create_date timestamp default sysdate, -- 등록일
     expire_date timestamp default sysdate, -- 유통기한
-    like_cnt number, -- 좋아요수
-    view_cnt number, -- 조회수
+    like_cnt number default 0, -- 좋아요수
+    view_cnt number default 0, -- 조회수
     constraints pk_product_id primary key(product_id),
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
@@ -196,7 +197,7 @@ create table product_detail (
 	product_id number, -- fk
     option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
     option_value varchar2(200), -- 옵션속성
-    additional_price number, -- 옵션에 따른 추가금
+    additional_price number default 0, -- 옵션에 따른 추가금
     stock number default 0,
     sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
     constraints pk_product_detail_id primary key(product_detail_id),
@@ -240,20 +241,6 @@ create table persistent_logins (
     token varchar(64) not null, -- username, password, expiry time을 hasing한 값
     last_used timestamp not null
 );
-
--- 상품상세 테이블
-create table product_detail (
-    product_detail_id number, -- pk
-	product_id number, -- fk
-    option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
-    option_value varchar2(200), -- 옵션속성
-    additional_price number, -- 옵션에 따른 추가금
-    stock number default 0,
-    sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
-    constraints pk_product_detail_id primary key(product_detail_id),
-    constraints fk_product_id foreign key(product_id) references product(product_id)
-);
-
 -- 주문상세 테이블
 create table order_detail (
     order_id number,
