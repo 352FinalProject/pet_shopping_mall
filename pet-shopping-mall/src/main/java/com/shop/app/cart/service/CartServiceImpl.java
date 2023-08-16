@@ -32,24 +32,25 @@ public class CartServiceImpl implements CartService {
 	
 	@Override
 	public CartItemDetails getCartList(String memberId) {
+		// 1. 멤버 아이디로 카트(cart) 조회 (쿼리문 쪼인처리하면 될듯)
 		List<CartItem> cartItemList = cartRepository.getCartList(memberId);
 		log.debug("cartItem codeList = {}", cartItemList);
-		// cartItem에 담긴 모든 product_code를 가지고
-		// product 테이블을 조회해야 함
-		Product product = null;
+		
+		// cartItem에 담긴 모든 product_detail_id를 가지고 product_detail 테이블을 조회해야 함
+		// Map<ProductDetail, 구매수량> 하면 될 것같음
 		
 		CartItemDetails cartItemDetails = 
 				CartItemDetails.builder()
 				.cartList(new HashMap<>())
 				.build();
 		
-		for(CartItem item : cartItemList) {
-			product = productRepository.findProductByCode(item.getProductCode());
-			// cartItemDetails에 있는 Map에 Product 세팅 / 구매수량 세팅
-			log.debug("product = {}", product);
-			cartItemDetails.getCartList().put(product, item.getQuantity());
-			log.debug("cartItemDetails = {}", cartItemDetails);
-		}
+//		for(CartItem item : cartItemList) {
+//			product = productRepository.findProductByCode(item.getProductCode());
+//			// cartItemDetails에 있는 Map에 Product 세팅 / 구매수량 세팅
+//			log.debug("product = {}", product);
+//			cartItemDetails.getCartList().put(product, item.getQuantity());
+//			log.debug("cartItemDetails = {}", cartItemDetails);
+//		}
 		return cartItemDetails;
 	}
 
