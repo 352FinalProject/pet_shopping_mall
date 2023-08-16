@@ -160,7 +160,6 @@ public class AdminController {
 	
 	/**
 	 *  전체회원 이름,아이디 검색
-	 *  ************페이지 바 손봐야 한다 쌤한테 물어봐서 하기(하다만거)*****************
 	 * @param searchKeyword
 	 * @param model
 	 * @return
@@ -185,7 +184,6 @@ public class AdminController {
 	
 	/**
 	 *  구독자 이름,아이디 검색
-	 *  ************페이지 바 손봐야 한다 쌤한테 물어봐서 하기(하다만거)*****************
 	 * @param searchKeyword
 	 * @param page
 	 * @param model

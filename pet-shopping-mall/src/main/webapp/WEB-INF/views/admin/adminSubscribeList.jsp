@@ -36,10 +36,13 @@ table {
     </form:form>
 </div>
 
+<div>
+	<h3>현재 구독자수 : ${totalCount}명 </h3>
+</div>
+
 <table class="table table-striped table-hover">
     <thead class="table-dark">
         <tr>
-            <th>no</th>
             <th>회원아이디</th>
             <th>이름</th>
             <th>전화번호</th>
@@ -59,7 +62,6 @@ table {
         <c:if test="${not empty members}">
             <c:forEach items="${members}" var="member" varStatus="vs">
 				<tr>
-				    <td>${totalCount - vs.index}</td>
 				    <td>${member.memberId}</td>
 				    <td>${member.name}</td>
 				    <td>${member.phone}</td>

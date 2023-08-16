@@ -20,6 +20,31 @@ table {
 	margin: 30px auto;
 }
 </style>
+
+<script>
+$(document).ready(function() {
+    totalMemberCnt(); 
+});
+
+const totalMemberCnt = () => {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/admin/adminMemberList",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            if (response.totalCount) {
+                $("#totalCount").text("Current number of members: " + response.totalCount);
+            } else {
+                $("#totalCount").text("Error fetching member count.");
+            }
+        },
+        error: function() {
+            $("#totalCount").text("Error fetching member count.");
+        }
+    });
+}
+</script>
+
 <section>
 	<div class="admin-member-search-container">
 		<form:form name="adminMemberSearchFrm"
@@ -36,11 +61,14 @@ table {
 			<div id="searchResults"></div>
 		</form:form>
 	</div>
-
+	
+	<div>
+		<h3 id='totalCount'>현재 회원수 : ${totalCount}명 </h3>
+	</div>
+	
 	<table class="table table-striped table-hover">
 		<thead class="table-dark">
 			<tr>
-				<th>no</th>
 				<th>회원아이디</th>
 				<th>이름</th>
 				<th>전화번호</th>
@@ -61,7 +89,6 @@ table {
 			<c:if test="${members != null}">
 				<c:forEach items="${members}" var="member" varStatus="vs">
 					<tr>
-						<td>${totalCount - vs.index}</td>
 						<td>${member.memberId}</td>
 						<td>${member.name}</td>
 						<td>${member.phone}</td>
