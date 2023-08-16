@@ -6,71 +6,58 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-<%-- 1:1 문의 작성 (예라) --%>
+<%-- 상품등록폼 (수경) --%>
 <section class="common-section" id="#">
-	<div class="common-title">1:1 문의 작성</div>
+	<div class="common-title">상품 등록</div>
 	<div class="common-container">
 		<div class="common-div">
-			<form:form action="${pageContext.request.contextPath}/admin/addProduct.do" 
-			enctype="multipart/form-data" method="post">
+			<form:form 
+				action="${pageContext.request.contextPath}/product/addProduct.do" 
+				enctype="multipart/form-data" 
+				method="post">
+				
 				<div class="qna-create">
 					<div class="input-container">
 						<table>
 						<tr>
-								<th>분류</th>
-								<td class="questionCategory"><select name="questionCategory">
+							<th>상품 카테고리</th>
+								<td class="productCategory"><select name="productCategory">
 										<option value="-선택-">-선택-</option>
-										<option value="상품">상품</option>
-										<option value="배송"">배송</option>
-										<option value="주문">주문</option>
-										<option value="교환">교환</option>
-										<option value="취소">취소</option>
-										<option value="기타">기타</option>
+										<option value="사료">사료</option>
+										<option value="간식"">간식</option>
+										<option value="패션용품">패션용품</option>
+										<option value="산책용품">산책용품</option>
+										<option value="산책용품">산책용품</option>
+										<option value="위생용품">위생용품</option>
+										<option value="고양이">고양이</option>
+										<option value="기타용품">기타용품</option>
 									</select></td>
 							</tr>
 							<tr>
-								<th>아이디</th>
-								<td><input type="text" name="questionMemberId" id="questionMemberId"
+								<th>상품명</th>
+								<td><input type="text" name="ProductName" id="ProductName"
 									value="" required /></td>
 							</tr>
 							<tr>
-								<th>이메일</th>
-								<td><input type="email" name="questionEmail" id="questionEmail"
+								<th>상품금액</th>
+								<td><input type="number" name="productPrice" id="productPrice"
 									required></td>
 							</tr>
 							<tr>
-								<th>사진첨부</th>
+								<th>썸네일(대표) 사진</th>
 								<td><label for="file">
 								</label> <input type="file" name="upFile" id="file"></td>
-							</tr>
-							<tr>
-								<th>제목</th>
-								<td><input type="text" name="questionTitle" id="questionTitle"
-									required></td>
 							</tr>
 						</table>
 					</div>
 				</div>
-			    <!-- 내용 섹션 -->
-			    <div class="content-container">
-			        <div class="qna-create2">
-			            <table>
-			                <tr>
-			                    <th></th>
-			                    <td>
-			                        <textarea name="questionContent" rows="4" cols="50" placeholder="상세 내용 (필수)" required></textarea>
-			                    </td>
-			                </tr>
-			            </table>
-			        </div>
-			    </div>
 			    <div class="qna-create-btn">
 			        <button class="qna-btn-reset" type="reset">초기화</button>
-			        <button class="qna-btn-create" type="submit">작성하기</button>
+			        <button class="qna-btn-create" type="submit">상품등록</button>
 			    </div>
+			</form:form>
 		    </div>
 		</div>
-	</form:form>
 </section>
 <script>
 document.querySelectorAll("[name=file]").forEach((input) => {

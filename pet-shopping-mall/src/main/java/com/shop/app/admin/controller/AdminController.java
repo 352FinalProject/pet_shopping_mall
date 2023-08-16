@@ -176,16 +176,10 @@ public class AdminController {
 	@GetMapping("/adminStatistics.do")
 	public void adminStatistics() {}
 	
-	// 상품 추가
-	
-	@GetMapping("/addProduct.do")
+	// 상품 추가 페이지로 연결
+	@GetMapping("/adminAddProduct.do")
 	public void adminAddProduct() {}
-	
-//	@PostMapping("/addProduct.do")
-//	public String adminAddProduct() {
-//		
-//		return "";
-//	}
+
 
 }
 
