@@ -193,9 +193,10 @@ button, input {
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<button type="submit" class="kakao-btn"
+							<a href="${pageContext.request.contextPath}/oauth/kakao/login.do">카카오 로그인</a>
+<%-- 							<button type="submit" class="kakao-btn"
 								onclick="location.href='${pageContext.request.contextPath}/oauth2/authorization/kakao'">카카오
-								로그인</button>
+								로그인</button> --%>
 						</div>
 					</td>
 				</tr>
