@@ -21,52 +21,58 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 
-drop table review;
-drop table image_attachment;
-drop table image_attachment_mapping;
-drop table answer;
-drop table question;
-drop table point;
-drop table return;
-drop table product_detail;
-drop table product;
-drop table product_category;
-drop table cart;
-drop table payment;
-drop table cartitem;
-drop table orderTbl;
-drop table order_detail;
-drop table refund;
-drop table cancel_order;
-drop table authority;
-drop table product_category;
-drop table community;
-drop table wishlist;
-drop table pet;
-drop table persistent_logins;
-drop table image_attachment_mapping;
-drop table member;
+--drop table review;
+--drop table image_attachment;
+--drop table image_attachment_mapping;
+--drop table answer;
+--drop table question;
+--drop table point;
+--drop table product_category;
+--drop table product;
+--drop table product_detail;
+--drop table cart;
+--drop table payment;
+--drop table cartitem;
+--drop table orderTbl;
+--drop table order_detail;
+--drop table refund;
+--drop table cancel_order;
+--drop table authority;
+--drop table product_category;
+--drop table community;
+--drop table wishlist;
+--drop table pet;
+--drop table persistent_logins;
+--drop table image_attachment_mapping;
+--drop table member;
+--drop table ordertbl;
+--drop table return;
+--drop table terms;
+--drop table terms_history;
 
-drop sequence seq_question_id;
-drop sequence seq_answer_id;
-drop sequence seq_image_attachment_id;
-drop sequence seq_image_attachment_mapping_id;
-drop sequence seq_point_id;
-drop sequence seq_product_category_id;
-drop sequence seq_product_id;
-drop sequence seq_product_detail_id;
-drop sequence seq_cart_id;
-drop sequence seq_payment_id;
-drop sequence seq_cartitem_id;
-drop sequence seq_ordertbl_id;
-drop sequence seq_refund_id;
-drop sequence seq_cancel_order_id;
-drop sequence seq_authority_id;
-drop sequence seq_community_id;
-drop sequence seq_wishlist_id;
-drop sequence seq_pet_id;
-drop sequence seq_persistent_logins_id;
-drop sequence seq_member_id;
+
+
+--drop sequence seq_question_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_image_attachment_mapping_id;
+--drop sequence seq_point_id;
+--drop sequence seq_product_category_id;
+--drop sequence seq_product_id;
+--drop sequence seq_product_detail_id;
+--drop sequence seq_cart_id;
+--drop sequence seq_payment_id;
+--drop sequence seq_cartitem_id;
+--drop sequence seq_ordertbl_id;
+--drop sequence seq_refund_id;
+--drop sequence seq_cancel_order_id;
+--drop sequence seq_authority_id;
+--drop sequence seq_community_id;
+--drop sequence seq_wishlist_id;
+--drop sequence seq_pet_id;
+--drop sequence seq_persistent_logins_id;
+--drop sequence seq_member_id;
+--drop sequence seq_review_id;
 
 --==============================
 -- 테이블 생성
@@ -85,7 +91,7 @@ create table member (
     subscribe char(1) default 'N' not null,
     constraints pk_member_id primary key(member_id)
 );
-
+select * from member;
 
 -- 권한 테이블
 create table authority(
@@ -388,8 +394,8 @@ create table  terms_history (
  constraint pk_terms_id primary key(terms_id),
  constraint  fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
 );
- 
-
+ commit;
+select * from member;
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -418,6 +424,8 @@ select * from image_attachment_mapping;
 select * from authority;
 select * from pet;
 select * from review;
+
+
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger

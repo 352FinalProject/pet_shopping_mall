@@ -48,4 +48,10 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteMember(String memberId) {
 		return memberRepository.deleteMember(memberId);
 	}
+
+//	@Override
+//	public int kakaoinsertMember(KakaoMemberCreateDto member) {
+//		return memberRepository.kakaoinsertMember(member);
+//	}
+
 }

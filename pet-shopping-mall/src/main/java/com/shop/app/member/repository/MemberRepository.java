@@ -18,7 +18,7 @@ public interface MemberRepository {
 	@Select("select * from member where member_id = #{memberId}")
 	Member findMemberById(String memberId);
 
-	@Insert("insert into member values (#{memberId}, #{password}, #{name}, #{phone, jdbcType=VARCHAR}, #{email}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
+	@Insert("INSERT INTO member VALUES (#{memberId}, #{password}, #{name}, #{phone, jdbcType=VARCHAR}, #{email}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
 	int insertMember(MemberCreateDto member);
 
 	@Update("update member set name = #{name}, password = #{password}, email = #{email} where member_id = #{memberId}")
@@ -28,4 +28,6 @@ public interface MemberRepository {
 	int deleteMember(String memberId);
 
 	MemberDetails loadUserByUsername(String username);
+
+
 }
