@@ -65,13 +65,7 @@
 										<td>${member.address}</td>
 										<td>${member.birthday}</td>
 										<td>${member.subscribe}</td>
-										<td>
-											<form action="${pageContext.request.contextPath}/admin/adminPointUpdate.do" method="post">
-							                    <input type="hidden" name="memberId" value="${member.memberId}" />
-							                    <input type="number" name="pointChange" placeholder="Enter point change" />
-							                    <button type="submit">Update Points</button>
-							                </form>
-										</td>
+										<td><button onclick="submit">포인트관리</button></td>
 									</tr>
 								</c:forEach>
 							</c:if>
