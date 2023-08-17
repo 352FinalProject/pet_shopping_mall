@@ -7,7 +7,7 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
-			<h1 class="mt-4">주문 조회</h1>
+			<h1 class="mt-4">상품 조회</h1>
 			<ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item"><a
 					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
@@ -50,39 +50,37 @@
 
 			<div class="card mb-4">
 				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 주문목록
+					<i class="fas fa-table me-1"></i> 상품목록
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple">
 						<thead>
 							<th>번호</th>
-							<th>주문일시</th>
-							<th>주문번호</th>
 							<th>이미지</th>
-							<th>주문상품</th>
-							<th>수량</th>
-							<th>상품금액</th>
-							<th>배송비</th>
-							<th>주문상태</th>
-							<th>주문자</th>
-							<th>총주문액</th>
-							<th>결제방법</th>
+							<th>상품코드</th>
+							<th>상품명</th>
+							<th>시중가</th>
+							<th>공급가</th>
+							<th>판매가</th>
+							<th>포인트</th>
+							<th>재고</th>
+							<th>순위</th>
+							<th>관리</th>
 						</thead>
 						<tbody>
 							<c:forEach begin="0" end="20" step="1" varStatus="status">
 								<tr>
-									<th>${status.count}</th>
-									<th>주문일시</th>
-									<th><a href="#" />주문번호</th>
+									<th>번호</th>
 									<th><a href="#" />이미지</th>
-									<th><a href="#" />주문상품</th>
-									<th>수량</th>
-									<th>상품금액</th>
-									<th>배송비</th>
-									<th>주문상태</th>
-									<th>주문자</th>
-									<th>총주문액</th>
-									<th>결제방법</th>
+									<th><a href="#" />상품코드</th>
+									<th><a href="#" />상품명</th>
+									<th>시중가</th>
+									<th>공급가</th>
+									<th>판매가</th>
+									<th>포인트</th>
+									<th>재고</th>
+									<th>순위</th>
+									<td><button onclick="">수정</button> <button onclick="">삭제</button></td>
 								</tr>
 							</c:forEach>
 						</tbody>
