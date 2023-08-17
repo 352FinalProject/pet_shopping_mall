@@ -29,23 +29,23 @@ public interface ReviewRepository {
 	
 	
 	
-	@Select("select count(*) from review")
-	int findTotalReviewCount();
-
+//	@Select("select count(*) from review")
+//	int findTotalReviewCount();
+//
 //	@Select
 //	List<Review> findReviewAll(RowBounds rowBounds);
 
 
 	// 리뷰 조회
-//	@Select("select * from review where review_member_id = #{reviewMemberId}")
-//	Review findReviewMemberById(Review review);
+	@Select("select * from review where review_member_id = #{reviewMemberId}")
+	Review findReviewMemberById(Review review);
 
 	// 리뷰삭제
 	@Delete("delete from review where review_id = #{reviewId}")
 	int reviewDelete(int reviewId);
 	
 	// 리뷰조회2
-	@Select("select * from review where review_member_id = #{reviewMemberId}")
+	@Select("select * from review")
 	Review findReviewId(Review review);
 
 }

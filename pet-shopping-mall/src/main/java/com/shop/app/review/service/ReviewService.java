@@ -16,12 +16,14 @@ public interface ReviewService {
 	// 리뷰 삭제
 	int reviewDelete(int reviewId);
 
-	// 리뷰 전체 카운트
-	//int findTotalReviewCount();
+//	// 리뷰 전체 카운트
+//	int findTotalReviewCount();
+//
+//	// 내가 쓴 리뷰 목록 조회
+//	List<Review> findReviewAll(Map<String, Object> params);
 
-	// 내가 쓴 리뷰 목록 조회
-	//List<Review> findReviewAll(Map<String, Object> params);
 	
 	Review findReviewId(Review review);
+
 
 }

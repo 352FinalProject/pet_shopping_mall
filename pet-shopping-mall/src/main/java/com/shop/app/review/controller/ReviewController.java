@@ -45,11 +45,12 @@ public class ReviewController {
 	private PointService pointService;
 	
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
-	@GetMapping("/reviewList.do")
-	public void reviewList(
-			@RequestParam int reviewId,
-			Model model) {
-		
+//	@GetMapping("/reviewList.do")
+//	public void reviewList(
+//			@RequestParam(defaultValue = "1") int page,
+//			Review review,
+//			Model model) {
+//		
 //		int limit = 10;
 //		
 //		Map<String, Object> params = Map.of(
@@ -60,16 +61,29 @@ public class ReviewController {
 //		int totalCount = reviewService.findTotalReviewCount();
 //		int totalPages = (int) Math.ceil((double) totalCount / limit);
 //		model.addAttribute("totalPages", totalPages);
-		
+//		
 //		List<Review> reviews = reviewService.findReviewAll(params);
+//		log.debug("review params = {}", params);
+//		log.debug("reviews = {}" ,reviews);
 //		model.addAttribute("reviews", reviews);
 		
+	// 리뷰조회
+	@GetMapping("/reviewList.do")
+	public void reviewList(@RequestParam int reviewId, Model model) {
+		
+		//log.debug("reviewId = {}" , reviewId);
+
+		log.debug("reviewId = {}" , reviewId);
+
 		Review review = Review
 				.builder()
 				.reviewId(reviewId)
 				.build();
 		
+		
 		Review reviews = reviewService.findReviewId(review);
+		log.debug("reviews = {}" , reviews);
+		
 		model.addAttribute("reviews", reviews);
 		
 	}
