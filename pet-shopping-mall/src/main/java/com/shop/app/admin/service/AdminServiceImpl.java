@@ -20,19 +20,20 @@ public class AdminServiceImpl implements AdminService {
 	private AdminRepository adminRepository;
 
 	@Override
-	public List<Member> adminMemberList(Map<String, Object> params) {
-		int limit = (int) params.get("limit");
-		int page = (int) params.get("page");
-		int offset = (page - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return adminRepository.adminMemberList(rowBounds);
+	public List<Member> adminMemberList() {
+		return adminRepository.adminMemberList();
+	}
+	
+	@Override
+	public List<Member> adminSubscribeList() {
+		return adminRepository.adminSubscribeList();
 	}
 	
 	@Override
 	public List<Member> adminMemberSearchByNameOrId(String searchKeyword) {
 	    return adminRepository.adminMemberSearchByNameOrId(searchKeyword);
 	}	
-	
+	 
 	@Override
 	public int insertMember(Member member) {
 		return adminRepository.insertMember(member);
@@ -63,6 +64,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<Question> questionSearch(String searchKeyword) {
 		return adminRepository.questionSearch(searchKeyword);
 	}
+	
+	@Override
+	public List<Member> adminSubscribeSearchByNameOrId(String searchKeyword) {
+		return adminRepository.adminSubscribeSearchByNameOrId(searchKeyword);
+	}
 
 	@Override
 	public int findTotalQuestionCount() {
@@ -73,6 +79,14 @@ public class AdminServiceImpl implements AdminService {
 	public int findTotalAdminCount() {
 		return adminRepository.findTotalAdminCount();
 	}
+	
+	@Override
+	public int findTotalubscribeCount() {
+		return adminRepository.findTotalubscribeCount();
+	}
+	
+	
+	
 
 	
 
