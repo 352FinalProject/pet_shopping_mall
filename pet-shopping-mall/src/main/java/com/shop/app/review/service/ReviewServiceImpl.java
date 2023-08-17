@@ -27,12 +27,8 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int insertReview(Review review) {
 		int result = 0;
-		
 		// review 저장
 		result = reviewRepository.insertReview(review);
-		
-		log.debug("reviews = {}", review);
-		
 		
 		int refId = review.getReviewId();
 		System.out.println("review refId = " + refId);
@@ -42,10 +38,13 @@ public class ReviewServiceImpl implements ReviewService {
 		if(attachments != null && !attachments.isEmpty()) {
 			for(imageAttachment attach : attachments) {
 				
+				// 1. 이미지 파일 DB에 저장
 				int result2 = reviewRepository.insertAttachment(attach);
 				
+				// 2. 이미지 파일 DB 저장 후 생성된 이미지 ID 가져오기
 				int imageId = attach.getImageId();
 				
+				// 3. 리뷰 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 				int reviewIdImageId = reviewRepository.insertMapping(refId, imageId);
 				
 			}

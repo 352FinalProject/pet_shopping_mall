@@ -20,17 +20,21 @@ public interface ReviewRepository {
 	int insertReview(Review review);
 
 	// 리뷰 파일첨부
-	@Insert("insert into image_attachment values(seq_image_attachment_id.nextval, #{imageType}, #{imageCategory}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)")
 	int insertAttachment(imageAttachment attach);
 
+	// 리뷰 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
+	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'review', #{reviewId}, #{imageId})")
+	int insertMapping(int reviewId, int imageId);
+
+	
+	
+	
 	@Select("select count(*) from review")
 	int findTotalReviewCount();
 
 //	@Select
 //	List<Review> findReviewAll(RowBounds rowBounds);
 
-	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'review', #{reviewId}, #{imageId})")
-	int insertMapping(int refId, int imageId);
 
 	// 리뷰 조회
 //	@Select("select * from review where review_member_id = #{reviewMemberId}")
