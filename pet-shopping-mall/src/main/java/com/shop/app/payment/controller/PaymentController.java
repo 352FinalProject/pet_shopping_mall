@@ -3,6 +3,8 @@ package com.shop.app.payment.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,16 +19,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.dto.CartListDto;
+import com.shop.app.cart.service.CartService;
+import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -42,6 +50,12 @@ public class PaymentController {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	CartService cartService;
+	
+	@Autowired
+	PointService pointService;
+	
 	private IamportClient iamportClient;
 	private IamportApi IamportApi;
 	
@@ -56,8 +70,15 @@ public class PaymentController {
 	
 	
 	@GetMapping("/paymentInfo.do")
-	public void payment() {
+	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
 		// 폼으로 가져오기
+		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
+		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
+		
+		Point point = pointService.findCurrentPointById(principal.getMemberId());
+		
+		model.addAttribute("cartList", cartList);
+		model.addAttribute("pointCurrent", point.getPointCurrent());
 		
 	}
 	

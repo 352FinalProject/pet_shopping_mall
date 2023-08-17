@@ -66,7 +66,7 @@ font-size:24px;
         <div class="common-title">
             장바구니
         </div>
-        <div class="common-container">E
+        <div class="common-container">
             <div class="common-div">
             	<div class="shopping-div">
 	                <div class="cart-left">

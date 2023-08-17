@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .payment-left div:not(:last-child){
@@ -91,25 +95,28 @@ display: flex;
             <div class="common-div">
             	<div class="payment-div">
 	                <div class="payment-left">
+	                	<c:forEach items="${cartList}" var="product" varStatus="vs">
 	                	<div class="cart-product-info">
+	                		<c:set var="totalPrice" value="${price + product.productPrice}"/>
 	                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
 	                		<div>
 	                			<div>
-	                				<p id="buy-title">리드줄 목줄 소형견 리드줄</p>
+	                				<p id="buy-title">${product.productName}</p>
 	                			</div>
 	                			<div>
 	                				<div id="cart-option">
 	                					<div>
-	                						<p>옵션: 노란색</p>
-	                						<p>수량: 1개</p>
+	                						<p>옵션 : ${product.optionName} ${product.optionValue} <span>(+${product.additionalPrice})</span></p>
+	                						<p>수량 : ${product.quantity}개</p>
 	                					</div>
 	                				</div>
 	                				<div>
-	                					<p>총 상품 금액 11,100원</p>
+	                					<p>상품 금액 ${(product.productPrice + product.additionalPrice) * product.quantity}원</p>
 	                				</div>
 	                			</div>
 	                		</div>
 	                	</div>
+	                	</c:forEach>
 	                	<div class="order-info">
 	                		<div>
 	                			<p class="order-info-title">주문자</p>
@@ -146,7 +153,7 @@ display: flex;
 							<div>
 								<div class="product-price">
 									<span class="price"><strong>상품금액</strong></span>
-									<p><span id="total-price">11,100</span>원</p>
+									<p><span id="total-price">${totalPrice}</span>원</p>
 								</div>
 								<div class="product-price">
 									<span>배송비</span>
@@ -154,14 +161,14 @@ display: flex;
 								</div>
 								<div class="product-price">
 									<span>쿠폰 및 포인트</span>
-									<p><span>(-)</span><span id="discount">3,000</span>원</p>
+									<p><span>(-)</span><span id="discount">${pointCurrent}</span>원</p>
 								</div>
 							</div>
 						</div>
 						<div class="payment-info">
 							<div class="product-price">
 								<strong class="price">최종 결제 금액</strong>
-								<p class="price"><span id="amount">11,100</span>원</p>
+								<p class="price"><span id="amount">${totalPrice}</span>원</p>
 							</div>
 						</div>
 						<div>
@@ -291,7 +298,16 @@ const requestPaymentByCard = (data) => {
 };
 
 
-
+document.addEventListener("DOMContentLoaded", function() {
+    const productInfos = document.querySelectorAll(".cart-product-info");
+    
+    productInfos.forEach(productInfo => {
+        const details = productInfo.querySelector(".product-details");
+        productInfo.addEventListener("click", () => {
+            details.style.display = details.style.display === "block" ? "none" : "block";
+        });
+    });
+});
 
 
 

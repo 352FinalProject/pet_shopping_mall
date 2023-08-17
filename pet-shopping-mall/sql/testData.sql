@@ -1,7 +1,7 @@
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
-
+select * from member;
 --==============================
 --sample data 생성
 --==============================
@@ -174,6 +174,8 @@ set member_role = 'ROLE_ADMIN'
 where id = 77;
 
 
+select * from member;
+
 -- 장바구니 테스트 데이터
 select * from product_category;
 insert into product_category values(1, '사료');
@@ -189,7 +191,7 @@ update cartitem set product_detail_id=2 where product_detail_id=1;
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
 
-insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 2);
+insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
 
 select 
     *
@@ -208,7 +210,7 @@ FROM
 JOIN 
     product p ON pd.product_id = p.product_id;
     
-
+select * from cart;
 -- 이렇게 불러오기..    
 select 
     p.*,
