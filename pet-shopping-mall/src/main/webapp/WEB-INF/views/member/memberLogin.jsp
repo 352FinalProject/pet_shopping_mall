@@ -203,7 +203,7 @@ button, input {
 					<td>
 						<div class="login-btnAll">
 							<button type="submit" class="naver-btn"
-								onclick="location.href='${pageContext.request.contextPath}/'">네이버
+								onclick="location.href='${pageContext.request.contextPath}/oauth2/authorization/naver'">네이버
 								로그인</button>
 						</div>
 					</td>
