@@ -18,6 +18,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CartItemDetails extends CartItem {
 	// 상품 상세 / 상품 / 상품 이미지
-	private Member member;
-	private Map<Product, Integer> cartList; // 제품 객체와 구매 수량을 세팅
+	//
+	int id;
 }

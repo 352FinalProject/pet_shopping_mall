@@ -96,18 +96,38 @@ create table authority(
 );
 
 -- 펫 테이블
-create table pet (
+CREATE TABLE pet (
     pet_id number,
-    pet_member_id varchar2(20),
+    member_id varchar2(20),
+    breed_id number,
     pet_name VARCHAR2(50) NOT NULL,
-    pet_DofB timestamp,
-    pet_kind VARCHAR2(50),
-    pet_breed VARCHAR2(50),
-    pet_adoption timestamp,
+    pet_birthday timestamp,
+    adoption_date timestamp,
     pet_gender CHAR(1),
     constraints pk_pet_id primary key(pet_id),
-    constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade,
+    constraints fk_pet_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    constraints fk_pet_breed_id foreign key(breed_id) references breed(breed_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
+);
+
+CREATE TABLE breed (
+    breed_id number,
+    pet_kind VARCHAR2(50),
+    pet_breed VARCHAR2(50),
+    constraints pk_breed_id primary key(breed_id),
+    CONSTRAINT chk_pet_breed CHECK (pet_breed IN ('C', 'D', 'E'))
+    );
+
+
+-- 찜한 목록 테이블
+create table wishlist(
+    wishlist_id number,
+    wishlist_member_id varchar2(20),
+    wishlist_product_id number,
+    wishlist_created_at timestamp default sysdate,
+    constraints pk_wishlist_id primary key(wishlist_id),
+    constraints fk_wishlist_member_id foreign key(wishlist_member_id) references member(member_id) on delete cascade,
+    constraints fk_wishlist_product_id foreign key(wishlist_product_id) references product(product_id) on delete cascade
 );
 
 
@@ -191,7 +211,6 @@ create table product (
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
--- 상품상세 테이블
 create table product_detail (
     product_detail_id number, -- pk
 	product_id number, -- fk
@@ -301,32 +320,32 @@ create table payment (
 );
 
 -- 반품테이블
-create table return (
-    return_id number,
-    return_status number default 0 not null,
-    request_date timestamp default systimestamp not null,
-    receipt_date timestamp,
-    withdraw_data timestamp,
-    order_id number,
-    constraint pk_return_id primary key(return_id),
-    constraint fk_return_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
-);
+-- create table return (
+--     return_id number,
+--     return_status number default 0 not null,
+--     request_date timestamp default systimestamp not null,
+--     receipt_date timestamp,
+--     withdraw_data timestamp,
+--     order_id number,
+--     constraint pk_return_id primary key(return_id),
+--     constraint fk_return_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+-- );
 
 -- 환불테이블
-create table refund (
-    refund_id number,
-    receipt_date timestamp default systimestamp not null,
-    complete_date timestamp,
-    refund_status number default 0 not null,
-    refund_price number not null,
-    refund_method number not null,
-    refund_account varchar2(20),
-    account_name varchar2(20),
-    bank varchar2(20),
-    order_id number,
-    constraint pk_refund_id primary key(refund_id),
-    constraint fk_refund_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
-);
+-- create table refund (
+--     refund_id number,
+--     receipt_date timestamp default systimestamp not null,
+--     complete_date timestamp,
+--     refund_status number default 0 not null,
+--     refund_price number not null,
+--     refund_method number not null,
+--     refund_account varchar2(20),
+--     account_name varchar2(20),
+--     bank varchar2(20),
+--     order_id number,
+--     constraint pk_refund_id primary key(refund_id),
+--     constraint fk_refund_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+-- );
 
 create table cart (
     cart_id number,
