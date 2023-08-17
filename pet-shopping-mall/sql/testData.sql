@@ -74,6 +74,10 @@ values (seq_answer_answer_id.nextval, '관리자', 47, '우동친은 우리집�
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
 
+------------------ point insert ---------------------------
+INSERT INTO point (point_id, point_member_id, point_current, point_type, point_amount)
+VALUES (2, '사용자2', 50, '사용', -500, SYSTIMESTAMP);
+
 ------------------ product insert ---------------------------
 -- 카테고리 생성
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
@@ -136,7 +140,7 @@ commit;
 
 update set member_role from member where member_id = 77;
 
-delete from pet where pet_id = '1';
+delete from answer where answer_id = '2';
 
 SELECT * FROM product WHERE id = 3;
 
@@ -218,3 +222,6 @@ from
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
 where 
     ci.product_detail_id = 2;
+    
+select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
+    

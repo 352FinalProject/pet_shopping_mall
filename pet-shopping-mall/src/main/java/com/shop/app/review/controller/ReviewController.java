@@ -83,7 +83,6 @@ public class ReviewController {
 	
 	   // 리뷰 작성
 	   @PostMapping("/reviewCreate.do")
-	   @Transactional
 	   public String reviewCreate(
 	         @Valid ReviewCreateDto _review, 
 	         BindingResult bindingResult, 
@@ -128,8 +127,11 @@ public class ReviewController {
 	      
 	      int result = reviewService.insertReview(reviews);
 	      
+	      // 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
+	      point.setPointMemberId(_review.getReviewMemberId());
+	      
 	      // 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
-	      Point currentPoints = pointService.findReviewPointMemberById(reviews); 
+	      Point currentPoints = pointService.findReviewPointCurrentById(point); 
 	      
 	      log.debug("ReviewDetails reviewMemberId = {}", reviews.getReviewMemberId());
 	      log.debug("currentPoints = {}", currentPoints);
@@ -141,17 +143,17 @@ public class ReviewController {
 	      }
 
 	      // 5. 현재 포인트를 가져온 후 포인트 적립 계산
-	      Point currentPoint = pointService.findReviewPointMemberById(reviews); 
 	      int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
 
 	      // 6. 포인트 테이블에 행 추가
 	      Point newPoint = new Point();
-	      newPoint.setPointAmount(updatedPointAmount);
+	      newPoint.setPointCurrent(updatedPointAmount); 
+	      newPoint.setPointAmount(pointAmount); 
 	      newPoint.setPointType("리뷰적립");
 	      newPoint.setPointMemberId(_review.getReviewMemberId());
 
 	      int newPointResult = pointService.insertPoint(newPoint);
-
+	      
 	      return "redirect:/review/reviewCreate.do";
 	   
 

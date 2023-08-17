@@ -32,5 +32,11 @@ public class PointServiceImpl implements PointService {
 		return pointRepository.findReviewPointMemberById(reviews);
 	}
 
+	// memberId값으로 현재 사용자의 포인트 가져오기 (예라)
+	@Override
+	public Point findReviewPointCurrentById(Point point) {
+		return pointRepository.findReviewPointCurrentById(point);
+	}
+
 
 }

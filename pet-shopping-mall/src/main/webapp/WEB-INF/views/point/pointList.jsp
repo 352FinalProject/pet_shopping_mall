@@ -30,7 +30,16 @@
 									<tr class="question-row">
 										<td>${point.pointId}</td>
 										<td>${point.pointType}</td>
-										<td>${point.pointAmount}</td>
+										<td>
+										    <c:choose>
+										        <c:when test="${point.pointAmount >= 0}">
+										            <span class="plus">+ ${point.pointAmount}</span>
+										        </c:when>
+										        <c:otherwise>
+										            <span class="minus"> ${point.pointAmount}</span>
+										        </c:otherwise>
+										    </c:choose>
+										</td>
 										<td>${point.pointCurrent}</td>
 										<td class="qna-date">
 											<input type="hidden" name="pointDate" value="${point.pointDate}" />

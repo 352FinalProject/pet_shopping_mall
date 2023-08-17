@@ -303,7 +303,7 @@
 }
 
 /* 답변대기 */
-.question-row span {
+.question-row > td > a span {
 	color: #c8c8c8;
 }
 

@@ -16,6 +16,11 @@ public interface PointService	 {
 	// 리뷰 쓴 사용자 포인트 적립을 위해 아이디 조회 (예라)
 	Point findReviewPointMemberById(ReviewDetails reviews);
 
+	// memberId값으로 현재 사용자의 포인트 가져오기 (예라)
+	Point findReviewPointCurrentById(Point point);
+
+	
+
 	
 }
 
