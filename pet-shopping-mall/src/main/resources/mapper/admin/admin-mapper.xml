@@ -4,11 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.admin.repository.AdminRepository">
 
-<!-- 	<select id="adminMemberSearchByNameOrId" resultType="com.shop.app.member.entity.Member">
-    SELECT *
-    FROM member
-    WHERE name LIKE #{searchKeyword}
-    OR member_id LIKE #{searchKeyword}
-	</select> -->
+
 	
 </mapper>
