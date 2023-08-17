@@ -78,12 +78,13 @@ public class ReviewController {
 	public String reviewCreate(
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
-			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles) 
+			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, Point point) 
 					throws IllegalStateException, IOException {
 	
 		// 1. 파일저장
 		List<imageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
+		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
@@ -118,17 +119,26 @@ public class ReviewController {
 		
 		int result = reviewService.insertReview(reviews);
 		
-		// 3. 리뷰 작성하면 포인트 적립 (텍스트 500원, 이미지 1000원) 예라
+		// 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
+		Point currentPoints = pointService.findReviewPointMemberById(reviews); 
+		
+		log.debug("ReviewDetails reviewMemberId = {}", reviews.getReviewMemberId());
+		log.debug("currentPoints = {}", currentPoints);
+		
+		// 4. 리뷰 작성하면 현재 포인트에 추가로 포인트 적립 (텍스트 500원, 이미지 1000원)
 		int pointAmount = 500;
 		if(hasImage) {
 			pointAmount += 1000;
 		}
-		Point point = new Point();
-		point.setPointAmount(pointAmount);
-		point.setPointMemberId(_review.getReviewMemberId());
-		point.setPointType("리뷰적립");
 		
-		int pointResult = pointService.givePointsForSignUp(point);
+		Point updatedPoint = new Point();
+		updatedPoint.setPointAmount(currentPoints.getPointCurrent() + pointAmount); // 현재 포인트와 새로운 포인트 합치기
+		updatedPoint.setPointMemberId(_review.getReviewMemberId());
+		updatedPoint.setPointType("리뷰적립");
+		
+		int pointResult = pointService.updatePoint(updatedPoint); // 수정된 포인트로 업데이트
+		
+		log.debug("pointResult = {} ", pointResult);
 		
 		return "redirect:/review/reviewCreate.do";
 	}

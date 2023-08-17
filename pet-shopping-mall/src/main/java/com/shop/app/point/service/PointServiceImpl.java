@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.repository.PointRepository;
+import com.shop.app.review.entity.ReviewDetails;
 
 @Service
 public class PointServiceImpl implements PointService {
@@ -19,9 +20,23 @@ public class PointServiceImpl implements PointService {
 		return pointRepository.findPointAll(point);
 	}
 
-	// 회원가입, 리뷰 포인트 적립 (예라)
+	// 회원가입 포인트 적립 (예라)
 	@Override
-	public int givePointsForSignUp(Point point) {
-		return pointRepository.givePointsForSignUp(point);
+	public int insertPoint(Point point) {
+		return pointRepository.insertPoint(point);
 	}
+
+	// 리뷰 쓴 사용자 포인트 적립을 위해 아이디 조회 (예라)
+	@Override
+	public Point findReviewPointMemberById(ReviewDetails reviews) {
+		return pointRepository.findReviewPointMemberById(reviews);
+	}
+	
+	// 리뷰 포인트 적립 (예라)
+	@Override
+	public int updatePoint(Point point) {
+		return pointRepository.updatePoint(point);
+	}
+
+
 }

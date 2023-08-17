@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.MemberRole;
 import com.shop.app.member.entity.Subscribe;
+import com.shop.app.product.entity.ProductCategory;
+import com.shop.app.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +35,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@GetMapping("/admin.do")
 	public void admin() {}
@@ -176,16 +183,21 @@ public class AdminController {
 	@GetMapping("/adminStatistics.do")
 	public void adminStatistics() {}
 	
-	// 상품 추가
-	
-	@GetMapping("/addProduct.do")
-	public void adminAddProduct() {}
-	
-//	@PostMapping("/addProduct.do")
-//	public String adminAddProduct() {
-//		
-//		return "";
-//	}
+	// 상품 추가 페이지로 연결
+	@GetMapping("/adminAddProduct.do")
+	public void adminAddProduct(
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		log.debug("member = {}", member);
+		
+		// 상품카테고리 조회 후 전달
+		List<ProductCategory> categories = productService.findAll();
+		log.debug("categories = {}", categories);
+		model.addAttribute("categories", categories);
+		
+	}
+
 
 }
 

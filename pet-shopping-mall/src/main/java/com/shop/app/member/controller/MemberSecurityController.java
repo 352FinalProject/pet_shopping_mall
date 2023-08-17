@@ -98,7 +98,7 @@ public class MemberSecurityController {
 		point.setPointType("회원가입");
 		point.setPointAmount(3000);
 		
-		int resultPoint = pointService.givePointsForSignUp(point);
+		int resultPoint = pointService.insertPoint(point);
 		
 		Terms terms = new Terms();
 		terms.setMemberId(member.getMemberId());
