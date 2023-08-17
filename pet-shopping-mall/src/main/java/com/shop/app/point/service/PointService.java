@@ -12,4 +12,6 @@ public interface PointService {
 	// 회원가입 포인트 저장 (예라)
 	int givePointsForSignUp(Point point);
 
+	Point findCurrentPointById(String memberId);
+
 }

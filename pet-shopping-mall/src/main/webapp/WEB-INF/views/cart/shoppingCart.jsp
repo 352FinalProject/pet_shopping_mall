@@ -66,7 +66,7 @@ font-size:24px;
         <div class="common-title">
             장바구니
         </div>
-        <div class="common-container">
+        <div class="common-container">E
             <div class="common-div">
             	<div class="shopping-div">
 	                <div class="cart-left">
@@ -74,32 +74,33 @@ font-size:24px;
 	                		<input type="checkbox" name="checkAll" id="checkAll">
 	                		<label for="checkAll">전체 선택</label>
 	                	</div>
-	                	<c:forEach items="cart" var="product">
+	                	<c:forEach items="${cartList}" var="product" varStatus="vs">
 	                	<div class="cart-product-info">
 	                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
 	                		<div>
 	                			<div>
-	                				<input type="checkbox" name="products">
-	                				<label>${product} ${cart}</label>
+	                				<input type="checkbox" name="productName">
+	                				<label>${product.productName}</label>
 	                			</div>
 	                			<div>
 	                				<div id="cart-option">
 	                					<div>
-	                						<p>옵션: 노란색</p>
-	                						<p>수량: 1개</p>
+	                						<p>옵션 : ${product.optionName}</p>
+	                						<p>수량 : ${product.quantity}</p>
 	                					</div>
 	                					<div>
 	                						<button class="cart-btn">옵션/수량변경</button>
 	                					</div>
 	                				</div>
 	                				<div>
-	                					<p>총 상품 금액 11,100원</p>
+	                					<fmt:formatNumber value='${(product.productPrice + product.additionalPrice) * product.quantity}' pattern="0,000" var="formattedPrice" />
+	                					<p>총 상품 금액 : ${formattedPrice}원</p>
 	                				</div>
 	                			</div>
 	                		</div>
 	                	</div>
+	                	<c:set var="totalPrice" value="${totalPrice + ((product.productPrice + product.additionalPrice) * product.quantity)}" />
 	                	</c:forEach>
-	                	
 	                	<div>
 	                		<button class="cart-btn">선택 상품 삭제</button>
 	                		<button class="cart-btn">전체 상품 삭제</button>
@@ -111,22 +112,24 @@ font-size:24px;
 							<div>
 								<div class="product-price">
 									<span class="price"><strong>상품금액</strong></span>
-									<p>11,100원</p>
+									<p>${formattedPrice}원</p>
 								</div>
 								<div class="product-price">
 									<span>배송비</span>
 									<p><span>(+)</span>3,000원</p>
 								</div>
 								<div class="product-price">
-									<span>쿠폰 및 정립금</span>
-									<p><span>(-)</span>3,000원</p>
+									<span>사용 가능 적립금</span>
+									<fmt:formatNumber value='${pointCurrent}' pattern="0,000" var="formattedPoint" />
+									<p><span>(-)</span>${formattedPoint}원</p>
 								</div>
 							</div>
 						</div>
 						<div class="payment-info">
 							<div class="product-price">
+								<fmt:formatNumber value='${totalPrice}' pattern="0,000" var="formattedTotal" />
 								<strong class="price">최종 결제 금액</strong>
-								<p class="price">11,100원</p>
+								<p class="price">${formattedTotal}원</p>
 							</div>
 						</div>
 						<div>

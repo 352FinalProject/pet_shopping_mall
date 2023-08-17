@@ -25,4 +25,10 @@ public class PointServiceImpl implements PointService {
 		return pointRepository.givePointsForSignUp(point);
 	}
 
+	// 멤버아이디로 포인트 조회 (담희)
+	@Override
+	public Point findCurrentPointById(String memberId) {
+		return pointRepository.findCurrentPointById(memberId);
+	}
+
 }

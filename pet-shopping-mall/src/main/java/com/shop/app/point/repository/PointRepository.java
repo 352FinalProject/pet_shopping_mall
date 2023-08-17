@@ -19,4 +19,7 @@ public interface PointRepository {
 	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
 	int givePointsForSignUp(Point point);
 
+	@Select("select * from point where point_member_id = #{member_id}")
+	Point findCurrentPointById(String memberId);
+
 }

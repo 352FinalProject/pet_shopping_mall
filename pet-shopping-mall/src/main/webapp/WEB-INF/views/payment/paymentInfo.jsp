@@ -85,7 +85,7 @@ display: flex;
 </style>
     <section class="common-section" id="#">
         <div class="common-title">
-            장바구니
+            결제
         </div>
         <div class="common-container">
             <div class="common-div">

@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.shop.app.cart.dto.CartListDto;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
@@ -55,7 +56,10 @@ public class PaymentController {
 	
 	
 	@GetMapping("/paymentInfo.do")
-	public void payment() {}
+	public void payment() {
+		// 폼으로 가져오기
+		
+	}
 	
 	/**
 	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드
