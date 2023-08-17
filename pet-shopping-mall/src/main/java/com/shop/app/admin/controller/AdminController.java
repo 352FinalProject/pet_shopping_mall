@@ -76,7 +76,7 @@ public class AdminController {
 //		
 //		model.addAttribute("members", members);
 //	}
-	
+//	
 
 	// 관리자 1:1 문의 전체 내역 조회 + 페이징바 (예라)
 	@GetMapping("/adminQuestionList.do")

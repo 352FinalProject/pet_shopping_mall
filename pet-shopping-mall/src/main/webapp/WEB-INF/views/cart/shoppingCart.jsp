@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .cart-left div:not(:last-child){
@@ -70,12 +74,13 @@ font-size:24px;
 	                		<input type="checkbox" name="checkAll" id="checkAll">
 	                		<label for="checkAll">전체 선택</label>
 	                	</div>
+	                	<c:forEach items="cart" var="product">
 	                	<div class="cart-product-info">
 	                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
 	                		<div>
 	                			<div>
 	                				<input type="checkbox" name="products">
-	                				<label>리드줄 목줄 소형견 리드줄</label>
+	                				<label>${product} ${cart}</label>
 	                			</div>
 	                			<div>
 	                				<div id="cart-option">
@@ -93,6 +98,8 @@ font-size:24px;
 	                			</div>
 	                		</div>
 	                	</div>
+	                	</c:forEach>
+	                	
 	                	<div>
 	                		<button class="cart-btn">선택 상품 삭제</button>
 	                		<button class="cart-btn">전체 상품 삭제</button>

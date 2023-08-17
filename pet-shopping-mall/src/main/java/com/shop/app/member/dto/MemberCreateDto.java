@@ -2,6 +2,7 @@ package com.shop.app.member.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -11,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 
 @Data
 @Builder
@@ -37,7 +40,12 @@ public class MemberCreateDto {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 	
-	private int point;
-	
+	@Email(message = "유효한 이메일을 작성해주세요.")
 	private String email;
+
+	public void setPoint(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
