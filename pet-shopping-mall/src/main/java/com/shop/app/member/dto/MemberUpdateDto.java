@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,9 +21,14 @@ public class MemberUpdateDto {
 	@Email(message = "유효한 이메일을 작성해주세요.") // "" 허용
 	private String email;
 
+	@NotBlank(message = "비밀번호는 필수입니다.")
+	@Pattern(regexp = "\\w{4,}", message = "비밀번호는 영문자/숫자 4글자이상이어야 합니다.")
+	private String password;
+	
 	public Member toMember() {
 		return Member.builder()
 			.name(name)
+			.password(password)
 			.birthday(birthday)
 			.email(email)
 			.build();
