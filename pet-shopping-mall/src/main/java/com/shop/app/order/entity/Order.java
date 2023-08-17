@@ -18,10 +18,10 @@ public class Order {
 	private Date orderDate; // 주문날짜
 	
 	// 주문 상태
-	// 0: 입금대기 / 1: 입금완료 / 2: 배송준비 / 3: 배송중 / 4: 배송완료 /5: 주문취소 /6: 환불 / 7:반품
+	// 0: 입금대기 / 1: 입금완료 / 2: 배송준비 / 3: 배송중 / 4: 배송완료 / 5: 주문취소 / 6: 환불 / 7:반품
 	private int orderStatus; 
 	
-	private int paymentState; // 0-결제 미완료 / 1-결제완료
+	private int paymentState; // 0: 결제 미완료 / 1: 결제완료
 	
 	private int totalPrice; // 순수 상품의 가격
 	private int deliveryFee; // 배송비 (고정 3000원)
