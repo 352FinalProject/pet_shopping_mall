@@ -30,7 +30,6 @@
 							<th>가입일</th>
 							<th>주소</th>
 							<th>생일</th>
-							<th>구독</th>
 							<th>관리</th>
 						</thead>
 						<tbody>
@@ -49,7 +48,6 @@
 										<td>${member.enrollDate}</td>
 										<td>${member.address}</td>
 										<td>${member.birthday}</td>
-										<td>${member.subscribe}</td>
 										<td><button onclick="submit">포인트관리</button></td>
 									</tr>
 								</c:forEach>
