@@ -20,7 +20,7 @@
 <body class="sb-nav-fixed">
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" href="admin.do">펫쇼핑몰</a>
+		<a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/">펫쇼핑몰</a>
 		<!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 	</nav>
@@ -30,25 +30,30 @@
 				id="sidenavAccordion">
 				<div class="sb-sidenav-menu">
 					<div class="nav">
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/admin.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 관리자 홈
+						</a>
 						<div class="sb-sidenav-menu-heading">회원목록</div>
-						</a> <a class="nav-link" href="${pageContext.request.contextPath}/admin/adminMemberList2.do">
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
 							</div> 전체 회원목록
 						</a>
-						</a> <a class="nav-link" href="${pageContext.request.contextPath}/admin/adminSubscribeList2.do">
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminSubscribeList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
 							</div> 구독 회원목록
 						</a>
 						<div class="sb-sidenav-menu-heading">상품</div>
-						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminProductList2.do">
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminProductList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
 							</div> 상품목록
 						</a>
 						<div class="sb-sidenav-menu-heading">주문</div>
-						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminOrderList2.do">
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminOrderList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
 							</div> 주문목록

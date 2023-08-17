@@ -49,7 +49,7 @@ public class AdminController {
 	 * @param page
 	 * @param model
 	 */
-	@GetMapping("/adminMemberList2.do")
+	@GetMapping("/adminMemberList.do")
 	public void adminMemberList(Model model) {
 		// MemberDetails로 바꿔야댐
 		List<Member> members = adminService.adminMemberList();
@@ -74,7 +74,7 @@ public class AdminController {
 	 * @param page
 	 * @param model
 	 */
-	@GetMapping("/adminSubscribeList2.do")
+	@GetMapping("/adminSubscribeList.do")
 	public void adminSubscribeList(Model model) {
 		// MemberDetails로 바꿔야댐
 		List<Member> subscribeMembers = adminService.adminSubscribeList();
@@ -202,14 +202,11 @@ public class AdminController {
 	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
 			
-	    return "admin/adminSubscribeList2";
+	    return "admin/adminSubscribeList";
 	}
 	
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList() {}
-	
-	@GetMapping("/adminOrderList2.do")
-	public void adminOrderList2() {}
 	
 	@GetMapping("/adminProductList.do")
 	public void adminProductList() {}

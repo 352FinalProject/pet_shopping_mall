@@ -17,7 +17,7 @@
 								<div class="card-body">주문 관리</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminOrderList2.do">주문 조회</a>
+									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminOrderList.do">주문 조회</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
@@ -29,7 +29,7 @@
 								<div class="card-body">상품 관리</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminProductList2.do">상품 조회</a>
+									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminProductList.do">상품 조회</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
@@ -41,7 +41,7 @@
 								<div class="card-body">회원 포인트</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminMemberList2.do">회원 관리</a>
+									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do">회원 관리</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
