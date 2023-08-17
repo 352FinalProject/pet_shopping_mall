@@ -39,7 +39,9 @@
 						    <th>사진첨부</th>
 						    <td>
 						        <div class="detail-upload">
-						            ${questionDetails.attachments[0].imageOriginalFilename}
+						        	<input type="text" name="imageOriginalFilename" 
+						            value="${questionDetails.attachments[0].imageOriginalFilename}" required
+								readonly">
 						        </div>
 						    </td>
 						</tr>

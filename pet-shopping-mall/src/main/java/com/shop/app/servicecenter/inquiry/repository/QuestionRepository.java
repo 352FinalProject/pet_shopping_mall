@@ -68,7 +68,7 @@ public interface QuestionRepository {
 	QuestionDetails findImageAttachmentsByQuestionId(int questionId);
 
 	// 1:1 문의 답변 카운트 (예라)
-	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) answer_count from question q order by question_id desc")
+	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) answer_count from question q where q.question_id = #{questionId} order by question_id desc")
 	Question findQuestionByAnwerCount(Question question);
 
 }
