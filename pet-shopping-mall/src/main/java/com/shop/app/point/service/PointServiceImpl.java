@@ -31,12 +31,6 @@ public class PointServiceImpl implements PointService {
 	public Point findReviewPointMemberById(ReviewDetails reviews) {
 		return pointRepository.findReviewPointMemberById(reviews);
 	}
-	
-	// 리뷰 포인트 적립 (예라)
-	@Override
-	public int updatePoint(Point point) {
-		return pointRepository.updatePoint(point);
-	}
 
 
 }

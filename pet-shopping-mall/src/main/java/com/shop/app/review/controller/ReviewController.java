@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,6 +83,7 @@ public class ReviewController {
 	
 	   // 리뷰 작성
 	   @PostMapping("/reviewCreate.do")
+	   @Transactional
 	   public String reviewCreate(
 	         @Valid ReviewCreateDto _review, 
 	         BindingResult bindingResult, 
@@ -134,23 +136,25 @@ public class ReviewController {
 	      
 	      // 4. 리뷰 작성하면 현재 포인트에 추가로 포인트 적립 (텍스트 500원, 이미지 1000원)
 	      int pointAmount = 500;
-	      if(hasImage) {
-	         pointAmount += 1000;
+	      if (hasImage) {
+	          pointAmount += 500;
 	      }
-	      
-	      Point updatedPoint = new Point();
-	      updatedPoint.setPointAmount(currentPoints.getPointCurrent() + pointAmount); // 현재 포인트와 새로운 포인트 합치기
-	      updatedPoint.setPointMemberId(_review.getReviewMemberId());
-	      updatedPoint.setPointType("리뷰적립");
-	      
-	      int pointResult = pointService.updatePoint(updatedPoint); // 수정된 포인트로 업데이트
-	      
-	      log.debug("pointResult = {} ", pointResult);
-	      
+
+	      // 5. 현재 포인트를 가져온 후 포인트 적립 계산
+	      Point currentPoint = pointService.findReviewPointMemberById(reviews); 
+	      int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
+
+	      // 6. 포인트 테이블에 행 추가
+	      Point newPoint = new Point();
+	      newPoint.setPointAmount(updatedPointAmount);
+	      newPoint.setPointType("리뷰적립");
+	      newPoint.setPointMemberId(_review.getReviewMemberId());
+
+	      int newPointResult = pointService.insertPoint(newPoint);
+
 	      return "redirect:/review/reviewCreate.do";
-	   }
 	   
 
-
+	   }
 	
 }
