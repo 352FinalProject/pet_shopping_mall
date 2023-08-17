@@ -120,7 +120,7 @@
 			 		</td>
 		 		</tr>
                 <tr>
-                    <th>제목트트트트</th>
+                    <th>제목</th>
                     <td>
                     	<input type="text" id="reviewTitle" name="reviewTitle" required/>
                     </td>

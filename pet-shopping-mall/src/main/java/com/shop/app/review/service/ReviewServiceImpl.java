@@ -53,16 +53,22 @@ public class ReviewServiceImpl implements ReviewService {
 		return result;
 	}
 
+//	@Override
+//	public Review findReviewMemberById(Review review) {
+//		return reviewRepository.findReviewMemberById(review);
+//	}
+
+	// 리뷰 삭제
 	@Override
-	public Review findReviewMemberById(Review review) {
-		return reviewRepository.findReviewMemberById(review);
+	public int reviewDelete(int reviewId) {
+		return reviewRepository.reviewDelete(reviewId);
 	}
 
 //	@Override
 //	public int findTotalReviewCount() {
 //		return reviewRepository.findTotalReviewCount();
 //	}
-//
+
 //	@Override
 //	public List<Review> findReviewAll(Map<String, Object> params) {
 //		int limit = (int) params.get("limit");
@@ -71,5 +77,10 @@ public class ReviewServiceImpl implements ReviewService {
 //		RowBounds rowBounds = new RowBounds(offset, limit);
 //		return reviewRepository.findReviewAll(rowBounds);
 //	}
+
+	@Override
+	public Review findReviewId(Review review) {
+		return reviewRepository.findReviewId(review);
+	}
 
 }

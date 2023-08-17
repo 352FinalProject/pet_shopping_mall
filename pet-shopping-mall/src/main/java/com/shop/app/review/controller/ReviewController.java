@@ -45,12 +45,11 @@ public class ReviewController {
 	private PointService pointService;
 	
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
-//	@GetMapping("/reviewList.do")
-//	public void reviewList(
-//			@RequestParam(defaultValue = "1") int page,
-//			Review review,
-//			Model model) {
-//		
+	@GetMapping("/reviewList.do")
+	public void reviewList(
+			@RequestParam int reviewId,
+			Model model) {
+		
 //		int limit = 10;
 //		
 //		Map<String, Object> params = Map.of(
@@ -61,11 +60,19 @@ public class ReviewController {
 //		int totalCount = reviewService.findTotalReviewCount();
 //		int totalPages = (int) Math.ceil((double) totalCount / limit);
 //		model.addAttribute("totalPages", totalPages);
-//		
+		
 //		List<Review> reviews = reviewService.findReviewAll(params);
 //		model.addAttribute("reviews", reviews);
-//		
-//	}
+		
+		Review review = Review
+				.builder()
+				.reviewId(reviewId)
+				.build();
+		
+		Review reviews = reviewService.findReviewId(review);
+		model.addAttribute("reviews", reviews);
+		
+	}
 	
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
@@ -119,6 +126,20 @@ public class ReviewController {
 		
 		int result = reviewService.insertReview(reviews);
 		
+		// 리뷰작성 후 어디페이지로 갈지 정하기
+		return "redirect:/review/reviewList.do";
+	}
+		
+	// 리뷰삭제
+	@PostMapping("/reviewDelete.do")
+	public String reviewDelete(@RequestParam int reviewId) {
+		
+		int result = reviewService.reviewDelete(reviewId);
+		
+		return "redirect:/review/reviewList.do";
+	}
+
+
 		// 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
 		Point currentPoints = pointService.findReviewPointMemberById(reviews); 
 		
