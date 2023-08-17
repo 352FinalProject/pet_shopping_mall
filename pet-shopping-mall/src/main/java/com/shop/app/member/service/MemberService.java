@@ -20,6 +20,6 @@ public interface MemberService extends UserDetailsService {
 
 	int deleteMember(String memberId);
 
-	int insertMember(KakaoMemberCreateDto kakaoMemberCreateDto);
+	int kakaoinsertMember(KakaoMemberCreateDto kakaoMemberCreateDto);
 
 }

@@ -76,7 +76,7 @@ public class KakaoController {
 						.email(email)
 						.build();
 			
-			int result = memberService.insertMember(kakaoMemberCreateDto);
+			int result = memberService.kakaoinsertMember(kakaoMemberCreateDto);
 			
 			// 회원가입 후, 다시 회원 정보를 조회
 			member = (MemberDetails) memberService.loadUserByUsername(memberId);

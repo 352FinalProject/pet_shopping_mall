@@ -51,8 +51,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int insertMember(KakaoMemberCreateDto member) {
-		return memberRepository.insertMember(member);
+	public int kakaoinsertMember(KakaoMemberCreateDto member) {
+		return memberRepository.kakaoinsertMember(member);
 	}
 
 }

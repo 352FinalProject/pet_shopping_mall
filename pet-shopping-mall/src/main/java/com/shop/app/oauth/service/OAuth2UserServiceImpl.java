@@ -70,7 +70,7 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 						.build();
 			
 			// DB에 회원 정보 저장
-			int result = memberService.insertMember(kakaoCreateDto);
+			int result = memberService.kakaoinsertMember(kakaoCreateDto);
 			member = (MemberDetails) memberService.loadUserByUsername(memberId);
 		}
 		

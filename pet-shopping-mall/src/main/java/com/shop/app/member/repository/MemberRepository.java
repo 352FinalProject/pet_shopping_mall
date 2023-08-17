@@ -33,6 +33,6 @@ public interface MemberRepository {
 	MemberDetails loadUserByUsername(String username);
 
 	@Insert("insert into member values (#{memberId}, #{password}, #{name}, #{birthday, jdbcType=DATE}, #{email, jdbcType=VARCHAR}, default)")
-	int insertMember(KakaoMemberCreateDto member);
+	int kakaoinsertMember(KakaoMemberCreateDto member);
 
 }
