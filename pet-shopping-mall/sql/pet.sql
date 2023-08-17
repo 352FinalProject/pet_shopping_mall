@@ -49,9 +49,9 @@ SELECT *  FROM all_tables;
 --drop table return;
 --drop table terms;
 --drop table terms_history;
-
-
-
+--
+--
+--
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
