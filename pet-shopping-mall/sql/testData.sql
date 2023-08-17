@@ -75,11 +75,52 @@ insert into answer (answer_id, answer_admin_name, answer_question_id, answer_con
 values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
 
 ------------------ product insert ---------------------------
-insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
-values (seq_member_id.nextval, 101, '사료', '오리젠 퍼피', 32000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
+-- 카테고리 생성
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '간식');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
+select * from product_category;
 
-insert into product (id, product_code, product_category, product_name, product_price, product_stock, expire_date)
-values (seq_member_id.nextval, 102, '하네스', '말랑 하네스', 15000, 100, to_date('2023-12-31', 'yyyy-mm-DD'));
+-- 제품등록 (이미지는 현재 null 처리)
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 2, '말랑 개껌', 10000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, null, null, default, null, 31, 156);
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 4, '말랑 하네스', 15000, null, null, default, null, default, default);
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 4, '짱 부드러운 목줄', 25000, null, null, default, null, 10, 112);
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 6, '츄릅츄릅 츄르 10개입', 20000, null, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+select * from product;
+
+-- 제품상세 등록
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, '용량', '1kg', default, 10, default);
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, '용량', '2kg', 20000, 20, default);
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, '용량', '5kg', 40000, 10, default);
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, '맛', '소고기', default, 10, default);
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, '맛', '닭고기', 20000, 20, default);
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, '맛', '연어', 40000, 10, default);
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 2, '맛', '소고기', default, 20, 1);
+insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
+    values (seq_product_detail_id.nextval, 2, '맛', '닭고기', default, 20, 1);
+select * from product_detail;
+commit;
+
+
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)

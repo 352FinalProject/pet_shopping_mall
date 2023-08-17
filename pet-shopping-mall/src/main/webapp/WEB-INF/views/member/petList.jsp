@@ -40,14 +40,13 @@
 			        </tr>
 			    </thead>
 					    <tbody>
-					        <c:forEach items="${petList}" var="pet" varStatus="vs">
+					        <c:forEach items="${pets}" var="pet" varStatus="vs">
 					            <tr>
 					                <td>${vs.index + 1}</td>
 					                <td>${pet.petKind}</td>
 					                <td>${pet.petBreed}</td>
 					                <td>${pet.petGender}</td>
 					                <td>${pet.petDofB}</td>
-					                <td>${calculateAge(pet.petDofB)}</td>
 					                <td>${pet.petName}</td>
 					                <td>
 					                    <a href="${pageContext.request.contextPath}/edit/${pet.petId}"> 수정</a>
@@ -61,6 +60,17 @@
 			</div>
 		</div>
 	</div>
+<button type="button" onclick="PetDelete();"
+class="qna-btn-reset">삭제하기</button>
+
+<!-- 펫 정보 삭제 폼 -->
+<form:form name="PetDeleteFrm"
+	action="${pageContext.request.contextPath}/member/petDelete.do"
+	method="POST">
+	<input type="hidden" name="petId" value="${pet.petId}" />
+</form:form>
+</section>
+
 <nav aria-label="...">
   	<ul class="pagination pagination-sm">
 	    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
@@ -74,5 +84,11 @@
 </nav>
 </section>
 <script>
+const PetDelete = () => {
+	if(confirm("질문을 삭제하시겠습니까?")) {
+		document.PetDeleteFrm.submit();
+	}
+};
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

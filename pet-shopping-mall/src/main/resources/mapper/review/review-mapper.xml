@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.app.review.repository.ReviewRepository">
+
+    <insert id="insertAttachment" useGeneratedKeys="true" keyProperty="imageId" keyColumn="image_id">
+    insert into 
+    	image_attachment 
+    	(image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, image_created_at) 
+    	values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)
+	</insert>
+
+    
+<resultMap type="ReviewDetails" id="ReviewDetailsResultMap">
+    <id property="reviewId" column="review_id"/>
+    <result property="petId" column="pet_id"/>
+    <result property="orderId" column="order_id"/>
+    <result property="reviewMemberId" column="review_member_id"/>
+    <result property="productDetailId" column="product_detail_id"/>
+    <result property="reviewTitle" column="review_title"/>
+    <result property="reviewContent" column="review_content"/>
+    <result property="reviewStarRate" column="review_star_rate"/>
+    <result property="reviewCreatedAt" column="review_created_at"/>
+
+    <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
+    <collection property="attachments" ofType="imageAttachment">
+        <result property="imageId" column="image_id"/>
+        <result property="imageType" column="image_type"/>
+        <result property="imageCategory" column="image_category"/>
+        <result property="imageOriginalFilename" column="image_original_filename"/>
+        <result property="imageRenamedFilename" column="image_renamed_filename"/>
+        <result property="imageFileSize" column="image_file_size"/>
+        <result property="imageCreatedAt" column="image_created_at"/>
+    </collection>
+</resultMap>
+</mapper>

@@ -15,11 +15,17 @@ import com.shop.app.servicecenter.inquiry.entity.Question;
 @Mapper
 public interface AdminRepository {
 	
-	@Select("select * from member order by id desc")
-	List<Member> adminMemberList(RowBounds rowBounds);
+	@Select("select * from member order by enroll_date desc")
+	List<Member> adminMemberList();
+	
+	@Select("select * from member where subscribe ='Y' order by enroll_date desc")
+	List<Member> adminSubscribeList();
 	
 	@Select("select * from member where name like '%' || #{searchKeyword} || '%' or member_id like '%' || #{searchKeyword} || '%'")
 	List<Member> adminMemberSearchByNameOrId(@Param("searchKeyword") String searchKeyword);
+	
+	@Select("select * from member where (name like '%' || #{searchKeyword} || '%' or member_id like '%' || #{searchKeyword} || '%') and subscribe = 'Y'")
+	List<Member> adminSubscribeSearchByNameOrId(String searchKeyword);
 	
 	@Insert("insert into member values ()")
 	int insertMember(Member member);
@@ -43,6 +49,13 @@ public interface AdminRepository {
 
 	@Select("select count (*) from member")
 	int findTotalAdminCount();
+
+	@Select("select count (*) from member where subscribe ='Y' order by enroll_date desc")
+	int findTotalubscribeCount();
+
+	
+
+	
 
 
 }

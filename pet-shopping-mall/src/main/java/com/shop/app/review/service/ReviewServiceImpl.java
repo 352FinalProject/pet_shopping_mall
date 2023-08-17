@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.review.dto.ReviewDetails;
 import com.shop.app.review.entity.Review;
+import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,35 +27,59 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int insertReview(Review review) {
 		int result = 0;
-		
 		// review 저장
 		result = reviewRepository.insertReview(review);
 		
-		log.debug("reviews = {}", review);
+		int refId = review.getReviewId();
+		System.out.println("review refId = " + refId);
 		
 		// attachment 저장
 		List<imageAttachment> attachments = ((ReviewDetails) review).getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(imageAttachment attach : attachments) {
-				attach.setImageId(review.getReviewId());
-				result = reviewRepository.insertAttachment(attach);
+				
+				// 1. 이미지 파일 DB에 저장
+				int result2 = reviewRepository.insertAttachment(attach);
+				
+				// 2. 이미지 파일 DB 저장 후 생성된 이미지 ID 가져오기
+				int imageId = attach.getImageId();
+				
+				// 3. 리뷰 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
+				int reviewIdImageId = reviewRepository.insertMapping(refId, imageId);
+				
 			}
 		}
 		return result;
 	}
 
+//	@Override
+//	public Review findReviewMemberById(Review review) {
+//		return reviewRepository.findReviewMemberById(review);
+//	}
+
+	// 리뷰 삭제
 	@Override
-	public int findTotalReviewCount() {
-		return reviewRepository.findTotalReviewCount();
+	public int reviewDelete(int reviewId) {
+		return reviewRepository.reviewDelete(reviewId);
 	}
 
+//	@Override
+//	public int findTotalReviewCount() {
+//		return reviewRepository.findTotalReviewCount();
+//	}
+
+//	@Override
+//	public List<Review> findReviewAll(Map<String, Object> params) {
+//		int limit = (int) params.get("limit");
+//		int page = (int) params.get("page");
+//		int offset = (page - 1) * limit;
+//		RowBounds rowBounds = new RowBounds(offset, limit);
+//		return reviewRepository.findReviewAll(rowBounds);
+//	}
+
 	@Override
-	public List<Review> findReviewAll(Map<String, Object> params) {
-		int limit = (int) params.get("limit");
-		int page = (int) params.get("page");
-		int offset = (page - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return reviewRepository.findReviewAll(rowBounds);
+	public Review findReviewId(Review review) {
+		return reviewRepository.findReviewId(review);
 	}
 
 }

@@ -18,6 +18,8 @@ public interface MemberService extends UserDetailsService {
 
 	int updateMember(Member member);
 
-	int deleteMember(Member member);
+	int deleteMember(String memberId);
+
+//	int kakaoinsertMember(KakaoMemberCreateDto kakaoMemberCreateDto);
 
 }

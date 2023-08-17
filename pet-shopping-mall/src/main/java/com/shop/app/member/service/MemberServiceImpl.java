@@ -37,20 +37,23 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteMember(Member member) {
-		return memberRepository.deleteMember(member);
-	}
-
-
-	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails memberDetails = memberRepository.loadUserByUsername(username);
 		log.debug("memberDetails = {}", memberDetails);
-		if(memberDetails == null)
+		if (memberDetails == null)
 			throw new UsernameNotFoundException(username);
 		return memberDetails;
 	}
 
+	@Override
+	public int deleteMember(String memberId) {
+		return memberRepository.deleteMember(memberId);
+	}
+
+//	@Override
+//	public int kakaoinsertMember(KakaoMemberCreateDto member) {
+//		return memberRepository.kakaoinsertMember(member);
+//	}
 
 
 
