@@ -20,21 +20,13 @@ public class AdminServiceImpl implements AdminService {
 	private AdminRepository adminRepository;
 
 	@Override
-	public List<Member> adminMemberList(Map<String, Object> params) {
-		int limit = (int) params.get("limit");
-		int page = (int) params.get("page");
-		int offset = (page - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return adminRepository.adminMemberList(rowBounds);
+	public List<Member> adminMemberList() {
+		return adminRepository.adminMemberList();
 	}
 	
 	@Override
-	public List<Member> adminSubscribeList(Map<String, Object> params) {
-		int limit = (int) params.get("limit");
-		int page = (int) params.get("page");
-		int offset = (page - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		return adminRepository.adminSubscribeList(rowBounds);
+	public List<Member> adminSubscribeList() {
+		return adminRepository.adminSubscribeList();
 	}
 	
 	@Override

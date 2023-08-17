@@ -41,23 +41,19 @@ public class AdminController {
 	@GetMapping("/admin.do")
 	public void admin() {}
 	
+	@GetMapping("/index.do")
+	public void admin2() {}
+	
 	/**
 	 * 회원목록
 	 * @param page
 	 * @param model
 	 */
-	@GetMapping("/adminMemberList.do")
-	public void adminMemberList(@RequestParam(defaultValue = "1") int page,
-			Model model) {
-		int limit = 10;
-		Map<String, Object> params = Map.of(
-				"page", page,
-				"limit", limit
-			);
-		
+	@GetMapping("/adminMemberList2.do")
+	public void adminMemberList(Model model) {
 		// MemberDetails로 바꿔야댐
-		List<Member> members = adminService.adminMemberList(params);
-//		log.debug("members = {}", members);
+		List<Member> members = adminService.adminMemberList();
+		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
 	    for (Member member : members) {
@@ -69,9 +65,6 @@ public class AdminController {
 	    }
 	    
 	    int totalCount = adminService.findTotalAdminCount();
-		int totalPages = (int) Math.ceil((double) totalCount / limit);
-		
-		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("members", members);
 	}
@@ -81,34 +74,25 @@ public class AdminController {
 	 * @param page
 	 * @param model
 	 */
-	@GetMapping("/adminSubscribeList.do")
-	public void adminSubscribeList(@RequestParam(defaultValue = "1") int page,
-			Model model) {
-		int limit = 10;
-		Map<String, Object> params = Map.of(
-				"page", page,
-				"limit", limit
-			);
-		
+	@GetMapping("/adminSubscribeList2.do")
+	public void adminSubscribeList(Model model) {
 		// MemberDetails로 바꿔야댐
-		List<Member> members = adminService.adminSubscribeList(params);
+		List<Member> subscribeMembers = adminService.adminSubscribeList();
 //		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
-	    for (Member member : members) {
+	    for (Member subscribeMember : subscribeMembers) {
 	        
-	        String subscribeString = member.getSubscribe().toString(); 
+	        String subscribeString = subscribeMember.getSubscribe().toString(); 
 	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
 	        
-	        member.setSubscribe(subscribe);
+	        subscribeMember.setSubscribe(subscribe);
 	    }
 	    
 	    int totalCount = adminService.findTotalubscribeCount();
-		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		
-		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("members", members);
+		model.addAttribute("subscribeMembers", subscribeMembers);
 	}
 	
 
@@ -215,15 +199,17 @@ public class AdminController {
 	                subscribedMembers.add(member);
 		        }
 	        }
-	        model.addAttribute("members", subscribedMembers);
+	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
 			
-	    return "admin/adminSubscribeList";
+	    return "admin/adminSubscribeList2";
 	}
 	
-
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList() {}
+	
+	@GetMapping("/adminOrderList2.do")
+	public void adminOrderList2() {}
 	
 	@GetMapping("/adminProductList.do")
 	public void adminProductList() {}

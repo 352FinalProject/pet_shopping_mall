@@ -83,7 +83,6 @@
 				<th>결제방법</th>
 			</tr>
 		</c:forEach>
-			
 	</tbody>
 </table>
 

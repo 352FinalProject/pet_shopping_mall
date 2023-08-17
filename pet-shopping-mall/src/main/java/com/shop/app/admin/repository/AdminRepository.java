@@ -16,10 +16,10 @@ import com.shop.app.servicecenter.inquiry.entity.Question;
 public interface AdminRepository {
 	
 	@Select("select * from member order by enroll_date desc")
-	List<Member> adminMemberList(RowBounds rowBounds);
+	List<Member> adminMemberList();
 	
 	@Select("select * from member where subscribe ='Y' order by enroll_date desc")
-	List<Member> adminSubscribeList(RowBounds rowBounds);
+	List<Member> adminSubscribeList();
 	
 	@Select("select * from member where name like '%' || #{searchKeyword} || '%' or member_id like '%' || #{searchKeyword} || '%'")
 	List<Member> adminMemberSearchByNameOrId(@Param("searchKeyword") String searchKeyword);

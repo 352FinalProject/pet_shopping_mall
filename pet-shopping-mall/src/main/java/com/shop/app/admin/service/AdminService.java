@@ -9,9 +9,9 @@ import com.shop.app.servicecenter.inquiry.entity.Question;
 
 public interface AdminService {
 
-	List<Member> adminMemberList(Map<String, Object> params);
+	List<Member> adminMemberList();
 	
-	List<Member> adminSubscribeList(Map<String, Object> params);
+	List<Member> adminSubscribeList();
 
 	
 	int insertMember(Member member);
