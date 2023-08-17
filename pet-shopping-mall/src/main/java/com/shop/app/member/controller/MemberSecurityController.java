@@ -91,7 +91,7 @@ public class MemberSecurityController {
 		point.setPointType("회원가입");
 		point.setPointAmount(3000);
 		
-		int resultPoint = pointService.givePointsForSignUp(point);
+		int resultPoint = pointService.insertPoint(point);
 		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/";
@@ -204,9 +204,6 @@ public class MemberSecurityController {
 	
 	@GetMapping("/myWishlist.do")
 	public void myWishlist() {}
-	
-	@GetMapping("/petList.do")
-	public void petList() {}
 
 }
 

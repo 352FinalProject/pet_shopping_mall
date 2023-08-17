@@ -3,23 +3,28 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.member.repository.MemberRepository">
-    <!-- 회원 로그인을 위한 쿼리 -->
-<!--     <select id="loadUserByUsername" resultMap="memberAuthMap">
 
-	    "SELECT * FROM member WHERE member_id = #{memberId}"
-  </select> -->
 
+ <select id="loadUserByUsername" resultMap="memberAuthMap">
+	select
+	    *
+	from 
+	    member M
+	  left join authority A
+	    on M.member_id = A.member_id
+	where 
+	    M.member_id = #{username}
+  </select>
+
+  <resultMap id="memberAuthMap" type="memberDetails">
   
- <resultMap id="memberAuthMap" type="memberDetails">
       <id column="member_id" property="memberId"/>
       <result column="password" property="password"/>
       <result column="name" property="name"/>
-      <result column="email" property="email"/>
-      <result column="address " property="address "/>
+      <result column="gender" property="gender"/>
       <result column="birthday" property="birthday"/>
-      <result column="memberRole " property="memberRole "/>
-      <result column="point  " property="point  "/>
-      <result column="subscribe " property="subscribe "/>
+      <result column="email" property="email"/>
+      <result column="created_at" property="createdAt"/>
       <collection property="authorities"
                   ofType="simpleGrantedAuthority">
           <constructor>
@@ -28,5 +33,5 @@
           </constructor>
       </collection>
   </resultMap>
-
+  
 </mapper>
