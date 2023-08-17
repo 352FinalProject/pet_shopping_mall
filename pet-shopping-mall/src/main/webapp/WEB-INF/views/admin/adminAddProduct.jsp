@@ -24,13 +24,7 @@
 								<td class="productCategory"><select name="categoryId" id="categoryId">
 										<option value="-선택-">-선택-</option>
 										<c:if test="${empty categories}">
-											<option value="1">사료**</option>
-											<option value="2"">간식**</option>
-											<option value="3">패션용품**</option>
-											<option value="4">산책용품**</option>
-											<option value="5">위생용품**</option>
-											<option value="6">고양이**</option>
-											<option value="7">기타용품**</option>
+											<option value="1">카테고리가 없습니다. 카테고리를 추가해주세요</option>
 										</c:if>
 										<c:if test="${not empty categories}">
 											<c:forEach items="${categories}" var="category" varStatus="vs">
