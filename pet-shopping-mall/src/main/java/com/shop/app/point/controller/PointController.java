@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/point")
 @Slf4j
-public class pointController {
+public class PointController {
 
 	@Autowired
 	private PointService pointService;

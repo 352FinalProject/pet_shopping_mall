@@ -37,6 +37,8 @@ public interface AdminService {
 	
 	int findTotalubscribeCount();
 
+	int updateMemberPoints(String memberId, int pointChange);
+
 	
 
 
