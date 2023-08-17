@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.oauth.dto.KakaoMemberCreateDto;
 
 @Mapper
 public interface MemberRepository {
@@ -30,5 +31,8 @@ public interface MemberRepository {
 	int deleteMember(String memberId);
 
 	MemberDetails loadUserByUsername(String username);
+
+	@Insert("insert into member values (#{memberId}, #{password}, #{name}, #{birthday, jdbcType=DATE}, #{email, jdbcType=VARCHAR}, default)")
+	int insertMember(KakaoMemberCreateDto member);
 
 }
