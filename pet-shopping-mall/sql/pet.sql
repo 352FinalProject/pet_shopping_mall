@@ -44,7 +44,13 @@ SELECT *  FROM all_tables;
 --drop table persistent_logins;
 --drop table image_attachment_mapping;
 --drop table member;
---
+--drop table ordertbl;
+--drop table return;
+--drop table terms;
+--drop table terms_history;
+
+
+
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
@@ -75,7 +81,7 @@ create table member (
     member_id varchar2(20),
     password varchar2(300) not null,
     name varchar2(50) not null,
-    phone varchar2(11) not null,
+    phone varchar2(11),
     email varchar2(200),
     enroll_date timestamp default sysdate,
     address varchar2(500),
@@ -83,7 +89,7 @@ create table member (
     subscribe char(1) default 'N' not null,
     constraints pk_member_id primary key(member_id)
 );
-
+select * from member;
 
 -- 권한 테이블
 create table authority(
@@ -109,7 +115,7 @@ CREATE TABLE pet (
     constraints fk_pet_breed_id foreign key(breed_id) references breed(breed_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
-
+select * from member;
 CREATE TABLE breed (
     breed_id number,
     pet_kind VARCHAR2(50),
@@ -384,8 +390,8 @@ create table  terms_history (
  constraint pk_terms_id primary key(terms_id),
  constraint  fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
 );
- 
-
+ commit;
+select * from member;
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -414,6 +420,8 @@ select * from image_attachment_mapping;
 select * from authority;
 select * from pet;
 select * from review;
+
+
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger

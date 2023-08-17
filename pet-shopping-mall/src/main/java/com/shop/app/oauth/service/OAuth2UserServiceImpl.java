@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
-import com.shop.app.oauth.dto.KakaoMemberCreateDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,8 +60,8 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 			
 			String name = (String) profile.get("nickname");
 			String email = (String) kakaoAccount.get("email");
-			KakaoMemberCreateDto kakaoCreateDto = 
-					KakaoMemberCreateDto.builder()
+			MemberCreateDto memberCreateDto = 
+					MemberCreateDto.builder()
 						.memberId(memberId)
 						.password("1234")  // 기본 패스워드 설정
 						.name(name)
@@ -70,7 +69,7 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 						.build();
 			
 			// DB에 회원 정보 저장
-			int result = memberService.kakaoinsertMember(kakaoCreateDto);
+			int result = memberService.insertMember(memberCreateDto);
 			member = (MemberDetails) memberService.loadUserByUsername(memberId);
 		}
 		

@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.formLogin().loginPage("/member/memberLogin.do") // 로그인 페이지 경로
 				.loginProcessingUrl("/member/memberLogin.do") // 로그인 성공시 이동할 URL
-				.usernameParameter("memberId").defaultSuccessUrl("/") // 로그인 성공시 이동할 URL
+				.usernameParameter("memberId").defaultSuccessUrl("/", true) // 로그인 성공시 이동할 URL
 				.permitAll(); // 모든 사용자 허용
 
 		http.logout().logoutUrl("/member/memberLogout.do") // 로그아웃 URL
@@ -81,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.tokenValiditySeconds(60 * 60 * 24 * 14); // 2주
 		
 		http.oauth2Login()
-		.loginPage("/member/memberLogin.do")
+		.loginPage("/member/memberLogin.do").defaultSuccessUrl("/", true)
 		.userInfoEndpoint()
 		.userService(oauth2UserService);
 	}
