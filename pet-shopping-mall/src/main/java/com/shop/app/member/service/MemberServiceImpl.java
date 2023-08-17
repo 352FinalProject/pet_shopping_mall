@@ -1,7 +1,5 @@
 package com.shop.app.member.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,6 +39,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+
+	// Spring Security에 의해 db 사용자를 조회할 때 사용
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails memberDetails = memberRepository.loadUserByUsername(username);
@@ -49,6 +49,5 @@ public class MemberServiceImpl implements MemberService {
 			throw new UsernameNotFoundException(username);
 		return memberDetails;
 	}
-
 
 }
