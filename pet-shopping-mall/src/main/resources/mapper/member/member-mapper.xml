@@ -14,7 +14,6 @@
 	where 
 	    M.member_id = #{username}
   </select>
-  
 
   
  <resultMap id="memberAuthMap" type="memberDetails">

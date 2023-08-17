@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.repository.MemberRepository;
-import com.shop.app.oauth.dto.KakaoMemberCreateDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,9 +49,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.deleteMember(memberId);
 	}
 
-	@Override
-	public int kakaoinsertMember(KakaoMemberCreateDto member) {
-		return memberRepository.kakaoinsertMember(member);
-	}
+//	@Override
+//	public int kakaoinsertMember(KakaoMemberCreateDto member) {
+//		return memberRepository.kakaoinsertMember(member);
+//	}
 
 }

@@ -20,7 +20,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
-import com.shop.app.oauth.dto.KakaoMemberCreateDto;
 import com.shop.app.oauth.service.KakaoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -68,15 +67,15 @@ public class KakaoController {
 			
 			String name = (String) profile.get("nickname");
 			String email = (String) kakaoAccount.get("email");
-			KakaoMemberCreateDto kakaoMemberCreateDto = 
-					KakaoMemberCreateDto.builder()
+			MemberCreateDto memberCreateDto = 
+					MemberCreateDto.builder()
 						.memberId(memberId)
 						.password("1234")
 						.name(name)
 						.email(email)
 						.build();
 			
-			int result = memberService.kakaoinsertMember(kakaoMemberCreateDto);
+			int result = memberService.insertMember(memberCreateDto);
 			
 			// 회원가입 후, 다시 회원 정보를 조회
 			member = (MemberDetails) memberService.loadUserByUsername(memberId);
