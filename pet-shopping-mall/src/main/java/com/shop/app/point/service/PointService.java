@@ -5,7 +5,7 @@ import java.util.List;
 import com.shop.app.point.entity.Point;
 import com.shop.app.review.entity.ReviewDetails;
 
-public interface PointService {
+public interface PointService	 {
 
 	// 포인트 전체 조회 (예라)
 	List<Point> findPointAll(Point point);

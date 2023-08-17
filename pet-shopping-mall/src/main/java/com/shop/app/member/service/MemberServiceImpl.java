@@ -1,5 +1,7 @@
 package com.shop.app.member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.repository.MemberRepository;
+import com.shop.app.oauth.dto.KakaoMemberCreateDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,20 +37,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteMember(Member member) {
-		return memberRepository.deleteMember(member);
-	}
-
-
-
-	// Spring Security에 의해 db 사용자를 조회할 때 사용
-	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails memberDetails = memberRepository.loadUserByUsername(username);
 		log.debug("memberDetails = {}", memberDetails);
-		if(memberDetails == null)
+		if (memberDetails == null)
 			throw new UsernameNotFoundException(username);
 		return memberDetails;
+	}
+
+	@Override
+	public int deleteMember(String memberId) {
+		return memberRepository.deleteMember(memberId);
+	}
+
+	@Override
+	public int kakaoinsertMember(KakaoMemberCreateDto member) {
+		return memberRepository.kakaoinsertMember(member);
 	}
 
 }

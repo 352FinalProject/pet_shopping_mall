@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
     .accordion-content {
@@ -16,6 +19,8 @@
     <div class="common-title">내가 쓴 리뷰</div>
     <div class="common-container">
         <div class="common-div">
+    		<form:form name="questionSearchFrm" 
+			action="${pageContext.request.contextPath}/review/reviewList.do" method="get">
             <div class="service-util-div">
                 <table class="service-product-utility">
 					<thead>
@@ -27,6 +32,13 @@
 						</tr>
 					</thead>
                     <tbody>
+                    	<c:if test="${empty reviews}">
+                    		<tr>
+                    			<td colspan="4">작성된 리뷰가 없습니다.</td>
+                    		</tr>
+                    	</c:if>
+                    	<c:if test="${not empty reviews}">
+                    	<c:forEach items="${reviews} var="review" varStatus="vs">
                         <tr class="table-row">
                             <td>
                                 <div style="display: flex; align-items: center;">
@@ -46,15 +58,19 @@
                                 </div>
                             </td>
                             <td style="vertical-align: middle;">
-                                ★(5)
+                                ${review.reviewStarRate}
                             </td>
                             <td style="vertical-align: middle;">
-                                2023.08.06
+                            <fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+							<fmt:formatDate value="${reviewCreatedAt}" pattern="yy/MM/dd HH:mm"/>
                             </td>
                         </tr>
+                        </c:forEach>
+                        </c:if>
                     </tbody>
                 </table>
             </div>
+            </form:form>
         </div>
     </div>
 </section>

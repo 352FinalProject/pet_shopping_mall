@@ -27,7 +27,11 @@
         <label for="saleStatusPaused">중지</label><br>
         <button type="submit">검색</button>
     </form>
-        <button type="button" href="${pageContext.request.contextPath}/admin/adminAddProduct.do">상품추가</button>
+    <form 
+    	method="GET"
+    	action="${pageContext.request.contextPath}/admin/adminAddProduct.do">
+        <button type="button">상품추가</button>
+    </form>
 </div>
 
 <table class="table table-striped table-hover">
