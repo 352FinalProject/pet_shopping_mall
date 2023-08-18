@@ -189,7 +189,7 @@ insert into product values(seq_product_id.nextval, 2, '꼬까옷', 17000, 2, 2, 
 select * from cartitem;
 select* from product;
 select * from product_detail;
-
+select * from orderTbl;
 update cartitem set product_detail_id=2 where product_detail_id=1;
 
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
