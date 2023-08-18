@@ -254,7 +254,7 @@ insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '
 select * from cart;
 insert into cartitem values(seq_cartitem_id.nextval, 25, 9, 1);
 insert into cartitem values(seq_cartitem_id.nextval, 25, 8, 1);
-select * from member;
+select * from orderTbl;
 select 
     *
 from
@@ -283,3 +283,44 @@ from
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
 where 
     ci.product_detail_id = 2;
+
+
+-------------------------------------------------------------------
+SELECT
+    ot.order_id,
+    ot.order_date,
+    ot.order_no,
+    p.product_name,
+    ot.order_status,
+    ot.payment_status,
+    ot.member_id,
+    ot.amount,
+    ot.delivery_fee,
+    pay.payment_method
+FROM
+    orderTbl ot
+JOIN
+    order_detail od ON ot.order_id = od.order_id
+JOIN
+    product_detail pd ON od.product_detail_id = pd.product_detail_id
+JOIN
+    product p ON pd.product_id = p.product_id
+JOIN
+    payment pay ON ot.order_id = pay.order_id;
+    
+select * from orderTbl;
+-------------------------------------------------------------------
+    
+select 
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
+from 
+    product p 
+left join product_detail pd on p.product_id = pd.product_id
+left join cartitem ci on pd.product_detail_id = ci.product_detail_id;

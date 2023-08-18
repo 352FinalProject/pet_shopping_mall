@@ -219,10 +219,8 @@ public class AdminController {
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList(Model model) {
 		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
-		log.debug("orderlist = {}", orderlists);
+		log.debug("orderlists = {}", orderlists);
 		model.addAttribute("orderlists", orderlists);
-		
-		
 	}
 	
 	@GetMapping("/adminProductList.do")

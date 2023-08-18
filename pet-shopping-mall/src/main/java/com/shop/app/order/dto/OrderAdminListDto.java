@@ -15,7 +15,7 @@ public class OrderAdminListDto {
 	private String productName; // 주문 상품 (product)
 	private int orderStatus;// 주문 상태 (orderTbl)
 	private int paymentState;// 결제 상태 (orderTbl)
-	private String memberName;// 주문자(이름) (member)
+	private String memberId;// 주문자(이름) (member)
 	private int amount; // 실 결제금액	(orderTbl)
 	private int deliveryFee; // 배송비 (orderTbl)
 	private int paymentMethod;// 결제방법 (payment)
