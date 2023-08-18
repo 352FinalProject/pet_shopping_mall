@@ -7,6 +7,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+
 <section class="common-section" id="#">
 	<div class="common-title">결제</div>
 	<div class="common-container">
@@ -126,7 +127,17 @@
 		</div>
 	</div>
 </section>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+
+let token = $("meta[name='_csrf']").attr("content");
+let header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
 
 /* 이용약관 버튼 색상 조정 */
 const checkAll = document.getElementById("checkAll");
@@ -223,7 +234,7 @@ const requestPaymentByCard = (data) => {
 	IMP.init('imp60204862');
 	/* 2. 결제 데이터 정의 */
 	IMP.request_pay({
-		pg : "kakaopay",                         // PG사
+		pg : data.pg,                         // PG사
     	pay_method: "card",
     	merchant_uid: data.orderNo,   // 주문번호
     	name: data.title,
@@ -238,7 +249,7 @@ const requestPaymentByCard = (data) => {
 		console.log(response)
  		$.ajax({
 			type: 'POST',
-			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid
+			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid,
 		}).done((data) =>  {
 			if(response.paid_amount == data.response.amount) {
 				alert("결제 완료");
@@ -249,7 +260,9 @@ const requestPaymentByCard = (data) => {
 	});
 };
 
-
+/* 			beforeSend : function(xhr){
+xhr.setRequestHeader(header, token);
+} */
 
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />

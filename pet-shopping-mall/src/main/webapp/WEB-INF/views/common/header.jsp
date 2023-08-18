@@ -12,6 +12,9 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <title>반려동물 쇼핑몰</title>
 </head>
 <link rel="stylesheet"
@@ -28,7 +31,7 @@
 	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/point.css" />
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
