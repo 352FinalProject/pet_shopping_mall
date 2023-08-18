@@ -194,7 +194,7 @@ update cartitem set product_detail_id=2 where product_detail_id=1;
 
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
-
+insert into cart values(1, 'pet123');
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
 insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
 select * from member;

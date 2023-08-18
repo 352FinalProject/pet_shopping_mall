@@ -347,15 +347,15 @@ footer p {
 .chat-btn {
 	display: flex;
 	justify-content: flex-end;
+	position: fixed;
+	bottom: 0;
+	right: 0;
 }
 .chat-btn2 {
 	display: flex;
-	position: fixed;
-	z-index: 999;
+	align-items: flex-end;
 }
 .chat-btn img {
 	width: 250px;
 	z-index: 999;
-	margin-top: 580px;
-	margin-right: 15px;
 }

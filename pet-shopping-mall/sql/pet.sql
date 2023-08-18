@@ -366,6 +366,9 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+select * from cart;
+
+
 create table cartitem (
     cartitem_id number,
     cart_id number,
@@ -441,6 +444,7 @@ create sequence seq_cartitem_id;
 create sequence seq_chat_id;
 create sequence seq_chat_room_id;
 
+select * from orderTbl;
 select * from member;
 select * from question;
 select * from answer;
