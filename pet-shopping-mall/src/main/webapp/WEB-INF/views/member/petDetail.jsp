@@ -56,6 +56,10 @@
                         <th>품종:</th>
                         <td>${pet.petBreed}</td>
                     </tr>
+                    <tr>
+                        <th>성별</th>
+                        <td>${pet.petGender}</td>
+                    </tr>
                 </table>
             </div>
             <div class="pet-text-input">
@@ -65,6 +69,7 @@
         </div>
     </div>
 </section>
+
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

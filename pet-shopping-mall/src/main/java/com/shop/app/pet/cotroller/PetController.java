@@ -1,14 +1,12 @@
 package com.shop.app.pet.cotroller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
+import com.shop.app.pet.entity.PetDetails;
 import com.shop.app.pet.service.PetService; // 패키지명 수정
-import com.shop.app.servicecenter.inquiry.controller.QuestionController;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,22 +53,20 @@ public class PetController {
 		model.addAttribute("pets", pets);
 		}
 	
-	
-	 @PostMapping("/petDelete.do")
-	 public String petDelete(@RequestParam int petId) {
-	    int result = petService.petDelete(petId);
-	    return "redirect:/member/petList.do";
-	    }
-	 
-//	 @GetMapping("/member/petDetail.do")
-//	 public String petDetail(@RequestParam int petId, Model model) {
-//	     int pet = petService.findPetById(petId);
-//	     model.addAttribute("pet", pet);
-//	     return "redirect:/member/petDetail.do"; // 디렉토리 구조에 맞게 경로를 조정해야 합니다.
-//	 }
-//	 
-	 
+	@GetMapping("/petDetail.do")
+	public void petDetail(@RequestParam int petId, Model model) {
+		int petDetail = petService.findPetById(petId); // petId에 해당하는 펫 정보 가져오기
+	    model.addAttribute("petDetail", petDetail);
+		
+//	    return "redirect:/member/petDetail.do"; // 실제 펫 디테일 페이지의 경로를 반환해야 합니다.
+	}
+
 }
+
+
+
+
+
 //	@PostMapping("/petUpdate")
 //	public String petUpdate(@Valid PetUpdateDto pet, RedirectAttributes redirectAttributes) {
 //	
@@ -82,3 +78,5 @@ public class PetController {
 //
 //	    return "redirect:/member/petList.do"; // 목록 페이지로 리다이렉트
 //	}
+
+    

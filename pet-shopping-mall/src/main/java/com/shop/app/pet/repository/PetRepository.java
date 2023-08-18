@@ -28,10 +28,9 @@ public interface PetRepository {
     @Delete("DELETE FROM pet WHERE pet_id = 1")
     int petDelete(int petId);
 
-
-//    @Select("SELECT * FROM pet WHERE pet_id = #{petId}")
-//    Pet petDetail(int petId);
-
+    
+    @Select("SELECT * FROM pet WHERE pet_id = #{petId}")
+    int petDetail(int petId);
 
 	
 

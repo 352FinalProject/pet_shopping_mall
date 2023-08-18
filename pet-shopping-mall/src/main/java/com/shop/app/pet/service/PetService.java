@@ -7,6 +7,7 @@ import java.util.Map;
 import com.shop.app.pet.dto.PetCreateDto;
 //import com.shop.app.pet.dto.PetUpdateDto;
 import com.shop.app.pet.entity.Pet;
+import com.shop.app.pet.entity.PetDetails;
 
 public interface PetService {
 
@@ -21,9 +22,9 @@ public interface PetService {
 
 	int petDelete(int petId);
 
-//	int petDetail(int petId);
-//	
-//	
+
+	int petDetail(int petId);
+
 
 }
 

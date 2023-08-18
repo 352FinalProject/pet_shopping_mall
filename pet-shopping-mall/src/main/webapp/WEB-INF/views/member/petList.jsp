@@ -70,7 +70,7 @@
 			</div>
 		</div>
 	</div>
-					<button type="button" onclick="PetDelete();" class="">삭제하기</button>
+					<button type="button"		 onclick="PetDelete();" class="">삭제하기</button>
 					<!-- 펫 정보 삭제 폼 -->
 					<form:form name="PetDeleteFrm"
 					   action="${pageContext.request.contextPath}/member/petDelete.do"
