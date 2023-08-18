@@ -51,7 +51,8 @@ SELECT *  FROM all_tables;
 --drop table terms_history;
 --drop table chat;
 --drop table chat_room;
-
+--drop table breed;
+--
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
