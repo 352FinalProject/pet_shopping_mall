@@ -9,7 +9,10 @@ import com.shop.app.servicecenter.inquiry.entity.Question;
 
 public interface AdminService {
 
-	List<Member> adminMemberList(Map<String, Object> params);
+	List<Member> adminMemberList();
+	
+	List<Member> adminSubscribeList();
+
 	
 	int insertMember(Member member);
 
@@ -27,8 +30,17 @@ public interface AdminService {
 	int findTotalQuestionCount();
 	
 	List<Member> adminMemberSearchByNameOrId(String searchKeyword);
+	
+	List<Member> adminSubscribeSearchByNameOrId(String searchKeyword);
 
 	int findTotalAdminCount();
+	
+	int findTotalubscribeCount();
+
+	int updateMemberPoints(String memberId, int pointChange);
+
+	
+
 
 
 

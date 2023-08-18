@@ -4,34 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.cart.repository.CartRepository">
 
- <!-- <select id="findAll" resultType="cartDto">
-    select
-    	* 
-    from 
-    	Blog 
-    order by
-    	id desc
-  </select> -->
+ <select id="getPrice" resultMap="priceListMap">
+	select 
+		product_name, product_price 
+	from 
+		product 
+	where 
+		product_id = #{productId}
+  </select>
   
-  
-  	 <!-- <resultMap type="boardDetails" id="boardDetailsMap">
-		<id column="id" property="id"/>
-		<result column="title" property="title"/>
-		<result column="member_id" property="memberId"/>
-		<result column="content" property="content"/>
-		<result column="created_at" property="createdAt"/>
-		<association property="member" javaType="member">
-			<id column="member_id" property="memberId"/>
-			<result column="name" property="name"/>
-			<result column="birthday" property="birthday"/>
-			<result column="email" property="email"/>
-		</association>
-		<collection property="attachments" ofType="attachment">
-			<id column="attach_id" property="id"/>
-			<result column="board_id" property="boardId"/>
-			<result column="original_filename" property="originalFilename"/>
-			<result column="renamed_filename" property="renamedFilename"/>
-			<result column="attach_created_at" property="createdAt"/>
-		</collection>
-	</resultMap> -->
+  <resultMap type="map" id="priceListMap">
+  	<result column="product_name" property="productName" />
+  	<result column="product_price" property="productPrice" />
+  </resultMap>
 </mapper>

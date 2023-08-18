@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -31,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService memberService;
 
+	
+	@Autowired
+	private OAuth2UserService oauth2UserService;
 	
 	// 데이터 소스 연결
 	@Autowired
@@ -55,14 +59,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/index.jsp").permitAll() // 모든 사용자 허용
+				.antMatchers("/servicecenter/inquiry/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
 				.antMatchers("/member/terms.do","/member/memberCreate.do", "/member/checkIdDuplicate.do").anonymous() // 비로그인 사용자만 허용
-				.antMatchers("/board/boardList.do").permitAll();
-//				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
+				.antMatchers("/oauth/**").permitAll();
+//				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 //				.anyRequest().authenticated(); // 나머지 요청은 인증 필요
 
 		http.formLogin().loginPage("/member/memberLogin.do") // 로그인 페이지 경로
 				.loginProcessingUrl("/member/memberLogin.do") // 로그인 성공시 이동할 URL
-				.usernameParameter("memberId").defaultSuccessUrl("/") // 로그인 성공시 이동할 URL
+				.usernameParameter("memberId").defaultSuccessUrl("/", true) // 로그인 성공시 이동할 URL
 				.permitAll(); // 모든 사용자 허용
 
 		http.logout().logoutUrl("/member/memberLogout.do") // 로그아웃 URL
@@ -72,8 +77,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		http.rememberMe() // remember-me 기능 설정(아이디 저장)
-				.tokenRepository(tokenRepository()).key("hello-springboot-secret")
+				.tokenRepository(tokenRepository()).key("saveId")
 				.tokenValiditySeconds(60 * 60 * 24 * 14); // 2주
+		
+		http.oauth2Login()
+		.loginPage("/member/memberLogin.do").defaultSuccessUrl("/", true)
+		.userInfoEndpoint()
+		.userService(oauth2UserService);
 	}
 
 

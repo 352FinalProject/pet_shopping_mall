@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.shop.app.common.entity.Attachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.AnswerDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
@@ -18,7 +17,7 @@ public interface AnswerRepository {
 
 
 	// 관리자 1:1 문의 댓글 작성 (예라)
-	@Insert("insert into answer values(seq_answer_answer_id.nextval, #{answerAdminName}, #{answerQuestionId}, #{answerContent}, default)")
+	@Insert("insert into answer values(seq_answer_id.nextval, #{answerAdminName}, #{answerQuestionId}, #{answerContent}, default)")
 	int insertAnswer(AnswerDetails answers);
 
 	// 관리자 1:1 문의 댓글 삭제 (예라)

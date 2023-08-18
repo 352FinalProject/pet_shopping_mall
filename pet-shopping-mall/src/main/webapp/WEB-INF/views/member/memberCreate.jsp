@@ -84,6 +84,10 @@
 	border: 1px solid #e7e7e7;
 	color: white;
 }
+
+button, input {
+	cursor: pointer;
+}
 </style>
 <!-- 회원가입 (혜령) -->
     <section class="common-section" id="#">

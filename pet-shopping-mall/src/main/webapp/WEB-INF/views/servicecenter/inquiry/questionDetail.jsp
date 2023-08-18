@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <%-- 1:1 문의 상세 조회 (예라) --%>
@@ -35,18 +36,12 @@
 								readonly></td>
 						</tr>
 						<tr>
-							<th>사진첨부</th>
-							<td class="td-with-margin">
-								<%-- 사진 첨부 영역에 컨테이너로 감싸서 마진 적용 --%>
-								<div>
-									<%-- 					              <c:forEach items="${questions.attachments}" var="attach" varStatus="vs">
-					                <button type="button" class="btn btn-outline-success btn-block"
-					                  onclick="location.href = '${pageContext.request.contextPath}/servicecenter/inquiry/fileDownload.do?id=${attach.id}';">
-					                  첨부파일${vs.count} - ${attach.originalFilename}
-					                </button>
-					              </c:forEach> --%>
-								</div>
-							</td>
+						    <th>사진첨부</th>
+						    <td>
+						        <div class="detail-upload">
+						            ${questionDetails.attachments[0].imageOriginalFilename}
+						        </div>
+						    </td>
 						</tr>
 						<tr>
 							<th>제목</th>
@@ -70,8 +65,10 @@
 				<table>
 					<div class="anw-regdate">
 						<br />
-						<fmt:parseDate value="${answers.answerCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="answerCreatedAt" />
-						답변 등록일 <fmt:formatDate value="${answerCreatedAt}" pattern="yy/MM/dd" />
+						<fmt:parseDate value="${answers.answerCreatedAt}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="answerCreatedAt" />
+						답변 등록일
+						<fmt:formatDate value="${answerCreatedAt}" pattern="yy/MM/dd" />
 					</div>
 					<tr>
 						<th>A</th>
@@ -79,38 +76,45 @@
 								readonly style="height: 160px; resize: none;">${answers.answerContent}</textarea></td>
 					</tr>
 				</table>
-				<sec:authorize access="hasRole('USER_ADMIN')">
-					<!-- 댓글 기능 -->
-					<div class="anw-create-btn">
-						<!-- 댓글 삭제 -->
-						<button type="button" onclick="AnswerDelete();"
-							class="anw-btn-reset">댓글삭제</button>
-						<!-- 댓글 수정 -->
-							<button class="anw-btn-create" type="button" onclick="showEditBox();">댓글수정</button>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<!-- 답변 1개 이상 달리면 댓글창 안 보이게 -->
+					<c:if test="${question.awnserCount >= 1}">
+				<!-- 댓글 기능 -->
+						<div class="anw-create-btn">
+				<!-- 댓글 삭제 -->
+							<button type="button" onclick="AnswerDelete();"
+								class="anw-btn-reset">댓글삭제</button>
+				<!-- 댓글 수정 -->
+							<button class="anw-btn-create" type="button"
+								onclick="showEditBox();">댓글수정</button>
+							<form:form
+								action="${pageContext.request.contextPath}/servicecenter/inquiry/answerUpdate.do?questionId=${questions.questionId}"
+								method="post">
+								<div class="hidden-textbox" style="display: none;">
+									<textarea id="editComment" name="answerContent"
+										style="position: absolute; border: 1px solid #c8c8c8; background: #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
+									<input type="hidden" name="questionId"
+										value="${questions.questionId}" /> <input type="hidden"
+										name="answerId" value="${answers.answerId}" />
+									<button onclick="submitEdit();" name="" class="editComment">수정하기</button>
+								</div>
+							</form:form>
+						</div>
+				<!-- 댓글 작성 -->
 						<form:form
-							action="${pageContext.request.contextPath}/servicecenter/inquiry/answerUpdate.do?questionId=${questions.questionId}" method="post">
-							<div class="hidden-textbox" style="display: none;">
-							    <textarea id="editComment" name="answerContent" style=" position: absolute; border : 1px solid #c8c8c8; background : #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
-								<input type="hidden" name="questionId" value="${questions.questionId}" />
-								<input type="hidden" name="answerId" value="${answers.answerId}" />
-							    <button onclick="submitEdit();" name="" class="editComment">수정하기</button>
+							action="${pageContext.request.contextPath}/servicecenter/inquiry/answerCreate.do"
+							method="post">
+							<td><textarea name="answerContent" id="answerContent"
+									style="height: 100px; resize: none;"></textarea></td>
+							<input type="hidden" name="questionId"
+								value="${questions.questionId}">
+							<input type="hidden" name="answerAdminName"
+								value="${answers.answerAdminName}">
+							<div class="anw-create2">
+								<button class="anw-btn-create2" type="submit">댓글작성</button>
 							</div>
 						</form:form>
-					</div>
-					<!-- 댓글 작성 -->
-					<form:form
-						action="${pageContext.request.contextPath}/servicecenter/inquiry/answerCreate.do"
-						method="post">
-						<td><textarea name="answerContent" id="answerContent"
-								style="height: 100px; resize: none;"></textarea></td>
-						<input type="hidden" name="questionId"
-							value="${questions.questionId}">
-						<input type="hidden" name="answerAdminName"
-							value="${answers.answerAdminName}">
-						<div class="anw-create2">
-							<button class="anw-btn-create2" type="submit">댓글작성</button>
-						</div>
-					</form:form>
+					</c:if>
 				</sec:authorize>
 			</div>
 		</div>

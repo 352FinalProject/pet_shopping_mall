@@ -100,6 +100,10 @@
 .pet-info div {
 	color: blue;
 }
+
+button, input {
+	cursor: pointer;
+}
 </style>
 
 <!-- 마이페이지 (혜령) -->
@@ -109,12 +113,14 @@
 	<br>
 	<div class="common-container">
 		<div class="common-div">
-			<form:form name="memberCreateFrm" action="" method="POST">
+			<form:form name="memberUpdateFrm"
+				action="${pageContext.request.contextPath}/member/memberUpdate.do"
+				method="POST">
 				<table>
 					<tr>
 						<th>아이디</th>
-						<td><input type="text" name="memberId" id="memberId" value=""
-							readonly required /></td>
+						<td><input type="text" name="memberId" id="memberId"
+							value="${loginMember.memberId}"  required /></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
@@ -125,8 +131,8 @@
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td><input type="text" name="name" id="name" value=""
-							readonly required></td>
+						<td><input type="text" name="name" id="name"
+							value="${loginMember.name}" required></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
@@ -147,9 +153,9 @@
 					</tr>
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="tel" name="tel" id="tel" value="" required>
-							<input type="button" value="핸드폰 인증" onclick="telCheck()">
-						</td>
+						<td><input type="tel" name="tel" id="tel"
+							value="${loginMember.phone}" required> <input
+							type="button" value="핸드폰 인증" onclick="telCheck()"></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
@@ -160,23 +166,26 @@
 					</tr>
 					<tr>
 						<th>생일</th>
-						<td><input type="date" name="birthday" id="birthday" value=""
-							readonly required></td>
+						<td><input type="date" name="birthday" id="birthday"
+							value="${loginMember.birthday}" readonly required></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="pet@gmail.com" value="" required></td>
+							placeholder="pet@gmail.com" value="${loginMember.email}" required>
+						</td>
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input type="text" name="address" id="address" value=""
-							required> <input type="button" value="주소 검색"></td>
+						<td><input type="text" name="address" id="address"
+							value="${loginMember.address}" required> <input
+							type="button" value="주소 검색"></td>
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2"><input type="reset"
-							value="돌아가기"> <input type="submit" value="수정하기">
-						</td>
+							value="돌아가기"
+							onclick="location.href='${pageContext.request.contextPath}/'">
+							<input type="submit" value="수정하기"></td>
 					</tr>
 				</table>
 			</form:form>
