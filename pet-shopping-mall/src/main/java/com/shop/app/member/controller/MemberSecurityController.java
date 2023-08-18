@@ -63,7 +63,7 @@ public class MemberSecurityController {
 	
 
 	@PostMapping("/memberCreate.do") // 회원 생성 처리
-	public String create(
+	public String memberCreate(
 			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
 			BindingResult bindingResult, // 유효성 검사 결과
 			RedirectAttributes redirectAttr) { // 리다이렉트시 전달 할 속성
@@ -75,7 +75,7 @@ public class MemberSecurityController {
 		    // getAllErrors 메서드를 통해 발생한 모든 오류를 가져오고, 첫 번째 오류를 선택.
 		    redirectAttr.addFlashAttribute("msg", error.getDefaultMessage());
 		    // 오류 메시지를 리다이렉트 애트리뷰트에 "msg"라는 이름으로 추가하여, 리다이렉트 후에도 데이터가 유지.
-		    return "redirect:/member/memberCreate.do";
+		    return "redirect:/memberCreate.do";
 		    // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
 		}
 
@@ -108,7 +108,7 @@ public class MemberSecurityController {
 //		int resultTerms = termsService.insertTerms(terms);
 		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
-		return "redirect:/";
+		return "redirect:/memberCreateComplete.do";
 	}
 	
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑

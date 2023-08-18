@@ -88,11 +88,12 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 		            // NAVER 특정 속성을 사용하여 회원을 생성하는 방법을 처리합니다.
 		            // 올바른 속성을 추출하기 위해 로직을 조정해야 합니다.
 		        	
-		        	   Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("naverAccount");
-			           Map<String, Object> profile = (Map<String, Object>) naverAccount.get("profile");
-			           
-		        	   String name = (String) profile.get("profile");
-			           String email = (String) naverAccount.get("naverAccount");
+		        	   Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("response");
+//		        	   log.debug("naverAccount = {}", naverAccount);
+			           log.debug("response = {}", naverAccount);
+		        	   String name = (String) naverAccount.get("name");
+		        	   log.debug("name = {}", name);
+			           String email = (String) naverAccount.get("email");
 			            
 			            MemberCreateDto memberCreateDto = MemberCreateDto.builder()
 			                .memberId(memberId)

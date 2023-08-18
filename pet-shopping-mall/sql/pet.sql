@@ -89,7 +89,7 @@ create table member (
     subscribe char(1) default 'N' not null,
     constraints pk_member_id primary key(member_id)
 );
-select * from member;
+
 
 -- 권한 테이블
 create table authority(
@@ -258,7 +258,8 @@ create table cancel_order (
     constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 
 );
-
+select * from member;
+commit;
 -- 대충 시큐리티 테이블 없으면 오류남
 create table persistent_logins (
     username varchar(64) not null,
