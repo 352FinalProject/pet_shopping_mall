@@ -16,11 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CartInfoDto{
+	private int productId;
 	private int productDetailId; //product_detail
 	private String productName; // product
-	private String OptionName; // product_detail
-	private String OptionValue; // product_detail
-	private int totalPrice; // product.getProductPrice +  productDetail.additionalPrice
+	private String optionName; // product_detail
+	private String optionValue; // product_detail
+	private int productPrice;
+	private int additionalPrice; // product.getProductPrice +  productDetail.additionalPrice
 	private int quantity; // cartitemId
 	
 }

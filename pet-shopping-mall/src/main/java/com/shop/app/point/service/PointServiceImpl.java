@@ -26,6 +26,14 @@ public class PointServiceImpl implements PointService {
 		return pointRepository.insertPoint(point);
 	}
 
+
+	// 멤버아이디로 포인트 조회 (담희)
+	@Override
+	public Point findCurrentPointById(String memberId) {
+		return pointRepository.findCurrentPointById(memberId);
+	}
+
+
 	// 리뷰 쓴 사용자 포인트 적립을 위해 아이디 조회 (예라)
 	@Override
 	public Point findReviewPointMemberById(ReviewDetails reviews) {

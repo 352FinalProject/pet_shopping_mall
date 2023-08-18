@@ -33,5 +33,8 @@ public interface PointRepository {
 	Point findReviewPointCurrentById(Point point);
 
 
-	
+	@Select("select * from point where point_member_id = #{member_id}")
+	Point findCurrentPointById(String memberId);
+
+
 }

@@ -1,12 +1,11 @@
 package com.shop.app.cart.service;
 
-import java.util.Map;
+import java.util.List;
 
 import com.shop.app.cart.dto.CartInfoDto;
-import com.shop.app.product.entity.ProductDetail;
 
 public interface CartService {
 
-	CartInfoDto getCartList(String memberId);
+	List<CartInfoDto> getCartInfoList(String memberId);
 
 }
