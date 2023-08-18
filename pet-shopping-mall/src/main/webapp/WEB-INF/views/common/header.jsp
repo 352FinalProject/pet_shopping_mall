@@ -28,6 +28,8 @@
 	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/point.css" />
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
 <body>

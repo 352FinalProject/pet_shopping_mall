@@ -33,5 +33,8 @@ public interface PointRepository {
 	@Update("UPDATE point SET point_current = point_current + #{pointAmount}, point_amount = #{pointAmount}, point_type = '리뷰적립', point_date = SYSTIMESTAMP WHERE point_member_id = #{pointMemberId}")
 	int updatePoint(Point point);
 
-	
+	@Select("select * from point where point_member_id = #{member_id}")
+	Point findCurrentPointById(String memberId);
+
+
 }
