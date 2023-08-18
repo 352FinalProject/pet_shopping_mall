@@ -6,9 +6,6 @@ values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울�
 --sample data 생성
 --==============================
 -- member insert
-insert into member (member_id, password, name, phone, email, address, birthday, member_role, point, subscribe)
-values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'ROLE_ADMIN', 10000, 'Y');
-
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
 
@@ -52,7 +49,34 @@ insert into member (member_id, password, name, phone, email, address, birthday, 
 values ('member14', '1234', '고모훈', '01012244238', 'qwewkim@naver.com', '서울시 송파구 석비촌동', to_date('1999-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('honggd', '1234', '홍지디', '01015314328', 'honggd@naver.com', '서울시 송파구 석나니촌동', to_date('1991-01-01', 'YYYY-MM-DD'), 'ROLE_USER', 10000, 'Y');
+values ('honggd', '1234', '홍지디', '01014567828', 'honggd@naver.com', '서울시 송파구 하하동', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hogd', '1234', '홍박사', '01015314318', 'honggd@naver.com', '서울시 송파구 타파동', to_date('1978-01-01', 'YYYY-MM-DD'), 'N');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('ho12d', '1234', '홍사', '01015315558', 'ho12d@naver.com', '서울시 송파구 자카동', to_date('1989-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('haad', '1234', '홍박', '01015315538', 'haad@naver.com', '서울시 송파구 사아동', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hoeerd', '1234', '홍양파', '01012314328', 'hoeerd@naver.com', '서울시 송파구 마바동', to_date('1988-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('htruyd', '1234', '홍대파', '01011231238', 'htruyd@naver.com', '서울시 송파구 다라동', to_date('1999-01-01', 'YYYY-MM-DD'), 'N');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hfnd', '1234', '홍쪽파', '01015123458', 'hfnd@naver.com', '서울시 송파구 가나동', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hsssd', '1234', '홍당근', '01015314128', 'hsssd@naver.com', '서울시 송파구 촌동', to_date('1994-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('hoqfghhd', '1234', '홍마늘', '01015124328', 'hoqfghhd@naver.com', '서울시 송파구 니촌동', to_date('1992-01-01', 'YYYY-MM-DD'), 'Y');
+
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('h123qd', '1234', '홍당무', '01015312328', 'h123qd@naver.com', '서울시 송파구 나동', to_date('1991-07-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
 insert into authority values ('abcde', 'ROLE_USER');
@@ -120,7 +144,44 @@ insert into product_detail (product_detail_id, product_id, option_name, option_v
 select * from product_detail;
 commit;
 
+-- 주문테이블 등록
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-001', 'honggd', sysdate, 0,  0, 35000, 3000, 0, 38000, null);
 
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-002', 'honggd', sysdate, 1,  1, 35000, 3000, 0, 38000, null);
+    
+ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-003', 'member5', sysdate, 1,  1, 35000, 3000, 0, 38000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-004', 'member2', sysdate, 1,  1, 35000, 3000, 0, 38000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-005', 'member3', sysdate, 1,  1, 25000, 3000, 0, 28000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-006', 'member5', sysdate, 1,  1, 22000, 3000, 0, 25000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-007', 'member6', sysdate, 1,  1, 17000, 3000, 0, 20000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-008', 'member7', sysdate, 1,  1, 24000,3000, 0, 27000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-009', 'member8', sysdate, 2,  1, 22000,3000, 0, 25000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-010', 'member9', sysdate, 3,  1, 19000,3000, 0, 22000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-011', 'member10', sysdate, 2, 1, 20000,3000, 0, 23000, null);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
+    
+    
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)

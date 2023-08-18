@@ -76,14 +76,10 @@
 							<th>번호</th>
 							<th>주문일시</th>
 							<th>주문번호</th>
-							<th>이미지</th>
-							<th>주문상품</th>
-							<th>수량</th>
-							<th>상품금액</th>
-							<th>배송비</th>
 							<th>주문상태</th>
+							<th>결제상태</th>
 							<th>주문자</th>
-							<th>총주문액</th>
+							<th>총결제액</th>
 							<th>결제방법</th>
 						</thead>
 						<tbody>
@@ -92,14 +88,10 @@
 									<th>${status.count}</th>
 									<th>주문일시</th>
 									<th><a href="#" />주문번호</th>
-									<th><a href="#" />이미지</th>
-									<th><a href="#" />주문상품</th>
-									<th>수량</th>
-									<th>상품금액</th>
-									<th>배송비</th>
 									<th>주문상태</th>
+									<th>결제상태</th>
 									<th>주문자</th>
-									<th>총주문액</th>
+									<th>총결제액</th>
 									<th>결제방법</th>
 								</tr>
 							</c:forEach>

@@ -9,8 +9,7 @@
 		<div class="container-fluid px-4">
 			<h1 class="mt-4">구독회원 조회</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a
-					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
 			</ol>
 			<div class="card mb-4">
 				<div class="card-body">
@@ -19,6 +18,7 @@
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 현재 구독회원 : ${totalCount}명
+					<span><button onclick="submit">구독회원 알림발송</button></span>
 				</div>
 				<div class="admin-member-search-container">
 					<form:form name="adminMemberSearchFrm"
