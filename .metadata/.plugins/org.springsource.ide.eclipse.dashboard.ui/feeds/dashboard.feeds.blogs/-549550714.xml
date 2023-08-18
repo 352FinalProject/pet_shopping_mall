@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 16 Aug 2023 16:43:26 GMT</lastBuildDate><item><title><![CDATA[Spring Modulith 1.0 RC2 released]]></title><link>https://spring.io/blog/2023/08/16/spring-modulith-1-0-rc2-released</link><guid isPermaLink="true">https://spring.io/blog/2023/08/16/spring-modulith-1-0-rc2-released</guid><dc:creator><![CDATA[Oliver Drotbohm]]></dc:creator><pubDate>Wed, 16 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;In preparation for the GA release next Monday, we have just shipped 1.0 RC2 of Spring Modulith. We took the chance to fold in some feedback regarding some tiny inconsistencies that would&apos;ve been inconvenient to fix post 1.0 GA.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 17 Aug 2023 21:27:02 GMT</lastBuildDate><item><title><![CDATA[Spring Framework 6.1 M4 released]]></title><link>https://spring.io/blog/2023/08/17/spring-framework-6-1-m4-released</link><guid isPermaLink="true">https://spring.io/blog/2023/08/17/spring-framework-6-1-m4-released</guid><dc:creator><![CDATA[Brian Clozel]]></dc:creator><pubDate>Thu, 17 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the Spring Framework framework team, it is my pleasure to announce that the fourth Spring Framework 6.1 milestone release is available from &lt;a href=&quot;https://repo.spring.io/milestone&quot;&gt;repo.spring.io/milestone&lt;/a&gt; now. This is the final milestone release for this new generation and we are scheduling the first release candidate in a month.&lt;/p&gt;
+&lt;p&gt;Spring Framework 6.1.0-M4 ships &lt;a href=&quot;https://github.com/spring-projects/spring-framework/milestone/330?closed=1&quot;&gt;62 fixes and improvements&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;New Features&lt;/h2&gt;
+&lt;p&gt;This new milestone ships new interesting features, such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Introduce &lt;code&gt;JdbcClient&lt;/code&gt; (a JDBC variant of the R2DBC &lt;code&gt;DatabaseClient&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Observability support for JMS (&lt;code&gt;@JmsListener&lt;/code&gt; and &lt;code&gt;JmsTemplate&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@HttpExchange&lt;/code&gt; annotations are now supported for server side handling (mapping requests to controllers methods)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CompletableFuture&lt;/code&gt; support for &lt;code&gt;@Cacheable&lt;/code&gt; methods&lt;/li&gt;
+&lt;li&gt;New improvements on the web binding and validation theme&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This also ships improvements for all existing applications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Improved support for &lt;code&gt;DatabaseClient&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;We tightened a bit the &lt;code&gt;@Bean&lt;/code&gt; configuration model to better prevent invalid configurations&lt;/li&gt;
+&lt;li&gt;Better &lt;code&gt;@TestPropertySource&lt;/code&gt; support (resource patterns, custom file extensions, text blocks)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What&apos;s next&lt;/h2&gt;
+&lt;p&gt;Check out our &lt;a href=&quot;https://github.com/spring-projects/spring-framework/wiki/What&amp;#x27;s-New-in-Spring-Framework-6.x&quot;&gt;What&apos;s New page&lt;/a&gt; for details about the specific features shipped so far.&lt;/p&gt;
+&lt;p&gt;The second Spring Boot 3.2 milestone &lt;a href=&quot;https://calendar.spring.io/&quot;&gt;will be released next week&lt;/a&gt; - this is the last stop before the release candidate phase, where we will stabilize new features. This is the right time to send your feedback about those new features!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Modulith 1.0 RC2 released]]></title><link>https://spring.io/blog/2023/08/16/spring-modulith-1-0-rc2-released</link><guid isPermaLink="true">https://spring.io/blog/2023/08/16/spring-modulith-1-0-rc2-released</guid><dc:creator><![CDATA[Oliver Drotbohm]]></dc:creator><pubDate>Wed, 16 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;In preparation for the GA release next Monday, we have just shipped 1.0 RC2 of Spring Modulith. We took the chance to fold in some feedback regarding some tiny inconsistencies that would&apos;ve been inconvenient to fix post 1.0 GA.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The Event Publication Registry now consistently uses &lt;code&gt;event_publication&lt;/code&gt; as table name for the relational stores and as collection name for MongoDB &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/issues/265&quot;&gt;GH-265&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/issues/266&quot;&gt;GH-266&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Improved JPA event publication completion &lt;a href=&quot;https://github.com/spring-projects/spring-modulith/issues/261&quot;&gt;GH-261&lt;/a&gt;&lt;/li&gt;
@@ -293,158 +312,4 @@ dependencyManagement {
 &lt;li&gt;The Kotlin dev portal continues to get new and nice stuff to read, including this one: &lt;a href=&quot;https://kotlinlang.org/docs/jvm-spring-boot-add-db-support.html&quot;&gt;Add database support for Spring Boot projects in Kotlin&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;I love this: &lt;a href=&quot;https://medium.com/better-programming/going-serverless-with-spring-cloud-function-aws-lambda-java-17-support-and-snapstart-d3d8ffd44bbd&quot;&gt;Going Serverless With Spring Cloud Function, AWS Lambda Java 17 Support, and SnapStart&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;This blog is fire: a modern way to efficiently execute concurrent network requests in Java. Amazing. The subtitle? &lt;a href=&quot;https://medium.com/better-programming/a-modern-way-to-efficiently-execute-concurrent-network-requests-in-java-c8dceb4e7f4f&quot;&gt;Java server applications using virtual threads are clearly more performant than Node.js&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2022.0.4 (aka Kilburn) Is Available]]></title><link>https://spring.io/blog/2023/07/28/spring-cloud-2022-0-4-aka-kilburn-is-available</link><guid isPermaLink="true">https://spring.io/blog/2023/07/28/spring-cloud-2022-0-4-aka-kilburn-is-available</guid><dc:creator><![CDATA[Olga Maciaszek-Sharma]]></dc:creator><pubDate>Thu, 27 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the General Availability (RELEASE) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2022.0.4&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href=&quot;https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/2022.0.4/&quot;&gt;Maven Central&lt;/a&gt;. You can check out the 2022.0.4 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2022.0.4-Release-Notes&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Notable Changes in the 2022.0.4 Release Train&lt;/h2&gt;
-&lt;p&gt;This release is based on Spring Boot 3.0.9.&lt;/p&gt;
-&lt;p&gt;A complete list of issues resolved in this release can be found in &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/114/views/1&quot;&gt;this GitHub project&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Spring Cloud Commons&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Support for retry-aware load-balancing for ServiceInstanceListSupplier delegates has been added &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/issues/1221&quot;&gt;(1221)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Spring Cloud OpenFeign&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Upgraded OpenFeign/Feign &lt;code&gt;12.4&lt;/code&gt; &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/issues/878&quot;&gt;(878)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Spring Cloud Stream&lt;/h3&gt;
-&lt;p&gt;Fix function auto-detection issues when single input/output bindings are defined.
-Fix type discovery issues in &lt;code&gt;DefaultPollableMessageSource.&lt;/code&gt;
-Shared beans loading exception handling improvements (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/issues/2744&quot;&gt;https://github.com/spring-cloud/spring-cloud-stream/issues/2744&lt;/a&gt;)
-Fix partition selector strategy issues when using reactive functions (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/issues/2750&quot;&gt;https://github.com/spring-cloud/spring-cloud-stream/issues/2750&lt;/a&gt;)
-KafkaBinderHealthIndicator refactorings.
-Fix &lt;code&gt;StreamBridge&lt;/code&gt; double partitioning issues (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/issues/2759&quot;&gt;https://github.com/spring-cloud/spring-cloud-stream/issues/2759&lt;/a&gt;)
-Add new health indicator for Reactor Kafka Binder (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/issues/2752&quot;&gt;https://github.com/spring-cloud/spring-cloud-stream/issues/2752&lt;/a&gt;)
-Address dynamic destination via sendto header issues causing partition key extractor invocation problems (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/issues/2770&quot;&gt;https://github.com/spring-cloud/spring-cloud-stream/issues/2770&lt;/a&gt;)
-Address BindersHealthContributor thread-safety issues (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/issues/2780&quot;&gt;https://github.com/spring-cloud/spring-cloud-stream/issues/2780&lt;/a&gt;)&lt;/p&gt;
-&lt;h3&gt;Spring Cloud Netflix&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Upgraded Netflix/Eureka to &lt;code&gt;2.0.1&lt;/code&gt; which contains fixes necessary for using secured replicas &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/issues/4161&quot;&gt;(4161)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The following modules were updated as part of 2022.0.4:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Module&lt;/th&gt;
-&lt;th&gt;Version&lt;/th&gt;
-&lt;th&gt;Issues&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Zookeeper&lt;/td&gt;
-&lt;td&gt;4.0.1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-zookeeper/releases/tag/v4.0.1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
-&lt;td&gt;3.0.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/releases/tag/v3.0.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Function&lt;/td&gt;
-&lt;td&gt;4.0.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/releases/tag/v4.0.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Commons&lt;/td&gt;
-&lt;td&gt;4.0.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/releases/tag/v4.0.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud CircuitBreaker&lt;/td&gt;
-&lt;td&gt;3.0.3&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/releases/tag/v3.0.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud OpenFeign&lt;/td&gt;
-&lt;td&gt;4.0.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/releases/tag/v4.0.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Gateway&lt;/td&gt;
-&lt;td&gt;4.0.7&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/releases/tag/v4.0.7&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
-&lt;td&gt;4.0.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/releases/tag/v4.0.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Consul&lt;/td&gt;
-&lt;td&gt;4.0.3&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-consul/releases/tag/v4.0.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Build&lt;/td&gt;
-&lt;td&gt;4.0.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-build/releases/tag/v4.0.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Config&lt;/td&gt;
-&lt;td&gt;4.0.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/releases/tag/v4.0.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Contract&lt;/td&gt;
-&lt;td&gt;4.0.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-contract/releases/tag/v4.0.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Starter Build&lt;/td&gt;
-&lt;td&gt;2022.0.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-starter-build/releases/tag/v2022.0.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
-&lt;td&gt;4.0.3&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/releases/tag/v4.0.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-&amp;#x3C;dependencyManagement&gt;
-    &amp;#x3C;dependencies&gt;
-        &amp;#x3C;dependency&gt;
-            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
-            &amp;#x3C;version&gt;2022.0.4&amp;#x3C;/version&gt;
-            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
-            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
-        &amp;#x3C;/dependency&gt;
-    &amp;#x3C;/dependencies&gt;
-&amp;#x3C;/dependencyManagement&gt;
-&amp;#x3C;dependencies&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    ...
-&amp;#x3C;/dependencies&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;or with Gradle:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;buildscript {
-dependencies {
-classpath &quot;io.spring.gradle:dependency-management-plugin:1.0.2.RELEASE&quot;
-}
-}
-
-apply plugin: &quot;io.spring.dependency-management&quot;
-
-dependencyManagement {
-imports {
-mavenBom &apos;org.springframework.cloud:spring-cloud-dependencies:2022.0.4&apos;
-}
-}
-
-dependencies {
-compile &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
-compile &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
-...
-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item></channel></rss>
+&lt;/ul&gt;</content:encoded></item></channel></rss>
