@@ -173,7 +173,7 @@ update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
 
-
+select * from orderTbl;
 select * from member;
 
 -- 장바구니 테스트 데이터
@@ -192,7 +192,8 @@ insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
 
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
-
+insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
+select * from member;
 select 
     *
 from
