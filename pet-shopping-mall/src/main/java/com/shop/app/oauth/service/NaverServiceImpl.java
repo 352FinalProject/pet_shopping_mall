@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class NaverServiceImpl implements NaverService {  // 인터페이스 이름 변경
+public class NaverServiceImpl implements NaverService { 
 
 	// 네이버 인증 관련 설정값들
 	@Value("${oauth.naver.authorize-uri}")

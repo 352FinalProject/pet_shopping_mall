@@ -100,12 +100,12 @@ public class MemberSecurityController {
 		
 		int resultPoint = pointService.insertPoint(point);
 		
-		Terms terms = new Terms();
-		terms.setMemberId(member.getMemberId());
+//		Terms terms = new Terms();
+//		terms.setMemberId(member.getMemberId());
 //		terms.setAcceptDate(null);
-		terms.setAccept(Accept.Y);
-		
-		int resultTerms = termsService.insertTerms(terms);
+//		terms.setAccept(Accept.Y);
+//		
+//		int resultTerms = termsService.insertTerms(terms);
 		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/";
@@ -176,6 +176,7 @@ public class MemberSecurityController {
 	public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr) {
 	    String memberId = principal.getMemberId(); // 현재 로그인한 회원의 ID를 가져옵니다.
 	    memberService.deleteMember(memberId);  // 회원 삭제 서비스 호출
+//	    sessionStatus.setComplete(); // 세션 종료
 	    redirectAttr.addFlashAttribute("msg", "회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다.");
 	    return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
 	}

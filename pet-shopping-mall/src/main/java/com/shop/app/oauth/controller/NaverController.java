@@ -20,7 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
-import com.shop.app.oauth.service.NaverService;  
+import com.shop.app.oauth.service.NaverService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,34 +31,34 @@ import lombok.extern.slf4j.Slf4j;
 public class NaverController {
 	
 	@Autowired
-	private NaverService naverService;  // 수정된 부분
+	private NaverService naverService;  
 
 	@Autowired
 	private MemberService memberService;
 	
 	@GetMapping("/login.do")
 	public RedirectView login() {
-		return new RedirectView(naverService.getAuthorizeUri());  // 수정된 부분
+		return new RedirectView(naverService.getAuthorizeUri());  
 	}
 
 	@GetMapping("/callback.do")
 	public RedirectView callback(@RequestParam String code, Model model, HttpServletRequest request) {
-		Map<String, Object> tokens = naverService.getTokens(code);  // 수정된 부분
-		
+		Map<String, Object> tokens = naverService.getTokens(code);  
 		model.addAttribute("access_token", tokens.get("access_token"));
 		model.addAttribute("refresh_token", tokens.get("refresh_token"));
-
-		Map<String, Object> attributes = naverService.getProfile((String) tokens.get("access_token"));  // 수정된 부분
+		log.debug("access_token {} =", tokens);
+		Map<String, Object> attributes = naverService.getProfile((String) tokens.get("access_token")); 
 		
-		String memberId = attributes.get("id") + "@naver";  // 수정된 부분
+		String memberId = attributes.get("id") + "@naver";  
 		MemberDetails member = null;
 		try {
 			member = (MemberDetails) memberService.loadUserByUsername(memberId);
 		} catch(UsernameNotFoundException ignore) {
-			Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("response");  // 네이버에서는 'response' 키에 사용자 정보가 포함됩니다.
+			Map<String, Object> oauth2Account = (Map<String, Object>) attributes.get("naverAccount");  // 네이버에서는 'response' 키에 사용자 정보가 포함
+			Map<String, Object> profile = (Map<String, Object>) attributes.get("profile");  // 네이버에서는 'response' 키에 사용자 정보가 포함
 			
-			String name = (String) naverAccount.get("name");
-			String email = (String) naverAccount.get("email");
+			String name = (String) oauth2Account.get("name");
+			String email = (String) oauth2Account.get("email");
 			MemberCreateDto memberCreateDto = 
 					MemberCreateDto.builder()
 						.memberId(memberId)

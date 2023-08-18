@@ -25,45 +25,60 @@
 
 .form-control {
 	display: flex;
-	width: 400px;
+	width: 300px;
 	text-align: center;
 	justify-content: center;
 	margin: 20px auto;
-	height: 70px;
+	height: 50px;
 	border-radius: 35px;
-	font-size: 20px;
+	font-size: 15px;
 }
 
 .form-control2 {
 	display: flex;
-	width: 400px;
+	width: 300px;
 	text-align: center;
 	justify-content: center;
 	margin: 20px auto;
-	height: 70px;
+	height: 50px;
 	border-radius: 35px;
-	font-size: 20px;
+	font-size: 15px;
 }
 
 .save-search {
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 15px;
+	margin-bottom: 25px;
+	display: flex;
+	margin-left: -30px;
+}
+
+.search-id {
+	display: flex;
 }
 
 .saveId { /*    ̵      */
 	margin-right: 50px;
-	font-size: 25px;
-	width: 25px;
-	height: 25px;
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
 	margin-botom: 10px;
-	width: 40px;
-	height: 40px;
+	align-items: center;
+	margin-top: -3px;
+}
+
+.saveId input {
+	margin-left: 50px;
+	margin-top: -2px;
+} 
+
+.saveId p {
+	margin-right: 40px;
+	padding-right: 500px;
 }
 
 .search {
-	margin-left: 50px;
+	margin-left: 5px;
 	border: none !important;
-	font-size: 18px;
 	background-color: white;
 	border: none !important;
 }
@@ -79,42 +94,42 @@
 
 .login-btn {
 	background-color: #c8c8c8;;
-	width: 400px;
-	height: 70px;
+	width: 300px;
+	height: 50px;
 	border-radius: 35px;
 	border: none !important;
 	color: white;
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .kakao-btn {
 	background-color: #ffeb00;
-	width: 400px;
-	height: 70px;
+	width: 300px;
+	height: 50px;
 	border-radius: 35px;
 	border: none !important;
 	color: white;
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .naver-btn {
 	background-color: #00c577;
-	width: 400px;
-	height: 70px;
+	width: 300px;
+	height: 50px;
 	border-radius: 35px;
 	border: none !important;
 	color: white;
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .signUp-btn {
 	background: #c8c8c8;
-	width: 400px;
-	height: 70px;
+	width: 300px;
+	height: 50px;
 	border-radius: 35px;
 	border: none !important;
 	color: white;
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .login-btn2 {
@@ -167,11 +182,14 @@ button, input {
 				<tr>
 					<td>
 						<div class="save-search">
-							<label for="saveId"> <input type="checkbox"
-								class="saveId">아이디저장
-							</label>
-							<button type="button" class="search" id="searchId">아이디찾기</button>
-							<button type="button" class="search" id="searchPasword">비밀번호찾기</button>
+							<div class="saveId">
+								<input type="checkbox">
+							</div>
+							<div class="search-id">
+								<p>아이디저장</p>
+								<button type="button" class="search" id="searchId">아이디찾기</button>
+								<button type="button" class="search" id="searchPasword">비밀번호찾기</button>
+							</div>
 						</div>
 					</td>
 				</tr>
