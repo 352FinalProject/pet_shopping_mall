@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Pet {
 	private int petId;
-	private String petMemberId;
+	private String memberId;
     private String petName;    
     private LocalDateTime petDofB;
     private String petKind;

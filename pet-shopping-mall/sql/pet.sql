@@ -91,21 +91,30 @@ create table authority(
                 on delete cascade
 );
 
--- 펫 테이블
 CREATE TABLE pet (
     pet_id number,
-    pet_member_id varchar2(20),
+    member_id varchar2(20),
+    breed_id number,
     pet_name VARCHAR2(50) NOT NULL,
-    pet_DofB timestamp,
-    pet_kind VARCHAR2(50),
-    pet_breed VARCHAR2(50),
-    pet_adoption timestamp,
+    pet_birthday timestamp,
+    adoption_date timestamp,
     pet_gender CHAR(1),
     constraints pk_pet_id primary key(pet_id),
-    constraints fk_pet_member_id foreign key(pet_member_id) references member(member_id) on delete cascade,
+    constraints fk_pet_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    constraints fk_pet_breed_id foreign key(breed_id) references breed(breed_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
+
+--품종 테이블(아직 미사용)
+CREATE TABLE breed (
+    breed_id number,
+    pet_kind VARCHAR2(50),
+    pet_breed VARCHAR2(50),
+    CONSTRAINT chk_pet_breed CHECK (pet_breed IN ('C', 'D', 'E'))
+    );
+    
 --DROP TABLE pet;
+--DROP TABLE breed;
 
 -- 찜한 목록 테이블
 create table wishlist(

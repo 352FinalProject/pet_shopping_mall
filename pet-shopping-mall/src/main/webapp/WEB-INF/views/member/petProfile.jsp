@@ -141,7 +141,7 @@
                   <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" name="petMemberId" id="petMemberId" value="admin" required>
+                            <input type="text" name="memberId" id="memberId" value="admin" required>
                         </td>
                     </tr>
                     <tr>
