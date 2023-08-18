@@ -22,7 +22,7 @@
 				</div>
 				<div class="admin-member-search-container">
 					<form:form name="adminMemberSearchFrm"
-						action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
+						action="${pageContext.request.contextPath}/admin/adminSubscribeSearchByNameOrId.do"
 						method="get">
 						<label for="searchKeyword">회원검색:</label>
 						<select name="searchCategory">
@@ -48,13 +48,13 @@
 							<th>관리</th>
 						</thead>
 						<tbody>
-							<c:if test="${empty subscribeMembers}">
+							<c:if test="${empty subscribedMembers}">
 								<tr>
 									<td colspan="12" class="text-center">조회된 회원이 없습니다.</td>
 								</tr>
 							</c:if>
-							<c:if test="${subscribeMembers != null}">
-								<c:forEach items="${subscribeMembers}" var="member"
+							<c:if test="${subscribedMembers != null}">
+								<c:forEach items="${subscribedMembers}" var="member"
 									varStatus="vs">
 									<tr>
 										<td>${member.memberId}</td>

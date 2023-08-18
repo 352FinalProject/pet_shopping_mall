@@ -12,7 +12,7 @@ public class ProductCreateDto {
 	@NotNull(message = "상품카테고리는 필수입력입니다.")
 	private ProductCategory productCategory;
 	@NotNull(message = "상품명은 필수입력입니다.")
-	private String ProductName;
+	private String productName;
 	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
 	private int thumbnailImg;
@@ -21,7 +21,7 @@ public class ProductCreateDto {
 	public Product toProduct() {
 		return Product.builder()
 				.productCategory(productCategory)
-				.ProductName(ProductName)
+				.productName(productName)
 				.productPrice(productPrice)
 				.thumbnailImg(thumbnailImg)
 				.productImg(productImg)

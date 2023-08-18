@@ -55,10 +55,6 @@
 	    <label for="canceled">취소</label>
 	    <input type="checkbox" id="refunded" name="orderStatus" value="refunded">
 	    <label for="refunded">환불</label>
-	    <input type="checkbox" id="return" name="orderStatus" value="return">
-	    <label for="return">반품</label>
-	    <input type="checkbox" id="exchanged" name="orderStatus" value="exchanged">
-	    <label for="exchanged">교환</label>
         <br>
         <button type="submit">검색</button>
     </form>
@@ -76,10 +72,12 @@
 							<th>번호</th>
 							<th>주문일시</th>
 							<th>주문번호</th>
+							<th>주문상품</th>
 							<th>주문상태</th>
 							<th>결제상태</th>
 							<th>주문자</th>
-							<th>총결제액</th>
+							<th>결제액</th>
+							<th>배송비</th>
 							<th>결제방법</th>
 						</thead>
 						<tbody>
@@ -88,10 +86,12 @@
 									<th>${status.count}</th>
 									<th>주문일시</th>
 									<th><a href="#" />주문번호</th>
+									<th><a href="#" />주문상품</th>
 									<th>주문상태</th>
 									<th>결제상태</th>
 									<th>주문자</th>
-									<th>총결제액</th>
+									<th>결제액</th>
+									<th>배송비</th>
 									<th>결제방법</th>
 								</tr>
 							</c:forEach>

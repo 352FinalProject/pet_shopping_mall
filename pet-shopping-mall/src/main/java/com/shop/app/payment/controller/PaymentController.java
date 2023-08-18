@@ -78,7 +78,7 @@ public class PaymentController {
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
 		
 		model.addAttribute("cartList", cartList);
-		model.addAttribute("pointCurrent", point.getPointCurrent());
+//		model.addAttribute("pointCurrent", point.getPointCurrent());
 		
 	}
 	

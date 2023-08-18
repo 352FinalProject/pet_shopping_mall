@@ -42,6 +42,6 @@ public class CartController {
 		log.debug("point = {}", point);
 		
 		model.addAttribute("cartList", cartList);
-		model.addAttribute("pointCurrent", point.getPointCurrent());
+		// model.addAttribute("pointCurrent", point.getPointCurrent());
 	}
 }
