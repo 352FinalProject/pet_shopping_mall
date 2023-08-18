@@ -21,6 +21,7 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 
+--drop table review;
 --drop table image_attachment;
 --drop table image_attachment_mapping;
 --drop table answer;
@@ -48,9 +49,9 @@ SELECT *  FROM all_tables;
 --drop table return;
 --drop table terms;
 --drop table terms_history;
---
---
---
+--drop table chat;
+--drop table chat_room;
+
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
@@ -71,6 +72,9 @@ SELECT *  FROM all_tables;
 --drop sequence seq_pet_id;
 --drop sequence seq_persistent_logins_id;
 --drop sequence seq_member_id;
+--drop sequence seq_review_id;
+--drop seq_chat_id;
+--drop sequence seq_chat_room_id;
 
 --==============================
 -- 테이블 생성
@@ -83,7 +87,7 @@ create table member (
     name varchar2(50) not null,
     phone varchar2(11),
     email varchar2(200),
-    enroll_date timestamp default sysdate,
+    enroll_date timestamp default systimestamp,
     address varchar2(500),
     birthday timestamp,
     subscribe char(1) default 'N' not null,
@@ -105,24 +109,26 @@ create table authority(
 CREATE TABLE pet (
     pet_id number,
     member_id varchar2(20),
-    breed_id number,
     pet_name VARCHAR2(50) NOT NULL,
-    pet_birthday timestamp,
-    adoption_date timestamp,
+    pet_DofB timestamp,
+    pet_kind VARCHAR2(50),
+    pet_breed VARCHAR2(50),
+    pet_adoption timestamp,
     pet_gender CHAR(1),
     constraints pk_pet_id primary key(pet_id),
     constraints fk_pet_member_id foreign key(member_id) references member(member_id) on delete cascade,
-    constraints fk_pet_breed_id foreign key(breed_id) references breed(breed_id) on delete cascade,
+
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
-select * from member;
+
+-- 품종 테이블
 CREATE TABLE breed (
     breed_id number,
     pet_kind VARCHAR2(50),
     pet_breed VARCHAR2(50),
-    constraints pk_breed_id primary key(breed_id),
     CONSTRAINT chk_pet_breed CHECK (pet_breed IN ('C', 'D', 'E'))
     );
+
 
 
 -- 찜한 목록 테이블
@@ -360,6 +366,9 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+select * from cart;
+
+
 create table cartitem (
     cartitem_id number,
     cart_id number,
@@ -382,14 +391,37 @@ create table  terms (
 );
 
 -- 약관동의 이력 테이블
-create table  terms_history (
+create table terms_history (
  terms_id number,
  title varchar2(50),
  content varchar2(200),
  required char(1) not null,
  constraint pk_terms_id primary key(terms_id),
- constraint  fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
+ constraint fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
 );
+
+-- 채팅 로그 테이블
+create table chat (
+ chat_id number,
+ chat_room_id varchar2(20) not null,
+ chat_member_id varchar2(50) not null,
+ chat_message varchar2(4000) not null,
+ chat_created_at timestamp default systimestamp not null,
+ chat_unread_count number,
+ constraint pk_chat_id primary key(chat_id),
+ constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
+);
+
+-- 채팅방 테이블
+create table chat_room (
+ chat_room_id varchar2(20) not null,
+ chat_room_member_id varchar2(50) not null,
+ chat_room_admin_roll varchar2(20) not null,
+ chat_room_created_at timestamp default systimestamp not null,
+ constraint pk_chat_room_id primary key(chat_room_id),
+ constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
+);
+
  commit;
 select * from member;
 create sequence seq_orderTbl_id;
@@ -409,7 +441,10 @@ create sequence seq_payment_id;
 create sequence seq_cancel_id;
 create sequence seq_cart_id;
 create sequence seq_cartitem_id;
+create sequence seq_chat_id;
+create sequence seq_chat_room_id;
 
+select * from orderTbl;
 select * from member;
 select * from question;
 select * from answer;

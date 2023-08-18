@@ -17,7 +17,7 @@ public interface AnswerRepository {
 
 
 	// 관리자 1:1 문의 댓글 작성 (예라)
-	@Insert("insert into answer values(seq_answer_id.nextval, #{answerAdminName}, #{answerQuestionId}, #{answerContent}, default)")
+	@Insert("insert into answer values(seq_answer_id.nextval, default, #{answerQuestionId}, #{answerContent}, default)")
 	int insertAnswer(AnswerDetails answers);
 
 	// 관리자 1:1 문의 댓글 삭제 (예라)

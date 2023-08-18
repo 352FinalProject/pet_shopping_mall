@@ -1,0 +1,146 @@
+.cart-left div:not(:last-child){
+	margin-bottom:5px;
+}
+.shopping-div {
+display: flex;
+}
+.cart-product-info {
+	width: 460px;
+	height: 170px;
+	border: 1px solid #e7e7e7;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+#cart-option {
+	display: flex;
+}
+#cart-option div:last-child{
+	margin-left:140px;
+}
+.cart-left {
+    margin-right: 30px; 
+}
+
+.cart-right {
+    margin-left: 30px;
+}
+.payment-info {
+	width: 400px;
+	border: 1px solid #e7e7e7;
+	padding: 10px;	
+}
+.product-price {
+	display:flex;
+    width: 100%; 
+    justify-content: space-between;
+    margin-top:5px;
+}
+.price {
+font-size:24px;
+}
+.cart-btn {
+	border: 1px solid #e7e7e7;
+	background: white;
+	padding:5px;
+	border-radius: 2px;
+}
+#order-btn {
+	margin-top:20px;
+	width:100%;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+.payment-left div:not(:last-child) {
+	margin-bottom: 20px;
+}
+
+.payment-div {
+	display: flex;
+}
+
+.cart-product-info {
+	width: 460px;
+	height: 170px;
+	border: 1px solid #e7e7e7;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.payment-left {
+	margin-right: 30px;
+}
+
+.payment-right {
+	margin-left: 30px;
+}
+
+.payment-info {
+	width: 400px;
+	border: 1px solid #e7e7e7;
+	padding: 10px;
+}
+
+.product-price {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	margin-top: 5px;
+}
+
+.price {
+	font-size: 24px;
+}
+
+.cart-btn {
+	border: 1px solid #e7e7e7;
+	background: white;
+	padding: 5px;
+	border-radius: 2px;
+}
+
+#order-btn {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.order-info-title {
+	font-size: 19px;
+	margin-right: 3px;
+}
+
+.flex-box {
+	display: flex;
+}
+
+/*버튼 활성화 시 색상 변경하려고 만든 클래스*/
+.active {
+	background-color: #5886d3;
+}
+
+.paybtn input[type="radio"] {
+	display: none;
+}
+
+.paybtn input[type="radio"]+span {
+	display: inline-block;
+	border: 1px solid #c8c8c8;
+	background-color: #ffffff;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 5px;
+	padding: 10px;
+	width: 150px;
+}
+
+.paybtn input[type="radio"]:checked+span {
+	background-color: #5886d3;
+	color: #ffffff;
+}

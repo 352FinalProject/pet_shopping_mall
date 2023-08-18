@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,13 +28,20 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	@Autowired
+	private PointService pointService;
 	
 	@GetMapping("/shoppingCart.do")
 	public void getCartList(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-		CartInfoDto cart = cartService.getCartList(principal.getMemberId());
+		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
 		
-		model.addAttribute("cart",cart);
+		Point point = pointService.findCurrentPointById(principal.getMemberId());
+
+		log.debug("cartList = {}" , cartList);
+		log.debug("point = {}", point);
 		
+		model.addAttribute("cartList", cartList);
+		model.addAttribute("pointCurrent", point.getPointCurrent());
 	}
 }

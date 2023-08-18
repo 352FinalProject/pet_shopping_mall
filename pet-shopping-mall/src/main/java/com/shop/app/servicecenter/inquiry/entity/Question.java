@@ -24,7 +24,7 @@ public class Question {
 	private String questionContent;
 	private String questionCategory;
 	private LocalDateTime questionCreatedAt;
-	private int awnserCount;
+	private int answerCount;
 	private int imageId;
 	
 	List<Answer> answers;

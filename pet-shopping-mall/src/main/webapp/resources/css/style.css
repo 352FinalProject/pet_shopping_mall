@@ -342,3 +342,20 @@ footer p {
 	font-size: 14px;
 	color: #4d4d4d;
 }
+
+/* 홈 채팅 아이콘 */
+.chat-btn {
+	display: flex;
+	justify-content: flex-end;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+.chat-btn2 {
+	display: flex;
+	align-items: flex-end;
+}
+.chat-btn img {
+	width: 250px;
+	z-index: 999;
+}

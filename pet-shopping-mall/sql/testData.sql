@@ -1,7 +1,7 @@
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
-
+select * from member;
 --==============================
 --sample data 생성
 --==============================
@@ -74,6 +74,10 @@ values (seq_answer_answer_id.nextval, '관리자', 47, '우동친은 우리집�
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
 
+------------------ point insert ---------------------------
+INSERT INTO point (point_id, point_member_id, point_current, point_type, point_amount)
+VALUES (2, '사용자2', 50, '사용', -500, SYSTIMESTAMP);
+
 ------------------ product insert ---------------------------
 -- 카테고리 생성
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
@@ -136,7 +140,7 @@ commit;
 
 update set member_role from member where member_id = 77;
 
-delete from pet where pet_id = '1';
+delete from answer where answer_id = '2';
 
 SELECT * FROM product WHERE id = 3;
 
@@ -173,6 +177,8 @@ update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
 
+select * from orderTbl;
+select * from member;
 
 -- 장바구니 테스트 데이터
 select * from product_category;
@@ -188,9 +194,10 @@ update cartitem set product_detail_id=2 where product_detail_id=1;
 
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
-
-insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 2);
-
+insert into cart values(1, 'pet123');
+insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
+insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
+select * from member;
 select 
     *
 from
@@ -208,7 +215,7 @@ FROM
 JOIN 
     product p ON pd.product_id = p.product_id;
     
-
+select * from cart;
 -- 이렇게 불러오기..    
 select 
     p.*,
@@ -218,3 +225,17 @@ from
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
 where 
     ci.product_detail_id = 2;
+    
+insert into point (point_id, point_member_id, point_current, point_type, point_amount)
+values (
+    seq_point_id.nextval,
+    'member1',
+    0,
+    '구매사용',
+    -3000
+);
+
+select * from point order by point_id desc;
+
+delete from point where point_id = '9';
+    

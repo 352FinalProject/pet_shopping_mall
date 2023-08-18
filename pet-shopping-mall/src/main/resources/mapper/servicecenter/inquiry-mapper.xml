@@ -18,19 +18,19 @@
 	</insert>
 	
 	<select id="findImageAttachmentsByQuestionId" resultMap="QuestionDetailsResultMap">
-	SELECT
+	select
 	    q.question_id,
 	    q.question_title,
 	    q.question_content,
 	    ia.image_original_filename,
 	    ia.image_renamed_filename
-	FROM 
+	from 
 	    question q
-	LEFT JOIN 
-	    image_attachment_mapping iam ON q.question_id = iam.ref_id AND iam.ref_table = 'question'
-	LEFT JOIN
+	left join 
+	    image_attachment_mapping iam on q.question_id = iam.ref_id and iam.ref_table = 'question'
+	left join
 	    image_attachment ia ON iam.image_id = ia.image_id
-	WHERE 
+	where 
     	q.question_id = #{questionId}
 	</select>
 
