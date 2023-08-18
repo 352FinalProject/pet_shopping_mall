@@ -5,63 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<style>
-.cart-left div:not(:last-child){
-	margin-bottom:5px;
-}
-.shopping-div {
-display: flex;
-}
-.cart-product-info {
-	width: 460px;
-	height: 170px;
-	border: 1px solid #e7e7e7;
-	padding: 10px;
-	display: flex;
-	align-items: center;
-}
-#cart-option {
-	display: flex;
-}
-#cart-option div:last-child{
-	margin-left:140px;
-}
-.cart-left {
-    margin-right: 30px; 
-}
-
-
-
-
-.cart-right {
-    margin-left: 30px;
-}
-.payment-info {
-	width: 400px;
-	border: 1px solid #e7e7e7;
-	padding: 10px;	
-}
-.product-price {
-	display:flex;
-    width: 100%; 
-    justify-content: space-between;
-    margin-top:5px;
-}
-.price {
-font-size:24px;
-}
-.cart-btn {
-	border: 1px solid #e7e7e7;
-	background: white;
-	padding:5px;
-	border-radius: 2px;
-}
-#order-btn {
-	margin-top:20px;
-	width:100%;
-	cursor: pointer;
-}
-</style>
     <section class="common-section" id="#">
         <div class="common-title">
             장바구니
@@ -71,35 +14,36 @@ font-size:24px;
             	<div class="shopping-div">
 	                <div class="cart-left">
 	                	<div>
-	                		<input type="checkbox" name="checkAll" id="checkAll">
+	                		<input type="checkbox" name="checkAll" id="checkAll" class="checkbox" value="0">
 	                		<label for="checkAll">전체 선택</label>
 	                	</div>
-	                	<c:forEach items="cart" var="product">
+	                	<c:forEach items="${cartList}" var="product" varStatus="vs">
+	                	<fmt:formatNumber value='${(product.productPrice + product.additionalPrice) * product.quantity}' pattern="0,000" var="formattedPrice" />
 	                	<div class="cart-product-info">
 	                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
 	                		<div>
 	                			<div>
-	                				<input type="checkbox" name="products">
-	                				<label>${product} ${cart}</label>
+	                				<input type="checkbox" class="checkbox" name="productName" value="${formattedPrice}">
+	                				<label>${product.productName}</label>
 	                			</div>
-	                			<div>
+	                			<div> 
 	                				<div id="cart-option">
 	                					<div>
-	                						<p>옵션: 노란색</p>
-	                						<p>수량: 1개</p>
+	                						<p>옵션 : ${product.optionName}</p>
+	                						<p>수량 : ${product.quantity}</p>
 	                					</div>
 	                					<div>
 	                						<button class="cart-btn">옵션/수량변경</button>
 	                					</div>
 	                				</div>
 	                				<div>
-	                					<p>총 상품 금액 11,100원</p>
+	                					<p>총 상품 금액 : <span class="target-price">${formattedPrice}</span>원</p>
 	                				</div>
 	                			</div>
 	                		</div>
 	                	</div>
+	                	<c:set var="totalPrice" value="${totalPrice + ((product.productPrice + product.additionalPrice) * product.quantity)}" />
 	                	</c:forEach>
-	                	
 	                	<div>
 	                		<button class="cart-btn">선택 상품 삭제</button>
 	                		<button class="cart-btn">전체 상품 삭제</button>
@@ -111,22 +55,24 @@ font-size:24px;
 							<div>
 								<div class="product-price">
 									<span class="price"><strong>상품금액</strong></span>
-									<p>11,100원</p>
+									<p id="total-price"></p>
 								</div>
 								<div class="product-price">
 									<span>배송비</span>
 									<p><span>(+)</span>3,000원</p>
 								</div>
 								<div class="product-price">
-									<span>쿠폰 및 정립금</span>
-									<p><span>(-)</span>3,000원</p>
+									<span>사용 가능 적립금</span>
+									<fmt:formatNumber value='${pointCurrent}' pattern="0,000" var="formattedPoint" />
+									<p id="point"><span>(-)</span>${formattedPoint}원</p>
 								</div>
 							</div>
 						</div>
 						<div class="payment-info">
 							<div class="product-price">
+								<fmt:formatNumber value='${totalPrice}' pattern="0,000" var="formattedTotal" />
 								<strong class="price">최종 결제 금액</strong>
-								<p class="price">11,100원</p>
+								<p class="price" id="amount"></p>
 							</div>
 						</div>
 						<div>
@@ -138,27 +84,62 @@ font-size:24px;
         </div>
     </section>
 <script>
-const products = document.querySelectorAll('input[name="products"]');
+/* document.addEventListener('DOMContentLoaded', () => {
+	updatePrice();
+}) */
+const productNameCheckboxes = document.querySelectorAll('input[name="productName"]');
 const orderButton = document.getElementById("order-btn");
 const checkAll = document.querySelector("#checkAll");
+const checkboxes = document.querySelectorAll('.checkbox');
 
-console.log(products);
+ // 모든 체크박스
 
-/* products.forEach(term => {
-	products.addEventListener("change", () => {
-        updateButtonColor();
+checkAll.addEventListener("change", () => {
+    const isChecked = checkAll.checked;
+    productNameCheckboxes.forEach(checkbox => {
+        checkbox.checked = isChecked;
     });
 });
 
-const updateButtonColor = () => {
-    products.forEach(product => {
-    	product.checked ? orderButton.classList.add("active") : orderButton.classList.remove("active");
-    })
-}; */
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', updateSubmitButtonStatus);
+    checkbox.addEventListener('change', updatePrice);
+});
+
+function updateSubmitButtonStatus() {
+	
+    const isChecked = Array.from(checkboxes)
+        .some(checkbox => {
+            if (checkbox.checked) {
+                orderButton.classList.add('active');
+                return true;
+            } else {
+                orderButton.classList.remove('active');
+                return false;
+            }
+        });
+    orderButton.disabled = !isChecked;
+}
+
+function updatePrice () {
+	let total = 0;
+	checkboxes.forEach(box => {
+        if (box.checked) {
+            let p = Number(box.value.replace(",", ""));
+            total += p;
+        }
+    });
+    
+	document.querySelector("#amount").innerHTML = formatPrice(total);
+}
 
 const payment = () => {
 	window.location.href = '${pageContext.request.contextPath}/payment/paymentInfo.do';
 };
+
+const formatPrice = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -26,10 +26,10 @@ public class MemberDetails extends Member implements UserDetails, OAuth2User  { 
 	private Map<String, Object> attributes;
 	
 	
-//	@Override
-//	public Map<String, Object> getAttributes() {
-//		return this.attributes;
-//	}
+	@Override
+	public Map<String, Object> getAttributes() {
+		return this.attributes;
+	}
 	
     
 	@Override
