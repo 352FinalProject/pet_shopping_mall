@@ -36,7 +36,7 @@
 										            <span class="plus">+ ${point.pointAmount}</span>
 										        </c:when>
 										        <c:otherwise>
-										            <span class="minus"> ${point.pointAmount}</span>
+										            <span class="minus">${point.pointAmount}</span>
 										        </c:otherwise>
 										    </c:choose>
 										</td>

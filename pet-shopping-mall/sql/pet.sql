@@ -49,8 +49,8 @@ SELECT *  FROM all_tables;
 --drop table return;
 --drop table terms;
 --drop table terms_history;
---
---
+--drop table chat;
+--drop table chat_room;
 --
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
@@ -73,6 +73,8 @@ SELECT *  FROM all_tables;
 --drop sequence seq_persistent_logins_id;
 --drop sequence seq_member_id;
 --drop sequence seq_review_id;
+--drop seq_chat_id;
+--drop sequence seq_chat_room_id;
 
 --==============================
 -- 테이블 생성
@@ -386,14 +388,37 @@ create table  terms (
 );
 
 -- 약관동의 이력 테이블
-create table  terms_history (
+create table terms_history (
  terms_id number,
  title varchar2(50),
  content varchar2(200),
  required char(1) not null,
  constraint pk_terms_id primary key(terms_id),
- constraint  fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
+ constraint fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
 );
+
+-- 채팅 로그 테이블
+create table chat (
+ chat_id number,
+ chat_room_id varchar2(20) not null,
+ chat_member_id varchar2(50) not null,
+ chat_message varchar2(4000) not null,
+ chat_created_at timestamp default systimestamp not null,
+ chat_unread_count number,
+ constraint pk_chat_id primary key(chat_id),
+ constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
+);
+
+-- 채팅방 테이블
+create table chat_room (
+ chat_room_id varchar2(20) not null,
+ chat_room_member_id varchar2(50) not null,
+ chat_room_admin_roll varchar2(20) not null,
+ chat_room_created_at timestamp default systimestamp not null,
+ constraint pk_chat_room_id primary key(chat_room_id),
+ constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
+);
+
  commit;
 select * from member;
 create sequence seq_orderTbl_id;
@@ -413,6 +438,8 @@ create sequence seq_payment_id;
 create sequence seq_cancel_id;
 create sequence seq_cart_id;
 create sequence seq_cartitem_id;
+create sequence seq_chat_id;
+create sequence seq_chat_room_id;
 
 select * from member;
 select * from question;

@@ -30,6 +30,7 @@
 	href="${pageContext.request.contextPath}/resources/css/point.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 
+
 <body>
 	<sec:authorize access="isAuthenticated()">
 		<form:form name="memberLogoutFrm"
@@ -145,3 +146,4 @@
 			</div>
 		</div>
 	</header>
+	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>

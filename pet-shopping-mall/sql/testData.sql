@@ -223,5 +223,16 @@ from
 where 
     ci.product_detail_id = 2;
     
-select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc;
+insert into point (point_id, point_member_id, point_current, point_type, point_amount)
+values (
+    seq_point_id.nextval,
+    'member1',
+    0,
+    '구매사용',
+    -3000
+);
+
+select * from point order by point_id desc;
+
+delete from point where point_id = '9';
     

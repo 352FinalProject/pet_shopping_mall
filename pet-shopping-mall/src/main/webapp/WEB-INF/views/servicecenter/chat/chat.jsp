@@ -102,7 +102,7 @@
 	<!-- 채팅 리스트 -->
 	<div class="chatListContainer font_jua display-none">
 		<div class="chatTop">
-			<div style="padding: 10px; margin-left: 4px;">니즈톡 리스트</div>
+			<div style="padding: 10px; margin-left: 4px;">우동친 리스트</div>
 		</div>
 		<div class="chatList">
 			<!-- 동적 생성 -->
