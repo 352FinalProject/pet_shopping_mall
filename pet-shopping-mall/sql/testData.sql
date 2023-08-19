@@ -134,6 +134,11 @@ values (seq_point_point_id.nextval, 'member1', 1000, '적립', 500, to_date('202
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
 values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
+-------------------- discount_rule insert ---------------------------
+insert into discount_rule (discount_id, discount_code, discount_type, discount_value)
+values
+    (1, '포인트사용', 'fixed_amount', 5000));
+    
 
 select * from pet;
 
@@ -180,6 +185,8 @@ where id = 77;
 
 select * from orderTbl;
 select * from member;
+select * from point where point_member_id = 'member1';
+delete from point where point_id = 2;
 
 -- 장바구니 테스트 데이터
 select * from product_category;
@@ -191,11 +198,15 @@ select * from cartitem;
 select* from product;
 select * from product_detail;
 select * from orderTbl;
+
 update cartitem set product_detail_id=2 where product_detail_id=1;
+
+delete from cartitem where cartitem_id = 2;
+delete from product where product_id = 4;
 
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
-insert into cart values(1, 'pet123');
+insert into cart values(1, 'member1');
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
 insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
 select * from member;

@@ -91,14 +91,45 @@ public class PaymentController {
 	    Map <String, Object> resultMap = new HashMap<>();
 	    log.debug("_order = {}", _order);
 	    Order order = _order.toOder();
+	    order.setDiscountCode("포인트사용"); // 할인 코드 설정 (예라)
+	    
+	    // 포인트를 사용하는 경우 (예라)
+	    if(_order.isUsePoints) {
+	        int discountAmount = calculateDiscount(_order.getPointsUsed());
+	        _order.setDiscount(_order.getDiscount() + discountAmount); // 주문의 할인 금액에 포인트 할인 금액 반영
+	    }
+	    
 	    int result = orderService.insertOrder(order);
 	    log.debug("result = {}", result);
 	    
 	    String msg = "";
 	    
-	    if(result > 0) 
+	    if(result > 0) {
 	    	msg = "주문에 성공하셨습니다.";
-	    else 
+	    	
+	    // 1. 결제 성공하면 구매한 금액의 1% 포인트 적립 (예라)
+	    int amount = order.getAmount(); // 실제 주문 금액
+	    int pointAmount = (int)(amount * 0.01); // 주문 금액의 1% 적립
+	    
+	    Point point = new Point();
+	    point.setPointMemberId(order.getMemberId());
+	    point.setPointType("구매적립"); // 포인트 유형
+	    point.setPointAmount(pointAmount); // 적립된 포인트
+	      
+	    // 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
+	    Point currentPoints = pointService.findReviewPointCurrentById(point); 
+	    log.debug("currentPoints = {}", currentPoints);
+	    
+	    // 4. 현재 포인트를 가져온 후 포인트 적립 계산
+	    int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
+	    
+	    // 5. 업데이트된 포인트 값 설정
+	    point.setPointCurrent(updatedPointAmount);
+	    
+	    // 6. 적립된 포인트를 DB에 저장
+	    int pointResult = pointService.insertPoint(point);
+	    
+		} else 
 	    	msg = "주문에 실패하셨습니다. 관리자에게 문의하세요.";	
 	    	
 	    resultMap.put("result", result);
@@ -107,7 +138,12 @@ public class PaymentController {
 	    return resultMap;
 	}
 	
-	
+	// 할인율 계산하는 메소드 (예
+	private int calculateDiscount(int pointsUsed) {
+		return pointsUsed;
+	}
+
+
 	@PostMapping("/verifyIamport/{imp_uid}")
 	@ResponseBody
 	public IamportResponse<Payment> paymentByImpUid(Model model, Locale locale, HttpSession session

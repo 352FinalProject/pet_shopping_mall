@@ -21,61 +21,67 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 
---drop table review;
---drop table image_attachment;
---drop table image_attachment_mapping;
---drop table answer;
---drop table question;
---drop table point;
---drop table product_category;
---drop table product;
---drop table product_detail;
---drop table cart;
---drop table payment;
---drop table cartitem;
---drop table orderTbl;
---drop table order_detail;
---drop table refund;
---drop table cancel_order;
---drop table authority;
---drop table product_category;
---drop table community;
---drop table wishlist;
---drop table pet;
---drop table persistent_logins;
---drop table image_attachment_mapping;
---drop table member;
---drop table ordertbl;
---drop table return;
---drop table terms;
---drop table terms_history;
---drop table chat;
---drop table chat_room;
---drop table breed;
---
---drop sequence seq_question_id;
---drop sequence seq_answer_id;
---drop sequence seq_image_attachment_id;
---drop sequence seq_image_attachment_mapping_id;
---drop sequence seq_point_id;
---drop sequence seq_product_category_id;
---drop sequence seq_product_id;
---drop sequence seq_product_detail_id;
---drop sequence seq_cart_id;
---drop sequence seq_payment_id;
---drop sequence seq_cartitem_id;
---drop sequence seq_ordertbl_id;
---drop sequence seq_refund_id;
---drop sequence seq_cancel_order_id;
---drop sequence seq_authority_id;
---drop sequence seq_community_id;
---drop sequence seq_wishlist_id;
---drop sequence seq_pet_id;
---drop sequence seq_persistent_logins_id;
---drop sequence seq_member_id;
---drop sequence seq_review_id;
---drop seq_chat_id;
---drop sequence seq_chat_room_id;
+drop table review;
+drop table image_attachment;
+drop table image_attachment_mapping;
+drop table answer;
+drop table question;
+drop table point;
+drop table discount_rule;
+drop table product_category;
+drop table product;
+drop table product_detail;
+drop table cart;
+drop table payment;
+drop table cartitem;
+drop table orderTbl;
+drop table order_detail;
+drop table refund;
+drop table cancel_order;
+drop table authority;
+drop table product_category;
+drop table community;
+drop table wishlist;
+drop table pet;
+drop table persistent_logins;
+drop table image_attachment_mapping;
+drop table member;
+drop table ordertbl;
+drop table return;
+drop table terms;
+drop table terms_history;
+drop table chat;
+drop table chat_room;
+drop table breed;
+
+
+drop sequence seq_question_id;
+drop sequence seq_answer_id;
+drop sequence seq_image_attachment_id;
+drop sequence seq_image_attachment_mapping_id;
+drop sequence seq_point_id;
+drop sequence seq_product_category_id;
+drop sequence seq_product_id;
+drop sequence seq_product_detail_id;
+drop sequence seq_cart_id;
+drop sequence seq_payment_id;
+drop sequence seq_cartitem_id;
+drop sequence seq_ordertbl_id;
+drop sequence seq_refund_id;
+drop sequence seq_cancel_order_id;
+drop sequence seq_authority_id;
+drop sequence seq_community_id;
+drop sequence seq_wishlist_id;
+drop sequence seq_pet_id;
+drop sequence seq_persistent_logins_id;
+drop sequence seq_member_id;
+drop sequence seq_review_id;
+drop sequence seq_chat_id;
+drop sequence seq_chat_room_id;
+drop sequence seq_cancel_id;
+drop sequence seq_history_id;
+drop sequence seq_terms_id;
+
 
 --==============================
 -- 테이블 생성
@@ -175,17 +181,6 @@ create table image_attachment_mapping (
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
 
--- 포인트 테이블
-create table point (
-    point_id number,
-    point_member_id varchar2(20) not null,
-    point_current number not null,
-    point_type varchar2(100) not null,
-    point_amount number not null,
-    point_date timestamp default systimestamp,
-    constraint pk_point_id primary key (point_id),
-    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
-);
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
@@ -237,7 +232,30 @@ create table orderTbl (
     amount number not null,
     discount_code varchar2(20),
     constraint pk_order_id primary key(order_id),
-    constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade
+    constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    constraint fk_orderTbl_discount_code foreign key(discount_code) references discount_rule(discount_code) on delete cascade
+);
+
+-- 할인 테이블
+create table discount_rule (
+    discount_id number,
+    discount_code varchar2(20), -- 할인 코드 0: 포인트사용, 1: 쿠폰사용
+    discount_type varchar2(20) not null, -- 할인을 퍼센트or고정금액 중 한 개로 고정할 거면 이 컬럼은 필요없음. 하지만 퍼센트, 고정 금액, 최대금액 제한 할인 등등 여러 개가 될 거면 필요함
+    discount_value number not null, -- 할인값 ex) 할인률이 10%면 여기에 10이 들어가고 고정 할인이면 고정 금액이 들어감
+    constraint pk_discount_id primary key(discount_id),
+    constraint unique_discount_code unique(discount_code)
+);
+
+-- 포인트 테이블
+create table point (
+    point_id number,
+    point_member_id varchar2(20) not null,
+    point_current number not null,
+    point_type varchar2(100) not null,
+    point_amount number not null,
+    point_date timestamp default systimestamp,
+    constraint pk_point_id primary key (point_id),
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
 
 create table cancel_order (
@@ -429,10 +447,11 @@ create sequence seq_terms_id;
 create sequence seq_history_id;
 
 select * from orderTbl;
+select * from point;
+select * from discount_rule;
 select * from member;
 select * from question;
 select * from answer;
-select * from point;
 select * from product;
 select * from image_attachment;
 select * from image_attachment_mapping;
@@ -442,6 +461,7 @@ select * from review;
 select * from terms;
 select * from terms_history;
 
+delete from point where point_id = '22';
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
