@@ -25,6 +25,8 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/review.css" />
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/point.css" />

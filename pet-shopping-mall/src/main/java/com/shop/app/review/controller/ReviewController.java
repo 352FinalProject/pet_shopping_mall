@@ -54,36 +54,36 @@ public class ReviewController {
 	@Autowired
 	private PointService pointService;
 	
-	@Autowired 
-	private ImageService imageService; // 이미지 서비스 주입
-	
-	// 리뷰 페이지에서 이미지를 불러오는 컨트롤러 메소드
-    @GetMapping("/reviews/{reviewId}/image/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveImage(@PathVariable Long reviewId, @PathVariable String filename) {
-        Resource image = imageService.loadImage(reviewId, filename); // 이미지 서비스에서 이미지 로드
-
-        // 이미지 타입에 따라 Content-Type 설정
-        String contentType = determineContentType(filename);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, contentType)
-                .body(image);
-    }
-
-    // 파일 확장자에 따라 Content-Type을 결정하는 메소드
-    private String determineContentType(String filename) {
-        String extension = FilenameUtils.getExtension(filename.toLowerCase());
-        switch (extension) {
-            case "jpg":
-            case "jpeg":
-                return "image/jpeg";
-            case "png":
-                return "image/png";
-            // 추가적인 이미지 확장자 처리 가능
-            default:
-                return "application/octet-stream"; // 기본적으로 이진 데이터로 설정
-        }
-    }
+//	@Autowired 
+//	private ImageService imageService; // 이미지 서비스 주입
+//	
+//	// 리뷰 페이지에서 이미지를 불러오는 컨트롤러 메소드
+//    @GetMapping("/reviews/{reviewId}/image/{filename:.+}")
+//    @ResponseBody
+//    public ResponseEntity<Resource> serveImage(@PathVariable Long reviewId, @PathVariable String filename) {
+//        Resource image = imageService.loadImage(reviewId, filename); // 이미지 서비스에서 이미지 로드
+//
+//        // 이미지 타입에 따라 Content-Type 설정
+//        String contentType = determineContentType(filename);
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_TYPE, contentType)
+//                .body(image);
+//    }
+//
+//    // 파일 확장자에 따라 Content-Type을 결정하는 메소드
+//    private String determineContentType(String filename) {
+//        String extension = FilenameUtils.getExtension(filename.toLowerCase());
+//        switch (extension) {
+//            case "jpg":
+//            case "jpeg":
+//                return "image/jpeg";
+//            case "png":
+//                return "image/png";
+//            // 추가적인 이미지 확장자 처리 가능
+//            default:
+//                return "application/octet-stream"; // 기본적으로 이진 데이터로 설정
+//        }
+//    }
 	
 	
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
@@ -220,7 +220,7 @@ public class ReviewController {
 	   
    }
 
-   // 리뷰 수정
+   // 리뷰 수정 페이지 이동
    @GetMapping("/reviewUpdate.do")
    public void reviewUpdate(@RequestParam int reviewId, Model model) {
 	   
@@ -240,7 +240,11 @@ public class ReviewController {
 	   Review reviews = _review.toReview();
 	   int result = reviewService.updateReview(reviews);
 	   
-	   return "redirect:/review/reviewDetail.do?reviewId=" + reviews.getReviewId();
+	   log.debug("리뷰수정 result = {}", result);
+	   
+//	   return "redirect:/review/reviewDetail.do?reviewId=" + reviews.getReviewId();
+	   return "redirect:/review/reviewDetail.do";
+//	   return "redirect:/review/reviewList.do";
 	   
    }
    

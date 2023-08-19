@@ -1,0 +1,88 @@
+
+@charset "UTF-8";
+/* 리뷰 css (혜령) */
+
+/* 리뷰작성 */
+/* 사용자 버튼 */
+.review-create-btn{
+	display: flex;
+	justify-content: center;
+	gap: 15px;	
+	margin-top: 30px;
+}
+
+/* 초기화 버튼 */
+.review-btn-rset {
+	background-color: #c8c8c8;
+	margin-right: 10px;
+	width: 120px;
+	height: 40px;
+	border-radius: 20px;
+	color: white;
+	border: 1px solid #e7e7e7;
+	margin-top: 30px;
+	cursor: pointer;
+}
+
+/* 작성하기 버튼 */
+.review-btn-submit {
+	background-color: #58ACFA;
+	width: 120px;
+	height: 40px;
+	border-radius: 20px;
+	border: 1px solid #e7e7e7;
+	color: white;
+	margin-top: 30px;
+	cursor: pointer;
+}
+
+/* 리뷰 내용 textarea */
+.review-write-content{
+  height: 150px;
+  width: 600px;
+  justify-content: left;
+  text-align: left;
+  display: flex;
+  border: 1px solid lightgray;
+  background-color: white;
+  margin: auto;
+  padding: 10px;
+  resize: none; /* textarea 사이즈 조절 금지 */
+}
+
+/* 리뷰작성 table */
+.review-write-table {
+  height: 180px;
+  width: 600px;
+  justify-content: left;
+  text-align: left;
+  display: flex;
+  border: 1px solid lightgray;
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+}
+
+.review-write-table td {
+	margin-left : 100px;
+}
+
+.common-title {
+	font-size:24px;
+	justify-content: center;
+	display: flex;
+}
+
+/* 별점 */
+.star-rating {
+   color: #5886d3; 
+   cursor: pointer;
+}
+
+.common-div table td {
+	padding: 5px;
+}
+
+
+
+
