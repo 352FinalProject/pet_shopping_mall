@@ -17,36 +17,43 @@
 	                		<input type="checkbox" name="checkAll" id="checkAll" class="checkbox" value="0">
 	                		<label for="checkAll">전체 선택</label>
 	                	</div>
-	                	<c:forEach items="${cartList}" var="product" varStatus="vs">
-	                	<fmt:formatNumber value='${(product.productPrice + product.additionalPrice) * product.quantity}' pattern="0,000" var="formattedPrice" />
-	                	<div class="cart-product-info">
-	                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
-	                		<div>
-	                			<div>
-	                				<input type="checkbox" class="checkbox" name="productName" value="${formattedPrice}">
-	                				<label>${product.productName}</label>
-	                			</div>
-	                			<div> 
-	                				<div id="cart-option">
-	                					<div>
-	                						<p>옵션 : ${product.optionName}</p>
-	                						<p>수량 : ${product.quantity}</p>
-	                					</div>
-	                					<div>
-	                						<button class="cart-btn">옵션/수량변경</button>
-	                					</div>
-	                				</div>
-	                				<div>
-	                					<p>총 상품 금액 : <span class="target-price">${formattedPrice}</span>원</p>
-	                				</div>
-	                			</div>
-	                		</div>
-	                	</div>
-	                	<c:set var="totalPrice" value="${totalPrice + ((product.productPrice + product.additionalPrice) * product.quantity)}" />
-	                	<form:form id="deleteOneFrm" method="POST" action="${pageContext.request.contextPath}/cart/deleteCartOne.do">
-	                		<input type="hidden" name="id" value="${product.cartitemId}">
-	                	</form:form>
-	                	</c:forEach>
+	                	<c:if test="${not empty cartList}">
+		                	<c:forEach items="${cartList}" var="product" varStatus="vs">
+		                	<fmt:formatNumber value='${(product.productPrice + product.additionalPrice) * product.quantity}' pattern="0,000" var="formattedPrice" />
+		                	<div class="cart-product-info">
+		                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
+		                		<div>
+		                			<div>
+		                				<input type="checkbox" class="checkbox" name="productName" value="${formattedPrice}">
+		                				<label>${product.productName}</label>
+		                			</div>
+		                			<div> 
+		                				<div id="cart-option">
+		                					<div>
+		                						<p>옵션 : ${product.optionName}</p>
+		                						<p>수량 : ${product.quantity}</p>
+		                					</div>
+		                					<div>
+		                						<button class="cart-btn update-btn" value="${product.productId}">옵션/수량변경</button>
+		                					</div>
+		                				</div>
+		                				<div>
+		                					<p>총 상품 금액 : <span class="target-price">${formattedPrice}</span>원</p>
+		                				</div>
+		                			</div>
+		                		</div>
+		                	</div>
+		                	<c:set var="totalPrice" value="${totalPrice + ((product.productPrice + product.additionalPrice) * product.quantity)}" />
+		                	<form:form id="deleteOneFrm" method="POST" action="${pageContext.request.contextPath}/cart/deleteCartOne.do">
+		                		<input type="hidden" name="id" value="${product.cartitemId}">
+		                	</form:form>
+		                	</c:forEach>
+		                </c:if>
+		                <c:if test="${empty cartList}">
+		                	<div class="cart-product-info">
+		                		<p>장바구니에 담긴 상품이 없습니다.</p>
+		                	</div>
+		                </c:if>
 	                	<div>
 	                		<button class="cart-btn" onclick="deleteCartOne();">선택 상품 삭제</button>
 	                		<button class="cart-btn" onclick="deleteAll();">전체 상품 삭제</button>
@@ -85,6 +92,17 @@
                 </div>
             </div>
         </div>
+    <div id="modal">
+    	<div class="modal-content">
+    		<h2>옵션 및 수량 변경</h2>
+    		<p>상품명</p>
+    		<p>옵션</p>
+    		<select>
+    			<option value="detailId"></option>
+    		</select>
+    		<button id="close-modal">완료</button>
+    	</div>
+   	</div>
     </section>
 <form:form id="deleteAllFrm" method="POST" 
 	action="${pageContext.request.contextPath}/cart/deleteCartAll.do">
@@ -145,15 +163,40 @@ const payment = () => {
 
 const formatPrice = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+};
 
 const deleteAll = () => {
 	$("#deleteAllFrm").submit();
-}
+};
 
 const deleteCartOne = () => {
 	$("#deleteOneFrm").submit();
-}
+};
+
+
+const modal = document.getElementById("modal");
+const openModalBtns = document.querySelectorAll(".update-btn");
+const closeModalBtn = document.getElementById("close-modal");
+
+openModalBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+    	let productId = btn.value;
+    	
+/*     	$.ajax({
+    		url: "${pageContext.request.contextPath}/product/findProdById.do?id=" + productId,
+			method: 'GET',
+			
+    	}); */
+    	
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    });
+});
+
+closeModalBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+});
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
