@@ -25,6 +25,7 @@
                 <table class="service-product-utility">
 					<thead>
 						<tr>
+							<th>번호</th>
 							<th>상품명</th>
 							<th>옵션</th>
 							<th>별점</th>
@@ -34,12 +35,15 @@
                     <tbody>
                     	<c:if test="${empty reviews}">
                     		<tr>
-                    			<td colspan="4">작성된 리뷰가 없습니다.</td>
+                    			<td colspan="5">작성된 리뷰가 없습니다.</td>
                     		</tr>
                     	</c:if>
                     	<c:if test="${not empty reviews}">
-                    	<c:forEach items="${reviews} var="review" varStatus="vs">
+                    	<c:forEach items="${reviews}" var="review" varStatus="vs">
                         <tr class="table-row">
+                        	<td>
+                        		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">${review.reviewId}</a>
+                        	</td>
                             <td>
                                 <div style="display: flex; align-items: center;">
                                     <img style="width: 100px; height: 100px; margin-right: 10px; cursor: pointer;" alt="상품이미지" 
@@ -61,8 +65,8 @@
                                 ${review.reviewStarRate}
                             </td>
                             <td style="vertical-align: middle;">
-                            <fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
-							<fmt:formatDate value="${reviewCreatedAt}" pattern="yy/MM/dd HH:mm"/>
+								<fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+								<fmt:formatDate value="${createdAt}" pattern="yy/MM/dd HH:mm"/>
                             </td>
                         </tr>
                         </c:forEach>

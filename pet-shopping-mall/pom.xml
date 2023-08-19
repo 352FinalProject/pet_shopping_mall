@@ -111,6 +111,15 @@
 			<artifactId>iamport-rest-client-java</artifactId>
 			<version>0.2.22</version>
 		</dependency>
+		
+		<!-- 이미지 출력 -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version> 
+		</dependency>
+		
+		
 
 	</dependencies>
 
