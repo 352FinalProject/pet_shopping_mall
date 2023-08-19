@@ -25,6 +25,9 @@ public interface PointService	 {
 	// 물건 구매 포인트 사용 (예라)
 	int insertUsedPoint(Point usedPoint);
 
+	// 취소된 포인트를 db에 저장 (예라)
+	int insertRollbackPoint(Point rollbackPoint);
+
 	
 }
 

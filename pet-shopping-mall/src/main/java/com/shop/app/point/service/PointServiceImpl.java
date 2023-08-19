@@ -49,4 +49,10 @@ public class PointServiceImpl implements PointService {
 	public int insertUsedPoint(Point usedPoint) {
 		return pointRepository.insertUsedPoint(usedPoint);
 	}
+
+	// 취소된 포인트를 db에 저장 (예라)
+	@Override
+	public int insertRollbackPoint(Point rollbackPoint) {
+		return pointRepository.insertRollbackPoint(rollbackPoint);
+	}
 }

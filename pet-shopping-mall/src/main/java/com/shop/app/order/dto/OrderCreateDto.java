@@ -22,7 +22,7 @@ public class OrderCreateDto {
 	
 	public Order toOder() {
 		
-	    int afterDiscount = pointsUsed;  // 사용한 포인트가 할인될 금액 (예라)
+	    int afterDiscount = pointsUsed;  // 사용한 포인트 금액 (예라)
 	    int finalAmount = amount - afterDiscount;  // 최종 결제 금액 (예라)
 	    
 		return Order.builder()

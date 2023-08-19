@@ -132,12 +132,10 @@ insert into point (point_id, point_member_id, point_current, point_type, point_a
 values (seq_point_id.nextval, 'member1', 3000, '회원가입', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
-values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_id.nextval, 'member1', 3000, '구매적립', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
--------------------- discount_rule insert ---------------------------
-insert into discount_rule (discount_id, discount_code, discount_type, discount_value)
-values
-    (1, '포인트사용', '고정할인', 5000);
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
 commit;

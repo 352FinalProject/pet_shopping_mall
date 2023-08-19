@@ -45,5 +45,9 @@ public interface PointRepository {
 	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
 	int insertUsedPoint(Point usedPoint);
 
+	// 취소된 포인트를 db에 저장 (예라)
+	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
+	int insertRollbackPoint(Point rollbackPoint);
+
 
 }

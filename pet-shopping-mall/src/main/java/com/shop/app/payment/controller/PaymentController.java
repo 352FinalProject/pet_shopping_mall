@@ -89,38 +89,31 @@ public class PaymentController {
 	@PostMapping("/proceed.do")
 	public Map<String, Object> paymentProceed(@Valid @RequestBody OrderCreateDto _order) {
 		Map <String, Object> resultMap = new HashMap<>();
-		log.debug("_order = {}", _order);
 		Order order = _order.toOder();
 
 		// 0. 사용된 포인트 가져오기 (예라)
 		int pointsUsed = _order.getPointsUsed();
-		log.debug("pointsUsed = {}", pointsUsed);
+		log.debug("사용 포인트 pointsUsed = {}", pointsUsed);
 
 		// 1. (사용) 현재 포인트를 가져오기
 		Point points = new Point();
 		points.setPointMemberId(_order.getMemberId());
 		Point currentPoints = pointService.findPointCurrentById(points);
-		log.debug("currentPoints = {}", currentPoints);
 
 		// 2. 포인트 사용 정보 저장
 		Point usedPoint = new Point();
 		usedPoint.setPointMemberId(_order.getMemberId());
 		usedPoint.setPointType("구매사용"); 
 		usedPoint.setPointAmount(-_order.getPointsUsed()); // 사용된 포인트 금액
-		log.debug("Points used from _order = {}", _order.getPointsUsed());
-		log.debug("usedPoint = {}", usedPoint);
 
 		// 3. 사용된 포인트 업데이트
 		int currentPoint = currentPoints.getPointCurrent();
 		usedPoint.setPointCurrent(currentPoint - _order.getPointsUsed());
-		log.debug("currentPoint = {}", currentPoint);
 
 		// 4. db에 포인트 사용 정보 저장
 		int usedPointResult = pointService.insertUsedPoint(usedPoint);
-		log.debug("usedPointResult = {}", usedPointResult);
 
 		int result = orderService.insertOrder(order);
-		log.debug("result = {}", result);
 
 		String msg = "";
 
@@ -140,7 +133,7 @@ public class PaymentController {
 				point.setPointType("구매적립"); // 포인트 유형
 				point.setPointAmount(pointAmount); // 적립된 포인트
 
-				// 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
+				// 3. memberId값으로 현재 사용자의 포인트 가져오기
 				Point currentPoints2 = pointService.findReviewPointCurrentById(point); 
 
 				// 4. 현재 포인트를 가져온 후 포인트 적립 계산
@@ -171,5 +164,64 @@ public class PaymentController {
 		log.debug("imp_uid= {}", imp_uid);
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
+	
+	/*
+	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)
+	 * */
+	@PostMapping("/verifyAndHandleCancelledPayment/{imp_uid}")
+	@ResponseBody
+	public ResponseEntity<?> verifyAndHandleCancelledPayment(@Valid @RequestBody OrderCreateDto _order, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException {
+	    log.debug("imp_uid_rollback = {}", imp_uid);
+	    
+	    // 1. 결제 정보 가져오기
+	    IamportResponse<Payment> paymentResponse = iamportClient.paymentByImpUid(imp_uid);
 
+	    if (paymentResponse == null || paymentResponse.getResponse() == null) {
+	        return ResponseEntity.badRequest().body("결제 정보를 가져올 수 없습니다.");
+	    }
+
+	    Payment payment = paymentResponse.getResponse();
+	    String orderUid = payment.getMerchantUid();
+	    
+		Order order = _order.toOder();
+	    
+	    // 2. db에서 주문 정보 가져오기
+	    Order findOrder = orderService.findByOrder(order);
+	    log.debug("findOrder = {}", findOrder);
+
+	    String memberId = _order.getMemberId();
+		int pointsUsed = findOrder.getDiscount();
+	    
+	    log.debug("_order = {}", _order);
+	    log.debug("pointsUsed = {}", pointsUsed);
+	    
+	    // 3. 결제 상태가 'failed'인지 확인
+	    if ("failed".equalsIgnoreCase(payment.getStatus())) {
+	        // 4. 'failed' 상태라면 사용자의 포인트를 다시 반환
+	        handleCancelledPayment(memberId, pointsUsed);
+	        return ResponseEntity.ok("결제가 취소되었으며 포인트가 환불되었습니다.");
+	    }
+
+	    return ResponseEntity.ok(paymentResponse);
+	}
+
+	private void handleCancelledPayment(String memberId, int usedPoints) {
+	    // 1. 포인트 반환 로직
+	    Point rollbackPoint = new Point();
+	    rollbackPoint.setPointMemberId(memberId);
+	    rollbackPoint.setPointType("구매취소");
+	    rollbackPoint.setPointAmount(usedPoints);
+
+	    // 2. 현재 포인트 값을 가져온다
+	    Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
+	    log.debug("currentPoints = {}", currentPoints);
+
+	    // 3. 현재 포인트에 반환될 포인트를 더한다
+	    int updatedPoint = currentPoints.getPointCurrent() + usedPoints;
+	    rollbackPoint.setPointCurrent(updatedPoint);
+
+	    // 4. 취소된 포인트를 db에 저장
+	    int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
+	    log.debug("pointRollback = {}", pointRollback);
+	}
 }

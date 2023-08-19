@@ -20,7 +20,7 @@
 						<div class="cart-product-info">
 							<c:set var="productTotal"
 								value="${(product.productPrice + product.additionalPrice) * product.quantity}" />
-							 <c:set var="amount" value="${amount + productTotal}" />
+							<c:set var="amount" value="${amount + productTotal}" />
 							<div class="product-thumbnail">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg"
@@ -34,13 +34,18 @@
 									<div id="cart-option">
 										<div>
 											<p>
-												옵션 : ${product.optionName} ${product.optionValue} <span>(+<fmt:formatNumber value="${product.additionalPrice}" groupingUsed="true" />)</span>
+												옵션 : ${product.optionName} ${product.optionValue} <span>(+<fmt:formatNumber
+														value="${product.additionalPrice}" groupingUsed="true" />)
+												</span>
 											</p>
 											<p>수량 : ${product.quantity}개</p>
 										</div>
 									</div>
 									<div class="productTotal-title">
-										<p>상품 금액 <span class="productTotal-title2"><fmt:formatNumber value="${productTotal}" groupingUsed="true" /></span>원</p>
+										<p>
+											상품 금액 <span class="productTotal-title2"><fmt:formatNumber
+													value="${productTotal}" groupingUsed="true" /></span>원
+										</p>
 									</div>
 								</div>
 							</div>
@@ -71,8 +76,7 @@
 								name="paymethod" value="trans"> <span>무통장입금</span>
 							</label> <label class="paybtn"> <input type="radio"
 								name="paymethod" value="html5_inicis"> <span>카드결제</span>
-							</label>
-							<label class="paybtn"> <input type="radio"
+							</label> <label class="paybtn"> <input type="radio"
 								name="paymethod" value="kakaopay"> <span>카카오페이</span>
 							</label>
 						</div>
@@ -84,13 +88,14 @@
 						<div class="discount-info">
 							<div>
 								<div class="discount-point-info">
-									<span class="discount-point">포인트</span>
-									<input type="text" name="point-view" id="pointInput" class="point-view" value="0" style="width:64px; text-align: right; margin-left: 10px;">원 
+									<span class="discount-point">포인트</span> <input type="text"
+										name="point-view" id="pointInput" class="point-view" value="0"
+										style="width: 64px; text-align: right; margin-left: 10px;">원
 									<button type="button" class="discount-point-btn">사용</button>
 									<button type="button" class="discount-point-btn">모두사용</button>
-									<span class="have-point">
-										(보유 <span class="have-point-bold" style="font-weight: 600"><fmt:formatNumber value="${pointCurrent}" groupingUsed="true" /></span>원
-										)
+									<span class="have-point"> (보유 <span
+										class="have-point-bold" style="font-weight: 600"><fmt:formatNumber
+												value="${pointCurrent}" groupingUsed="true" /></span>원 )
 									</span>
 								</div>
 							</div>
@@ -102,7 +107,8 @@
 							<div class="product-price">
 								<span class="price"><strong>상품금액</strong></span>
 								<p>
-									<span id="total-price"><fmt:formatNumber value="${productTotal}" groupingUsed="true" /></span>원
+									<span id="total-price"><fmt:formatNumber
+											value="${productTotal}" groupingUsed="true" /></span>원
 								</p>
 							</div>
 							<div class="product-price">
@@ -114,13 +120,13 @@
 							<div class="product-price">
 								<span>포인트</span>
 								<p>
-									<span style="color:red;">(-) <span id="discount">원</span></span>
+									<span style="color: red;">(-) <span id="discount">원</span></span>
 								</p>
 							</div>
 							<div class="product-price">
 								<span>쿠폰</span>
 								<p>
-									<span style="color:red;">(-) <span id="discount">원</span></span>
+									<span style="color: red;">(-) <span id="discount">원</span></span>
 								</p>
 							</div>
 						</div>
@@ -129,7 +135,8 @@
 						<div class="product-price">
 							<strong class="price-title">최종 결제 금액</strong>
 							<p class="price">
-								<span id="amount"><fmt:formatNumber value="${amount}" groupingUsed="true" /></span>원
+								<span id="amount"><fmt:formatNumber value="${amount}"
+										groupingUsed="true" /></span>원
 							</p>
 						</div>
 					</div>
@@ -215,7 +222,7 @@ const proceedPay = () => {
 	}
 	
 	// 포인트 입력 값 가져오기 (예라)
-    let pointUsed = parseInt(document.getElementById('pointInput').value) || 0;
+    let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
 	
 	const data = {
 		orderNo: new Date().getTime(),
@@ -230,7 +237,7 @@ const proceedPay = () => {
 		deliveryFee: 3000,
 		discount: '${pointCurrent}',
 		amount: '${amount}',
-        pointsUsed: pointUsed, // 포인트 사용량 추가 (예라)
+		pointsUsed: pointValue, // 포인트 사용량 추가 (예라)
 		pg: checkedButton.value
 	};
 	
@@ -273,6 +280,36 @@ const requestPaymentByCard = (data) => {
 	}, 
 	function (response) {
 		console.log(response)
+	    // 결제가 취소됐을 때 (예라)
+	    if (!response.success && response.error_msg.includes("결제포기")) {
+    		console.log("결제 취소됨");
+		   	let orderData = {
+		   			orderNo: new Date().getTime(),
+		   			memberId: '${loginMember.memberId}',
+		   			name: '${loginMember.name}',
+		   			buyerTel: '${loginMember.phone}',
+		   			buyerEmail: '${loginMember.email}',
+		   			buyerAddr: '${loginMember.address}',
+		   			postcode: 1,
+		   			totalPrice: '${productTotal}',
+		   			deliveryFee: 3000,
+		   			discount: '${pointCurrent}',
+		   			amount: '${amount}',
+
+		   	};
+			        
+	        $.ajax({
+	            type: 'POST',
+	            url : '${pageContext.request.contextPath}/payment/verifyAndHandleCancelledPayment/' + response.imp_uid,
+	            data: JSON.stringify(orderData), // orderData를 JSON 문자열로 변환
+	            contentType: "application/json", // 전송 데이터의 종류
+	            dataType: "json", // 응답 데이터의 종류
+	        }).done((data) =>  {
+	            alert("결제가 취소되었습니다.");
+	        });
+	        return;
+	    }
+		
  		$.ajax({
 			type: 'POST',
 			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid,
@@ -284,7 +321,7 @@ const requestPaymentByCard = (data) => {
 			}
 		})
 	});
-};
+}; 
 
 /* 포인트 사용하면 포인트에 금액 기재되고 최종 결제 금액에서 차감 (예라)*/
 document.querySelector('.discount-point-btn').addEventListener('click', function() {
