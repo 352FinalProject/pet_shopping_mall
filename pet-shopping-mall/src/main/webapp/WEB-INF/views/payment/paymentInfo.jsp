@@ -39,8 +39,8 @@
 											<p>수량 : ${product.quantity}개</p>
 										</div>
 									</div>
-									<div>
-										<p>상품 금액 <fmt:formatNumber value="${productTotal}" groupingUsed="true" />원</p>
+									<div class="productTotal-title">
+										<p>상품 금액 <span class="productTotal-title2"><fmt:formatNumber value="${productTotal}" groupingUsed="true" /></span>원</p>
 									</div>
 								</div>
 							</div>
@@ -114,20 +114,20 @@
 							<div class="product-price">
 								<span>포인트</span>
 								<p>
-									<span>(-)</span><span id="discount"></span>원
+									<span style="color:red;">(-) <span id="discount">원</span></span>
 								</p>
 							</div>
 							<div class="product-price">
 								<span>쿠폰</span>
 								<p>
-									<span>(-)</span><span id="discount"></span>원
+									<span style="color:red;">(-) <span id="discount">원</span></span>
 								</p>
 							</div>
 						</div>
 					</div>
 					<div class="payment-info2">
 						<div class="product-price">
-							<strong class="price">최종 결제 금액</strong>
+							<strong class="price-title">최종 결제 금액</strong>
 							<p class="price">
 								<span id="amount"><fmt:formatNumber value="${amount}" groupingUsed="true" /></span>원
 							</p>
@@ -287,11 +287,10 @@ const requestPaymentByCard = (data) => {
 	});
 };
 
-
 /* 포인트 사용하면 포인트에 금액 기재되고 최종 결제 금액에서 차감 (예라)*/
 document.querySelector('.discount-point-btn').addEventListener('click', function() {
     // 포인트 입력 값 가져오기
-    let pointValue = parseInt(document.getElementById('pointInput').value) || 0;
+    let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
 
     // 총 결제 금액에서 포인트 차감
     let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
@@ -305,49 +304,56 @@ document.querySelector('.discount-point-btn').addEventListener('click', function
 });
 
 /* 모두사용 버튼 누르면 현재 있는 모든 포인트 사용 (예라)*/
- document.querySelectorAll('.discount-point-btn')[1].addEventListener('click', function() {
+document.querySelectorAll('.discount-point-btn')[1].addEventListener('click', function() {
     // 현재 사용자의 포인트 가져오기
     let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
 
     // 포인트 입력 필드 값을 현재 포인트로 설정
-    document.getElementById('pointInput').value = pointCurrent;
+    document.getElementById('pointInput').value = pointCurrent.toLocaleString(); // 여기서 toLocaleString()를 추가했습니다.
 
     // 총 결제 금액에서 포인트 차감
     let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
     amount -= pointCurrent;
 
     // 포인트 차감 금액 업데이트
-    document.getElementById('discount').innerText = pointCurrent.toLocaleString(); // 숫자를 쉼표 포함 문자열로 변환
+    document.getElementById('discount').innerText = pointCurrent.toLocaleString() + '원'; // 숫자를 쉼표 포함 문자열로 변환
 
     // 총 결제 금액 업데이트
     document.getElementById('amount').innerText = amount.toLocaleString();
 });
 
+
 /* 가지고 있는 포인트보다 많이 쓰려고 할 때, 음수 입력할 때 팝업창 + 0으로 초기화 (예라)*/
 // 포인트 입력 필드 가져오기
 const pointInput = document.getElementById('pointInput');
 
+//사용자가 입력 필드에서 포커스를 잃었을 때 쉼표를 추가
+pointInput.addEventListener('focusout', function() {
+    let value = this.value.replace(/,/g, '');  // 쉼표 제거
+    let pointValue = parseInt(value) || 0;
+    this.value = pointValue.toLocaleString();  // 쉼표 추가
+});
+
 // 포인트 입력 값이 변경될 때마다 검사
 pointInput.addEventListener('input', function() {
+    // 입력된 값에서 쉼표를 제거
+    let value = this.value.replace(/,/g, '');  
+    
+    // 숫자 이외의 문자가 입력되면 제거
+    this.value = value.replace(/\D/g,'');
+
     // 현재 사용자의 포인트 가져오기
     let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
-
-    // 포인트 입력 값 가져오기
-    let pointValue = parseInt(pointInput.value) || 0;
-
-    // 입력된 포인트가 음수인지 검사
-    if(pointValue < 0) {
-        alert('음수 값을 입력할 수 없습니다.'); // 경고 팝업
-        pointInput.value = 0; // 입력 필드 값을 0으로 설정
-        return;
-    }
+    let pointValue = parseInt(this.value) || 0;
     
     // 입력된 포인트가 사용 가능한 포인트보다 큰지 검사
     if(pointValue > pointCurrent) {
-        alert('사용 가능한 포인트보다 많이 입력하셨습니다.'); // 경고 팝업
-        pointInput.value = 0; // 입력 필드 값을 0으로 설정
+        alert('사용 가능한 포인트보다 많이 입력하셨습니다.');
+        this.value = '0';
+        return;
     }
 });
+
 
 /* 			beforeSend : function(xhr){
 xhr.setRequestHeader(header, token);
