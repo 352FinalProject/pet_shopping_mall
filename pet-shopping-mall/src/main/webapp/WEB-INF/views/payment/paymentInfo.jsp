@@ -255,7 +255,6 @@ const proceedPay = () => {
 
 };
 
-
 const requestPaymentByCard = (data) => {
 	
 	IMP.init('imp60204862');
