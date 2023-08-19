@@ -36,7 +36,7 @@
 	                						<button class="cart-btn">옵션/수량변경</button>
 	                					</div>
 	                				</div>
-	                				<div>
+	                				<div class="cart-productTotal">
 	                					<p>총 상품 금액 : <span class="target-price">${formattedPrice}</span>원</p>
 	                				</div>
 	                			</div>

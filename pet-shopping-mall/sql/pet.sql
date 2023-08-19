@@ -27,6 +27,7 @@ SELECT *  FROM all_tables;
 --drop table answer;
 --drop table question;
 --drop table point;
+--drop table discount_rule;
 --drop table product_category;
 --drop table product;
 --drop table product_detail;
@@ -51,7 +52,9 @@ SELECT *  FROM all_tables;
 --drop table terms_history;
 --drop table chat;
 --drop table chat_room;
-
+--drop table breed;
+--
+--
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
@@ -73,8 +76,12 @@ SELECT *  FROM all_tables;
 --drop sequence seq_persistent_logins_id;
 --drop sequence seq_member_id;
 --drop sequence seq_review_id;
---drop seq_chat_id;
+--drop sequence seq_chat_id;
 --drop sequence seq_chat_room_id;
+--drop sequence seq_cancel_id;
+--drop sequence seq_history_id;
+--drop sequence seq_terms_id;
+
 
 --==============================
 -- 테이블 생성
@@ -93,7 +100,6 @@ create table member (
     subscribe char(1) default 'N' not null,
     constraints pk_member_id primary key(member_id)
 );
-select * from member;
 
 -- 권한 테이블
 create table authority(
@@ -127,21 +133,7 @@ CREATE TABLE breed (
     pet_kind VARCHAR2(50),
     pet_breed VARCHAR2(50),
     CONSTRAINT chk_pet_breed CHECK (pet_breed IN ('C', 'D', 'E'))
-    );
-
-
-
--- 찜한 목록 테이블
-create table wishlist(
-    wishlist_id number,
-    wishlist_member_id varchar2(20),
-    wishlist_product_id number,
-    wishlist_created_at timestamp default sysdate,
-    constraints pk_wishlist_id primary key(wishlist_id),
-    constraints fk_wishlist_member_id foreign key(wishlist_member_id) references member(member_id) on delete cascade,
-    constraints fk_wishlist_product_id foreign key(wishlist_product_id) references product(product_id) on delete cascade
 );
-
 
 -- qna 질문 테이블
 create table question(
@@ -189,17 +181,6 @@ create table image_attachment_mapping (
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
 
--- 포인트 테이블
-create table point (
-    point_id number,
-    point_member_id varchar2(20) not null,
-    point_current number not null,
-    point_type varchar2(100) not null,
-    point_amount number not null,
-    point_date timestamp default systimestamp,
-    constraint pk_point_id primary key (point_id),
-    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
-);
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
@@ -215,8 +196,8 @@ create table product (
     product_price number not null,
     thumbnail_img number, -- 썸네일 이미지(fk)
     product_img number, -- 제품상세 이미지(fk)
-    create_date timestamp default sysdate, -- 등록일
-    expire_date timestamp default sysdate, -- 유통기한
+    create_date timestamp default systimestamp, -- 등록일
+    expire_date timestamp default systimestamp, -- 유통기한
     like_cnt number default 0, -- 좋아요수
     view_cnt number default 0, -- 조회수
     constraints pk_product_id primary key(product_id),
@@ -254,6 +235,18 @@ create table orderTbl (
     constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+-- 포인트 테이블
+create table point (
+    point_id number,
+    point_member_id varchar2(20) not null,
+    point_current number not null,
+    point_type varchar2(100) not null,
+    point_amount number not null,
+    point_date timestamp default systimestamp,
+    constraint pk_point_id primary key (point_id),
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
+);
+
 create table cancel_order (
     cancel_id number,
     request_date timestamp default systimestamp not null,
@@ -272,6 +265,7 @@ create table persistent_logins (
     token varchar(64) not null, -- username, password, expiry time을 hasing한 값
     last_used timestamp not null
 );
+
 -- 주문상세 테이블
 create table order_detail (
     order_id number,
@@ -287,7 +281,7 @@ create table wishlist(
     wishlist_id number,
     wishlist_member_id varchar2(20),
     wishlist_product_id number,
-    wishlist_created_at timestamp default sysdate,
+    wishlist_created_at timestamp default systimestamp,
     constraints pk_wishlist_id primary key(wishlist_id),
     constraints fk_wishlist_member_id foreign key(wishlist_member_id) references member(member_id) on delete cascade,
     constraints fk_wishlist_product_id foreign key(wishlist_product_id) references product(product_id) on delete cascade
@@ -303,7 +297,7 @@ create table review (
     review_title varchar2(50),
     review_content varchar2(3000),
     review_star_rate number default 1 not null,
-    review_created_at timestamp default sysdate,
+    review_created_at timestamp default systimestamp,
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
     constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
@@ -316,7 +310,7 @@ create table community (
     community_member_id varchar2(50),
     community_title varchar2(500),
     community_content varchar2(4000),
-    community_created_at timestamp default sysdate,
+    community_created_at timestamp default systimestamp,
     constraint pk_community_id primary key(community_id),
     constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
 );
@@ -366,9 +360,6 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
-select * from cart;
-
-
 create table cartitem (
     cartitem_id number,
     cart_id number,
@@ -400,6 +391,16 @@ create table terms_history (
  constraint fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
 );
 
+-- 채팅방 테이블
+create table chat_room (
+ chat_room_id varchar2(20) not null,
+ chat_room_member_id varchar2(50) not null,
+ chat_room_admin_roll varchar2(20) not null,
+ chat_room_created_at timestamp default systimestamp not null,
+ constraint pk_chat_room_id primary key(chat_room_id),
+ constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
+);
+
 -- 채팅 로그 테이블
 create table chat (
  chat_id number,
@@ -412,18 +413,6 @@ create table chat (
  constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
 );
 
--- 채팅방 테이블
-create table chat_room (
- chat_room_id varchar2(20) not null,
- chat_room_member_id varchar2(50) not null,
- chat_room_admin_roll varchar2(20) not null,
- chat_room_created_at timestamp default systimestamp not null,
- constraint pk_chat_room_id primary key(chat_room_id),
- constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
-);
-
- commit;
-select * from member;
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -443,20 +432,23 @@ create sequence seq_cart_id;
 create sequence seq_cartitem_id;
 create sequence seq_chat_id;
 create sequence seq_chat_room_id;
+create sequence seq_terms_id;
+create sequence seq_history_id;
 
-select * from orderTbl;
+select * from orderTbl order by order_id desc;
+select * from point order by point_id desc;
+select * from discount_rule;
 select * from member;
 select * from question;
 select * from answer;
-select * from point;
 select * from product;
 select * from image_attachment;
 select * from image_attachment_mapping;
 select * from authority;
 select * from pet;
 select * from review;
-
-
+select * from terms;
+select * from terms_history;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger

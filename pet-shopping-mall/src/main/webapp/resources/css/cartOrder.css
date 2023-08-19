@@ -14,9 +14,18 @@ display: flex;
 }
 #cart-option {
 	display: flex;
+	margin-left: 23px;
 }
 #cart-option div:last-child{
-	margin-left:140px;
+	/* margin-left:140px; */
+}
+
+#cart-option {
+	margin-left: 23px;
+}
+
+.cart-productTotal {
+	margin-left: 23px;
 }
 .cart-left {
     margin-right: 30px; 
@@ -25,25 +34,56 @@ display: flex;
 .cart-right {
     margin-left: 30px;
 }
-.payment-info {
-	width: 400px;
-	border: 1px solid #e7e7e7;
-	padding: 10px;	
+
+#buy-title {
+	margin-left: 23px;
+	font-weight: 700;
+	color: #444;
 }
+
+.productTotal-title {
+	margin-left: 23px;
+}
+
+.productTotal-title2 {
+	font-weight: 700;
+	margin-left: 10px;
+	color: #444;
+}
+
+.product-thumbnail img {
+	margin-top: 20px;
+}
+
+.discount-point-btn {
+	font-size: 12px;
+	padding-left : 8px;
+	padding-right : 8px;
+	display: inline-block; 
+	border: 1px #ccc solid;
+	background-color: white;
+	height: 30px;
+	cursor: pointer;
+}
+
+#pointInput {
+	height: 30px;
+	border: 1px #ccc solid;
+}
+
 .product-price {
 	display:flex;
     width: 100%; 
     justify-content: space-between;
     margin-top:5px;
 }
-.price {
-font-size:24px;
-}
+
 .cart-btn {
 	border: 1px solid #e7e7e7;
 	background: white;
 	padding:5px;
 	border-radius: 2px;
+	margin-left: 50px;
 }
 #order-btn {
 	margin-top:20px;
@@ -52,13 +92,9 @@ font-size:24px;
 }
 
 
-
-
-
-
-
 .payment-left div:not(:last-child) {
 	margin-bottom: 20px;
+	margin-right: 10px;
 }
 
 .payment-div {
@@ -66,7 +102,7 @@ font-size:24px;
 }
 
 .cart-product-info {
-	width: 460px;
+	width: 600px;
 	height: 170px;
 	border: 1px solid #e7e7e7;
 	padding: 10px;
@@ -83,9 +119,28 @@ font-size:24px;
 }
 
 .payment-info {
-	width: 400px;
+	width: 500px;
 	border: 1px solid #e7e7e7;
 	padding: 10px;
+	
+}
+
+.payment-info2 {
+	width: 500px;
+	border: 1px solid #e7e7e7;
+	padding: 10px;
+	margin-bottom: 30px;
+	
+}
+
+
+
+.have-point {
+	font-size: 13px;
+}
+
+.payment-discount {
+	margin-bottom: 30px;
 }
 
 .product-price {
@@ -96,7 +151,16 @@ font-size:24px;
 }
 
 .price {
-	font-size: 24px;
+	font-size: 16px;
+}
+
+.price-title {
+	font-size: 20px;
+}
+
+#amount {
+	font-size: 22px;
+	font-weight: 700;
 }
 
 .cart-btn {
@@ -112,15 +176,16 @@ font-size:24px;
 }
 
 .order-info-title {
-	font-size: 19px;
+	font-size: 23px;
 	margin-right: 3px;
+	margin-bottom: 10px;
 }
 
 .flex-box {
 	display: flex;
 }
 
-/*버튼 활성화 시 색상 변경하려고 만든 클래스*/
+/*踰꾪듉 �솢�꽦�솕 �떆 �깋�긽 蹂�寃쏀븯�젮怨� 留뚮뱺 �겢�옒�뒪*/
 .active {
 	background-color: #5886d3;
 }

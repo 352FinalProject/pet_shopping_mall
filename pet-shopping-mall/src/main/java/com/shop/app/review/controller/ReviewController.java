@@ -146,10 +146,7 @@ public class ReviewController {
 	      
 	      // 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
 	      Point currentPoints = pointService.findReviewPointCurrentById(point); 
-	      
-	      log.debug("ReviewDetails reviewMemberId = {}", reviews.getReviewMemberId());
-	      log.debug("currentPoints = {}", currentPoints);
-	      
+
 	      // 4. 리뷰 작성하면 현재 포인트에 추가로 포인트 적립 (텍스트 500원, 이미지 1000원)
 	      int pointAmount = 500;
 	      if (hasImage) {
