@@ -34,13 +34,13 @@
 									<div id="cart-option">
 										<div>
 											<p>
-												옵션 : ${product.optionName} ${product.optionValue} <span>(+${product.additionalPrice})</span>
+												옵션 : ${product.optionName} ${product.optionValue} <span>(+<fmt:formatNumber value="${product.additionalPrice}" groupingUsed="true" />)</span>
 											</p>
 											<p>수량 : ${product.quantity}개</p>
 										</div>
 									</div>
 									<div>
-										<p>상품 금액 ${productTotal}원</p>
+										<p>상품 금액 <fmt:formatNumber value="${productTotal}" groupingUsed="true" />원</p>
 									</div>
 								</div>
 							</div>
@@ -85,11 +85,11 @@
 							<div>
 								<div class="discount-point-info">
 									<span class="discount-point">포인트</span>
-									<input type="text" name="point-view" class="point-view" value="0" style="width:64px; text-align: right; margin-left: 10px;">원 
-									<button type="button" class="discount-point-btn" style="display: inline-block;">사용</button>
-									<button type="button" class="discount-point-btn" style="display: inline-block;">모두사용</button>
+									<input type="text" name="point-view" id="pointInput" class="point-view" value="0" style="width:64px; text-align: right; margin-left: 10px;">원 
+									<button type="button" class="discount-point-btn">사용</button>
+									<button type="button" class="discount-point-btn">모두사용</button>
 									<span class="have-point">
-										(보유 <span class="have-point-bold">원</span>
+										(보유 <span class="have-point-bold" style="font-weight: 600"><fmt:formatNumber value="${pointCurrent}" groupingUsed="true" /></span>원
 										)
 									</span>
 								</div>
@@ -102,7 +102,7 @@
 							<div class="product-price">
 								<span class="price"><strong>상품금액</strong></span>
 								<p>
-									<span id="total-price">${productTotal}</span>원
+									<span id="total-price"><fmt:formatNumber value="${productTotal}" groupingUsed="true" /></span>원
 								</p>
 							</div>
 							<div class="product-price">
@@ -112,9 +112,15 @@
 								</p>
 							</div>
 							<div class="product-price">
-								<span>쿠폰 및 포인트</span>
+								<span>포인트</span>
 								<p>
-									<span>(-)</span><span id="discount">${pointCurrent}</span>원
+									<span>(-)</span><span id="discount"></span>원
+								</p>
+							</div>
+							<div class="product-price">
+								<span>쿠폰</span>
+								<p>
+									<span>(-)</span><span id="discount"></span>원
 								</p>
 							</div>
 						</div>
@@ -123,7 +129,7 @@
 						<div class="product-price">
 							<strong class="price">최종 결제 금액</strong>
 							<p class="price">
-								<span id="amount">${amount}</span>원
+								<span id="amount"><fmt:formatNumber value="${amount}" groupingUsed="true" /></span>원
 							</p>
 						</div>
 					</div>
@@ -208,6 +214,9 @@ const proceedPay = () => {
 		title = "${cartList[0].productName}" +" 외" + (cartListLength - 1) + "개";
 	}
 	
+	// 포인트 입력 값 가져오기 (예라)
+    let pointUsed = parseInt(document.getElementById('pointInput').value) || 0;
+	
 	const data = {
 		orderNo: new Date().getTime(),
 		memberId: '${loginMember.memberId}',
@@ -221,6 +230,7 @@ const proceedPay = () => {
 		deliveryFee: 3000,
 		discount: '${pointCurrent}',
 		amount: '${amount}',
+        pointsUsed: pointUsed, // 포인트 사용량 추가 (예라)
 		pg: checkedButton.value
 	};
 	
@@ -276,6 +286,68 @@ const requestPaymentByCard = (data) => {
 		})
 	});
 };
+
+
+/* 포인트 사용하면 포인트에 금액 기재되고 최종 결제 금액에서 차감 (예라)*/
+document.querySelector('.discount-point-btn').addEventListener('click', function() {
+    // 포인트 입력 값 가져오기
+    let pointValue = parseInt(document.getElementById('pointInput').value) || 0;
+
+    // 총 결제 금액에서 포인트 차감
+    let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
+    amount -= pointValue;
+
+    // 포인트 차감 금액 업데이트
+    document.getElementById('discount').innerText = pointValue.toLocaleString(); // 숫자를 쉼표 포함 문자열로 변환
+
+    // 총 결제 금액 업데이트
+    document.getElementById('amount').innerText = amount.toLocaleString();
+});
+
+/* 모두사용 버튼 누르면 현재 있는 모든 포인트 사용 (예라)*/
+ document.querySelectorAll('.discount-point-btn')[1].addEventListener('click', function() {
+    // 현재 사용자의 포인트 가져오기
+    let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
+
+    // 포인트 입력 필드 값을 현재 포인트로 설정
+    document.getElementById('pointInput').value = pointCurrent;
+
+    // 총 결제 금액에서 포인트 차감
+    let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
+    amount -= pointCurrent;
+
+    // 포인트 차감 금액 업데이트
+    document.getElementById('discount').innerText = pointCurrent.toLocaleString(); // 숫자를 쉼표 포함 문자열로 변환
+
+    // 총 결제 금액 업데이트
+    document.getElementById('amount').innerText = amount.toLocaleString();
+});
+
+/* 가지고 있는 포인트보다 많이 쓰려고 할 때, 음수 입력할 때 팝업창 + 0으로 초기화 (예라)*/
+// 포인트 입력 필드 가져오기
+const pointInput = document.getElementById('pointInput');
+
+// 포인트 입력 값이 변경될 때마다 검사
+pointInput.addEventListener('input', function() {
+    // 현재 사용자의 포인트 가져오기
+    let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
+
+    // 포인트 입력 값 가져오기
+    let pointValue = parseInt(pointInput.value) || 0;
+
+    // 입력된 포인트가 음수인지 검사
+    if(pointValue < 0) {
+        alert('음수 값을 입력할 수 없습니다.'); // 경고 팝업
+        pointInput.value = 0; // 입력 필드 값을 0으로 설정
+        return;
+    }
+    
+    // 입력된 포인트가 사용 가능한 포인트보다 큰지 검사
+    if(pointValue > pointCurrent) {
+        alert('사용 가능한 포인트보다 많이 입력하셨습니다.'); // 경고 팝업
+        pointInput.value = 0; // 입력 필드 값을 0으로 설정
+    }
+});
 
 /* 			beforeSend : function(xhr){
 xhr.setRequestHeader(header, token);

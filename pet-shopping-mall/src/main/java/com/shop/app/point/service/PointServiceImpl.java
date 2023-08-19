@@ -43,4 +43,10 @@ public class PointServiceImpl implements PointService {
 	public Point findPointCurrentById(Point points) {
 		return pointRepository.findPointCurrentById(points);
 	}
+
+	// 물건 구매 포인트 사용 (예라)
+	@Override
+	public int insertUsedPoint(Point usedPoint) {
+		return pointRepository.insertUsedPoint(usedPoint);
+	}
 }

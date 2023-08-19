@@ -123,11 +123,11 @@
 			<version>0.2.22</version>
 		</dependency>
 		
-		<dependency> <!-- ojdbc8.jar -->
+<!-- 		<dependency> ojdbc8.jar
 			<groupId>com.oracle.ojdbc</groupId>
 			<artifactId>orai18n</artifactId>
 			<version>19.3.0.0</version>
-		</dependency>
+		</dependency> -->
 
 	</dependencies>
 

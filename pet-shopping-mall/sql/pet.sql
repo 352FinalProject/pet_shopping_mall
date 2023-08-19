@@ -232,18 +232,7 @@ create table orderTbl (
     amount number not null,
     discount_code varchar2(20),
     constraint pk_order_id primary key(order_id),
-    constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade,
-    constraint fk_orderTbl_discount_code foreign key(discount_code) references discount_rule(discount_code) on delete cascade
-);
-
--- 할인 테이블
-create table discount_rule (
-    discount_id number,
-    discount_code varchar2(20), -- 할인 코드 0: 포인트사용, 1: 쿠폰사용
-    discount_type varchar2(20) not null, -- 할인을 퍼센트or고정금액 중 한 개로 고정할 거면 이 컬럼은 필요없음. 하지만 퍼센트, 고정 금액, 최대금액 제한 할인 등등 여러 개가 될 거면 필요함
-    discount_value number not null, -- 할인값 ex) 할인률이 10%면 여기에 10이 들어가고 고정 할인이면 고정 금액이 들어감
-    constraint pk_discount_id primary key(discount_id),
-    constraint unique_discount_code unique(discount_code)
+    constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
 -- 포인트 테이블
@@ -461,7 +450,7 @@ select * from review;
 select * from terms;
 select * from terms_history;
 
-delete from point where point_id = '61';
+delete from point where point_id = '105';
 delete from discount_rule where discount_id = '1';
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거

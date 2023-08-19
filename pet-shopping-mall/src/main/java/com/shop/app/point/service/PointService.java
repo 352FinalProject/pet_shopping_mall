@@ -22,6 +22,9 @@ public interface PointService	 {
 	// (사용) 사용자의 현재 포인트를 가져오기 (예라)
 	Point findPointCurrentById(Point points);
 
+	// 물건 구매 포인트 사용 (예라)
+	int insertUsedPoint(Point usedPoint);
+
 	
 }
 

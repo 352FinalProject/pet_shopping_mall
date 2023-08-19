@@ -14,6 +14,7 @@ display: flex;
 }
 #cart-option {
 	display: flex;
+	margin-left: -139px;
 }
 #cart-option div:last-child{
 	margin-left:140px;
@@ -24,6 +25,22 @@ display: flex;
 
 .cart-right {
     margin-left: 50px;
+}
+
+.discount-point-btn {
+	font-size: 12px;
+	padding-left : 8px;
+	padding-right : 8px;
+	display: inline-block; 
+	border: 1px #ccc solid;
+	background-color: white;
+	height: 30px;
+	cursor: pointer;
+}
+
+#pointInput {
+	height: 30px;
+	border: 1px #ccc solid;
 }
 
 .product-price {
@@ -46,13 +63,9 @@ display: flex;
 }
 
 
-
-
-
-
-
 .payment-left div:not(:last-child) {
 	margin-bottom: 20px;
+	margin-right: 10px;
 }
 
 .payment-div {
@@ -90,6 +103,7 @@ display: flex;
 	margin-bottom: 30px;
 	
 }
+
 
 
 .have-point {
