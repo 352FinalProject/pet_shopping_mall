@@ -197,6 +197,7 @@ insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '
 insert into cart values(1, 'pet123');
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
 insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
+select * from cartitem;
 select * from member;
 select 
     *
@@ -218,13 +219,24 @@ JOIN
 select * from cart;
 -- 이렇게 불러오기..    
 select 
-    p.*,
-    pd.*
+    ci.cartitem_id,
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
 from 
     product p left join product_detail pd on p.product_id = pd.product_id
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
 where 
     ci.product_detail_id = 2;
+    
+delete from cartitem where cartitem_id = 21;
+
+delete from cartitem ci where ci.cart_id = (select cart_id from cart where member_id ='honggd');   
     
 insert into point (point_id, point_member_id, point_current, point_type, point_amount)
 values (
@@ -234,6 +246,7 @@ values (
     '구매사용',
     -3000
 );
+
 
 select * from point order by point_id desc;
 

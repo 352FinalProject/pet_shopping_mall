@@ -29,8 +29,6 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public List<CartInfoDto> getCartInfoList(String memberId) {
 		List<CartItem> cartItemList = cartRepository.getCartList(memberId);
-		log.debug("cartItem codeList = {}", cartItemList);
-		
 		List<CartInfoDto> cartInfoList = new ArrayList<>();
 		
 		CartInfoDto product = null;
@@ -41,6 +39,18 @@ public class CartServiceImpl implements CartService {
 		}
 
 		return cartInfoList;
+	}
+
+
+	@Override
+	public int deleteCartOne(int id, String memberId) {
+		return cartRepository.deleteCartOne(id, memberId);
+	}
+
+
+	@Override
+	public int deleteCartAll(String memberId) {
+		return cartRepository.deleteCartAll(memberId);
 	}
 
 }
