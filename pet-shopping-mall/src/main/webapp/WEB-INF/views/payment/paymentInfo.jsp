@@ -56,7 +56,7 @@
 					<div>
 						<div class="flex-box">
 							<p class="order-info-title">배송지</p>
-							<button class="cart-btn">수정</button>
+							<button class="cart-btn-update">수정</button>
 						</div>
 						<p id="">${loginMember.name}</p>
 						<p id="phone">${loginMember.phone}</p>

@@ -85,6 +85,13 @@ display: flex;
 	border-radius: 2px;
 	margin-left: 50px;
 }
+
+.cart-btn-update {
+	border: 1px solid #e7e7e7;
+	background: white;
+	padding:5px;
+	border-radius: 2px;
+}
 #order-btn {
 	margin-top:20px;
 	width:100%;
