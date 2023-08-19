@@ -24,12 +24,12 @@
         border-bottom: 1px solid lightgray;
     }
     
-	.pet-text-input textarea {
-	    width: 100%; /* 텍스트 입력란이 부모 컨테이너의 너비에 맞게 설정 */
-	    height: 100px; /* 원하는 높이로 설정 */
-	    resize: none; /* 크기 조절 불가능하도록 설정 */
-	    box-sizing: border-box; /* padding과 border를 포함한 크기 계산 */
-	}
+    .pet-text-input textarea {
+        width: 100%; /* 텍스트 입력란이 부모 컨테이너의 너비에 맞게 설정 */
+        height: 100px; /* 원하는 높이로 설정 */
+        resize: none; /* 크기 조절 불가능하도록 설정 */
+        box-sizing: border-box; /* padding과 border를 포함한 크기 계산 */
+    }
 </style>
 
 <!-- 펫 상세 정보 페이지 내용 -->
@@ -39,37 +39,39 @@
         <div class="common-div">
             <div class="pet-details">
                 <h2>펫 기본 정보</h2>
-                <table class="pet-info-table">
+				 <table class="pet-info-table">
                     <tr>
-                        <th>이름:</th>
-                        <td>${pet.petName}</td>
+                        <th>이름</th>
+                        <td>${petInfo.petName}</td>
                     </tr>
                     <tr>
                         <th>생년월일:</th>
-                        <td>${pet.petDofB}</td>
+                        <td>${petInfo.petDofB}</td>
                     </tr>
                     <tr>
                         <th>타입:</th>
-                        <td>${pet.petKind}</td>
+                        <td>${petInfo.petKind}</td>
                     </tr>
                     <tr>
                         <th>품종:</th>
-                        <td>${pet.petBreed}</td>
+                        <td>${petInfo.petBreed}</td>
                     </tr>
                     <tr>
                         <th>성별</th>
-                        <td>${pet.petGender}</td>
+                        <td>${petInfo.petGender}</td>
                     </tr>
-                </table>
+                </table>			
             </div>
             <div class="pet-text-input">
                 <h2>텍스트 입력</h2>
-                <textarea rows="5" cols="50" placeholder="텍스트를 입력하세요"></textarea>
+                <form action="/member/savePetText" method="post">
+                    <textarea rows="5" cols="50" placeholder="텍스트를 입력하세요" name="petText"></textarea>
+                    <input type="hidden" name="petId" value="${petInfo.petId}">
+                    <input type="submit" value="저장">
+                </form>
             </div>
         </div>
     </div>
 </section>
-
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

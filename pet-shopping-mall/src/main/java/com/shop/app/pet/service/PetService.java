@@ -17,13 +17,13 @@ public interface PetService {
 
 	List<Pet> findPetByAll(Pet pet);
 
-	int findPetById(int petId);
-
+	Pet findPetById(int petId);
+	
 
 	int petDelete(int petId);
 
 
-	int petDetail(int petId);
+	
 
 
 }

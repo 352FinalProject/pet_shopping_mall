@@ -18,6 +18,7 @@ import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.entity.PetDetails;
 import com.shop.app.pet.service.PetService; // 패키지명 수정
+import com.shop.app.servicecenter.inquiry.entity.Question;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,12 +55,22 @@ public class PetController {
 		}
 	
 	@GetMapping("/petDetail.do")
-	public void petDetail(@RequestParam int petId, Model model) {
-		int petDetail = petService.findPetById(petId); // petId에 해당하는 펫 정보 가져오기
-	    model.addAttribute("petDetail", petDetail);
-		
-//	    return "redirect:/member/petDetail.do"; // 실제 펫 디테일 페이지의 경로를 반환해야 합니다.
+	public String petDetail(@RequestParam int petId, Model model) {
+	    Pet pet = Pet.builder()
+	            .petId(petId)
+	            .build();
+
+	    Pet petInfo = petService.findPetById(petId); // petId에 해당하는 펫 정보 가져오기
+	    model.addAttribute("petInfo", petInfo); // 펫 정보를 모델에 추가
+
+	    return "member/petDetail"; // petDetail.jsp로 이동
 	}
+	
+	 @PostMapping("/petDelete.do")
+	 public String petDelete(@RequestParam int petId) {
+	    int result = petService.petDelete(petId);
+	    return "redirect:/member/petList.do";
+	    }
 
 }
 
