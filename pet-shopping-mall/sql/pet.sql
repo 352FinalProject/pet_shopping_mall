@@ -103,7 +103,7 @@ CREATE TABLE pet (
     pet_gender CHAR(1),
     pet_created_at timestamp default systimestamp,
     constraints pk_pet_id primary key(pet_id),
-    constraints fk_pet_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
 
