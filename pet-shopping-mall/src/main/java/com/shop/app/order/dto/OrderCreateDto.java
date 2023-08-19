@@ -18,8 +18,7 @@ public class OrderCreateDto {
 	private int amount;
 	private String discountCode;
 	
-	public boolean isUsePoints; // 포인트 사용 여부를 확인하는 필드 (예라)
-	private int pointsUsed; // 포인트 사용 때 사용하는 필드(예라)
+	private int pointsUsed; // 사용하려는 포인트 (예라)
 	
 	public Order toOder() {
 		return Order.builder()

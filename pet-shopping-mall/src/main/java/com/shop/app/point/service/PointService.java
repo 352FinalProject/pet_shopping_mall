@@ -19,6 +19,9 @@ public interface PointService	 {
 	// 리뷰, 구매 적립 memberId값으로 현재 사용자의 포인트 가져오기 (예라)
 	Point findReviewPointCurrentById(Point point);
 
+	// (사용) 사용자의 현재 포인트를 가져오기 (예라)
+	Point findPointCurrentById(Point points);
+
 	
 }
 

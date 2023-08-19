@@ -91,12 +91,18 @@ public class PaymentController {
 	    Map <String, Object> resultMap = new HashMap<>();
 	    log.debug("_order = {}", _order);
 	    Order order = _order.toOder();
-	    order.setDiscountCode("포인트사용"); // 할인 코드 설정 (예라)
 	    
-	    // 포인트를 사용하는 경우 (예라)
-	    if(_order.isUsePoints) {
-	        int discountAmount = calculateDiscount(_order.getPointsUsed());
-	        _order.setDiscount(_order.getDiscount() + discountAmount); // 주문의 할인 금액에 포인트 할인 금액 반영
+	    // 1. (사용) 현재 포인트를 가져오기 (예라)
+	    Point points = new Point();
+	    points.setPointMemberId(_order.getMemberId());
+	    Point currentPoints = pointService.findPointCurrentById(points);
+	    log.debug("currentPoints = {}", currentPoints);
+	    
+	    // 2. 사용하려는 포인트와 보유 포인트를 비교
+	    if(_order.getPointsUsed() > currentPoints.getPointCurrent()) {
+	        resultMap.put("result", -1); // 더 많은 포인트를 사용하려고 할 때
+	        resultMap.put("msg", "보유한 포인트보다 많은 포인트를 사용할 수 없습니다.");
+	        return resultMap;
 	    }
 	    
 	    int result = orderService.insertOrder(order);
@@ -107,7 +113,7 @@ public class PaymentController {
 	    if(result > 0) {
 	    	msg = "주문에 성공하셨습니다.";
 	    	
-	    // 1. 결제 성공하면 구매한 금액의 1% 포인트 적립 (예라)
+	    // 1. (적립) 결제 성공하면 구매한 금액의 1% 포인트 적립 (예라)
 	    int amount = order.getAmount(); // 실제 주문 금액
 	    int pointAmount = (int)(amount * 0.01); // 주문 금액의 1% 적립
 	    
@@ -117,8 +123,7 @@ public class PaymentController {
 	    point.setPointAmount(pointAmount); // 적립된 포인트
 	      
 	    // 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
-	    Point currentPoints = pointService.findReviewPointCurrentById(point); 
-	    log.debug("currentPoints = {}", currentPoints);
+	    Point currentPoints2 = pointService.findReviewPointCurrentById(point); 
 	    
 	    // 4. 현재 포인트를 가져온 후 포인트 적립 계산
 	    int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
@@ -136,11 +141,6 @@ public class PaymentController {
 	    resultMap.put("msg", msg);
 	    
 	    return resultMap;
-	}
-	
-	// 할인율 계산하는 메소드 (예
-	private int calculateDiscount(int pointsUsed) {
-		return pointsUsed;
 	}
 
 

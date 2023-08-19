@@ -446,8 +446,8 @@ create sequence seq_chat_room_id;
 create sequence seq_terms_id;
 create sequence seq_history_id;
 
-select * from orderTbl;
-select * from point;
+select * from orderTbl order by order_id desc;
+select * from point order by point_id desc;
 select * from discount_rule;
 select * from member;
 select * from question;
@@ -461,7 +461,8 @@ select * from review;
 select * from terms;
 select * from terms_history;
 
-delete from point where point_id = '22';
+delete from point where point_id = '61';
+delete from discount_rule where discount_id = '1';
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger

@@ -19,26 +19,20 @@ display: flex;
 	margin-left:140px;
 }
 .cart-left {
-    margin-right: 30px; 
+    margin-right: 50px; 
 }
 
 .cart-right {
-    margin-left: 30px;
+    margin-left: 50px;
 }
-.payment-info {
-	width: 400px;
-	border: 1px solid #e7e7e7;
-	padding: 10px;	
-}
+
 .product-price {
 	display:flex;
     width: 100%; 
     justify-content: space-between;
     margin-top:5px;
 }
-.price {
-font-size:24px;
-}
+
 .cart-btn {
 	border: 1px solid #e7e7e7;
 	background: white;
@@ -66,7 +60,7 @@ font-size:24px;
 }
 
 .cart-product-info {
-	width: 460px;
+	width: 600px;
 	height: 170px;
 	border: 1px solid #e7e7e7;
 	padding: 10px;
@@ -75,17 +69,35 @@ font-size:24px;
 }
 
 .payment-left {
-	margin-right: 30px;
+	margin-right: 50px;
 }
 
 .payment-right {
-	margin-left: 30px;
+	margin-left: 50px;
 }
 
 .payment-info {
-	width: 400px;
+	width: 500px;
 	border: 1px solid #e7e7e7;
 	padding: 10px;
+	
+}
+
+.payment-info2 {
+	width: 500px;
+	border: 1px solid #e7e7e7;
+	padding: 10px;
+	margin-bottom: 30px;
+	
+}
+
+
+.have-point {
+	font-size: 13px;
+}
+
+.payment-discount {
+	margin-bottom: 30px;
 }
 
 .product-price {
@@ -96,7 +108,7 @@ font-size:24px;
 }
 
 .price {
-	font-size: 24px;
+	font-size: 20px;
 }
 
 .cart-btn {
@@ -112,15 +124,16 @@ font-size:24px;
 }
 
 .order-info-title {
-	font-size: 19px;
+	font-size: 23px;
 	margin-right: 3px;
+	margin-bottom: 10px;
 }
 
 .flex-box {
 	display: flex;
 }
 
-/*버튼 활성화 시 색상 변경하려고 만든 클래스*/
+/*踰꾪듉 �솢�꽦�솕 �떆 �깋�긽 蹂�寃쏀븯�젮怨� 留뚮뱺 �겢�옒�뒪*/
 .active {
 	background-color: #5886d3;
 }

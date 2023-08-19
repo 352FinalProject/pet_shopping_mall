@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <section class="common-section" id="#">
-	<div class="common-title">결제</div>
+	<div class="common-title">주문/결제</div>
 	<div class="common-container">
 		<div class="common-div">
 			<div class="payment-div">
@@ -65,7 +65,7 @@
 						</p>
 					</div>
 					<div>
-						<div class="order-info-title">결제수단</div>
+						<p class="order-info-title">결제수단</p>
 						<div>
 							<label class="paybtn"> <input type="radio"
 								name="paymethod" value="trans"> <span>무통장입금</span>
@@ -79,7 +79,24 @@
 					</div>
 				</div>
 				<div class="payment-right">
-					<span>결제금액</span>
+					<div class="payment-discount">
+						<p class="order-info-title">할인수단</p>
+						<div class="discount-info">
+							<div>
+								<div class="discount-point-info">
+									<span class="discount-point">포인트</span>
+									<input type="text" name="point-view" class="point-view" value="0" style="width:64px; text-align: right; margin-left: 10px;">원 
+									<button type="button" class="discount-point-btn" style="display: inline-block;">사용</button>
+									<button type="button" class="discount-point-btn" style="display: inline-block;">모두사용</button>
+									<span class="have-point">
+										(보유 <span class="have-point-bold">원</span>
+										)
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p class="order-info-title">결제금액</p>
 					<div class="payment-info">
 						<div>
 							<div class="product-price">
@@ -102,7 +119,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="payment-info">
+					<div class="payment-info2">
 						<div class="product-price">
 							<strong class="price">최종 결제 금액</strong>
 							<p class="price">
@@ -111,7 +128,7 @@
 						</div>
 					</div>
 					<div>
-						<p>약관동의</p>
+						<p class="order-info-title">약관동의</p>
 						<input type="checkbox" id="checkAll" name="checkAll" /><label>전체
 							동의하기</label><br /> <input type="checkbox" name="terms" /><label>쇼핑몰
 							이용약관 동의<span class="essential-check">(필수)</span>

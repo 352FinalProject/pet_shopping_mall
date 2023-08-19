@@ -37,5 +37,9 @@ public interface PointRepository {
 	@Select("select * from point where point_member_id = #{member_id}")
 	Point findCurrentPointById(String memberId);
 
+	// (사용) 사용자의 현재 포인트를 가져오기 (예라)
+	@Select("select * from (select * from point where point_member_id = #{pointMemberId} order by point_date desc) where rownum <= 1")
+	Point findPointCurrentById(Point points);
+
 
 }
