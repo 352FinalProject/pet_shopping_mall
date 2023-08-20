@@ -88,8 +88,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.logout().logoutUrl("/member/memberLogout.do") // 로그아웃 URL
 				.logoutSuccessUrl("/") // 로그아웃 성공시 이동할 URL
 				.permitAll(); // 모든 사용자 허용
-		
-		http.csrf().disable();
 
 		http.rememberMe() // remember-me 기능 설정(아이디 저장)
 				.tokenRepository(tokenRepository()).key("saveId")

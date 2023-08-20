@@ -4,31 +4,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-
-<%-- 리뷰작성 (혜령) --%>
-
+<%-- 리뷰 수정 --%>
 <section class="common-section" id="#">
-<div class="common-title">리뷰작성</div>
-<br>
+	<div class="common-title">리뷰 수정</div>
+	<br>
 	<div class="common-container">
-    	<div class="common-div">
-        <form:form action="${pageContext.request.contextPath}/review/reviewCreate.do"
-        enctype="multipart/form-data" method="post">
-            <table class="review-write-table">
+		<div class="common-div">
+			<form:form name= "reviewUpdateFrm" action="${pageContext.request.contextPath}/review/reviewUpdate.do" 
+			enctype="multipart/form-data" method="post">
+			<table class="review-update-table">
                 <tr>
-                    <th>작성자</th>
-                    <td class="review-create-writer">
-                    	<input type="text" id="reviewMemberId" name="reviewMemberId" value="<sec:authentication property="name"/>" required readonly/>
+                    <th>제목</th>
+                    <td class="review-update-title">
+                    	<input type="text" id="reviewTitle" name="reviewTitle" value="${reviews.reviewTitle}" required/>
                     </td>
                 </tr>
                 <tr>
 					<th><label for="starRating">별점</label></th>
 					<td>
 					    <div class="star-rating">
-					        <input type="hidden" id="reviewStarRate" name="reviewStarRate">
+					        <input type="hidden" id="reviewStarRate" name="reviewStarRate" value="${reviews.reviewStarRate}">
 					        <span class="star" onclick="setRating(1)">☆</span>
 					        <span class="star" onclick="setRating(2)">☆</span>
 					        <span class="star" onclick="setRating(3)">☆</span>
@@ -48,30 +45,24 @@
 			 			</div>
 			 		</td>
 		 		</tr>
-                <tr>
-                    <th>제목</th>
-                    <td>
-                    	<input type="text" id="reviewTitle" name="reviewTitle" required/>
-                    </td>
-                </tr>
             </table>
             <br>
             <table>
             	<tr>
                     <td>
-                        <textarea class="review-write-content" id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>
+                        <textarea class="review-update-content" id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required>${reviews.reviewContent}</textarea>
                     </td>
                 </tr>
             </table>
-            <div class="review-create-btn">
-                <button class="review-btn-rset" type="reset">초기화</button>
-				<button class="review-btn-submit" type="submit" >작성하기</button>
-            </div>
-        </form:form>
-    </div>
-</div>
+			    <div class="review-update-btn">
+			        <button class="review-btn-reset" type="reset">초기화</button>
+			        <input type="hidden" name="reviewId" value="${reviews.reviewId}">
+			        <button class="review-btn-update" type="submit">수정하기</button>
+			    </div>
+			</form:form>
+	    </div>
+	</div>
 </section>
-
 <script>
 function setRating(rating) {
     const stars = document.querySelectorAll('.star');
@@ -87,4 +78,5 @@ function setRating(rating) {
     reviewStarRateInput.value = rating;
 }
 </script>
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

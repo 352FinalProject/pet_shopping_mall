@@ -16,4 +16,10 @@ public class OrderServiceImpl implements OrderService {
 	public int insertOrder(Order order) {
 		return orderRepository.insertOrder(order);
 	}
+
+	// 2. db에서 주문 정보 가져오기 (예라)
+	@Override
+	public Order findByOrder(Order order) {
+		return orderRepository.findByOrder(order);
+	}
 }

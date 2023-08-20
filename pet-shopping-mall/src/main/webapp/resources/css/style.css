@@ -91,7 +91,11 @@ body {
 }
 
 .common-title {
-	font-size: 24px;
+	font-size: 28px;
+	margin-bottom: 50px;
+	line-height: 1.2;
+	font-weight: 500;
+	color: #333;
 }
 
 

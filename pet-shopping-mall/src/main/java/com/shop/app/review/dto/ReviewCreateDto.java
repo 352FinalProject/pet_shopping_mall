@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class ReviewCreateDto {
 	
+	private int reviewId;
 	// 작성자
 	private String reviewMemberId;
 	
@@ -22,6 +23,7 @@ public class ReviewCreateDto {
 	
 	public Review toReview() {
 		return Review.builder()
+				.reviewId(reviewId)
 				.reviewMemberId(reviewMemberId)
 				.reviewStarRate(reviewStarRate)
 				.reviewTitle(reviewTitle)

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.review.entity.Review;
@@ -16,7 +15,6 @@ import com.shop.app.review.repository.ReviewRepository;
 import lombok.extern.slf4j.Slf4j;
 
 
-@Transactional(rollbackFor = Exception.class) // service 단에 쓰는거임. 
 @Service
 @Slf4j
 public class ReviewServiceImpl implements ReviewService {
@@ -24,6 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 	
+	// 리뷰추가
 	@Override
 	public int insertReview(Review review) {
 		int result = 0;
@@ -31,6 +30,7 @@ public class ReviewServiceImpl implements ReviewService {
 		result = reviewRepository.insertReview(review);
 		
 		int refId = review.getReviewId();
+		System.out.println("review = " + review);
 		System.out.println("review refId = " + refId);
 		
 		// attachment 저장
@@ -46,16 +46,10 @@ public class ReviewServiceImpl implements ReviewService {
 				
 				// 3. 리뷰 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 				int reviewIdImageId = reviewRepository.insertMapping(refId, imageId);
-				
 			}
 		}
 		return result;
 	}
-
-//	@Override
-//	public Review findReviewMemberById(Review review) {
-//		return reviewRepository.findReviewMemberById(review);
-//	}
 
 	// 리뷰 삭제
 	@Override
@@ -63,23 +57,40 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.reviewDelete(reviewId);
 	}
 
-//	@Override
-//	public int findTotalReviewCount() {
-//		return reviewRepository.findTotalReviewCount();
-//	}
-//
-//	@Override
-//	public List<Review> findReviewAll(Map<String, Object> params) {
-//		int limit = (int) params.get("limit");
-//		int page = (int) params.get("page");
-//		int offset = (page - 1) * limit;
-//		RowBounds rowBounds = new RowBounds(offset, limit);
-//		return reviewRepository.findReviewAll(rowBounds);
-//	}
+	// 내가 쓴 리뷰목록 조회
+	@Override
+	public List<Review> findReviewAll(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		String reviewMemberId = (String) params.get("reviewMemberId");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return reviewRepository.findReviewAll(reviewMemberId, rowBounds);
+	}
 
+	// 리뷰 전체 카운트
+	@Override
+	public int findTotalReviewCount(String reviewMemberId) {
+		return reviewRepository.findTotalReviewCount(reviewMemberId);
+	}
+
+	// 리뷰 상세조회
 	@Override
 	public Review findReviewId(Review review) {
 		return reviewRepository.findReviewId(review);
 	}
+
+	// 리뷰 상세조회 - 이미지 조회
+	@Override
+	public ReviewDetails findImageAttachmentsByReviewId(int reviewId) {
+		return reviewRepository.findImageAttachmentsByReviewId(reviewId);
+	}
+
+	// 리뷰 수정
+	@Override
+	public int updateReview(Review review) {
+		return reviewRepository.updateReview(review);
+	}
+
 
 }
