@@ -12,7 +12,12 @@ public interface OrderService {
 
 	int insertOrder(Order order);
 
+	// 관리자페이지 주문조회(대원)
 	List<OrderAdminListDto> adminOrderList();
+
+	// 2. db에서 주문 정보 가져오기 (예라)
+	Order findByOrder(Order order);
+
 	
 	
 }

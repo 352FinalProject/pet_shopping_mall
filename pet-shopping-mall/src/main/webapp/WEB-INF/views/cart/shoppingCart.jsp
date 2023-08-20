@@ -36,17 +36,20 @@
 	                						<button class="cart-btn">옵션/수량변경</button>
 	                					</div>
 	                				</div>
-	                				<div>
+	                				<div class="cart-productTotal">
 	                					<p>총 상품 금액 : <span class="target-price">${formattedPrice}</span>원</p>
 	                				</div>
 	                			</div>
 	                		</div>
 	                	</div>
 	                	<c:set var="totalPrice" value="${totalPrice + ((product.productPrice + product.additionalPrice) * product.quantity)}" />
+	                	<form:form id="deleteOneFrm" method="POST" action="${pageContext.request.contextPath}/cart/deleteCartOne.do">
+	                		<input type="hidden" name="id" value="${product.cartitemId}">
+	                	</form:form>
 	                	</c:forEach>
 	                	<div>
-	                		<button class="cart-btn">선택 상품 삭제</button>
-	                		<button class="cart-btn">전체 상품 삭제</button>
+	                		<button class="cart-btn" onclick="deleteCartOne();">선택 상품 삭제</button>
+	                		<button class="cart-btn" onclick="deleteAll();">전체 상품 삭제</button>
 	                	</div>
 	                </div>
 	                <div class="cart-right">
@@ -83,6 +86,9 @@
             </div>
         </div>
     </section>
+<form:form id="deleteAllFrm" method="POST" 
+	action="${pageContext.request.contextPath}/cart/deleteCartAll.do">
+</form:form>
 <script>
 /* document.addEventListener('DOMContentLoaded', () => {
 	updatePrice();
@@ -139,6 +145,14 @@ const payment = () => {
 
 const formatPrice = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const deleteAll = () => {
+	$("#deleteAllFrm").submit();
+}
+
+const deleteCartOne = () => {
+	$("#deleteOneFrm").submit();
 }
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>

@@ -46,8 +46,8 @@
 							            </td>
 							            <td>
 							                <a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
-							                <c:if test="${question.awnserCount <= 0}"><span>답변대기</span></c:if>
-							                <c:if test="${question.awnserCount >= 1}">답변완료</c:if>
+							                <c:if test="${question.answerCount <= 0}"><span>답변대기</span></c:if>
+							                <c:if test="${question.answerCount >= 1}">답변완료</c:if>
 							            </td>
 							            <td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
 							            <td class="qna-date">
@@ -65,8 +65,8 @@
 							            </td>
 							            <td>
 							                <a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
-							                <c:if test="${question.awnserCount <= 0}"><span>답변대기</span></c:if>
-							                <c:if test="${question.awnserCount >= 1}">답변완료</c:if>
+							                <c:if test="${question.answerCount <= 0}"><span>답변대기</span></c:if>
+							                <c:if test="${question.answerCount >= 1}">답변완료</c:if>
 							            </td>
 							            <td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
 							            <td class="qna-date">

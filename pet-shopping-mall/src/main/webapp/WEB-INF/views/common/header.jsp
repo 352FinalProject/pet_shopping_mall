@@ -12,6 +12,9 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <title>반려동물 쇼핑몰</title>
 </head>
 <link rel="stylesheet"
@@ -21,16 +24,15 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/product.css" />
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
-<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/point.css" />
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
+
 
 <body>
 	<sec:authorize access="isAuthenticated()">
@@ -43,7 +45,10 @@
 		<div class="header">
 			<span id="notification"></span>
 			<ul class="utility">
-				<%-- <sec:authentication property="principal.username"/> --%>
+			<sec:authorize access="isAuthenticated()">
+				권한 : <sec:authentication property="authorities"/>
+				아이디 : <sec:authentication property="principal.username"/>
+			</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<li class="login_li"><a
 						href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
@@ -144,3 +149,4 @@
 			</div>
 		</div>
 	</header>
+	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>
