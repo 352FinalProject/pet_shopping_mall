@@ -446,7 +446,7 @@ select * from image_attachment;
 select * from image_attachment_mapping;
 select * from authority;
 select * from pet;
-select * from review;
+select * from review order by review_id desc;
 select * from terms;
 select * from terms_history;
 
