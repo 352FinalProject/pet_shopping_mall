@@ -252,8 +252,10 @@ create table point (
     point_type varchar2(100) not null,
     point_amount number not null,
     point_date timestamp default systimestamp,
+    review_id number
     constraint pk_point_id primary key (point_id),
-    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade,
+    constraint fk_point_review_id foreign key (review_id) references review(review_id) on delete cascade;
 );
 
 create table cancel_order (
