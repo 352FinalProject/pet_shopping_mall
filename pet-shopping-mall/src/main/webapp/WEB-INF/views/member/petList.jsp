@@ -45,6 +45,7 @@
                             <th>생일</th>
                             <th>이름</th>
                             <th>정보 수정</th>
+                            <th>삭제</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,7 +57,8 @@
                                 <td>${pet.petGender == 'M' ? '수컷' : '암컷'}</td>
                                 <td>${pet.petDofB}</td>
                                 <td><a href="${pageContext.request.contextPath}/member/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
-                                <td><a href="${pageContext.request.contextPath}/pet/updateForm.do?petId=${pet.petId}"> 수정 </a></td>
+                                <td><a href="${pageContext.request.contextPath}/member/petGoDetail.do?petId=${pet.petId}"> 수정 </a></td>
+                                <td><a href="javascript:void(0)" onclick="fnDelete('${pet.petId}');"> 삭제 </a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -66,23 +68,27 @@
     </div>
 </section>
 
-<!-- 펫 정보 삭제 버튼 -->
-<button type="button" onclick="PetDelete();" class="">삭제하기</button>
-
 <!-- 펫 정보 삭제 폼 -->
 <form:form name="PetDeleteFrm"
     action="${pageContext.request.contextPath}/member/petDelete.do"
     method="POST">
-    <input type="hidden" name="petId" value="${pet.petId}" />
+    <input type="hidden" name="petId" id="getPetId" value="${pet.petId}" />
 </form:form>
 
 <!-- Footer Image -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script>
-    const PetDelete = () => {
-        if (confirm("질문을 삭제하시겠습니까?")) {
+	$(document).ready(function() {
+		var msg = [["${msg}"]];
+		if(msg != "") alert(msg);
+		
+	});
+	
+	function fnDelete(petId) {
+		if(confirm("삭제하시겠습니까?")) {
+			$("#getPetId").val(petId);
             document.PetDeleteFrm.submit();
         }
-    };
+	};
 </script>

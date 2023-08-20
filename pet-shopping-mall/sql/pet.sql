@@ -102,6 +102,7 @@ CREATE TABLE pet (
     pet_adoption timestamp,
     pet_gender CHAR(1),
     pet_created_at timestamp default systimestamp,
+    pet_text VARCHAR2(2000)
     constraints pk_pet_id primary key(pet_id),
     constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
@@ -481,7 +482,7 @@ select q.*, (select count(*) from answer where answer_question_id = q.question_i
         "#{member.address}, #{member.birthday, jdbcType=DATE}, #{member.point})")
 int insertMember(@Param("member") MemberCreateDto member);
 
-
+z
 SELECT
     q.question_id,
     q.question_title,

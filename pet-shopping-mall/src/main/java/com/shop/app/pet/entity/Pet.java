@@ -3,8 +3,6 @@ package com.shop.app.pet.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.shop.app.servicecenter.inquiry.entity.Answer;
-import com.shop.app.servicecenter.inquiry.entity.Question;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +22,10 @@ public class Pet {
     private String petKind;
     private String petBreed;
     private LocalDateTime petAdoptionDate;
-    private PetGender petGender; 
+    private PetGender petGender;
+    private String petDofBFix;
+    private String petAdoptionDateFix;
+    
     
 
 }

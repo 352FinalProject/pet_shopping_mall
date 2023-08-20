@@ -40,41 +40,41 @@
             <div class="pet-details">
                       <h2>펫 기본 정보</h2>
                     <table class="pet-info-table">
-                        <tr>
-                            <th>이름</th>
-                            <td><input type="text" name="petName" value="${petInfo.petName}"></td>
-                        </tr>
-                        <tr>
-                            <th>생년월일:</th>
-                            <td><input type="date" name="petDofB" value="${petInfo.petDofB}"></td>
-                        </tr>
-                        <tr>
-                            <th>타입:</th>
-                            <td><input type="text" name="petKind" value="${petInfo.petKind}"></td>
-                        </tr>
-                        <tr>
-                            <th>품종:</th>
-                            <td><input type="text" name="petBreed" value="${petInfo.petBreed}"></td>
-                        </tr>
-                        <tr>
-                            <th>성별</th>
-                            <td>
-                                <select name="petGender">
-                                    <option value="M" ${petInfo.petGender == 'M' ? 'selected' : ''}>♂</option>
-                                    <option value="F" ${petInfo.petGender == 'F' ? 'selected' : ''}>♀</option>
-                                </select>
-                            </td>
+ 					<tr>
+                        <th>이름</th>
+                        <td>${petInfo.petName}</td>
+                    </tr>
+                    <tr>
+                        <th>생년월일:</th>
+                        <td>${petInfo.petDofBFix}</td>
+                    </tr>
+                    <tr>
+                        <th>타입:</th>
+                        <td>${petInfo.petKind}</td>
+                    </tr>
+                    <tr>
+                        <th>품종:</th>
+                        <td>${petInfo.petBreed}</td>
+                    </tr>
+                    <tr>
+                        <th>성별</th>
+                        <td>${petInfo.petGender == 'M' ? '♂ ' : '♀ '}</td>
+                    </tr>
+                    <tr>
+                        <th>등록일</th>
+                        <td>${petInfo.petAdoptionDateFix}</td>
+                    </tr>
                         </tr>
                     </table>
                 </div>
-            <div class="pet-text-input">
+ <!--           <div class="pet-text-input">
                 <h2>텍스트 입력</h2>
                 <form action="/member/savePetText" method="post">
                     <textarea rows="5" cols="50" placeholder="텍스트를 입력하세요" name="petText"></textarea>
                     <input type="hidden" name="petId" value="${petInfo.petId}">
                     <input type="submit" value="저장">
                 </form>
-            </div>
+            </div> --> 
         </div>
     </div>
 </section>
@@ -86,9 +86,15 @@
                 class="form-inline">
                 <button class="btn-add">돌아가기</button>
             </form>
-            <a href="/member/updatePet.do?petId=${petInfo.petId}" class="edit-button">수정</a>
+            
+            <form action="${pageContext.request.contextPath}/member/petGoDetail.do" method="GET"
+                class="form-inline">
+                <input type="hidden" name="petId" value="${petInfo.petId}">
+                <button class="btn-add">수정</button>
+            </form>
         </div>
     </div>
+</section>
 </section>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

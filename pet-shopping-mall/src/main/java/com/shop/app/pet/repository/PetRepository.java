@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.pet.dto.PetCreateDto;
+import com.shop.app.pet.dto.PetUpdateDto;
 import com.shop.app.pet.entity.Pet;
 
 //import com.shop.app.pet.dto.PetUpdateDto;
@@ -25,11 +27,22 @@ public interface PetRepository {
     @Select("select * from pet")
     List<Pet> findPetByAll(Pet pet);
 
-    @Delete("DELETE FROM pet WHERE pet_id = 1")
+    @Delete("DELETE FROM pet WHERE pet_id = #{petId}")
     int petDelete(int petId);
-
-    @Select("SELECT * FROM pet WHERE pet_id = #{petId}")
+    
+    @Select("SELECT pet_id, member_id, pet_name, TO_CHAR(pet_DofB, 'YYYY-MM-DD') AS pet_DofB_fix, pet_kind, pet_breed"
+    		+ ", TO_CHAR(pet_adoption, 'YYYY-MM-DD') AS pet_adoption_date_fix, pet_gender, pet_created_at FROM pet WHERE pet_id = #{petId}")
     Pet findPetById(int petId);
+    
+    @Update("UPDATE pet "
+    		+ "SET pet_name = #{petName}"
+    		+ ", pet_DofB = #{petDofBFix, jdbcType=DATE}"
+    		+ ", pet_kind = #{petKind}"
+    		+ ", pet_breed = #{petBreed}"
+    		+ ", pet_adoption = #{petAdoptionDateFix, jdbcType=DATE}"
+    		+ ", pet_gender = #{petGender}"
+    		+ "WHERE pet_id = #{petId}")
+    int petUpdate(PetUpdateDto pet);
     
 	
 
