@@ -27,7 +27,9 @@ import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
+import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
+import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -214,8 +216,30 @@ public class AdminController {
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList() {}
 	
+	/**
+	 * 상품정보 조회 
+	 * 
+	 * @param member
+	 * @param model
+	 */
 	@GetMapping("/adminProductList.do")
-	public void adminProductList() {}
+	public void adminProductList(
+		@AuthenticationPrincipal MemberDetails member,
+		Model model
+			) {
+		log.debug("member = {}", member);
+		
+		// 기본 상품들 조회해서 가져오기.
+		List<Product> basicProducts = productService.findAllBasicProduct();
+		log.debug("basicProducts = {}", basicProducts);
+		model.addAttribute("basicProducts", basicProducts);
+
+		// 옵션추가된 상품들 조회
+		List<ProductDetail> productDetails = productService.findAllProductDetails();
+		log.debug("productDetails = {}", productDetails);
+		model.addAttribute("productDetails", productDetails);
+		
+	}
 	
 	/**
 	 * 판매량통계
