@@ -58,7 +58,6 @@ public class ProductController {
 		int result = productService.insertProduct(product);
 		// There is no getter for property named 'category_id' in 'class com.shop.app.product.entity.Product'
 		
-		
 		return "redirect:/admin/adminProductList.do";
 	}
 	

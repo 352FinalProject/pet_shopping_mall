@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
+import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,16 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int insertProduct(Product product) {
 		return productRepository.insertProduct(product);
+	}
+
+	@Override
+	public List<Product> findAllBasicProduct() {
+		return productRepository.findAllBasicProduct();
+	}
+	
+	@Override
+	public List<ProductDetail> findAllProductDetails() {
+		return productRepository.findAllProductDetails();
 	}
 
 

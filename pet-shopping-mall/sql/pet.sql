@@ -53,8 +53,8 @@ SELECT *  FROM all_tables;
 --drop table chat;
 --drop table chat_room;
 --drop table breed;
-
-
+--
+--
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
@@ -82,7 +82,6 @@ SELECT *  FROM all_tables;
 --drop sequence seq_cancel_id;
 --drop sequence seq_history_id;
 --drop sequence seq_terms_id;
-
 
 --==============================
 -- 테이블 생성
