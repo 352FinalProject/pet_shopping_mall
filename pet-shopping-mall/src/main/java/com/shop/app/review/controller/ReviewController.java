@@ -170,9 +170,11 @@ public class ReviewController {
 				.build();
 
 		int reviewId = reviewService.insertReview(reviews);
+		Review pointReviewId = reviewService.findReviewId(reviews);
 
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
+		point.setReviewId(_review.getReviewId());
 
 		// 4. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
 		Point currentPoints = pointService.findReviewPointCurrentById(point); 
@@ -192,11 +194,46 @@ public class ReviewController {
 		newPoint.setPointAmount(pointAmount); 
 		newPoint.setPointType("리뷰적립");
 		newPoint.setPointMemberId(_review.getReviewMemberId());
+		newPoint.setReviewId(pointReviewId.getReviewId());
+		
+		log.debug("newPoint = {}", newPoint);
 
 		int newPointResult = pointService.insertPoint(newPoint);
 
 		return "redirect:/review/reviewList.do";
 	}
+
+	// 리뷰 삭제
+	@PostMapping("/reviewDelete.do")
+	public String reviewDelete(@RequestParam int reviewId) {
+
+		// 1. 리뷰 id로 적립된 포인트 찾기
+		Point earnedPoint = pointService.getPointByReviewId(reviewId);
+
+		if (earnedPoint != null) {
+			// 2. 현재 포인트에서 적립된 포인트 빼기
+			Point currentPoints = pointService.findReviewPointCurrentById(earnedPoint); 
+			int updatedPointAmount = currentPoints.getPointCurrent() - earnedPoint.getPointAmount();
+
+			// 3. 포인트 테이블에 행 추가 또는 업데이트
+			Point rollbackPoint = new Point();
+			rollbackPoint.setPointCurrent(updatedPointAmount);
+			rollbackPoint.setPointAmount(-earnedPoint.getPointAmount());
+			rollbackPoint.setPointType("리뷰삭제");
+			rollbackPoint.setPointMemberId(earnedPoint.getPointMemberId());
+			rollbackPoint.setReviewId(reviewId);
+			
+			log.debug("rollbackPoint = {}", rollbackPoint);
+
+			int rollbackResult = pointService.insertRollbackPoint(rollbackPoint);
+		}
+
+		// 리뷰 삭제
+		int result = reviewService.reviewDelete(reviewId);
+
+		return "redirect:/review/reviewList.do";
+	}
+
 
 	// 리뷰 상세조회 
 	@GetMapping("/reviewDetail.do")

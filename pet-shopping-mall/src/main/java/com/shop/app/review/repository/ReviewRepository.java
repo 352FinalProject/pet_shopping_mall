@@ -56,6 +56,10 @@ public interface ReviewRepository {
 	@Update("update review set review_title = #{reviewTitle}, review_content = #{reviewContent}, review_star_rate = #{reviewStarRate} where review_id = #{reviewId}")
 	int updateReview(Review review);
 
+	// 삭제되는 리뷰 정보 가져오기 (예라)
+	@Select("select * from review where review_id = #{reviewId}")
+	ReviewDetails getDeleteReviewById(int reviewId);
+
 
 
 }

@@ -302,4 +302,5 @@ values (
 select * from point order by point_id desc;
 
 delete from point where point_id = '9';
+
     
