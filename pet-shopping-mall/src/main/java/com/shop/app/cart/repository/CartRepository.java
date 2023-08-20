@@ -33,6 +33,6 @@ public interface CartRepository {
 	List<ProductDetail> findProdById(int productId);
 	
 	@Update("update cartitem set product_detail_id = #{productDetailId}, quantity = #{quantity} where cartitem_id = #{cartitemId}")
-	int updateCart(int productDetailId, int cartitemId, int quantity);
+	int updateCart(CartItem cartitem);
 
 }

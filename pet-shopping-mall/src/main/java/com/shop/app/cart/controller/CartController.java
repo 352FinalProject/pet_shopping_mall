@@ -10,15 +10,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.CartUpdateDto;
+import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.product.entity.ProductDetail;
@@ -78,14 +82,10 @@ public class CartController {
 	
 	@ResponseBody
 	@PostMapping("/updateCart.do")
-	public int updateCart(@RequestParam("selectedValue") String _productDetailId, 
-			@RequestParam("cartitemId") String _cartitemId, @RequestParam("quantity") String _quantity) {
-		int quantity = Integer.parseInt(_quantity);
-		int productDetailId = Integer.parseInt(_productDetailId);
-		int cartitemId = Integer.parseInt(_cartitemId);
-		int result = cartService.updateCart(productDetailId, cartitemId, quantity);
-		
-		log.debug("result = {}", result);
+	public int updateCart(CartUpdateDto _cartitem) {
+		log.debug("_cartitem = {}", _cartitem);
+		CartItem cartitem = _cartitem.toCartitem();
+		int result = cartService.updateCart(cartitem);
 		
 		return result;
 	}

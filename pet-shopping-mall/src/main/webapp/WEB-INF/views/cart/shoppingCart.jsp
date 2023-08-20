@@ -245,7 +245,7 @@ const updateProduct = (product) => {
         method: "POST",
         data: {
         	cartitemId : cartitemIdInput.value,
-            selectedValue: selectedValue,
+        	productDetailId : selectedValue,
             quantity : updateQuantity
         },
         success(response) {
