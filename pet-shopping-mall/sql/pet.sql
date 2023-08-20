@@ -52,8 +52,15 @@ SELECT *  FROM all_tables;
 --drop table terms_history;
 --drop table chat;
 --drop table chat_room;
---drop table breed;
 --
+---- 외래키 붙어있는 테이블삭제
+--drop table member cascade constraints;
+--drop table review cascade constraints;
+--drop table product cascade constraints;
+--drop table product_detail cascade constraints;
+--drop table pet cascade constraints;
+--drop table breed cascade constraints;
+--drop table order_detail cascade constraints;
 --
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;

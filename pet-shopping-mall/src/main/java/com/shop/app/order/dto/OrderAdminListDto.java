@@ -2,14 +2,17 @@ package com.shop.app.order.dto;
 
 import java.sql.Date;
 
-import javax.validation.Valid;
-
-import com.shop.app.order.entity.Order;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class OrderAdminListDto {
-	private int orderId;
+	private Long orderId;
 	private Date orderDate; // 주문 일시 (orderTbl)
 	private String orderNo; // 주문 번호 (orderTbl)
 	private String productName; // 주문 상품 (product)

@@ -24,6 +24,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderAdminListDto> adminOrderList() {
 		return orderRepository.adminOrderList();
+	}
 
 
 	// 2. db에서 주문 정보 가져오기 (예라)

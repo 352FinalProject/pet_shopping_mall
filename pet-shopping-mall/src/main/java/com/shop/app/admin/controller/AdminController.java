@@ -75,7 +75,6 @@ public class AdminController {
 	        
 	        member.setSubscribe(subscribe);
 	    }
-	    
 	    int totalCount = adminService.findTotalAdminCount();
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("members", members);
@@ -179,6 +178,9 @@ public class AdminController {
 		        
 		        member.setSubscribe(subscribe);
 		    }
+			int totalCount = adminService.findTotalAdminCount();
+			model.addAttribute("totalCount", totalCount);
+			
 			model.addAttribute("members", members);
 	    }
 	    return "admin/adminMemberList";
@@ -210,6 +212,9 @@ public class AdminController {
 	                subscribedMembers.add(member);
 		        }
 	        }
+	        int totalCount = adminService.findTotalubscribeCount();
+			model.addAttribute("totalCount", totalCount);
+			
 	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
 			
@@ -229,7 +234,7 @@ public class AdminController {
 	/**
 	 * 판매량통계
 	 */
-	@GetMapping("/adminStatistics.do")
+	@GetMapping("/adminStatisticsProduct.do")
 	public void adminStatistics() {
 		
 		

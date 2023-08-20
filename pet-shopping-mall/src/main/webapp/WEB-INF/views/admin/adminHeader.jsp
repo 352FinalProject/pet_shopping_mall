@@ -75,7 +75,7 @@
 						</a>
 						<div class="sb-sidenav-menu-heading">매출</div>
 						<a class="nav-link"
-							href="${pageContext.request.contextPath}/admin/adminStatistics.do">
+							href="${pageContext.request.contextPath}/admin/adminStatisticsProduct.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-chart-area"></i>
 							</div> 상품별 매출

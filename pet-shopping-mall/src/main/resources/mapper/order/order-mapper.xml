@@ -17,14 +17,16 @@
 		    pay.payment_method
 		from
 		    orderTbl ot
-		join
+		left join
 		    order_detail od ON ot.order_id = od.order_id
-		join
+		left join
 		    product_detail pd ON od.product_detail_id = pd.product_detail_id
-		join
+		left join
 		    product p ON pd.product_id = p.product_id
-		join
+		left join
 		    payment pay ON ot.order_id = pay.order_id
+		order by
+   			 ot.order_id desc
 	</select>
   	<resultMap type="OrderAdminListDto" id="orderAdminListDto">
 	  	<id column="order_id" property="orderId" />
