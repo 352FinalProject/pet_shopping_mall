@@ -1,6 +1,6 @@
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
+values ('admin2', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 select * from member;
 --==============================
 --sample data 생성
@@ -104,23 +104,46 @@ insert into product (product_id, category_id, product_name, product_price, thumb
     values (seq_product_id.nextval, 6, '츄릅츄릅 츄르 10개입', 20000, null, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 select * from product;
 
+-- 제품옵션 
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_option_id.nextval, 1, '용량', '1kg');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '용량', '2kg');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '용량', '5kg');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '맛', '소고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '맛', '닭고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 2, '맛', '소고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 2, '맛', '닭고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 3, '색', '분홍색');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 3, '색', '하늘색');    
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 4, '기본', '기본');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 5, '기본', '기본');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 6, '맛', '연어맛');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 2, '맛', '참치맛');    
+select * from product_option;
+
 -- 제품상세 등록
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '용량', '1kg', default, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '용량', '2kg', 20000, 20, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '용량', '5kg', 40000, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '맛', '소고기', default, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '맛', '닭고기', 20000, 20, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '맛', '연어', 40000, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 2, '맛', '소고기', default, 20, 1);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 2, '맛', '닭고기', default, 20, 1);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, 10, default);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 2, 20, default);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 3, 30, 1);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 4, 30, 1);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 5, 10, 1);
 select * from product_detail;
 commit;
 
