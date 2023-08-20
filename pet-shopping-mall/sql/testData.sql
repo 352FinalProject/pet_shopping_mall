@@ -191,18 +191,26 @@ insert into product_category values(2, '옷');
 insert into product values(seq_product_id.nextval, 1, '에르메스 사료', 15000, 1, 1, systimestamp, systimestamp, 111, 111);
 insert into product values(seq_product_id.nextval, 2, '꼬까옷', 17000, 2, 2, systimestamp, systimestamp, 222, 222);
 select * from cartitem;
+update cartitem set product_detail_id = 1 where cart_id = (select cart_id from cart where member_id='honggd');
 select* from product;
 select * from product_detail;
 select * from orderTbl;
+
 
 update cartitem set product_detail_id=2 where product_detail_id=1;
 
 delete from cartitem where cartitem_id = 2;
 delete from product where product_id = 4;
 
+update cartitem set product_detail_id=1 where product_detail_id=0;
+select * from cartitem;
+
+select * from product_detail;
+
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
+insert into product_detail values(seq_product_detail_id.nextval, 2, '추가1', '파란망토', 1900, 9, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
-insert into cart values(1, 'member1');
+
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
 insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
 select * from cartitem;
@@ -242,7 +250,42 @@ from
 where 
     ci.product_detail_id = 2;
     
-delete from cartitem where cartitem_id = 21;
+
+select 
+	ci.cartitem_id,
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+where
+    p.product_id = 2;
+    
+select 
+	ci.cartitem_id,
+    p.product_id,
+    pd.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+where 
+    p.product_id = 2;
+    
+    
+    
+delete from cartitem where product_detail_id = 3;
 
 delete from cartitem ci where ci.cart_id = (select cart_id from cart where member_id ='honggd');   
     
