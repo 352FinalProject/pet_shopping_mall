@@ -20,7 +20,7 @@ public interface PointRepository {
 	List<Point> findPointAll(Point point);
 
 	// 포인트 적립 (예라)
-	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
+	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date, review_id) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default, #{reviewId})")
 	int insertPoint(Point point);
 	
 	// 리뷰 쓴 사용자 포인트 적립을 위해 아이디 조회 (예라)
@@ -48,6 +48,11 @@ public interface PointRepository {
 	// 취소된 포인트를 db에 저장 (예라)
 	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
 	int insertRollbackPoint(Point rollbackPoint);
+
+	// 삭제된 리뷰에 대한 포인트 정보 가져오기 (예라)
+	@Select("select * from point where review_id = #{reviewId}")
+	Point getPointByReviewId(int reviewId);
+
 
 
 }

@@ -55,4 +55,10 @@ public class PointServiceImpl implements PointService {
 	public int insertRollbackPoint(Point rollbackPoint) {
 		return pointRepository.insertRollbackPoint(rollbackPoint);
 	}
+
+	// 삭제된 리뷰에 대한 포인트 정보 가져오기 (예라)
+	@Override
+	public Point getPointByReviewId(int reviewId) {
+		return pointRepository.getPointByReviewId(reviewId);
+	}
 }

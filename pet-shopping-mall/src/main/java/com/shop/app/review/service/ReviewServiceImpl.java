@@ -92,5 +92,11 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.updateReview(review);
 	}
 
+	// 삭제되는 리뷰 정보 가져오기 (예라)
+	@Override
+	public ReviewDetails getDeleteReviewById(int reviewId) {
+		return reviewRepository.getDeleteReviewById(reviewId);
+	}
+
 
 }

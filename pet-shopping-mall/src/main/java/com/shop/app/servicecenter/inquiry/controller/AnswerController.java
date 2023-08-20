@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,10 +40,12 @@ public class AnswerController {
 	@Autowired
 	private QuestionService questionService;
 	
+	@Autowired
+	private MailSender mailSender;
 	
 	// 관리자 1:1 문의 댓글 작성 (예라)
 	@PostMapping("/inquiry/answerCreate.do")
-	public String adminAnswerCreate(@RequestParam int questionId, AnswerCreateDto _answer) {
+	public String adminAnswerCreate(@RequestParam int questionId, @RequestParam String questionEmail, AnswerCreateDto _answer) {
 		
 		// 관리자 답변 등록
 		AnswerDetails answers = AnswerDetails.builder()
@@ -52,7 +55,13 @@ public class AnswerController {
 				.build();
 		
 		int result = answerService.insertAnswer(answers);
-		 
+		
+	    if (result > 0) {
+	        // 답변이 등록되면 이메일을 보낸다
+	        mailSender.sendEmailOnAnswerRegistration(questionEmail, _answer.getAnswerContent(), questionId);
+	        log.debug("questionEmail = {}", questionEmail);
+	    }
+		
 		// questionId 객체 생성
 		Question question = Question.builder().questionId(questionId).build();
 		// questionId 조회
@@ -76,10 +85,8 @@ public class AnswerController {
 		
 		Answer answers = _answer.toAnswer();
 		int result = answerService.updateAnswer(answers);
-		log.debug("answers = {}", answers);
 		
 		Question questions = _question.toQuestion();
-		log.debug("questions = {}", questions);
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}
 }

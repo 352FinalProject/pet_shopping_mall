@@ -16,7 +16,7 @@ public interface ReviewService {
 
 	// 내가 쓴 리뷰 목록 조회
 	List<Review> findReviewAll(Map<String, Object> params);
-//	List<Review> findReviewAll(int reviewId);
+	//	List<Review> findReviewAll(int reviewId);
 	
 	// 리뷰 상세조회
 	Review findReviewId(Review review);
@@ -29,6 +29,9 @@ public interface ReviewService {
 
 	// 리뷰 전체 카운트
 	int findTotalReviewCount(String reviewMemberId);
+	
+	// 삭제되는 리뷰 정보 가져오기 (예라)
+	ReviewDetails getDeleteReviewById(int reviewId);
 
 
 }
