@@ -44,8 +44,8 @@ public class CartServiceImpl implements CartService {
 
 
 	@Override
-	public int deleteCartOne(int id, String memberId) {
-		return cartRepository.deleteCartOne(id, memberId);
+	public int deleteCartOne(int cartitemId, String memberId) {
+		return cartRepository.deleteCartOne(cartitemId, memberId);
 	}
 
 
@@ -64,6 +64,12 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public int updateCart(CartItem cartitem) {
 		return cartRepository.updateCart(cartitem);
+	}
+
+
+	@Override
+	public int updatePayStatus(String orderNo) {
+		return cartRepository.updatePayStatus(orderNo);
 	}
 
 

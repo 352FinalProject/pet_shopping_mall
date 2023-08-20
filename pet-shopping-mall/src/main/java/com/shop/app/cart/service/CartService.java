@@ -10,11 +10,13 @@ public interface CartService {
 
 	List<CartInfoDto> getCartInfoList(String memberId);
 
-	int deleteCartOne(int id, String memberId);
+	int deleteCartOne(int cartitemId, String memberId);
 
 	int deleteCartAll(String memberId);
 
 	List<ProductDetail> findProdById(int id);
 
 	int updateCart(CartItem cartitem);
+
+	int updatePayStatus(String orderNo);
 }

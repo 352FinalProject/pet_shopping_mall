@@ -2,6 +2,7 @@ package com.shop.app.payment.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -164,6 +166,26 @@ public class PaymentController {
 		log.debug("imp_uid= {}", imp_uid);
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
+	
+	
+	@PostMapping("/successPay.do")
+	@ResponseBody
+	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid, @AuthenticationPrincipal MemberDetails member) {
+		String orderNo = merchantUid;
+		int result = cartService.updatePayStatus(orderNo);
+		
+		// 주문이 완료되면 장바구니 전체 비우기
+		String memberId = member.getMemberId();
+		 int deleteCart = cartService.deleteCartAll(memberId);
+		
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(Map.of("result", 1));
+	}
+	
+	
+	@GetMapping("/paymentCompleted.do")
+	public void paymentCompleted() {}
 	
 	/*
 	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)
