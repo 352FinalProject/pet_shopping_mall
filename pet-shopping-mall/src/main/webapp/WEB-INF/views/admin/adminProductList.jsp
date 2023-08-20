@@ -70,16 +70,16 @@
 						<tbody>
 							<c:forEach begin="0" end="20" step="1" varStatus="status">
 								<tr>
-									<th>번호</th>
-									<th><a href="#" />이미지</th>
-									<th><a href="#" />상품코드</th>
-									<th><a href="#" />상품명</th>
-									<th>시중가</th>
-									<th>공급가</th>
-									<th>판매가</th>
-									<th>포인트</th>
-									<th>재고</th>
-									<th>순위</th>
+									<td>번호</td>
+									<td><a href="#" />이미지</td>
+									<td><a href="#" />상품코드</td>
+									<td><a href="#" />상품명</td>
+									<td>시중가</td>
+									<td>공급가</td>
+									<td>판매가</td>
+									<td>포인트</td>
+									<td>재고</td>
+									<td>순위</td>
 									<td><button onclick="">수정</button> <button onclick="">삭제</button></td>
 								</tr>
 							</c:forEach>

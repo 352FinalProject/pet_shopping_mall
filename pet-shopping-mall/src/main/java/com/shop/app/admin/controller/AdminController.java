@@ -232,11 +232,28 @@ public class AdminController {
 	public void adminProductList() {}
 	
 	/**
-	 * 판매량통계
+	 * 상품별 판매량통계
 	 */
 	@GetMapping("/adminStatisticsProduct.do")
-	public void adminStatistics() {
+	public void adminStatisticsProduct() {
 		
+		
+	}
+	
+	/**
+	 * 월별 판매량통계
+	 */
+	@GetMapping("/adminStatisticsMonthly.do")
+	public void adminStatisticsMonthly() {
+		
+		
+	}
+	
+	/**
+	 * 일별 판매량통계
+	 */
+	@GetMapping("/adminStatisticsDaily.do")
+	public void adminStatisticsDaily() {
 		
 		
 	}

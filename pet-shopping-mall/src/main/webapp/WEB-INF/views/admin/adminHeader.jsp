@@ -94,13 +94,14 @@
 							<nav class="sb-sidenav-menu-nested nav accordion"
 								id="sidenavAccordionPages">
 								<a class="nav-link collapsed"
-									href="${pageContext.request.contextPath}/admin/adminMemberList2.do"
+									href="${pageContext.request.contextPath}/admin/adminStatisticsMonthly.do"
 									data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
 									aria-expanded="false" aria-controls="pagesCollapseAuth"> 월별
 									매출
 									<div class="sb-sidenav-collapse-arrow"></div>
-								</a> <a class="nav-link collapsed"
-									href="${pageContext.request.contextPath}/admin/adminMemberList2.do"
+								</a> 
+								<a class="nav-link collapsed"
+									href="${pageContext.request.contextPath}/admin/adminStatisticsDaily.do"
 									data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
 									aria-expanded="false" aria-controls="pagesCollapseAuth"> 일별
 									매출
