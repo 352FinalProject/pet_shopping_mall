@@ -32,7 +32,7 @@ public interface CartRepository {
 	@Select("select * from product_detail where product_id = #{productId}")
 	List<ProductDetail> findProdById(int productId);
 	
-	@Update("update cartitem set product_detail_id = #{productDetailId} where cartitem_id = #{cartitemId}")
-	int updateCart(int productDetailId, int cartitemId);
+	@Update("update cartitem set product_detail_id = #{productDetailId}, quantity = #{quantity} where cartitem_id = #{cartitemId}")
+	int updateCart(CartItem cartitem);
 
 }

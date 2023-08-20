@@ -273,6 +273,8 @@ from
 where 
     ci.product_detail_id = 2;
     
+update cartitem set product_detail_id = 2, quantity = 2 where cartitem_id =13;
+
 
 select 
 	ci.cartitem_id,

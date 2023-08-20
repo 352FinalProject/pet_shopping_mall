@@ -95,6 +95,12 @@
 	    <div id="modal">
 	    	<div class="modal-div">
 		    	<div id="modal-content"></div>
+		    	<div class="quantity-container">
+		    		수량
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
 		    	<div>
 		    		옵션변경
 		    	    <select id="modal-option" onchange="updateProduct(this);">
@@ -187,14 +193,14 @@ const deleteCartOne = () => {
 };
 
 
-const modal = document.getElementById("modal");
+const modal = document.querySelector("#modal");
 const openModalBtns = document.querySelectorAll(".update-btn");
 const closeModalBtn = document.querySelector("#close-modal");
 const modalContent = document.querySelector("#modal-content");
 const options = document.querySelector("#modal-option");
 const updateFrm = document.querySelector("#updateFrm");
-const cartitemIdInput = document.getElementById("cartitemId");
-
+const cartitemIdInput = document.querySelector("#cartitemId");
+const quantity = document.querySelector("#quantity");
 
 openModalBtns.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -214,7 +220,6 @@ openModalBtns.forEach(btn => {
 					options.innerHTML += `
 						<option value="\${product.productDetailId}"> \${product.optionName} \${product.optionValue}</option>
 					`;
-					
 				});
 			}
     	});
@@ -234,19 +239,41 @@ closeModalBtn.addEventListener("click", () => {
 const updateProduct = (product) => {
 	const selectedOption = product.options[product.selectedIndex];
     const selectedValue = selectedOption.value;
+    const updateQuantity = quantity.value;
     $.ajax({
         url: "${pageContext.request.contextPath}/cart/updateCart.do",
         method: "POST",
         data: {
         	cartitemId : cartitemIdInput.value,
-            selectedValue: selectedValue
+        	productDetailId : selectedValue,
+            quantity : updateQuantity
         },
         success(response) {
             alert('변경 완료!');
             location.href="${pageContext.request.contextPath}/cart/shoppingCart.do"
         }
     });
-} 
+};
+
+const quantityContainer = document.querySelector('.quantity-container');
+const quantityInput = quantityContainer.querySelector('.quantity-input');
+const minusButton = quantityContainer.querySelector('.minus');
+const plusButton = quantityContainer.querySelector('.plus');
+
+minusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+        currentValue--;
+        quantityInput.value = currentValue;
+    }
+});
+
+plusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    currentValue++;
+    quantityInput.value = currentValue;
+});
+
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
