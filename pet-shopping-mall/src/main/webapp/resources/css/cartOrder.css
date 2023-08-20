@@ -257,7 +257,7 @@ div.modal-div {
   top: 50%;
   left: 50%;
   width: 400px;
-  height: 600px;
+  height: 300px;
   padding: 40px;
   text-align: center;
   background-color: rgb(255, 255, 255);
@@ -274,7 +274,6 @@ div.modal-div {
     margin-bottom: 10px;
 }
 
-/* Style for the close button */
 #close-modal {
     display: block;
     margin-top: 10px;
