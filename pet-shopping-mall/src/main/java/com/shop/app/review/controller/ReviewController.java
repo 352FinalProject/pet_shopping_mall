@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -199,6 +200,69 @@ public class ReviewController {
    public String reviewDelete(@RequestParam int reviewId) {
 	   
 	   int result = reviewService.reviewDelete(reviewId);
+	      // 1. 파일저장
+	      List<imageAttachment> attachments = new ArrayList<>();
+	      boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
+	      
+	      for(MultipartFile upFile : upFiles) {
+	         if(!upFile.isEmpty()) {
+	            String imageOriginalFilename = upFile.getOriginalFilename();
+	            String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
+	            File destFile = new File(imageRenamedFilename);
+	            upFile.transferTo(destFile);
+	            
+	            int imageType = 1;
+	            
+	            imageAttachment attach =
+	                  imageAttachment.builder()
+	                  .imageOriginalFilename(imageOriginalFilename)
+	                  .imageRenamedFilename(imageRenamedFilename)
+	                  .imageType(imageType)
+	                  .imageFileSize(upFile.getSize())
+	                  .build();
+	                  
+	            log.debug("review attach = {}", attach);
+	            attachments.add(attach);
+	            hasImage = true; // 이미지가 있으면 true (예라)
+	         }
+	      }
+	      
+	      // 2. db저장
+	      ReviewDetails reviews = ReviewDetails.builder()
+	            .reviewMemberId(_review.getReviewMemberId())
+	            .reviewStarRate(_review.getReviewStarRate())
+	            .reviewTitle(_review.getReviewTitle())
+	            .reviewContent(_review.getReviewContent())
+	            .attachments(attachments)
+	            .build();
+	      
+	      int result = reviewService.insertReview(reviews);
+	      
+	      // 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
+	      point.setPointMemberId(_review.getReviewMemberId());
+	      
+	      // 3. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
+	      Point currentPoints = pointService.findReviewPointCurrentById(point); 
+
+	      // 4. 리뷰 작성하면 현재 포인트에 추가로 포인트 적립 (텍스트 500원, 이미지 1000원)
+	      int pointAmount = 500;
+	      if (hasImage) {
+	          pointAmount += 500;
+	      }
+
+	      // 5. 현재 포인트를 가져온 후 포인트 적립 계산
+	      int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
+
+	      // 6. 포인트 테이블에 행 추가
+	      Point newPoint = new Point();
+	      newPoint.setPointCurrent(updatedPointAmount); 
+	      newPoint.setPointAmount(pointAmount); 
+	      newPoint.setPointType("리뷰적립");
+	      newPoint.setPointMemberId(_review.getReviewMemberId());
+
+	      int newPointResult = pointService.insertPoint(newPoint);
+	      
+	      return "redirect:/review/reviewCreate.do";
 	   
 	   return "redirect:/review/reivewList.do";
    }
@@ -221,6 +285,7 @@ public class ReviewController {
 	   
    }
 
+   
    // 리뷰 수정 페이지 이동
    @GetMapping("/reviewUpdate.do")
    public void reviewUpdate(@RequestParam int reviewId, Model model) {

@@ -10,9 +10,10 @@
 			<h2 class="sidebar2-title2">마이 쇼핑</h2></a>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/order/orderHistory.do">주문내역</a></li>
-				<li><a href="${pageContext.request.contextPath}/order/orderCancle">취소/반품</a></li>
+				<li><a href="${pageContext.request.contextPath}/order/orderCancle">취소내역</a></li>
 				<li><a href="${pageContext.request.contextPath}/">찜한상품</a></li>
-				<li><a href="#">내가 쓴 문의</a></li>
+				<li><a href="<%= request.getContextPath() %>/servicecenter/inquiry/questionList.do">내가 쓴 문의</a></li>
+				<li><a href="#">내가 쓴 리뷰</a></li>
 			</ul>
 		</li>
 		<li class="sidebar2-mybe">

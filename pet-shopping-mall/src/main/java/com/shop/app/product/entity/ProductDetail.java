@@ -13,7 +13,7 @@ public class ProductDetail {
 	private int productDetailId;
 	private int productId;
 	
-	private String option;
+	private String optionName;
 	private String optionValue;
 	
 	private int additionalPrice;

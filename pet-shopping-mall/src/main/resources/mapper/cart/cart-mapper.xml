@@ -4,17 +4,33 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.cart.repository.CartRepository">
 
- <select id="getPrice" resultMap="priceListMap">
-	select 
-		product_name, product_price 
-	from 
-		product 
-	where 
-		product_id = #{productId}
+   <select id="getCartInfoList" resultMap="cartInfoDto">
+select 
+	ci.cartitem_id,
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+where 
+    ci.product_detail_id = #{productDetailId}
   </select>
   
-  <resultMap type="map" id="priceListMap">
+  <resultMap type="CartInfoDto" id="cartInfoDto">
+  	<result column="cartitem_id" property="cartitemId" />
+  	<result column="product_id" property="productId" />
+  	<result column="product_detail_id" property="productDetailId" />
   	<result column="product_name" property="productName" />
+  	<result column="option_name" property="optionName" />
+  	<result column="option_value" property="optionValue" />
   	<result column="product_price" property="productPrice" />
+  	<result column="additional_price" property="additionalPrice" />
+  	<result column="quantity" property="quantity" />
   </resultMap>
 </mapper>

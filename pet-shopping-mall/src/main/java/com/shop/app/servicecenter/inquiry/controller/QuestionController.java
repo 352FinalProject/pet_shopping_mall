@@ -59,23 +59,20 @@ public class QuestionController {
 		model.addAttribute("totalPages", totalPages);
 		
 		List<Question> questions = questionService.findQuestionAll(params);
-		log.debug("params = {}", params);
-		log.debug("questions = {}", questions);
 		model.addAttribute("questions", questions);
 	}
 	
 	// 1:1 목록 상세 조회 + 답변 (예라)
 	@GetMapping("/inquiry/questionDetail.do")
-	public void questionDetail(@RequestParam int questionId, Model model) {
+	public void questionDetail(Question question, Model model) {
 	    
 		// 1:1 상세 조회
-		Question question = Question
-				.builder()
-				.questionId(questionId)
-				.build();
 
-	    Question questions = questionService.findQuestionById(question);
+	    Question questions = questionService.findQuestionByAnwerCount(question);
+	    log.debug("questions = {}", questions);
 	    model.addAttribute("questions", questions);
+	    
+	    int questionId = question.getQuestionId();
 	    
 	    // 1:1 답변 조회
 	    Answer answer = Answer
@@ -125,7 +122,6 @@ public class QuestionController {
 		            .imageFileSize(upFile.getSize())
 		            .build();
 
-		        log.debug("attach = {}", attach);
 		        attachments.add(attach);
 		    }
 		}	

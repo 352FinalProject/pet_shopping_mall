@@ -1,9 +1,7 @@
 package com.shop.app.cart.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.entity.CartItem;
-import com.shop.app.cart.entity.CartItemDetails;
 import com.shop.app.cart.repository.CartRepository;
-import com.shop.app.member.entity.Member;
-import com.shop.app.product.dto.ProductPriceDto;
-import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.repository.ProductRepository;
 
@@ -34,43 +28,43 @@ public class CartServiceImpl implements CartService {
 	
 	
 	@Override
-	public CartInfoDto getCartList(String memberId) {
-		// 1. 멤버 아이디로 카트(cart) 조회 (쿼리문 쪼인처리하면 될듯)
+	public List<CartInfoDto> getCartInfoList(String memberId) {
 		List<CartItem> cartItemList = cartRepository.getCartList(memberId);
-		log.debug("cartItem codeList = {}", cartItemList);
-		
-		// 걍 쪼인해서 가져오자 List로...
-		
 		List<CartInfoDto> cartInfoList = new ArrayList<>();
 		
+		CartInfoDto product = null;
 		
 		for(int i=0; i <cartItemList.size(); i++) {
-			// cartRepository.getProductList(cartItemList.get(i).getProductDetailId());
-
-			/*
-			 * 
-			 * select 
-    p.*,
-    pd.*
-from 
-    product p left join product_detail pd on p.product_id = pd.product_id
-    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
-where 
-    ci.product_detail_id = 2;
-			 * 
-			 * 
-			 * 
-			 * */
-			
-			
-			//			product = productRepository.findProductDetailById(cartItemList.get(i).getProductDetailId());
-//			
-//			productInfo.put(product, cartItemList.get(i).getQuantity());
-////			priceList.add(map.of(cartRepository.getPrice(product.getProductId()));
-//			// 상품, 상품가격 가져와서 넣기~
+			product = cartRepository.getCartInfoList(cartItemList.get(i).getProductDetailId());
+			cartInfoList.add(product);
 		}
 
-		return null;
+		return cartInfoList;
 	}
+
+
+	@Override
+	public int deleteCartOne(int id, String memberId) {
+		return cartRepository.deleteCartOne(id, memberId);
+	}
+
+
+	@Override
+	public int deleteCartAll(String memberId) {
+		return cartRepository.deleteCartAll(memberId);
+	}
+
+
+	@Override
+	public List<ProductDetail> findProdById(int id) {
+		return cartRepository.findProdById(id);
+	}
+
+
+	@Override
+	public int updateCart(int productDetailId,  int cartitemId) {
+		return cartRepository.updateCart(productDetailId, cartitemId);
+	}
+
 
 }

@@ -9,11 +9,19 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
+import com.shop.app.product.entity.ProductDetail;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,13 +33,57 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	@Autowired
+	private PointService pointService;
 	
 	@GetMapping("/shoppingCart.do")
 	public void getCartList(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-		CartInfoDto cart = cartService.getCartList(principal.getMemberId());
+		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
 		
-		model.addAttribute("cart",cart);
+		Point point = pointService.findCurrentPointById(principal.getMemberId());
+
+		model.addAttribute("cartList", cartList);
+		model.addAttribute("pointCurrent", point.getPointCurrent());
+	}
+	
+	@PostMapping("/deleteCartOne.do")
+	public String deleteOne(@RequestParam("id") String _id, RedirectAttributes redirectAttr, 
+			Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
+		int id = Integer.parseInt(_id);
+		String memberId = member.getMemberId();
+		int result = cartService.deleteCartOne(id, memberId);
+		return "redirect:/cart/shoppingCart.do";
+	}
+	
+	@PostMapping("/deleteCartAll.do")
+	public String deleteCartAll(RedirectAttributes redirectAttr, 
+			Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
 		
+		String memberId = member.getMemberId();
+		int result = cartService.deleteCartAll(memberId);
+		return "redirect:/cart/shoppingCart.do";
+	}
+	
+	
+	// 상품 한 개 조회하려고 만든 메소드
+	@ResponseBody
+	@GetMapping("/findProdById.do")
+	public List<ProductDetail> findProdById(@RequestParam("id") String _id) {
+		int id = Integer.parseInt(_id);
+		List<ProductDetail> productInfo =  cartService.findProdById(id);
+		log.debug("productInfo = {}", productInfo);
+		return productInfo;
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateCart.do")
+	public int updateCart(@RequestParam("selectedValue") String _productDetailId, @RequestParam("cartitemId") String _cartitemId, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
+		log.debug("cartitemID = {}", _cartitemId);
+		
+		int productDetailId = Integer.parseInt(_productDetailId);
+		int cartitemId = Integer.parseInt(_cartitemId);
+		int result = cartService.updateCart(productDetailId, cartitemId);
+		return result;
 	}
 }
