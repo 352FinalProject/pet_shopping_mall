@@ -20,7 +20,7 @@
             <table class="review-write-table">
                 <tr>
                     <th>작성자</th>
-                    <td>
+                    <td class="review-create-writer">
                     	<input type="text" id="reviewMemberId" name="reviewMemberId" value="<sec:authentication property="name"/>" required readonly/>
                     </td>
                 </tr>
@@ -73,18 +73,18 @@
 </section>
 
 <script>
-    function setRating(rating) {
-        const stars = document.querySelectorAll('.star');
-        const reviewStarRateInput = document.getElementById('reviewStarRate');
-        
-        for (let i = 0; i < stars.length; i++) {
-            if (i < rating) {
-                stars[i].textContent = '★';
-            } else {
-                stars[i].textContent = '☆';
-            }
+function setRating(rating) {
+    const stars = document.querySelectorAll('.star');
+    const reviewStarRateInput = document.getElementById('reviewStarRate');
+    
+    for (let i = 0; i < stars.length; i++) {
+        if (i < rating) {
+            stars[i].textContent = '★';
+        } else {
+            stars[i].textContent = '☆';
         }
-        reviewStarRateInput.value = rating;
     }
+    reviewStarRateInput.value = rating;
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

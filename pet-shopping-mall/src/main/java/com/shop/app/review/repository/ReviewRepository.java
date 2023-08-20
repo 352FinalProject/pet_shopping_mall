@@ -33,21 +33,13 @@ public interface ReviewRepository {
 	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'review', #{reviewId}, #{imageId})")
 	int insertMapping(int reviewId, int imageId);
 
-	
-	
-	
-//	@Select("select count(*) from review")
-//	int findTotalReviewCount();
-//
+	// 내가 쓴 리뷰 조회
 	@Select("SELECT * FROM review WHERE review_member_id = #{reviewMemberId} ORDER BY review_id DESC")
-//	List<Review> findReviewAll(RowBounds rowBounds);
 	List<Review> findReviewAll(String reviewMemberId, RowBounds rowBounds);
 
-
-
-	// 리뷰 조회
-//	@Select("select * from review where review_member_id = #{reviewMemberId}")
-//	Review findReviewMemberById(Review review);
+	// 리뷰 전체 카운트
+	@Select("select count (*) from review where review_member_id = #{reviewMemberId}")
+	int findTotalReviewCount(String reviewMemberId);
 
 	// 리뷰삭제
 	@Delete("delete from review where review_id = #{reviewId}")
@@ -63,5 +55,7 @@ public interface ReviewRepository {
 	// 리뷰수정
 	@Update("update review set review_title = #{reviewTitle}, review_content = #{reviewContent}, review_star_rate = #{reviewStarRate} where review_id = #{reviewId}")
 	int updateReview(Review review);
+
+
 
 }

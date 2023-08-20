@@ -14,10 +14,10 @@
 	<br>
 	<div class="common-container">
 		<div class="common-div">
-					<table class="review-write-table">
+					<table class="review-detail-table">
 						<tr>
 							<th>제목</th>
-							<td>
+							<td class="review-detail-title input[type="text"]">
 								<input type="text" name="reviewTitle" id="reivewTitle" readonly value="${reviews.reviewTitle}"required>
 							</td>
 						</tr>
@@ -31,7 +31,7 @@
 						<tr>
 							<th>별점</th>
 							<td>
-								<div class="star-rating" id="starContainer"></div>
+								<div class="star-rating-detail" id="starContainer"></div>
 							</td>
 						<tr>
 							<th>이미지</th>
@@ -43,11 +43,11 @@
 				</div>
 			</div>
 		</div>
-		<table class="table_row_b">
+		<table class="review-write-table2">
 			<tr>
 				<td>
-					<textarea class="" name="review-content" id="reviewContent"
-						rows="10" cols="59" readonly style="resize: none;">
+					<textarea class="review-detail-content" name="review-content" id="reviewContent"
+						rows="10" cols="59" readonly style="resize: none; text-align:left; ">
 					${reviews.reviewContent}
 					</textarea>
 				</td>
@@ -57,16 +57,16 @@
 			<form
 				action="${pageContext.request.contextPath}/review/reviewList.do"
 				class="form-inline">
-				<button class="review-btn-reset" type="submit">목록</button>
+				<button class="review-btn-rset" type="submit">목록</button>
 			</form>
 			<button type="button" onclick="reviewDelete();"
-				class="review-btn-reset">삭제하기</button>
+				class="review-btn-delete">삭제하기</button>
 			<c:if test="${!empty reviews.reviewContent}">
 				<form
 					action="${pageContext.request.contextPath}/review/reviewUpdate.do?reviewId=${reviews.reviewId}">
 					<input type="hidden" name="reviewId"
 						value="${reviews.reviewId}">
-					<button class="review-btn-create" type="submit">수정하기</button>
+					<button class="review-btn-update" type="submit">수정하기</button>
 				</form>
 			</c:if>
 		</div>
@@ -82,7 +82,7 @@
 
 // 리뷰 삭제
 const reviewDelete = () => {
-	if(confirm("작성한 리뷰를 삭제하시겠습니까?")) {
+	if(confirm("작성한 리뷰를 삭제하시겠습니까? \n리뷰를 삭제하시면 리뷰작성 포인트도 함께 차감됩니다.")) {
 		document.reviewDeleteFrm.submit();
 	}
 };
@@ -109,6 +109,7 @@ function displayStars(starRate) {
 // 별 찍히게 하기
 const reviewStarRate = ${reviews.reviewStarRate};
 displayStars(reviewStarRate);
+
 
 </script>
 

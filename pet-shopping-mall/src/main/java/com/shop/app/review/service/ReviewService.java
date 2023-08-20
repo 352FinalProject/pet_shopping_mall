@@ -27,5 +27,8 @@ public interface ReviewService {
 	// 리뷰 수정
 	int updateReview(Review review);
 
+	// 리뷰 전체 카운트
+	int findTotalReviewCount(String reviewMemberId);
+
 
 }

@@ -68,6 +68,12 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.findReviewAll(reviewMemberId, rowBounds);
 	}
 
+	// 리뷰 전체 카운트
+	@Override
+	public int findTotalReviewCount(String reviewMemberId) {
+		return reviewRepository.findTotalReviewCount(reviewMemberId);
+	}
+
 	// 리뷰 상세조회
 	@Override
 	public Review findReviewId(Review review) {
@@ -85,5 +91,6 @@ public class ReviewServiceImpl implements ReviewService {
 	public int updateReview(Review review) {
 		return reviewRepository.updateReview(review);
 	}
+
 
 }

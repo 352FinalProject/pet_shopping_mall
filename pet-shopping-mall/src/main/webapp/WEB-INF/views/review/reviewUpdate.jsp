@@ -9,9 +9,18 @@
 <%-- 리뷰 수정 --%>
 <section class="common-section" id="#">
 	<div class="common-title">리뷰 수정</div>
+	<br>
 	<div class="common-container">
 		<div class="common-div">
-			<form:form name= "reviewUpdateFrm" action="${pageContext.request.contextPath}/review/reviewUpdate.do" method="post">
+			<form:form name= "reviewUpdateFrm" action="${pageContext.request.contextPath}/review/reviewUpdate.do" 
+			enctype="multipart/form-data" method="post">
+			<table class="review-update-table">
+                <tr>
+                    <th>제목</th>
+                    <td class="review-update-title">
+                    	<input type="text" id="reviewTitle" name="reviewTitle" value="${reviews.reviewTitle}" required/>
+                    </td>
+                </tr>
                 <tr>
 					<th><label for="starRating">별점</label></th>
 					<td>
@@ -36,44 +45,38 @@
 			 			</div>
 			 		</td>
 		 		</tr>
-                <tr>
-                    <th>제목</th>
-                    <td>
-                    	<input type="text" id="reviewTitle" name="reviewTitle" value="${reviews.reviewTitle}" required/>
-                    </td>
-                </tr>
             </table>
             <br>
             <table>
             	<tr>
                     <td>
-                        <textarea id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required>${reviews.reviewContent}</textarea>
+                        <textarea class="review-update-content" id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required>${reviews.reviewContent}</textarea>
                     </td>
                 </tr>
             </table>
-			    <div class="review-create-btn">
+			    <div class="review-update-btn">
 			        <button class="review-btn-reset" type="reset">초기화</button>
 			        <input type="hidden" name="reviewId" value="${reviews.reviewId}">
-			        <button class="review-btn-create" type="submit">수정하기</button>
+			        <button class="review-btn-update" type="submit">수정하기</button>
 			    </div>
-		    </div>
-		</div>
 			</form:form>
+	    </div>
+	</div>
 </section>
 <script>
-    function setRating(rating) {
-        const stars = document.querySelectorAll('.star');
-        const reviewStarRateInput = document.getElementById('reviewStarRate');
-        
-        for (let i = 0; i < stars.length; i++) {
-            if (i < rating) {
-                stars[i].textContent = '★';
-            } else {
-                stars[i].textContent = '☆';
-            }
+function setRating(rating) {
+    const stars = document.querySelectorAll('.star');
+    const reviewStarRateInput = document.getElementById('reviewStarRate');
+    
+    for (let i = 0; i < stars.length; i++) {
+        if (i < rating) {
+            stars[i].textContent = '★';
+        } else {
+            stars[i].textContent = '☆';
         }
-        reviewStarRateInput.value = rating;
     }
+    reviewStarRateInput.value = rating;
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

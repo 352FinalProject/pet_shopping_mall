@@ -92,7 +92,7 @@ public class ReviewController {
 			@RequestParam(defaultValue = "1") int page,
 			Model model) {
 		
-		int limit = 10;
+		int limit = 5;
 		
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    String reviewMemberId = authentication.getName();
@@ -103,16 +103,17 @@ public class ReviewController {
 				"reviewMemberId", reviewMemberId
 		);
 		
-//		int totalCount = reviewService.findTotalReviewCount();
-//		int totalPages = (int) Math.ceil((double) totalCount / limit);
-//		model.addAttribute("totalPages", totalPages);
+		int totalCount = reviewService.findTotalReviewCount(reviewMemberId);
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		model.addAttribute("totalPages", totalPages);
 		
 		List<Review> reviews = reviewService.findReviewAll(params);
-//		List<Review> reviews = reviewService.findReviewAll(reviewId);
 		
-		log.debug("reviews = {}", reviews);
+		log.debug("토탈카운트 = {} ", totalCount);
+		log.debug("페이지, 리밋, 멤버아이디 params = {}", params);
+		log.debug("파람스 들어가있는거 reviews = {}", reviews);
+		
 		model.addAttribute("reviews", reviews);
-	
 	}
 	
 	
@@ -242,9 +243,7 @@ public class ReviewController {
 	   
 	   log.debug("리뷰수정 result = {}", result);
 	   
-//	   return "redirect:/review/reviewDetail.do?reviewId=" + reviews.getReviewId();
-	   return "redirect:/review/reviewDetail.do";
-//	   return "redirect:/review/reviewList.do";
+	   return "redirect:/review/reviewDetail.do?reviewId=" + reviews.getReviewId();
 	   
    }
    

@@ -7,21 +7,13 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-<style>
-    .accordion-content {
-        display: none;
-        padding: 10px;
-        background-color: white;
-    }
-</style>
+
 <%-- 내 리뷰 조회 (혜령) --%>
-<section class="common-section" id="common-section-List">
+<section class="common-section" id="common-section-List" style="padding-bottom: 350px;" >
     <div class="common-title">내가 쓴 리뷰</div>
     <div class="common-container">
         <div class="common-div">
-    		<form:form name="questionSearchFrm" 
-			action="${pageContext.request.contextPath}/review/reviewList.do" method="get">
-            <div class="service-util-div">
+            <div class="review-util-div">
                 <table class="service-product-utility">
 					<thead>
 						<tr>
@@ -29,7 +21,7 @@
 							<th>상품명</th>
 							<th>옵션</th>
 							<th>별점</th>
-							<th>날짜</th>
+							<th>작성일</th>
 						</tr>
 					</thead>
                     <tbody>
@@ -40,7 +32,7 @@
                     	</c:if>
                     	<c:if test="${not empty reviews}">
                     	<c:forEach items="${reviews}" var="review" varStatus="vs">
-                        <tr class="table-row">
+                        <tr>
                         	<td>
                         		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">${review.reviewId}</a>
                         	</td>
@@ -55,16 +47,16 @@
                                     </div>
                                 </div>
                             </td>
-                            <td style="vertical-align: middle;">
+                            <td>
                                 <div style="display: flex; flex-direction: column;">
                                     <div>색상 : 노란색</div>
                                     <div>수량 : 1개</div>
                                 </div>
                             </td>
-                            <td style="vertical-align: middle;">
+                            <td>
                                 ${review.reviewStarRate}
                             </td>
-                            <td style="vertical-align: middle;">
+                            <td>
 								<fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 								<fmt:formatDate value="${createdAt}" pattern="yy/MM/dd HH:mm"/>
                             </td>
@@ -74,33 +66,20 @@
                     </tbody>
                 </table>
             </div>
-            </form:form>
         </div>
     </div>
+    <!-- 페이징 바 -->
+	<nav aria-label="..." >
+	  	<ul class="pagination pagination-sm">
+		    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+		        <li class="page-item ${page == pageNumber ? 'active' : ''}">
+		            <a class="page-link" href="${pageContext.request.contextPath}/review/reviewList.do?page=${pageNumber}">
+	                    <span class="page-number">${pageNumber}</span>
+	                </a>
+		        </li>
+		    </c:forEach>
+		</ul>
+	</nav>
 </section>
 
-<section class="myReview accordion-content">
-    <h3>혜령공주</h3>
-    <div> 두부 | 여 | 8살 | 4.0kg | 비숑 </div>
-    <div>
-        ★(5)
-    </div>
-    <div>
-        <img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-            class="product-img"
-            src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
-    </div>
-    <div>
-        졸려 졸려 졸려 
-    </div>
-</section>
-
-<script>
-    function toggleAccordion(imageElement) {
-        const accordionContent = imageElement.closest('.table-row').nextElementSibling;
-        if (accordionContent) {
-            accordionContent.classList.toggle('active');
-        }
-    }
-</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
