@@ -1,6 +1,6 @@
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('admin2', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
+values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 select * from member;
 --==============================
 --sample data 생성
