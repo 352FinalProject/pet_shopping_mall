@@ -12,21 +12,5 @@ import com.shop.app.servicecenter.chat.entity.ChatRoom;
 @Mapper
 public interface ChatRepository {
 	
-    public static final SqlSessionTemplate sqlSession = null;
-
-    
-	public ChatRoom selectChatRoom(String chatRoomId);
-
-	public int insertMessage(Chat chatMessage);
-
-	public List<Chat> messageList(String chatRoomId);
-
-	public int createChat(ChatRoom chatRoom);
-
-	public ChatRoom searchChatRoom(ChatRoom chatRoom);
-
-	public List<ChatRoom> chatRoomList(int chatRoomId);
-
-	public int selectUnReadCount(Chat message);
 
 }
