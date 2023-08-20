@@ -54,7 +54,23 @@
                                 </div>
                             </td>
                             <td>
-                                ${review.reviewStarRate}
+                                <c:choose>
+							        <c:when test="${review.reviewStarRate == 1}">
+							            <span class="star-rating">★</span> (1)
+							        </c:when>
+							        <c:when test="${review.reviewStarRate == 2}">
+							            <span class="star-rating">★★</span>  (2)
+							        </c:when>
+							        <c:when test="${review.reviewStarRate == 3}">
+							            <span class="star-rating">★★★</span> (3)
+							        </c:when> 
+							        <c:when test="${review.reviewStarRate == 4}">
+							            <span class="star-rating">★★★★</span> (4)
+							        </c:when>
+							        <c:when test="${review.reviewStarRate == 5}">
+							            <span class="star-rating">★★★★★</span> (5)
+							        </c:when>
+    							</c:choose>
                             </td>
                             <td>
 								<fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
