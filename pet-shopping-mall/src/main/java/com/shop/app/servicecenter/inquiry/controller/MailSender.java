@@ -12,15 +12,27 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MailSender {
 
-	    public void sendEmailOnAnswerRegistration(String userEmail, String answerContent) {
-	        String subject = "문의하신 내용에 답변이 등록되었습니다.";
-	        String message = "안녕하세요,\n\n문의하신 내용에 다음과 같은 답변이 등록되었습니다:\n\n" + answerContent;
-	        
-	        sendEmail(userEmail, subject, message);
-	    }
-
+		public void sendEmailOnAnswerRegistration(String userEmail, String answerContent, int questionId) {
+		    String subject = "[우리집동물친구] 문의하신 내용에 답변이 등록되었습니다.";
+		    String link = "http://localhost:8080/pet/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
+	
+		    String htmlMessage = "<html><body><div style='width: 800px; margin: auto;'>";
+		    htmlMessage += "<br/><br/><p style='font-size: 22px;'><strong>우리집동물친구</strong>";
+		    htmlMessage += "<hr style='border: 1px solid #c8c8c8;'/>";
+		    htmlMessage += "<br/><p style='font-size: 27px;'><strong>문의하신 내용</strong>에 답변이 등록되었습니다.<br/></p>";
+		    htmlMessage += "<br/>안녕하세요. 반려동물 쇼핑몰 우리집동물친구입니다. <br/> 문의하신 내용에 다음과 같은 답변이 등록되었습니다.<br/><br/><br/>";
+		    htmlMessage += "<div style='background-color: #f5f5f5; display: flex; align-items: center; height: 100px; margin-bottom: 50px;'>" + answerContent + "<br/></div>";
+		    htmlMessage += "<a href='" + link + "' style='background-color: #5886d3; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none;'>1:1 문의 보러가기</a>";
+		    htmlMessage += "<br/><hr style='border: 1px solid #c8c8c8; margin-top: 50px;'/><br/><br/>";
+		    htmlMessage += "</div></body></html>";
+	
+		    sendEmail(userEmail, subject, htmlMessage);
+		}
 	    // 실제 이메일 발송 처리 메소드
 	    public void sendEmail(String recipient, String subject, String message) {
 	        Properties p = System.getProperties();
@@ -30,7 +42,7 @@ public class MailSender {
 	        p.put("mail.smtp.port", "25");
 
 	        Authenticator auth = new MyAuthentication();
-	        Session session = Session.getDefaultInstance(p, auth);
+	        Session session = Session.getInstance(p, auth);
 	        MimeMessage msg = new MimeMessage(session);
 
 	        try {
@@ -49,12 +61,6 @@ public class MailSender {
 	        } catch (MessagingException msg_e) {
 	            msg_e.printStackTrace();
 	        }
-	    }
-
-	    public static void main(String[] args) {
-	        // 메인 메소드 내에서 객체 생성 및 이메일 발송 메소드 호출
-	        MailSender mailSender = new MailSender();
-	        mailSender.sendEmailOnAnswerRegistration("vldzmf0877@naver.com", "테스트");
 	    }
 	}
 	
