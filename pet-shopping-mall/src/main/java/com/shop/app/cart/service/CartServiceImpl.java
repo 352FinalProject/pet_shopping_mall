@@ -62,8 +62,8 @@ public class CartServiceImpl implements CartService {
 
 
 	@Override
-	public int updateCart(int productDetailId,  int cartitemId) {
-		return cartRepository.updateCart(productDetailId, cartitemId);
+	public int updateCart(int productDetailId,  int cartitemId, int quantity) {
+		return cartRepository.updateCart(productDetailId, cartitemId, quantity);
 	}
 
 

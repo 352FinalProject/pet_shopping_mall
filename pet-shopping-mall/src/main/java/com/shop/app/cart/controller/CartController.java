@@ -78,12 +78,15 @@ public class CartController {
 	
 	@ResponseBody
 	@PostMapping("/updateCart.do")
-	public int updateCart(@RequestParam("selectedValue") String _productDetailId, @RequestParam("cartitemId") String _cartitemId, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
-		log.debug("cartitemID = {}", _cartitemId);
-		
+	public int updateCart(@RequestParam("selectedValue") String _productDetailId, 
+			@RequestParam("cartitemId") String _cartitemId, @RequestParam("quantity") String _quantity) {
+		int quantity = Integer.parseInt(_quantity);
 		int productDetailId = Integer.parseInt(_productDetailId);
 		int cartitemId = Integer.parseInt(_cartitemId);
-		int result = cartService.updateCart(productDetailId, cartitemId);
+		int result = cartService.updateCart(productDetailId, cartitemId, quantity);
+		
+		log.debug("result = {}", result);
+		
 		return result;
 	}
 }

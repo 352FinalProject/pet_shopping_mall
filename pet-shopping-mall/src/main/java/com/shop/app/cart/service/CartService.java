@@ -15,5 +15,5 @@ public interface CartService {
 
 	List<ProductDetail> findProdById(int id);
 
-	int updateCart(int productDetailId, int cartitemId);
+	int updateCart(int productDetailId, int cartitemId, int quantity);
 }

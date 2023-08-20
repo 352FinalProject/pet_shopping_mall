@@ -271,7 +271,7 @@ const requestPaymentByCard = (data) => {
     	pay_method: "card",
     	merchant_uid: data.orderNo,   // 주문번호
     	name: data.title,
-    	amount: 1000,                         // 숫자 타입
+    	amount: data.amount,                         // 숫자 타입
     	buyer_email: data.buyerEmail,
     	buyer_name: data.name,
     	buyer_tel: data.buyerTel,
@@ -391,9 +391,6 @@ pointInput.addEventListener('input', function() {
 });
 
 
-/* 			beforeSend : function(xhr){
-xhr.setRequestHeader(header, token);
-} */
 
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
