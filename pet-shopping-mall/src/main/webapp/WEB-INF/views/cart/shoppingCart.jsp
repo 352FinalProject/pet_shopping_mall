@@ -34,7 +34,7 @@
 		                						<p>수량 : ${product.quantity}</p>
 		                					</div>
 		                					<div>
-		                						<button class="cart-btn update-btn" value="${product.productId}">옵션/수량변경</button>
+		                						<button class="cart-btn update-btn" value="${product.cartitemId}" product-id="${product.productId}" product-detail-id="${product.productDetailId}">옵션/수량변경</button>
 		                					</div>
 		                				</div>
 		                				<div>
@@ -92,25 +92,38 @@
                 </div>
             </div>
         </div>
-    <div id="modal">
-    	<div class="modal-content">
-    		<h2>옵션 및 수량 변경</h2>
-    		<p>상품명</p>
-    		<p>옵션</p>
-    		<select>
-    			<option value="detailId"></option>
-    		</select>
-    		<button id="close-modal">완료</button>
-    	</div>
-   	</div>
+	    <div id="modal">
+	    	<div class="modal-div">
+		    	<div id="modal-content"></div>
+		    	<div>
+		    		옵션변경
+		    	    <select id="modal-option" onchange="updateProduct(this);">
+		    	    	<option>옵션을 선택해주세요</option>
+		    		</select>
+		    	</div>
+		    	<form:form id="updateFrm">
+		    		<input type="hidden" value="" name="cartitemId" id="cartitemId" />
+		    	</form:form>
+		    	<div>
+		    		<button id="close-modal">완료</button>
+		    	</div>
+	    	</div>
+	   	</div>
     </section>
 <form:form id="deleteAllFrm" method="POST" 
 	action="${pageContext.request.contextPath}/cart/deleteCartAll.do">
 </form:form>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-/* document.addEventListener('DOMContentLoaded', () => {
-	updatePrice();
-}) */
+let token = $("meta[name='_csrf']").attr("content");
+let header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
 const productNameCheckboxes = document.querySelectorAll('input[name="productName"]');
 const orderButton = document.getElementById("order-btn");
 const checkAll = document.querySelector("#checkAll");
@@ -176,27 +189,64 @@ const deleteCartOne = () => {
 
 const modal = document.getElementById("modal");
 const openModalBtns = document.querySelectorAll(".update-btn");
-const closeModalBtn = document.getElementById("close-modal");
+const closeModalBtn = document.querySelector("#close-modal");
+const modalContent = document.querySelector("#modal-content");
+const options = document.querySelector("#modal-option");
+const updateFrm = document.querySelector("#updateFrm");
+const cartitemIdInput = document.getElementById("cartitemId");
+
 
 openModalBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-    	let productId = btn.value;
-    	
-/*     	$.ajax({
-    		url: "${pageContext.request.contextPath}/product/findProdById.do?id=" + productId,
+        const productId = btn.getAttribute("product-id");
+        const productDetailId = btn.getAttribute("product-detail-id");
+        cartitemIdInput.value = btn.value;
+        
+     	$.ajax({
+    		url: "${pageContext.request.contextPath}/cart/findProdById.do?id=" + productId,
 			method: 'GET',
-			
-    	}); */
-    	
+			success(products) {
+				console.log(products);
+				products.forEach((product) => {
+					modalContent.innerHTML = `
+	                    <h2>\${product.productName}</h2>
+	                `;
+					options.innerHTML += `
+						<option value="\${product.productDetailId}"> \${product.optionName} \${product.optionValue}</option>
+					`;
+					
+				});
+			}
+    	});
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
+        
     });
 });
 
 closeModalBtn.addEventListener("click", () => {
-    modal.style.display = "none";
+	
+	modal.style.display = "none";
     document.body.style.overflow = "auto";
+	options.innerHTML = ''; // 초기화
 });
+
+const updateProduct = (product) => {
+	const selectedOption = product.options[product.selectedIndex];
+    const selectedValue = selectedOption.value;
+    $.ajax({
+        url: "${pageContext.request.contextPath}/cart/updateCart.do",
+        method: "POST",
+        data: {
+        	cartitemId : cartitemIdInput.value,
+            selectedValue: selectedValue
+        },
+        success(response) {
+            alert('변경 완료!');
+            location.href="${pageContext.request.contextPath}/cart/shoppingCart.do"
+        }
+    });
+} 
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

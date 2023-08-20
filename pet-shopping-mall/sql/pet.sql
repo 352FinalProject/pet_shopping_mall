@@ -20,7 +20,7 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
-
+--
 --drop table review;
 --drop table image_attachment;
 --drop table image_attachment_mapping;
@@ -51,7 +51,7 @@ SELECT *  FROM all_tables;
 --drop table terms_history;
 --drop table chat;
 --drop table chat_room;
-
+--
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;

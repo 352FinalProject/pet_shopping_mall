@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.repository.CartRepository;
+import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,5 +53,18 @@ public class CartServiceImpl implements CartService {
 	public int deleteCartAll(String memberId) {
 		return cartRepository.deleteCartAll(memberId);
 	}
+
+
+	@Override
+	public List<ProductDetail> findProdById(int id) {
+		return cartRepository.findProdById(id);
+	}
+
+
+	@Override
+	public int updateCart(int productDetailId,  int cartitemId) {
+		return cartRepository.updateCart(productDetailId, cartitemId);
+	}
+
 
 }
