@@ -30,5 +30,11 @@ public interface ProductRepository {
 	@Select("select * from product_detail where product_detail_id = #{productDetailId}")
 	ProductDetail findProductDetailById(int productDetailId);
 
+	@Select("select * from product order by create_date desc")
+	List<Product> findAllBasicProduct();
+
+	@Select("select * from product_detail order by product_detail_id desc")
+	List<ProductDetail> findAllProductDetails();
+
 
 }

@@ -8,9 +8,10 @@
 
 <%-- 상품등록폼 (수경) --%>
 <section class="common-section" id="#">
-	<div class="common-title">상품 등록</div>
+	<div class="common-title">상품 기본 등록</div>
 	<div class="common-container">
 		<div class="common-div">
+		
 			<form:form 
 				action="${pageContext.request.contextPath}/product/addProduct.do" 
 				enctype="multipart/form-data" 
@@ -61,8 +62,9 @@
 			        <button class="qna-btn-create" type="submit">상품등록</button>
 			    </div>
 			</form:form>
-		    </div>
-		</div>
+			
+	    </div>
+	</div>
 </section>
 <script>
 document.querySelectorAll("[name=upFile]").forEach((input) => {
