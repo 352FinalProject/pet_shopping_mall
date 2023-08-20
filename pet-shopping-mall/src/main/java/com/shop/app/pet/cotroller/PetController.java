@@ -98,7 +98,7 @@ public class PetController {
 		int cnt = petService.petDelete(petId);
 		
 		if(cnt > 0) {
-			redirectAttributes.addFlashAttribute("msg", cnt + "건이 정상적으로 삭제되었습니다.");
+			redirectAttributes.addFlashAttribute("msg", cnt + "정상적으로 삭제되었습니다.");
 		} else {
 			redirectAttributes.addFlashAttribute("msg", "삭제 중 오류가 발생하였습니다.");
 		}
