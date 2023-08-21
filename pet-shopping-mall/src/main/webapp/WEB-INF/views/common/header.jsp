@@ -15,9 +15,13 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-
-
 <title>반려동물 쇼핑몰</title>
+
+<c:if test="${not empty msg}">
+	<script>
+		alert('${msg}');
+	</script>
+</c:if>
 </head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />

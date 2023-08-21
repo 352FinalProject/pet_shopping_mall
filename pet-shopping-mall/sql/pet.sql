@@ -313,7 +313,6 @@ create table review (
     review_created_at timestamp default systimestamp,
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-    constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
     constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );

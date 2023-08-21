@@ -80,8 +80,15 @@ public class MemberSecurityController {
 	public String memberCreate(
 			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
 			BindingResult bindingResult, // 유효성 검사 결과
-			RedirectAttributes redirectAttr) { // 리다이렉트시 전달 할 속성
+			RedirectAttributes redirectAttr, HttpSession session) { // 리다이렉트시 전달 할 속성
 		log.debug("member = {}", member);
+		
+	    // 이메일 인증 확인 (예라)
+	    Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
+	    if (isVerified == null || !isVerified) {
+	        redirectAttr.addFlashAttribute("msg", "이메일 인증을 해주세요.");
+	        return "redirect:/member/memberCreate.do";
+	    }
 		
 		if(bindingResult.hasErrors()) {
 		    // bindingResult에 오류가 있을 경우, 즉 유효성 검사에서 문제가 발견된 경우 실행됩니다.
@@ -119,7 +126,10 @@ public class MemberSecurityController {
 		terms.setAccept(Accept.Y);
 		
 		int resultTerms = termsService.insertTerms(terms);
-
+		
+		// 회원 정보 db에 저장하고 세션 제거 (예라)
+		session.removeAttribute("emailVerified");
+		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/memberCreateComplete.do";
 	}
