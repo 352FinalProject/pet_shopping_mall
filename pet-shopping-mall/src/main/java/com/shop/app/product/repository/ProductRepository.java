@@ -8,12 +8,14 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.product.dto.ProductPriceDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductOption;
 
 @Mapper
 public interface ProductRepository {
@@ -22,6 +24,12 @@ public interface ProductRepository {
 //	Product findProductByCode(String productCode);
 
 	@Insert("insert into product(product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt) values (seq_product_id.nextval, #{categoryId}, #{productName}, #{productPrice}, #{thumbnailImg}, #{productImg}, default, null, default, default)")
+	@SelectKey(
+			before = false,
+			keyProperty = "productId",
+			resultType = int.class,
+			statement = "select seq_product_id.currval from dual"
+			)
 	int insertProduct(Product product);
 
 	@Select("select * from product_category order by category_id")
@@ -48,5 +56,11 @@ public interface ProductRepository {
 
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
+
+	@Insert("insert into product_option(option_id, product_id, option_name, option_value) values (seq_product_option_id.nextval, #{productId}, #{optionName}, #{optionValue})")
+	int insertProductOption(ProductOption option);
+
+	@Select("select * from product_option order by product_id desc")
+	List<ProductOption> findAllProductOptions();
 
 }

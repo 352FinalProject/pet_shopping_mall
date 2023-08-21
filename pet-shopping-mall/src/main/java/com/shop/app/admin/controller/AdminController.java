@@ -34,6 +34,7 @@ import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductOption;
 import com.shop.app.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -238,11 +239,14 @@ public class AdminController {
 		log.debug("basicProducts = {}", basicProducts);
 		model.addAttribute("basicProducts", basicProducts);
 
-		// 옵션추가된 상품들 조회
-		List<ProductDetail> productDetails = productService.findAllProductDetails();
-		log.debug("productDetails = {}", productDetails);
-		model.addAttribute("productDetails", productDetails);
+		// 옵션 조회해서 가져오기
+		List<ProductOption> productOptions = productService.findAllProductOptions();
+		log.debug("productOptions = {}", productOptions);
+		model.addAttribute("productOptions", productOptions);
 		
+//		List<ProductDetail> productDetails = productService.findAllProductDetails();
+//		log.debug("productDetails = {}", productDetails);
+//		model.addAttribute("productDetails", productDetails);
 	}
 	
 	/**
@@ -322,15 +326,22 @@ public class AdminController {
 	@PostMapping("/adminAddProductOption.do")
 	public String adminAddProductOption(
 			@Valid OptionCreateDto _option,
-			@Valid ProductCreateDto _product,
 			BindingResult bindingResult,
 			@AuthenticationPrincipal MemberDetails member,
 			Model model
 			){
 		log.debug("OptionCreateDto = {}", _option);
-		log.debug("ProductCreateDto = {}", _product);
+		// OptionCreateDto = OptionCreateDto(productId=0, optionName=색, optionValue=빨강, categoryId=3, productName=강아지원피스, productPrice=10000, thumbnailImg=0, productImg=0)
 		
+		// 1. product 객체 생성, 새로 발급받은 productId 가져오기
+		Product product = _option.toProduct(); // categoryId=3, productName=강아지원피스, productPrice=10000, thumbnailImg=0, productImg=0
+		int productId = productService.insertProduct(product);
+		log.debug("productId = {}", productId);
 		
+		// 2. 발급받은 product 아이디를 참조하는 옵션 객체 생성
+		ProductOption option = _option.toProductOption();
+		option.setProductId(productId);
+		int result = productService.insertProductOption(option);
 		
 		
 		return "redirect:/admin/adminProductList.do";

@@ -5,6 +5,7 @@ import java.util.List;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductOption;
 
 public interface ProductService {
 
@@ -21,6 +22,10 @@ public interface ProductService {
 	int updateProduct(Product product);
 
 	int deleteProduct(int productId);
+
+	int insertProductOption(ProductOption option);
+
+	List<ProductOption> findAllProductOptions();
 	
 	
 

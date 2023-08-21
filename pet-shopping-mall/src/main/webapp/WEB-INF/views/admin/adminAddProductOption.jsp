@@ -13,7 +13,7 @@
 		<div class="common-div">
 		
 			<form:form 
-				action="${pageContext.request.contextPath}/product/addProductOption.do" 
+				action="${pageContext.request.contextPath}/admin/adminAddProductOption.do" 
 				enctype="multipart/form-data" 
 				method="post">
 				
@@ -43,7 +43,7 @@
 								<th>옵션명</th>
 								<td>
 									<select name="optionName" id="optionName">
-										<option value="">-선택-</option>
+										<option value="">-선택안함-</option>
 										<option value="색">색</option>
 										<option value="사이즈">사이즈</option>
 										<option value="무게">무게</option>
@@ -53,7 +53,7 @@
 							</tr>
 							<tr>
 								<th>옵션값</th>
-								<td><input type="text" name="optionValue"></td>
+								<td><input type="text" name="optionValue" id="optionValue"></td>
 							</tr>
 							<tr>
 								<th>상품금액</th>
