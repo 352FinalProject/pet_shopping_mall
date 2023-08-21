@@ -4,8 +4,9 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.cart.repository.CartRepository">
 
- <select id="getCartInfoList" resultMap="cartInfoDto">
+   <select id="getCartInfoList" resultMap="cartInfoDto">
 select 
+	ci.cartitem_id,
     p.product_id,
     ci.product_detail_id,
     p.product_name,
@@ -22,6 +23,7 @@ where
   </select>
   
   <resultMap type="CartInfoDto" id="cartInfoDto">
+  	<result column="cartitem_id" property="cartitemId" />
   	<result column="product_id" property="productId" />
   	<result column="product_detail_id" property="productDetailId" />
   	<result column="product_name" property="productName" />

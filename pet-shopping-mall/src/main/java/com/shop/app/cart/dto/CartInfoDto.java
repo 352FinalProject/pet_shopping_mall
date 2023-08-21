@@ -1,10 +1,5 @@
 package com.shop.app.cart.dto;
 
-import java.util.List;
-import java.util.Map;
-
-import com.shop.app.product.entity.Product;
-import com.shop.app.product.entity.ProductDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CartInfoDto{
+	private int cartitemId;
 	private int productId;
 	private int productDetailId; //product_detail
 	private String productName; // product

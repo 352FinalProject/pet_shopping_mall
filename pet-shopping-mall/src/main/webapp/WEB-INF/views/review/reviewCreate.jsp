@@ -6,83 +6,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-<style>
 
-.common-title {
-	font-size:24px;
-	justify-content: center;
-	display: flex;
-}
-
-.star {
-   color: #5886d3; 
-   cursor: pointer;
-}
-
-.review-write-table {
-  height: 180px;
-  width: 600px;
-  justify-content: left;
-  text-align: left;
-  display: flex;
-  border: 1px solid lightgray;
-  background-color: white;
-  margin: auto;
-  padding: 20px;
-}
-
-.common-div table td {
-	padding: 5px;
-}
-
-.review-write-content{
-  height: 150px;
-  width: 600px;
-  justify-content: left;
-  text-align: left;
-  display: flex;
-  border: 1px solid lightgray;
-  background-color: white;
-  margin: auto;
-  padding: 10px;
-  resize: none; /* textarea 사이즈 조절 금지 */
-}
-
-.resetAndSubmit {
-    text-align: center; /* 버튼 가운데 정렬 */
-    margin-top: 30px; /* 버튼 위 여백 조절 */
-}
-
-/* 돌아가기 버튼 */
-.resetAndSubmit input[type="reset"] {
-	background-color: #c8c8c8;
-	margin-right: 10px;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	color: white;
-	border: 1px solid #e7e7e7;
-	margin-top: 30px;
-}
-
-/* 가입하기 버튼 */
-.resetAndSubmit input[type="submit"] {
-	background-color: #5886d3;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	border: 1px solid #e7e7e7;
-	color: white;
-}
-
-
-
-</style>
 
 <%-- 리뷰작성 (혜령) --%>
 
 <section class="common-section" id="#">
-<div class="common-title">상품 후기</div>
+<div class="common-title">리뷰작성</div>
 <br>
 	<div class="common-container">
     	<div class="common-div">
@@ -91,7 +20,7 @@
             <table class="review-write-table">
                 <tr>
                     <th>작성자</th>
-                    <td>
+                    <td class="review-create-writer">
                     	<input type="text" id="reviewMemberId" name="reviewMemberId" value="<sec:authentication property="name"/>" required readonly/>
                     </td>
                 </tr>
@@ -133,31 +62,29 @@
                         <textarea class="review-write-content" id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>
                     </td>
                 </tr>
-                <tr>
-                    <td class="resetAndSubmit" colspan="2">
-                        <input type="reset" value="돌아가기">
-                        <input type="submit" value="작성하기">
-                    </td>
-                </tr>
             </table>
+            <div class="review-create-btn">
+                <button class="review-btn-rset" type="reset">초기화</button>
+				<button class="review-btn-submit" type="submit" >작성하기</button>
+            </div>
         </form:form>
     </div>
 </div>
 </section>
 
 <script>
-    function setRating(rating) {
-        const stars = document.querySelectorAll('.star');
-        const reviewStarRateInput = document.getElementById('reviewStarRate');
-        
-        for (let i = 0; i < stars.length; i++) {
-            if (i < rating) {
-                stars[i].textContent = '★';
-            } else {
-                stars[i].textContent = '☆';
-            }
+function setRating(rating) {
+    const stars = document.querySelectorAll('.star');
+    const reviewStarRateInput = document.getElementById('reviewStarRate');
+    
+    for (let i = 0; i < stars.length; i++) {
+        if (i < rating) {
+            stars[i].textContent = '★';
+        } else {
+            stars[i].textContent = '☆';
         }
-        reviewStarRateInput.value = rating;
     }
+    reviewStarRateInput.value = rating;
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

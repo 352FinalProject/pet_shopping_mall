@@ -60,6 +60,7 @@ insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
+insert into authority values ('member1', 'ROLE_ADMIN');
 
 ------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
@@ -73,6 +74,10 @@ values (seq_answer_answer_id.nextval, '관리자', 47, '우동친은 우리집�
 
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
 values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드세요', sysdate);
+
+------------------ point insert ---------------------------
+INSERT INTO point (point_id, point_member_id, point_current, point_type, point_amount)
+VALUES (2, '사용자2', 50, '사용', -500, SYSTIMESTAMP);
 
 ------------------ product insert ---------------------------
 -- 카테고리 생성
@@ -100,23 +105,46 @@ insert into product (product_id, category_id, product_name, product_price, thumb
     values (seq_product_id.nextval, 6, '츄릅츄릅 츄르 10개입', 20000, null, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 select * from product;
 
+-- 제품옵션 
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_option_id.nextval, 1, '용량', '1kg');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '용량', '2kg');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '용량', '5kg');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '맛', '소고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 1, '맛', '닭고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 2, '맛', '소고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 2, '맛', '닭고기');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 3, '색', '분홍색');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 3, '색', '하늘색');    
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 4, '기본', '기본');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 5, '기본', '기본');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 6, '맛', '연어맛');
+insert into product_option (option_id, product_id, option_name, option_value)
+    values (seq_product_detail_id.nextval, 2, '맛', '참치맛');    
+select * from product_option;
+
 -- 제품상세 등록
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '용량', '1kg', default, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '용량', '2kg', 20000, 20, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '용량', '5kg', 40000, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '맛', '소고기', default, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '맛', '닭고기', 20000, 20, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, '맛', '연어', 40000, 10, default);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 2, '맛', '소고기', default, 20, 1);
-insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 2, '맛', '닭고기', default, 20, 1);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 1, 10, default);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 2, 20, default);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 3, 30, 1);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 4, 30, 1);
+insert into product_detail (product_detail_id, option_id, stock, sale_state)
+    values (seq_product_detail_id.nextval, 5, 10, 1);
 select * from product_detail;
 commit;
 
@@ -124,19 +152,20 @@ commit;
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
-values (seq_point_point_id.nextval, 'member1', 1000, '적립', 500, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_id.nextval, 'member1', 3000, '회원가입', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+
+insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
+values (seq_point_id.nextval, 'member1', 3000, '구매적립', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
 values (seq_point_point_id.nextval, 'member1', 800, '사용', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
-select * from pet;
-
 commit;
 
 update set member_role from member where member_id = 77;
 
-delete from pet where pet_id = '1';
+delete from answer where answer_id = '2';
 
 SELECT * FROM product WHERE id = 3;
 
@@ -175,6 +204,8 @@ where id = 77;
 
 select * from orderTbl;
 select * from member;
+select * from point where point_member_id = 'member1';
+delete from point where point_id = 2;
 
 -- 장바구니 테스트 데이터
 select * from product_category;
@@ -183,16 +214,29 @@ insert into product_category values(2, '옷');
 insert into product values(seq_product_id.nextval, 1, '에르메스 사료', 15000, 1, 1, systimestamp, systimestamp, 111, 111);
 insert into product values(seq_product_id.nextval, 2, '꼬까옷', 17000, 2, 2, systimestamp, systimestamp, 222, 222);
 select * from cartitem;
+update cartitem set product_detail_id = 1 where cart_id = (select cart_id from cart where member_id='honggd');
 select* from product;
 select * from product_detail;
-select * from member;
+select * from orderTbl;
+
+
 update cartitem set product_detail_id=2 where product_detail_id=1;
-insert into cart values (2, 'honggdd');
+
+delete from cartitem where cartitem_id = 2;
+delete from product where product_id = 4;
+
+update cartitem set product_detail_id=1 where product_detail_id=0;
+select * from cartitem;
+
+select * from product_detail;
+
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
+insert into product_detail values(seq_product_detail_id.nextval, 2, '추가1', '파란망토', 1900, 9, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
-commit;
-insert into cartitem values(seq_cartitem_id.nextval, 2, 2, 1);
-insert into cartitem values(seq_cartitem_id.nextval, 2, 1, 1);
+
+insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
+insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
+select * from cartitem;
 select * from member;
 select 
     *
@@ -214,10 +258,74 @@ JOIN
 select * from cart;
 -- 이렇게 불러오기..    
 select 
-    p.*,
-    pd.*
+    ci.cartitem_id,
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
 from 
     product p left join product_detail pd on p.product_id = pd.product_id
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
 where 
     ci.product_detail_id = 2;
+    
+update cartitem set product_detail_id = 2, quantity = 2 where cartitem_id =13;
+
+
+select 
+	ci.cartitem_id,
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+where
+    p.product_id = 2;
+    
+select 
+	ci.cartitem_id,
+    p.product_id,
+    pd.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+where 
+    p.product_id = 2;
+    
+    
+    
+delete from cartitem where product_detail_id = 3;
+
+delete from cartitem ci where ci.cart_id = (select cart_id from cart where member_id ='honggd');   
+    
+insert into point (point_id, point_member_id, point_current, point_type, point_amount)
+values (
+    seq_point_id.nextval,
+    'member1',
+    0,
+    '구매사용',
+    -3000
+);
+
+
+select * from point order by point_id desc;
+
+delete from point where point_id = '9';
+
+    

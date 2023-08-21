@@ -39,7 +39,9 @@
 						    <th>사진첨부</th>
 						    <td>
 						        <div class="detail-upload">
-						            ${questionDetails.attachments[0].imageOriginalFilename}
+						        	<input type="text" name="imageOriginalFilename" 
+						            value="${questionDetails.attachments[0].imageOriginalFilename}" required
+								readonly">
 						        </div>
 						    </td>
 						</tr>
@@ -78,7 +80,6 @@
 				</table>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<!-- 답변 1개 이상 달리면 댓글창 안 보이게 -->
-					<c:if test="${question.awnserCount >= 1}">
 				<!-- 댓글 기능 -->
 						<div class="anw-create-btn">
 				<!-- 댓글 삭제 -->
@@ -91,16 +92,19 @@
 								action="${pageContext.request.contextPath}/servicecenter/inquiry/answerUpdate.do?questionId=${questions.questionId}"
 								method="post">
 								<div class="hidden-textbox" style="display: none;">
-									<textarea id="editComment" name="answerContent"
-										style="position: absolute; border: 1px solid #c8c8c8; background: #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
-									<input type="hidden" name="questionId"
-										value="${questions.questionId}" /> <input type="hidden"
-										name="answerId" value="${answers.answerId}" />
+									<c:if test="${questions.answerCount <= 0}">
+										<textarea id="editComment" name="answerContent"
+											style="position: absolute; border: 1px solid #c8c8c8; background: #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
+										<input type="hidden" name="questionId"
+											value="${questions.questionId}" /> <input type="hidden"
+											name="answerId" value="${answers.answerId}" />
+									</c:if>
 									<button onclick="submitEdit();" name="" class="editComment">수정하기</button>
 								</div>
 							</form:form>
 						</div>
 				<!-- 댓글 작성 -->
+					<c:if test="${questions.answerCount <= 0}">
 						<form:form
 							action="${pageContext.request.contextPath}/servicecenter/inquiry/answerCreate.do"
 							method="post">
@@ -111,6 +115,7 @@
 							<input type="hidden" name="answerAdminName"
 								value="${answers.answerAdminName}">
 							<div class="anw-create2">
+							<input type="hidden" name="questionEmail" value="${questions.questionEmail}" />
 								<button class="anw-btn-create2" type="submit">댓글작성</button>
 							</div>
 						</form:form>

@@ -7,21 +7,29 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
+import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
+import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -208,8 +216,30 @@ public class AdminController {
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList() {}
 	
+	/**
+	 * 상품정보 조회 
+	 * 
+	 * @param member
+	 * @param model
+	 */
 	@GetMapping("/adminProductList.do")
-	public void adminProductList() {}
+	public void adminProductList(
+		@AuthenticationPrincipal MemberDetails member,
+		Model model
+			) {
+		log.debug("member = {}", member);
+		
+		// 기본 상품들 조회해서 가져오기.
+		List<Product> basicProducts = productService.findAllBasicProduct();
+		log.debug("basicProducts = {}", basicProducts);
+		model.addAttribute("basicProducts", basicProducts);
+
+		// 옵션추가된 상품들 조회
+		List<ProductDetail> productDetails = productService.findAllProductDetails();
+		log.debug("productDetails = {}", productDetails);
+		model.addAttribute("productDetails", productDetails);
+		
+	}
 	
 	/**
 	 * 판매량통계
@@ -219,6 +249,35 @@ public class AdminController {
 		
 		
 		
+	}
+	
+	// 기본상품 수정 페이지로 연결
+	@GetMapping("/adminUpdateProduct.do")
+	public void adminUpdateProduct(
+			@RequestParam int productId,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		
+		// 상품아이디로 상품정보 조회해서 가져오기
+		Product product = productService.findProductById(productId);
+		log.debug("product = {}", product);
+		model.addAttribute("product", product);
+	}
+	
+	
+	// 상품 추가 페이지로 연결
+	@GetMapping("/adminAddProductOption.do")
+	public void adminAddProductOption(
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		log.debug("member = {}", member);
+		
+		// 상품카테고리 조회 후 전달
+		List<ProductCategory> categories = productService.findAll();
+		log.debug("categories = {}", categories);
+		model.addAttribute("categories", categories);
 	}
 	
 	// 상품 추가 페이지로 연결
@@ -233,9 +292,18 @@ public class AdminController {
 		List<ProductCategory> categories = productService.findAll();
 		log.debug("categories = {}", categories);
 		model.addAttribute("categories", categories);
-		
 	}
 
+	/**
+	 * 시간남으면하는기능(포인트주입)
+	 */
+//	@PostMapping("/adminPointUpdate.do")
+//	public String adminPointUpdate(
+//			@RequestParam String memberId,
+//	        @RequestParam int pointChange) {
+//	    adminService.updateMemberPoints(memberId, pointChange);
+//		return "admin/adminMemberList";
+//	}
 
 }
 

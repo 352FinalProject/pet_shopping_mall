@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
 <%-- 1:1 문의 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
@@ -39,8 +38,8 @@
 								</td>
 								<td>
 									<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
-								<c:if test="${question.awnserCount <= 0}"><span>답변대기</span></c:if>
-								<c:if test="${question.awnserCount >= 1}">답변완료</c:if>
+								<c:if test="${question.answerCount <= 0}"><span>답변대기</span></c:if>
+								<c:if test="${question.answerCount >= 1}">답변완료</c:if>
 								</td>
 								<td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionMemberId}</a></td>
 								<td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.repository.CartRepository;
+import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,6 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public List<CartInfoDto> getCartInfoList(String memberId) {
 		List<CartItem> cartItemList = cartRepository.getCartList(memberId);
-		log.debug("cartItem codeList = {}", cartItemList);
-		
 		List<CartInfoDto> cartInfoList = new ArrayList<>();
 		
 		CartInfoDto product = null;
@@ -42,5 +41,30 @@ public class CartServiceImpl implements CartService {
 
 		return cartInfoList;
 	}
+
+
+	@Override
+	public int deleteCartOne(int id, String memberId) {
+		return cartRepository.deleteCartOne(id, memberId);
+	}
+
+
+	@Override
+	public int deleteCartAll(String memberId) {
+		return cartRepository.deleteCartAll(memberId);
+	}
+
+
+	@Override
+	public List<ProductDetail> findProdById(int id) {
+		return cartRepository.findProdById(id);
+	}
+
+
+	@Override
+	public int updateCart(CartItem cartitem) {
+		return cartRepository.updateCart(cartitem);
+	}
+
 
 }

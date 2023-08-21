@@ -85,7 +85,10 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepository.findTotalubscribeCount();
 	}
 	
-	
+	@Override
+	public int updateMemberPoints(String memberId, int pointChange) {
+		return adminRepository.updateMemberPoints(memberId, pointChange);
+	}
 	
 
 	

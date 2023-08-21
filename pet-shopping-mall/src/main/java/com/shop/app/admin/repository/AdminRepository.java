@@ -52,6 +52,9 @@ public interface AdminRepository {
 
 	@Select("select count (*) from member where subscribe ='Y' order by enroll_date desc")
 	int findTotalubscribeCount();
+	
+	@Update("UPDATE point SET point_current = point_current + #{pointAmount}, point_amount = #{pointAmount}, point_type = '리뷰적립', point_date = SYSTIMESTAMP WHERE point_member_id = #{pointMemberId}")
+	int updateMemberPoints(String memberId, int pointAmount);
 
 	
 
