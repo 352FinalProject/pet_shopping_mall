@@ -1,7 +1,10 @@
 package com.shop.app.member.controller;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
@@ -20,6 +23,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.shop.app.member.dto.MemberCreateDto;
+import com.shop.app.member.dto.MemberUpdateDto;
+import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
+import com.shop.app.terms.entity.Accept;
+import com.shop.app.terms.entity.Terms;
 import com.shop.app.terms.service.TermsService;
 
 import lombok.extern.slf4j.Slf4j;

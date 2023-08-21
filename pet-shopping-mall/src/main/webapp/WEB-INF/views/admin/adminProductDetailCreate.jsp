@@ -13,7 +13,7 @@
 		<div class="common-div">
 		
 			<form:form 
-				action="${pageContext.request.contextPath}/product/addProduct.do" 
+				action="${pageContext.request.contextPath}/admin/adminProductDetailCreate.do" 
 				enctype="multipart/form-data" 
 				method="post">
 				
@@ -40,6 +40,22 @@
 									value="" required /></td>
 							</tr>
 							<tr>
+								<th>옵션명</th>
+								<td>
+									<select name="optionName" id="optionName">
+										<option value="">-선택안함-</option>
+										<option value="색">색</option>
+										<option value="사이즈">사이즈</option>
+										<option value="무게">무게</option>
+										<option value="기타">기타</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>옵션값</th>
+								<td><input type="text" name="optionValue" id="optionValue"></td>
+							</tr>
+							<tr>
 								<th>상품금액</th>
 								<td><input type="number" name="productPrice" id="productPrice"
 									required></td>
@@ -62,7 +78,6 @@
 			        <button class="qna-btn-create" type="submit">상품등록</button>
 			    </div>
 			</form:form>
-			
 	    </div>
 	</div>
 </section>
