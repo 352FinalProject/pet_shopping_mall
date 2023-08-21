@@ -192,6 +192,7 @@ public class AdminController {
 			model.addAttribute("totalCount", totalCount);
 			
 			model.addAttribute("members", members);
+	    
 	    }
 	    return "admin/adminMemberList";
 	}
