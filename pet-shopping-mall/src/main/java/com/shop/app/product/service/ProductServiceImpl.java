@@ -40,6 +40,12 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDetail> findAllProductDetails() {
 		return productRepository.findAllProductDetails();
 	}
+	
+	@Override
+	public Product findProductById(int productId) {
+		return productRepository.findProductById(productId);
+	}
+
 
 
 }
