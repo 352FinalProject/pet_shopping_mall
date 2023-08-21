@@ -122,11 +122,7 @@ button, input {
 						<td><input type="text" name="memberId" id="memberId"
 							value="${loginMember.memberId}"  required /></td>
 						<td rowspan="2" class="pet-info-container">
-							<div class="pet-info">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/마이페이지/1.png" />
-								<div>펫 등록1</div>
-							</div>
+
 						</td>
 					</tr>
 					<tr>
@@ -139,11 +135,7 @@ button, input {
 						<td><input type="password" name="password" id="password"
 							value="" required></td>
 						<td rowspan="2" class="pet-info-container">
-							<div class="pet-info">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/마이페이지/2.png" />
-								<div>펫 등록2</div>
-							</div>
+
 						</td>
 					</tr>
 					<tr>
@@ -158,9 +150,7 @@ button, input {
 							type="button" value="핸드폰 인증" onclick="telCheck()"></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/마이페이지/3.png" />
-								<div>펫 등록3</div>
+		
 							</div>
 						</td>
 					</tr>
