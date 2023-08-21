@@ -39,7 +39,6 @@ import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
-import com.shop.app.servicecenter.chat.dto.ChatSession;
 import com.shop.app.terms.entity.Accept;
 import com.shop.app.terms.entity.Terms;
 import com.shop.app.terms.service.TermsService;

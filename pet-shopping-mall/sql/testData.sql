@@ -398,15 +398,33 @@ select * from orderTbl;
 select * from order_detail;
 select * from payment;
 
-delete from order_detail where product_detail_id =6;
 ------------------------
-insert into order_detail (order_id, product_detail_id, quantity) values (5,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (17,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (18,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (19,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (20,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (21,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (22,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (23,2,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (24,5,default);
 ------------------------
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
 
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 2, '말랑 개껌', 35000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
+    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(1, 0, systimestamp, 38000, 13);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(2, 0, systimestamp, 38000, 14);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(3, 0, systimestamp, 38000, 15);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(4, 0, systimestamp, 25000, 17);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(6, 0, systimestamp, 20000, 18);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(7, 0, systimestamp, 27000, 19);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(8, 0, systimestamp, 25000, 20);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(9, 0, systimestamp, 22000, 21);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(10, 0, systimestamp, 23000, 22);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(13, 0, systimestamp, 30000, 16);    
+
 ------------------------
 insert into orderTbl  (
     order_id,
@@ -492,8 +510,6 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
-------------------------
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(5, 0, systimestamp, 38000, 5);
 -----------------------------------------
 -- 통계조회 쿼리
 -----------------------------------------
