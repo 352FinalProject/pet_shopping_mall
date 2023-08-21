@@ -1,7 +1,9 @@
 package com.shop.app.member.controller;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,12 +28,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.app.common.controller.advice.MailSender;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.entity.Member;
@@ -66,8 +70,9 @@ public class MemberSecurityController {
 	
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
-	
 
+	private final Map<String, String> tokenStore = new HashMap<>();
+	
 	@PostMapping("/memberCreate.do") // 회원 생성 처리
 	public String create(
 			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
@@ -108,7 +113,6 @@ public class MemberSecurityController {
 		
 		Terms terms = new Terms();
 		terms.setMemberId(member.getMemberId());
-//		terms.setAcceptDate(null);
 		terms.setAccept(Accept.Y);
 		
 		int resultTerms = termsService.insertTerms(terms);
@@ -200,7 +204,6 @@ public class MemberSecurityController {
 				.status(HttpStatus.OK)
 				.body(Map.of("available", available, "memberId", memberId));
 	}
-
 	
 	@GetMapping("/terms.do")
 	public void getTerms() {}

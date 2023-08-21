@@ -214,6 +214,7 @@ insert into product_category values(2, '옷');
 insert into product values(seq_product_id.nextval, 1, '에르메스 사료', 15000, 1, 1, systimestamp, systimestamp, 111, 111);
 insert into product values(seq_product_id.nextval, 2, '꼬까옷', 17000, 2, 2, systimestamp, systimestamp, 222, 222);
 select * from cartitem;
+select * from cart;
 update cartitem set product_detail_id = 1 where cart_id = (select cart_id from cart where member_id='honggd');
 select* from product;
 select * from product_detail;
@@ -328,4 +329,5 @@ select * from point order by point_id desc;
 
 delete from point where point_id = '9';
 
-    
+alter table point add review_id number;
+alter table point add constraint fk_point_review_id foreign key (review_id) references review(review_id) on delete cascade;

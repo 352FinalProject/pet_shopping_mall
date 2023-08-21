@@ -1,4 +1,4 @@
-package com.shop.app.servicecenter.inquiry.controller;
+package com.shop.app.common.controller.advice;
 
 import java.util.Date;
 import java.util.Properties;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailSender {
 
+		// 질문 답변 메소드
 		public void sendEmailOnAnswerRegistration(String userEmail, String answerContent, int questionId) {
 		    String subject = "[우리집동물친구] 문의하신 내용에 답변이 등록되었습니다.";
 		    String link = "http://localhost:8080/pet/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
@@ -33,6 +34,24 @@ public class MailSender {
 	
 		    sendEmail(userEmail, subject, htmlMessage);
 		}
+		
+		// 핸드폰 인증 메소드
+	    public void sendEmailOnUserVerification(String userEmail, String verificationCode) {
+	        String subject = "[우리집동물친구] 회원가입 이메일 인증";
+	        String verificationUrl = "http://localhost:8080/email/verifyEmail?email=" + userEmail + "&token=" + verificationCode;
+	        
+		    String htmlMessage = "<html><body><div style='width: 800px; margin: auto;'>";
+		    htmlMessage += "<br/><br/><p style='font-size: 22px;'><strong>우리집동물친구</strong>";
+		    htmlMessage += "<hr style='border: 1px solid #c8c8c8;'/>";
+		    htmlMessage += "<br/><p style='font-size: 27px;'><strong>이메일 인증 코드</strong> 보내드립니다.<br/></p>";
+		    htmlMessage += "<br/>안녕하세요. 반려동물 쇼핑몰 우리집동물친구입니다. <br/> 이메일 인증 링크 보내드립니다. <br/><br/> <p>아래 링크를 눌러주시면 이메일 인증이 완료됩니다.</p><br/><br/>";
+		    htmlMessage += "<a href='"+ verificationUrl +"' style='background-color: #5886d3; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; margin-top: 20px;'>인증하기</a><br/>";
+		    htmlMessage += "<br/><hr style='border: 1px solid #c8c8c8; margin-top: 50px;'/><br/><br/>";
+		    htmlMessage += "</div></body></html>";
+		    
+	        sendEmail(userEmail, subject, htmlMessage);
+	    }
+	    
 	    // 실제 이메일 발송 처리 메소드
 	    public void sendEmail(String recipient, String subject, String message) {
 	        Properties p = System.getProperties();
