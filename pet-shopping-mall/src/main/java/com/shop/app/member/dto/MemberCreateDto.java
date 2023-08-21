@@ -43,10 +43,13 @@ public class MemberCreateDto {
 	
 	@Email(message = "유효한 이메일을 작성해주세요.")
 	private String email;
+	
+	private boolean isPromotion;
 
 	public void setPoint(int i) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }
