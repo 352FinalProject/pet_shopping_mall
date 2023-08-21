@@ -50,25 +50,35 @@
 							<th>상품아이디</th>
 							<th>이미지</th>
 							<th>상품명</th>
+							<th>카테고리</th>
 							<th>상품가격</th>
+							<th>옵션명</th>
+							<th>옵션값</th>
+							<th>옵션추가금</th>
+							<th>판매상태</th>
 							<th>관리</th>
 						</thead>
 						<tbody>
 
-							<c:if test="${empty productDetails}">
+							<c:if test="${empty productInfos}">
 								<td colspan="5">등록된 상품이 없습니다.</td>
 							</c:if>
-							<c:if test="${not empty productDetails}">
-								<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+							<c:if test="${not empty productInfos}">
+								<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
 									<tr>
-										<td>${productDetail.productId}</td>
+										<td>${productInfo.product.productId}</td>
 										<td>
 											이미지는 아직
 										</td>
 										<td>
-										<a href="${pageContext.request.contextPath}/admin/adminUpdateProduct.do?productId=${productDetail.productId}">${productDetail.productName}</a>
+										<a href="${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
 										</td>
-										<td>${productDetail.productPrice}</td>
+										<td>${productInfo.productCategory.categoryName}</td>
+										<td>${productInfo.product.productPrice}</td>
+										<td>${productInfo.optionName}</td>
+										<td>${productInfo.optionValue}</td>
+										<td>${productInfo.additionalPrice}</td>
+										<td>${productInfo.saleState}</td>
 										<td>
 											<button onclick="">수정</button> 
 											<button onclick="">삭제</button> 

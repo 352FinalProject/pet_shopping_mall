@@ -17,5 +17,5 @@ public class ProductDetail {
 	private String optionName;
 	private String optionValue;
 	private int additionalPrice;
-	private int sale_state; // default=0(판매대기) 1: 판매중 2: 품절 3: 기타
+	private int saleState; // default=0(판매대기) 1: 판매중 2: 품절 3: 기타
 }

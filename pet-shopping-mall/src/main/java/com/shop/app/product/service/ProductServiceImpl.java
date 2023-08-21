@@ -55,6 +55,11 @@ public class ProductServiceImpl implements ProductService {
 	public int deleteProduct(int productId) {
 		return productRepository.deleteProduct(productId);
 	}
+	
+	@Override
+	public ProductCategory findProductCategoryById(int categoryId) {
+		return productRepository.findProductCategoryById(categoryId);
+	}
 
 
 }

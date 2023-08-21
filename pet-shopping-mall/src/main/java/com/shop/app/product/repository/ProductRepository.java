@@ -46,5 +46,8 @@ public interface ProductRepository {
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
 
+	@Select("select * from product_category where category_id = #{categoryId}")
+	ProductCategory findProductCategoryById(int categoryId);
+
 
 }

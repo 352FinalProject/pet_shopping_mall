@@ -25,19 +25,10 @@ public class ProductInfoDto {
 	private String optionName;
 	private String optionValue;
 	private int additionalPrice;
-	private int sale_state; // default=0(판매대기) 1: 판매중 2: 품절 3: 기타
+	private int saleState;
 	
 	private ProductCategory productCategory; // 카테고리명 저장용
 	private Product product; // 상품정보 저장용
-	
-	public ProductDetail toProductDetail() {
-		return ProductDetail.builder()
-				.optionName(optionName)
-				.optionValue(optionValue)
-				.additionalPrice(additionalPrice)
-				.sale_state(sale_state)
-				.build();
-	}
 	
 
 }

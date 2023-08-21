@@ -35,6 +35,7 @@ import com.shop.app.order.service.OrderService;
 import com.shop.app.point.entity.Point;
 
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
 
@@ -278,7 +279,29 @@ public class AdminController {
 		// 등록된 상품 가져오기
 		List<ProductDetail> productDetails = productService.findAllProductDetails();
 		log.debug("productDetails = {}", productDetails);
-		model.addAttribute("productDetails", productDetails);
+		
+		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
+		for(ProductDetail productDetail : productDetails) {
+			// 상품값
+			Product product = productService.findProductById(productDetail.getProductId());
+			// 카테고리값
+			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
+			
+			// 옵션값
+			ProductInfoDto productInfo = ProductInfoDto.builder()
+					.product(product)
+					.productCategory(productCategory)
+					.optionName(productDetail.getOptionName())
+					.optionValue(productDetail.getOptionValue())
+					.additionalPrice(productDetail.getAdditionalPrice())
+					.saleState(productDetail.getSaleState())
+					.build();
+			// 리스트에 추가
+			productInfos.add(productInfo);
+		}
+		
+		log.debug("productInfos = {}", productInfos);
+		model.addAttribute("productInfos", productInfos);
 	}
 	
 
