@@ -134,7 +134,7 @@ CREATE TABLE pet (
     pet_adoption timestamp,
     pet_gender CHAR(1),
     pet_created_at timestamp default systimestamp,
-    pet_text VARCHAR2(2000)
+    pet_text VARCHAR2(2000),
     constraints pk_pet_id primary key(pet_id),
     constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
@@ -157,6 +157,7 @@ create table question(
     question_title varchar2(500) not null,
     question_content varchar2(4000) not null,
     question_created_at timestamp default systimestamp,
+    review_id number,
     constraints pk_question_id primary key(question_id),
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
