@@ -229,12 +229,29 @@ public class AdminController {
 	    return "admin/adminSubscribeList";
 	}
 	
+	/**
+	 * 주문 조회
+	 * @param model
+	 */
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList(Model model) {
 		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
-		log.debug("orderlists = {}", orderlists);
 		model.addAttribute("orderlists", orderlists);
 	}
+	
+	/**
+	 * 주문 조회
+	 * @param model
+	 */
+	@GetMapping("/adminOrderSearch.do")
+	public String adminOrderSearch(Model model) {
+		List<OrderAdminListDto> orderlists = orderService.adminOrderSearch();
+		model.addAttribute("orderlists", orderlists);
+		
+		return "admin/adminOrderList";
+	}
+	
+	
 	
 	/**
 	 * 상품정보 조회 
