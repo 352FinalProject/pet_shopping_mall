@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -29,5 +30,7 @@ public interface MemberRepository {
 
 	MemberDetails loadUserByUsername(String username);
 
-
+	//아이디 찾기
+	@Select("select nvl(id, 0) from t_member where name=#{name} and email=#{email}")
+	public String memberSearchId(@Param("name") String name, @Param("email") String email);
 }

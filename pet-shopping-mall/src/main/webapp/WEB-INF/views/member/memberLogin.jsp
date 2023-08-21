@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
 .table-bordered {
 	display: flex;
@@ -187,7 +187,9 @@ button, input {
 							</div>
 							<div class="search-id">
 								<p>아이디저장</p>
-								<button type="button" class="search" id="searchId">아이디찾기</button>
+								<button type="button" class="search" id="searchId"
+								onclick="location.href='${pageContext.request.contextPath}/member/memberSearchId.do'"
+								>아이디찾기</button>
 								<button type="button" class="search" id="searchPasword">비밀번호찾기</button>
 							</div>
 						</div>
@@ -254,13 +256,18 @@ button, input {
 	  }
 	};
 
-	// ID와 비밀번호 필드에 대한 값 변경시 checkInputs 함수를 호출하도록 이벤트 리스너 추가
 	document.getElementById('inputId').addEventListener('input', checkInputs);
 	document.getElementById('inputPassword').addEventListener('input', checkInputs);
 
-	// 초기 상태 설정을 위해 함수를 한 번 호출
 	checkInputs();
 
+	document.getElementById('searchId').addEventListener('click', () => {
+		
+	});
+
+	document.getElementById('searchPasword').addEventListener('click', () => {
+		
+	}); 		
 	
 	</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />

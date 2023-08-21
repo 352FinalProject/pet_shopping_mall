@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -24,9 +25,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.app.member.dto.MailDto;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.entity.Member;
@@ -181,6 +185,7 @@ public class MemberSecurityController {
 	    return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
 	}
 
+	@GetMapping("/checkIdDuplicate.do")
 	
 	// 중복 ID 검사
 	public ResponseEntity<?> checkIdDuplicate(@RequestParam String memberId) {
@@ -195,6 +200,26 @@ public class MemberSecurityController {
 				.status(HttpStatus.OK)
 				.body(Map.of("available", available, "memberId", memberId));
 	}
+
+	//아이디 찾기 
+//	@RequestMapping(value = "/memberSearchId.do", method = RequestMethod.POST)
+	@GetMapping("/memberSearchId.do")
+	@ResponseBody
+	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
+	    String result = memberService.memberSearchId(name, email);
+	    return result;
+	}
+
+	 // 이메일 보내기
+    @Transactional
+    @PostMapping("/sendEmail")
+    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
+        MailDto dto = ms.createMailAndChangePassword(memberEmail);
+        ms.mailSend(dto);
+
+        return "/member/login.do";
+    }
+	
 	
 	@GetMapping("/terms.do")
 	public void getTerms() {}
