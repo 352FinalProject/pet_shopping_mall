@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -18,7 +19,7 @@ public interface MemberRepository {
 	@Select("select * from member where member_id = #{memberId}")
 	Member findMemberById(String memberId);
 
-	@Insert("INSERT INTO member VALUES (#{memberId}, #{password}, #{name}, #{phone, jdbcType=VARCHAR}, #{email}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
+	@Insert("INSERT INTO member VALUES (#{memberId}, #{password}, #{name, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
 	int insertMember(MemberCreateDto member);
 
 	@Update("update member set name = #{name}, password = #{password}, email = #{email} where member_id = #{memberId}")
@@ -29,5 +30,7 @@ public interface MemberRepository {
 
 	MemberDetails loadUserByUsername(String username);
 
-
+	//아이디 찾기
+	@Select("select nvl(id, 0) from member where name=#{name} and email=#{email}")
+	public String memberSearchId(@Param("name") String name, @Param("email") String email);
 }

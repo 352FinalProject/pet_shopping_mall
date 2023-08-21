@@ -62,11 +62,11 @@ public class KakaoController {
 			member = (MemberDetails) memberService.loadUserByUsername(memberId);
 		} catch(UsernameNotFoundException ignore) {
 			// 회원이 아닌 경우 회원가입 처리
-			Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-			Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+			Map<String, Object> oauth2Account = (Map<String, Object>) attributes.get("kakao_account");
+			Map<String, Object> profile = (Map<String, Object>) oauth2Account.get("profile");
 			
 			String name = (String) profile.get("nickname");
-			String email = (String) kakaoAccount.get("email");
+			String email = (String) oauth2Account.get("email");
 			MemberCreateDto memberCreateDto = 
 					MemberCreateDto.builder()
 						.memberId(memberId)
