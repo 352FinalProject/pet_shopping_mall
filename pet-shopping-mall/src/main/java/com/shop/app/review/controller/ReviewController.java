@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -169,6 +168,8 @@ public class ReviewController {
 				.attachments(attachments)
 				.build();
 
+		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+		
 		int reviewId = reviewService.insertReview(reviews);
 		Review pointReviewId = reviewService.findReviewId(reviews);
 

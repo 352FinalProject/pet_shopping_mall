@@ -95,9 +95,6 @@ span {
     background-color: #c8c8c8;
 }
 
-
-
-
 </style>
 <section class="terms-section">
 	<div>
@@ -144,15 +141,13 @@ span {
 	</div>
 </section>
 <script>
-
-
 const checkbox = () => {
 	const target = document.getElementById("disabled-button");
 	const checkBox1 = document.getElementById("checkBox1");
 	const checkBox2 = document.getElementById("checkBox2");
 	const checkAll = document.getElementById("checkAll");
-	
-	if(checkBox1.checked && checkBox2.checked || checkAll.checked && checkBox1.checked && checkBox2.checked ){
+
+	if ((checkBox1.checked && checkBox2.checked) || checkAll.checked) {
 		target.style.backgroundColor = '#5886d3';
 		target.disabled = false;
 	} else {
@@ -161,28 +156,30 @@ const checkbox = () => {
 	}
 };
 
-	 
 const next = () => {
-	const box1 = document.querySelector("#checkBox1");
-	const box2 = document.querySelector("#checkBox2");
+	const box1 = document.getElementById("checkBox1");
+	const box2 = document.getElementById("checkBox2");
 	
-	if(box1.checked && box2.checked ){
+	if (box1.checked && box2.checked) {
 		location.href = '${pageContext.request.contextPath}/member/memberCreate.do';
-	} else{
+	} else {
 		alert("필수항목 체크해주세요");
 	}
 };
 
 const toggleCheckBox = () => {
 	const checkAll = document.getElementById("checkAll");
+	const boxes = document.getElementsByName("chk"); // 태그 객체 배열
 	
-	const boxs = document.getElementsByName("chk"); // 태그 객체 배열
-	
-	for(let i=0; i<boxs.length; i++) {
-		boxs[i].checked = checkAll.checked;
+	for (let i = 0; i < boxes.length; i++) {
+		boxes[i].checked = checkAll.checked;
 	}
 	checkbox();
-	
 };
+
+// 페이지가 로딩되면 체크박스 상태를 초기화
+window.addEventListener('load', () => {
+	checkbox();
+});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

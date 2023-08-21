@@ -11,31 +11,23 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 @Mapper
 public interface AdminRepository {
 	
 	@Select("select * from member order by enroll_date desc")
-	List<Member> adminMemberList();
+	List<MemberDetails> adminMemberList();
 	
 	@Select("select * from member where subscribe ='Y' order by enroll_date desc")
-	List<Member> adminSubscribeList();
+	List<MemberDetails> adminSubscribeList();
 	
 	@Select("select * from member where name like '%' || #{searchKeyword} || '%' or member_id like '%' || #{searchKeyword} || '%'")
-	List<Member> adminMemberSearchByNameOrId(@Param("searchKeyword") String searchKeyword);
+	List<MemberDetails> adminMemberSearchByNameOrId(@Param("searchKeyword") String searchKeyword);
 	
 	@Select("select * from member where (name like '%' || #{searchKeyword} || '%' or member_id like '%' || #{searchKeyword} || '%') and subscribe = 'Y'")
-	List<Member> adminSubscribeSearchByNameOrId(String searchKeyword);
+	List<MemberDetails> adminSubscribeSearchByNameOrId(String searchKeyword);
 	
-	@Insert("insert into member values ()")
-	int insertMember(Member member);
-	
-	@Update("update member set birthday =")
-	int updateMember(Member member);
-	
-	@Delete("delete memeber where id = #{memberId}")
-	int deleteMember(Member member);
-
 	// 관리자 1:1 문의 전체 내역 조회 + 페이징바(예라)
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc")
 	List<Question> findQuestionAll(RowBounds rowBounds);

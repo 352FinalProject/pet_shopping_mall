@@ -19,6 +19,7 @@
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 현재 회원 : ${totalCount}명
+					<span><button onclick="submit">전체 알림발송</button></span>
 				</div>
 				<div class="admin-member-search-container">
 					<form:form name="adminMemberSearchFrm"
@@ -46,7 +47,6 @@
 							<th>주소</th>
 							<th>생일</th>
 							<th>구독</th>
-							<th>관리</th>
 						</thead>
 						<tbody>
 							<c:if test="${empty members}">
@@ -65,7 +65,6 @@
 										<td>${member.address}</td>
 										<td>${member.birthday}</td>
 										<td>${member.subscribe}</td>
-										<td><button onclick="submit">포인트관리</button></td>
 									</tr>
 								</c:forEach>
 							</c:if>

@@ -164,7 +164,7 @@
 
 /* 리뷰 상세 table */
 .review-detail-table {
-  height: 180px;
+  height: 160px;
   width: 600px;
   justify-content: left;
   text-align: left;
@@ -175,10 +175,22 @@
   padding: 20px;
 }
 
-.review-detail-table td {
-	
-	margin-left: 1770px;
+/* 리뷰 상세 div */
+.review-container {
+  height: 500px;
+  width: 600px;
+  justify-content: left;
+  text-align: left;
+  border: 1px solid lightgray;
+  background-color: white;
+  padding: 20px;	
 }
+
+/* 리뷰 상세 div 속성 */
+#review-div, .review-createdAt, .review-img {
+	display: inline-block;
+}
+
 
 /* 리뷰상세 textarea */
 .review-detail-content {

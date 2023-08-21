@@ -183,12 +183,12 @@ button, input {
 					<td>
 						<div class="save-search">
 							<div class="saveId">
-								<input type="checkbox">
+								<input class="saveId" type="checkbox">
 							</div>
 							<div class="search-id">
 								<p>아이디저장</p>
 								<button type="button" class="search" id="searchId"
-								onclick="location.href='${pageContext.request.contextPath}/member/memberSearchId.do'"
+								onclick='location.href="${pageContext.request.contextPath}/member/memberSearchId"'
 								>아이디찾기</button>
 								<button type="button" class="search" id="searchPasword">비밀번호찾기</button>
 							</div>

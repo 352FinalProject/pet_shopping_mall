@@ -131,7 +131,6 @@ button, input {
 					<tr>
 						<th>핸드폰 번호</th>
 						<td><input type="tel" name="phone" id="tel" value="" required>
-							<input type="button" value="핸드폰 인증" onclick="telCheck()">
 						</td>
 					</tr>
 					<tr>
@@ -141,8 +140,8 @@ button, input {
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td><input type="email" name="email" id="email"
-							placeholder="" required></td>
+						<td><input type="email" name="email" id="emailInput" placeholder="pet@gmail.com" required>
+							<input type="button" id="emailButton" value="이메일 인증" onclick="emailCheck()">
 					</tr>
 					<tr>
 						<th>주소</th>
@@ -162,7 +161,79 @@ button, input {
 		</div>
 	</div>
 </section>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+
+let token = $("meta[name='_csrf']").attr("content");
+let header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
+/* 이메일 인증 처리 */
+function emailCheck() {
+  const email = $('#emailInput').val();
+  
+  // 이메일 유효성 검사
+  if (!email.includes('@')) {
+    alert('유효한 이메일을 입력해주세요.');
+    return;
+  }
+  
+  // 서버에 이메일 인증 요청
+	$.ajax({
+	  type: 'POST',
+	  url: '${pageContext.request.contextPath}/email/send',
+	  data: JSON.stringify({ email: email }),
+	  contentType: 'application/json',
+	  dataType: 'json',
+	  beforeSend: function(xhr) { // beforeSend 콜백을 사용하여 헤더 설정
+	    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+	  }
+	}).done((data) => {
+	  if (data.success) {
+	    alert('인증 메일이 발송되었습니다. 이메일을 확인해주세요.');
+	  } else {
+	    alert('인증 메일 발송에 실패했습니다.');
+	  }
+	}).fail((jqXHR, textStatus, errorThrown) => {
+	  console.log("HTTP Status: ", jqXHR.status); // 상태 코드 출력
+	  alert('서버와의 통신에 실패했습니다.');
+	});
+}
+
+
+// 인증 번호 확인 함수는 그대로 유지
+function verifyToken() {
+  const email = $('#emailInput').val();
+  const token = $('#token').val();
+  
+  xhr.setRequestHeader("X-CSRF-TOKEN", token) 
+  
+  	// 서버에 토큰 인증 요청
+		$.ajax({
+		  type: 'POST',
+		  url: '${pageContext.request.contextPath}/email/send',
+		  data: JSON.stringify({ email: email }),
+		  contentType: 'application/json',
+		  dataType: 'json',
+		  beforeSend: function(xhr) { // beforeSend 콜백을 사용하여 헤더 설정
+		    xhr.setRequestHeader("X-CSRF-TOKEN", token);
+		  }
+		}).done((data) => {
+		  if (data.success) {
+		    alert('인증 메일이 발송되었습니다. 이메일을 확인해주세요.');
+		  } else {
+		    alert('인증 메일 발송에 실패했습니다.');
+		  }
+		}).fail((jqXHR, textStatus, errorThrown) => {
+		  console.log("HTTP Status: ", jqXHR.status); // 상태 코드 출력
+		  alert('서버와의 통신에 실패했습니다.');
+		});
+	};
 document.querySelector("#idCheckButton").onclick = () => {
 	const memberIdInput = document.querySelector("#memberId");
 	const value = memberIdInput.value;
@@ -177,7 +248,7 @@ document.querySelector("#idCheckButton").onclick = () => {
 			dataType: "json",
 			success: function(responseData) {
 				console.log(responseData);
-				const idValid = document.querySelector("#idValid");
+				const idValid = document.querySelector("#memberid");
 				const guideOk = document.querySelector(".guide.ok");
 				const guideError = document.querySelector(".guide.error");
 				
@@ -201,7 +272,7 @@ document.querySelector("#idCheckButton").onclick = () => {
 	}
 };
 
-document.memberCreateFrm.onsubmit = (e) => {
+/* document.memberCreateFrm.onsubmit = (e) => {
 	const idValid = document.querySelector("#idValid");
 	const password = document.querySelector("#password");
 	const passwordConfirmation = document.querySelector("#passwordConfirm");
@@ -215,7 +286,7 @@ document.memberCreateFrm.onsubmit = (e) => {
 		alert("비밀번호가 일치하지 않습니다.");
 		return false;
 	}
-};
+}; */
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

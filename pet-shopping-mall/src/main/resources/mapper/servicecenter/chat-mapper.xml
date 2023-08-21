@@ -5,7 +5,7 @@
 <mapper namespace="com.shop.app.servicecenter.chat.repository.ChatRepository">
 
     
-    <!-- 신규 채팅방일 때 채팅 방 생성 -->
+<!--     신규 채팅방일 때 채팅 방 생성
     <insert id="createChat" parameterType="ChatRoom">
         insert into chat_room values(seq_chat_room_id.nextval, #{userEmail}, #{userName}, DEFAULT, #{masterEmail}, #{masterName}, #{masterPic})
     </insert>
@@ -66,5 +66,5 @@
         <result property="chatCreatedAt" column="chat_created_at" />
         <result property="chatUnReadCount" column="chat_unread_count" />
     </resultMap>
-    
+     -->
 </mapper>
