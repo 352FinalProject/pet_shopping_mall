@@ -121,9 +121,10 @@ CREATE TABLE pet (
     pet_breed VARCHAR2(50),
     pet_adoption timestamp,
     pet_gender CHAR(1),
+    pet_created_at timestamp default systimestamp,
+    pet_text VARCHAR2(2000)
     constraints pk_pet_id primary key(pet_id),
-    constraints fk_pet_member_id foreign key(member_id) references member(member_id) on delete cascade,
-
+    constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
 
@@ -413,6 +414,7 @@ create table chat (
  constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
 );
 
+
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -456,5 +458,13 @@ after insert on member
 for each row
 begin
     insert into cart(cart_id, member_id) values(seq_cart_id.nextval, :NEW.member_id);
+end;
+/
+-- 회원가입시 자동으로 멤버 롤이 들어가는 트리거
+create or replace trigger user_role_create_trriger
+after insert on member
+for each row
+begin
+    insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /

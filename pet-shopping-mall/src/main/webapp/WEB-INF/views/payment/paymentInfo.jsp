@@ -50,6 +50,10 @@
 								</div>
 							</div>
 						</div>
+					<form:form name="orderDetailFrm">
+						<input type="hidden" value="${product.productDetailId}" class="productDetailId" />
+						<input type="hidden" value="${product.quantity}" class="quantity" />
+					</form:form>
 					</c:forEach>
 					<div class="order-info">
 						<div>
@@ -202,15 +206,10 @@ const updateButtonColor = () => {
 
 
 /* 결제 관련 js */
-
-
 /* 결제 전 주문 페이지에 주문 정보를 담는다 */
-
 const proceedPay = () => {
 	/* 주문 테이블에 들어갈 값 */
 	const checkedButton = document.querySelector('.paybtn input[type="radio"]:checked');
-	
-	console.log(checkedButton);
 	
 	let title;
 	let cartListLength = ${fn:length(cartList)};
@@ -223,6 +222,8 @@ const proceedPay = () => {
 	
 	// 포인트 입력 값 가져오기 (예라)
     let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
+	
+    const forms = document.querySelectorAll('[name="orderDetailFrm"]');
 	
 	const data = {
 		orderNo: new Date().getTime(),
@@ -237,9 +238,24 @@ const proceedPay = () => {
 		deliveryFee: 3000,
 		discount: '${pointCurrent}',
 		amount: '${amount}',
-		pointsUsed: pointValue, // 포인트 사용량 추가 (예라)
-		pg: checkedButton.value
+		pointsUsed: pointValue,
+		pg: checkedButton.value,
+		
 	};
+	
+	const formDatas = [];
+	
+	forms.forEach(form => {
+		const productDetailId = form.querySelector('.productDetailId').value;
+		const quantity = form.querySelector('.quantity').value;
+		
+		formDatas.push({
+			productDetailId: productDetailId,
+			quantity: quantity
+		});
+	});
+	
+	data.forms = formDatas;
 	
 	console.log(data);
 	

@@ -35,7 +35,4 @@ public interface CartRepository {
 	@Update("update cartitem set product_detail_id = #{productDetailId}, quantity = #{quantity} where cartitem_id = #{cartitemId}")
 	int updateCart(CartItem cartitem);
 
-	@Update("update orderTbl set payment_status = 1 where order_no = #{orderNo}")
-	int updatePayStatus(String orderNo);
-
 }

@@ -67,10 +67,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 
-	@Override
-	public int updatePayStatus(String orderNo) {
-		return cartRepository.updatePayStatus(orderNo);
-	}
+	
 
 
 }

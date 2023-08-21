@@ -18,5 +18,5 @@ public interface CartService {
 
 	int updateCart(CartItem cartitem);
 
-	int updatePayStatus(String orderNo);
+	
 }

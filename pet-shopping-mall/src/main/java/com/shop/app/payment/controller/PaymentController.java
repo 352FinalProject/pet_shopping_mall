@@ -34,7 +34,9 @@ import com.shop.app.cart.service.CartService;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.entity.Order;
+import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.order.service.OrderService;
+import com.shop.app.payment.service.PaymentService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.siot.IamportRestClient.IamportClient;
@@ -55,6 +57,9 @@ public class PaymentController {
 	@Autowired
 	CartService cartService;
 
+	@Autowired
+	PaymentService paymentService;
+	
 	@Autowired
 	PointService pointService;
 
@@ -84,6 +89,7 @@ public class PaymentController {
 
 	}
 
+	
 	/**
 	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드
 	 */
@@ -91,8 +97,11 @@ public class PaymentController {
 	@PostMapping("/proceed.do")
 	public Map<String, Object> paymentProceed(@Valid @RequestBody OrderCreateDto _order) {
 		Map <String, Object> resultMap = new HashMap<>();
+		
 		Order order = _order.toOder();
-
+		
+		List<OrderDetail> orderDetails= _order.getForms();
+		
 		// 0. 사용된 포인트 가져오기 (예라)
 		int pointsUsed = _order.getPointsUsed();
 		log.debug("사용 포인트 pointsUsed = {}", pointsUsed);
@@ -115,7 +124,7 @@ public class PaymentController {
 		// 4. db에 포인트 사용 정보 저장
 		int usedPointResult = pointService.insertUsedPoint(usedPoint);
 
-		int result = orderService.insertOrder(order);
+		int result = orderService.insertOrder(order, orderDetails);
 
 		String msg = "";
 
@@ -158,6 +167,7 @@ public class PaymentController {
 			return resultMap;
 		}
 
+	
 
 	@PostMapping("/verifyIamport/{imp_uid}")
 	@ResponseBody
@@ -168,11 +178,12 @@ public class PaymentController {
 	}
 	
 	
+	
 	@PostMapping("/successPay.do")
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid, @AuthenticationPrincipal MemberDetails member) {
 		String orderNo = merchantUid;
-		int result = cartService.updatePayStatus(orderNo);
+		int result = paymentService.updatePayStatus(orderNo);
 		
 		// 주문이 완료되면 장바구니 전체 비우기
 		String memberId = member.getMemberId();
@@ -182,6 +193,7 @@ public class PaymentController {
 				.status(HttpStatus.OK)
 				.body(Map.of("result", 1));
 	}
+	
 	
 	
 	@GetMapping("/paymentCompleted.do")
