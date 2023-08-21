@@ -20,41 +20,41 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
---
---drop table review;
---drop table image_attachment;
---drop table image_attachment_mapping;
---drop table answer;
---drop table question;
---drop table point;
---drop table discount_rule;
---drop table product_category;
---drop table product;
---drop table product_option;
---drop table product_detail;
---drop table cart;
---drop table payment;
---drop table cartitem;
---drop table orderTbl;
---drop table order_detail;
---drop table refund;
---drop table cancel_order;
---drop table authority;
---drop table community;
---drop table wishlist;
---drop table pet;
---drop table persistent_logins;
---drop table image_attachment_mapping;
---drop table member;
---drop table ordertbl;
---drop table return;
---drop table terms;
---drop table terms_history;
---drop table chat;
---drop table chat_room;
---drop table breed;
---
---
+
+drop table review;
+drop table image_attachment;
+drop table image_attachment_mapping;
+drop table answer;
+drop table question;
+drop table point;
+drop table discount_rule;
+drop table product;
+drop table product_category;
+drop table product_option;
+drop table product_detail;
+drop table cart;
+drop table payment;
+drop table cartitem;
+drop table orderTbl;
+drop table order_detail;
+drop table refund;
+drop table cancel_order;
+drop table authority;
+drop table community;
+drop table wishlist;
+drop table pet;
+drop table persistent_logins;
+drop table image_attachment_mapping;
+drop table terms;
+drop table terms_history;
+drop table member;
+drop table ordertbl;
+drop table return;
+drop table chat;
+drop table chat_room;
+drop table breed;
+
+
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;

@@ -70,10 +70,9 @@
 						onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
 					</li>
 					<li>
-						<form action="/member/deleteMember.do" method="post"
-							onsubmit="return confirm('정말로 회원 탈퇴를 진행하시겠습니까?');">
-							<button type="submit">회원 탈퇴</button>
-						</form>
+						<form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
+							<a  type="button" href="#" onclick="deleteMember();">회원 탈퇴</a>
+						</form:form>
 					</li>
 				</sec:authorize>
 				<li class="community_li"><a
@@ -155,13 +154,16 @@
 			</div>
 		</div>
 	</header>
+<%-- <c:if test="${not empty msg}"> --%>
 <script>
-const deleteMember  = () => ({
-	  if (confirm('정말로 회원 탈퇴를 진행하시겠습니까?')) {
-          document.getElementById('deleteMemberForm').submit();
-      } else {
-          alert('회원 탈퇴에 실패하였습니다.');
-      }
-});
+/* alert('${msg}'); */
+const deleteMember = () => {
+    if (confirm('정말로 회원 탈퇴하시겠습니까?')) {
+        document.getElementById('deleteMemberForm').submit();
+    } else {
+        alert('회원 탈퇴를 실패했습니다.');
+    }
+};
 </script>
+<%-- </c:if>	 --%>
 	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>

@@ -177,7 +177,7 @@ document.querySelector("#idCheckButton").onclick = () => {
 			dataType: "json",
 			success: function(responseData) {
 				console.log(responseData);
-				const idValid = document.querySelector("#idValid");
+				const idValid = document.querySelector("#memberid");
 				const guideOk = document.querySelector(".guide.ok");
 				const guideError = document.querySelector(".guide.error");
 				
@@ -201,7 +201,7 @@ document.querySelector("#idCheckButton").onclick = () => {
 	}
 };
 
-document.memberCreateFrm.onsubmit = (e) => {
+/* document.memberCreateFrm.onsubmit = (e) => {
 	const idValid = document.querySelector("#idValid");
 	const password = document.querySelector("#password");
 	const passwordConfirmation = document.querySelector("#passwordConfirm");
@@ -215,7 +215,7 @@ document.memberCreateFrm.onsubmit = (e) => {
 		alert("비밀번호가 일치하지 않습니다.");
 		return false;
 	}
-};
+}; */
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
