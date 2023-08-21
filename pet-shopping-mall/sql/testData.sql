@@ -261,9 +261,9 @@ select * from cartitem;
 
 select * from product_detail;
 
-insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
-insert into product_detail values(seq_product_detail_id.nextval, 2, '추가1', '파란망토', 1900, 9, 1);
-insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
+insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2);
+insert into product_detail values(seq_product_detail_id.nextval, 2, '추가1', '파란망토', 1900, 9);
+insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9);
 
 insert into cart values(1, 'honggd');
 
@@ -272,6 +272,7 @@ insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
 select * from cartitem;
 select * from member;
 
+select * from cancel_order;
 select 
     *
 from

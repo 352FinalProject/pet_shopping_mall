@@ -2,6 +2,11 @@ package com.shop.app.member.controller;
 
 
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
@@ -20,6 +25,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.shop.app.member.dto.MemberCreateDto;
+import com.shop.app.member.dto.MemberUpdateDto;
+import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
+import com.shop.app.terms.entity.Accept;
+import com.shop.app.terms.entity.Terms;
 import com.shop.app.terms.service.TermsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,16 +73,11 @@ public class MemberSecurityController {
 			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
 			BindingResult bindingResult, // 유효성 검사 결과
 			RedirectAttributes redirectAttr) { // 리다이렉트시 전달 할 속성
-		log.debug("member = {}", member);
 		
 		if(bindingResult.hasErrors()) {
-		    // bindingResult에 오류가 있을 경우, 즉 유효성 검사에서 문제가 발견된 경우 실행됩니다.
 		    ObjectError error = bindingResult.getAllErrors().get(0);
-		    // getAllErrors 메서드를 통해 발생한 모든 오류를 가져오고, 첫 번째 오류를 선택.
 		    redirectAttr.addFlashAttribute("msg", error.getDefaultMessage());
-		    // 오류 메시지를 리다이렉트 애트리뷰트에 "msg"라는 이름으로 추가하여, 리다이렉트 후에도 데이터가 유지.
 		    return "redirect:/memberCreate.do";
-		    // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
 		}
 
 		
@@ -99,27 +114,15 @@ public class MemberSecurityController {
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
 	public void memberLogin() {}
 	
-	// 로그인처리하는 요청 작성 X
-	// 로그아웃처리하는 요청 작성 X
-	
-	// 멤버 상세 조회
 	@GetMapping("/myPage.do")
 	public void memberDetail(
 			Authentication authentication, 
 			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
-		log.debug("memberService = {}", memberService);
-		log.debug("authentication = {}", authentication);
 		
-		// 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
-		// 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
 		Object credentials = authentication.getCredentials(); // 열람불가
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		log.debug("principal = {}", principal);
-		log.debug("credentials = {}", credentials);
-		log.debug("authorities = {}", authorities);
-		
-		log.debug("member = {}", member);
+
 	}
 	
 	// 멤버 정보 업데이트
@@ -130,7 +133,6 @@ public class MemberSecurityController {
 			HttpSession session,
 			BindingResult bindingResult, 
 			RedirectAttributes redirectAttr) {
-		log.debug("_member = {}", _member);
 		Member member = _member.toMember();
 		String memberId = principal.getMemberId();
 		member.setMemberId(memberId);
