@@ -163,7 +163,6 @@ public class AdminController {
 	        	question.setQuestionTitle(titleString); 
 	        	question.setQuestionContent(contentString);
 		    }
-
 	        model.addAttribute("questions", questions);
 	    }
 	    return "admin/adminQuestionList";
@@ -188,12 +187,11 @@ public class AdminController {
 		        
 		        member.setSubscribe(subscribe);
 		    }
-			int totalCount = adminService.findTotalAdminCount();
-			model.addAttribute("totalCount", totalCount);
-			
 			model.addAttribute("members", members);
-	    
 	    }
+	    int totalCount = adminService.findTotalAdminCount();
+	    model.addAttribute("totalCount", totalCount);
+	    
 	    return "admin/adminMemberList";
 	}
 	
@@ -223,11 +221,10 @@ public class AdminController {
 	                subscribedMembers.add(member);
 		        }
 	        }
-	        int totalCount = adminService.findTotalubscribeCount();
-			model.addAttribute("totalCount", totalCount);
-			
 	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
+	    int totalCount = adminService.findTotalubscribeCount();
+	    model.addAttribute("totalCount", totalCount);
 			
 	    return "admin/adminSubscribeList";
 	}

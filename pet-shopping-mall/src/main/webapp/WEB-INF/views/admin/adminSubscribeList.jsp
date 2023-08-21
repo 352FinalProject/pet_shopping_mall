@@ -25,14 +25,8 @@
 						action="${pageContext.request.contextPath}/admin/adminSubscribeSearchByNameOrId.do"
 						method="get">
 						<label for="searchKeyword">회원검색:</label>
-						<select name="searchCategory">
-							<option value="memberName">회원명</option>
-							<option value="memberId">아이디</option>
-						</select>
-						<input type="text" id="searchKeyword" name="searchKeyword"
-							placeholder="회원명 또는 아이디">
+						<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
 						<input type="submit" value="검색">
-						<div id="searchResults"></div>
 					</form:form>
 				</div>
 				<div class="card-body">
@@ -48,26 +42,18 @@
 							<th>관리</th>
 						</thead>
 						<tbody>
-							<c:if test="${empty subscribedMembers}">
+							<c:forEach items="${subscribedMembers}" var="member" varStatus="vs">
 								<tr>
-									<td colspan="12" class="text-center">조회된 회원이 없습니다.</td>
+									<td>${member.memberId}</td>
+									<td>${member.name}</td>
+									<td>${member.phone}</td>
+									<td>${member.email}</td>
+									<td>${member.enrollDate}</td>
+									<td>${member.address}</td>
+									<td>${member.birthday}</td>
+									<td><button onclick="submit">포인트관리</button></td>
 								</tr>
-							</c:if>
-							<c:if test="${subscribedMembers != null}">
-								<c:forEach items="${subscribedMembers}" var="member"
-									varStatus="vs">
-									<tr>
-										<td>${member.memberId}</td>
-										<td>${member.name}</td>
-										<td>${member.phone}</td>
-										<td>${member.email}</td>
-										<td>${member.enrollDate}</td>
-										<td>${member.address}</td>
-										<td>${member.birthday}</td>
-										<td><button onclick="submit">포인트관리</button></td>
-									</tr>
-								</c:forEach>
-							</c:if>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

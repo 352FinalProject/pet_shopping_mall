@@ -45,25 +45,7 @@
 								<th>구독</th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<th>회원아이디</th>
-								<th>이름</th>
-								<th>전화번호</th>
-								<th>이메일</th>
-								<th>가입일</th>
-								<th>주소</th>
-								<th>생일</th>
-								<th>구독</th>
-							</tr>
-						</tfoot>
-						<tbody>
-							<c:if test="${empty members}">
-								<tr>
-									<td colspan="8">조회된 회원이 없습니다.</td>
-								</tr>
-							</c:if>
-							<c:if test="${members != null}">
+							<tbody>
 								<c:forEach items="${members}" var="member" varStatus="vs">
 									<tr>
 										<td>${member.memberId}</td>
@@ -76,8 +58,7 @@
 										<td>${member.subscribe}</td>
 									</tr>
 								</c:forEach>
-							</c:if>
-						</tbody>
+							</tbody>
 					</table>
 				</div>
 			</div>

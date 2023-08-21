@@ -69,39 +69,73 @@
 				<div class="card-body">
 					<table id="datatablesSimple">
 						<thead>
-							<th>번호</th>
-							<th>주문일시</th>
-							<th>주문번호</th>
-							<th>주문상품</th>
-							<th>주문상태</th>
-							<th>결제상태</th>
-							<th>주문자</th>
-							<th>결제액</th>
-							<th>배송비</th>
-							<th>결제방법</th>
+							<tr>
+								<th>번호</th>
+								<th>주문일시</th>
+								<th>주문번호</th>
+								<th>주문상품</th>
+								<th>주문상태</th>
+								<th>결제상태</th>
+								<th>주문자</th>
+								<th>결제액</th>
+								<th>배송비</th>
+								<th>결제방법</th>
+							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${empty orderlists}">
+							<c:forEach items="${orderlists}" var="orderlist" varStatus="vs">
 								<tr>
-									<td colspan="10" class="text-center">조회된 주문이 없습니다.</td>
+									<td>${orderlist.orderId}</td>
+									<td>${orderlist.orderDate}</td>
+									<td>${orderlist.orderNo}</td>
+									<td>${orderlist.productName}</td>
+									<td>
+										<c:if test="${orderlist.orderStatus == 0}">
+											입금대기
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 1}">
+											입금완료
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 2}">
+											배송준비
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 3}">
+											배송중
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 4}">
+											배송완료
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 5}">
+											주문취소
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 6}">
+											환불
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 7}">
+											반품
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${orderlist.paymentState == 0}">
+											결제 전
+										</c:if>
+										<c:if test="${orderlist.paymentState == 1}">
+											결제 완료
+										</c:if>
+									</td>
+									<td>${orderlist.memberId}</td>
+									<td>${orderlist.amount}</td>
+									<td>${orderlist.deliveryFee}</td>
+									<td>
+										<c:if test="${orderlist.paymentMethod == 0}">
+											무통장입금
+										</c:if>
+										<c:if test="${orderlist.paymentMethod == 1}">
+											카드결제
+										</c:if>
+									</td>
 								</tr>
-							</c:if>
-							<c:if test="${orderlists != null}">
-								<c:forEach items="${orderlists}" var="orderlist" varStatus="vs">
-									<tr>
-										<td>${orderlist.orderId}</td>
-										<td>${orderlist.orderDate}</td>
-										<td>${orderlist.orderNo}</td>
-										<td>${orderlist.productName}</td>
-										<td>${orderlist.orderStatus}</td>
-										<td>${orderlist.paymentState}</td>
-										<td>${orderlist.memberId}</td>
-										<td>${orderlist.amount}</td>
-										<td>${orderlist.deliveryFee}</td>
-										<td>${orderlist.paymentMethod}</td>
-									</tr>
-								</c:forEach>
-							</c:if>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
