@@ -10,8 +10,8 @@ import lombok.Data;
 public class ReviewCreateDto {
 	
 	private int reviewId;
-	// 작성자
-	private String reviewMemberId;
+	private String reviewMemberId; // 작성자
+	private int petId;
 	
 	private int reviewStarRate; // 별점
 	
@@ -25,6 +25,7 @@ public class ReviewCreateDto {
 		return Review.builder()
 				.reviewId(reviewId)
 				.reviewMemberId(reviewMemberId)
+				.petId(petId)
 				.reviewStarRate(reviewStarRate)
 				.reviewTitle(reviewTitle)
 				.reviewContent(reviewContent)

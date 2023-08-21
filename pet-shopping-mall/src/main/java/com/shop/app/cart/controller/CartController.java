@@ -57,9 +57,9 @@ public class CartController {
 	@PostMapping("/deleteCartOne.do")
 	public String deleteOne(@RequestParam("id") String _id, RedirectAttributes redirectAttr, 
 			Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
-		int id = Integer.parseInt(_id);
+		int cartitemId = Integer.parseInt(_id);
 		String memberId = member.getMemberId();
-		int result = cartService.deleteCartOne(id, memberId);
+		int result = cartService.deleteCartOne(cartitemId, memberId);
 		return "redirect:/cart/shoppingCart.do";
 	}
 	
@@ -92,4 +92,6 @@ public class CartController {
 		
 		return result;
 	}
+	
+
 }
