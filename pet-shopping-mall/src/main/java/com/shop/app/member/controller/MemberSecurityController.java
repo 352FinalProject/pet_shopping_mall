@@ -1,18 +1,11 @@
 package com.shop.app.member.controller;
 
-import java.util.Collection;
-import java.util.Map;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,20 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.shop.app.member.dto.MemberCreateDto;
-import com.shop.app.member.dto.MemberUpdateDto;
-import com.shop.app.member.entity.Member;
-import com.shop.app.member.entity.MemberDetails;
-import com.shop.app.member.service.MemberService;
-import com.shop.app.point.entity.Point;
-import com.shop.app.point.service.PointService;
 import com.shop.app.terms.service.TermsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,8 +45,9 @@ public class MemberSecurityController {
 	
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
-	
 
+	private final Map<String, String> tokenStore = new HashMap<>();
+	
 	@PostMapping("/memberCreate.do") // 회원 생성 처리
 	public String memberCreate(
 			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
@@ -106,13 +86,13 @@ public class MemberSecurityController {
 		
 		int resultPoint = pointService.insertPoint(point);
 		
-//		Terms terms = new Terms();
-//		terms.setMemberId(member.getMemberId());
-//		terms.setAcceptDate(null);
-//		terms.setAccept(Accept.Y);
-//		
-//		int resultTerms = termsService.insertTerms(terms);
+		Terms terms = new Terms();
+		terms.setMemberId(member.getMemberId());
+		terms.setAccept(Accept.Y);
 		
+		int resultTerms = termsService.insertTerms(terms);
+
+		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/memberCreateComplete.do";
 	}
 	
@@ -221,8 +201,6 @@ public class MemberSecurityController {
 //        return "/member/login.do";
 //    }
 //	
-
-//	@GetMapping("delteMember.do"){}
 	
 	@GetMapping("/terms.do")
 	public void getTerms() {}
@@ -239,5 +217,7 @@ public class MemberSecurityController {
 	@GetMapping("/myWishlist.do")
 	public void myWishlist() {}
 
+	@GetMapping("/petUpdate.do")
+	public void petUpdate() {}
 }
 

@@ -55,10 +55,6 @@
 	    <label for="canceled">취소</label>
 	    <input type="checkbox" id="refunded" name="orderStatus" value="refunded">
 	    <label for="refunded">환불</label>
-	    <input type="checkbox" id="return" name="orderStatus" value="return">
-	    <label for="return">반품</label>
-	    <input type="checkbox" id="exchanged" name="orderStatus" value="exchanged">
-	    <label for="exchanged">교환</label>
         <br>
         <button type="submit">검색</button>
     </form>
@@ -76,33 +72,36 @@
 							<th>번호</th>
 							<th>주문일시</th>
 							<th>주문번호</th>
-							<th>이미지</th>
 							<th>주문상품</th>
-							<th>수량</th>
-							<th>상품금액</th>
-							<th>배송비</th>
 							<th>주문상태</th>
+							<th>결제상태</th>
 							<th>주문자</th>
-							<th>총주문액</th>
+							<th>결제액</th>
+							<th>배송비</th>
 							<th>결제방법</th>
 						</thead>
 						<tbody>
-							<c:forEach begin="0" end="20" step="1" varStatus="status">
+							<c:if test="${empty orderlists}">
 								<tr>
-									<th>${status.count}</th>
-									<th>주문일시</th>
-									<th><a href="#" />주문번호</th>
-									<th><a href="#" />이미지</th>
-									<th><a href="#" />주문상품</th>
-									<th>수량</th>
-									<th>상품금액</th>
-									<th>배송비</th>
-									<th>주문상태</th>
-									<th>주문자</th>
-									<th>총주문액</th>
-									<th>결제방법</th>
+									<td colspan="10" class="text-center">조회된 주문이 없습니다.</td>
 								</tr>
-							</c:forEach>
+							</c:if>
+							<c:if test="${orderlists != null}">
+								<c:forEach items="${orderlists}" var="orderlist" varStatus="vs">
+									<tr>
+										<td>${orderlist.orderId}</td>
+										<td>${orderlist.orderDate}</td>
+										<td>${orderlist.orderNo}</td>
+										<td>${orderlist.productName}</td>
+										<td>${orderlist.orderStatus}</td>
+										<td>${orderlist.paymentState}</td>
+										<td>${orderlist.memberId}</td>
+										<td>${orderlist.amount}</td>
+										<td>${orderlist.deliveryFee}</td>
+										<td>${orderlist.paymentMethod}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

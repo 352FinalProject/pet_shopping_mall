@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PetCreateDto {
 
-	private String petMemberId;
+	private String memberId;
 	
 	@NotBlank(message = "펫 이름을 입력해주세요.")
     private String petName;    

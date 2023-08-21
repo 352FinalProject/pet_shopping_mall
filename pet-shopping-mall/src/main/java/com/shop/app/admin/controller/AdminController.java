@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,13 +24,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
+import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
+
+import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.service.OrderService;
+import com.shop.app.point.entity.Point;
+
+import com.shop.app.product.dto.OptionCreateDto;
+import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
+
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductOption;
 import com.shop.app.product.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +54,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@Autowired
 	private ProductService productService;
@@ -59,19 +74,17 @@ public class AdminController {
 	 */
 	@GetMapping("/adminMemberList.do")
 	public void adminMemberList(Model model) {
-		// MemberDetails로 바꿔야댐
-		List<Member> members = adminService.adminMemberList();
+		List<MemberDetails> members = adminService.adminMemberList();
 		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
-	    for (Member member : members) {
+	    for (MemberDetails member : members) {
 	        
 	        String subscribeString = member.getSubscribe().toString(); 
 	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
 	        
 	        member.setSubscribe(subscribe);
 	    }
-	    
 	    int totalCount = adminService.findTotalAdminCount();
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("members", members);
@@ -84,23 +97,22 @@ public class AdminController {
 	 */
 	@GetMapping("/adminSubscribeList.do")
 	public void adminSubscribeList(Model model) {
-		// MemberDetails로 바꿔야댐
-		List<Member> subscribeMembers = adminService.adminSubscribeList();
+		List<MemberDetails> subscribedMembers = adminService.adminSubscribeList();
 //		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
-	    for (Member subscribeMember : subscribeMembers) {
+	    for (MemberDetails subscribedMember : subscribedMembers) {
 	        
-	        String subscribeString = subscribeMember.getSubscribe().toString(); 
+	        String subscribeString = subscribedMember.getSubscribe().toString(); 
 	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
 	        
-	        subscribeMember.setSubscribe(subscribe);
+	        subscribedMember.setSubscribe(subscribe);
 	    }
 	    
 	    int totalCount = adminService.findTotalubscribeCount();
 		
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("subscribeMembers", subscribeMembers);
+		model.addAttribute("subscribedMembers", subscribedMembers);
 	}
 	
 
@@ -168,14 +180,17 @@ public class AdminController {
 	        @RequestParam(required = false) String searchKeyword,
 	        Model model) {
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
-	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
+	        List<MemberDetails> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
 	        
-	        for (Member member : members) {
+	        for (MemberDetails member : members) {
 		        String subscribeString = member.getSubscribe().toString(); 
 		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
 		        
 		        member.setSubscribe(subscribe);
 		    }
+			int totalCount = adminService.findTotalAdminCount();
+			model.addAttribute("totalCount", totalCount);
+			
 			model.addAttribute("members", members);
 	    }
 	    return "admin/adminMemberList";
@@ -194,9 +209,9 @@ public class AdminController {
 	        Model model) {
 		
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
-	        List<Member> members = adminService.adminSubscribeSearchByNameOrId(searchKeyword);
-	        List<Member> subscribedMembers = new ArrayList<>();
-	        for (Member member : members) {
+	        List<MemberDetails> members = adminService.adminSubscribeSearchByNameOrId(searchKeyword);
+	        List<MemberDetails> subscribedMembers = new ArrayList<>();
+	        for (MemberDetails member : members) {
 		        
 		        String subscribeString = member.getSubscribe().toString(); 
 		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
@@ -207,6 +222,9 @@ public class AdminController {
 	                subscribedMembers.add(member);
 		        }
 	        }
+	        int totalCount = adminService.findTotalubscribeCount();
+			model.addAttribute("totalCount", totalCount);
+			
 	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
 			
@@ -214,7 +232,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("/adminOrderList.do")
-	public void adminOrderList() {}
+	public void adminOrderList(Model model) {
+		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
+		log.debug("orderlists = {}", orderlists);
+		model.addAttribute("orderlists", orderlists);
+	}
 	
 	/**
 	 * 상품정보 조회 
@@ -234,19 +256,39 @@ public class AdminController {
 		log.debug("basicProducts = {}", basicProducts);
 		model.addAttribute("basicProducts", basicProducts);
 
-		// 옵션추가된 상품들 조회
-		List<ProductDetail> productDetails = productService.findAllProductDetails();
-		log.debug("productDetails = {}", productDetails);
-		model.addAttribute("productDetails", productDetails);
+		// 옵션 조회해서 가져오기
+		List<ProductOption> productOptions = productService.findAllProductOptions();
+		log.debug("productOptions = {}", productOptions);
+		model.addAttribute("productOptions", productOptions);
+		
+//		List<ProductDetail> productDetails = productService.findAllProductDetails();
+//		log.debug("productDetails = {}", productDetails);
+//		model.addAttribute("productDetails", productDetails);
+	}
+	
+	/**
+	 * 상품별 판매량통계
+	 */
+	@GetMapping("/adminStatisticsProduct.do")
+	public void adminStatisticsProduct() {
+		
 		
 	}
 	
 	/**
-	 * 판매량통계
+	 * 월별 판매량통계
 	 */
-	@GetMapping("/adminStatistics.do")
-	public void adminStatistics() {
+	@GetMapping("/adminStatisticsMonthly.do")
+	public void adminStatisticsMonthly() {
 		
+		
+	}
+	
+	/**
+	 * 일별 판매량통계
+	 */
+	@GetMapping("/adminStatisticsDaily.do")
+	public void adminStatisticsDaily() {
 		
 		
 	}
@@ -265,8 +307,42 @@ public class AdminController {
 		model.addAttribute("product", product);
 	}
 	
+	// 기본상품 수정
+	@PostMapping("/adminUpdateProduct.do")
+	public String adminUpdateProduct(
+			@Valid ProductUpdateDto _product,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		log.debug("ProductUpdateDto = {}", _product);
+		Product product = _product.toProduct();
+		
+		// 상품아이디로 상품정보 조회해서 가져오기
+		int result = productService.updateProduct(product);
+		log.debug("product = {}", product);
+		model.addAttribute("product", product);
+		
+		return "redirect:/admin/adminProductList.do";
+	}
 	
-	// 상품 추가 페이지로 연결
+	// 기본상품 삭제
+	@PostMapping("/adminDeleteProduct.do")
+	public String adminDeleteProduct(
+			@Valid ProductUpdateDto _product,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			){
+		
+		Product product = _product.toProduct();
+		int productId = product.getProductId();
+		int result = productService.deleteProduct(productId);
+		
+		return "redirect:/admin/adminProductList.do";
+	}
+	
+	// 상품(옵션) 추가 페이지로 연결
 	@GetMapping("/adminAddProductOption.do")
 	public void adminAddProductOption(
 			@AuthenticationPrincipal MemberDetails member, 
@@ -279,6 +355,33 @@ public class AdminController {
 		log.debug("categories = {}", categories);
 		model.addAttribute("categories", categories);
 	}
+	
+	// 상품(옵션)추가
+	@PostMapping("/adminAddProductOption.do")
+	public String adminAddProductOption(
+			@Valid OptionCreateDto _option,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal MemberDetails member,
+			Model model
+			){
+		log.debug("OptionCreateDto = {}", _option);
+		// OptionCreateDto = OptionCreateDto(productId=0, optionName=색, optionValue=빨강, categoryId=3, productName=강아지원피스, productPrice=10000, thumbnailImg=0, productImg=0)
+		
+		// 1. product 객체 생성, 새로 발급받은 productId 가져오기
+		Product product = _option.toProduct(); // categoryId=3, productName=강아지원피스, productPrice=10000, thumbnailImg=0, productImg=0
+		int productId = productService.insertProduct(product);
+		log.debug("productId = {}", productId);
+		
+		// 2. 발급받은 product 아이디를 참조하는 옵션 객체 생성
+		ProductOption option = _option.toProductOption();
+		option.setProductId(productId);
+		int result = productService.insertProductOption(option);
+		
+		
+		return "redirect:/admin/adminProductList.do";
+	}
+	
+	
 	
 	// 상품 추가 페이지로 연결
 	@GetMapping("/adminAddProduct.do")
