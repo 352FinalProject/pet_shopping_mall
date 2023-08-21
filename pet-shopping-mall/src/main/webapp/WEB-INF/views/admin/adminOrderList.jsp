@@ -4,6 +4,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
+<script>
+    function selectAllpaymentMethod(selectAll)  {
+      const checkboxes = document.getElementsByName('paymentMethod');
+      
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = selectAll.checked; // Use the selectAll argument here
+      });
+    }
+    
+    function selectAllOrderStatus(selectAll)  {
+        const orderStatusCheckboxes = document.getElementsByName('orderStatus');
+        
+        orderStatusCheckboxes.forEach((checkbox) => {
+          checkbox.checked = selectAll.checked;
+        });
+      }
+</script>
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
@@ -19,25 +36,24 @@
 			
 			<div class="admin-order-search-container">
 			    <form method="GET" class="admin-order-search" action="${pageContext.request.contextPath}/admin/adminOrderSearch.do">
-			        <label for="searchKeyword">검색어:</label>
-			        <select name="searchCategory">
-			            <option value="productName">상품명</option>
-			            <option value="productCode">주문코드</option>
-			        </select>
-			        <input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드"><br>
+			        <label for="searchKeyword">상품검색:</label>
+			        	<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드"><br>
+
 			        기간검색: <input type="date" name="startDate">
 			    	~ <input type="date" name="endDate">
 			    	<br>
+			    	
 			        <label>결제방법:</label>
-				    <input type="checkbox" id="all" name="paymentMethod" value="all">
-				    <label for="all">전체</label>
-				    <input type="checkbox" id="mutongjang" name="paymentMethod" value="mutongjang">
+				    <input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
+					<label for="all">전체</label>
+				    <input type="checkbox" id="deposit" name="paymentMethod" value="deposit">
 				    <label for="mutongjang">무통장</label>
 				    <input type="checkbox" id="sinhancard" name="paymentMethod" value="sinhancard">
 				    <label for="sinhancard">신용카드</label>
 			        <br>
+			        
 			        <label>주문상태:</label>
-				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll">
+				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
 				    <label for="orderStatusAll">전체</label>
 				    <input type="checkbox" id="waiting" name="orderStatus" value="waiting">
 				    <label for="waiting">입금대기</label>
@@ -54,6 +70,7 @@
 				    <input type="checkbox" id="refunded" name="orderStatus" value="refunded">
 				    <label for="refunded">환불</label>
 			        <br>
+			        
 			        <button type="submit">검색</button>
 			    </form>
 			</div>

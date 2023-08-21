@@ -56,5 +56,11 @@ public interface OrderRepository {
 	
 	@Select("select * from orderTbl where order_no = #{orderNo}")
 	Order findOrderByOrderNo(String orderNo);
+
+
+	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
+			List<String> paymentMethod, List<String> orderStatus);
+
+
 	
 }

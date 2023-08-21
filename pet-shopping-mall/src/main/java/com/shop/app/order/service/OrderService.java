@@ -26,4 +26,11 @@ public interface OrderService {
 	// 미 결제시 주문 취소
 	int insertCancelOrder(String orderNo);
 
+	List<OrderAdminListDto> adminOrderSearch(
+			String searchKeyword, 
+			String startDate, 
+			String endDate,
+			List<String> paymentMethod, 
+			List<String> orderStatus);
+
 }

@@ -240,12 +240,19 @@ public class AdminController {
 	}
 	
 	/**
-	 * 주문 조회
+	 * 주문검색 조회
 	 * @param model
 	 */
 	@GetMapping("/adminOrderSearch.do")
-	public String adminOrderSearch(Model model) {
-		List<OrderAdminListDto> orderlists = orderService.adminOrderSearch();
+	public String adminOrderSearch(
+			@RequestParam(required = false) String searchKeyword,
+	        @RequestParam(required = false) String startDate,
+	        @RequestParam(required = false) String endDate,
+	        @RequestParam(required = false) List<String> paymentMethod,
+	        @RequestParam(required = false) List<String> orderStatus,
+				Model model) {
+		List<OrderAdminListDto> orderlists = 
+				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
 		model.addAttribute("orderlists", orderlists);
 		
 		return "admin/adminOrderList";
