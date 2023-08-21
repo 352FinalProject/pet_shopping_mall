@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,6 +28,8 @@ import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
+import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -263,6 +266,25 @@ public class AdminController {
 		Product product = productService.findProductById(productId);
 		log.debug("product = {}", product);
 		model.addAttribute("product", product);
+	}
+	
+	// 기본상품 수정
+	@PostMapping("/adminUpdateProduct.do")
+	public ResponseEntity<?> adminUpdateProduct(
+			@Valid ProductUpdateDto _product,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		log.debug("ProductUpdateDto = {}", _product);
+		Product product = _product.toProduct();
+		
+		// 상품아이디로 상품정보 조회해서 가져오기
+		int result = productService.updateProduct(product);
+		log.debug("product = {}", product);
+		model.addAttribute("product", product);
+		
+		return null;
 	}
 	
 	

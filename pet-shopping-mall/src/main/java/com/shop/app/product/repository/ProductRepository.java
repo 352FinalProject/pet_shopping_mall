@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
 import com.shop.app.product.dto.ProductPriceDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
@@ -38,5 +40,8 @@ public interface ProductRepository {
 
 	@Select("select * from product where product_id = #{productId}")
 	Product findProductById(int productId);
+
+	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, thumbnail_img = #{thumbnailImg}, product_img = #{productImg}, expire_date = #{expireDate} where product_id = #{productId}")
+	int updateProduct(Product product);
 
 }
