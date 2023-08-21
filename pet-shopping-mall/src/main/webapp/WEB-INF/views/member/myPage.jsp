@@ -189,5 +189,10 @@ button, input {
 					</tr>
 				</table>
 			</form:form>
+		</div>
+	</div>
 </section>
+<script>
+const 
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

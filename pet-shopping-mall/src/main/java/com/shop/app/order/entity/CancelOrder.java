@@ -2,6 +2,16 @@ package com.shop.app.order.entity;
 
 import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@Builder
 public class CancelOrder {
 	private int cancelId; // PK
 	private Timestamp requestDate; // 취소 요청날짜

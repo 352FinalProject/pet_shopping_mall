@@ -78,7 +78,6 @@
 			        <button class="qna-btn-create" type="submit">상품등록</button>
 			    </div>
 			</form:form>
-			
 	    </div>
 	</div>
 </section>

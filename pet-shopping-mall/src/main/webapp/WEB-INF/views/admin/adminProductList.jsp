@@ -38,10 +38,6 @@
 						for="saleStatusPaused">중지</label><br>
 					<button type="submit">검색</button>
 				</form>
-				<form method="GET"
-					action="${pageContext.request.contextPath}/admin/adminAddProduct.do">
-					<button type="button">상품추가</button>
-				</form>
 			</div>
 
 			<div class="card mb-4">
@@ -66,11 +62,13 @@
 								<c:forEach items="${basicProducts}" var="basicProduct" varStatus="vs">
 									<tr>
 										<td>${basicProduct.productId}</td>
-										<td>이미지는 아직이오</td>
-										<td>${basicProduct.productName}</td>
+										<td>이미지는 아직</td>
+										<td>
+										<a href="${pageContext.request.contextPath}/admin/adminUpdateProduct.do?productId=${basicProduct.productId}">${basicProduct.productName}</a>
+										</td>
 										<td>${basicProduct.productPrice}</td>
 										<td>
-											<button formaction="${pageContext.request.contextPath}/admin/adminAddProductOption.do" onclick="">판매등록</button> 
+											<button onclick="">판매등록</button> 
 											<button onclick="">수정</button> 
 											<button onclick="">삭제</button> 
 										</td>

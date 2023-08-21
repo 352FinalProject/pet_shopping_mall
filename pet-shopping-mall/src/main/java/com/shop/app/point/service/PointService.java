@@ -2,6 +2,7 @@ package com.shop.app.point.service;
 
 import java.util.List;
 
+import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.point.entity.Point;
 import com.shop.app.review.entity.ReviewDetails;
 

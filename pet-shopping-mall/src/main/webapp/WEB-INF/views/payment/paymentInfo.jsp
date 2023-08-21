@@ -50,6 +50,10 @@
 								</div>
 							</div>
 						</div>
+					<form:form name="orderDetailFrm">
+						<input type="hidden" value="${product.productDetailId}" class="productDetailId" />
+						<input type="hidden" value="${product.quantity}" class="quantity" />
+					</form:form>
 					</c:forEach>
 					<div class="order-info">
 						<div>
@@ -202,15 +206,10 @@ const updateButtonColor = () => {
 
 
 /* 결제 관련 js */
-
-
 /* 결제 전 주문 페이지에 주문 정보를 담는다 */
-
 const proceedPay = () => {
 	/* 주문 테이블에 들어갈 값 */
 	const checkedButton = document.querySelector('.paybtn input[type="radio"]:checked');
-	
-	console.log(checkedButton);
 	
 	let title;
 	let cartListLength = ${fn:length(cartList)};
@@ -223,6 +222,8 @@ const proceedPay = () => {
 	
 	// 포인트 입력 값 가져오기 (예라)
     let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
+	
+    const forms = document.querySelectorAll('[name="orderDetailFrm"]');
 	
 	const data = {
 		orderNo: new Date().getTime(),
@@ -237,9 +238,24 @@ const proceedPay = () => {
 		deliveryFee: 3000,
 		discount: '${pointCurrent}',
 		amount: '${amount}',
-		pointsUsed: pointValue, // 포인트 사용량 추가 (예라)
-		pg: checkedButton.value
+		pointsUsed: pointValue,
+		pg: checkedButton.value,
+		
 	};
+	
+	const formDatas = [];
+	
+	forms.forEach(form => {
+		const productDetailId = form.querySelector('.productDetailId').value;
+		const quantity = form.querySelector('.quantity').value;
+		
+		formDatas.push({
+			productDetailId: productDetailId,
+			quantity: quantity
+		});
+	});
+	
+	data.forms = formDatas;
 	
 	console.log(data);
 	
@@ -279,7 +295,6 @@ const requestPaymentByCard = (data) => {
     	buyer_postcode: "01181"
 	}, 
 	function (response) {
-		console.log(response)
 	    // 결제가 취소됐을 때 (예라)
 	    if (!response.success && response.error_msg.includes("결제포기")) {
     		console.log("결제 취소됨");
@@ -295,9 +310,7 @@ const requestPaymentByCard = (data) => {
 		   			deliveryFee: 3000,
 		   			discount: '${pointCurrent}',
 		   			amount: '${amount}',
-
 		   	};
-			        
 	        $.ajax({
 	            type: 'POST',
 	            url : '${pageContext.request.contextPath}/payment/verifyAndHandleCancelledPayment/' + response.imp_uid,
@@ -315,13 +328,34 @@ const requestPaymentByCard = (data) => {
 			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid,
 		}).done((data) =>  {
 			if(response.paid_amount == data.response.amount) {
-				alert("결제 완료");
-			} else {
-				alert("결제 실패")
+				successPay(response.imp_uid, response.merchant_uid);
 			}
 		})
 	});
 }; 
+
+const successPay = (imp_uid, merchant_uid) => {
+	$.ajax({  
+		 url : "${pageContext.request.contextPath}/payment/successPay.do",
+		 type : "POST",
+		 async : true,
+		 dataType : "Json", 
+		 data :{
+			imp_uid: imp_uid,            // 결제 고유번호
+         	merchant_uid: merchant_uid   // 주문번호 
+		 },
+		 success(data){
+			if(data.result > 0){
+         		alert("결제 및 검증 완료");
+           		location.href="${pageContext.request.contextPath}/paymentCompleted.do"
+            }else{
+              	alert("결제 완료 되었으나 에러 발생하였습니다. 관리자에게 문의하세요.")
+              	location.href="${pageContext.request.contextPath}/member/mypage.do"
+		 	}
+		 }
+	});
+};
+
 
 /* 포인트 사용하면 포인트에 금액 기재되고 최종 결제 금액에서 차감 (예라)*/
 document.querySelector('.discount-point-btn').addEventListener('click', function() {

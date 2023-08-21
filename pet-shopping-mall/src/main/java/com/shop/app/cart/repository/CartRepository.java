@@ -23,8 +23,8 @@ public interface CartRepository {
 
 	CartInfoDto getCartInfoList(int productDetailId);
 
-	@Delete("delete from cartitem ci where cartitem_id = #{id} and ci.cart_id = (select cart_id from cart where member_id =#{memberId})")
-	int deleteCartOne(int id, String memberId);
+	@Delete("delete from cartitem ci where cartitem_id = #{cartitemId} and ci.cart_id = (select cart_id from cart where member_id =#{memberId})")
+	int deleteCartOne(int cartitemId, String memberId);
 
 	@Delete("delete from cartitem ci where ci.cart_id = (select cart_id from cart where member_id =#{memberId})")
 	int deleteCartAll(String memberId);
