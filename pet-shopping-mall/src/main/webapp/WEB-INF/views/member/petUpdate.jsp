@@ -99,13 +99,18 @@
 
 <script>
     function selectGender(gender) {
-        document.getElementById("genderInput").value = gender;
-        var buttons = document.getElementsByName("gender");
-        for (var i = 0; i < buttons.length; i++) {
-            buttons[i].classList.remove("selected");
+        // 선택된 버튼의 'selected' 클래스 추가
+        const buttons = document.getElementsByName('gender');
+        for (const button of buttons) {
+            if (button.value === gender) {
+                button.classList.add('selected');
+            } else {
+                button.classList.remove('selected');
+            }
         }
-        var selectedButton = document.querySelector(`input[name="gender"][value="${gender}"]`);
-        selectedButton.classList.add("selected");
+
+        // 성별 입력 필드 업데이트
+        document.getElementById('genderInput').value = gender;
     }
 </script>
 
