@@ -28,6 +28,9 @@ public interface PointService	 {
 	// 취소된 포인트를 db에 저장 (예라)
 	int insertRollbackPoint(Point rollbackPoint);
 
+	// 삭제된 리뷰에 대한 포인트 정보 가져오기 (예라)
+	Point getPointByReviewId(int reviewId);
+
 	
 }
 

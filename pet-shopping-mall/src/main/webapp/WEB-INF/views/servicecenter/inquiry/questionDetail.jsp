@@ -115,6 +115,7 @@
 							<input type="hidden" name="answerAdminName"
 								value="${answers.answerAdminName}">
 							<div class="anw-create2">
+							<input type="hidden" name="questionEmail" value="${questions.questionEmail}" />
 								<button class="anw-btn-create2" type="submit">댓글작성</button>
 							</div>
 						</form:form>

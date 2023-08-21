@@ -7,6 +7,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,111 +28,36 @@ import com.shop.app.servicecenter.chat.entity.ChatRoom;
 import com.shop.app.servicecenter.chat.service.ChatService;
 
 @Controller
+@RequestMapping("/servicecenter/chat")
 public class ChatController {
-
-	@Autowired
-	ChatService cService;
-
-	@Autowired
-	ProductService pService;
-
-	@Autowired
-	private ChatSession cSession;
 	
-	@GetMapping("/servicecenter/chat/chat.do")
-	public void chatList() {
-	}
+	@Autowired
+	private ChatService chatService;
+	
+    @GetMapping("/chat.do")
+    public String showChatPage(Model model) {
+        return "servicecenter/chat/chat";
+    }
+    
+    // 채팅방 리스트 반환
+    @GetMapping("/rooms")
+    public String roomList(Model model) {
+        List<ChatRoom> rooms = chatService.findAllRoom();
+        model.addAttribute("rooms", rooms);
+        return "servicecenter/chat/roomList";
+    }
 
-	/**
-	 * 해당 채팅방의 채팅 메세지 불러오기
-	 * @param roomId
-	 * @param model
-	 * @param response
-	 * @throws JsonIOException
-	 * @throws IOException
-	 */
-	@RequestMapping(value="{roomId}.do")
-	public void messageList(@PathVariable String chatRoomId, Model model, HttpServletResponse response) throws JsonIOException, IOException {
-
-		List<Chat> mList = cService.messageList(chatRoomId);
-		response.setContentType("application/json; charset=utf-8");
-
-		// 안읽은 메세지의 숫자 0으로 바뀌기
-		Chat message = new Chat();
-		message.setChatRoomId(chatRoomId);
-		int result = cService.updateCount(message);
-
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(mList,response.getWriter());
-	}
-
-	/**
-	 * 채팅 방이 없을 때 생성
-	 * @param room
-	 * @param userEmail
-	 * @param masterNickname
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping("createChat.do")
-	public String createChat(ChatRoom chatRoom, String chatRoomMemberId, String chatRoomAdminRoll, String masterNickname){
-
-		chatRoom.setChatRoomMemberId(chatRoomMemberId);
-		chatRoom.setChatRoomAdminRoll(chatRoomAdminRoll);
-
-		ChatRoom exist  = cService.searchChatRoom(chatRoom);
-
-		// DB에 방이 없을 때
-		if(exist == null) {
-			System.out.println("방이 없다!!");
-			int result = cService.createChat(chatRoom);
-			if(result == 1) {
-				System.out.println("방 만들었다!!");
-				return "new";
-			}else {
-				return "fail";
-			}
-		}
-		// DB에 방이 있을 때
-		else{
-			System.out.println("방이 있다!!");
-			return "exist";
-		}
-	}
-
-	/**
-	 * 채팅 방 목록 불러오기
-	 * @param room
-	 * @param userEmail
-	 * @param response
-	 * @throws JsonIOException
-	 * @throws IOException
-	 */
-	@RequestMapping("chatRoomList.do")
-	public void createChat(ChatRoom chatRoom, int chatRoomId,Chat message, HttpServletResponse response) throws JsonIOException, IOException{
-		List<ChatRoom> cList = cService.chatRoomList(chatRoomId);
-
-		for(int i = 0; i < cList.size(); i++) {
-			message.setChatRoomId(cList.get(i).getChatRoomId());
-			int count = cService.selectUnReadCount(message);
-			cList.get(i).setChatUnReadCount(count);
-		}
-
-		response.setContentType("application/json; charset=utf-8");
-
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(cList,response.getWriter());
-	}
-
-	@RequestMapping("chatSession.do")
-	public void chatSession( HttpServletResponse response) throws JsonIOException, IOException{
-
-		ArrayList<String> chatSessionList = cSession.getLoginChatMember();
-
-		response.setContentType("application/json; charset=utf-8");
-
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(chatSessionList,response.getWriter());
-	}
-
+    // 특정 채팅방으로 이동
+    @GetMapping("/rooms/{roomId}")
+    public String room(@PathVariable String roomId, Model model) {
+        model.addAttribute("roomId", roomId);
+        return "servicecenter/chat/chat";
+    }
+    
+    // 메세지를 전송/수신하는 메소드
+    @MessageMapping("/chat/{roomId}/sendMessage")
+    @SendTo("/queue/{roomId}")
+    public Chat sendMessage(@DestinationVariable String roomId, @Payload Chat chatMessage) {
+        return chatMessage;
+    }
 }

@@ -20,7 +20,7 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
-
+--
 --drop table review;
 --drop table image_attachment;
 --drop table image_attachment_mapping;
@@ -30,6 +30,7 @@ SELECT *  FROM all_tables;
 --drop table discount_rule;
 --drop table product_category;
 --drop table product;
+--drop table product_option;
 --drop table product_detail;
 --drop table cart;
 --drop table payment;
@@ -39,7 +40,6 @@ SELECT *  FROM all_tables;
 --drop table refund;
 --drop table cancel_order;
 --drop table authority;
---drop table product_category;
 --drop table community;
 --drop table wishlist;
 --drop table pet;
@@ -69,6 +69,7 @@ SELECT *  FROM all_tables;
 --drop sequence seq_point_id;
 --drop sequence seq_product_category_id;
 --drop sequence seq_product_id;
+--drop sequence seq_product_option_id;
 --drop sequence seq_product_detail_id;
 --drop sequence seq_cart_id;
 --drop sequence seq_payment_id;
@@ -88,7 +89,6 @@ SELECT *  FROM all_tables;
 --drop sequence seq_cancel_id;
 --drop sequence seq_history_id;
 --drop sequence seq_terms_id;
-
 
 --==============================
 -- 테이블 생성
@@ -190,7 +190,7 @@ create table image_attachment_mapping (
 
 -- 상품 카테고리 테이블
 create table product_category (
-    category_id number,
+    category_id number, -- pk
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
@@ -203,24 +203,32 @@ create table product (
     product_price number not null,
     thumbnail_img number, -- 썸네일 이미지(fk)
     product_img number, -- 제품상세 이미지(fk)
-    create_date timestamp default systimestamp, -- 등록일
-    expire_date timestamp default systimestamp, -- 유통기한
+    create_date timestamp default sysdate, -- 등록일
+    expire_date timestamp default null, -- 유통기한
     like_cnt number default 0, -- 좋아요수
     view_cnt number default 0, -- 조회수
     constraints pk_product_id primary key(product_id),
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
+-- 상품 옵션 테이블
+create table product_option (
+    option_id number, -- pk
+    product_id number, -- fk
+    option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가) (사이즈)
+    option_value varchar2(200), -- 옵션속성 (S, M, L)
+    constraints pk_option_id primary key(option_id),
+    constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
+);
+-- 상품상세 테이블
 create table product_detail (
     product_detail_id number, -- pk
-	product_id number, -- fk
-    option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
-    option_value varchar2(200), -- 옵션속성
+    option_id number, -- fk
     additional_price number default 0, -- 옵션에 따른 추가금
     stock number default 0,
     sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
     constraints pk_product_detail_id primary key(product_detail_id),
-    constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
+    constraints fk_option_id foreign key(option_id) references product_option(option_id) on delete cascade
 );
 
 -- 주문테이블
@@ -250,8 +258,10 @@ create table point (
     point_type varchar2(100) not null,
     point_amount number not null,
     point_date timestamp default systimestamp,
+    review_id number
     constraint pk_point_id primary key (point_id),
-    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade,
+    constraint fk_point_review_id foreign key (review_id) references review(review_id) on delete cascade;
 );
 
 create table cancel_order (
@@ -431,6 +441,7 @@ create sequence seq_pet_id;
 create sequence seq_wishlist_id;
 create sequence seq_product_category_id;
 create sequence seq_product_id;
+create sequence seq_product_option_id;
 create sequence seq_product_detail_id;
 create sequence seq_review_id;
 create sequence seq_payment_id;
@@ -453,7 +464,7 @@ select * from image_attachment;
 select * from image_attachment_mapping;
 select * from authority;
 select * from pet;
-select * from review;
+select * from review order by review_id desc;
 select * from terms;
 select * from terms_history;
 

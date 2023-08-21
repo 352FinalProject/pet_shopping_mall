@@ -20,6 +20,7 @@
 			<h2 class="sidebar2-title2">마이 혜택</h2></a>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/point/pointList.do">포인트 내역</a></li>
+				<li><a href="${pageContext.request.contextPath}/review/reviewList.do">내가 쓴 리뷰</a></li>
 			</ul>
 		</li>
 		<li class="sidebar2-pro">

@@ -28,7 +28,6 @@ public class Product {
 	private int thumbnailImg; // fk
 	private int productImg; // fk
 	private Timestamp createDate;
-	@Nullable
 	private Timestamp expireDate;
 	private int likeCnt;
 	private int viewCnt;

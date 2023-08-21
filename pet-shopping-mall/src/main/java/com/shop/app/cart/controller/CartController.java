@@ -10,16 +10,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.CartUpdateDto;
+import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
+import com.shop.app.product.entity.ProductDetail;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,7 +48,10 @@ public class CartController {
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
 
 		model.addAttribute("cartList", cartList);
-		// model.addAttribute("pointCurrent", point.getPointCurrent());
+
+
+//		model.addAttribute("pointCurrent", point.getPointCurrent());
+
 	}
 	
 	@PostMapping("/deleteCartOne.do")
@@ -61,5 +70,26 @@ public class CartController {
 		String memberId = member.getMemberId();
 		int result = cartService.deleteCartAll(memberId);
 		return "redirect:/cart/shoppingCart.do";
+	}
+	
+	
+	// 상품 한 개 조회하려고 만든 메소드
+	@ResponseBody
+	@GetMapping("/findProdById.do")
+	public List<ProductDetail> findProdById(@RequestParam("id") String _id) {
+		int id = Integer.parseInt(_id);
+		List<ProductDetail> productInfo =  cartService.findProdById(id);
+		log.debug("productInfo = {}", productInfo);
+		return productInfo;
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateCart.do")
+	public int updateCart(CartUpdateDto _cartitem) {
+		log.debug("_cartitem = {}", _cartitem);
+		CartItem cartitem = _cartitem.toCartitem();
+		int result = cartService.updateCart(cartitem);
+		
+		return result;
 	}
 }
