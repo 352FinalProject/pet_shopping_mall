@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.oauth.entity.LoginProvider;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +40,9 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
 		ClientRegistration clientRegistration = userRequest.getClientRegistration(); // IDP 정보 가져오기
+	    String provider = clientRegistration.getRegistrationId().toUpperCase(); // 이를 통해 'KAKAO' 또는 'NAVER'를 가져올 수 있습니다.
+
+		
 		OAuth2AccessToken accessToken = userRequest.getAccessToken(); // 액세스 토큰 가져오기
 		OAuth2User oauth2User = super.loadUser(userRequest); // 상위 클래스의 사용자 정보 로드 메서드 호출
 		
@@ -47,32 +51,87 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 		log.debug("oauth2User = {}", oauth2User);
 		
 		Map<String, Object> attributes = oauth2User.getAttributes();
-		String memberId = attributes.get("id") + "@kakao";
-		MemberDetails member = null;
-
-		// 이미 등록된 회원인지 확인
-		try {
-			member = (MemberDetails) memberService.loadUserByUsername(memberId);
-		} catch (UsernameNotFoundException ignore) {
-			// 회원이 아니라면 카카오 정보로 회원가입
-			Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-			Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
-			
-			String name = (String) profile.get("nickname");
-			String email = (String) kakaoAccount.get("email");
-			MemberCreateDto memberCreateDto = 
-					MemberCreateDto.builder()
-						.memberId(memberId)
-						.password("1234")  // 기본 패스워드 설정
-						.name(name)
-						.email(email)
-						.build();
-			
-			// DB에 회원 정보 저장
-			int result = memberService.insertMember(memberCreateDto);
-			member = (MemberDetails) memberService.loadUserByUsername(memberId);
-		}
+		String memberId = null;
 		
-		return member;
-	}
+//		String memberId = attributes.get("id") + "@kakao"; //kakao
+//		MemberDetails member = null;
+	    if (LoginProvider.valueOf(provider) == LoginProvider.KAKAO) {
+	        memberId = attributes.get("id") + "@kakao";
+	    } else if (LoginProvider.valueOf(provider) == LoginProvider.NAVER) {
+	        memberId = attributes.get("id") + "@naver";
+	        // 주의: NAVER의 'id'가 다른 경우 속성 추출 로직을 조정해야 합니다.
+	    }
+
+		MemberDetails member = null;
+	    
+		  try {
+		        member = (MemberDetails) memberService.loadUserByUsername(memberId);
+		    } catch (UsernameNotFoundException ignore ) {
+		        if (LoginProvider.valueOf(provider) == LoginProvider.KAKAO) {
+		            Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+		            Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+
+		            String name = (String) profile.get("nickname");
+		            String email = (String) kakaoAccount.get("email");
+		            
+		            MemberCreateDto memberCreateDto = MemberCreateDto.builder()
+		                .memberId(memberId)
+		                .password("1234") 
+		                .name(name)
+		                .email(email)
+		                .build();
+
+		            int result = memberService.insertMember(memberCreateDto);
+		            member = (MemberDetails) memberService.loadUserByUsername(memberId);
+
+		        } else if (LoginProvider.valueOf(provider) == LoginProvider.NAVER) {
+		            // NAVER 특정 속성을 사용하여 회원을 생성하는 방법을 처리합니다.
+		            // 올바른 속성을 추출하기 위해 로직을 조정해야 합니다.
+		        	
+		        	   Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("response");
+//		        	   log.debug("naverAccount = {}", naverAccount);
+			           log.debug("response = {}", naverAccount);
+		        	   String name = (String) naverAccount.get("name");
+		        	   log.debug("name = {}", name);
+			           String email = (String) naverAccount.get("email");
+			            
+			            MemberCreateDto memberCreateDto = MemberCreateDto.builder()
+			                .memberId(memberId)
+			                .password("1234") 
+			                .name(name)
+			                .email(email)
+			                .build();
+
+			            int result = memberService.insertMember(memberCreateDto);
+			            member = (MemberDetails) memberService.loadUserByUsername(memberId);
+		        }
+		    }
+
+		    return member;
+		}
+		// 이미 등록된 회원인지 확인
+//		try {
+//			member = (MemberDetails) memberService.loadUserByUsername(memberId);
+//		} catch (UsernameNotFoundException ignore) {
+//			// 회원이 아니라면 카카오 정보로 회원가입
+//			Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+//			Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+//			
+//			String name = (String) profile.get("nickname");
+//			String email = (String) kakaoAccount.get("email");
+//			MemberCreateDto memberCreateDto = 
+//					MemberCreateDto.builder()
+//						.memberId(memberId)
+//						.password("1234")  // 기본 패스워드 설정
+//						.name(name)
+//						.email(email)
+//						.build();
+//			
+//			// DB에 회원 정보 저장
+//			int result = memberService.insertMember(memberCreateDto);
+//			member = (MemberDetails) memberService.loadUserByUsername(memberId);
+//		}
+//		
+//		return member;
+//	}
 }

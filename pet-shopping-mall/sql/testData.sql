@@ -109,29 +109,29 @@ select * from product;
 insert into product_option (option_id, product_id, option_name, option_value)
     values (seq_product_option_id.nextval, 1, '용량', '1kg');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 1, '용량', '2kg');
+    values (seq_product_option_id.nextval, 1, '용량', '2kg');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 1, '용량', '5kg');
+    values (seq_product_option_id.nextval, 1, '용량', '5kg');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 1, '맛', '소고기');
+    values (seq_product_option_id.nextval, 1, '맛', '소고기');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 1, '맛', '닭고기');
+    values (seq_product_option_id.nextval, 1, '맛', '닭고기');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 2, '맛', '소고기');
+    values (seq_product_option_id.nextval, 2, '맛', '소고기');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 2, '맛', '닭고기');
+    values (seq_product_option_id.nextval, 2, '맛', '닭고기');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 3, '색', '분홍색');
+    values (seq_product_option_id.nextval, 3, '색', '분홍색');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 3, '색', '하늘색');    
+    values (seq_product_option_id.nextval, 3, '색', '하늘색');    
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 4, '기본', '기본');
+    values (seq_product_option_id.nextval, 4, '기본', '기본');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 5, '기본', '기본');
+    values (seq_product_option_id.nextval, 5, '기본', '기본');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 6, '맛', '연어맛');
+    values (seq_product_option_id.nextval, 6, '맛', '연어맛');
 insert into product_option (option_id, product_id, option_name, option_value)
-    values (seq_product_detail_id.nextval, 2, '맛', '참치맛');    
+    values (seq_product_option_id.nextval, 2, '맛', '참치맛');    
 select * from product_option;
 
 -- 제품상세 등록

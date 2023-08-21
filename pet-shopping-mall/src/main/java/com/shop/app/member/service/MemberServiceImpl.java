@@ -50,10 +50,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.deleteMember(memberId);
 	}
 
-//	@Override
-//	public int kakaoinsertMember(KakaoMemberCreateDto member) {
-//		return memberRepository.kakaoinsertMember(member);
-//	}
+	@Override
+	public String memberSearchId(String name, String email) {
+		String result = "";
+		try {
+		 result= memberRepository.memberSearchId(name, email);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result ;
+		
+	}
 
 
 
