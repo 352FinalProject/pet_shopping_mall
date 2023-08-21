@@ -169,6 +169,8 @@ public class ReviewController {
 				.attachments(attachments)
 				.build();
 
+		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+		
 		int reviewId = reviewService.insertReview(reviews);
 		Review pointReviewId = reviewService.findReviewId(reviews);
 
