@@ -53,9 +53,9 @@ SELECT *  FROM all_tables;
 --drop table chat;
 --drop table chat_room;
 --drop table breed;
-
-
-
+--
+--
+--
 --
 ---- 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
@@ -66,7 +66,7 @@ SELECT *  FROM all_tables;
 --drop table breed cascade constraints;
 --drop table order_detail cascade constraints;
 --
-
+--
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
@@ -209,7 +209,7 @@ create table product (
     thumbnail_img number, -- 썸네일 이미지(fk)
     product_img number, -- 제품상세 이미지(fk)
     create_date timestamp default systimestamp, -- 등록일
-    expire_date timestamp default systimestamp, -- 유통기한
+    expire_date timestamp default null, -- 유통기한
     like_cnt number default 0, -- 좋아요수
     view_cnt number default 0, -- 조회수
     constraints pk_product_id primary key(product_id),
@@ -218,11 +218,10 @@ create table product (
 
 create table product_detail (
     product_detail_id number, -- pk
-   product_id number, -- fk
+    product_id number, -- fk
     option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
     option_value varchar2(200), -- 옵션속성
     additional_price number default 0, -- 옵션에 따른 추가금
-    stock number default 0,
     sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
