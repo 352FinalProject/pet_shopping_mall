@@ -16,6 +16,7 @@
 <!-- default header name is X-CSRF-TOKEN -->
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
+
 <title>반려동물 쇼핑몰</title>
 </head>
 <link rel="stylesheet"

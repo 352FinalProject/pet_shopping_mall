@@ -328,6 +328,9 @@ left join cartitem ci on pd.product_detail_id = ci.product_detail_id;
     
 update cartitem set product_detail_id = 2, quantity = 2 where cartitem_id =13;
 
+delete from orderTbl where member_id = 'honggd'; 
+
+update orderTbl set order_status = 5 where order_no = '1692609071018';
 
 select 
 	ci.cartitem_id,
@@ -570,3 +573,23 @@ JOIN
     product_detail pd ON od.product_detail_id = pd.product_detail_id
 JOIN
     product p ON pd.product_id = p.product_id;
+
+select * from orderTbl;
+select * from order_detail;
+
+select
+    ot.member_id,
+    ot.order_date,
+    ot.order_no,
+    ot.order_status,
+    (select product_name from product where product_id = pd.product_id) product_name,
+    od.product_detail_id,
+    od.quantity,
+    ot.total_price
+from
+    orderTbl ot left join order_detail od on ot.order_id = od.order_id
+    left join product_detail pd on od.product_detail_id = pd.product_detail_id
+    left join product p on p.product_id = pd.product_id
+where
+    ot.member_id = 'honggd';
+    
