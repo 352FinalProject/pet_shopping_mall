@@ -15,7 +15,7 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.1.100:1521:xe
+    url: jdbc:oracle:thin:@localhost:1521:xe
     username: pet
     password: pet
   servlet:
@@ -67,6 +67,9 @@ mybatis:
   type-aliases-package: com.shop.app, org.springframework.security.core.authority
   type-handlers-package: com.shop.app.common.typehandler
   mapper-locations: classpath:mapper/**/*-mapper.xml
+  type-handlers:
+    - handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+      javaType: com.shop.app.terms.entity.Accept
 
 # iamport
 external:

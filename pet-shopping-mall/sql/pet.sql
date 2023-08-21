@@ -382,15 +382,18 @@ create table cartitem (
 );
 
 -- 약관 테이블
-create table  terms (
- history_id number,
+create table terms (
  terms_id number,
  member_id varchar2(50),
- accept_yn char(1) not null,
+ terms_accept_yn char(1) not null,
+ policy_accept_yn char(1) not null,
+ email_accept_yn char(1) not null,
+ terms_accept_required char(1) not null,
+ policy_accept_required char(1) not null,
+ email_accept_required char(1) not null,
  accept_date timestamp default systimestamp not null,
- constraint pk_history_id primary key(history_id, terms_id),
- constraint fk_terms_member_id foreign key(member_id) references member(member_id),
- constraint unique_terms_id unique(terms_id)
+ constraint pk_terms_id primary key(terms_id),
+ constraint fk_terms_member_id foreign key(member_id) references member(member_id)
 );
 
 -- 약관동의 이력 테이블
@@ -398,8 +401,7 @@ create table terms_history (
  terms_id number,
  title varchar2(50),
  content varchar2(200),
- required char(1) not null,
- constraint pk_terms_id primary key(terms_id),
+ constraint pk_terms_history_id primary key(terms_id),
  constraint fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
 );
 
@@ -446,7 +448,7 @@ create sequence seq_cartitem_id;
 create sequence seq_chat_id;
 create sequence seq_chat_room_id;
 create sequence seq_terms_id;
-create sequence seq_history_id;
+create sequence seq_terms_history_id;
 
 select * from orderTbl order by order_id desc;
 select * from point order by point_id desc;
