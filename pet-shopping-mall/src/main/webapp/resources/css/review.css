@@ -35,6 +35,32 @@
 	vertical-align: middle;
 }
 
+/* 리뷰상세 부트스트랩 */
+.carousel-inner img {
+    width: 250px;
+    height: 250px;
+    background-color: black;
+}
+
+/* 이전 화살표 아이콘 이미지 교체 */
+.carousel-control-prev-icon::before {
+	content: url("/resources/images/review/arrow-left-short.svg");
+}
+
+/* 다음 화살표 아이콘 이미지 교체 */
+.carousel-control-next-icon::after {
+	content: url("/resources/images/review/arrow-right-short.svg");
+}
+
+/* 슬라이드 멈춤 시 배경 색상 설정 */
+#imageCarousel.carousel {
+	background-color: white; /* 원하는 배경 색상으로 변경 */
+}
+
+/* 모든 슬라이드 배경색을 하얀색으로 설정 */
+.carousel-inner .carousel-item {
+	background-color: white; /* 하얀색 배경색 설정 */
+}
 
 
 /* 리뷰작성 */

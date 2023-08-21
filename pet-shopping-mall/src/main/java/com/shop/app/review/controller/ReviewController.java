@@ -30,6 +30,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.ImageService;
 import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.pet.entity.Pet;
+import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.review.dto.ReviewCreateDto;
@@ -54,38 +56,9 @@ public class ReviewController {
 
 	@Autowired
 	private PointService pointService;
-
-	//	@Autowired 
-	//	private ImageService imageService; // 이미지 서비스 주입
-	//	
-	//	// 리뷰 페이지에서 이미지를 불러오는 컨트롤러 메소드
-	//    @GetMapping("/reviews/{reviewId}/image/{filename:.+}")
-	//    @ResponseBody
-	//    public ResponseEntity<Resource> serveImage(@PathVariable Long reviewId, @PathVariable String filename) {
-	//        Resource image = imageService.loadImage(reviewId, filename); // 이미지 서비스에서 이미지 로드
-	//
-	//        // 이미지 타입에 따라 Content-Type 설정
-	//        String contentType = determineContentType(filename);
-	//        return ResponseEntity.ok()
-	//                .header(HttpHeaders.CONTENT_TYPE, contentType)
-	//                .body(image);
-	//    }
-	//
-	//    // 파일 확장자에 따라 Content-Type을 결정하는 메소드
-	//    private String determineContentType(String filename) {
-	//        String extension = FilenameUtils.getExtension(filename.toLowerCase());
-	//        switch (extension) {
-	//            case "jpg":
-	//            case "jpeg":
-	//                return "image/jpeg";
-	//            case "png":
-	//                return "image/png";
-	//            // 추가적인 이미지 확장자 처리 가능
-	//            default:
-	//                return "application/octet-stream"; // 기본적으로 이진 데이터로 설정
-	//        }
-	//    }
-
+	
+	@Autowired
+	private PetService petService;
 
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
 	@GetMapping("/reviewList.do")
@@ -129,7 +102,7 @@ public class ReviewController {
 	public String reviewCreate(
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
-			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, Point point) 
+			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, Point point, Pet pet) 
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
@@ -153,11 +126,12 @@ public class ReviewController {
 						.imageFileSize(upFile.getSize())
 						.build();
 
-				log.debug("review attach = {}", attach);
+				// log.debug("review attach = {}", attach);
 				attachments.add(attach);
 				hasImage = true; // 이미지가 있으면 true (예라)
 			}
 		}
+		
 
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
@@ -169,7 +143,7 @@ public class ReviewController {
 				.attachments(attachments)
 				.build();
 
-		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+		// log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 		
 		int reviewId = reviewService.insertReview(reviews);
 		Review pointReviewId = reviewService.findReviewId(reviews);
@@ -198,7 +172,7 @@ public class ReviewController {
 		newPoint.setPointMemberId(_review.getReviewMemberId());
 		newPoint.setReviewId(pointReviewId.getReviewId());
 		
-		log.debug("newPoint = {}", newPoint);
+		// log.debug("newPoint = {}", newPoint);
 
 		int newPointResult = pointService.insertPoint(newPoint);
 
@@ -211,6 +185,7 @@ public class ReviewController {
 
 		// 1. 리뷰 id로 적립된 포인트 찾기
 		Point earnedPoint = pointService.getPointByReviewId(reviewId);
+		// log.debug("earnedPoint = {}", earnedPoint);
 
 		if (earnedPoint != null) {
 			// 2. 현재 포인트에서 적립된 포인트 빼기
@@ -225,7 +200,7 @@ public class ReviewController {
 			rollbackPoint.setPointMemberId(earnedPoint.getPointMemberId());
 			rollbackPoint.setReviewId(reviewId);
 			
-			log.debug("rollbackPoint = {}", rollbackPoint);
+			// log.debug("rollbackPoint = {}", rollbackPoint);
 
 			int rollbackResult = pointService.insertRollbackPoint(rollbackPoint);
 		}
@@ -239,14 +214,20 @@ public class ReviewController {
 
 	// 리뷰 상세조회 
 	@GetMapping("/reviewDetail.do")
-	public void reviewDetail(@RequestParam(required=true) int reviewId, Model model) {
+	public void reviewDetail(@RequestParam(required=true) int reviewId, Model model, Pet pet) {
 
+		// 펫 정보 가져오기
+		Pet petId = petService.findPetId(pet);
+
+		log.debug("펫정보 petId = {}", petId);
+		
 		Review review = Review.builder()
 				.reviewId(reviewId)
 				.build();
 
 		Review reviews = reviewService.findReviewId(review);
 		model.addAttribute("reviews", reviews);
+		model.addAttribute("petId", petId);
 
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
@@ -276,11 +257,69 @@ public class ReviewController {
 		Review reviews = _review.toReview();
 		int result = reviewService.updateReview(reviews);
 
-		log.debug("리뷰수정 result = {}", result);
+		// log.debug("리뷰수정 result = {}", result);
 
 		return "redirect:/review/reviewDetail.do?reviewId=" + reviews.getReviewId();
 
 	}
 
+//	-- 리뷰 테이블
+//	create table review (
+//	    review_id number,
+//	    pet_id number,
+//	    order_id number,
+//	    review_member_id varchar(20) not null,
+//	    product_detail_id number,
+//	    review_title varchar2(50) not null,
+//	    review_content varchar2(3000) not null,
+//	    review_star_rate number default 1 not null,
+//	    review_created_at timestamp default systimestamp,
+//	    constraint pk_review_id primary key(review_id),
+//	    constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
+//	    constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
+//	    constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
+//	    constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
+//	);
+//
+//	-- 펫 테이블
+//	CREATE TABLE pet (
+//	    pet_id number,
+//	    member_id varchar2(20),
+//	    pet_name VARCHAR2(50) NOT NULL,
+//	    pet_DofB timestamp,
+//	    pet_kind VARCHAR2(50),
+//	    pet_breed VARCHAR2(50),
+//	    pet_adoption timestamp,
+//	    pet_gender CHAR(1),
+//	    pet_created_at timestamp default systimestamp,
+//	    pet_text VARCHAR2(2000),
+//	    constraints pk_pet_id primary key(pet_id),
+//	    constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
+//	    CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
+//	);
+//
+//	-- 멤버 테이블
+//	create table member (
+//	    member_id varchar2(20),
+//	    password varchar2(300) not null,
+//	    name varchar2(50) not null,
+//	    phone varchar2(11),
+//	    email varchar2(200),
+//	    enroll_date timestamp default systimestamp,
+//	    address varchar2(500),
+//	    birthday timestamp,
+//	    subscribe char(1) default 'N' not null,
+//	    constraints pk_member_id primary key(member_id)
+//	);
+//
+//	각각 테이블이 이렇게 되어있는 상황이고
+//	리뷰 작성 후 조회를 하면 펫 정보를 가져오려고 하거든
+//
+//
+//	There was an unexpected error (type=Internal Server Error, status=500).
+//	nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'reviewMemberId' in 'class com.shop.app.pet.entity.Pet'
+//	org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'reviewMemberId' in 'class com.shop.app.pet.entity.Pet'
+//	
+	
 
 }

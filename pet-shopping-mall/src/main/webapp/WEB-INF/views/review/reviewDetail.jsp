@@ -7,30 +7,16 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Slider Example</title>
+<!-- Bootstrap CSS 포함 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <style>
-.carousel-inner img {
-	width: 210px;
-	height: 200px;
-	background-color: black;
-}
-/* 이전 화살표 아이콘 이미지 교체 */
-.carousel-control-prev-icon::before {
-	content: url("/resources/images/review/arrow-left-short.svg");
-}
-
-/* 다음 화살표 아이콘 이미지 교체 */
-.carousel-control-next-icon::after {
-	content: url("/resources/images/review/arrow-right-short.svg");
-}
-
-/* 슬라이드 멈춤 시 배경 색상 설정 */
-#imageCarousel.carousel {
-	background-color: white; /* 원하는 배경 색상으로 변경 */
-}
-
-/* 모든 슬라이드 배경색을 하얀색으로 설정 */
-.carousel-inner .carousel-item {
-	background-color: white; /* 하얀색 배경색 설정 */
+/* 부트스트랩 색깔 지정 */
+a {
+    color: black;
 }
 </style>
 <%-- 리뷰 상세 조회 (혜령) --%>
@@ -55,6 +41,11 @@
 				<div class="star-rating-detail" id="starContainer"></div>
 			</div>
 		<br><br>
+		<div id="review-div">품종</div>
+			<div id="review-div">
+				${petId.petName}
+			</div>
+		<br><br>
 		<div class="review-img">
 			<div style="display: inline-block;">이미지</div><br>
 			<br>
@@ -70,7 +61,7 @@
 							<c:set var="imageSrc"
 								value="${pageContext.request.contextPath}/${imagePath}" />
 							<div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-								<img class="d-block w-100" alt="리뷰이미지" src="${imageSrc}">
+								<img class="review-img2" alt="리뷰이미지" src="${imageSrc}">
 							</div>
 						</c:forEach>
 					</div>
@@ -151,6 +142,7 @@ displayStars(reviewStarRate);
 </script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

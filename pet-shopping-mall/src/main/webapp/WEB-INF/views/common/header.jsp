@@ -16,12 +16,6 @@
 <!-- default header name is X-CSRF-TOKEN -->
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Slider Example</title>
-<!-- Bootstrap CSS 포함 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
 <title>반려동물 쇼핑몰</title>
 </head>
 <link rel="stylesheet"
