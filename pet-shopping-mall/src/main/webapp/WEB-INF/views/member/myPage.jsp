@@ -190,4 +190,7 @@ button, input {
 				</table>
 			</form:form>
 </section>
+<script>
+const 
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

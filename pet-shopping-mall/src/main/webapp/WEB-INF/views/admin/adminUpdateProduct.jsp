@@ -8,12 +8,12 @@
 
 <%-- 상품등록폼 (수경) --%>
 <section class="common-section" id="#">
-	<div class="common-title">상품 기본 등록</div>
+	<div class="common-title">상품기본 수정</div>
 	<div class="common-container">
 		<div class="common-div">
 		
 			<form:form 
-				action="${pageContext.request.contextPath}/product/addProduct.do" 
+				action="${pageContext.request.contextPath}/admin/adminUpdateProduct.do" 
 				enctype="multipart/form-data" 
 				method="post">
 				
@@ -29,7 +29,7 @@
 										</c:if>
 										<c:if test="${not empty categories}">
 											<c:forEach items="${categories}" var="category" varStatus="vs">
-												<option value="${category.categoryId}">${category.categoryName}</option>
+												<option value="${category.categoryId}" ${category.categoryId eq product.categoryId ? "selected" : "" } >${category.categoryName}</option>
 											</c:forEach>
 										</c:if>
 									</select></td>
@@ -37,12 +37,12 @@
 							<tr>
 								<th>상품명</th>
 								<td><input type="text" name="ProductName" id="ProductName"
-									value="" required /></td>
+									value="${product.productName}" required /></td>
 							</tr>
 							<tr>
 								<th>상품금액</th>
 								<td><input type="number" name="productPrice" id="productPrice"
-									required></td>
+									value="${product.productPrice}" required></td>
 							</tr>
 							<tr>
 								<th>썸네일(대표) 사진</th>
@@ -58,8 +58,7 @@
 					</div>
 				</div>
 			    <div class="qna-create-btn">
-			        <button class="qna-btn-reset" type="reset">초기화</button>
-			        <button class="qna-btn-create" type="submit">상품등록</button>
+			        <button class="qna-btn-create" type="submit">상품수정</button>
 			    </div>
 			</form:form>
 			

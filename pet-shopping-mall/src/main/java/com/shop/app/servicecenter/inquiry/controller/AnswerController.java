@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
+import com.shop.app.common.controller.advice.MailSender;
 import com.shop.app.servicecenter.inquiry.dto.AnswerCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.AnswerUpdateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
