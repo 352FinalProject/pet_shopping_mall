@@ -7,34 +7,104 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <style>
-    /* 스타일 수정 */
-    .pet-details, .pet-text-input {
-        width: 50%;
-        padding: 20px;
+.common-section{
+	display: flex;
+    flex-direction: column;
+    margin:100px;
+}
+.common-div {
+	justify-content: center;
+	align-items: left;
+	display: flex;
+} 
+
+/* 회원가입 타이틀 */
+.common-title {
+	font-size:24px;
+	justify-content: center;
+	display: flex;
+}
+
+/* input 글씨 왼쪽정렬 */
+.common-div table th {
+	text-align: left;
+}
+
+/* 테이블 사이 간격 */
+.common-div table td {
+	padding: 5px;
+}
+
+/* input-button 태그 */
+.common-div table td input{
+	height: 30px;
+ 	border-radius: 10px;
+ 	border: 1px solid lightgray;
+ 	background-color: white;
+}
+
+.common-div table td input[type="email"] {
+    margin-bottom: 12px;
+}
+
+/* input 태그 */
+.common-div table td input[type="text"],
+.common-div table td input[type="password"], 
+.common-div table td input[type="tel"], 
+.common-div table td input[type="date"],
+.common-div table td input[type="email"] {
+		margin-right: 10px;
+		margin-left: 10px;
+		width: 250px;
+		border-radius: 20px;
+		height: 40px;
+		border: 1px solid lightgray;
+		padding: 2px 15px; /* 위아래 2px 좌우 15px 패딩 조정 */
+}
+
+/* 돌아가기&가입하기 버튼 */
+.resetAndSubmit {
+	text-align: center;
+}
+
+/* 돌아가기 버튼 */
+.resetAndSubmit input[type="reset"] {
+	background-color: #c8c8c8;
+	margin-right: 10px;
+	width: 120px;
+	height: 40px;
+	border-radius: 20px;
+	color: white;
+	border: 1px solid #e7e7e7;
+	margin-top: 30px;
+}
+
+/* 가입하기 버튼 */
+.resetAndSubmit input[type="submit"] {
+	background-color: #5886d3;
+	width: 120px;
+	height: 40px;
+	border-radius: 20px;
+	border: 1px solid #e7e7e7;
+	color: white;
+	
+}
+
+/* 성별선택 버튼 */
+    input[type="button"][name="gender"] {
         border: 1px solid lightgray;
-        margin: 10px;
+        border-radius: 20px;
+        padding: 5px 10px;
+        margin-right: 10px;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    input[type="button"][name="gender"].selected {
+        background-color: #5886d3;
+        color: white;
     }
     
-    .pet-info-table {
-        width: 100%;
-    }
-    
-    .pet-info-table th, .pet-info-table td {
-        padding: 5px;
-        border-bottom: 1px solid lightgray;
-    }
-    
-    .pet-text-input textarea {
-        width: 100%;
-        height: 100px;
-        resize: none;
-        box-sizing: border-box;
-    }
-    
-    /* 성별 선택 버튼 스타일 */
-    .selected {
-        background-color: lightblue;
-    }
 </style>
 
 <!-- 펫 수정 페이지 내용 -->
@@ -99,18 +169,13 @@
 
 <script>
     function selectGender(gender) {
-        // 선택된 버튼의 'selected' 클래스 추가
-        const buttons = document.getElementsByName('gender');
-        for (const button of buttons) {
-            if (button.value === gender) {
-                button.classList.add('selected');
-            } else {
-                button.classList.remove('selected');
-            }
+        document.getElementById("genderInput").value = gender;
+        var buttons = document.getElementsByName("gender");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("selected");
         }
-
-        // 성별 입력 필드 업데이트
-        document.getElementById('genderInput').value = gender;
+        var selectedButton = document.querySelector(`input[name="gender"][value="${gender}"]`);
+        selectedButton.classList.add("selected");
     }
 </script>
 
