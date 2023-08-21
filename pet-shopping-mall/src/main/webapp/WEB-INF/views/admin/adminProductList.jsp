@@ -58,6 +58,7 @@
 							<th>관리</th>
 						</thead>
 						<tbody>
+
 							<c:if test="${empty basicProducts}">
 								<td colspan="5">등록된 상품이 없습니다.</td>
 							</c:if>

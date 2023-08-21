@@ -4,21 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 
 
 public interface AdminService {
 
-	List<Member> adminMemberList();
+	List<MemberDetails> adminMemberList();
 	
-	List<Member> adminSubscribeList();
-
-	
-	int insertMember(Member member);
-
-	int updateMember(Member member);
-
-	int deleteMember(Member member);
+	List<MemberDetails> adminSubscribeList();
 
 	// 관리자 1:1 문의 전체 내역 조회 (예라)
 	List<Question> findQuestionAll(Map<String, Object> params);
@@ -29,9 +23,9 @@ public interface AdminService {
 	// 관리자 1:1 문의 전체 카운트 (예라)
 	int findTotalQuestionCount();
 	
-	List<Member> adminMemberSearchByNameOrId(String searchKeyword);
+	List<MemberDetails> adminMemberSearchByNameOrId(String searchKeyword);
 	
-	List<Member> adminSubscribeSearchByNameOrId(String searchKeyword);
+	List<MemberDetails> adminSubscribeSearchByNameOrId(String searchKeyword);
 
 	int findTotalAdminCount();
 	

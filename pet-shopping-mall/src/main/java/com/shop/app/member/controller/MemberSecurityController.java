@@ -41,6 +41,7 @@ import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
+
 import com.shop.app.terms.service.TermsService;
 
 import lombok.extern.slf4j.Slf4j;

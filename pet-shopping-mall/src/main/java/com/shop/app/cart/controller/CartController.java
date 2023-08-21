@@ -48,7 +48,10 @@ public class CartController {
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
 
 		model.addAttribute("cartList", cartList);
+
+
 //		model.addAttribute("pointCurrent", point.getPointCurrent());
+
 	}
 	
 	@PostMapping("/deleteCartOne.do")
