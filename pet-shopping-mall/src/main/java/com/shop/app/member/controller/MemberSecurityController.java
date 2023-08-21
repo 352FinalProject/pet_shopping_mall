@@ -211,15 +211,15 @@ public class MemberSecurityController {
 	}
 
 	 // 이메일 보내기
-    @Transactional
-    @PostMapping("/sendEmail")
-    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
-        MailDto dto = ms.createMailAndChangePassword(memberEmail);
-        ms.mailSend(dto);
-
-        return "/member/login.do";
-    }
-	
+//    @Transactional
+//    @PostMapping("/sendEmail")
+//    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
+//        MailDto dto = ms.createMailAndChangePassword(memberEmail);
+//        ms.mailSend(dto);
+//
+//        return "/member/login.do";
+//    }
+//	
 	
 	@GetMapping("/terms.do")
 	public void getTerms() {}

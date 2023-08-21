@@ -31,6 +31,6 @@ public interface MemberRepository {
 	MemberDetails loadUserByUsername(String username);
 
 	//아이디 찾기
-	@Select("select nvl(id, 0) from t_member where name=#{name} and email=#{email}")
+	@Select("select nvl(id, 0) from member where name=#{name} and email=#{email}")
 	public String memberSearchId(@Param("name") String name, @Param("email") String email);
 }
