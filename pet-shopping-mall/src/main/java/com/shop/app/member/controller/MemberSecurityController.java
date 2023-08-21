@@ -2,8 +2,12 @@ package com.shop.app.member.controller;
 
 
 
-import javax.validation.Valid;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.shop.app.member.dto.MemberCreateDto;
+import com.shop.app.member.dto.MemberUpdateDto;
+import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.service.MemberService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
+import com.shop.app.terms.entity.Accept;
+import com.shop.app.terms.entity.Terms;
 import com.shop.app.terms.service.TermsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +84,6 @@ public class MemberSecurityController {
 		    // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
 		}
 
-		
 		// 비밀번호 암호화 처리
 		String rawPassword = member.getPassword();
 		String encodedPassword = passwordEncoder.encode(rawPassword);
@@ -92,12 +110,13 @@ public class MemberSecurityController {
 		
 		int resultTerms = termsService.insertTerms(terms);
 
-		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
+//		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/memberCreateComplete.do";
 	}
 	
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
-	public void memberLogin() {}
+	public void memberLogin(){}
+	
 	
 	// 로그인처리하는 요청 작성 X
 	// 로그아웃처리하는 요청 작성 X
@@ -190,7 +209,8 @@ public class MemberSecurityController {
 		return "redirect/member/memberSearchId.do"; 
 	}
 	
-
+	@GetMapping("/memberCreateComplete.do")
+	public void memberCreateComplete() {}
 	 // 이메일 보내기
 //    @Transactional
 //    @PostMapping("/sendEmail")

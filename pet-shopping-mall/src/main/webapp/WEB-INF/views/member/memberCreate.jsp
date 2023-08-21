@@ -87,6 +87,12 @@
 button, input {
 	cursor: pointer;
 }
+.guide.ok, .guide.error {
+    display: none;
+}
+#memberId.duplicate {
+    border: 2px solid red; /* 아이디 중복일 때 테두리 색상: 빨간색 */
+}
 </style>
 <!-- 회원가입 (혜령) -->
 <section class="common-section" id="#">
@@ -99,54 +105,58 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td>
-							<div id="memberId-container">
-								<input type="text"
-								class="form-control"
-								placeholder=""
-								name="memberId"
-								id="memberId"
-								value=""
-								pattern="\w{4,}"
-								required>
-								<input type="button" id="idCheckButton" value="중복 확인">
-								<input type="hidden" id="idValid" value="0"/>
-							</div>
+						<div id="memberId-container">
+						<input type="text" 
+							   class="form-control" 
+							   placeholder="아이디"
+							   name="memberId" 
+							   id="memberId"
+							   value=""
+							   pattern="\w{4,}"
+							   required>
+						<span class="guide ok">이 아이디는 사용가능합니다.</span>
+						<span class="guide error">이 아이디는 이미 사용중입니다.</span>
+						<input type="hidden" id="idValid" value="0"/>
+					</div>
 						</td>
 					</tr>
 					<tr>
 						<th>이름</th>
 						<td><input type="text" name="name" id="name" value=""
-							required></td>
+							placeholder="이름" required></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
 						<td><input type="password" name="password" id="password"
-							value="" required></td>
+							placeholder="비밀번호" value="" required>
+							</td>
 					</tr>
 					<tr>
 						<th>비밀번호 확인</th>
 						<td><input type="password" id="passwordConfirm" value=""
-							required></td>
+							placeholder="비밀번호 확인" required></td>
 					</tr>
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="tel" name="phone" id="tel" value="" required>
-						</td>
+						<td><input type="tel" name="phone" id="tel" value=""
+							placeholder="핸드폰번호" required></td>
 					</tr>
 					<tr>
 						<th>생일</th>
-						<td><input type="date" name="birthday" id="birthday" required>
-						</td>
+						<td><input type="date" name="birthday" id="birthday"
+							placeholder="생년월일" required></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td><input type="email" name="email" id="emailInput" placeholder="pet@gmail.com" required>
-							<input type="button" id="emailButton" value="이메일 인증" onclick="emailCheck()">
+						<td><input type="email" name="email" id="emailInput"
+							placeholder="이메일" required> <input type="button"
+							id="emailButton" value="이메일 인증" onclick="emailCheck()">
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input type="text" name="address" id="address" required>
-							<input type="button" value="주소 검색"></td>
+						<td><input type="text" name="address" id="address"
+							placeholder="주소" required> <input type="button"
+							value="주소 검색"></td>
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2">
@@ -234,59 +244,64 @@ function verifyToken() {
 		  alert('서버와의 통신에 실패했습니다.');
 		});
 	};
-document.querySelector("#idCheckButton").onclick = () => {
-	const memberIdInput = document.querySelector("#memberId");
-	const value = memberIdInput.value;
-
-	if (value.length >= 4) {
-		$.ajax({
-			url: "${pageContext.request.contextPath}/member/checkIdDuplicate.do",
-			data: {
-				memberId: value
-			},
-			method: "GET",
-			dataType: "json",
-			success: function(responseData) {
-				console.log(responseData);
-				const idValid = document.querySelector("#memberid");
-				const guideOk = document.querySelector(".guide.ok");
-				const guideError = document.querySelector(".guide.error");
-				
-				const { available } = responseData;
-				if (available) {
-					alert("사용 가능한 아이디입니다.");
-					guideOk.style.display = "inline";
-					guideError.style.display = "none";
-					idValid.value = "1";
-				} else {
-					alert("이미 사용 중인 아이디입니다.");
-					guideOk.style.display = "none";
-					guideError.style.display = "inline";
-					idValid.value = "0";
+	document.querySelector("#memberId").onkeyup = (e) => {
+		const value = e.target.value; 
+		console.log(value);
+		
+		const guideOk = document.querySelector(".guide.ok");
+		const guideError = document.querySelector(".guide.error");
+		const idValid = document.querySelector("#idValid");
+		
+		if(value.length >= 4) {
+			$.ajax({
+				url : "${pageContext.request.contextPath}/member/checkIdDuplicate.do",
+				data : {
+					memberId : value
+				},
+				method : "GET",
+				dataType : "json",
+				success(responseData) {
+					console.log(responseData);
+					const {available} = responseData;
+					if(available) {
+						guideOk.style.display = "inline";
+						guideError.style.display = "none";
+						idValid.value = "1";
+					}
+					else {
+						guideOk.style.display = "none";
+						guideError.style.display = "inline";
+						idValid.value = "0";
+					}
+					
 				}
-			}
-		});
-	} else {
-		alert("아이디를 최소 4자 이상 입력해주세요.");
-		idValid.value = "0";
-	}
-};
+			});
+		}
+		else {
+			guideOk.style.display = "none";
+			guideError.style.display = "none";
+			idValid.value = "0";
+		}
+	};
 
-/* document.memberCreateFrm.onsubmit = (e) => {
-	const idValid = document.querySelector("#idValid");
-	const password = document.querySelector("#password");
-	const passwordConfirmation = document.querySelector("#passwordConfirm");
-
-	if (idValid.value === "0") {
-		alert("사용 가능한 아이디를 입력해주세요.");
-		return false;
-	}
-
-	if (password.value !== passwordConfirmation.value) {
-		alert("비밀번호가 일치하지 않습니다.");
-		return false;
-	}
-}; */
+	document.memberCreateFrm.onsubmit = (e) => {
+		const memberIdContainer = document.querySelector("#memberId-container");
+		const idValid = document.querySelector("#idValid");
+		const password = document.querySelector("#password");
+		const passwordConfirmation = document.querySelector("#passwordConfirmation");
+		
+		if(idValid === "0") {
+			memberIdContainer.classList.add("duplicate");
+			alert("사용가능한 아이디를 작성해주세요.");
+			return false;
+		}
+		
+		
+		if(password.value !== passwordConfirmation.value) {
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		}
+	};
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

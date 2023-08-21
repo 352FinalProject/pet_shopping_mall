@@ -56,7 +56,7 @@ SELECT *  FROM all_tables;
 
 
 
---
+
 ---- 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
@@ -65,7 +65,7 @@ SELECT *  FROM all_tables;
 --drop table pet cascade constraints;
 --drop table breed cascade constraints;
 --drop table order_detail cascade constraints;
---
+
 
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
@@ -390,7 +390,7 @@ create table  terms (
  accept_yn char(1) not null,
  accept_date timestamp default systimestamp not null,
  constraint pk_history_id primary key(history_id, terms_id),
- constraint fk_terms_member_id foreign key(member_id) references member(member_id),
+ constraint fk_terms_member_id foreign key(member_id) references member(member_id) on delete cascade,
  constraint unique_terms_id unique(terms_id)
 );
 

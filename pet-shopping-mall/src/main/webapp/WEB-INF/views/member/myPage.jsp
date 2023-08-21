@@ -120,19 +120,19 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td><input type="text" name="memberId" id="memberId"
-							value="${loginMember.memberId}"  required /></td>
+							value="${loginMember.memberId}"  required readonly/></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/마이페이지/1.png" />
-								<div>펫 등록1</div>
+								<div></div>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th>이름</th>
 						<td><input type="text" name="name" id="name"
-							value="${loginMember.name}" required></td>
+							value="${loginMember.name}" required readonly></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
@@ -142,7 +142,7 @@ button, input {
 							<div class="pet-info">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/마이페이지/2.png" />
-								<div>펫 등록2</div>
+								<div></div>
 							</div>
 						</td>
 					</tr>
@@ -154,13 +154,12 @@ button, input {
 					<tr>
 						<th>핸드폰 번호</th>
 						<td><input type="tel" name="tel" id="tel"
-							value="${loginMember.phone}" required> <input
-							type="button" value="핸드폰 인증" onclick="telCheck()"></td>
+							value="${loginMember.phone}" required></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/마이페이지/3.png" />
-								<div>펫 등록3</div>
+								<div></div>
 							</div>
 						</td>
 					</tr>
@@ -172,7 +171,9 @@ button, input {
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="pet@gmail.com" value="${loginMember.email}" required>
+							placeholder="pet@gmail.com" value="${loginMember.email}" required readonly>
+							<input
+							type="button" value="이메일 인증" onclick="emailCheck()">
 						</td>
 					</tr>
 					<tr>
@@ -191,6 +192,5 @@ button, input {
 			</form:form>
 </section>
 <script>
-const 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
