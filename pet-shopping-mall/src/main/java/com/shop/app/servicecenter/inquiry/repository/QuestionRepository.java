@@ -71,4 +71,8 @@ public interface QuestionRepository {
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) answer_count from question q where q.question_id = #{questionId} order by question_id desc")
 	Question findQuestionByAnwerCount(Question question);
 
+	// 각 질문의 답변 수 계산하여 추가 (예라)
+	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) answer_count from question q where q.question_id = #{questionId} order by question_id desc")
+	int calculateAnswerCount(int questionId);
+
 }

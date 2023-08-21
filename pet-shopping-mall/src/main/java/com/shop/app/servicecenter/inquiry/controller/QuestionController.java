@@ -3,16 +3,20 @@ package com.shop.app.servicecenter.inquiry.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
@@ -173,27 +177,29 @@ public class QuestionController {
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}
 	
-	// 1:1 문의 검색 (예라)
+	// 1:1 문의 실시간 검색 (예라)
 	@GetMapping("/inquiry/questionSearch.do")
-	public String questionSearch(
-	        @RequestParam(required = false) String searchKeyword,
-	        Model model) {
-
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> questionSearch(
+	        @RequestParam(required = false) String searchKeyword, Model model, Question question) {
+	    Map<String, Object> result = new HashMap<>();
+	    
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
 	        List<Question> questions = questionService.questionSearch(searchKeyword);
-
-	        for (Question question : questions) {
-		        String titleString = question.getQuestionTitle(); 
-		        String contentString = question.getQuestionContent(); 
-		        
-	        	question.setQuestionTitle(titleString); 
-	        	question.setQuestionContent(contentString);
-		    }
-
+	        
+	        // 각 질문의 답변 수 계산하여 추가
+	        for (Question q : questions) {
+	            int answerCount = questionService.calculateAnswerCount(q.getQuestionId());
+	            log.debug("answerCount = {}", answerCount);
+	            q.setAnswerCount(answerCount);
+	        }
+	        
 	        model.addAttribute("questions", questions);
+	        result.put("questions", questions);
+	        return new ResponseEntity<>(result, HttpStatus.OK);
+	        
 	    }
-	    return "/servicecenter/inquiry/questionList";
+	    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
 	}
-	
-	
+
 }
