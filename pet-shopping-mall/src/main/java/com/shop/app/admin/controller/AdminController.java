@@ -28,6 +28,7 @@ import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
+import com.shop.app.product.dto.OptionCreateDto;
 import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
@@ -270,7 +271,7 @@ public class AdminController {
 	
 	// 기본상품 수정
 	@PostMapping("/adminUpdateProduct.do")
-	public ResponseEntity<?> adminUpdateProduct(
+	public String adminUpdateProduct(
 			@Valid ProductUpdateDto _product,
 			BindingResult bindingResult,
 			@AuthenticationPrincipal MemberDetails member, 
@@ -284,12 +285,12 @@ public class AdminController {
 		log.debug("product = {}", product);
 		model.addAttribute("product", product);
 		
-		return null;
+		return "redirect:/admin/adminProductList.do";
 	}
 	
 	// 기본상품 삭제
 	@PostMapping("/adminDeleteProduct.do")
-	public ResponseEntity<?> adminDeleteProduct(
+	public String adminDeleteProduct(
 			@Valid ProductUpdateDto _product,
 			BindingResult bindingResult,
 			@AuthenticationPrincipal MemberDetails member, 
@@ -300,10 +301,10 @@ public class AdminController {
 		int productId = product.getProductId();
 		int result = productService.deleteProduct(productId);
 		
-		return null;
+		return "redirect:/admin/adminProductList.do";
 	}
 	
-	// 상품 추가 페이지로 연결
+	// 상품(옵션) 추가 페이지로 연결
 	@GetMapping("/adminAddProductOption.do")
 	public void adminAddProductOption(
 			@AuthenticationPrincipal MemberDetails member, 
@@ -316,6 +317,26 @@ public class AdminController {
 		log.debug("categories = {}", categories);
 		model.addAttribute("categories", categories);
 	}
+	
+	// 상품(옵션)추가
+	@PostMapping("/adminAddProductOption.do")
+	public String adminAddProductOption(
+			@Valid OptionCreateDto _option,
+			@Valid ProductCreateDto _product,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal MemberDetails member,
+			Model model
+			){
+		log.debug("OptionCreateDto = {}", _option);
+		log.debug("ProductCreateDto = {}", _product);
+		
+		
+		
+		
+		return "redirect:/admin/adminProductList.do";
+	}
+	
+	
 	
 	// 상품 추가 페이지로 연결
 	@GetMapping("/adminAddProduct.do")
