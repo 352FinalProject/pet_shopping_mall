@@ -73,14 +73,15 @@
 					href="${pageContext.request.contextPath}/admin/admin.do">관리자페이지</a>
 				</li>
 				<sec:authorize access="isAuthenticated()">
-					<li>
-						<button class="" type="button"
-							onclick="document.memberLogoutFrm.submit();">로그아웃</button>
+					<li><a class="" type="button" href="#"
+						onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
 					</li>
-					<form action="/member/deleteMember.do" method="post"
-						onsubmit="return confirm('정말로 회원 탈퇴를 진행하시겠습니까?');">
-						<button type="submit">회원 탈퇴</button>
-					</form>
+					<li>
+						<form action="/member/deleteMember.do" method="post"
+							onsubmit="return confirm('정말로 회원 탈퇴를 진행하시겠습니까?');">
+							<button type="submit">회원 탈퇴</button>
+						</form>
+					</li>
 				</sec:authorize>
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/community.do">펫스토리</a>
@@ -161,4 +162,13 @@
 			</div>
 		</div>
 	</header>
+<script>
+const deleteMember  = () => ({
+	  if (confirm('정말로 회원 탈퇴를 진행하시겠습니까?')) {
+          document.getElementById('deleteMemberForm').submit();
+      } else {
+          alert('회원 탈퇴에 실패하였습니다.');
+      }
+});
+</script>
 	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>
