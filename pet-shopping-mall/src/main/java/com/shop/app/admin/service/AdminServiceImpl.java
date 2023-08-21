@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.admin.repository.AdminRepository;
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 
 @Transactional(rollbackFor = Exception.class) // 어떤예외가 발생하면 자동으로 롤백
@@ -20,33 +21,23 @@ public class AdminServiceImpl implements AdminService {
 	private AdminRepository adminRepository;
 
 	@Override
-	public List<Member> adminMemberList() {
+	public List<MemberDetails> adminMemberList() {
 		return adminRepository.adminMemberList();
 	}
 	
 	@Override
-	public List<Member> adminSubscribeList() {
+	public List<MemberDetails> adminSubscribeList() {
 		return adminRepository.adminSubscribeList();
 	}
 	
 	@Override
-	public List<Member> adminMemberSearchByNameOrId(String searchKeyword) {
+	public List<MemberDetails> adminMemberSearchByNameOrId(String searchKeyword) {
 	    return adminRepository.adminMemberSearchByNameOrId(searchKeyword);
 	}	
-	 
+	
 	@Override
-	public int insertMember(Member member) {
-		return adminRepository.insertMember(member);
-	}
-
-	@Override
-	public int updateMember(Member member) {
-		return adminRepository.updateMember(member);
-	}
-
-	@Override
-	public int deleteMember(Member member) {
-		return adminRepository.deleteMember(member);
+	public List<MemberDetails> adminSubscribeSearchByNameOrId(String searchKeyword) {
+		return adminRepository.adminSubscribeSearchByNameOrId(searchKeyword);
 	}
 
 	// 관리자 1:1 문의 전체 내역 조회 (예라)
@@ -65,11 +56,6 @@ public class AdminServiceImpl implements AdminService {
 		return adminRepository.questionSearch(searchKeyword);
 	}
 	
-	@Override
-	public List<Member> adminSubscribeSearchByNameOrId(String searchKeyword) {
-		return adminRepository.adminSubscribeSearchByNameOrId(searchKeyword);
-	}
-
 	@Override
 	public int findTotalQuestionCount() {
 		return adminRepository.findTotalQuestionCount();

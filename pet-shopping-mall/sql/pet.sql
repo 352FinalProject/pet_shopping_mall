@@ -21,77 +21,78 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 --
-drop table review;
-drop table image_attachment;
-drop table image_attachment_mapping;
-drop table answer;
-drop table question;
-drop table point;
-drop table discount_rule;
-drop table product_category;
-drop table product;
-drop table product_detail;
-drop table cart;
-drop table payment;
-drop table cartitem;
-drop table orderTbl;
-drop table order_detail;
-drop table refund;
-drop table cancel_order;
-drop table authority;
-drop table product_category;
-drop table community;
-drop table wishlist;
-drop table pet;
-drop table persistent_logins;
-drop table image_attachment_mapping;
-drop table member;
-drop table ordertbl;
-drop table return;
-drop table terms;
-drop table terms_history;
-drop table chat;
-drop table chat_room;
-drop table breed;
-
-
--- 외래키 붙어있는 테이블삭제
-drop table member cascade constraints;
-drop table review cascade constraints;
-drop table product cascade constraints;
-drop table product_detail cascade constraints;
-drop table pet cascade constraints;
-drop table breed cascade constraints;
-drop table order_detail cascade constraints;
-
-
-drop sequence seq_question_id;
-drop sequence seq_answer_id;
-drop sequence seq_image_attachment_id;
-drop sequence seq_image_attachment_mapping_id;
-drop sequence seq_point_id;
-drop sequence seq_product_category_id;
-drop sequence seq_product_id;
-drop sequence seq_product_detail_id;
-drop sequence seq_cart_id;
-drop sequence seq_payment_id;
-drop sequence seq_cartitem_id;
-drop sequence seq_ordertbl_id;
-drop sequence seq_refund_id;
-drop sequence seq_cancel_order_id;
-drop sequence seq_authority_id;
-drop sequence seq_community_id;
-drop sequence seq_wishlist_id;
-drop sequence seq_pet_id;
-drop sequence seq_persistent_logins_id;
-drop sequence seq_member_id;
-drop sequence seq_review_id;
-drop sequence seq_chat_id;
-drop sequence seq_chat_room_id;
-drop sequence seq_cancel_id;
-drop sequence seq_history_id;
-drop sequence seq_terms_id;
-drop sequence seq_product_option_id;
+--drop table review;
+--drop table image_attachment;
+--drop table image_attachment_mapping;
+--drop table answer;
+--drop table question;
+--drop table point;
+--drop table discount_rule;
+--drop table product_category;
+--drop table product;
+--drop table product_detail;
+--drop table cart;
+--drop table payment;
+--drop table cartitem;
+--drop table orderTbl;
+--drop table order_detail;
+--drop table refund;
+--drop table cancel_order;
+--drop table authority;
+--drop table product_category;
+--drop table community;
+--drop table wishlist;
+--drop table pet;
+--drop table persistent_logins;
+--drop table image_attachment_mapping;
+--drop table member;
+--drop table ordertbl;
+--drop table return;
+--drop table terms;
+--drop table terms_history;
+--drop table chat;
+--drop table chat_room;
+--drop table breed;
+--
+--
+--
+--
+---- 외래키 붙어있는 테이블삭제
+--drop table member cascade constraints;
+--drop table review cascade constraints;
+--drop table product cascade constraints;
+--drop table product_detail cascade constraints;
+--drop table pet cascade constraints;
+--drop table breed cascade constraints;
+--drop table order_detail cascade constraints;
+--
+--
+--drop sequence seq_question_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_image_attachment_mapping_id;
+--drop sequence seq_point_id;
+--drop sequence seq_product_category_id;
+--drop sequence seq_product_id;
+--drop sequence seq_product_detail_id;
+--drop sequence seq_cart_id;
+--drop sequence seq_payment_id;
+--drop sequence seq_cartitem_id;
+--drop sequence seq_ordertbl_id;
+--drop sequence seq_refund_id;
+--drop sequence seq_cancel_order_id;
+--drop sequence seq_authority_id;
+--drop sequence seq_community_id;
+--drop sequence seq_wishlist_id;
+--drop sequence seq_pet_id;
+--drop sequence seq_persistent_logins_id;
+--drop sequence seq_member_id;
+--drop sequence seq_review_id;
+--drop sequence seq_chat_id;
+--drop sequence seq_chat_room_id;
+--drop sequence seq_cancel_id;
+--drop sequence seq_history_id;
+--drop sequence seq_terms_id;
 
 
 --==============================
@@ -133,7 +134,7 @@ CREATE TABLE pet (
     pet_adoption timestamp,
     pet_gender CHAR(1),
     pet_created_at timestamp default systimestamp,
-    pet_text VARCHAR2(2000),
+    pet_text VARCHAR2(2000)
     constraints pk_pet_id primary key(pet_id),
     constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
@@ -194,7 +195,7 @@ create table image_attachment_mapping (
 
 -- 상품 카테고리 테이블
 create table product_category (
-    category_id number, -- pk
+    category_id number,
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
@@ -207,7 +208,7 @@ create table product (
     product_price number not null,
     thumbnail_img number, -- 썸네일 이미지(fk)
     product_img number, -- 제품상세 이미지(fk)
-    create_date timestamp default sysdate, -- 등록일
+    create_date timestamp default systimestamp, -- 등록일
     expire_date timestamp default null, -- 유통기한
     like_cnt number default 0, -- 좋아요수
     view_cnt number default 0, -- 조회수
@@ -215,7 +216,6 @@ create table product (
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
--- 상품상세 테이블
 create table product_detail (
     product_detail_id number, -- pk
     product_id number, -- fk
@@ -226,7 +226,6 @@ create table product_detail (
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
 );
-
 
 -- 주문테이블
 -- order 가 오라클 예약어여서 테이블명 이렇게 했습니다.
@@ -338,7 +337,6 @@ create table payment (
     constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
-
 -- 반품테이블
 -- create table return (
 --     return_id number,
@@ -448,7 +446,6 @@ create sequence seq_chat_id;
 create sequence seq_chat_room_id;
 create sequence seq_terms_id;
 create sequence seq_history_id;
-create sequence seq_product_option_id;
 
 select * from orderTbl order by order_id desc;
 select * from point order by point_id desc;

@@ -24,14 +24,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
+import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
+
+import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.service.OrderService;
+import com.shop.app.point.entity.Point;
+
 import com.shop.app.product.dto.OptionCreateDto;
 import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
+
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductOption;
@@ -49,6 +56,9 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
 	private ProductService productService;
 	
 	@GetMapping("/admin.do")
@@ -64,19 +74,17 @@ public class AdminController {
 	 */
 	@GetMapping("/adminMemberList.do")
 	public void adminMemberList(Model model) {
-		// MemberDetails로 바꿔야댐
-		List<Member> members = adminService.adminMemberList();
+		List<MemberDetails> members = adminService.adminMemberList();
 		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
-	    for (Member member : members) {
+	    for (MemberDetails member : members) {
 	        
 	        String subscribeString = member.getSubscribe().toString(); 
 	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
 	        
 	        member.setSubscribe(subscribe);
 	    }
-	    
 	    int totalCount = adminService.findTotalAdminCount();
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("members", members);
@@ -89,23 +97,22 @@ public class AdminController {
 	 */
 	@GetMapping("/adminSubscribeList.do")
 	public void adminSubscribeList(Model model) {
-		// MemberDetails로 바꿔야댐
-		List<Member> subscribeMembers = adminService.adminSubscribeList();
+		List<MemberDetails> subscribedMembers = adminService.adminSubscribeList();
 //		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
-	    for (Member subscribeMember : subscribeMembers) {
+	    for (MemberDetails subscribedMember : subscribedMembers) {
 	        
-	        String subscribeString = subscribeMember.getSubscribe().toString(); 
+	        String subscribeString = subscribedMember.getSubscribe().toString(); 
 	        Subscribe subscribe = Subscribe.valueOf(subscribeString); 
 	        
-	        subscribeMember.setSubscribe(subscribe);
+	        subscribedMember.setSubscribe(subscribe);
 	    }
 	    
 	    int totalCount = adminService.findTotalubscribeCount();
 		
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("subscribeMembers", subscribeMembers);
+		model.addAttribute("subscribedMembers", subscribedMembers);
 	}
 	
 
@@ -173,14 +180,17 @@ public class AdminController {
 	        @RequestParam(required = false) String searchKeyword,
 	        Model model) {
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
-	        List<Member> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
+	        List<MemberDetails> members = adminService.adminMemberSearchByNameOrId(searchKeyword);
 	        
-	        for (Member member : members) {
+	        for (MemberDetails member : members) {
 		        String subscribeString = member.getSubscribe().toString(); 
 		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
 		        
 		        member.setSubscribe(subscribe);
 		    }
+			int totalCount = adminService.findTotalAdminCount();
+			model.addAttribute("totalCount", totalCount);
+			
 			model.addAttribute("members", members);
 	    }
 	    return "admin/adminMemberList";
@@ -199,9 +209,9 @@ public class AdminController {
 	        Model model) {
 		
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
-	        List<Member> members = adminService.adminSubscribeSearchByNameOrId(searchKeyword);
-	        List<Member> subscribedMembers = new ArrayList<>();
-	        for (Member member : members) {
+	        List<MemberDetails> members = adminService.adminSubscribeSearchByNameOrId(searchKeyword);
+	        List<MemberDetails> subscribedMembers = new ArrayList<>();
+	        for (MemberDetails member : members) {
 		        
 		        String subscribeString = member.getSubscribe().toString(); 
 		        Subscribe subscribe = Subscribe.valueOf(subscribeString);
@@ -212,6 +222,9 @@ public class AdminController {
 	                subscribedMembers.add(member);
 		        }
 	        }
+	        int totalCount = adminService.findTotalubscribeCount();
+			model.addAttribute("totalCount", totalCount);
+			
 	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
 			
@@ -219,7 +232,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("/adminOrderList.do")
-	public void adminOrderList() {}
+	public void adminOrderList(Model model) {
+		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
+		log.debug("orderlists = {}", orderlists);
+		model.addAttribute("orderlists", orderlists);
+	}
 	
 	/**
 	 * 상품정보 조회 
@@ -250,11 +267,28 @@ public class AdminController {
 	}
 	
 	/**
-	 * 판매량통계
+	 * 상품별 판매량통계
 	 */
-	@GetMapping("/adminStatistics.do")
-	public void adminStatistics() {
+	@GetMapping("/adminStatisticsProduct.do")
+	public void adminStatisticsProduct() {
 		
+		
+	}
+	
+	/**
+	 * 월별 판매량통계
+	 */
+	@GetMapping("/adminStatisticsMonthly.do")
+	public void adminStatisticsMonthly() {
+		
+		
+	}
+	
+	/**
+	 * 일별 판매량통계
+	 */
+	@GetMapping("/adminStatisticsDaily.do")
+	public void adminStatisticsDaily() {
 		
 		
 	}
@@ -266,6 +300,11 @@ public class AdminController {
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
 			) {
+		
+		// 상품카테고리 조회 후 전달
+		List<ProductCategory> categories = productService.findAll();
+		log.debug("categories = {}", categories);
+		model.addAttribute("categories", categories);
 		
 		// 상품아이디로 상품정보 조회해서 가져오기
 		Product product = productService.findProductById(productId);
@@ -283,8 +322,9 @@ public class AdminController {
 			) {
 		log.debug("ProductUpdateDto = {}", _product);
 		Product product = _product.toProduct();
+
 		
-		// 상품아이디로 상품정보 조회해서 가져오기
+		// 상품정보 수정하기
 		int result = productService.updateProduct(product);
 		log.debug("product = {}", product);
 		model.addAttribute("product", product);

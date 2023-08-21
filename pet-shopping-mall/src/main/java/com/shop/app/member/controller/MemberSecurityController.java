@@ -1,10 +1,6 @@
 package com.shop.app.member.controller;
 
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +50,7 @@ import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.terms.entity.Accept;
 import com.shop.app.terms.entity.Terms;
+
 import com.shop.app.terms.service.TermsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +61,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberSecurityController {
 
+	 
 	@Autowired // MemberService 자동 주입
 	private MemberService memberService;
 	
@@ -158,7 +157,8 @@ public class MemberSecurityController {
 	@PostMapping("/memberUpdate.do")
 	public String memberUpdate(
 			@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
-			@Valid MemberUpdateDto _member, 
+			@Valid MemberUpdateDto _member,
+			HttpSession session,
 			BindingResult bindingResult, 
 			RedirectAttributes redirectAttr) {
 		log.debug("_member = {}", _member);
@@ -185,16 +185,17 @@ public class MemberSecurityController {
 			);
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		
-		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
+	    session.invalidate(); // 세션 종료
+//		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
 		return "redirect:/member/myPage.do";
 	}
 	
-	@DeleteMapping("/deleteMember.do")
-	public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr) {
+	@PostMapping("/deleteMember.do")
+	public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr, HttpSession session) {
 	    String memberId = principal.getMemberId(); // 현재 로그인한 회원의 ID를 가져옵니다.
 	    memberService.deleteMember(memberId);  // 회원 삭제 서비스 호출
-//	    sessionStatus.setComplete(); // 세션 종료
-	    redirectAttr.addFlashAttribute("msg", "회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다.");
+	    session.invalidate(); // 세션 종료
+	    
 	    return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
 	}
 
@@ -215,13 +216,11 @@ public class MemberSecurityController {
 	}
 
 	//아이디 찾기 
-//	@RequestMapping(value = "/memberSearchId.do", method = RequestMethod.POST)
 	@GetMapping("/memberSearchId.do")
-	@ResponseBody
-	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
-	    String result = memberService.memberSearchId(name, email);
-	    return result;
+	public String memberSearchId() {
+		return "redirect/member/memberSearchId.do"; 
 	}
+	
 
 	 // 이메일 보내기
 //    @Transactional
