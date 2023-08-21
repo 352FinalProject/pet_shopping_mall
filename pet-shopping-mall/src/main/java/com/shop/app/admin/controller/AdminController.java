@@ -251,6 +251,35 @@ public class AdminController {
 		
 	}
 	
+	// 기본상품 수정 페이지로 연결
+	@GetMapping("/adminUpdateProduct.do")
+	public void adminUpdateProduct(
+			@RequestParam int productId,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		
+		// 상품아이디로 상품정보 조회해서 가져오기
+		Product product = productService.findProductById(productId);
+		log.debug("product = {}", product);
+		model.addAttribute("product", product);
+	}
+	
+	
+	// 상품 추가 페이지로 연결
+	@GetMapping("/adminAddProductOption.do")
+	public void adminAddProductOption(
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		log.debug("member = {}", member);
+		
+		// 상품카테고리 조회 후 전달
+		List<ProductCategory> categories = productService.findAll();
+		log.debug("categories = {}", categories);
+		model.addAttribute("categories", categories);
+	}
+	
 	// 상품 추가 페이지로 연결
 	@GetMapping("/adminAddProduct.do")
 	public void adminAddProduct(

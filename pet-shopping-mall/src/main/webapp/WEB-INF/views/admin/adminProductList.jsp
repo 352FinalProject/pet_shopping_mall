@@ -69,7 +69,7 @@
 										<td>${basicProduct.productName}</td>
 										<td>${basicProduct.productPrice}</td>
 										<td>
-											<button onclick="">판매등록</button> 
+											<button formaction="${pageContext.request.contextPath}/admin/adminAddProductOption.do" onclick="">판매등록</button> 
 											<button onclick="">수정</button> 
 											<button onclick="">삭제</button> 
 										</td>

@@ -24,8 +24,8 @@ public interface ProductRepository {
 	List<ProductCategory> findAll();
 	
 	// productCode 변수는 존재하지 않습니다.(수경)
-	@Select("select * from product where product_code = #{productCode}")
-	Product findProductByCode(String productCode);
+//	@Select("select * from product where product_code = #{productCode}")
+//	Product findProductByCode(String productCode);
 
 	@Select("select * from product_detail where product_detail_id = #{productDetailId}")
 	ProductDetail findProductDetailById(int productDetailId);
@@ -36,5 +36,7 @@ public interface ProductRepository {
 	@Select("select * from product_detail order by product_detail_id desc")
 	List<ProductDetail> findAllProductDetails();
 
+	@Select("select * from product where product_id = #{productId}")
+	Product findProductById(int productId);
 
 }
