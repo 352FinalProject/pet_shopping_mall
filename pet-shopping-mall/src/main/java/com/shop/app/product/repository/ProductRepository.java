@@ -1,6 +1,8 @@
 package com.shop.app.product.repository;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
@@ -43,5 +45,8 @@ public interface ProductRepository {
 
 	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, thumbnail_img = #{thumbnailImg}, product_img = #{productImg}, expire_date = #{expireDate} where product_id = #{productId}")
 	int updateProduct(Product product);
+
+	@Delete("delete from product where product_id = #{productId}")
+	int deleteProduct(int productId);
 
 }

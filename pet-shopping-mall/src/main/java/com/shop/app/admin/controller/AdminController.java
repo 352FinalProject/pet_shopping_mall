@@ -287,6 +287,21 @@ public class AdminController {
 		return null;
 	}
 	
+	// 기본상품 삭제
+	@PostMapping("/adminDeleteProduct.do")
+	public ResponseEntity<?> adminDeleteProduct(
+			@Valid ProductUpdateDto _product,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			){
+		
+		Product product = _product.toProduct();
+		int productId = product.getProductId();
+		int result = productService.deleteProduct(productId);
+		
+		return null;
+	}
 	
 	// 상품 추가 페이지로 연결
 	@GetMapping("/adminAddProductOption.do")

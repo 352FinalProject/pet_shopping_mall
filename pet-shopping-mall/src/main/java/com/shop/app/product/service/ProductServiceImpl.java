@@ -50,6 +50,11 @@ public class ProductServiceImpl implements ProductService {
 	public int updateProduct(Product product) {
 		return productRepository.updateProduct(product);
 	}
+	
+	@Override
+	public int deleteProduct(int productId) {
+		return productRepository.deleteProduct(productId);
+	}
 
 
 
