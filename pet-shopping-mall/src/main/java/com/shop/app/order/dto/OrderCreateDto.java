@@ -1,22 +1,29 @@
 package com.shop.app.order.dto;
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import com.shop.app.order.entity.Order;
+import com.shop.app.order.entity.OrderDetail;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Valid
 @Data
+@ToString
 public class OrderCreateDto {
-	private String orderNo; // 주문번호 (ex 230811001)
+	private String orderNo;
 	private String memberId;
 	private int totalPrice;
 	private int deliveryFee;
 	private int discount;
 	private int amount;
 	private String discountCode;
+		
+	private List<OrderDetail> forms;
 	
 	private int pointsUsed; // 사용하려는 포인트 (예라)
 	

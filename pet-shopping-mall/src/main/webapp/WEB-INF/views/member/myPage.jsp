@@ -189,6 +189,8 @@ button, input {
 					</tr>
 				</table>
 			</form:form>
+		</div>
+	</div>
 </section>
 <script>
 const 

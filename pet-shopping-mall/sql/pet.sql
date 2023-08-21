@@ -425,6 +425,7 @@ create table chat (
  constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
 );
 
+
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
