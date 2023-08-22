@@ -126,49 +126,31 @@ public class MemberSecurityController {
 	@GetMapping("/myPage.do")
 	public void memberDetail(
 			Authentication authentication, // 현재 사용자 인증 정보와 멤버 정보를 가져와서 상세 정보 페이지에 표시. 
-			@AuthenticationPrincipal MemberDetails member, // member: 현재 사용자 멤버 정보
-			Model model) { // model: 뷰와 컨트롤러 사이에서 데이터를 전달하는 객체
-
-			
-		log.debug("memberService = {}", memberService);
-		log.debug("authentication = {}", authentication);
+			@AuthenticationPrincipal MemberDetails _member, // member: 현재 사용자 멤버 정보
+			Model model
+			) { // model: 뷰와 컨트롤러 사이에서 데이터를 전달하는 객체 
 		
 		// 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
 		// 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
 		Object credentials = authentication.getCredentials(); // 열람불가
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		log.debug("principal = {}", principal);
-		log.debug("credentials = {}", credentials);
-		log.debug("authorities = {}", authorities);
+		
+		Member member = memberService.findMemberById(_member.getMemberId());
 		
 		log.debug("member = {}", member);
 		
-//		String memberId = principal.getMemberId();
-//		log.debug("memberId= {}", memberId);
-//		String memberName = principal.getName();
-//		log.debug("memberName = {}", memberName);
-//		String memberEmail = principal.getEmail();
-//		log.debug("memberEmail = {}", memberEmail);
-//		log.debug("address= {}", address); 이새끼 왜 null임 ㅅㅂ
-	    model.addAttribute("memberId", member.getMemberId());
-	    model.addAttribute("memberName", member.getName());
-	    model.addAttribute("phone", member.getPhone());
-	    model.addAttribute("birthday", member.getBirthday());
-	    model.addAttribute("email", member.getEmail());
-	    model.addAttribute("address", member.getAddress());
-	    
+	    model.addAttribute("member", member);
 	}
 	
 	// 멤버 정보 업데이트
-	@PostMapping("/memberUpdate.do")
+	@PostMapping("/memberUdapte.do")
 	public String memberUpdate(
 			@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
 			@Valid MemberUpdateDto _member,
 			HttpSession session,
 			BindingResult bindingResult, 
 			RedirectAttributes redirectAttr) {
-		log.debug("_member = {}", _member);
 		Member member = _member.toMember();
 		String memberId = principal.getMemberId();
 		member.setMemberId(memberId);
@@ -193,7 +175,7 @@ public class MemberSecurityController {
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		
 	    session.invalidate(); // 세션 종료
-//		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
+		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
 		return "redirect:/member/myPage.do";
 	}
 	

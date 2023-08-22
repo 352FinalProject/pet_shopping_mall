@@ -120,7 +120,7 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td><input type="text" name="memberId" id="memberId"
-							value="${memberId}"  required readonly/></td>
+							value="${member.memberId}"  required readonly/></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
@@ -132,7 +132,7 @@ button, input {
 					<tr>
 						<th>이름</th>
 						<td><input type="text" name="name" id="name"
-							value="${memberName}" required readonly></td>
+							value="${member.name}" required readonly></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
@@ -154,7 +154,7 @@ button, input {
 					<tr>
 						<th>핸드폰 번호</th>
 						<td><input type="tel" name="tel" id="tel"
-							value="${phone}" required></td>
+							value="${member.phone}" required></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
@@ -166,20 +166,20 @@ button, input {
 					<tr>
 						<th>생일</th>
 						<td><input type="date" name="birthday" id="birthday"
-							value="${birthday}" readonly required></td>
+							value="${member.birthday}" readonly required></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="이메일" value="${email}" required readonly>
+							placeholder="이메일" value="${member.email}" required readonly>
 							<input
 							type="button" value="이메일 인증" onclick="emailCheck()">
 						</td>
 					</tr>
 					<tr>
-						<th>주소</th>
+						<th>주소</th> <!-- value="${member.address}" 생략되었지만 getter 사용됨 -->
 						<td><input type="text" name="address" id="address"
-							value="${address}" required> <input
+							value="${member.address}" required> <input 
 							type="button" value="주소 검색"></td>
 					</tr>
 					<tr>
