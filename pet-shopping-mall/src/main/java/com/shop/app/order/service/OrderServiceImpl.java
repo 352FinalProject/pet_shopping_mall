@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderAdminListDto> adminOrderList() {
 		return orderRepository.adminOrderList();
 	}
-	
+	// 관리자페이지 주문검색 조회 (대원)
 	@Override
 	public List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
 			List<String> paymentMethod, List<String> orderStatus) {

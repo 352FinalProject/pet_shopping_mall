@@ -29,10 +29,6 @@ public interface OrderRepository {
 	)
 	int insertOrder(Order order);
 	
-	
-	List<OrderAdminListDto> adminOrderList();
-
-	
 	// 2. db에서 주문 정보 가져오기 (예라)
 	@Select("select * from (select * from orderTbl where member_id = #{memberId} order by order_id desc) where rownum <= 1")
 	Order findByOrder(Order order);
@@ -57,7 +53,10 @@ public interface OrderRepository {
 	@Select("select * from orderTbl where order_no = #{orderNo}")
 	Order findOrderByOrderNo(String orderNo);
 
-
+	// 관리자 주문조회 (대원)
+	List<OrderAdminListDto> adminOrderList();
+	
+	// 관리자 주문검색 조회 (대원)
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
 			List<String> paymentMethod, List<String> orderStatus);
 

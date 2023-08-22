@@ -25,7 +25,8 @@ public interface OrderService {
 
 	// 주문 취소
 	int insertCancelOrder(String orderNo, String isRefund);
-
+	
+	// 관리자페이지 주문검색 조회(대원)
 	List<OrderAdminListDto> adminOrderSearch(
 			String searchKeyword, 
 			String startDate, 

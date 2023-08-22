@@ -70,5 +70,51 @@ where
   	<result column="quantity" property="quantity" />
   	<result column="amount" property="amount" />
   </resultMap>
+  
+  
+  <select id="adminOrderSearch" resultMap="orderAdminListDto">
+  	SELECT
+	    ot.order_id,
+	    ot.order_date,
+	    ot.order_no,
+	    p.product_name,
+	    ot.order_status,
+	    ot.payment_status,
+	    ot.member_id,
+	    ot.amount,
+	    ot.delivery_fee,
+	    pay.payment_method
+	FROM
+	    orderTbl ot
+	LEFT JOIN
+	    order_detail od ON ot.order_id = od.order_id
+	LEFT JOIN
+	    product_detail pd ON od.product_detail_id = pd.product_detail_id
+	LEFT JOIN
+	    product p ON pd.product_id = p.product_id
+	LEFT JOIN
+	    payment pay ON ot.order_id = pay.order_id
+	WHERE
+	    (ot.order_no LIKE '%' || #{searchKeyword} || '%'
+	    OR p.product_name LIKE '%' || #{searchKeyword} || '%')
+	    AND ot.order_date &gt;= #{startDate}
+	    AND ot.order_date &lt;= #{endDate}
+	    AND pay.payment_method IN
+	        <foreach collection="paymentMethod" item="method" open="(" separator="," close=")">
+	            #{method}
+	        </foreach>
+	    <where>
+	    	<if test="#{status} != null">
+	    AND ot.order_status IN
+	        <foreach collection="orderStatus" item="status" open="(" separator="," close=")">
+	            #{status}
+	        </foreach>
+	        </if>
+	    </where> 
+	ORDER BY
+	    ot.order_id DESC
+  </select>
+  
+  
 </mapper>
 

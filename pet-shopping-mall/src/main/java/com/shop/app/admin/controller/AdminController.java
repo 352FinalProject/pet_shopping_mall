@@ -9,12 +9,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,21 +18,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
-import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.service.OrderService;
-import com.shop.app.point.entity.Point;
 
 import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductInfoDto;
@@ -47,7 +39,6 @@ import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.service.ProductService;
-import com.shop.app.review.entity.ReviewDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -253,24 +244,25 @@ public class AdminController {
 	 * @param model
 	 */
 	@GetMapping("/adminOrderSearch.do")
-	public String adminOrderSearch(
+	@ResponseBody
+	public List<OrderAdminListDto> adminOrderSearch(
 			@RequestParam(required = false) String searchKeyword,
 	        @RequestParam(required = false) String startDate,
 	        @RequestParam(required = false) String endDate,
 	        @RequestParam(required = false) List<String> paymentMethod,
 	        @RequestParam(required = false) List<String> orderStatus,
 				Model model) {
-		String[] method = {"카카오", "신용카드"};
-		String[] status = {"입금대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
 		
-		model.addAttribute("method", method);
-		model.addAttribute("status", status);
+		System.out.println(searchKeyword);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		System.out.println(paymentMethod);
+		System.out.println(orderStatus);
 		
 		List<OrderAdminListDto> orderlists = 
 				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
-		model.addAttribute("orderlists", orderlists);
 		
-		return "admin/adminOrderList";
+		return orderlists;
 	}
 	
 	

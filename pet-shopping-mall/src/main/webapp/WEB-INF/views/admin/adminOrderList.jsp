@@ -20,6 +20,45 @@
           checkbox.checked = selectAll.checked;
         });
       }
+    $(document).ready(function() {
+        // Handle form submission with AJAX
+        $("#searchForm").submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Get form data
+            var formData = $(this).serialize();
+            
+            // Send AJAX request
+            $.ajax({
+                type: "GET",
+                url: "/adminOrderSearch.do", // URL of your controller method
+                data: formData,
+                dataType: "json", // Expect JSON response
+                success: function(response) {
+                    // Handle the response data (orderlists)
+                    // You can update your table or perform other actions here
+                    console.log(response); // Log the response for debugging
+                },
+                error: function(xhr, status, error) {
+                    // Handle error (if any)
+                    console.error(error);
+                }
+            });
+        });
+    });
+
+    <!-- HTML form for input -->
+    <form id="searchForm" method="GET" action="/adminOrderSearch.do">
+        <!-- Your input fields for search criteria go here -->
+        <input type="text" name="searchKeyword" placeholder="Search Keyword">
+        <input type="date" name="startDate">
+        <input type="date" name="endDate">
+        <!-- Checkboxes for paymentMethod and orderStatus go here -->
+        <input type="submit" value="Search">
+    </form>
+
+
+
 </script>
 <div id="layoutSidenav_content">
 	<main>
