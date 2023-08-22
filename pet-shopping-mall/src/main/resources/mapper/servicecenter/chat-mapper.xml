@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.app.servicecenter.chat.repository.ChatRepository">
+
+    
+<!--     신규 채팅방일 때 채팅 방 생성
+    <insert id="createChat" parameterType="ChatRoom">
+        insert into chat_room values(seq_chat_room_id.nextval, #{userEmail}, #{userName}, DEFAULT, #{masterEmail}, #{masterName}, #{masterPic})
+    </insert>
+ 
+    <select id="selectChatRoom" parameterType="string" resultMap="chatRoomResultSet">
+        select * from chat_room 
+        where chat_room_id = #{chatRoomId} 
+    </select>
+    
+    <insert id="insertMessage" parameterType="Chat">
+        <if test="sessionCount == 1">
+        insert into chat values(#{roomId}, seq_chat_id.nextval, #{message}, #{name}, #{email}, DEFAULT)
+        </if>
+        <if test="sessionCount == 2">
+        insert into chat values(#{roomId}, seq_chat_id.nextval, #{message}, #{name}, #{email}, 0)
+        </if>
+    </insert>
+    
+    <select id="messageList" parameterType="string" resultMap="chatMessageResultSet">
+        select * from chat
+        where chat_room_id = #{rooomId}
+    </select>
+    
+    <select id="searchChatRoom" parameterType="ChatRoom" resultMap="chatRoomResultSet">
+        select * from chat_room
+        where USER_EMAIL = #{userEmail} AND MASTER_EMAIL = #{masterEmail}
+    </select>
+    
+    <select id="chatRoomList" parameterType="string" resultMap="chatRoomResultSet">
+        select * from chat_room
+        where USER_EMAIL = #{userEmail} OR MASTER_EMAIL = #{userEmail}
+    </select>
+    
+    <select id="selectUnReadCount" parameterType="Chat" resultType="_int">
+        select count(*) from chat
+        where chat_room_id = #{roomId} AND USER_EMAIL != #{email} AND UNREAD_COUNT = 1
+    </select>
+    
+    <update id="updateCount" parameterType="Chat">
+        update chat
+        set UNREAD_COUNT = 0
+        where chat_room_id = #{roomId} and USER_EMAIL != #{email} AND UNREAD_COUNT = 1
+    </update>
+
+
+    <resultMap type="ChatRoom" id="chatRoomResultSet">
+        <id property="chatRoomId" column="chat_room_id" />
+        <result property="chatRoomMemberId" column="chat_room_member_id" />
+        <result property="chatRoomAdminRoll" column="chat_room_admin_roll" />        
+        <result property="chatRoomCreatedAt" column="chat_room_created_at" />
+    </resultMap>
+ 
+    <resultMap type="Chat" id="chatMessageResultSet">
+        <id property="chatId" column="chat_id" />
+        <result property="chatRoomId" column="chat_room_id" />
+        <result property="chatMemberId" column="chat_member_id" />
+        <result property="chatMessage" column="chat_message" />
+        <result property="chatCreatedAt" column="chat_created_at" />
+        <result property="chatUnReadCount" column="chat_unread_count" />
+    </resultMap>
+     -->
+</mapper>

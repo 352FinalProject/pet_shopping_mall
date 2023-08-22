@@ -42,5 +42,11 @@ public interface QuestionService {
 
 	// 이미지 파일 정보 조회 (예라)
 	QuestionDetails findImageAttachmentsByQuestionId(int questionId);
+
+	// 1:1 문의 답변 카운트 (예라)
+	Question findQuestionByAnwerCount(Question question);
+
+	// 각 질문의 답변 수 계산하여 추가 (예라)
+	int calculateAnswerCount(int questionId);
 	
 }

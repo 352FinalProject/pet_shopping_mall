@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.entity.MemberDetails;
@@ -49,16 +50,16 @@ public class ProductController {
 			BindingResult bindingResult,
 			@AuthenticationPrincipal MemberDetails member,
 			Model model){
-		log.debug("ProductCreateDto = {}", _product);
+		log.debug("ProductCreateDto = {}", _product); // ProductCreateDto = ProductCreateDto(categoryId=1, productName=멍멍사료, productPrice=2000, thumbnailImg=0, productImg=0)
 		
 		Product product = _product.toProduct();
-		log.debug("product = {}", product);
+		log.debug("product = {}", product); // product = Product(productId=0, categoryId=1, productName=멍멍사료, productPrice=2000, thumbnailImg=0, productImg=0, createDate=null, expireDate=null, likeCnt=0, viewCnt=0)
 		
 		int result = productService.insertProduct(product);
-		
+		// There is no getter for property named 'category_id' in 'class com.shop.app.product.entity.Product'
 		
 		return "redirect:/admin/adminProductList.do";
 	}
-
+	
 	
 }

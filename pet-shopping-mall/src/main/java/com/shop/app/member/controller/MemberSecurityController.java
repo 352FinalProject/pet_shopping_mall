@@ -1,8 +1,10 @@
 package com.shop.app.member.controller;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.shop.app.common.controller.advice.MailSender;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +44,7 @@ import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.entity.TermsHistory;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
@@ -46,6 +60,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberSecurityController {
 
+	 
 	@Autowired // MemberService 자동 주입
 	private MemberService memberService;
 	
@@ -60,14 +75,21 @@ public class MemberSecurityController {
 	
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
-	
 
+	private final Map<String, String> tokenStore = new HashMap<>();
+	
 	@PostMapping("/memberCreate.do") // 회원 생성 처리
-	public String create(
-			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
-			BindingResult bindingResult, // 유효성 검사 결과
-			RedirectAttributes redirectAttr) { // 리다이렉트시 전달 할 속성
-		log.debug("member = {}", member);
+	public String memberCreate(
+	        @Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
+	        BindingResult bindingResult, // 유효성 검사 결과
+	        RedirectAttributes redirectAttr, HttpSession session) { // 리다이렉트시 전달 할 속성
+	    
+	    // 이메일 인증 확인 (예라)
+	    Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
+	    if (isVerified == null || !isVerified) {
+	        redirectAttr.addFlashAttribute("msg", "이메일 인증을 해주세요.");
+	        return "redirect:/member/memberCreate.do";
+	    }
 		
 		if(bindingResult.hasErrors()) {
 		    // bindingResult에 오류가 있을 경우, 즉 유효성 검사에서 문제가 발견된 경우 실행됩니다.
@@ -75,7 +97,7 @@ public class MemberSecurityController {
 		    // getAllErrors 메서드를 통해 발생한 모든 오류를 가져오고, 첫 번째 오류를 선택.
 		    redirectAttr.addFlashAttribute("msg", error.getDefaultMessage());
 		    // 오류 메시지를 리다이렉트 애트리뷰트에 "msg"라는 이름으로 추가하여, 리다이렉트 후에도 데이터가 유지.
-		    return "redirect:/member/memberCreate.do";
+		    return "redirect:/memberCreate.do";
 		    // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
 		}
 
@@ -83,7 +105,6 @@ public class MemberSecurityController {
 		// 비밀번호 암호화 처리
 		String rawPassword = member.getPassword();
 		String encodedPassword = passwordEncoder.encode(rawPassword);
-		log.debug("{} -> {}", rawPassword, encodedPassword);
 		member.setPassword(encodedPassword);
 		
 		// 포인트 테이블에 디비 저장 (예라)
@@ -100,15 +121,57 @@ public class MemberSecurityController {
 		
 		int resultPoint = pointService.insertPoint(point);
 		
-		Terms terms = new Terms();
-		terms.setMemberId(member.getMemberId());
-//		terms.setAcceptDate(null);
-		terms.setAccept(Accept.Y);
-		
+		// 약관 동의 정보 가져오기 (예라)
+	    Terms terms = (Terms) session.getAttribute("terms");
+	    if (terms == null) {
+	        redirectAttr.addFlashAttribute("msg", "약관에 동의해주세요.");
+	        return "redirect:/member/terms.do";
+	    }
+	    
+	    terms.setMemberId(member.getMemberId());  // 회원가입이 완료된 후에 memberId를 설정 (예라)
+	    
 		int resultTerms = termsService.insertTerms(terms);
 		
+	    // 약관 동의 이력 정보 생성 및 저장 (예라)
+	    TermsHistory termsHistory = new TermsHistory();
+	    termsHistory.setTermsId(terms.getTermsId()); 
+	    termsHistory.setTitle("제목");
+	    termsHistory.setContent("내용");
+	    
+	    int resulttermsHistory = termsService.insertTermsHistory(termsHistory);
+	    
+		session.removeAttribute("terms"); 
+	
+		// 회원 정보 db에 저장하고 세션 제거 (예라)
+		session.removeAttribute("emailVerified");
+		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
-		return "redirect:/";
+		return "redirect:/memberCreateComplete.do";
+	}
+	
+	// 약관 동의 정보를 세션에 임시 저장 (예라)
+	@PostMapping("/updateTerms.do") 
+	public ResponseEntity<?> updateTerms(
+	        @RequestParam Map<String, String> data, 
+	        HttpSession session) {
+	    
+	    String term = data.get("termsAccept");
+	    String privacy = data.get("privacyAccept");
+	    String promotion = data.get("emailAccept");
+	    boolean userAgreedToPromotion = "Y".equals(promotion); 
+	    
+	    Terms terms = new Terms();
+	    terms.setTermsAccept(Accept.Y);
+	    terms.setTermsAcceptRequired('Y');  // 필수
+	    terms.setPrivacyAccept(Accept.Y);
+	    terms.setPrivacyAcceptRequired('Y');  // 필수
+	    terms.setEmailAccept(userAgreedToPromotion ? Accept.Y : Accept.N);
+	    terms.setEmailAcceptRequired('N');  // 선택
+	    
+	    log.debug("terms = {}",terms);
+	    session.setAttribute("terms", terms);
+	    
+	    return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
@@ -122,29 +185,22 @@ public class MemberSecurityController {
 	public void memberDetail(
 			Authentication authentication, 
 			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
-		log.debug("memberService = {}", memberService);
-		log.debug("authentication = {}", authentication);
 		
 		// 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
 		// 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
 		Object credentials = authentication.getCredentials(); // 열람불가
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		log.debug("principal = {}", principal);
-		log.debug("credentials = {}", credentials);
-		log.debug("authorities = {}", authorities);
-		
-		log.debug("member = {}", member);
 	}
 	
 	// 멤버 정보 업데이트
 	@PostMapping("/memberUpdate.do")
 	public String memberUpdate(
 			@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
-			@Valid MemberUpdateDto _member, 
+			@Valid MemberUpdateDto _member,
+			HttpSession session,
 			BindingResult bindingResult, 
 			RedirectAttributes redirectAttr) {
-		log.debug("_member = {}", _member);
 		Member member = _member.toMember();
 		String memberId = principal.getMemberId();
 		member.setMemberId(memberId);
@@ -168,18 +224,21 @@ public class MemberSecurityController {
 			);
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		
-		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
+	    session.invalidate(); // 세션 종료
+//		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
 		return "redirect:/member/myPage.do";
 	}
 	
-	@DeleteMapping("/deleteMember.do")
-	public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr) {
+	@PostMapping("/deleteMember.do")
+	public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr, HttpSession session) {
 	    String memberId = principal.getMemberId(); // 현재 로그인한 회원의 ID를 가져옵니다.
 	    memberService.deleteMember(memberId);  // 회원 삭제 서비스 호출
-	    redirectAttr.addFlashAttribute("msg", "회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다.");
+	    session.invalidate(); // 세션 종료
+	    
 	    return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
 	}
 
+	@GetMapping("/checkIdDuplicate.do")
 	
 	// 중복 ID 검사
 	public ResponseEntity<?> checkIdDuplicate(@RequestParam String memberId) {
@@ -194,6 +253,24 @@ public class MemberSecurityController {
 				.status(HttpStatus.OK)
 				.body(Map.of("available", available, "memberId", memberId));
 	}
+
+	//아이디 찾기 
+	@GetMapping("/memberSearchId.do")
+	public String memberSearchId() {
+		return "redirect/member/memberSearchId.do"; 
+	}
+	
+
+	 // 이메일 보내기
+//    @Transactional
+//    @PostMapping("/sendEmail")
+//    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
+//        MailDto dto = ms.createMailAndChangePassword(memberEmail);
+//        ms.mailSend(dto);
+//
+//        return "/member/login.do";
+//    }
+//	
 	
 	@GetMapping("/terms.do")
 	public void getTerms() {}

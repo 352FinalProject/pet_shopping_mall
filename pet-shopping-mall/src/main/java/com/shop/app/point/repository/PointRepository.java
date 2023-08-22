@@ -19,8 +19,8 @@ public interface PointRepository {
 	@Select("select * from point order by point_id desc")
 	List<Point> findPointAll(Point point);
 
-	// 회원가입 포인트 적립 (예라)
-	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
+	// 포인트 적립 (예라)
+	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date, review_id) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default, #{reviewId})")
 	int insertPoint(Point point);
 	
 	// 리뷰 쓴 사용자 포인트 적립을 위해 아이디 조회 (예라)
@@ -29,9 +29,30 @@ public interface PointRepository {
 	@Select("select * from (select * from review where review_member_id = #{reviewMemberId} order by review_created_at desc) where rownum <= 1")
 	Point findReviewPointMemberById(ReviewDetails reviews);
 	
-	// 리뷰 포인트 적립 (예라)
-	@Update("UPDATE point SET point_current = point_current + #{pointAmount}, point_amount = #{pointAmount}, point_type = '리뷰적립', point_date = SYSTIMESTAMP WHERE point_member_id = #{pointMemberId}")
-	int updatePoint(Point point);
+	// 리뷰, 구매 적립 memberId값으로 현재 사용자의 포인트 가져오기 (예라)
+	@Select("select * from (select * from point where point_member_id = #{pointMemberId} order by point_date desc) where rownum <= 1")
+	Point findReviewPointCurrentById(Point point);
 
-	
+	// 멤버아이디로 포인트 조회 (담희)
+	@Select("select * from (select * from point where point_member_id = #{member_id} order by point_date desc) where rownum <= 1")
+	Point findCurrentPointById(String memberId);
+
+	// (사용) 사용자의 현재 포인트를 가져오기 (예라)
+	@Select("select * from (select * from point where point_member_id = #{pointMemberId} order by point_date desc) where rownum <= 1")
+	Point findPointCurrentById(Point points);
+
+	// 물건 구매 포인트 사용 (예라)
+	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
+	int insertUsedPoint(Point usedPoint);
+
+	// 취소된 포인트를 db에 저장 (예라)
+	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default)")
+	int insertRollbackPoint(Point rollbackPoint);
+
+	// 삭제된 리뷰에 대한 포인트 정보 가져오기 (예라)
+	@Select("select * from point where review_id = #{reviewId}")
+	Point getPointByReviewId(int reviewId);
+
+
+
 }

@@ -3,6 +3,7 @@ package com.shop.app.member.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.repository.MemberRepository;
+import com.shop.app.point.entity.Point;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,13 +47,25 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	@CacheEvict(value = "memberCache", key = "#memberId")
 	public int deleteMember(String memberId) {
+		log.debug("memberId= {}", memberId);
 		return memberRepository.deleteMember(memberId);
+		
 	}
 
-//	@Override
-//	public int kakaoinsertMember(KakaoMemberCreateDto member) {
-//		return memberRepository.kakaoinsertMember(member);
-//	}
+	@Override
+	public String memberSearchId(String name, String email) {
+		String result = "";
+		try {
+		 result= memberRepository.memberSearchId(name, email);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result ;
+		
+	}
+
+
 
 }

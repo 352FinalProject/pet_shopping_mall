@@ -17,8 +17,6 @@
 					김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원</div>
 			</div>
 
-
-
 			<div class="admin-product-search-container">
 				<form method="GET" class="admin-product-search">
 					<label for="searchKeyword">검색어:</label> <select
@@ -40,53 +38,59 @@
 						for="saleStatusPaused">중지</label><br>
 					<button type="submit">검색</button>
 				</form>
-				<form method="GET"
-					action="${pageContext.request.contextPath}/admin/adminAddProduct.do">
-					<button type="button">상품추가</button>
-				</form>
 			</div>
-
-
 
 			<div class="card mb-4">
 				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 상품목록
+					<i class="fas fa-table me-1"></i> 기본상품목록
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple">
 						<thead>
-							<th>번호</th>
+							<th>상품아이디</th>
 							<th>이미지</th>
-							<th>상품코드</th>
 							<th>상품명</th>
-							<th>시중가</th>
-							<th>공급가</th>
-							<th>판매가</th>
-							<th>포인트</th>
-							<th>재고</th>
-							<th>순위</th>
+							<th>카테고리</th>
+							<th>상품가격</th>
+							<th>옵션명</th>
+							<th>옵션값</th>
+							<th>옵션추가금</th>
+							<th>판매상태</th>
 							<th>관리</th>
 						</thead>
 						<tbody>
-							<c:forEach begin="0" end="20" step="1" varStatus="status">
-								<tr>
-									<th>번호</th>
-									<th><a href="#" />이미지</th>
-									<th><a href="#" />상품코드</th>
-									<th><a href="#" />상품명</th>
-									<th>시중가</th>
-									<th>공급가</th>
-									<th>판매가</th>
-									<th>포인트</th>
-									<th>재고</th>
-									<th>순위</th>
-									<td><button onclick="">수정</button> <button onclick="">삭제</button></td>
-								</tr>
-							</c:forEach>
+
+							<c:if test="${empty productInfos}">
+								<td colspan="5">등록된 상품이 없습니다.</td>
+							</c:if>
+							<c:if test="${not empty productInfos}">
+								<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
+									<tr>
+										<td>${productInfo.product.productId}</td>
+										<td>
+											이미지는 아직
+										</td>
+										<td>
+										<a href="${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
+										</td>
+										<td>${productInfo.productCategory.categoryName}</td>
+										<td>${productInfo.product.productPrice}</td>
+										<td>${productInfo.optionName}</td>
+										<td>${productInfo.optionValue}</td>
+										<td>${productInfo.additionalPrice}</td>
+										<td>${productInfo.saleState}</td>
+										<td>
+											<button onclick="">수정</button> 
+											<button onclick="">삭제</button> 
+										</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
 			</div>
+			
 		</div>
 	</main>
 	<jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>

@@ -18,4 +18,5 @@ public class Point {
 	private int pointAmount;
 	private int pointCurrent;
 	private LocalDateTime pointDate;
+	private int reviewId;
 }

@@ -115,4 +115,16 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionRepository.findImageAttachmentsByQuestionId(questionId);
 	}
 
+	// 1:1 문의 답변 카운트 (예라)
+	@Override
+	public Question findQuestionByAnwerCount(Question question) {
+		return questionRepository.findQuestionByAnwerCount(question);
+	}
+
+	// 각 질문의 답변 수 계산하여 추가 (예라)
+	@Override
+	public int calculateAnswerCount(int questionId) {
+		return questionRepository.calculateAnswerCount(questionId);
+	}
+
 }

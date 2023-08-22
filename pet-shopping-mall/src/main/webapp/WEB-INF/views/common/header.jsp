@@ -12,7 +12,16 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <title>반려동물 쇼핑몰</title>
+
+<c:if test="${not empty msg}">
+	<script>
+		alert('${msg}');
+	</script>
+</c:if>
 </head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -21,14 +30,17 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/product.css" />
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/memberLogin.css" />
-<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/review.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/sidebar.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/point.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
+
 
 <body>
 	<sec:authorize access="isAuthenticated()">
@@ -41,7 +53,10 @@
 		<div class="header">
 			<span id="notification"></span>
 			<ul class="utility">
-				<%-- <sec:authentication property="principal.username"/> --%>
+			<sec:authorize access="isAuthenticated()">
+				권한 : <sec:authentication property="authorities"/>
+				아이디 : <sec:authentication property="principal.username"/>
+			</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<li class="login_li"><a
 						href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
@@ -57,17 +72,20 @@
 					href="${pageContext.request.contextPath}/admin/admin.do">관리자페이지</a>
 				</li>
 				<sec:authorize access="isAuthenticated()">
-					<li>
-						<button class="" type="button"
-							onclick="document.memberLogoutFrm.submit();">로그아웃</button>
+					<li><a class="" type="button" href="#"
+						onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
 					</li>
-					<form action="/member/deleteMember.do" method="post"
-						onsubmit="return confirm('정말로 회원 탈퇴를 진행하시겠습니까?');">
-						<button type="submit">회원 탈퇴</button>
-					</form>
+					<li>
+						<form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
+							<a  type="button" href="#" onclick="deleteMember();">회원 탈퇴</a>
+						</form:form>
+					</li>
 				</sec:authorize>
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/community.do">펫스토리</a>
+				</li>
+				<li class="community_li"><a
+					href="<%=request.getContextPath()%>/review/reviewCreate.do">리뷰작성</a>
 				</li>
 			</ul>
 			<div class="logo_top_wrap">
@@ -142,3 +160,16 @@
 			</div>
 		</div>
 	</header>
+<%-- <c:if test="${not empty msg}"> --%>
+<script>
+/* alert('${msg}'); */
+const deleteMember = () => {
+    if (confirm('정말로 회원 탈퇴하시겠습니까?')) {
+        document.getElementById('deleteMemberForm').submit();
+    } else {
+        alert('회원 탈퇴를 실패했습니다.');
+    }
+};
+</script>
+<%-- </c:if>	 --%>
+	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>

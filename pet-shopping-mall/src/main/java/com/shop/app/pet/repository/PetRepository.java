@@ -51,6 +51,9 @@ public interface PetRepository {
     		+ ", pet_gender = #{petGender}"
     		+ "WHERE pet_id = #{petId}")
     int petUpdate(PetUpdateDto pet);
+
+    @Select("select * from pet where member_id = #{reviewMemberId}")
+	Pet findPetId(Pet pet);
     
 	
 

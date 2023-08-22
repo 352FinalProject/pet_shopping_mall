@@ -95,9 +95,6 @@ span {
     background-color: #c8c8c8;
 }
 
-
-
-
 </style>
 <section class="terms-section">
 	<div>
@@ -105,7 +102,7 @@ span {
 			<ul class="join_box">
 				<li class="checkBoxcheckTerms">
 					<div class="terms-title">
-						<input type="checkbox" name="checkAll" id="checkAll"
+						<input type="checkbox" name="checkAll" id="checkAll" 
 							onchange="toggleCheckBox();" /><label for="checkAll">전체선택</label>
 						</br>이용약관, 개인정보 수집 및 이용, 위치정보 이용약관<span2>(선택)</span2>, 프로모션 안내 메일 수신<span2>(선택)</span2>에 모두 동의합니다. 
 					</div>
@@ -113,7 +110,7 @@ span {
 				<li class="checkBoxcheckTerms">
 					<ul class="clearfix">
 						<li class="checkBtn"><input id="checkBox1" type="checkbox"
-							onclick="checkbox();" name="chk">이용약관 동의 <span>(필수)</span></li>
+							onclick="checkbox(); sendData();" name="chk">이용약관 동의 <span>(필수)</span></li>
 					</ul> <textarea class="terms-content" name="" id="">여러분을 환영합니다.
 네이버 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 네이버 서비스의 이용과 관련하여 네이버 서비스를 제공하는 네이버 주식회사(이하 ‘네이버’)와 이를 이용하는 네이버 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
        </textarea>
@@ -121,14 +118,14 @@ span {
 				<li class="checkBoxcheckTerms">
 					<ul class="clearfix">
 						<li class="checkBtn"><input id="checkBox2" type="checkbox"
-							onclick="checkbox();" name="chk">개인정보 수집 및 이용에 대한 안내 <span>(필수)</span></li>
+							onclick="checkbox(); sendData();" name="chk">개인정보 수집 및 이용에 대한 안내 <span>(필수)</span></li>
 					</ul> <textarea class="terms-content" name="" id="">여러분을 환영합니다.
 네이버 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 네이버 서비스의 이용과 관련하여 네이버 서비스를 제공하는 네이버 주식회사(이하 ‘네이버’)와 이를 이용하는 네이버 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
        </textarea>
 				</li>
 				<li class="checkBoxcheckTerms">
 					<ul class="clearfix">
-						<li class="checkBtn"><input type="checkbox" name="chk">
+						<input id="promotionEmailAccept" type="checkbox" name="chk" onclick="sendData();" >
 						이벤트 등 프로모션 알림 메일 수신 <span2>(선택)</span2></li>
 					</ul>
 
@@ -144,15 +141,13 @@ span {
 	</div>
 </section>
 <script>
-
-
 const checkbox = () => {
 	const target = document.getElementById("disabled-button");
 	const checkBox1 = document.getElementById("checkBox1");
 	const checkBox2 = document.getElementById("checkBox2");
 	const checkAll = document.getElementById("checkAll");
-	
-	if(checkBox1.checked && checkBox2.checked || checkAll.checked && checkBox1.checked && checkBox2.checked ){
+
+	if ((checkBox1.checked && checkBox2.checked) || checkAll.checked) {
 		target.style.backgroundColor = '#5886d3';
 		target.disabled = false;
 	} else {
@@ -161,28 +156,88 @@ const checkbox = () => {
 	}
 };
 
-	 
 const next = () => {
-	const box1 = document.querySelector("#checkBox1");
-	const box2 = document.querySelector("#checkBox2");
+	const box1 = document.getElementById("checkBox1");
+	const box2 = document.getElementById("checkBox2");
 	
-	if(box1.checked && box2.checked ){
+	if (box1.checked && box2.checked) {
 		location.href = '${pageContext.request.contextPath}/member/memberCreate.do';
-	} else{
+	} else {
 		alert("필수항목 체크해주세요");
 	}
 };
 
 const toggleCheckBox = () => {
-	const checkAll = document.getElementById("checkAll");
-	
-	const boxs = document.getElementsByName("chk"); // 태그 객체 배열
-	
-	for(let i=0; i<boxs.length; i++) {
-		boxs[i].checked = checkAll.checked;
-	}
-	checkbox();
-	
+    const checkAll = document.getElementById("checkAll");
+    const boxes = document.getElementsByName("chk"); // 태그 객체 배열
+    
+    for (let i = 0; i < boxes.length; i++) {
+        boxes[i].checked = checkAll.checked;
+    }
+    checkbox();
+    sendData(); // 여기에 sendData()를 호출하여 전체 선택 변경 시에도 데이터가 전송
 };
+
+// 페이지가 로딩되면 체크박스 상태를 초기화
+window.addEventListener('load', () => {
+	checkbox();
+});
+
+//체크박스 상태 변경 이벤트 핸들러
+const handleCheckboxChange = () => {
+
+    const checkBox1 = document.getElementById("checkBox1");
+    const checkBox2 = document.getElementById("checkBox2");
+    const promotionEmailAccept = document.getElementById("promotionEmailAccept");
+
+    // 동의 체크박스가 선택되었을 때만 버튼 활성화
+    const disabledButton = document.getElementById("disabled-button");
+    if (checkBox1.checked && checkBox2.checked) {
+        disabledButton.removeAttribute("disabled");
+    } else {
+        disabledButton.setAttribute("disabled", "disabled");
+    }
+};
+
+//각 체크박스 변경 이벤트에 핸들러 연결
+document.getElementById("checkBox2").addEventListener("change", handleCheckboxChange);
+document.getElementById("promotionEmailAccept").addEventListener("change", handleCheckboxChange);
+
+//체크박스 동의 여부를 전송
+const sendData = () => {
+
+    const checkBox1 = document.getElementById("checkBox1").checked ? 'Y' : 'N';
+    console.log(checkBox1);
+    const checkBox2 = document.getElementById("checkBox2").checked ? 'Y' : 'N';
+    console.log(checkBox2);
+    const promotionEmailAccept = document.getElementById("promotionEmailAccept").checked ? 'Y' : 'N';
+    console.log(promotionEmailAccept);
+    
+    const formData = new URLSearchParams();
+    formData.append('termsAccept', checkBox1);
+    formData.append('privacyAccept', checkBox2);
+    formData.append('emailAccept', promotionEmailAccept);
+	
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    fetch('${pageContext.request.contextPath}/member/updateTerms.do', { 
+        method: 'POST',
+        headers: {
+            [csrfHeader]: csrfToken
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // 성공
+        } else {
+            // 실패
+        }
+    })
+    .catch(error => console.error("Fetch Error:", error));
+}
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

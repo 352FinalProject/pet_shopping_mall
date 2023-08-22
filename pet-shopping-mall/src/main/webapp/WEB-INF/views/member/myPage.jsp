@@ -120,7 +120,7 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td><input type="text" name="memberId" id="memberId"
-							value="${loginMember.memberId}"  required /></td>
+							value="${loginMember.memberId}"  required readonly /></td>
 						<td rowspan="2" class="pet-info-container">
 
 						</td>
@@ -128,7 +128,7 @@ button, input {
 					<tr>
 						<th>이름</th>
 						<td><input type="text" name="name" id="name"
-							value="${loginMember.name}" required></td>
+							value="${loginMember.name}" required readonly></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
@@ -146,8 +146,7 @@ button, input {
 					<tr>
 						<th>핸드폰 번호</th>
 						<td><input type="tel" name="tel" id="tel"
-							value="${loginMember.phone}" required> <input
-							type="button" value="핸드폰 인증" onclick="telCheck()"></td>
+							value="${loginMember.phone}" required>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 		
@@ -162,7 +161,7 @@ button, input {
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="pet@gmail.com" value="${loginMember.email}" required>
+							placeholder="pet@gmail.com" value="${loginMember.email}" readonly required>
 						</td>
 					</tr>
 					<tr>
@@ -179,5 +178,10 @@ button, input {
 					</tr>
 				</table>
 			</form:form>
+		</div>
+	</div>
 </section>
+<script>
+const 
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
