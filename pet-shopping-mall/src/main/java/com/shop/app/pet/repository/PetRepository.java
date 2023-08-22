@@ -19,8 +19,8 @@ import com.shop.app.pet.entity.Pet;
 @Mapper
 public interface PetRepository {
 
-	@Insert("INSERT INTO pet (pet_id, member_id, pet_name, pet_DofB, pet_kind, pet_breed, pet_adoption, pet_gender) " +
-	        "VALUES (seq_pet_id.nextval, #{memberId}, #{petName}, #{petDofB, jdbcType=DATE}, #{petKind}, #{petBreed}, #{petAdoption, jdbcType=DATE}, #{petGender})")
+	@Insert("INSERT INTO pet (pet_id, member_id, pet_name, pet_DofB, pet_kind, pet_breed, pet_weight, pet_adoption, pet_gender) " +
+	        "VALUES (seq_pet_id.nextval, #{memberId}, #{petName}, #{petDofB, jdbcType=DATE}, #{petKind}, #{petBreed}, #{petWeight}, #{petAdoption, jdbcType=DATE}, #{petGender})")
 	int petCreate(PetCreateDto pet);
 	
     
@@ -39,6 +39,7 @@ public interface PetRepository {
     		+ ", pet_DofB = #{petDofBFix, jdbcType=DATE}"
     		+ ", pet_kind = #{petKind}"
     		+ ", pet_breed = #{petBreed}"
+    		+ ", pet_weight = #{petWeight}"
     		+ ", pet_adoption = #{petAdoptionDateFix, jdbcType=DATE}"
     		+ ", pet_gender = #{petGender}"
     		+ "WHERE pet_id = #{petId}")

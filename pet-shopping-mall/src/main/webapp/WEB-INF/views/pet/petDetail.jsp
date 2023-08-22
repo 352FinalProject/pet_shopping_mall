@@ -82,12 +82,12 @@
 <section class="common-section" id="back-button-section">
     <div class="common-container">
         <div class="common-div">
-            <form action="${pageContext.request.contextPath}/member/petList.do"
+            <form action="${pageContext.request.contextPath}/pet/petList.do"
                 class="form-inline">
                 <button class="btn-add">돌아가기</button>
             </form>
             
-            <form action="${pageContext.request.contextPath}/member/petGoDetail.do" method="GET"
+            <form action="${pageContext.request.contextPath}/pet/petGoDetail.do" method="GET"
                 class="form-inline">
                 <input type="hidden" name="petId" value="${petInfo.petId}">
                 <button class="btn-add">수정</button>

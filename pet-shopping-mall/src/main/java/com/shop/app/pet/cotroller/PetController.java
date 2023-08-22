@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/pet")
 public class PetController {
 	@Autowired
 	private PetService petService;
@@ -50,7 +50,7 @@ public class PetController {
 	        redirectAttributes.addFlashAttribute("successMessage", "등록성공!");
 	    }
 	    
-	    return "redirect:/member/petList.do"; // 등록 후 다시 폼으로 리다이렉트
+	    return "redirect:/pet/petList.do"; // 등록 후 다시 폼으로 리다이렉트
 	}
 
 	@GetMapping("/petList.do")
@@ -58,7 +58,7 @@ public class PetController {
 		List<Pet> pets = petService.findPetByAll(pet); 
 		model.addAttribute("pets", pets);
 		
-		return "member/petList";
+		return "pet/petList";
 	}
 	
 	@GetMapping("/petDetail.do")
@@ -70,7 +70,7 @@ public class PetController {
 	    Pet petInfo = petService.findPetById(petId); // petId에 해당하는 펫 정보 가져오기
 	    model.addAttribute("petInfo", petInfo); // 펫 정보를 모델에 추가
 
-	    return "member/petDetail"; // petDetail.jsp로 이동
+	    return "pet/petDetail"; // petDetail.jsp로 이동
 	}
 	
 	@GetMapping("/petGoDetail.do")
@@ -82,7 +82,7 @@ public class PetController {
 	    Pet petInfo = petService.findPetById(petId); // petId에 해당하는 펫 정보 가져오기
 	    model.addAttribute("petInfo", petInfo); // 펫 정보를 모델에 추가
 
-	    return "member/petUpdate"; // petDetail.jsp로 이동
+	    return "pet/petUpdate"; // petDetail.jsp로 이동
 	}
 	
 //	@RequestMapping(value = "/petDetail.do", method = {RequestMethod.POST})
@@ -103,7 +103,7 @@ public class PetController {
 			redirectAttributes.addFlashAttribute("msg", "삭제 중 오류가 발생하였습니다.");
 		}
 		
-	    return "redirect:/member/petList.do";
+	    return "redirect:/pet/petList.do";
     }
 	
 	@PostMapping("/petUpdate.do")
@@ -114,7 +114,7 @@ public class PetController {
 			redirectAttributes.addFlashAttribute("successMessage", "수정완료!");
 	    }
 	
-	    return "redirect:/member/petList.do"; // 목록 페이지로 리다이렉트
+	    return "redirect:/pet/petList.do"; // 목록 페이지로 리다이렉트
 	}
 }
 

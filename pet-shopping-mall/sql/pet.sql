@@ -98,7 +98,8 @@ CREATE TABLE pet (
     pet_name VARCHAR2(50) NOT NULL,
     pet_DofB timestamp,
     pet_kind VARCHAR2(50),
-    pet_breed VARCHAR2(50),
+    pet_breed VARCHAR2(50)
+    pet_weight double,,
     pet_adoption timestamp,
     pet_gender CHAR(1),
     pet_created_at timestamp default systimestamp,
