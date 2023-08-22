@@ -89,8 +89,10 @@ button, input {
 }
 .guide.ok, .guide.error {
     display: none;
+    color: red;
 }
-#memberId.duplicate {
+
+span duplicate {
     border: 2px solid red; /* 아이디 중복일 때 테두리 색상: 빨간색 */
 }
 
@@ -105,6 +107,8 @@ button, input {
 #memberId-container.duplicate input {
     border: 1px solid red; /* 빨간색 테두리 */
 }
+
+
 </style>
 <!-- 회원가입 (혜령) -->
 <section class="common-section" id="#">
@@ -123,57 +127,74 @@ button, input {
 							   placeholder="아이디"
 							   name="memberId" 
 							   id="memberId"
-							   value="${memberId}"
+							   value=""
 							   pattern="\w{4,}"
 							   required>
 						<input type="hidden" id="idValid" value="0"/>
+						<span class="guide error">이 아이디는 이미 사용중입니다.</span>
 					</div>
 						</td>
 					</tr>
+					
 					<tr>
 						<th>이름</th>
-						<td><input type="text" name="name" id="name" value="${memberName}"
-							placeholder="이름" required></td>
+						<td>
+						<div class="memberName-container">
+						<input type="text"
+								 name="name"
+								 id="name"
+								 value=""
+								 placeholder="이름"
+							     pattern="[가-힣A-Za-z]+"
+								 required>
+								 <br>
+						</div>
+						</td>
 					</tr>
+					
 					<tr>
 						<th>비밀번호</th>
 						<td><input type="password" name="password" id="password"
 							placeholder="비밀번호" value="" required>
-							</td>
+						</td>
 					</tr>
+					
 					<tr>
 						<th>비밀번호 확인</th>
 						<td><input type="password" id="passwordConfirm" value=""
 							placeholder="비밀번호 확인" required></td>
 					</tr>
+					
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="tel" name="phone" id="tel" value="${Phone}"
+						<td><input class="" type="tel" name="phone" id="tel" value=""
 							placeholder="핸드폰번호" required></td>
 					</tr>
+					
 					<tr>
 						<th>생일</th>
 						<td><input type="date" name="birthday" id="birthday"
 							placeholder="생년월일" required></td>
 					</tr>
+					
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="emailInput"
-							placeholder="이메일" value="${email}" required> <input type="button"
+							placeholder="이메일" value="" required> <input type="button"
 							id="emailButton" value="이메일 인증" onclick="emailCheck()">
 					</tr>
+					
 					<tr>
 						<th>주소</th>
 						<td><input type="text" name="address" id="address"
-							placeholder="주소" value="${address}" required> <input type="button"
+							placeholder="주소" value="" required> <input type="button"
 							value="주소 검색"></td>
 					</tr>
+					
 					<tr>
 						<td class="resetAndSubmit" colspan="2">
-							<form action="/member/memberCreateComplte.do">
 								<input type="reset" value="돌아가기"> <input type="submit"
 									value="가입하기">
-							</form>
 						</td>
 					</tr>
 				</table>
@@ -270,6 +291,8 @@ $(document).ready(function() {
         }
     });
     
+
+
     $("#memberCreateFrm").on("submit", function(e) {
         const memberIdContainer = $("#memberId-container");
         const idValid = $("#idValid");
@@ -288,9 +311,76 @@ $(document).ready(function() {
             e.preventDefault(); // 폼 제출을 중단
             return;
         }
+        
     });
 });
 
+window.onload = function() {
+    // 필요한 요소들을 가져오기
+    var passwordInput = document.getElementById("password");
+    var confirmPasswordInput = document.getElementById("passwordConfirm");
+    
+    // 비밀번호 일치 여부 확인 함수
+    function validatePassword() {
+        var password = passwordInput.value;
+        var confirmPassword = confirmPasswordInput.value;
+        
+        if (password === confirmPassword) {
+            // 비밀번호 일치 시 스타일 변경
+            passwordInput.style.border = "1px solid #5886d3";
+            confirmPasswordInput.style.border = "1px solid #58586d3";
+        } else {
+            // 비밀번호 불일치 시 스타일 변경
+            passwordInput.style.border = "1px solid red";
+            confirmPasswordInput.style.border = "1px solid red";
+        }
+    }
+    
+    // 입력이 변경될 때마다 비밀번호 일치 여부 확인
+    passwordInput.addEventListener("input", validatePassword);
+    confirmPasswordInput.addEventListener("input", validatePassword);
+}
+
+
+
+function validateEmail() {
+    const emailInput = document.getElementById("emailInput");
+    const emailValidationMessage = document.getElementById("emailValidationMessage");
+
+    const emailPattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+    if (!emailPattern.test(emailInput.value)) {
+        emailValidationMessage.textContent = "유효한 이메일 주소를 입력하세요.";
+        emailValidationMessage.style.display = "block";
+        emailInput.style.border = "1px solid red"; // 이메일 형식이 유효하지 않을 때 색상 변경
+    } else {
+        emailValidationMessage.textContent = "";
+        emailValidationMessage.style.display = "none";
+        emailInput.style.border = "1px solid #58586d3"; // 이메일 형식이 유효할 때 기본 색상으로 변경
+    }
+}
+
+
+window.onload = function() {
+    // 필요한 요소들을 가져오기
+    var nameInput = document.getElementById("name");
+    
+    // 이름 및 아이디 일치 여부 확인 함수
+    function validateName() {
+        var name = nameInput.value;
+        
+        if (name.length >= 2) {
+            // 이름 조건에 맞을 때 스타일 변경
+            nameInput.style.border = "1px solid #5886d3";
+        } else {
+            // 이름 조건에 맞지 않을 때 스타일 변경
+            nameInput.style.border = "1px solid red";
+        }
+    }
+    
+    // 입력이 변경될 때마다 이름 일치 여부 확인
+    nameInput.addEventListener("input", validateName);
+}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
