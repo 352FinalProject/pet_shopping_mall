@@ -31,5 +31,7 @@ public interface ProductService {
 
 	ProductImages findImageAttachmentsByProductId(int productId);
 
+	List<ProductDetail> findAllProductDetailsByProductId(int productId);
+
 
 }
