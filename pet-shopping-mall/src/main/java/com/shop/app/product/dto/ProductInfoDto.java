@@ -1,5 +1,9 @@
 package com.shop.app.product.dto;
 
+import java.util.List;
+
+import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.imageAttachmentMapping;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -31,5 +35,7 @@ public class ProductInfoDto {
 	private ProductCategory productCategory; // 카테고리명 저장용
 	private Product product; // 상품정보 저장용
 	
+	private List<imageAttachment> attachments;
+	private List<imageAttachmentMapping> attachmentMapping;
 
 }

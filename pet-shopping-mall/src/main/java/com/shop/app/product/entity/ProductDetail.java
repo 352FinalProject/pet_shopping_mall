@@ -24,6 +24,4 @@ public class ProductDetail {
 	private int additionalPrice;
 	private int saleState; // default=0(판매대기) 1: 판매중 2: 품절 3: 기타
 	
-	private List<imageAttachment> attachments;
-	private List<imageAttachmentMapping> attachmentMapping;
 }

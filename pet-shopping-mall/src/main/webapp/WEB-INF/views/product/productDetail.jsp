@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Slider Example</title>
+<!-- Bootstrap CSS 포함 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <section class="common-section" id="#">
 	<div class="common-container">
@@ -82,27 +95,75 @@
 			</ul>
 		</div>
 		<div class="review-div">
+<!-- 			<ul class="review-product-utility">
+				<li>별점</li>
+				<li class="review-title">제목</li>
+				<li class="review-title-name">작성자</li>
+				<li class="review-regdate">등록일</li>
+			</ul> -->
 			<ul class="review-product-utility">
-				<li><a href="#">별점</a></li>
-				<li class="review-title"><a href="#">제목</a></li>
-				<li class="review-title-name"><a href="#">작성자</a></li>
-				<li class="review-regdate"><a href="#">등록일</a></li>
+				<c:if test="${empty reviews}">
+					작성된 리뷰가 없습니다.
+				</c:if>
+				<c:if test="${not empty reviews}">
+					<c:forEach items="${reviews}" var="review" varStatus="vs">
+						<li>
+						<div class="review-box">
+							<div class="review-info-box"> <%-- 회원정보 --%>
+								<em class="review-info-id">${review.reviewMemberId}</em>
+								<em class="review-info-date">
+									<fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+									<fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd"/>
+								</em>
+							</div>
+ 							<c:if test="${not empty petId}">
+								<div class="reivew-pet-box"> <%-- 펫정보 --%>
+									<em class="review-pet-name">${petId[0].petName} |</em>
+									<em class="review-pet-name">${petId[0].petGender} |</em>
+									<em class="review-pet-name">${petId[0].petAge}살 |</em>
+									<em class="review-pet-name">${petId[0].petWeight}kg |</em>
+									<em class="review-pet-name">${petId[0].petBreed} </em>
+								</div>
+							</c:if> 
+							<div class="review-detail-box"> <%-- 리뷰 제목/별점/사진/내용 --%>
+								<div class="score_star">
+									 <c:choose>
+								        <c:when test="${review.reviewStarRate == 1}">
+								            <span class="star-rating">★☆☆☆☆</span> (1)
+								        </c:when>
+								        <c:when test="${review.reviewStarRate == 2}">
+								            <span class="star-rating">★★☆☆☆</span>  (2)
+								        </c:when>
+								        <c:when test="${review.reviewStarRate == 3}">
+								            <span class="star-rating">★★★☆☆</span> (3)
+								        </c:when> 
+								        <c:when test="${review.reviewStarRate == 4}">
+								            <span class="star-rating">★★★★☆</span> (4)
+								        </c:when>
+								        <c:when test="${review.reviewStarRate == 5}">
+								            <span class="star-rating">★★★★★</span> (5)
+								        </c:when>
+	    							</c:choose>
+								</div>
+							<div class="review-warp">
+							</div>
+							<div class="review-data-wrap">
+								<span class="review-data"></span>
+							</div>
+							</div>
+						</div>
+						</li>
+					</c:forEach>
+				</c:if>
 			</ul>
 		</div>
+		
+		
 		<div id="Accordion_wrap">
-			<div class="que">
-				<c:forEach items="${reviews}" var="review" varStatus="vs">
-					${review.reviewId}
-				</c:forEach>
-				<div class="review-warp">
-					<span class="review-name"></span>
-				</div>
-				<div class="review-data-wrap">
-					<span class="review-data">${review.reviewCreatedAt}</span>
-				</div>
-			</div>
 			
-			<div class="anw">
+			
+			
+<%-- 			<div class="anw">
 				<div class="review-profile">호두누나 <span>2023.08.06 <br/>
 				호두 | 수컷 | 3살 | 5.7kg | 푸숑</span> </div>
 				<img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" alt="리뷰사진">
@@ -142,8 +203,22 @@
 				<img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" alt="리뷰사진">
 				<div class="review-desc">너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 
 				<br/> 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~</div>
-			</div>
+			</div> --%>
 		</div>
+		<!-- 페이징 바 -->
+		<nav aria-label="..." >
+	  	<ul class="pagination pagination-sm">
+		    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+		        <li class="page-item ${page == pageNumber ? 'active' : ''}">
+		            <a class="page-link" href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}">
+	                    <span class="page-number">${pageNumber}</span>
+	                </a>
+		        </li>
+		    </c:forEach>
+		</ul>
+		</nav>
+		
+		
 		<!-- 교환/반품/배송 -->
 		<div class="util-div">
 			<ul class="product-utility">
@@ -202,7 +277,7 @@
 </section>
 <script>
 // 리뷰 페이지 아코디언 효과
-const ques = document.querySelectorAll(".que");
+/* const ques = document.querySelectorAll(".que");
 const anws = document.querySelectorAll(".anw");
 
 ques.forEach(que => {
@@ -229,7 +304,15 @@ ques.forEach(que => {
       }
     });
   });
-});
+}); */
 </script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

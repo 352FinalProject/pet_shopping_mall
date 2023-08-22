@@ -46,6 +46,7 @@ import com.shop.app.product.entity.Product;
 
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.entity.ReviewDetails;
 
@@ -288,7 +289,12 @@ public class AdminController {
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(ProductDetail productDetail : productDetails) {
+			// 상품
 			Product product = productService.findProductById(productDetail.getProductId());
+			// 상품이미지
+			ProductImages productImages = productService.findImageAttachmentsByProductId(productDetail.getProductId());
+			
+			// 카테고리
 			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
 			// 옵션값
 			ProductInfoDto productInfo = ProductInfoDto.builder()
@@ -299,6 +305,8 @@ public class AdminController {
 					.optionValue(productDetail.getOptionValue())
 					.additionalPrice(productDetail.getAdditionalPrice())
 					.saleState(productDetail.getSaleState())
+					.attachments(productImages.getAttachments())
+					.attachmentMapping(productImages.getAttachmentMapping())
 					.build();
 			// 리스트에 추가
 			productInfos.add(productInfo);
@@ -307,7 +315,6 @@ public class AdminController {
 		log.debug("productInfos = {}", productInfos);
 		model.addAttribute("productInfos", productInfos);
 	}
-	
 
 	
 	/**
@@ -363,11 +370,16 @@ public class AdminController {
 
 		// 2. db저장
 		// 2.1. product 객체 저장
-		Product product = Product.builder()
+		ProductImages productImages = ProductImages.builder()
+				.categoryId(_product.getCategoryId())
+				.productName(_product.getProductName())
+				.productPrice(_product.getProductPrice())
+				.attachments(attachments)
 				.build(); // 상품카테고리아이디, 상품명, 가격
-		int result = productService.insertProduct(product);
-		int productId = product.getProductId();
+		
+		int productId = productService.insertProduct(productImages); // 여기서 이미지도 저장
 		log.debug("productId = {}", productId);
+		
 		// 2.1. productDetail 객체 저장
 		ProductDetail productDetail = ProductDetail.builder()
 				.productId(productId)
@@ -375,9 +387,9 @@ public class AdminController {
 				.optionValue(_product.getOptionValue())
 				.additionalPrice(_product.getAdditionalPrice())
 				.saleState(_product.getSaleState())
-				.attachments(attachments)
 				.build();
-		result = productService.insertProductDetail(productDetail);
+		
+		int result = productService.insertProductDetail(productDetail);
 		int productDetailId = productDetail.getProductDetailId();
 		log.debug("productDetailId = {}", productDetailId);
 		
@@ -388,21 +400,25 @@ public class AdminController {
 	 * @author 전수경
 	 * 상품수정 폼으로 연결
 	 */
-	@GetMapping("/adminProductDetailUpdate.do")
+	@GetMapping("/adminProductUpdate.do")
 	public void adminProductDetailUpdate(
 			@RequestParam int productId,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
 			) {
 		
-		// 상품카테고리 조회 후 전달
+		// 상품카테고리 가져오기
 		List<ProductCategory> categories = productService.findAll();
-		model.addAttribute("categories", categories);
-		
-		// 상품아이디로 상품정보 조회해서 가져오기
-		ProductDetail product = productService.findProductDetailById(productId);
+		// 상품정보 가져오기
+		Product product = productService.findProductById(productId);
 		log.debug("product = {}", product);
+		// 상품옵션 가져오기(리스트)
+		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
+		log.debug("productDetails = {}", productDetails);
+		
+		model.addAttribute("categories", categories);
 		model.addAttribute("product", product);
+		model.addAttribute("productDetails", productDetails);
 	}
 	
 	
@@ -410,7 +426,7 @@ public class AdminController {
 	 * @author 전수경
 	 * 상품 수정
 	 */
-	@PostMapping("/adminProductDetailUpdate.do")
+	@PostMapping("/adminProductUpdate.do")
 	public String adminProductDetailUpdate(
 			@Valid ProductUpdateDto _product,
 			BindingResult bindingResult,

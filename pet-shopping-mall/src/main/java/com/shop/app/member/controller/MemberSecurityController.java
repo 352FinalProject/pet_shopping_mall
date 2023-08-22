@@ -1,5 +1,8 @@
 package com.shop.app.member.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.app.coupon.entity.Coupon;
+import com.shop.app.coupon.entity.MemberCoupon;
+import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.dto.MypageDto;
@@ -65,6 +71,9 @@ public class MemberSecurityController {
 	@Autowired
 	private TermsService termsService; // 회원가입시 약관동의
 	
+	@Autowired
+	private CouponService couponService; // 쿠폰
+	
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {}
 
@@ -94,7 +103,6 @@ public class MemberSecurityController {
 		    return "redirect:/member/memberCreate.do";
 		    // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
 		}
-
 		
 		// 비밀번호 암호화 처리
 		String rawPassword = member.getPassword();
@@ -103,7 +111,7 @@ public class MemberSecurityController {
 		
 		// 포인트 테이블에 디비 저장 (예라)
 		member.setPoint(3000);
-		
+	
 		// 회원 정보 DB에 저장
 		int result = memberService.insertMember(member);
 		
@@ -113,9 +121,31 @@ public class MemberSecurityController {
 		point.setPointType("회원가입");
 		point.setPointAmount(3000);
 		
+		int resultPoint = pointService.insertPoint(point);
+		
+	    // 회원가입시 무료배송 쿠폰 발급 (예라)
+	    List<Coupon> resultCoupon = couponService.findCoupon();
+	    for (Coupon coupon : resultCoupon) {
+	        MemberCoupon memberCoupon = new MemberCoupon();
+	        memberCoupon.setCouponId(coupon.getCouponId());
+	        memberCoupon.setMemberId(member.getMemberId());
+
+	        // 발급받은 날짜로부터 한달 뒤의 날짜 계산
+	        LocalDateTime issuanceDate = LocalDateTime.now();
+	        LocalDateTime endDate = issuanceDate.plusMonths(1);
+	        
+	        memberCoupon.setCreateDate(issuanceDate); 
+	        memberCoupon.setEndDate(endDate); 
+	        memberCoupon.setUseStatus(0);
+
+	        // memberCoupon db 추가
+	        int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
+	    }
+		
 	    // 약관 동의 정보 가져오기
 	    Object obj = session.getAttribute("userAgreements");
 	    log.debug("obj = {}", obj);
+	    
 	    // Terms 객체 생성
 	    Terms terms = new Terms();
 

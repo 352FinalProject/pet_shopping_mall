@@ -105,7 +105,7 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.findProductTotalReviewCount();
 	}
 
-	// 상품 상페페이지 전체 리뷰 
+	// 상품 상세페이지 전체 리뷰 
 	@Override
 	public List<Review> findProductReviewAll(Map<String, Object> params) {
 		int limit = (int) params.get("limit");
@@ -113,6 +113,12 @@ public class ReviewServiceImpl implements ReviewService {
 		int offset = (page - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return reviewRepository.findProductReviewAll(rowBounds);
+	}
+
+	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
+	@Override
+	public ReviewDetails findProductImageAttachmentsByReviewId(int reviewId) {
+		return reviewRepository.findProductImageAttachmentsByReviewId(reviewId);
 	}
 
 

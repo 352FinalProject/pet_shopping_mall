@@ -10,9 +10,6 @@
   <div class="container-fluid px-4">
     <form:form action="${pageContext.request.contextPath}/admin/adminProductDetailCreate.do" enctype="multipart/form-data" method="post" class="mt-4">
 
-      <div class="mb-3">
-        <div class="row">
-          <div class="col-md-6">
             <label for="categoryId" class="form-label">상품 카테고리</label>
             <select name="categoryId" id="categoryId" class="form-select">
               <option value="-선택-">-선택-</option>
@@ -25,51 +22,31 @@
                 </c:forEach>
               </c:if>
             </select>
-          </div>
           <div class="col-md-6">
             <label for="ProductName" class="form-label">상품명</label>
-            <input type="text" name="ProductName" id="ProductName" class="form-control" required>
+            <input type="text" name="ProductName" id="ProductName" class="form-control" value="${product.productName}" required>
           </div>
-        </div>
-        <div class="row">
           <div class="col-md-6">
             <label for="productPrice" class="form-label">상품금액</label>
-            <input type="number" name="productPrice" id="productPrice" class="form-control" required>
+            <input type="number" name="productPrice" id="productPrice" class="form-control" value="${product.productPrice}" required>
           </div>
-          <div class="col-md-6">
-            <label for="optionName" class="form-label">옵션명</label>
-            <select name="optionName" id="optionName" class="form-select">
-              <option value="">-선택안함-</option>
-              <option value="색">색</option>
-              <option value="사이즈">사이즈</option>
-              <option value="무게">무게</option>
-              <option value="기타">기타</option>
-            </select>
-          </div>
-        </div>
-        <div class="optionValueInput">
-          <div class="row">
+	      <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+	          <div class="col-md-6">
+	            <label for="optionName" class="form-label">옵션명</label>
+	            <input type="text" name="optionName" id="optionName" class="form-control" value="${productDetail.optionName}">
+	          </div>
             <div class="col-md-6">
               <label for="optionValue" class="form-label">옵션값</label>
-              <input type="text" name="optionValue" id="optionValue" class="form-control">
+              <input type="text" name="optionValue" id="optionValue" class="form-control" value="${productDetail.optionValue}">
             </div>
             <div class="col-md-6">
               <label class="form-label">추가</label>
               <button type="button" class="btn btn-secondary" onclick="addOptionValue()">추가</button>
             </div>
-          </div>
-          <div class="row">
             <div class="col-md-6">
               <label for="additionalPrice" class="form-label">옵션추가금</label>
               <input type="number" name="additionalPrice" id="additionalPrice" class="form-control" value="0">
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="file" class="form-label">제품 사진</label>
-            <input type="file" name="upFile" id="file" class="form-control">
-          </div>
           <div class="col-md-6">
             <label for="saleState" class="form-label">판매상태</label>
             <select name="saleState" id="saleState" class="form-select">
@@ -78,6 +55,16 @@
               <option value="2">품절</option>
               <option value="3">기타</option>
             </select>
+          </div>
+	      
+	      </c:forEach>    
+	          
+
+        
+        <div class="row">
+          <div class="col-md-6">
+            <label for="file" class="form-label">제품 사진</label>
+            <input type="file" name="upFile" id="file" class="form-control">
           </div>
         </div>
       </div>

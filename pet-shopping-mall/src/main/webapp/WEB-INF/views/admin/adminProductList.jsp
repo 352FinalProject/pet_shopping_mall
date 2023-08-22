@@ -69,12 +69,19 @@
 									<tr>
 										<td>${productInfo.product.productId}</td>
 										<td>
-											<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-		                                        class="product-img"
-		                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+											<c:if test="${empty productInfo.attachments}">
+												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
+			                                        class="product-img"
+			                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+											</c:if>
+											<c:if test="${not empty productInfo.attachments}">
+												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
+			                                        class="product-img"
+			                                        src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
+											</c:if>
 										</td>
 										<td>
-										<a href="${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
+										<a href="${pageContext.request.contextPath}/admin/adminProductUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
 										</td>
 										<td>${productInfo.productCategory.categoryName}</td>
 										<td>${productInfo.product.productPrice}</td>
