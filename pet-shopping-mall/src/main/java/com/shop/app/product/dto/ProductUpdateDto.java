@@ -11,14 +11,14 @@ public class ProductUpdateDto {
 	private String productName;
 	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
-	private int imageId;
+	private int imgId;
 	
 	public Product toProduct() {
 		return Product.builder()
 				.categoryId(categoryId)
 				.productName(productName)
 				.productPrice(productPrice)
-				.imageId(imageId)
+				.imgId(imgId)
 				.build();
 	}
 }
