@@ -41,12 +41,12 @@
                       <h2>펫 기본 정보</h2>
                     <table class="pet-info-table">
  					<tr>
-                        <th>이름</th>
+                        <th>이름:</th>
                         <td>${petInfo.petName}</td>
                     </tr>
                     <tr>
-                        <th>생년월일:</th>
-                        <td>${petInfo.petDofBFix}</td>
+                        <th>나이:</th>
+                        <td>${petInfo.petAge}</td>
                     </tr>
                     <tr>
                         <th>타입:</th>
@@ -82,12 +82,12 @@
 <section class="common-section" id="back-button-section">
     <div class="common-container">
         <div class="common-div">
-            <form action="${pageContext.request.contextPath}/member/petList.do"
+            <form action="${pageContext.request.contextPath}/pet/petList.do"
                 class="form-inline">
                 <button class="btn-add">돌아가기</button>
             </form>
             
-            <form action="${pageContext.request.contextPath}/member/petGoDetail.do" method="GET"
+            <form action="${pageContext.request.contextPath}/pet/petGoDetail.do" method="GET"
                 class="form-inline">
                 <input type="hidden" name="petId" value="${petInfo.petId}">
                 <button class="btn-add">수정</button>

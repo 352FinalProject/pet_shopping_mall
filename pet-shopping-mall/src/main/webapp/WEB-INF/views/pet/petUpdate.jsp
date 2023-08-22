@@ -7,34 +7,104 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <style>
-    /* 스타일 수정 */
-    .pet-details, .pet-text-input {
-        width: 50%;
-        padding: 20px;
+.common-section{
+	display: flex;
+    flex-direction: column;
+    margin:100px;
+}
+.common-div {
+	justify-content: center;
+	align-items: left;
+	display: flex;
+} 
+
+/* 회원가입 타이틀 */
+.common-title {
+	font-size:24px;
+	justify-content: center;
+	display: flex;
+}
+
+/* input 글씨 왼쪽정렬 */
+.common-div table th {
+	text-align: left;
+}
+
+/* 테이블 사이 간격 */
+.common-div table td {
+	padding: 5px;
+}
+
+/* input-button 태그 */
+.common-div table td input{
+	height: 30px;
+ 	border-radius: 10px;
+ 	border: 1px solid lightgray;
+ 	background-color: white;
+}
+
+.common-div table td input[type="email"] {
+    margin-bottom: 12px;
+}
+
+/* input 태그 */
+.common-div table td input[type="text"],
+.common-div table td input[type="password"], 
+.common-div table td input[type="tel"], 
+.common-div table td input[type="date"],
+.common-div table td input[type="email"] {
+		margin-right: 10px;
+		margin-left: 10px;
+		width: 250px;
+		border-radius: 20px;
+		height: 40px;
+		border: 1px solid lightgray;
+		padding: 2px 15px; /* 위아래 2px 좌우 15px 패딩 조정 */
+}
+
+/* 돌아가기&가입하기 버튼 */
+.resetAndSubmit {
+	text-align: center;
+}
+
+/* 돌아가기 버튼 */
+.resetAndSubmit input[type="reset"] {
+	background-color: #c8c8c8;
+	margin-right: 10px;
+	width: 120px;
+	height: 40px;
+	border-radius: 20px;
+	color: white;
+	border: 1px solid #e7e7e7;
+	margin-top: 30px;
+}
+
+/* 가입하기 버튼 */
+.resetAndSubmit input[type="submit"] {
+	background-color: #5886d3;
+	width: 120px;
+	height: 40px;
+	border-radius: 20px;
+	border: 1px solid #e7e7e7;
+	color: white;
+	
+}
+
+/* 성별선택 버튼 */
+    input[type="button"][name="gender"] {
         border: 1px solid lightgray;
-        margin: 10px;
+        border-radius: 20px;
+        padding: 5px 10px;
+        margin-right: 10px;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    input[type="button"][name="gender"].selected {
+        background-color: #5886d3;
+        color: white;
     }
     
-    .pet-info-table {
-        width: 100%;
-    }
-    
-    .pet-info-table th, .pet-info-table td {
-        padding: 5px;
-        border-bottom: 1px solid lightgray;
-    }
-    
-    .pet-text-input textarea {
-        width: 100%;
-        height: 100px;
-        resize: none;
-        box-sizing: border-box;
-    }
-    
-    /* 성별 선택 버튼 스타일 */
-    .selected {
-        background-color: lightblue;
-    }
 </style>
 
 <!-- 펫 수정 페이지 내용 -->
@@ -43,7 +113,7 @@
     <br>
     <div class="common-container">
         <div class="common-div">
-            <form:form action="${pageContext.request.contextPath}/member/petUpdate.do" method="POST">
+            <form:form action="${pageContext.request.contextPath}/pet/petUpdate.do" method="POST">
                 <input type="hidden" name="petId" value="${petInfo.petId}">
                 <table>
                     <tr>
@@ -61,7 +131,7 @@
                     <tr>
                         <th>생일</th>
                         <td>
-                            <input type="date" name="petDofBFix" id="petDofBFix" value="${petInfo.petDofBFix}" required>
+                            <input type="text" name="petAge" id="petAge" value="${petInfo.petDofBFix}" required>
                         </td>
                     </tr>
                     <tr>
@@ -76,6 +146,12 @@
                             <input type="text" name="petBreed" value="${petInfo.petBreed}">
                         </td>
                     </tr>
+                    <tr>
+                   		<th>몸무게</th>
+                        <td>
+                            <input type="text" name="petWeight" value="${petInfo.petWeight}">
+                        </td>
+                    </tr>                    
                     <tr>
                         <th>입양일</th>
                         <td>
@@ -112,7 +188,7 @@
 <section class="common-section" id="back-button-section">
     <div class="common-container">
         <div class="common-div">
-            <form action="${pageContext.request.contextPath}/member/petList.do" class="form-inline">
+            <form action="${pageContext.request.contextPath}/pet/petList.do" class="form-inline">
                 <button class="btn-add">돌아가기</button>
             </form>
         </div>
