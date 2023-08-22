@@ -87,6 +87,24 @@
 button, input {
 	cursor: pointer;
 }
+.guide.ok, .guide.error {
+    display: none;
+}
+#memberId.duplicate {
+    border: 2px solid red; /* 아이디 중복일 때 테두리 색상: 빨간색 */
+}
+
+#memberId-container {
+    position: relative;
+}
+
+#memberId-container.valid input {
+    border: 1px solid #5886d3; /* 파란색 테두리 */
+}
+
+#memberId-container.duplicate input {
+    border: 1px solid red; /* 빨간색 테두리 */
+}
 </style>
 <!-- 회원가입 (혜령) -->
 <section class="common-section" id="#">
@@ -99,58 +117,60 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td>
-							<div id="memberId-container">
-								<input type="text"
-								class="form-control"
-								placeholder=""
-								name="memberId"
-								id="memberId"
-								value=""
-								pattern="\w{4,}"
-								required>
-								<input type="button" id="idCheckButton" value="중복 확인">
-								<input type="hidden" id="idValid" value="0"/>
-							</div>
+						<div id="memberId-container">
+						<input type="text" 
+							   class="form-control" 
+							   placeholder="아이디"
+							   name="memberId" 
+							   id="memberId"
+							   value="${memberId}"
+							   pattern="\w{4,}"
+							   required>
+						<input type="hidden" id="idValid" value="0"/>
+					</div>
 						</td>
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td><input type="text" name="name" id="name" value=""
-							required></td>
+						<td><input type="text" name="name" id="name" value="${memberName}"
+							placeholder="이름" required></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
 						<td><input type="password" name="password" id="password"
-							value="" required></td>
+							placeholder="비밀번호" value="" required>
+							</td>
 					</tr>
 					<tr>
 						<th>비밀번호 확인</th>
 						<td><input type="password" id="passwordConfirm" value=""
-							required></td>
+							placeholder="비밀번호 확인" required></td>
 					</tr>
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="tel" name="phone" id="tel" value="" required>
-						</td>
+						<td><input type="tel" name="phone" id="tel" value="${Phone}"
+							placeholder="핸드폰번호" required></td>
 					</tr>
 					<tr>
 						<th>생일</th>
-						<td><input type="date" name="birthday" id="birthday" required>
-						</td>
+						<td><input type="date" name="birthday" id="birthday"
+							placeholder="생년월일" required></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td><input type="email" name="email" id="emailInput" placeholder="pet@gmail.com" required>
-							<input type="button" id="emailButton" value="이메일 인증" onclick="emailCheck()">
+						<td><input type="email" name="email" id="emailInput"
+							placeholder="이메일" value="${email}" required> <input type="button"
+							id="emailButton" value="이메일 인증" onclick="emailCheck()">
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input type="text" name="address" id="address" required>
-							<input type="button" value="주소 검색"></td>
+						<td><input type="text" name="address" id="address"
+							placeholder="주소" value="${address}" required> <input type="button"
+							value="주소 검색"></td>
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2">
-							<form action="/member/memberCreateComplte.do">
+							<form action="${pageContext.request.contextPath}/member/memberCreateComplte.do">
 								<input type="reset" value="돌아가기"> <input type="submit"
 									value="가입하기">
 							</form>
@@ -198,62 +218,79 @@ function emailCheck() {
     xhr.setRequestHeader("X-CSRF-TOKEN", token);
     xhr.send(JSON.stringify({ email: email }));
 }
+	
+/* 유효성 검사 */
+$(document).ready(function() {
+    function updateInputBorderStyle(idValidValue) {
+        const memberIdContainer = $("#memberId-container");
 
+        if (idValidValue === "1") {
+            memberIdContainer.removeClass("duplicate").addClass("valid");
+        } else if (idValidValue === "0") {
+            memberIdContainer.removeClass("valid").addClass("duplicate");
+        } else {
+            memberIdContainer.removeClass("valid duplicate");
+        }
+    }
 
-// 유효성 검사	
-document.querySelector("#idCheckButton").onclick = () => {
-	const memberIdInput = document.querySelector("#memberId");
-	const value = memberIdInput.value;
+    $("#memberId").on("keyup", function(e) {
+        const value = e.target.value;
+        const guideOk = $(".guide.ok");
+        const guideError = $(".guide.error");
+        const idValid = $("#idValid");
+        
+        if (value.length >= 4) {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/member/checkIdDuplicate.do",
+                data: {
+                    memberId: value
+                },
+                method: "GET",
+                dataType: "json",
+                success: function(responseData) {
+                    console.log(responseData);
+                    const { available } = responseData;
+                    if (available) {
+                        guideOk.show();
+                        guideError.hide();
+                        idValid.val("1");
+                    } else {
+                        guideOk.hide();
+                        guideError.show();
+                        idValid.val("0");
+                    }
+                    updateInputBorderStyle(idValid.val()); // 스타일 업데이트 호출
+                }
+            });
+        } else {
+            guideOk.hide();
+            guideError.hide();
+            idValid.val("0");
+            updateInputBorderStyle(idValid.val()); // 스타일 업데이트 호출
+        }
+    });
+    
+    $("#memberCreateFrm").on("submit", function(e) {
+        const memberIdContainer = $("#memberId-container");
+        const idValid = $("#idValid");
+        const password = $("#password");
+        const passwordConfirmation = $("#passwordConfirmation");
 
-	if (value.length >= 4) {
-		$.ajax({
-			url: "${pageContext.request.contextPath}/member/checkIdDuplicate.do",
-			data: {
-				memberId: value
-			},
-			method: "GET",
-			dataType: "json",
-			success: function(responseData) {
-				console.log(responseData);
-				const idValid = document.querySelector("#memberid");
-				const guideOk = document.querySelector(".guide.ok");
-				const guideError = document.querySelector(".guide.error");
-				
-				const { available } = responseData;
-				if (available) {
-					alert("사용 가능한 아이디입니다.");
-					guideOk.style.display = "inline";
-					guideError.style.display = "none";
-					idValid.value = "1";
-				} else {
-					alert("이미 사용 중인 아이디입니다.");
-					guideOk.style.display = "none";
-					guideError.style.display = "inline";
-					idValid.value = "0";
-				}
-			}
-		});
-	} else {
-		alert("아이디를 최소 4자 이상 입력해주세요.");
-		idValid.value = "0";
-	}
-};
+        if (idValid.val() === "0") {
+            memberIdContainer.addClass("duplicate");
+            alert("사용가능한 아이디를 작성해주세요.");
+            e.preventDefault(); // 폼 제출을 중단
+            return;
+        }
 
-/* document.memberCreateFrm.onsubmit = (e) => {
-	const idValid = document.querySelector("#idValid");
-	const password = document.querySelector("#password");
-	const passwordConfirmation = document.querySelector("#passwordConfirm");
+        if (password.val() !== passwordConfirmation.val()) {
+            alert("비밀번호가 일치하지 않습니다.");
+            e.preventDefault(); // 폼 제출을 중단
+            return;
+        }
+    });
+});
 
-	if (idValid.value === "0") {
-		alert("사용 가능한 아이디를 입력해주세요.");
-		return false;
-	}
-
-	if (password.value !== passwordConfirmation.value) {
-		alert("비밀번호가 일치하지 않습니다.");
-		return false;
-	}
-}; */
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

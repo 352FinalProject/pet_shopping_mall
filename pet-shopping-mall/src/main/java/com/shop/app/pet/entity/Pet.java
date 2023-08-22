@@ -27,6 +27,7 @@ public class Pet {
     private String petDofBFix;
     private String petAdoptionDateFix;
     
+    private String reviewMemberId;
     
 
 }

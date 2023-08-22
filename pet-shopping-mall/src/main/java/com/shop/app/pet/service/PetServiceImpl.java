@@ -53,8 +53,9 @@ public class PetServiceImpl implements PetService {
 		return petRepository.petUpdate(pet);
 	}
 
+	// 리뷰-펫 정보 가져오기(혜령)
 	@Override
-	public Pet findPetId(Pet pet) {
-		return petRepository.findPetId(pet);
+	public List<Pet> findPetId(Pet pet, String memberId) {
+		return petRepository.findPetId(pet, memberId);
 	}
 }

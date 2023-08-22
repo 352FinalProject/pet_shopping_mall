@@ -47,9 +47,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	@CacheEvict(value = "memberCache", key = "#memberId")
 	public int deleteMember(String memberId) {
-		log.debug("memberId= {}", memberId);
 		return memberRepository.deleteMember(memberId);
 		
 	}
@@ -65,7 +63,6 @@ public class MemberServiceImpl implements MemberService {
 		return result ;
 		
 	}
-
 
 
 }

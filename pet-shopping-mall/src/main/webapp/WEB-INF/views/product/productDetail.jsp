@@ -91,15 +91,17 @@
 		</div>
 		<div id="Accordion_wrap">
 			<div class="que">
-				<div class="score_star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점"><span class="star_test">5.0</span></div>
-				<span>너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ </span>
+				<c:forEach items="${reviews}" var="review" varStatus="vs">
+					${review.reviewId}
+				</c:forEach>
 				<div class="review-warp">
-					<span class="review-name">호두누나</span>
+					<span class="review-name"></span>
 				</div>
 				<div class="review-data-wrap">
-					<span class="review-data">23.08.06</span>
+					<span class="review-data">${review.reviewCreatedAt}</span>
 				</div>
 			</div>
+			
 			<div class="anw">
 				<div class="review-profile">호두누나 <span>2023.08.06 <br/>
 				호두 | 수컷 | 3살 | 5.7kg | 푸숑</span> </div>
