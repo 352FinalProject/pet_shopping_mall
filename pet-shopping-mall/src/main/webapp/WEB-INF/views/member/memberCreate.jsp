@@ -296,6 +296,20 @@ function verifyToken() {
 			return false;
 		}
 	};
+	function checkEmail() {
+	    const emailInput = document.getElementById("emailInput");
+	    const emailValidationMessage = document.getElementById("emailValidationMessage");
+
+	    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+	    if (!emailPattern.test(emailInput.value)) {
+	        emailValidationMessage.textContent = "유효한 이메일 주소를 입력해주세요.";
+	        emailInput.focus();
+	    } else {
+	        emailValidationMessage.textContent = "";
+	    }
+	}
+
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
