@@ -51,6 +51,7 @@ public class MailSender {
 		    
 	        sendEmail(userEmail, subject, htmlMessage);
 	    }
+	   
 	    
 	    // 실제 이메일 발송 처리 메소드
 	    public void sendEmail(String recipient, String subject, String message) {

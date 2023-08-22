@@ -20,7 +20,7 @@ import com.shop.app.order.entity.OrderDetail;
 @Mapper
 public interface OrderRepository {
 
-	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{amount}, #{discountCode, jdbcType=VARCHAR})")
+	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{amount})")
 	@SelectKey(
 			before = false,
 			keyProperty = "orderId",
@@ -28,6 +28,10 @@ public interface OrderRepository {
 			statement = "select seq_orderTbl_id.currval from dual"
 	)
 	int insertOrder(Order order);
+	
+	
+	List<OrderAdminListDto> adminOrderList();
+
 	
 	// 2. db에서 주문 정보 가져오기 (예라)
 	@Select("select * from (select * from orderTbl where member_id = #{memberId} order by order_id desc) where rownum <= 1")
@@ -53,13 +57,7 @@ public interface OrderRepository {
 	@Select("select * from orderTbl where order_no = #{orderNo}")
 	Order findOrderByOrderNo(String orderNo);
 
-	// 관리자 주문조회 (대원)
-	List<OrderAdminListDto> adminOrderList();
-	
-	// 관리자 주문검색 조회 (대원)
-	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
-			List<String> paymentMethod, List<String> orderStatus);
 
-
+	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
 	
 }

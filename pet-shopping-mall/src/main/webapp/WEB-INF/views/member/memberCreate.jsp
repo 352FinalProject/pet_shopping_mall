@@ -93,6 +93,18 @@ button, input {
 #memberId.duplicate {
     border: 2px solid red; /* 아이디 중복일 때 테두리 색상: 빨간색 */
 }
+
+#memberId-container {
+    position: relative;
+}
+
+#memberId-container.valid input {
+    border: 1px solid #5886d3; /* 파란색 테두리 */
+}
+
+#memberId-container.duplicate input {
+    border: 1px solid red; /* 빨간색 테두리 */
+}
 </style>
 <!-- 회원가입 (혜령) -->
 <section class="common-section" id="#">
@@ -114,8 +126,6 @@ button, input {
 							   value="${memberId}"
 							   pattern="\w{4,}"
 							   required>
-						<span class="guide ok">이 아이디는 사용가능합니다.</span>
-						<span class="guide error">이 아이디는 이미 사용중입니다.</span>
 						<input type="hidden" id="idValid" value="0"/>
 					</div>
 						</td>
@@ -160,7 +170,7 @@ button, input {
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2">
-							<form action="/member/memberCreateComplte.do">
+							<form action="${pageContext.request.contextPath}/member/memberCreateComplte.do">
 								<input type="reset" value="돌아가기"> <input type="submit"
 									value="가입하기">
 							</form>
@@ -208,94 +218,79 @@ function emailCheck() {
     xhr.setRequestHeader("X-CSRF-TOKEN", token);
     xhr.send(JSON.stringify({ email: email }));
 }
+	
+/* 유효성 검사 */
+$(document).ready(function() {
+    function updateInputBorderStyle(idValidValue) {
+        const memberIdContainer = $("#memberId-container");
 
+        if (idValidValue === "1") {
+            memberIdContainer.removeClass("duplicate").addClass("valid");
+        } else if (idValidValue === "0") {
+            memberIdContainer.removeClass("valid").addClass("duplicate");
+        } else {
+            memberIdContainer.removeClass("valid duplicate");
+        }
+    }
 
-// 인증 번호 확인 함수는 그대로 유지
-function verifyToken() {
-  const email = $('#emailInput').val();
-  const token = $('#token').val();
-  
-  xhr.setRequestHeader("X-CSRF-TOKEN", token) 
-  
-  	// 서버에 토큰 인증 요청
-		$.ajax({
-		  type: 'POST',
-		  url: '${pageContext.request.contextPath}/email/send',
-		  data: JSON.stringify({ email: email }),
-		  contentType: 'application/json',
-		  dataType: 'json',
-		  beforeSend: function(xhr) { // beforeSend 콜백을 사용하여 헤더 설정
-		    xhr.setRequestHeader("X-CSRF-TOKEN", token);
-		  }
-		}).done((data) => {
-		  if (data.success) {
-		    alert('인증 메일이 발송되었습니다. 이메일을 확인해주세요.');
-		  } else {
-		    alert('인증 메일 발송에 실패했습니다.');
-		  }
-		}).fail((jqXHR, textStatus, errorThrown) => {
-		  console.log("HTTP Status: ", jqXHR.status); // 상태 코드 출력
-		  alert('서버와의 통신에 실패했습니다.');
-		});
-	};
-	document.querySelector("#memberId").onkeyup = (e) => {
-		const value = e.target.value; 
-		console.log(value);
-		
-		const guideOk = document.querySelector(".guide.ok");
-		const guideError = document.querySelector(".guide.error");
-		const idValid = document.querySelector("#idValid");
-		
-		if(value.length >= 4) {
-			$.ajax({
-				url : "${pageContext.request.contextPath}/member/checkIdDuplicate.do",
-				data : {
-					memberId : value
-				},
-				method : "GET",
-				dataType : "json",
-				success(responseData) {
-					console.log(responseData);
-					const {available} = responseData;
-					if(available) {
-						guideOk.style.display = "inline";
-						guideError.style.display = "none";
-						idValid.value = "1";
-					}
-					else {
-						guideOk.style.display = "none";
-						guideError.style.display = "inline";
-						idValid.value = "0";
-					}
-					
-				}
-			});
-		}
-		else {
-			guideOk.style.display = "none";
-			guideError.style.display = "none";
-			idValid.value = "0";
-		}
-	};
+    $("#memberId").on("keyup", function(e) {
+        const value = e.target.value;
+        const guideOk = $(".guide.ok");
+        const guideError = $(".guide.error");
+        const idValid = $("#idValid");
+        
+        if (value.length >= 4) {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/member/checkIdDuplicate.do",
+                data: {
+                    memberId: value
+                },
+                method: "GET",
+                dataType: "json",
+                success: function(responseData) {
+                    console.log(responseData);
+                    const { available } = responseData;
+                    if (available) {
+                        guideOk.show();
+                        guideError.hide();
+                        idValid.val("1");
+                    } else {
+                        guideOk.hide();
+                        guideError.show();
+                        idValid.val("0");
+                    }
+                    updateInputBorderStyle(idValid.val()); // 스타일 업데이트 호출
+                }
+            });
+        } else {
+            guideOk.hide();
+            guideError.hide();
+            idValid.val("0");
+            updateInputBorderStyle(idValid.val()); // 스타일 업데이트 호출
+        }
+    });
+    
+    $("#memberCreateFrm").on("submit", function(e) {
+        const memberIdContainer = $("#memberId-container");
+        const idValid = $("#idValid");
+        const password = $("#password");
+        const passwordConfirmation = $("#passwordConfirmation");
 
-	document.memberCreateFrm.onsubmit = (e) => {
-		const memberIdContainer = document.querySelector("#memberId-container");
-		const idValid = document.querySelector("#idValid");
-		const password = document.querySelector("#password");
-		const passwordConfirmation = document.querySelector("#passwordConfirmation");
-		
-		if(idValid === "0") {
-			memberIdContainer.classList.add("duplicate");
-			alert("사용가능한 아이디를 작성해주세요.");
-			return false;
-		}
-		
-		
-		if(password.value !== passwordConfirmation.value) {
-			alert("비밀번호가 일치하지 않습니다.");
-			return false;
-		}
-	};
+        if (idValid.val() === "0") {
+            memberIdContainer.addClass("duplicate");
+            alert("사용가능한 아이디를 작성해주세요.");
+            e.preventDefault(); // 폼 제출을 중단
+            return;
+        }
+
+        if (password.val() !== passwordConfirmation.val()) {
+            alert("비밀번호가 일치하지 않습니다.");
+            e.preventDefault(); // 폼 제출을 중단
+            return;
+        }
+    });
+});
+
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

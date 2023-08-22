@@ -60,6 +60,14 @@ public interface ReviewRepository {
 	@Select("select * from review where review_id = #{reviewId}")
 	ReviewDetails getDeleteReviewById(int reviewId);
 
+	// 상품 상세페이지 리뷰 전체 카운트
+	@Select("select count(*) from review")
+	int findProductTotalReviewCount();
+	
+	// 상품 상페페이지 전체 리뷰
+	@Select("select * from review")
+	List<Review> findProductReviewAll(RowBounds rowBounds);
+
 
 
 }
