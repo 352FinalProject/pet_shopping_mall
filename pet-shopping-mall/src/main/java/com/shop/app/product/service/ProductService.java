@@ -26,6 +26,8 @@ public interface ProductService {
 
 	ProductCategory findProductCategoryById(int categoryId);
 
+	int insertProductDetail(ProductDetail productDetail);
+
 
 
 }

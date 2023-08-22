@@ -41,12 +41,12 @@
                       <h2>펫 기본 정보</h2>
                     <table class="pet-info-table">
  					<tr>
-                        <th>이름</th>
+                        <th>이름:</th>
                         <td>${petInfo.petName}</td>
                     </tr>
                     <tr>
-                        <th>생년월일:</th>
-                        <td>${petInfo.petDofBFix}</td>
+                        <th>나이:</th>
+                        <td>${petInfo.petAge}</td>
                     </tr>
                     <tr>
                         <th>타입:</th>

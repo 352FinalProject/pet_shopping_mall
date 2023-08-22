@@ -43,6 +43,7 @@
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 기본상품목록
+					<input type="button" value="글쓰기" id="btn-add"/>
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple">
@@ -68,7 +69,9 @@
 									<tr>
 										<td>${productInfo.product.productId}</td>
 										<td>
-											이미지는 아직
+											<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
+		                                        class="product-img"
+		                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
 										</td>
 										<td>
 										<a href="${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
@@ -80,8 +83,7 @@
 										<td>${productInfo.additionalPrice}</td>
 										<td>${productInfo.saleState}</td>
 										<td>
-											<button onclick="">수정</button> 
-											<button onclick="">삭제</button> 
+											<button onclick="updateProduct();">수정</button> 
 										</td>
 									</tr>
 								</c:forEach>
@@ -93,4 +95,13 @@
 			
 		</div>
 	</main>
+	<script>
+	const updateProduct = () => {
+		
+	};
+	
+	document.querySelector("#btn-add").onclick = () => {
+		location.href = '${pageContext.request.contextPath}/admin/adminProductDetailCreate.do';
+	};
+	</script>
 	<jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>

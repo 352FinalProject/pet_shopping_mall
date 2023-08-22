@@ -120,22 +120,30 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td><input type="text" name="memberId" id="memberId"
-							value="${loginMember.memberId}"  required readonly /></td>
+							value="${member.memberId}"  required readonly/></td>
 						<td rowspan="2" class="pet-info-container">
-
+							<div class="pet-info">
+								<img
+									src="${pageContext.request.contextPath}/resources/images/마이페이지/1.png" />
+								<div></div>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<th>이름</th>
 						<td><input type="text" name="name" id="name"
-							value="${loginMember.name}" required readonly></td>
+							value="${member.name}" required readonly></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
 						<td><input type="password" name="password" id="password"
 							value="" required></td>
 						<td rowspan="2" class="pet-info-container">
-
+							<div class="pet-info">
+								<img
+									src="${pageContext.request.contextPath}/resources/images/마이페이지/2.png" />
+								<div></div>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -146,28 +154,32 @@ button, input {
 					<tr>
 						<th>핸드폰 번호</th>
 						<td><input type="tel" name="tel" id="tel"
-							value="${loginMember.phone}" required>
+							value="${member.phone}" required></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
-		
+								<img
+									src="${pageContext.request.contextPath}/resources/images/마이페이지/3.png" />
+								<div></div>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th>생일</th>
 						<td><input type="date" name="birthday" id="birthday"
-							value="${loginMember.birthday}" readonly required></td>
+							value="${member.birthday}" readonly required></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="pet@gmail.com" value="${loginMember.email}" readonly required>
+							placeholder="이메일" value="${member.email}" required readonly>
+							<input
+							type="button" value="이메일 인증" onclick="emailCheck()">
 						</td>
 					</tr>
 					<tr>
-						<th>주소</th>
+						<th>주소</th> <!-- value="${member.address}" 생략되었지만 getter 사용됨 -->
 						<td><input type="text" name="address" id="address"
-							value="${loginMember.address}" required> <input
+							value="${member.address}" required> <input 
 							type="button" value="주소 검색"></td>
 					</tr>
 					<tr>
@@ -182,6 +194,5 @@ button, input {
 	</div>
 </section>
 <script>
-const 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

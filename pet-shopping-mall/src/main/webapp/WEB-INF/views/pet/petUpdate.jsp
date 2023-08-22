@@ -106,6 +106,30 @@
     }
     
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const genderButtons = document.querySelectorAll('input[type="button"][name="gender"]');
+        const genderInput = document.getElementById("genderInput");
+        const successMessage = document.querySelector('.success-message');
+        const confirmButton = document.getElementById('confirmButton');
+
+        genderButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const selectedGender = this.value;
+                genderInput.value = selectedGender;
+
+                genderButtons.forEach(btn => btn.classList.remove("selected"));
+                this.classList.add("selected");
+            });
+        });
+
+        if (successMessage) {
+            confirmButton.addEventListener('click', function() {
+                location.href = "/pet/petList.do";
+            });
+        }
+    });
+</script>
 
 <!-- 펫 수정 페이지 내용 -->
 <section class="common-section" id="pet-update-section">
@@ -129,9 +153,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>생일</th>
+                        <th>나이</th>
                         <td>
-                            <input type="date" name="petDofBFix" id="petDofBFix" value="${petInfo.petDofBFix}" required>
+                            <input type="text" name="petAge" id="petAge" value="${petInfo.petAge}" required>
                         </td>
                     </tr>
                     <tr>

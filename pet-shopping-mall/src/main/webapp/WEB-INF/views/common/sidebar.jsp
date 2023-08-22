@@ -12,7 +12,7 @@
 <div class="sidebar">
 	<ul class="sidebar-text">
 		<c:if test="${empty loginMember}">
-		<span>MY</span><input type="button" class="sidebar-loginbutton" value="로그인">
+		<span>MY</span><input type="button" class="sidebar-loginbutton" value="로그인" onclick="location.href='${pageContext.request.contextPath}/member/memberLogin.do'">
 		<hr>
 		</c:if>
 		<li class="sidebar-title">카테고리f</li>
@@ -73,9 +73,10 @@
 		<hr>
 		<li><a href="#">마이페이지</a>
 			<ul>
-				<li><a href="#">김대원</a></li>
-				<li><a href="#">대원이</a></li>
-				<li><a href="#">대원</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/myPage.do">회원정보 수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/petList.do">펫 목록</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/petProfile.do">펫 등록</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/petUpdate">펫 정보 수정</a></li>
 			</ul>
 		</li>
 		<li><a href="#">고객센터</a>
