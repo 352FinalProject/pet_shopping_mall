@@ -43,7 +43,7 @@ a {
 		<div id="review-div"></div>
 			<div id="review-div">
 				<c:if test="${not empty petId}">
-				    ${petId[0].petName} | ${petId[0].petGender} | ${petId[0].petDofB} | ${petId[0].petWeight} | ${petId[0].petBreed}
+				    ${petId[0].petName} | ${petId[0].petGender} | ${petId[0].petAge}살 | ${petId[0].petWeight}kg | ${petId[0].petBreed}
 				</c:if>
 			</div><span class="small-space"></span>
 		<br>
