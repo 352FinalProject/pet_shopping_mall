@@ -24,9 +24,16 @@ public interface PetRepository {
 	int petCreate(PetCreateDto pet);
 	
     
-    @Select("select * from pet")
-    List<Pet> findPetByAll(Pet pet);
+//    @Select("select * from pet")
+//    List<Pet> findPetByAll(Pet pet);
+    
+	   @Select("SELECT * FROM pet WHERE member_id = #{memberId}")
+	    List<Pet> findPetsByMemberId(String memberId);
 
+
+//    @Select("select * from pet")
+//    List<Pet> findPetByAll(Pet pet);
+//    
     @Delete("DELETE FROM pet WHERE pet_id = #{petId}")
     int petDelete(int petId);
     

@@ -1,5 +1,6 @@
 package com.shop.app.pet.cotroller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,11 +55,12 @@ public class PetController {
 	}
 
 	@GetMapping("/petList.do")
-	public String petList(Pet pet, Model model) {
-		List<Pet> pets = petService.findPetByAll(pet); 
-		model.addAttribute("pets", pets);
-		
-		return "pet/petList";
+	public String petList(Principal principal, Model model) {
+	    String memberId = principal.getName(); // 로그인한 멤버의 ID
+	    List<Pet> pets = petService.findPetsByMemberId(memberId); // 해당 멤버의 펫 정보 조회
+	    model.addAttribute("pets", pets);
+
+	    return "pet/petList";
 	}
 	
 	@GetMapping("/petDetail.do")

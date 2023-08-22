@@ -28,11 +28,16 @@ public class PetServiceImpl implements PetService {
 	    return petRepository.petCreate(pet);
 	}
 
-	@Override
-	public List<Pet> findPetByAll(Pet pet) {
-	    return petRepository.findPetByAll(pet);
-	}
+//	@Override
+//	public List<Pet> findPetByAll(Pet pet) {
+//	    return petRepository.findPetByAll(pet);
+//	}
 
+    @Override
+    public List<Pet> findPetsByMemberId(String memberId) {
+        return petRepository.findPetsByMemberId(memberId);
+    }
+    
     @Override
     public int petDelete(int petId) {
         return petRepository.petDelete(petId);
