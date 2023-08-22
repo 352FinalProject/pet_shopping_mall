@@ -3,7 +3,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .terms-section {
-    width: 80%;
+    width: 1200px;
     margin: 50px auto;
     font-family: 'Arial', sans-serif;
     background-color: #f5f5f5;
@@ -43,9 +43,14 @@
     cursor: pointer;
 }
 
-span {
+.terms-section span2 {
     color: #5886d3;
     font-weight: 600;
+}
+
+.terms-section span {
+	color: red;
+	font-weight: 600;
 }
 
 .clearfix::after {
@@ -104,7 +109,7 @@ span {
 					<div class="terms-title">
 						<input type="checkbox" name="checkAll" id="checkAll" 
 							onchange="toggleCheckBox();" /><label for="checkAll">전체선택</label>
-						</br>이용약관, 개인정보 수집 및 이용, 위치정보 이용약관<span2>(선택)</span2>, 프로모션 안내 메일 수신<span2>(선택)</span2>에 모두 동의합니다. 
+						</br>이용약관 동의, 개인정보 수집 및 이용에 대한 안내<span>(필수)</span>, 이벤트 등 프로모션 알림 메일 수신<span2>(선택)</span2>에 모두 동의합니다. 
 					</div>
 				</li>
 				<li class="checkBoxcheckTerms">

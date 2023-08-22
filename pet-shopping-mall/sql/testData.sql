@@ -646,3 +646,14 @@ where
 insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, '이용약관 동의 (필수)', '여러분을 환영합니다.우리집동물친구 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 우리집동물친구 서비스의 이용과 관련하여 반려동물 쇼핑몰 서비스를 제공하는 우리집동물친구(이하 ‘우동친’)와 이를 이용하는 우리집동물친구 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 우리집동물친구 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.', 'Y');
 insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, '개인정보 수집 및 이용에 대한 안내 (필수)', '개인정보보호법에 따라 우동친에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다. 1. 수집하는 개인정보 이용자는 회원가입을 하지 않아도 정보 검색, 뉴스 보기 등 대부분의 우동친 서비스를 회원과 동일하게 이용할 수 있습니다. 이용자가 메일, 캘린더, 카페, 블로그 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우, 우동친는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.', 'Y');
 insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, '이벤트 등 프로모션 알림 메일 수신 (선택)', '우동친 서비스 및 제휴 이벤트・혜택 등의 정보를 휴대전화(우동친앱 알림 또는 문자), 이메일로 받을 수 있습니다. 일부 서비스(별개의 회원 체계 운영, 우동친 가입 후 추가 가입하는 서비스 등)의 경우, 수신에 대해 별도로 안내드리며 동의를 구합니다.', 'N');
+
+-----------------------------------------
+-- 쿠폰 데이터
+-----------------------------------------
+-- 회원가입시 배송비 쿠폰 (3000원)
+insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
+values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
+
+-- 생일 축하 10% 쿠폰
+insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
+values (2, '생일축하 10% 할인 쿠폰', null, 10);
