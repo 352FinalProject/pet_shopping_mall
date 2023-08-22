@@ -99,15 +99,19 @@ where
 	    OR p.product_name LIKE '%' || #{searchKeyword} || '%')
 	    AND ot.order_date &gt;= #{startDate}
 	    AND ot.order_date &lt;= #{endDate}
+	    <where>
+	    	<if test="paymentMethod != null">
 	    AND pay.payment_method IN
 	        <foreach collection="paymentMethod" item="method" open="(" separator="," close=")">
 	            #{method}
 	        </foreach>
+	        </if>
+		</where>
 	    <where>
-	    	<if test="#{status} != null">
+	    	<if test="orderStatus != null">
 	    AND ot.order_status IN
 	        <foreach collection="orderStatus" item="status" open="(" separator="," close=")">
-	            #{status}
+	            #{orderStatus}
 	        </foreach>
 	        </if>
 	    </where> 

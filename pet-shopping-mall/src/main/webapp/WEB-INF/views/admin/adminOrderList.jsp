@@ -47,15 +47,7 @@
         });
     });
 
-    <!-- HTML form for input -->
-    <form id="searchForm" method="GET" action="/adminOrderSearch.do">
-        <!-- Your input fields for search criteria go here -->
-        <input type="text" name="searchKeyword" placeholder="Search Keyword">
-        <input type="date" name="startDate">
-        <input type="date" name="endDate">
-        <!-- Checkboxes for paymentMethod and orderStatus go here -->
-        <input type="submit" value="Search">
-    </form>
+
 
 
 
@@ -94,7 +86,7 @@
 			        <label>주문상태:</label>
 				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
 				    <label for="orderStatusAll">전체</label>
-				    <c:forEach items="${status}" var="order">
+				    <c:forEach items="${status}" var="order" >
 					    <input type="checkbox" id="${order}" name="orderStatus" value="${order}">
 					    <label for="${order}">${order}</label>
 				    </c:forEach>
