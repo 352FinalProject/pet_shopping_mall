@@ -188,8 +188,9 @@
                         	</td>
                     </tr>
                     <tr>
-                        <td class="resetAndSubmit" colspan="2">
-                            <input type="reset" value="돌아가기">
+						<td class="resetAndSubmit" colspan="2"><input type="reset"
+							value="돌아가기"
+							onclick="location.href='${pageContext.request.contextPath}/'">
                             <input type="submit" value="등록하기">
                         </td>
                     </tr>
