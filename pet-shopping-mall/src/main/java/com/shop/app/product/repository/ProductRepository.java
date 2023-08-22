@@ -19,7 +19,13 @@ import com.shop.app.product.entity.ProductDetail;
 @Mapper
 public interface ProductRepository {
 
-	@Insert("insert into product(product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt) values (seq_product_id.nextval, #{categoryId}, #{productName}, #{productPrice}, #{thumbnailImg}, #{productImg}, default, null, default, default)")
+	@Select("select * from product_category order by category_id")
+	List<ProductCategory> findAll();
+
+	@Select("select * from product_category where category_id = #{categoryId}")
+	ProductCategory findProductCategoryById(int categoryId);
+
+	@Insert("insert into product(product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt) values (seq_product_id.nextval, #{categoryId}, #{productName}, #{productPrice}, #{imgId}, default, null, default, default)")
 	@SelectKey(
 			before = false,
 			keyProperty = "productId",
@@ -27,10 +33,7 @@ public interface ProductRepository {
 			statement = "select seq_product_id.currval from dual"
 			)
 	int insertProduct(Product product);
-
-	@Select("select * from product_category order by category_id")
-	List<ProductCategory> findAll();
-
+	
 	@Select("select * from product_detail where product_detail_id = #{productDetailId}")
 	ProductDetail findProductDetailById(int productDetailId);
 
@@ -40,14 +43,13 @@ public interface ProductRepository {
 	@Select("select * from product where product_id = #{productId}")
 	Product findProductById(int productId);
 
-	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, thumbnail_img = #{thumbnailImg}, product_img = #{productImg}, expire_date = #{expireDate} where product_id = #{productId}")
+	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, img_id = #{imgId}, expire_date = #{expireDate} where product_id = #{productId}")
 	int updateProduct(Product product);
 
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
 
-	@Select("select * from product_category where category_id = #{categoryId}")
-	ProductCategory findProductCategoryById(int categoryId);
+
 
 
 }

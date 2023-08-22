@@ -282,15 +282,13 @@ public class AdminController {
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(ProductDetail productDetail : productDetails) {
-			// 상품값
 			Product product = productService.findProductById(productDetail.getProductId());
-			// 카테고리값
 			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
-			
 			// 옵션값
 			ProductInfoDto productInfo = ProductInfoDto.builder()
 					.product(product)
 					.productCategory(productCategory)
+					.productDetailId(productDetail.getProductDetailId())
 					.optionName(productDetail.getOptionName())
 					.optionValue(productDetail.getOptionValue())
 					.additionalPrice(productDetail.getAdditionalPrice())
@@ -306,7 +304,7 @@ public class AdminController {
 	
 
 	
-	// 상품 추가 페이지로 연결
+	// 상품 등록 페이지로 연결
 	@GetMapping("/adminProductDetailCreate.do")
 	public void adminProductDetailCreate(
 			@AuthenticationPrincipal MemberDetails member, 
@@ -317,6 +315,21 @@ public class AdminController {
 		model.addAttribute("categories", categories);
 	}
 
+	// 상품 등록
+	@PostMapping("/adminProductDetailCreate.do")
+	public String adminProductDetailCreate(
+			@Valid ProductCreateDto _product,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model
+			) {
+		// 상품카테고리 조회 후 전달
+		List<ProductCategory> categories = productService.findAll();
+		model.addAttribute("categories", categories);
+		
+		
+		
+		return "redirect:/admin/adminProductList.do";
+	}
 	
 	/**
 	 * @author 전수경

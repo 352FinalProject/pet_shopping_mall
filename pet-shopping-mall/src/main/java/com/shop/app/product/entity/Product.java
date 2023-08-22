@@ -24,9 +24,7 @@ public class Product {
 	private String productName;
 	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
-	
-	private int thumbnailImg;
-	private int productImg;
+	private int imageId;
 	private Timestamp createDate;
 	private Timestamp expireDate; // default: null
 	private int likeCnt;
