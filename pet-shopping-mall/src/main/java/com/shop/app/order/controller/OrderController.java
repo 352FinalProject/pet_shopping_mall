@@ -56,12 +56,12 @@ public class OrderController {
 	@PostMapping("/cancelOrder.do")
 	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo) {
 		int result = orderService.insertCancelOrder(orderNo);
-		return null;
+		return "redirect:/";
 	}
 	
 	@PostMapping("/refundOrder.do")
 	public String refundOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo) {
 		// int result = orderService.refundOrder(orderNo);
-		return null;
+		return "redirect:/";
 	}
 }
