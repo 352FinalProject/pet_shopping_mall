@@ -5,9 +5,10 @@
 <style>
 .payment-common-container { /* 전체 */
 	align-items: center;
-	text-align: center;
-	align-content: stretch;
-	justify-content: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .payment-main-button {
@@ -24,10 +25,10 @@
 	align-content: stretch;
 	justify-content: center;
 	font-size: 17px;
-	border: 0.5px solid #000; /* 0.5픽셀 두께의 검은색 테두리 */
+	border: 0.5px solid #c8c8c8; /* 0.5픽셀 두께의 검은색 테두리 */
 	border-radius: 20px;
-	padding: 100px; /* 테두리와 텍스트 사이의 간격 */
-	background: white
+	background: white;
+	width: 600px;
 }
 
 .payment-main-button button {
@@ -51,8 +52,8 @@
 
 .check-image img {
 	margin-top: 130px;
-	width: 5%; /* 이미지 너비를 50%로 설정 */
-	height: 5%; /* 높이는 자동으로 조정 */
+	width: 25%; /* 이미지 너비를 50%로 설정 */
+	height: 25%; /* 높이는 자동으로 조정 */
 }
 
 .check-image h1 {

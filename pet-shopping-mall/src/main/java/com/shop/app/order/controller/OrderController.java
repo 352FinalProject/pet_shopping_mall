@@ -44,7 +44,7 @@ public class OrderController {
 		List<OrderHistoryDto> orderHistories = orderService.getOrderList(memberId);
 		log.debug("orderHistories = {}", orderHistories);
 		
-		String[] status = {"입금대기", "입금완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
+		String[] status = {"입금대기", "입금완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
 		
 		model.addAttribute("status", status);
 		model.addAttribute("orderHistories", orderHistories);
@@ -54,14 +54,14 @@ public class OrderController {
 	 * 주문 취소
 	 */
 	@PostMapping("/cancelOrder.do")
-	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo) {
-		int result = orderService.insertCancelOrder(orderNo);
+	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo, @RequestParam String isRefund) {
+		int result = orderService.insertCancelOrder(orderNo, isRefund);
 		return "redirect:/";
 	}
 	
 	@PostMapping("/refundOrder.do")
 	public String refundOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo) {
-		// int result = orderService.refundOrder(orderNo);
+//		 int result = orderService.refundOrder(orderNo);
 		return "redirect:/";
 	}
 }

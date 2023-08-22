@@ -51,7 +51,7 @@ select
     (select product_name from product where product_id = pd.product_id) product_name,
     od.product_detail_id,
     od.quantity,
-    ot.total_price
+    ot.amount
 from
     orderTbl ot left join order_detail od on ot.order_id = od.order_id
     left join product_detail pd on od.product_detail_id = pd.product_detail_id
@@ -68,7 +68,7 @@ where
   	<result column="product_name" property="productName" />
   	<result column="product_detail_id" property="productDetailId" />
   	<result column="quantity" property="quantity" />
-  	<result column="total_price" property="totalPrice" />
+  	<result column="amount" property="amount" />
   </resultMap>
 </mapper>
 
