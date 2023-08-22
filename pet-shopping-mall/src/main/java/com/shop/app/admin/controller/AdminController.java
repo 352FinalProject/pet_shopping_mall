@@ -257,6 +257,7 @@ public class AdminController {
 		List<String> methodList = Arrays.asList("카카오", "신용카드");
 		System.out.println(methodList.toString());
 		List<String> paymentMethod = Arrays.asList(_paymentMethod);
+		
 		String[] status = {"결제대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
 	    
 		
