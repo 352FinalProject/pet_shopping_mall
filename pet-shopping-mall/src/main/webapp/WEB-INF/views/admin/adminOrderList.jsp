@@ -77,18 +77,18 @@
 			        <label>결제방법:</label>
 				    <input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
 					<label for="all">전체</label>
-					<c:forEach items="${method}" var="order">
-					    <input type="checkbox" id="${order}" name="paymentMethod" value="${order}">
-					    <label for="${order}">${order}</label>
+					<c:forEach items="${method}" var="orderMethod" varStatus="vs">
+					    <input type="checkbox" id="${orderMethod}" name="paymentMethod" value="${vs}">
+					    <label for="${orderMethod}">${orderMethod}</label>
 				    </c:forEach>
 			        <br>
 			        
 			        <label>주문상태:</label>
 				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
 				    <label for="orderStatusAll">전체</label>
-				    <c:forEach items="${status}" var="order" >
-					    <input type="checkbox" id="${order}" name="orderStatus" value="${order}">
-					    <label for="${order}">${order}</label>
+				    <c:forEach items="${status}" var="orderStatus" varStatus="vs">
+					    <input type="checkbox" id="${orderStatus}" name="orderStatus" value="${vs}">
+					    <label for="${orderStatus}">${orderStatus}</label>
 				    </c:forEach>
 			        <br>
 			        
@@ -125,10 +125,10 @@
 									<td>${orderlist.productName}</td>
 									<td>
 										<c:if test="${orderlist.orderStatus == 0}">
-											입금대기
+											결제대기
 										</c:if>
 										<c:if test="${orderlist.orderStatus == 1}">
-											입금완료
+											결제완료
 										</c:if>
 										<c:if test="${orderlist.orderStatus == 2}">
 											배송준비

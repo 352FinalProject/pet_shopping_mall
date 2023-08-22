@@ -3,6 +3,7 @@ package com.shop.app.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -249,20 +250,29 @@ public class AdminController {
 			@RequestParam(required = false) String searchKeyword,
 	        @RequestParam(required = false) String startDate,
 	        @RequestParam(required = false) String endDate,
-	        @RequestParam(required = false) List<String> paymentMethod,
+	        @RequestParam(required = false) List<String> _paymentMethod,
 	        @RequestParam(required = false) List<String> orderStatus,
 				Model model) {
 		
-		System.out.println(searchKeyword);
-		System.out.println(startDate);
-		System.out.println(endDate);
-		System.out.println(paymentMethod);
-		System.out.println(orderStatus);
+		List<String> methodList = Arrays.asList("카카오", "신용카드");
+		System.out.println(methodList.toString());
+		List<String> paymentMethod = Arrays.asList(_paymentMethod);
+		String[] status = {"결제대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
+	    
 		
-		List<OrderAdminListDto> orderlists = 
-				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
+		for (String payment : paymentMethod) {
+	        int index = methodList.indexOf(payment); // Find the index of payment in the method list
+	        System.out.println(index);
+	    }
 		
-		return orderlists;
+		
+		
+//		/*
+//		 * List<OrderAdminListDto> orderlists =
+//		 * orderService.adminOrderSearch(searchKeyword, startDate, endDate,
+//		 * paymentMethod, orderStatus);
+//		 */
+		return null;
 	}
 	
 	
