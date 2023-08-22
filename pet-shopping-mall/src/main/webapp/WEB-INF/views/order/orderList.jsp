@@ -12,7 +12,7 @@
             line-height: 120px;
         }
 
-        #select {
+        #selectPeriod {
             position: relative;
             outline: none;
             display: block;
@@ -124,10 +124,9 @@
 		<div class="common-container">
 			<div class="order">
 				<div class="order_top">
-					<select name="select" id="select">
+					<select name="selectPeriod" id="selectPeriod">
 						<option value="3">최근 3개월</option>
 						<option value="6">최근 6개월</option>
-						<option value="9">최근 9개월</option>
 						<option value="12">최근 12개월</option>
 					</select> <a style="margin-bottom: 10px;" href="#">내가 쓴 상품 후기 ▶</a>
 				</div>
@@ -146,16 +145,17 @@
 						<c:forEach items="${orderHistories}" var="order" varStatus="vs">
 							<c:set var="index" value="${order.orderStatus}"/>
 							<c:set var="option" value="${order.optionName}" />
+							<c:set var="amount" value="${order.amount}" />
 							<fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
 							<tr>
 								<td>${formattedDate}</td>
 								<td>
 									<p>${order.orderNo}</p>
   									<c:choose>
-										<c:when test="${index ge 0 && index le 2}">
+										<c:when test="${index eq 0}">
 										    <button onclick="cancelOrder('cancel');">취소신청</button>
 										</c:when>
-										<c:when test="${index ge 3 && index le 4}">
+										<c:when test="${index ge 1 && index le 4}">
 										    <button onclick="cancelOrder('refund');">취소/환불신청</button>
 										</c:when>
 										<c:otherwise>
@@ -163,6 +163,8 @@
 									</c:choose>
 									<form:form id="cancelFrm" action="" method="POST">
 										<input type="hidden" name="orderNo" value="${order.orderNo}" />
+										<input type="hidden" name="amount" value="${order.amount}" />
+										<input type="hidden" name="isRefund" value="" />
 									</form:form>
 								</td>
 								<td><a
@@ -174,17 +176,17 @@
 											<div>
 												<p>${order.productName}</p>
 												<br />
-											<c:if test="${option} eq null">
+											<c:if test="${option eq null}">
 												<p>선택된 옵션이 없습니다.</p>
 											</c:if>
-											<c:if test="${option} ne null">
+											<c:if test="${option ne null}">
 												<p>${order.optionName} : ${order.optionValue}</p>
 											</c:if>
 												<p>수량: ${order.quantity}개</p>
 											</div>
 										</div>
 								</a></td>
-								<td>${order.totalPrice}원</td>
+								<td>${order.amount}원</td>
 								<td>
 									<p>${status[index]}</p>
 								</td>
@@ -199,19 +201,54 @@
 			</div>
 		</div>
 	</section>
+	<script
+  		src="https://code.jquery.com/jquery-3.3.1.min.js"
+  		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  		crossorigin="anonymous"></script>
 	<script>
 	const cancelFrm = document.querySelector("#cancelFrm");
+	const amount = Number(cancelFrm.amount.value);
 	
 	const cancelOrder = (text) => {
 		if(text === 'cancel') {
+			cancelFrm.isRefund.value="N";
 			cancelFrm.action ="${pageContext.request.contextPath}/order/cancelOrder.do";
 		} else {
-			cancelFrm.action ="${pageContext.request.contextPath}/order/refundOrder.do";
+ 			$.ajax({
+				url : "https://api.iamport.kr/payments/cancel",
+				type : "POST",
+				dataType: "json",
+				contentType: "application/json",
+				data : JSON.stringify({
+					merchant_uid: cancelFrm.orderNo.value,
+					cancel_request_amount: amount
+				}),
+				success(response) {
+					if(response.code == 200) {
+						alert("환불이 정상적으로 처리되었습니다.");
+						cancelFrm.isRefund.value="Y";
+						cancelFrm.action ="${pageContext.request.contextPath}/order/cancelOrder.do";
+						cancelFrm.submit();
+					} else {
+						alert("환불 실패! 관리자에게 문의하세요.")
+					}
+				}
+			});
 		}
-		cancelFrm.submit();
-		
 	};
 
+	/* 셀렉트 박스 */
+	const periodSelect = document.querySelector("#selectPeriod");
+	periodSelect.addEventListener('change', handleSelectChange);
+	
+	const handleSelectChange = () => {
+		const selectedValue = selectBox.value;
+		
+		$.ajax({
+			url: "${pageContext.request.}"
+			method: "GET",
+		})
+	}
 	</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
