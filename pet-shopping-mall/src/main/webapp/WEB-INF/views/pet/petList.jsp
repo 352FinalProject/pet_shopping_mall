@@ -57,7 +57,7 @@
                                 <td>${pet.petBreed}</td>
                                 <td>${pet.petGender == 'M' ? '수컷' : '암컷'}</td>
                                 <td>${pet.petWeight}</td>
-                                <td>${pet.petDofB}</td>
+                                <td>${pet.petAge}</td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petGoDetail.do?petId=${pet.petId}"> 수정 </a></td>
                                 <td><a href="javascript:void(0)" onclick="fnDelete('${pet.petId}');"> 삭제 </a></td>

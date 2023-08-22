@@ -152,9 +152,9 @@
                     </tr>
                     
                     <tr>
-                        <th>생일</th>
+                        <th>나이</th>
                         <td>
-                            <input type="date" name="petDofB" id="petDofB" required>
+                            <input type="text" name="petAge" id="petAge" required>
                         </td>
                     </tr>
 

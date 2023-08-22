@@ -131,7 +131,7 @@
                     <tr>
                         <th>생일</th>
                         <td>
-                            <input type="date" name="petDofBFix" id="petDofBFix" value="${petInfo.petDofBFix}" required>
+                            <input type="text" name="petAge" id="petAge" value="${petInfo.petDofBFix}" required>
                         </td>
                     </tr>
                     <tr>
