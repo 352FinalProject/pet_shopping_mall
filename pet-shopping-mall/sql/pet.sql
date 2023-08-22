@@ -128,7 +128,7 @@ CREATE TABLE pet (
     pet_id number,
     member_id varchar2(20),
     pet_name VARCHAR2(50) NOT NULL,
-    pet_DofB timestamp,
+    pet_age number,
     pet_kind VARCHAR2(50),
     pet_breed VARCHAR2(50),
     pet_adoption timestamp,

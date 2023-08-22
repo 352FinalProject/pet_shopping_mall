@@ -22,6 +22,5 @@
 	    private String petWeight;
 	    private LocalDate petAdoptionDate;
 	    private String petGender;
-	    private String petDofBFix;
 	    private String petAdoptionDateFix;
 	}
