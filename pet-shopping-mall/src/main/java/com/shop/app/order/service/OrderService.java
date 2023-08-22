@@ -26,5 +26,7 @@ public interface OrderService {
 	// 주문 취소
 	int insertCancelOrder(String orderNo, String isRefund);
 
+	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
+
 	
 }

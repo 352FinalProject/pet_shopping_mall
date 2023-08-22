@@ -97,7 +97,7 @@ public class MemberSecurityController {
 		    // getAllErrors 메서드를 통해 발생한 모든 오류를 가져오고, 첫 번째 오류를 선택.
 		    redirectAttr.addFlashAttribute("msg", error.getDefaultMessage());
 		    // 오류 메시지를 리다이렉트 애트리뷰트에 "msg"라는 이름으로 추가하여, 리다이렉트 후에도 데이터가 유지.
-		    return "redirect:/memberCreate.do";
+		    return "redirect:/member/memberCreate.do";
 		    // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
 		}
 

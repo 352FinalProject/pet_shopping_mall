@@ -80,4 +80,9 @@ public class OrderServiceImpl implements OrderService {
 			
 		return result;
 	}
+
+	@Override
+	public List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period) {
+		return orderRepository.getOrderListByPeriod(memberId, period);
+	}
 }
