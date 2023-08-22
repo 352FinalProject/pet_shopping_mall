@@ -36,8 +36,11 @@ public interface ReviewService {
 	// 상품 상세페이지 리뷰 전체 카운트
 	int findProductTotalReviewCount();
 
-	// 상품 상페페이지 전체 리뷰 
+	// 상품 상세페이지 전체 리뷰 
 	List<Review> findProductReviewAll(Map<String, Object> params);
+
+	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
+	ReviewDetails findProductImageAttachmentsByReviewId(int reviewId);
 
 
 }

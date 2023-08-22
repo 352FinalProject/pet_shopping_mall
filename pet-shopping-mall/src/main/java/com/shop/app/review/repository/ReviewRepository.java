@@ -64,9 +64,12 @@ public interface ReviewRepository {
 	@Select("select count(*) from review")
 	int findProductTotalReviewCount();
 	
-	// 상품 상페페이지 전체 리뷰
+	// 상품 상세페이지 전체 리뷰
 	@Select("select * from review")
 	List<Review> findProductReviewAll(RowBounds rowBounds);
+
+	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
+	ReviewDetails findProductImageAttachmentsByReviewId(int reviewId);
 
 
 
