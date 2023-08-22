@@ -102,7 +102,9 @@ public class ReviewController {
 	public String reviewCreate(
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
-			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, Point point, Pet pet) 
+			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
+			Point point, 
+			Pet pet) 
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
@@ -132,6 +134,8 @@ public class ReviewController {
 			}
 		}
 		
+		_review.setPetId(pet.getPetId());
+		log.debug("펫아이디 = {}", _review);
 
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
@@ -140,13 +144,15 @@ public class ReviewController {
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
 				.reviewContent(_review.getReviewContent())
+				.petId(_review.getPetId()) // petId를 pet의 Id와 연결
 				.attachments(attachments)
 				.build();
 
-		// log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+		 log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 		
 		int reviewId = reviewService.insertReview(reviews);
 		Review pointReviewId = reviewService.findReviewId(reviews);
+		
 
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
