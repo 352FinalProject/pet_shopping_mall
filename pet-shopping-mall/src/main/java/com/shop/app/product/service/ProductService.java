@@ -7,12 +7,13 @@ import javax.validation.constraints.NotNull;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductImages;
 
 public interface ProductService {
 
 	List<ProductCategory> findAll();
 
-	int insertProduct(Product product);
+	int insertProduct(ProductImages productImages);
 
 	ProductDetail findProductDetailById(int productId);
 	
@@ -28,6 +29,7 @@ public interface ProductService {
 
 	int insertProductDetail(ProductDetail productDetail);
 
+	ProductImages findImageAttachmentsByProductId(int productId);
 
 
 }

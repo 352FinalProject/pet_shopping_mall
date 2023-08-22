@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
+import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +24,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private QuestionRepository questionRepository;
 
 	@Override
 	public List<ProductCategory> findAll() {
@@ -27,8 +34,32 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int insertProduct(Product product) {
-		return productRepository.insertProduct(product);
+	public int insertProduct(ProductImages productImages) {
+		int result =0;
+		Product product = productImages.toProduct();
+		result = productRepository.insertProduct(product);
+		log.debug("product = {}", product);
+		
+		int refId = product.getProductId();
+		log.debug("product refId = {}", refId);
+		int productId = refId;
+		
+		// 첨부이미지 저장
+		List<imageAttachment> attachments = productImages.getAttachments();
+		if(attachments != null && !attachments.isEmpty()) {
+			for(imageAttachment attach : attachments) {
+				
+				// 1. 이미지 파일 저장
+				int result2 = productRepository.insertAttachment(attach);
+				
+				// 2. 이미지파일 DB저장후 생성된 이미지 아이디 가져오기
+				int imageId = attach.getImageId(); 
+				
+				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
+				int result3 = productRepository.insertMapping(refId, imageId);
+			}
+		}
+		return productId;
 	}
 
 	@Override
@@ -44,6 +75,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product findProductById(int productId) {
 		return productRepository.findProductById(productId);
+	}
+	
+	@Override
+	public ProductImages findImageAttachmentsByProductId(int productId) {
+		return productRepository.findImageAttachmentsByProductId(productId);
 	}
 	
 	@Override
