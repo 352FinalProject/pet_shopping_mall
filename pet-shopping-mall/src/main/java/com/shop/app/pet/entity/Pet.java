@@ -18,9 +18,10 @@ public class Pet {
 	private int petId;
 	private String memberId;
     private String petName;    
-    private LocalDateTime petDofB;
+    private String petAge;
     private String petKind;
     private String petBreed;
+    private String petWeight;
     private LocalDateTime petAdoptionDate;
     private PetGender petGender;
     private String petDofBFix;

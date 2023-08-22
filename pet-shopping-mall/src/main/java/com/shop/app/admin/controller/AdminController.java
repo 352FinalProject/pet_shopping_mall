@@ -1,5 +1,7 @@
 package com.shop.app.admin.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +23,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.common.HelloSpringUtils;
+import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
@@ -42,6 +47,7 @@ import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.service.ProductService;
+import com.shop.app.review.entity.ReviewDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -282,15 +288,13 @@ public class AdminController {
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(ProductDetail productDetail : productDetails) {
-			// 상품값
 			Product product = productService.findProductById(productDetail.getProductId());
-			// 카테고리값
 			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
-			
 			// 옵션값
 			ProductInfoDto productInfo = ProductInfoDto.builder()
 					.product(product)
 					.productCategory(productCategory)
+					.productDetailId(productDetail.getProductDetailId())
 					.optionName(productDetail.getOptionName())
 					.optionValue(productDetail.getOptionValue())
 					.additionalPrice(productDetail.getAdditionalPrice())
@@ -306,7 +310,10 @@ public class AdminController {
 	
 
 	
-	// 상품 추가 페이지로 연결
+	/**
+	 * @author 전수경
+	 * - 상품등록 폼으로 이동
+	 */
 	@GetMapping("/adminProductDetailCreate.do")
 	public void adminProductDetailCreate(
 			@AuthenticationPrincipal MemberDetails member, 
@@ -317,6 +324,65 @@ public class AdminController {
 		model.addAttribute("categories", categories);
 	}
 
+	/**
+	 * @author 전수경
+	 * - 상품등록
+	 */
+	@PostMapping("/adminProductDetailCreate.do")
+	public String adminProductDetailCreate(
+			@Valid ProductCreateDto _product,
+			@AuthenticationPrincipal MemberDetails member, 
+			Model model,
+			@RequestParam(value="upFile", required= false) List<MultipartFile> upFiles) throws IllegalStateException, IOException {
+
+		// 1. 파일저장
+		List<imageAttachment> attachments = new ArrayList<>();
+		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
+
+		for(MultipartFile upFile : upFiles) {
+			if(!upFile.isEmpty()) {
+				String imageOriginalFilename = upFile.getOriginalFilename();
+				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
+				File destFile = new File(imageRenamedFilename);
+				upFile.transferTo(destFile);
+
+				int imageType = 1;
+
+				imageAttachment attach =
+						imageAttachment.builder()
+						.imageOriginalFilename(imageOriginalFilename)
+						.imageRenamedFilename(imageRenamedFilename)
+						.imageType(imageType)
+						.imageFileSize(upFile.getSize())
+						.build();
+
+				attachments.add(attach);
+				hasImage = true; // 이미지가 있으면 true 
+			}
+		}
+
+		// 2. db저장
+		// 2.1. product 객체 저장
+		Product product = Product.builder()
+				.build(); // 상품카테고리아이디, 상품명, 가격
+		int result = productService.insertProduct(product);
+		int productId = product.getProductId();
+		log.debug("productId = {}", productId);
+		// 2.1. productDetail 객체 저장
+		ProductDetail productDetail = ProductDetail.builder()
+				.productId(productId)
+				.optionName(_product.getOptionName())
+				.optionValue(_product.getOptionValue())
+				.additionalPrice(_product.getAdditionalPrice())
+				.saleState(_product.getSaleState())
+				.attachments(attachments)
+				.build();
+		result = productService.insertProductDetail(productDetail);
+		int productDetailId = productDetail.getProductDetailId();
+		log.debug("productDetailId = {}", productDetailId);
+		
+		return "redirect:/admin/adminProductList.do";
+	}
 	
 	/**
 	 * @author 전수경

@@ -5,6 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -20,40 +28,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.shop.app.common.controller.advice.MailSender;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.shop.app.member.dto.MemberCreateDto;
-import com.shop.app.member.dto.MemberUpdateDto;
-import com.shop.app.member.entity.Member;
-import com.shop.app.member.entity.MemberDetails;
-import com.shop.app.member.entity.TermsHistory;
-import com.shop.app.member.service.MemberService;
-import com.shop.app.point.entity.Point;
-import com.shop.app.point.service.PointService;
-import com.shop.app.terms.entity.Accept;
-import com.shop.app.terms.entity.Terms;
-import com.shop.app.terms.service.TermsService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
@@ -104,7 +83,6 @@ public class MemberSecurityController {
 		    // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
 		}
 
-		
 		// 비밀번호 암호화 처리
 		String rawPassword = member.getPassword();
 		String encodedPassword = passwordEncoder.encode(rawPassword);
@@ -155,6 +133,21 @@ public class MemberSecurityController {
 	        redirectAttr.addFlashAttribute("msg", "약관에 동의해주세요.");
 	        return "redirect:/member/terms.do";
 	    }
+	    
+	    terms.setMemberId(member.getMemberId());  // 회원가입이 완료된 후에 memberId를 설정 (예라)
+	    
+		int resultTerms = termsService.insertTerms(terms);
+
+		
+	    // 약관 동의 이력 정보 생성 및 저장 (예라)
+	    TermsHistory termsHistory = new TermsHistory();
+	    termsHistory.setTermsId(terms.getTermsId()); 
+	    termsHistory.setTitle("제목");
+	    termsHistory.setContent("내용");
+	    
+	    int resulttermsHistory = termsService.insertTermsHistory(termsHistory);
+	    
+		session.removeAttribute("terms"); 
 	
 		// 회원 정보 세션 제거 (예라)
 		session.removeAttribute("emailVerified");
@@ -185,7 +178,8 @@ public class MemberSecurityController {
 
 	
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
-	public void memberLogin() {}
+	public void memberLogin(){}
+	
 	
 	// 로그인처리하는 요청 작성 X
 	// 로그아웃처리하는 요청 작성 X
@@ -193,18 +187,26 @@ public class MemberSecurityController {
 	// 멤버 상세 조회
 	@GetMapping("/myPage.do")
 	public void memberDetail(
-			Authentication authentication, 
-			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
+			Authentication authentication, // 현재 사용자 인증 정보와 멤버 정보를 가져와서 상세 정보 페이지에 표시. 
+			@AuthenticationPrincipal MemberDetails _member, // member: 현재 사용자 멤버 정보
+			Model model
+			) { // model: 뷰와 컨트롤러 사이에서 데이터를 전달하는 객체 
 		
 		// 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
 		// 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
 		Object credentials = authentication.getCredentials(); // 열람불가
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		
+		Member member = memberService.findMemberById(_member.getMemberId());
+		
+		log.debug("member = {}", member);
+		
+	    model.addAttribute("member", member);
 	}
 	
 	// 멤버 정보 업데이트
-	@PostMapping("/memberUpdate.do")
+	@PostMapping("/memberUdapte.do")
 	public String memberUpdate(
 			@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
 			@Valid MemberUpdateDto _member,
@@ -235,7 +237,7 @@ public class MemberSecurityController {
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		
 	    session.invalidate(); // 세션 종료
-//		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
+		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
 		return "redirect:/member/myPage.do";
 	}
 	
@@ -270,7 +272,8 @@ public class MemberSecurityController {
 		return "redirect/member/memberSearchId.do"; 
 	}
 	
-
+	@GetMapping("/memberCreateComplete.do")
+	public void memberCreateComplete() {}
 	 // 이메일 보내기
 //    @Transactional
 //    @PostMapping("/sendEmail")

@@ -1,6 +1,11 @@
 package com.shop.app.product.entity;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
+
+import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.imageAttachmentMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,4 +23,7 @@ public class ProductDetail {
 	private String optionValue;
 	private int additionalPrice;
 	private int saleState; // default=0(판매대기) 1: 판매중 2: 품절 3: 기타
+	
+	private List<imageAttachment> attachments;
+	private List<imageAttachmentMapping> attachmentMapping;
 }

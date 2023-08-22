@@ -122,7 +122,7 @@
 
         if (successMessage) {
             confirmButton.addEventListener('click', function() {
-                location.href = "/member/petList.do";
+                location.href = "/pet/petList.do";
             });
         }
     });
@@ -134,7 +134,7 @@
     <br>
     <div class="common-container">
         <div class="common-div">
-            <form:form action="${pageContext.request.contextPath}/member/petProfile.do" method="POST"> <!-- 2. 이부분 ${pageContext.request.contextPath} 추가 
+            <form:form action="${pageContext.request.contextPath}/pet/petProfile.do" method="POST"> <!-- 2. 이부분 ${pageContext.request.contextPath} 추가 
             																								3. 상단에 시큐리티 태그 링크, form:form 추가 -->
             
                 <table>
@@ -152,33 +152,37 @@
                     </tr>
                     
                     <tr>
-                        <th>생일</th>
+                        <th>나이</th>
                         <td>
-                            <input type="date" name="petDofB" id="petDofB" required>
+                            <input type="text" name="petAge" id="petAge" required>
                         </td>
                     </tr>
 
                     <tr>
                         <th>타입</th>
                         <td>
-                            <input type="text" name="petKind" placeholder="반려동물의 종류를 입력해 주세요." value="개">
+                            <input type="text" name="petKind" placeholder="ex:강아지">
                         </td>
                     </tr>
                 
                     <tr>
                         <th>품종</th>
                         <td>
-                            <input type="text" name="petBreed" placeholder="반려동물의 품종을 입력해 주세요." value="말티즈">
+                            <input type="text" name="petBreed" placeholder="ex:말티즈" >
                         </td>
                     </tr>
-                    
+                    <tr>
+                        <th>몸무게</th>
+                        <td>
+                            <input type="text" name="petWeight" placeholder="반려동물의 몸무게를 입력해 주세요." >
+                        </td>
+                    </tr>                    
                     <tr>
                         <th>입양일</th>
                         <td>
                             <input type="date" name="petAdoption" id="petAdoptionDate">
                         </td>
                     </tr>
-
                     <tr>
                         <th>성별</th>
 	                        <td>
@@ -188,8 +192,9 @@
                         	</td>
                     </tr>
                     <tr>
-                        <td class="resetAndSubmit" colspan="2">
-                            <input type="reset" value="돌아가기">
+						<td class="resetAndSubmit" colspan="2"><input type="reset"
+							value="돌아가기"
+							onclick="location.href='${pageContext.request.contextPath}/'">
                             <input type="submit" value="등록하기">
                         </td>
                     </tr>
