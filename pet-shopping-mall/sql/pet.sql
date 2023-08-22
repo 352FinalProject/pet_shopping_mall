@@ -20,7 +20,7 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
---
+
 --drop table review;
 --drop table image_attachment;
 --drop table image_attachment_mapping;
@@ -207,8 +207,7 @@ create table product (
     category_id number, -- fk
     product_name varchar2(200) not null,
     product_price number not null,
-    thumbnail_img number, -- 썸네일 이미지(fk)
-    product_img number, -- 제품상세 이미지(fk)
+    img_id number, -- 제품상세 이미지(fk)
     create_date timestamp default systimestamp, -- 등록일
     expire_date timestamp default null, -- 유통기한
     like_cnt number default 0, -- 좋아요수
