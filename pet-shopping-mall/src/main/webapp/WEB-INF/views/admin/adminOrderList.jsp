@@ -46,29 +46,19 @@
 			        <label>결제방법:</label>
 				    <input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
 					<label for="all">전체</label>
-				    <input type="checkbox" id="deposit" name="paymentMethod" value="deposit">
-				    <label for="mutongjang">무통장</label>
-				    <input type="checkbox" id="sinhancard" name="paymentMethod" value="sinhancard">
-				    <label for="sinhancard">신용카드</label>
+					<c:forEach items="${method}" var="order">
+					    <input type="checkbox" id="${order}" name="paymentMethod" value="${order}">
+					    <label for="${order}">${order}</label>
+				    </c:forEach>
 			        <br>
 			        
 			        <label>주문상태:</label>
 				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
 				    <label for="orderStatusAll">전체</label>
-				    <input type="checkbox" id="waiting" name="orderStatus" value="waiting">
-				    <label for="waiting">입금대기</label>
-				    <input type="checkbox" id="completeDeposit" name="orderStatus" value="completeDeposit">
-				    <label for="completeDeposit">입금완료</label>
-				    <input type="checkbox" id="readyDelivery" name="orderStatus" value="readyDelivery">
-				    <label for="readyDelivery">배송준비</label>
-				    <input type="checkbox" id="delivering" name="orderStatus" value="delivering">
-				    <label for="delivering">배송중</label>
-				    <input type="checkbox" id="delivered" name="orderStatus" value="delivered">
-				    <label for="delivered">배송완료</label>
-				    <input type="checkbox" id="canceled" name="orderStatus" value="canceled">
-				    <label for="canceled">취소</label>
-				    <input type="checkbox" id="refunded" name="orderStatus" value="refunded">
-				    <label for="refunded">환불</label>
+				    <c:forEach items="${status}" var="order">
+					    <input type="checkbox" id="${order}" name="orderStatus" value="${order}">
+					    <label for="${order}">${order}</label>
+				    </c:forEach>
 			        <br>
 			        
 			        <button type="submit">검색</button>

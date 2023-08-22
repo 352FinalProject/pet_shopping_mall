@@ -236,6 +236,10 @@ public class AdminController {
 	public void adminOrderList(Model model) {
 		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
 		model.addAttribute("orderlists", orderlists);
+		String[] method = {"카카오", "신용카드"};
+		String[] status = {"결제대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
+		model.addAttribute("method", method);
+		model.addAttribute("status", status);
 	}
 	
 	/**
@@ -250,6 +254,12 @@ public class AdminController {
 	        @RequestParam(required = false) List<String> paymentMethod,
 	        @RequestParam(required = false) List<String> orderStatus,
 				Model model) {
+		String[] method = {"카카오", "신용카드"};
+		String[] status = {"입금대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
+		
+		model.addAttribute("method", method);
+		model.addAttribute("status", status);
+		
 		List<OrderAdminListDto> orderlists = 
 				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
 		model.addAttribute("orderlists", orderlists);
@@ -259,24 +269,24 @@ public class AdminController {
 	
 	
 	
-	/**
-	 * 상품정보 조회 
-	 * 
-	 * @param member
-	 * @param model
-	 */
-	@GetMapping("/adminProductList.do")
-	public void adminProductList(
-		@AuthenticationPrincipal MemberDetails member,
-		Model model
-			) {
-		log.debug("member = {}", member);
-		
-		// 기본 상품들 조회해서 가져오기.
-		List<Product> basicProducts = productService.findAllBasicProduct();
-		log.debug("basicProducts = {}", basicProducts);
-		model.addAttribute("basicProducts", basicProducts);
-
+//	/**
+//	 * 상품정보 조회 
+//	 * 
+//	 * @param member
+//	 * @param model
+//	 */
+//	@GetMapping("/adminProductList.do")
+//	public void adminProductList(
+//		@AuthenticationPrincipal MemberDetails member,
+//		Model model
+//			) {
+//		log.debug("member = {}", member);
+//		
+//		// 기본 상품들 조회해서 가져오기.
+//		List<Product> basicProducts = productService.findAllBasicProduct();
+//		log.debug("basicProducts = {}", basicProducts);
+//		model.addAttribute("basicProducts", basicProducts);
+//	}
 	
 	/**
 	 * 상품별 판매량통계
