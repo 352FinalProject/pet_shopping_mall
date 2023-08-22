@@ -376,13 +376,6 @@ create table terms_history (
  constraint pk_terms_id primary key(terms_id)
 );
 
-drop table terms;
-drop table terms_history;
-
-drop sequence seq_history_id;
-drop sequence seq_terms_id;
-
-
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
