@@ -207,7 +207,7 @@ create table product (
     category_id number, -- fk
     product_name varchar2(200) not null,
     product_price number not null,
-    img_id number, -- 제품상세 이미지(fk)
+    image_id number, -- 제품상세 이미지(fk)
     create_date timestamp default systimestamp, -- 등록일
     expire_date timestamp default null, -- 유통기한
     like_cnt number default 0, -- 좋아요수
