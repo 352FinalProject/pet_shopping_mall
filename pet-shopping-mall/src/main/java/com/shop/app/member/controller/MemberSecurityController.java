@@ -2,6 +2,7 @@ package com.shop.app.member.controller;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -78,6 +79,8 @@ public class MemberSecurityController {
 
 	private final Map<String, String> tokenStore = new HashMap<>();
 	
+	Map<Integer, Accept> userAgreements = new HashMap<>();
+	
 	@PostMapping("/memberCreate.do") // 회원 생성 처리
 	public String memberCreate(
 	        @Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
@@ -119,30 +122,41 @@ public class MemberSecurityController {
 		point.setPointType("회원가입");
 		point.setPointAmount(3000);
 		
-		int resultPoint = pointService.insertPoint(point);
-		
-		// 약관 동의 정보 가져오기 (예라)
-	    Terms terms = (Terms) session.getAttribute("terms");
-	    if (terms == null) {
+	    // 약관 동의 정보 가져오기
+	    Object obj = session.getAttribute("userAgreements");
+	    log.debug("obj = {}", obj);
+	    // Terms 객체 생성
+	    Terms terms = new Terms();
+
+	    if (obj instanceof HashMap) {
+	        HashMap<Integer, Accept> userAgreements = (HashMap<Integer, Accept>) obj;
+
+	        log.debug("userAgreements = {}", userAgreements);
+	        // 회원 id 설정 (회원가입이 완료된 후에 설정)
+	        terms.setMemberId(member.getMemberId());
+
+	        List<TermsHistory> findTermsHistory = termsService.fineTermsHistory();
+	        
+	        log.debug("findTermsHistory = {}", findTermsHistory);
+	        
+	        for (TermsHistory th : findTermsHistory) {
+	            terms.setHistoryId(th.getTermsId());
+	            terms.setTermsId(th.getTermsId());
+	            terms.setAccept(userAgreements.getOrDefault(th.getTermsId(), Accept.N));
+	            
+	            int result2 = termsService.insertTerms(terms);
+	            log.debug("result2 = {}", result2);
+	        }
+
+	        // 약관 동의 세션 제거
+	        session.removeAttribute("terms");
+
+	    } else {
 	        redirectAttr.addFlashAttribute("msg", "약관에 동의해주세요.");
 	        return "redirect:/member/terms.do";
 	    }
-	    
-	    terms.setMemberId(member.getMemberId());  // 회원가입이 완료된 후에 memberId를 설정 (예라)
-	    
-		int resultTerms = termsService.insertTerms(terms);
-		
-	    // 약관 동의 이력 정보 생성 및 저장 (예라)
-	    TermsHistory termsHistory = new TermsHistory();
-	    termsHistory.setTermsId(terms.getTermsId()); 
-	    termsHistory.setTitle("제목");
-	    termsHistory.setContent("내용");
-	    
-	    int resulttermsHistory = termsService.insertTermsHistory(termsHistory);
-	    
-		session.removeAttribute("terms"); 
 	
-		// 회원 정보 db에 저장하고 세션 제거 (예라)
+		// 회원 정보 세션 제거 (예라)
 		session.removeAttribute("emailVerified");
 		
 		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
@@ -154,25 +168,21 @@ public class MemberSecurityController {
 	public ResponseEntity<?> updateTerms(
 	        @RequestParam Map<String, String> data, 
 	        HttpSession session) {
-	    
+
 	    String term = data.get("termsAccept");
 	    String privacy = data.get("privacyAccept");
 	    String promotion = data.get("emailAccept");
-	    boolean userAgreedToPromotion = "Y".equals(promotion); 
-	    
-	    Terms terms = new Terms();
-	    terms.setTermsAccept(Accept.Y);
-	    terms.setTermsAcceptRequired('Y');  // 필수
-	    terms.setPrivacyAccept(Accept.Y);
-	    terms.setPrivacyAcceptRequired('Y');  // 필수
-	    terms.setEmailAccept(userAgreedToPromotion ? Accept.Y : Accept.N);
-	    terms.setEmailAcceptRequired('N');  // 선택
-	    
-	    log.debug("terms = {}",terms);
-	    session.setAttribute("terms", terms);
-	    
+
+	    // 사용자가 동의한 항목에 대해 Map에 저장
+	    userAgreements.put(1, "Y".equals(term) ? Accept.Y : Accept.N);
+	    userAgreements.put(2, "Y".equals(privacy) ? Accept.Y : Accept.N); 
+	    userAgreements.put(3, "Y".equals(promotion) ? Accept.Y : Accept.N);
+
+	    session.setAttribute("userAgreements", userAgreements);
+
 	    return new ResponseEntity<>(HttpStatus.OK);
 	}
+
 	
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
 	public void memberLogin() {}

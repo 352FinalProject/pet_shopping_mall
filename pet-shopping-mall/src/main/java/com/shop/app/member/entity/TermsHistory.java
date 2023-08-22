@@ -19,4 +19,5 @@ public class TermsHistory {
 	private int termsId;
 	private String title;
 	private String content;
+	private Required required;
 }
