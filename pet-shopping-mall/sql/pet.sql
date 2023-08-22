@@ -116,7 +116,7 @@ CREATE TABLE breed (
     );
     
 SELECT * FROM member;
-select * from pet;
+
 
 delete from pet where pet_id = '23';
     
