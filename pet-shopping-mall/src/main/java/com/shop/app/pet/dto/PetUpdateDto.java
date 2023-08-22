@@ -19,6 +19,7 @@
 	    private LocalDate petDofB;
 	    private String petKind;
 	    private String petBreed;
+	    private String petWeight;
 	    private LocalDate petAdoptionDate;
 	    private String petGender;
 	    private String petDofBFix;

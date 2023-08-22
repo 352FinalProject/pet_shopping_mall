@@ -26,9 +26,9 @@
 		<li class="sidebar2-pro">
 			<h2 class="sidebar2-title2">마이 정보</h2></a>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/member/myPage.do">회원정보 수정</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/petList.do">펫 목록</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/petProfile.do">펫 등록</a></li>
+				<li><a href="${pageContext.request.contextPath}/pet/myPage.do">회원정보 수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/pet/petList.do">펫 목록</a></li>
+				<li><a href="${pageContext.request.contextPath}/pet/petProfile.do">펫 등록</a></li>
 				<li><a href="#">펫정보 수정</a></li>
 			</ul>
 		</li>

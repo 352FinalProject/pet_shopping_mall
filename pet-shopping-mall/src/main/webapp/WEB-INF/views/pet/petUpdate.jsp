@@ -1,7 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+
 <style>
 .common-section{
 	display: flex;
@@ -103,106 +107,92 @@
     
 </style>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const genderButtons = document.querySelectorAll('input[type="button"][name="gender"]');
-        const genderInput = document.getElementById("genderInput");
-        const successMessage = document.querySelector('.success-message');
-        const confirmButton = document.getElementById('confirmButton');
-
-        genderButtons.forEach(button => {
-            button.addEventListener("click", function() {
-                const selectedGender = this.value;
-                genderInput.value = selectedGender;
-
-                genderButtons.forEach(btn => btn.classList.remove("selected"));
-                this.classList.add("selected");
-            });
-        });
-
-        if (successMessage) {
-            confirmButton.addEventListener('click', function() {
-                location.href = "/member/petList.do";
-            });
-        }
-    });
-</script>
-
-<!-- 펫 프로필 입력 (혜령) -->
-<section class="common-section" id="#">
-    <div class="common-title">펫 프로필 입력</div>
+<!-- 펫 수정 페이지 내용 -->
+<section class="common-section" id="pet-update-section">
+    <div class="common-title">펫 프로필 수정</div>
     <br>
     <div class="common-container">
         <div class="common-div">
-            <form:form action="${pageContext.request.contextPath}/member/petProfile.do" method="POST"> <!-- 2. 이부분 ${pageContext.request.contextPath} 추가 
-            																								3. 상단에 시큐리티 태그 링크, form:form 추가 -->
-            
+            <form:form action="${pageContext.request.contextPath}/pet/petUpdate.do" method="POST">
+                <input type="hidden" name="petId" value="${petInfo.petId}">
                 <table>
-                  <tr>
+                    <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" name="memberId" id="memberId" value="admin" required>
+                            <input type="text" name="memberId" id="memberId" value="${petInfo.memberId}" readonly="readonly">
                         </td>
                     </tr>
                     <tr>
                         <th>펫 이름</th>
                         <td>
-                            <input type="text" name="petName" id="petName" value="두부" required>
+                            <input type="text" name="petName" id="petName" value="${petInfo.petName}" required>
                         </td>
                     </tr>
-                    
                     <tr>
                         <th>생일</th>
                         <td>
-                            <input type="date" name="petDofB" id="petDofB" required>
+                            <input type="date" name="petDofBFix" id="petDofBFix" value="${petInfo.petDofBFix}" required>
                         </td>
                     </tr>
-
                     <tr>
                         <th>타입</th>
                         <td>
-                            <input type="text" name="petKind" placeholder="반려동물의 종류를 입력해 주세요." value="개">
+                            <input type="text" name="petKind" value="${petInfo.petKind}">
                         </td>
                     </tr>
-                
                     <tr>
                         <th>품종</th>
                         <td>
-                            <input type="text" name="petBreed" placeholder="반려동물의 품종을 입력해 주세요." value="말티즈">
+                            <input type="text" name="petBreed" value="${petInfo.petBreed}">
                         </td>
                     </tr>
-                    
+                    <tr>
+                   		<th>몸무게</th>
+                        <td>
+                            <input type="text" name="petWeight" value="${petInfo.petWeight}">
+                        </td>
+                    </tr>                    
                     <tr>
                         <th>입양일</th>
                         <td>
-                            <input type="date" name="petAdoption" id="petAdoptionDate">
+                            <input type="date" name="petAdoptionDateFix" value="${petInfo.petAdoptionDateFix}">
                         </td>
                     </tr>
-
                     <tr>
                         <th>성별</th>
-	                        <td>
-							    <input type="hidden" name="petGender" id="genderInput">
-						        <input type="button" name="gender" value="M" onclick="selectGender('M')">
-						        <input type="button" name="gender" value="F" onclick="selectGender('F')">
-                        	</td>
-                    </tr>
-                    <tr>
-                        <td class="resetAndSubmit" colspan="2">
-                            <input type="reset" value="돌아가기">
-                            <input type="submit" value="등록하기">
+                        <td>
+                            <input type="hidden" name="petGender" id="genderInput" value="${petInfo.petGender}">
+                            <input type="button" name="gender" value="M" onclick="selectGender('M')" ${petInfo.petGender == 'M' ? 'class="selected"' : ''}>
+                            <input type="button" name="gender" value="F" onclick="selectGender('F')" ${petInfo.petGender == 'F' ? 'class="selected"' : ''}>
                         </td>
                     </tr>
                 </table>
+                <button type="submit" class="edit-button">수정</button>
             </form:form>
         </div>
     </div>
 </section>
+
 <script>
-// 펫 등록 젠더 선택
-function selectGender(gender) {
-    $("#genderInput").val(gender);
-    $("#selectedGender").text(gender === 'M' ? '♂' : '♀');
-}
+    function selectGender(gender) {
+        document.getElementById("genderInput").value = gender;
+        var buttons = document.getElementsByName("gender");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("selected");
+        }
+        var selectedButton = document.querySelector(`input[name="gender"][value="${gender}"]`);
+        selectedButton.classList.add("selected");
+    }
 </script>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
+<section class="common-section" id="back-button-section">
+    <div class="common-container">
+        <div class="common-div">
+            <form action="${pageContext.request.contextPath}/pet/petList.do" class="form-inline">
+                <button class="btn-add">돌아가기</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -39,6 +39,9 @@ public class PetCreateDto {
 	@NotBlank(message = "반려동물 품종을 입력해주세요.")
     private String petBreed;
 	
+	@NotBlank(message = "반려동물 몸무게를 입력해주세요.")
+	private String petWeight;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd") // 이부분 추가
     private LocalDate petAdoption;
 	

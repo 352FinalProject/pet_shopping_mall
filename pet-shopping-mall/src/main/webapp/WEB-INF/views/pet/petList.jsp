@@ -28,7 +28,7 @@
             </form:form>
 
             <!-- 펫 등록 버튼 -->
-            <form action="${pageContext.request.contextPath}/member/petProfile.do"
+            <form action="${pageContext.request.contextPath}/pet/petProfile.do"
                 class="form-inline">
                 <button class="btn-add">펫 등록</button>
             </form>
@@ -42,7 +42,8 @@
                             <th>타입</th>
                             <th>품종</th>
                             <th>성별</th>
-                            <th>생일</th>
+                            <th>몸무게</th>
+                            <th>나이</th>
                             <th>이름</th>
                             <th>정보 수정</th>
                             <th>삭제</th>
@@ -55,9 +56,10 @@
                                 <td>${pet.petKind}</td>
                                 <td>${pet.petBreed}</td>
                                 <td>${pet.petGender == 'M' ? '수컷' : '암컷'}</td>
+                                <td>${pet.petWeight}</td>
                                 <td>${pet.petDofB}</td>
-                                <td><a href="${pageContext.request.contextPath}/member/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
-                                <td><a href="${pageContext.request.contextPath}/member/petGoDetail.do?petId=${pet.petId}"> 수정 </a></td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petGoDetail.do?petId=${pet.petId}"> 수정 </a></td>
                                 <td><a href="javascript:void(0)" onclick="fnDelete('${pet.petId}');"> 삭제 </a></td>
                             </tr>
                         </c:forEach>
@@ -70,7 +72,7 @@
 
 <!-- 펫 정보 삭제 폼 -->
 <form:form name="PetDeleteFrm"
-    action="${pageContext.request.contextPath}/member/petDelete.do"
+    action="${pageContext.request.contextPath}/pet/petDelete.do"
     method="POST">
     <input type="hidden" name="petId" id="getPetId" value="${pet.petId}" />
 </form:form>

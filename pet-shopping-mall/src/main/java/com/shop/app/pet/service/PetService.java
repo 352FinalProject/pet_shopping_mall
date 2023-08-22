@@ -10,7 +10,8 @@ public interface PetService {
     
     int petUpdate(PetUpdateDto petUpdateDto);
 
-	List<Pet> findPetByAll(Pet pet);
+//	List<Pet> findPetByAll(Pet pet);
+    List<Pet> findPetsByMemberId(String memberId);
 
 	Pet findPetById(int petId);
 
