@@ -43,7 +43,12 @@ a {
 		<br><br>
 		<div id="review-div">품종</div>
 			<div id="review-div">
-				${petId.petName}
+<%-- 				<c:forEach var="pet" items="${petId}">
+			    <c:if test="${pet.memberId eq reviews.reviewMemberId}">
+			        ${pet.petName}
+			        <c:break /> <!-- 해당 조건이 충족되면 반복문 종료 -->
+			    </c:if>
+</c:forEach> --%>
 			</div>
 		<br><br>
 		<div class="review-img">

@@ -217,8 +217,6 @@ public class ReviewController {
 
 		// 펫 정보 가져오기
 		Pet petId = petService.findPetId(pet);
-
-		log.debug("펫정보 petId = {}", petId);
 		
 		Review review = Review.builder()
 				.reviewId(reviewId)
@@ -228,6 +226,8 @@ public class ReviewController {
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("petId", petId);
 
+		log.debug("펫정보 petId = {}", petId);
+		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
 		log.debug("reviewDetails = {}", reviewDetails);
@@ -262,63 +262,6 @@ public class ReviewController {
 
 	}
 
-//	-- 리뷰 테이블
-//	create table review (
-//	    review_id number,
-//	    pet_id number,
-//	    order_id number,
-//	    review_member_id varchar(20) not null,
-//	    product_detail_id number,
-//	    review_title varchar2(50) not null,
-//	    review_content varchar2(3000) not null,
-//	    review_star_rate number default 1 not null,
-//	    review_created_at timestamp default systimestamp,
-//	    constraint pk_review_id primary key(review_id),
-//	    constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-//	    constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
-//	    constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
-//	    constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
-//	);
-//
-//	-- 펫 테이블
-//	CREATE TABLE pet (
-//	    pet_id number,
-//	    member_id varchar2(20),
-//	    pet_name VARCHAR2(50) NOT NULL,
-//	    pet_DofB timestamp,
-//	    pet_kind VARCHAR2(50),
-//	    pet_breed VARCHAR2(50),
-//	    pet_adoption timestamp,
-//	    pet_gender CHAR(1),
-//	    pet_created_at timestamp default systimestamp,
-//	    pet_text VARCHAR2(2000),
-//	    constraints pk_pet_id primary key(pet_id),
-//	    constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
-//	    CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
-//	);
-//
-//	-- 멤버 테이블
-//	create table member (
-//	    member_id varchar2(20),
-//	    password varchar2(300) not null,
-//	    name varchar2(50) not null,
-//	    phone varchar2(11),
-//	    email varchar2(200),
-//	    enroll_date timestamp default systimestamp,
-//	    address varchar2(500),
-//	    birthday timestamp,
-//	    subscribe char(1) default 'N' not null,
-//	    constraints pk_member_id primary key(member_id)
-//	);
-//
-//	각각 테이블이 이렇게 되어있는 상황이고
-//	리뷰 작성 후 조회를 하면 펫 정보를 가져오려고 하거든
-//
-//
-//	There was an unexpected error (type=Internal Server Error, status=500).
-//	nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'reviewMemberId' in 'class com.shop.app.pet.entity.Pet'
-//	org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'reviewMemberId' in 'class com.shop.app.pet.entity.Pet'
-//	
-	
+
 
 }

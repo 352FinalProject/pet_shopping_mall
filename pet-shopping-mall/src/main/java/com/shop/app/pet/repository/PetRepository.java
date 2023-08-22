@@ -44,7 +44,7 @@ public interface PetRepository {
     		+ "WHERE pet_id = #{petId}")
     int petUpdate(PetUpdateDto pet);
 
-    @Select("select * from pet where member_id = #{reviewMemberId}")
+    @Select("select * from pet")
 	Pet findPetId(Pet pet);
     
 	
