@@ -170,7 +170,7 @@ button, input {
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2">
-							<form action="/member/memberCreateComplte.do">
+							<form action="${pageContext.request.contextPath}/member/memberCreateComplte.do">
 								<input type="reset" value="돌아가기"> <input type="submit"
 									value="가입하기">
 							</form>
