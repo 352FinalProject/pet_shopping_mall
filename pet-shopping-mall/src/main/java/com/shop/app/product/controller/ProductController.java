@@ -61,9 +61,7 @@ public class ProductController {
 
 		List<Review> reviews = reviewService.findProductReviewAll(params);
 
-		log.debug("토탈카운트 = {} ", totalCount);
-		log.debug("페이지, 리밋, 멤버아이디 params = {}", params);
-		log.debug("파람스 들어가있는거 reviews = {}", reviews);
+		log.debug("reviews = {}", reviews);
 
 		model.addAttribute("reviews", reviews);
 		

@@ -91,6 +91,8 @@ SELECT *  FROM all_tables;
 --drop sequence seq_history_id;
 --drop sequence seq_terms_id;
 --drop sequence seq_product_option_id;
+--drop sequence seq_member_coupon_id;
+--drop sequence seq_coupon_id;
 
 
 --==============================
@@ -239,10 +241,12 @@ create table orderTbl (
     total_price number not null,
     delivery_fee number default 3000 not null,
     discount number default 0,
+    discount_detail varchar2(50),
     amount number not null,
-    discount_code varchar2(20),
+    member_coupon_id number, -- null 사용하면 고유 번호 들어가게  
     constraint pk_order_id primary key(order_id),
-    constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade
+    constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    constraint fk_orderTbl_member_coupon_id foreign key(member_coupon_id) references member_coupon(member_coupon_id) on delete cascade
 );
 
 -- 포인트 테이블
@@ -363,7 +367,7 @@ create table terms (
  accept_yn char(1) not null,
  accept_date timestamp default systimestamp not null,
  constraint pk_history_id primary key(history_id, terms_id),
- constraint fk_terms_member_id foreign key(member_id) references member(member_id)
+ constraint fk_terms_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
 -- 약관동의 이력 테이블
@@ -373,6 +377,29 @@ create table terms_history (
  content varchar2(4000),
  required char(1) not null,
  constraint pk_terms_id primary key(terms_id)
+);
+
+-- 쿠폰 테이블
+create table coupon (
+ coupon_id number,
+ coupon_name varchar(100) not null, -- 쿠폰 이름 (ex. 배송비 무료 쿠폰 / 생일축하 쿠폰)
+ discount_amount number, -- 할인 금액 (ex. 3,000원 - 배송비 무료 쿠폰)
+ discount_percentage number(5, 2), -- 할인 비율 (ex. 10% - 생일 쿠폰)
+ constraint pk_coupon_id primary key(coupon_id)
+);
+
+-- 멤버 쿠폰 테이블
+create table member_coupon (
+ member_coupon_id number,
+ coupon_id number,
+ member_id varchar2(50),
+ create_date timestamp default systimestamp not null, -- 발급 날짜
+ end_date timestamp not null, -- 유효기간 (언제까지)
+ use_status number(1) default 0, -- 사용 여부 (사용 안 하면 0, 사용하면 1)
+ use_date timestamp, -- 사용 날짜
+ constraint pk_member_coupon_id primary key(member_coupon_id),
+ constraint fk_member_coupon_member_id foreign key(member_id) references member(member_id) on delete cascade,
+ constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
 );
 
 create sequence seq_orderTbl_id;
@@ -394,6 +421,8 @@ create sequence seq_cart_id;
 create sequence seq_cartitem_id;
 create sequence seq_terms_id;
 create sequence seq_history_id;
+create sequence seq_coupon_id;
+create sequence seq_member_coupon_id;
 
 select * from orderTbl order by order_id desc;
 select * from point order by point_id desc;
@@ -409,6 +438,8 @@ select * from pet;
 select * from review;
 select * from terms;
 select * from terms_history;
+select * from coupon;
+select * from member_coupon;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
