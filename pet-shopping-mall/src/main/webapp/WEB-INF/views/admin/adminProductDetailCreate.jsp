@@ -40,6 +40,11 @@
 									value="" required /></td>
 							</tr>
 							<tr>
+								<th>상품금액</th>
+								<td><input type="number" name="productPrice" id="productPrice"
+									required></td>
+							</tr>
+							<tr>
 								<th>옵션명</th>
 								<td>
 									<select name="optionName" id="optionName">
@@ -53,22 +58,32 @@
 							</tr>
 							<tr>
 								<th>옵션값</th>
-								<td><input type="text" name="optionValue" id="optionValue"></td>
+								<td>
+									<input type="text" name="optionValue" id="optionValue" >
+									<button onclick="addOptionValue">추가</button>
+								</td>
 							</tr>
 							<tr>
-								<th>상품금액</th>
-								<td><input type="number" name="productPrice" id="productPrice"
-									required></td>
-							</tr>
-							<tr>
-								<th>썸네일(대표) 사진</th>
-								<td><label for="file">
-								</label> <input type="file" name="upFile" id="file1"></td>
+								<th>옵션추가금</th>
+								<td>
+									<input type="number" name="additionalPrice" id="additionalPrice" value="0">
+								</td>
 							</tr>
 							<tr>
 								<th>제품 사진</th>
 								<td><label for="file">
-								</label> <input type="file" name="upFile" id="file2"></td>
+								</label> <input type="file" name="upFile" id="file"></td>
+							</tr>
+							<tr>
+								<th>판매상태</th>
+								<td>
+									<select name="saleState" id="saleState">
+										<option value="0">판매대기</option>
+										<option value="1">판매중</option>
+										<option value="2">품절</option>
+										<option value="3">기타</option>
+									</select>
+								</td>
 							</tr>
 						</table>
 					</div>

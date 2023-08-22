@@ -61,5 +61,10 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductCategoryById(categoryId);
 	}
 
+	@Override
+	public int insertProductDetail(ProductDetail productDetail) {
+		return productRepository.insertProductDetail(productDetail);
+	}
+
 
 }

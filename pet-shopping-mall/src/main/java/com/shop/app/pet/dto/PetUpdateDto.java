@@ -16,9 +16,10 @@
 	    private Long petId;
 	    private String memberId;
 	    private String petName;
-	    private LocalDate petDofB;
+	    private String petAge;
 	    private String petKind;
 	    private String petBreed;
+	    private String petWeight;
 	    private LocalDate petAdoptionDate;
 	    private String petGender;
 	    private String petDofBFix;

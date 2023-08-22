@@ -115,14 +115,14 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 select * from product_category;
 
 -- 제품등록 (이미지는 현재 null 처리)
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, null, null, default, null, 31, 156);
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 4, '말랑 하네스', 15000, null, null, default, null, default, default);
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 6, '츄릅츄릅 츄르 10개입', 20000, null, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
+insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, null, default, null, 31, 156);
+insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 4, '말랑 하네스', 15000, null, default, null, default, default);
+insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 6, '츄릅츄릅 츄르 10개입', 20000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 select * from product;
 
 -- 제품상세 등록

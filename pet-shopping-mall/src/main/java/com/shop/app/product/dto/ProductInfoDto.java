@@ -21,6 +21,7 @@ import lombok.NonNull;
 @Builder
 public class ProductInfoDto {
 	@NonNull
+	private int productDetailId;
 	private int productId;
 	private String optionName;
 	private String optionValue;
