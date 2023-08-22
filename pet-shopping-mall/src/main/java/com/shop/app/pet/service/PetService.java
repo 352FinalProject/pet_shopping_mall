@@ -15,4 +15,7 @@ public interface PetService {
 	Pet findPetById(int petId);
 
 	int petDelete(int petId);
+
+	// 펫 정보 가져오기(혜령)
+	Pet findPetId(Pet pet);
 }

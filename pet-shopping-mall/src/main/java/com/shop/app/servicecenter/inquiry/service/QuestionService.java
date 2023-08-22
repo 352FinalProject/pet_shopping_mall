@@ -45,5 +45,8 @@ public interface QuestionService {
 
 	// 1:1 문의 답변 카운트 (예라)
 	Question findQuestionByAnwerCount(Question question);
+
+	// 각 질문의 답변 수 계산하여 추가 (예라)
+	int calculateAnswerCount(int questionId);
 	
 }

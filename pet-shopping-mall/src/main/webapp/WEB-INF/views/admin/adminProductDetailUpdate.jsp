@@ -8,12 +8,12 @@
 
 <%-- 상품등록폼 (수경) --%>
 <section class="common-section" id="#">
-	<div class="common-title">상품기본 수정</div>
+	<div class="common-title">상품 수정</div>
 	<div class="common-container">
 		<div class="common-div">
 		
 			<form:form 
-				action="${pageContext.request.contextPath}/admin/adminUpdateProduct.do" 
+				action="${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do" 
 				enctype="multipart/form-data" 
 				method="post">
 				

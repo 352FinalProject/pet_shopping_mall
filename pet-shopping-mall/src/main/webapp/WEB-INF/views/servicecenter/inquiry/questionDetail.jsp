@@ -91,15 +91,11 @@
 							<form:form
 								action="${pageContext.request.contextPath}/servicecenter/inquiry/answerUpdate.do?questionId=${questions.questionId}"
 								method="post">
-								<div class="hidden-textbox" style="display: none;">
-									<c:if test="${questions.answerCount <= 0}">
-										<textarea id="editComment" name="answerContent"
-											style="position: absolute; border: 1px solid #c8c8c8; background: #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
-										<input type="hidden" name="questionId"
-											value="${questions.questionId}" /> <input type="hidden"
-											name="answerId" value="${answers.answerId}" />
-									</c:if>
-									<button onclick="submitEdit();" name="" class="editComment">수정하기</button>
+							<div class="hidden-textbox" style="display: none;">
+							    <textarea id="editComment" name="answerContent" style=" position: absolute; border : 1px solid #c8c8c8; background : #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
+								<input type="hidden" name="questionId" value="${questions.questionId}" />
+								<input type="hidden" name="answerId" value="${answers.answerId}" />
+							    <button onclick="submitEdit();" name="" class="editComment">수정하기</button>
 								</div>
 							</form:form>
 						</div>

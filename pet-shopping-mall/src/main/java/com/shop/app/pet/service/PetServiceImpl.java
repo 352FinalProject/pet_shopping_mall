@@ -47,4 +47,9 @@ public class PetServiceImpl implements PetService {
 	public int petUpdate(PetUpdateDto pet) {
 		return petRepository.petUpdate(pet);
 	}
+
+	@Override
+	public Pet findPetId(Pet pet) {
+		return petRepository.findPetId(pet);
+	}
 }

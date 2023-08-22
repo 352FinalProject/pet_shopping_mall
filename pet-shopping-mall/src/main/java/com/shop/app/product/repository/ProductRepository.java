@@ -15,13 +15,9 @@ import com.shop.app.product.dto.ProductPriceDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
-import com.shop.app.product.entity.ProductOption;
 
 @Mapper
 public interface ProductRepository {
-	
-//	@Select("select * from product where product_code = #{product_code}")
-//	Product findProductByCode(String productCode);
 
 	@Insert("insert into product(product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt) values (seq_product_id.nextval, #{categoryId}, #{productName}, #{productPrice}, #{thumbnailImg}, #{productImg}, default, null, default, default)")
 	@SelectKey(
@@ -34,16 +30,9 @@ public interface ProductRepository {
 
 	@Select("select * from product_category order by category_id")
 	List<ProductCategory> findAll();
-	
-	// productCode 변수는 존재하지 않습니다.(수경)
-//	@Select("select * from product where product_code = #{productCode}")
-//	Product findProductByCode(String productCode);
 
 	@Select("select * from product_detail where product_detail_id = #{productDetailId}")
 	ProductDetail findProductDetailById(int productDetailId);
-
-	@Select("select * from product order by create_date desc")
-	List<Product> findAllBasicProduct();
 
 	@Select("select * from product_detail order by product_detail_id desc")
 	List<ProductDetail> findAllProductDetails();
@@ -57,10 +46,8 @@ public interface ProductRepository {
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
 
-	@Insert("insert into product_option(option_id, product_id, option_name, option_value) values (seq_product_option_id.nextval, #{productId}, #{optionName}, #{optionValue})")
-	int insertProductOption(ProductOption option);
+	@Select("select * from product_category where category_id = #{categoryId}")
+	ProductCategory findProductCategoryById(int categoryId);
 
-	@Select("select * from product_option order by product_id desc")
-	List<ProductOption> findAllProductOptions();
 
 }

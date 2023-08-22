@@ -9,6 +9,7 @@ import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +23,9 @@ public class ReviewDetails extends Review {
 	
 //	private int reviewId;
 //	private String reviewMemberId;
+	
+	@Getter
+	private int petId;
 	
 	private List<imageAttachment> attachments;
 	private List<imageAttachmentMapping> attachmentMapping;
