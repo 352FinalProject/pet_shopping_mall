@@ -54,9 +54,6 @@ SELECT *  FROM all_tables;
 --drop table chat_room;
 --drop table breed;
 --
---
---
---
 ---- 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
@@ -93,6 +90,7 @@ SELECT *  FROM all_tables;
 --drop sequence seq_cancel_id;
 --drop sequence seq_history_id;
 --drop sequence seq_terms_id;
+--drop sequence seq_product_option_id;
 
 
 --==============================
@@ -216,6 +214,7 @@ create table product (
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
+-- 상품 디테일 테이블
 create table product_detail (
     product_detail_id number, -- pk
     product_id number, -- fk
@@ -259,6 +258,7 @@ create table point (
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
 
+-- 결제 취소 테이블
 create table cancel_order (
     cancel_id number,
     request_date timestamp default systimestamp not null,
@@ -326,6 +326,7 @@ create table community (
     constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
 );
 
+-- 결제 테이블
 create table payment (
     payment_id number,
     payment_method number not null,
@@ -336,34 +337,7 @@ create table payment (
     constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
--- 반품테이블
--- create table return (
---     return_id number,
---     return_status number default 0 not null,
---     request_date timestamp default systimestamp not null,
---     receipt_date timestamp,
---     withdraw_data timestamp,
---     order_id number,
---     constraint pk_return_id primary key(return_id),
---     constraint fk_return_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
--- );
-
--- 환불테이블
--- create table refund (
---     refund_id number,
---     receipt_date timestamp default systimestamp not null,
---     complete_date timestamp,
---     refund_status number default 0 not null,
---     refund_price number not null,
---     refund_method number not null,
---     refund_account varchar2(20),
---     account_name varchar2(20),
---     bank varchar2(20),
---     order_id number,
---     constraint pk_refund_id primary key(refund_id),
---     constraint fk_refund_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
--- );
-
+-- 장바구니 테이블
 create table cart (
     cart_id number,
     member_id varchar2(50),
@@ -371,6 +345,7 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+-- 장바구니 물건 테이블
 create table cartitem (
     cartitem_id number,
     cart_id number,
@@ -380,52 +355,25 @@ create table cartitem (
     constraint fk_cartitem_cart_id foreign key(cart_id) references cart (cart_id)
 );
 
--- 약관 테이블
+ -- 약관 테이블
 create table terms (
+ history_id number,
  terms_id number,
  member_id varchar2(50),
- terms_accept_yn char(1) not null,
- policy_accept_yn char(1) not null,
- email_accept_yn char(1) not null,
- terms_accept_required char(1) not null,
- policy_accept_required char(1) not null,
- email_accept_required char(1) not null,
+ accept_yn char(1) not null,
  accept_date timestamp default systimestamp not null,
- constraint pk_terms_id primary key(terms_id),
+ constraint pk_history_id primary key(history_id, terms_id),
  constraint fk_terms_member_id foreign key(member_id) references member(member_id)
 );
 
 -- 약관동의 이력 테이블
 create table terms_history (
  terms_id number,
- title varchar2(50),
- content varchar2(200),
- constraint pk_terms_history_id primary key(terms_id),
- constraint fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
+ title varchar2(100),
+ content varchar2(4000),
+ required char(1) not null,
+ constraint pk_terms_id primary key(terms_id)
 );
-
--- 채팅방 테이블
-create table chat_room (
- chat_room_id varchar2(20) not null,
- chat_room_member_id varchar2(50) not null,
- chat_room_admin_roll varchar2(20) not null,
- chat_room_created_at timestamp default systimestamp not null,
- constraint pk_chat_room_id primary key(chat_room_id),
- constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
-);
-
--- 채팅 로그 테이블
-create table chat (
- chat_id number,
- chat_room_id varchar2(20) not null,
- chat_member_id varchar2(50) not null,
- chat_message varchar2(4000) not null,
- chat_created_at timestamp default systimestamp not null,
- chat_unread_count number,
- constraint pk_chat_id primary key(chat_id),
- constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
-);
-
 
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
@@ -444,10 +392,8 @@ create sequence seq_payment_id;
 create sequence seq_cancel_id;
 create sequence seq_cart_id;
 create sequence seq_cartitem_id;
-create sequence seq_chat_id;
-create sequence seq_chat_room_id;
 create sequence seq_terms_id;
-create sequence seq_terms_history_id;
+create sequence seq_history_id;
 
 select * from orderTbl order by order_id desc;
 select * from point order by point_id desc;
