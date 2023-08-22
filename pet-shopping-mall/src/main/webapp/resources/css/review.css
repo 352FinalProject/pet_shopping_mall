@@ -203,7 +203,7 @@
 
 /* 리뷰 상세 div */
 .review-container {
-  height: 500px;
+  height: 530px;
   width: 600px;
   justify-content: left;
   text-align: left;
@@ -231,6 +231,23 @@
   padding: 10px;
   resize: none; /* textarea 사이즈 조절 금지 */
   white-space: pre-line; /* 첫줄 공백 제거 */
+}
+
+/* 리뷰상세 제목 */
+.review-div-title{
+	font-weight: bold;
+	font-size: 20px;
+}
+
+/* 공백 */
+.small-space {
+	display: inline-block;
+	height: 2em;
+}
+
+#review-div-star{
+	display: inline-block;
+	font-size: 20px;
 }
 
 

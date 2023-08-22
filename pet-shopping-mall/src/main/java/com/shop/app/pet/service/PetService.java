@@ -17,6 +17,6 @@ public interface PetService {
 
 	int petDelete(int petId);
 
-	// 펫 정보 가져오기(혜령)
-	Pet findPetId(Pet pet);
+	// 리뷰-펫 정보 가져오기(혜령)
+	List<Pet> findPetId(Pet pet, String memberId);
 }

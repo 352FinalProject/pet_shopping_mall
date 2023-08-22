@@ -2,6 +2,7 @@ package com.shop.app.review.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -213,10 +214,11 @@ public class ReviewController {
 
 	// 리뷰 상세조회 
 	@GetMapping("/reviewDetail.do")
-	public void reviewDetail(@RequestParam(required=true) int reviewId, Model model, Pet pet) {
+	public void reviewDetail(@RequestParam(required=true) int reviewId, Model model, Pet pet, Principal principal) {
 
 		// 펫 정보 가져오기
-		Pet petId = petService.findPetId(pet);
+		String memberId = principal.getName(); // 로그인한 멤버 아이디
+		List<Pet> petId = petService.findPetId(pet, memberId);
 		
 		Review review = Review.builder()
 				.reviewId(reviewId)

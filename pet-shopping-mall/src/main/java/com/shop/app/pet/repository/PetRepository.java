@@ -52,8 +52,9 @@ public interface PetRepository {
     		+ "WHERE pet_id = #{petId}")
     int petUpdate(PetUpdateDto pet);
 
-    @Select("select * from pet")
-	Pet findPetId(Pet pet);
+    // 리뷰-펫 정보 가져오기(혜령)
+    @Select("select * from pet where member_id = #{memberId}")
+	List<Pet> findPetId(Pet pet, String memberId);
     
 	
 
