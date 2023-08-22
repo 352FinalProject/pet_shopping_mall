@@ -128,7 +128,8 @@ public class QuestionController {
 
 		        attachments.add(attach);
 		    }
-		}	
+		}
+		
 		// 2. db 저장
 		QuestionDetails questions = QuestionDetails.builder()
 				.questionMemberId(_question.getQuestionMemberId())
