@@ -97,6 +97,23 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDetails getDeleteReviewById(int reviewId) {
 		return reviewRepository.getDeleteReviewById(reviewId);
 	}
+	
+	
+	// 상품 상세페이지 리뷰 전체 카운트
+	@Override
+	public int findProductTotalReviewCount() {
+		return reviewRepository.findProductTotalReviewCount();
+	}
+
+	// 상품 상페페이지 전체 리뷰 
+	@Override
+	public List<Review> findProductReviewAll(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return reviewRepository.findProductReviewAll(rowBounds);
+	}
 
 
 }

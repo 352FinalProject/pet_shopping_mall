@@ -182,7 +182,7 @@ button, input {
 					<td>
 						<div class="save-search">
 							<div class="saveId">
-								<input class="saveId" type="checkbox">
+								<input class="saveId" type="checkbox" name="saveId">
 							</div>
 							<div class="search-id">
 								<p>아이디저장</p>
