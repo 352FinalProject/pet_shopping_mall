@@ -179,6 +179,12 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
     
     
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-06-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-01-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
+        
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
@@ -330,6 +336,15 @@ where
     ci.product_detail_id = 2;
 -------------------------------------------------------------------
 
+select * from member;
+select * from point;
+
+select
+    m.name,
+    m.subscribe,
+    (select p.point_current from point where rownum <=1)
+from
+    member m left join point p on m.member_id = p.point_member_id; 
     
 select 
     p.product_id,

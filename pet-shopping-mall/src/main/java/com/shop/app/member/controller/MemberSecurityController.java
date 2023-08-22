@@ -32,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
+import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.entity.TermsHistory;
@@ -181,7 +182,7 @@ public class MemberSecurityController {
 	// 로그아웃처리하는 요청 작성 X
 	
 	// 멤버 상세 조회
-	@GetMapping("/myPage.do")
+	@GetMapping("/updateMember.do")
 	public void memberDetail(
 			Authentication authentication, // 현재 사용자 인증 정보와 멤버 정보를 가져와서 상세 정보 페이지에 표시. 
 			@AuthenticationPrincipal MemberDetails _member, // member: 현재 사용자 멤버 정보
@@ -234,7 +235,7 @@ public class MemberSecurityController {
 		
 	    session.invalidate(); // 세션 종료
 		redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
-		return "redirect:/member/myPage.do";
+		return "redirect:/member/updateMember.do";
 	}
 	
 	@PostMapping("/deleteMember.do")
@@ -281,14 +282,33 @@ public class MemberSecurityController {
 //    }
 //	
 	
+	
+	/**
+	 * 마이페이지 (담희)
+	 */
+	@GetMapping("/myPage.do")
+	public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
+		String memberId = member.getMemberId();
+		MypageDto myPage = memberService.getMyPage(memberId);
+		model.addAttribute("myPage", myPage);
+	}
+	
+	
+	
 	@GetMapping("/terms.do")
 	public void getTerms() {}
+	
+	
 	
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted(){}
 	
+	
+	
 	@GetMapping("/reviewWrite.do")
 	public void reviewWrite() {}
+	
+	
 	
 	@GetMapping("/myReview.do")
 	public void myReview() {}
