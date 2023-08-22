@@ -2,10 +2,11 @@ package com.shop.app.product.service;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
-import com.shop.app.product.entity.ProductOption;
 
 public interface ProductService {
 
@@ -13,8 +14,8 @@ public interface ProductService {
 
 	int insertProduct(Product product);
 
-	List<Product> findAllBasicProduct();
-
+	ProductDetail findProductDetailById(int productId);
+	
 	List<ProductDetail> findAllProductDetails();
 
 	Product findProductById(int productId);
@@ -23,11 +24,10 @@ public interface ProductService {
 
 	int deleteProduct(int productId);
 
-	int insertProductOption(ProductOption option);
+	ProductCategory findProductCategoryById(int categoryId);
 
-	List<ProductOption> findAllProductOptions();
-	
-	
+	int insertProductDetail(ProductDetail productDetail);
+
 
 
 }

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 section.order-header {
@@ -64,6 +68,7 @@ div.product-desc span{
 }
 
 </style>
+<div>${order }</div>
 <div class="common-section">
 	<!-- 컨테이너 -->
 	<div class="common-container">
@@ -83,12 +88,11 @@ div.product-desc span{
 	
 	<!-- 주문 바디 -->
 	<section class="order-body">
-		
 		<!-- 주문 내역 -->
 		<table class="order-history-tbl">
 		<thead>
 			<tr>
-				<th>날짜</th>
+				<th>${orderHistories}</th>
 				<th>주문번호</th>
 				<th>상품</th>
 				<th>주문금액</th>
@@ -148,7 +152,6 @@ div.product-desc span{
 				<!-- 주문결제정보 -->
 				<div class="order-info details">
 					<div class="title">주문결제정보</div>
-					
 				</div>
 			</div>
 		</div>

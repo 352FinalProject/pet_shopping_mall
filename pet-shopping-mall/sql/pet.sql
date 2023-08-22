@@ -20,7 +20,7 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
---
+
 --drop table review;
 --drop table image_attachment;
 --drop table image_attachment_mapping;
@@ -53,10 +53,10 @@ SELECT *  FROM all_tables;
 --drop table chat;
 --drop table chat_room;
 --drop table breed;
-
-
-
-
+--
+--
+--
+--
 ---- 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
@@ -65,8 +65,8 @@ SELECT *  FROM all_tables;
 --drop table pet cascade constraints;
 --drop table breed cascade constraints;
 --drop table order_detail cascade constraints;
-
-
+--
+--
 --drop sequence seq_question_id;
 --drop sequence seq_answer_id;
 --drop sequence seq_image_attachment_id;
@@ -134,7 +134,7 @@ CREATE TABLE pet (
     pet_adoption timestamp,
     pet_gender CHAR(1),
     pet_created_at timestamp default systimestamp,
-    pet_text VARCHAR2(2000)
+    pet_text VARCHAR2(2000),
     constraints pk_pet_id primary key(pet_id),
     constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
@@ -157,6 +157,7 @@ create table question(
     question_title varchar2(500) not null,
     question_content varchar2(4000) not null,
     question_created_at timestamp default systimestamp,
+    review_id number,
     constraints pk_question_id primary key(question_id),
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
@@ -206,10 +207,9 @@ create table product (
     category_id number, -- fk
     product_name varchar2(200) not null,
     product_price number not null,
-    thumbnail_img number, -- 썸네일 이미지(fk)
-    product_img number, -- 제품상세 이미지(fk)
+    img_id number, -- 제품상세 이미지(fk)
     create_date timestamp default systimestamp, -- 등록일
-    expire_date timestamp default systimestamp, -- 유통기한
+    expire_date timestamp default null, -- 유통기한
     like_cnt number default 0, -- 좋아요수
     view_cnt number default 0, -- 조회수
     constraints pk_product_id primary key(product_id),
@@ -218,11 +218,10 @@ create table product (
 
 create table product_detail (
     product_detail_id number, -- pk
-   product_id number, -- fk
+    product_id number, -- fk
     option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
     option_value varchar2(200), -- 옵션속성
     additional_price number default 0, -- 옵션에 따른 추가금
-    stock number default 0,
     sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
@@ -313,7 +312,6 @@ create table review (
     review_created_at timestamp default systimestamp,
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-    constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
     constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
@@ -383,15 +381,18 @@ create table cartitem (
 );
 
 -- 약관 테이블
-create table  terms (
- history_id number,
+create table terms (
  terms_id number,
  member_id varchar2(50),
- accept_yn char(1) not null,
+ terms_accept_yn char(1) not null,
+ policy_accept_yn char(1) not null,
+ email_accept_yn char(1) not null,
+ terms_accept_required char(1) not null,
+ policy_accept_required char(1) not null,
+ email_accept_required char(1) not null,
  accept_date timestamp default systimestamp not null,
- constraint pk_history_id primary key(history_id, terms_id),
- constraint fk_terms_member_id foreign key(member_id) references member(member_id) on delete cascade,
- constraint unique_terms_id unique(terms_id)
+ constraint pk_terms_id primary key(terms_id),
+ constraint fk_terms_member_id foreign key(member_id) references member(member_id)
 );
 
 -- 약관동의 이력 테이블
@@ -399,8 +400,7 @@ create table terms_history (
  terms_id number,
  title varchar2(50),
  content varchar2(200),
- required char(1) not null,
- constraint pk_terms_id primary key(terms_id),
+ constraint pk_terms_history_id primary key(terms_id),
  constraint fk_terms_history_terms_id FOREIGN KEY (terms_id) REFERENCES terms(terms_id)
 );
 
@@ -426,6 +426,7 @@ create table chat (
  constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
 );
 
+
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -446,7 +447,7 @@ create sequence seq_cartitem_id;
 create sequence seq_chat_id;
 create sequence seq_chat_room_id;
 create sequence seq_terms_id;
-create sequence seq_history_id;
+create sequence seq_terms_history_id;
 
 select * from orderTbl order by order_id desc;
 select * from point order by point_id desc;

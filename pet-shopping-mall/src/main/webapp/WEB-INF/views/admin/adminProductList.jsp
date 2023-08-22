@@ -38,15 +38,12 @@
 						for="saleStatusPaused">중지</label><br>
 					<button type="submit">검색</button>
 				</form>
-				<form method="GET"
-					action="${pageContext.request.contextPath}/admin/adminAddProduct.do">
-					<button type="button">상품추가</button>
-				</form>
 			</div>
 
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 기본상품목록
+					<input type="button" value="글쓰기" id="btn-add"/>
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple">
@@ -54,101 +51,39 @@
 							<th>상품아이디</th>
 							<th>이미지</th>
 							<th>상품명</th>
+							<th>카테고리</th>
 							<th>상품가격</th>
+							<th>옵션명</th>
+							<th>옵션값</th>
+							<th>옵션추가금</th>
+							<th>판매상태</th>
 							<th>관리</th>
 						</thead>
 						<tbody>
 
-							<c:if test="${empty basicProducts}">
+							<c:if test="${empty productInfos}">
 								<td colspan="5">등록된 상품이 없습니다.</td>
 							</c:if>
-							<c:if test="${not empty basicProducts}">
-								<c:forEach items="${basicProducts}" var="basicProduct" varStatus="vs">
+							<c:if test="${not empty productInfos}">
+								<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
 									<tr>
-										<td>${basicProduct.productId}</td>
-										<td>이미지는 아직이오</td>
-										<td>${basicProduct.productName}</td>
-										<td>${basicProduct.productPrice}</td>
+										<td>${productInfo.product.productId}</td>
 										<td>
-											<button formaction="${pageContext.request.contextPath}/admin/adminAddProductOption.do" onclick="">판매등록</button> 
-											<button onclick="">수정</button> 
-											<button onclick="">삭제</button> 
+											<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
+		                                        class="product-img"
+		                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
 										</td>
-									</tr>
-								</c:forEach>
-							</c:if>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 상품옵션목록
-				</div>
-				<div class="card-body">
-					<table id="datatablesSimple">
-						<thead>
-							<th>상품아이디</th>
-							<th>옵션아이디</th>
-							<th>옵션명</th>
-							<th>옵션값</th>
-							<th>관리</th>
-						</thead>
-						<tbody>
-							<c:if test="${empty productOptions}">
-								<td colspan="5">등록된 상품이 없습니다.</td>
-							</c:if>
-							<c:if test="${not empty productOptions}">
-								<c:forEach items="${productOptions}" var="productOption" varStatus="vs">
-									<tr>
-										<td>${productOption.productId}</td>
-										<td>${productOption.optionId}</td>
-										<td>${productOption.optionName}</td>
-										<td>${productOption.optionValue}</td>
 										<td>
-											<button onclick="">수정</button> 
-											<button onclick="">삭제</button> 
+										<a href="${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
 										</td>
-									</tr>
-								</c:forEach>
-							</c:if>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 판매상품목록
-				</div>
-				<div class="card-body">
-					<table id="datatablesSimple">
-						<thead>
-							<th>상품아이디</th>
-							<th>이미지</th>
-							<th>상품명</th>
-							<th>상품가격</th>
-							<th>옵션</th>
-							<th>옵션가격</th>
-							<th>재고</th>
-							<th>관리</th>
-						</thead>
-						<tbody>
-							<c:if test="${empty productDetails}">
-								<td colspan="5">등록된 상품이 없습니다.</td>
-							</c:if>
-							<c:if test="${not empty productDetails}">
-								<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-									<tr>
-										<td>${productDetail.productDetailId}</td>
-										<td>이미지는 아직이오</td>
-										<td>${productDetail.productName}</td>
-										<td>${productDetail.productPrice}</td>
+										<td>${productInfo.productCategory.categoryName}</td>
+										<td>${productInfo.product.productPrice}</td>
+										<td>${productInfo.optionName}</td>
+										<td>${productInfo.optionValue}</td>
+										<td>${productInfo.additionalPrice}</td>
+										<td>${productInfo.saleState}</td>
 										<td>
-											<button onclick="">판매등록</button> 
-											<button onclick="">수정</button> 
-											<button onclick="">삭제</button> 
+											<button onclick="updateProduct();">수정</button> 
 										</td>
 									</tr>
 								</c:forEach>
@@ -160,4 +95,13 @@
 			
 		</div>
 	</main>
+	<script>
+	const updateProduct = () => {
+		
+	};
+	
+	document.querySelector("#btn-add").onclick = () => {
+		location.href = '${pageContext.request.contextPath}/admin/adminProductDetailCreate.do';
+	};
+	</script>
 	<jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>

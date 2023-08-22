@@ -1,10 +1,16 @@
 package com.shop.app.member.controller;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,24 +31,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shop.app.member.dto.MemberCreateDto;
-import com.shop.app.member.dto.MemberUpdateDto;
-import com.shop.app.member.entity.Member;
-import com.shop.app.member.entity.MemberDetails;
-import com.shop.app.member.service.MemberService;
-import com.shop.app.point.entity.Point;
-import com.shop.app.point.service.PointService;
-import com.shop.app.terms.entity.Accept;
-import com.shop.app.terms.entity.Terms;
-import com.shop.app.terms.service.TermsService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
@@ -70,10 +59,16 @@ public class MemberSecurityController {
 	
 	@PostMapping("/memberCreate.do") // 회원 생성 처리
 	public String memberCreate(
-			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
-			BindingResult bindingResult, // 유효성 검사 결과
-			RedirectAttributes redirectAttr) { // 리다이렉트시 전달 할 속성
-		log.debug("member = {}", member);
+	        @Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
+	        BindingResult bindingResult, // 유효성 검사 결과
+	        RedirectAttributes redirectAttr, HttpSession session) { // 리다이렉트시 전달 할 속성
+	    
+	    // 이메일 인증 확인 (예라)
+	    Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
+	    if (isVerified == null || !isVerified) {
+	        redirectAttr.addFlashAttribute("msg", "이메일 인증을 해주세요.");
+	        return "redirect:/member/memberCreate.do";
+	    }
 		
 		if(bindingResult.hasErrors()) {
 		    // bindingResult에 오류가 있을 경우, 즉 유효성 검사에서 문제가 발견된 경우 실행됩니다.
@@ -88,7 +83,6 @@ public class MemberSecurityController {
 		// 비밀번호 암호화 처리
 		String rawPassword = member.getPassword();
 		String encodedPassword = passwordEncoder.encode(rawPassword);
-		log.debug("{} -> {}", rawPassword, encodedPassword);
 		member.setPassword(encodedPassword);
 		
 		// 포인트 테이블에 디비 저장 (예라)
@@ -105,14 +99,58 @@ public class MemberSecurityController {
 		
 		int resultPoint = pointService.insertPoint(point);
 		
-		Terms terms = new Terms();
-		terms.setMemberId(member.getMemberId());
-		terms.setAccept(Accept.Y);
-		
+		// 약관 동의 정보 가져오기 (예라)
+	    Terms terms = (Terms) session.getAttribute("terms");
+	    if (terms == null) {
+	        redirectAttr.addFlashAttribute("msg", "약관에 동의해주세요.");
+	        return "redirect:/member/terms.do";
+	    }
+	    
+	    terms.setMemberId(member.getMemberId());  // 회원가입이 완료된 후에 memberId를 설정 (예라)
+	    
 		int resultTerms = termsService.insertTerms(terms);
 
-//		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
+		
+	    // 약관 동의 이력 정보 생성 및 저장 (예라)
+	    TermsHistory termsHistory = new TermsHistory();
+	    termsHistory.setTermsId(terms.getTermsId()); 
+	    termsHistory.setTitle("제목");
+	    termsHistory.setContent("내용");
+	    
+	    int resulttermsHistory = termsService.insertTermsHistory(termsHistory);
+	    
+		session.removeAttribute("terms"); 
+	
+		// 회원 정보 db에 저장하고 세션 제거 (예라)
+		session.removeAttribute("emailVerified");
+		
+		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/memberCreateComplete.do";
+	}
+	
+	// 약관 동의 정보를 세션에 임시 저장 (예라)
+	@PostMapping("/updateTerms.do") 
+	public ResponseEntity<?> updateTerms(
+	        @RequestParam Map<String, String> data, 
+	        HttpSession session) {
+	    
+	    String term = data.get("termsAccept");
+	    String privacy = data.get("privacyAccept");
+	    String promotion = data.get("emailAccept");
+	    boolean userAgreedToPromotion = "Y".equals(promotion); 
+	    
+	    Terms terms = new Terms();
+	    terms.setTermsAccept(Accept.Y);
+	    terms.setTermsAcceptRequired('Y');  // 필수
+	    terms.setPrivacyAccept(Accept.Y);
+	    terms.setPrivacyAcceptRequired('Y');  // 필수
+	    terms.setEmailAccept(userAgreedToPromotion ? Accept.Y : Accept.N);
+	    terms.setEmailAcceptRequired('N');  // 선택
+	    
+	    log.debug("terms = {}",terms);
+	    session.setAttribute("terms", terms);
+	    
+	    return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑

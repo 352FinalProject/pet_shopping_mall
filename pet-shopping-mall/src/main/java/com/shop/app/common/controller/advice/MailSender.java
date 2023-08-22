@@ -35,10 +35,10 @@ public class MailSender {
 		    sendEmail(userEmail, subject, htmlMessage);
 		}
 		
-		// 핸드폰 인증 메소드
+		// 이메일 인증 메소드
 	    public void sendEmailOnUserVerification(String userEmail, String verificationCode) {
 	        String subject = "[우리집동물친구] 회원가입 이메일 인증";
-	        String verificationUrl = "http://localhost:8080/email/verifyEmail?email=" + userEmail + "&token=" + verificationCode;
+	        String verificationUrl = "http://localhost:8080/pet/email/verifyEmail?email=" + userEmail + "&token=" + verificationCode;
 	        
 		    String htmlMessage = "<html><body><div style='width: 800px; margin: auto;'>";
 		    htmlMessage += "<br/><br/><p style='font-size: 22px;'><strong>우리집동물친구</strong>";
