@@ -4,6 +4,66 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.product.repository.ProductRepository">
 
+    <insert id="insertAttachment" useGeneratedKeys="true" keyProperty="imageId" keyColumn="image_id">
+    insert into 
+    	image_attachment 
+    	(image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, image_created_at) 
+    	values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)
+	</insert>
+	
+	<select id="findImageAttachmentsByProductId" resultMap="ProductImagesResultMap">
+	select
+	    p.product_id,
+	    p.category_id,
+	    p.product_name,
+	    p.product_price,
+	    p.product_name,
+	    ia.image_original_filename,
+	    ia.image_renamed_filename
+	from 
+	    product p
+	left join 
+	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+	left join
+	    image_attachment ia ON iam.image_id = ia.image_id
+	where 
+    	p.product_id = #{productId}
+	</select>
+
+    <resultMap type="Product" id="productResultMap">
+        <id property="productId" column="product_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="imageId" column="image_id"/>
+        <result property="createDate" column="create_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="likeCnt" column="like_cnt"/>
+        <result property="viewCnt" column="view_cnt"/>
+    </resultMap>
+    
+<resultMap type="ProductImages" id="ProductImagesResultMap">
+        <id property="productId" column="product_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="imageId" column="image_id"/>
+        <result property="createDate" column="create_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="likeCnt" column="like_cnt"/>
+        <result property="viewCnt" column="view_cnt"/>
+
+    <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
+    <collection property="attachments" ofType="imageAttachment">
+        <result property="imageId" column="image_id"/>
+        <result property="imageType" column="image_type"/>
+        <result property="imageCategory" column="image_category"/>
+        <result property="imageOriginalFilename" column="image_original_filename"/>
+        <result property="imageRenamedFilename" column="image_renamed_filename"/>
+        <result property="imageFileSize" column="image_file_size"/>
+        <result property="imageCreatedAt" column="image_created_at"/>
+    </collection>
+</resultMap>
 
 
 </mapper>

@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int insertCancelOrder(String orderNo) {
+	public int insertCancelOrder(String orderNo, String isRefund) {
 		int result = 0;
 		
 		Order order = orderRepository.findOrderByOrderNo(orderNo);
@@ -71,9 +71,18 @@ public class OrderServiceImpl implements OrderService {
 		CancelOrder cancel = CancelOrder.builder()
 				.orderId(orderId)
 				.build();
-		
 		result = orderRepository.insertCancelOrder(cancel);
-		result = orderRepository.updateOrderStatus(orderNo, 5);
+		
+		if(isRefund.equals("N"))
+			result = orderRepository.updateOrderStatus(orderNo, 5);
+		else if(isRefund.equals("Y"))
+			result = orderRepository.updateOrderStatus(orderNo, 6);
+			
 		return result;
+	}
+
+	@Override
+	public List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period) {
+		return orderRepository.getOrderListByPeriod(memberId, period);
 	}
 }

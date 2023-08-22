@@ -23,8 +23,10 @@ public interface OrderService {
 	// 주문내역 조회 (담희)
 	List<OrderHistoryDto> getOrderList(String memberId);
 
-	// 미 결제시 주문 취소
-	int insertCancelOrder(String orderNo);
+	// 주문 취소
+	int insertCancelOrder(String orderNo, String isRefund);
+
+	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
 
 	
 }
