@@ -111,7 +111,7 @@ button, input {
 							   placeholder="아이디"
 							   name="memberId" 
 							   id="memberId"
-							   value=""
+							   value="${memberId}"
 							   pattern="\w{4,}"
 							   required>
 						<span class="guide ok">이 아이디는 사용가능합니다.</span>
@@ -122,7 +122,7 @@ button, input {
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td><input type="text" name="name" id="name" value=""
+						<td><input type="text" name="name" id="name" value="${memberName}"
 							placeholder="이름" required></td>
 					</tr>
 					<tr>
@@ -138,7 +138,7 @@ button, input {
 					</tr>
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="tel" name="phone" id="tel" value=""
+						<td><input type="tel" name="phone" id="tel" value="${Phone}"
 							placeholder="핸드폰번호" required></td>
 					</tr>
 					<tr>
@@ -149,13 +149,13 @@ button, input {
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="emailInput"
-							placeholder="이메일" required> <input type="button"
+							placeholder="이메일" value="${email}" required> <input type="button"
 							id="emailButton" value="이메일 인증" onclick="emailCheck()">
 					</tr>
 					<tr>
 						<th>주소</th>
 						<td><input type="text" name="address" id="address"
-							placeholder="주소" required> <input type="button"
+							placeholder="주소" value="${address}" required> <input type="button"
 							value="주소 검색"></td>
 					</tr>
 					<tr>

@@ -120,7 +120,7 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td><input type="text" name="memberId" id="memberId"
-							value="${loginMember.memberId}"  required readonly/></td>
+							value="${memberId}"  required readonly/></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
@@ -132,7 +132,7 @@ button, input {
 					<tr>
 						<th>이름</th>
 						<td><input type="text" name="name" id="name"
-							value="${loginMember.name}" required readonly></td>
+							value="${memberName}" required readonly></td>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
@@ -154,7 +154,7 @@ button, input {
 					<tr>
 						<th>핸드폰 번호</th>
 						<td><input type="tel" name="tel" id="tel"
-							value="${loginMember.phone}" required></td>
+							value="${phone}" required></td>
 						<td rowspan="2" class="pet-info-container">
 							<div class="pet-info">
 								<img
@@ -166,12 +166,12 @@ button, input {
 					<tr>
 						<th>생일</th>
 						<td><input type="date" name="birthday" id="birthday"
-							value="${loginMember.birthday}" readonly required></td>
+							value="${birthday}" readonly required></td>
 					</tr>
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="pet@gmail.com" value="${loginMember.email}" required readonly>
+							placeholder="이메일" value="${email}" required readonly>
 							<input
 							type="button" value="이메일 인증" onclick="emailCheck()">
 						</td>
@@ -179,7 +179,7 @@ button, input {
 					<tr>
 						<th>주소</th>
 						<td><input type="text" name="address" id="address"
-							value="${loginMember.address}" required> <input
+							value="${address}" required> <input
 							type="button" value="주소 검색"></td>
 					</tr>
 					<tr>

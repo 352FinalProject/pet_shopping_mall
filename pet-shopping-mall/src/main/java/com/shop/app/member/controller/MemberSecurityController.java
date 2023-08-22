@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -124,8 +125,11 @@ public class MemberSecurityController {
 	// 멤버 상세 조회
 	@GetMapping("/myPage.do")
 	public void memberDetail(
-			Authentication authentication, 
-			@AuthenticationPrincipal MemberDetails member) { // 현재 인증 객체
+			Authentication authentication, // 현재 사용자 인증 정보와 멤버 정보를 가져와서 상세 정보 페이지에 표시. 
+			@AuthenticationPrincipal MemberDetails member, // member: 현재 사용자 멤버 정보
+			Model model) { // model: 뷰와 컨트롤러 사이에서 데이터를 전달하는 객체
+
+			
 		log.debug("memberService = {}", memberService);
 		log.debug("authentication = {}", authentication);
 		
@@ -139,6 +143,21 @@ public class MemberSecurityController {
 		log.debug("authorities = {}", authorities);
 		
 		log.debug("member = {}", member);
+		
+//		String memberId = principal.getMemberId();
+//		log.debug("memberId= {}", memberId);
+//		String memberName = principal.getName();
+//		log.debug("memberName = {}", memberName);
+//		String memberEmail = principal.getEmail();
+//		log.debug("memberEmail = {}", memberEmail);
+//		log.debug("address= {}", address); 이새끼 왜 null임 ㅅㅂ
+	    model.addAttribute("memberId", member.getMemberId());
+	    model.addAttribute("memberName", member.getName());
+	    model.addAttribute("phone", member.getPhone());
+	    model.addAttribute("birthday", member.getBirthday());
+	    model.addAttribute("email", member.getEmail());
+	    model.addAttribute("address", member.getAddress());
+	    
 	}
 	
 	// 멤버 정보 업데이트
