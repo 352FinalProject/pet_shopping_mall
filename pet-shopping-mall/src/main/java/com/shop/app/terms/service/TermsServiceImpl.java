@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shop.app.member.entity.TermsHistory;
 import com.shop.app.terms.entity.Terms;
 import com.shop.app.terms.repository.TermsRepository;
 
@@ -22,6 +23,11 @@ public class TermsServiceImpl implements TermsService  {
 	@Override
 	public List<Terms> findTermsAll(Terms terms) {
 		return termsRepository.findTermsAll(terms);
+	}
+
+	@Override
+	public int insertTermsHistory(TermsHistory termsHistory) {
+		return termsRepository.insertTermsHistory(termsHistory);
 	}
 
 
