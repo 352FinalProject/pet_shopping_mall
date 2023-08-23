@@ -1,48 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>관리자 페이지</title>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/styles.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/js/scripts.js" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js" />
-<link
-	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
-	rel="stylesheet" />
-<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-	crossorigin="anonymous"></script>
+<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
 </head>
 <body class="sb-nav-fixed">
 	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3"
-			href="${pageContext.request.contextPath}/">펫쇼핑몰</a>
+		<a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/">펫쇼핑몰</a>
 		<!-- Sidebar Toggle-->
-		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			id="sidebarToggle" href="#!">
+		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
 			<i class="fas fa-bars"></i>
 		</button>
 	</nav>
 	<div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
-			<nav class="sb-sidenav accordion sb-sidenav-dark"
-				id="sidenavAccordion">
+			<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 				<div class="sb-sidenav-menu">
 					<div class="nav">
-						<a class="nav-link"
-							href="${pageContext.request.contextPath}/admin/admin.do">
+						<a class="nav-link"	href="${pageContext.request.contextPath}/admin/admin.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
 							</div> 관리자 홈
