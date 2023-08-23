@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
@@ -59,5 +60,7 @@ public interface OrderRepository {
 
 
 	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
+
+	OrderCancelInfoDto getCancelInfo(String orderNo);
 	
 }
