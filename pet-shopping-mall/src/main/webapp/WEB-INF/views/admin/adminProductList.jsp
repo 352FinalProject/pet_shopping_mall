@@ -108,7 +108,7 @@
 	};
 	
 	document.querySelector("#btn-add").onclick = () => {
-		location.href = '${pageContext.request.contextPath}/admin/adminProductDetailCreate.do';
+		location.href = '${pageContext.request.contextPath}/admin/adminProductCreate.do';
 	};
 	</script>
 	<jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>
