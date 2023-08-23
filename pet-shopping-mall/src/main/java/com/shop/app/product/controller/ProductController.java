@@ -2,6 +2,7 @@ package com.shop.app.product.controller;
 
 import java.lang.reflect.Member;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -135,10 +136,8 @@ public class ProductController {
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int reviewId,
 	        @RequestParam(defaultValue = "1") int page,
-	        Model model, HttpSession session) {
+	        Model model) {
 
-		String memberId = (String) session.getAttribute("memberId");
-		
 	    int limit = 3;
 	    Map<String, Object> params = Map.of("page", page, "limit", limit);
 
@@ -149,15 +148,17 @@ public class ProductController {
 	    List<Review> reviews = reviewService.findProductReviewAll(params);
 	    model.addAttribute("reviews", reviews);
 
-	    ReviewDetailDto review = reviewService.findReviewId(reviewId);
-	    
-	    List<Pet> pets = petService.findReviewPetByIdAndMemberId(review.getPetId(), memberId);
+	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 
-	    log.debug("review = {}", review);
-	    log.debug("pets = {}", pets);
+	    for (Review review : reviews) {
+	        List<Pet> pets = petService.findReviewPetByIdAndMemberId(review.getReviewId(), review.getReviewMemberId());
+	        reviewPetsMap.put(review.getReviewId(), pets);
+	    }
 
-	    model.addAttribute("pet", pets.get(0));
+	    model.addAttribute("reviewPetsMap", reviewPetsMap);
 	}
+
+
 
 
 

@@ -87,24 +87,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	@Transactional
 	public ReviewDetailDto findReviewId(int reviewId) {
-		Review review = reviewRepository.findReviewId(reviewId);
-		Pet pet = petRepository.findPetById(review.getPetId());
-		
-	    ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
-	    reviewDetailDto.setReviewId(review.getReviewId());
-	    reviewDetailDto.setReviewTitle(review.getReviewTitle());
-	    reviewDetailDto.setReviewContent(review.getReviewContent());
-	    reviewDetailDto.setReviewStarRate(review.getReviewStarRate());
-	    reviewDetailDto.setReviewCreatedAt(review.getReviewCreatedAt());
-
-	    reviewDetailDto.setPetId(pet.getPetId());
-	    reviewDetailDto.setPetName(pet.getPetName());
-	    reviewDetailDto.setPetAge(pet.getPetAge());
-	    reviewDetailDto.setPetBreed(pet.getPetBreed());
-	    reviewDetailDto.setPetWeight(pet.getPetWeight());
-	    reviewDetailDto.setPetGender(pet.getPetGender());
-
-	    return reviewDetailDto;
+		return reviewRepository.findReviewId(reviewId);
 	}
 	
 

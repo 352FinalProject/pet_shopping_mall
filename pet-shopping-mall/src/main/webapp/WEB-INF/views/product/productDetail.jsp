@@ -116,14 +116,17 @@
 									<fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd"/>
 								</em>
 							</div>
-	 							<c:forEach items="${pets}" var="pet" varStatus="vs">
-									<div class="reivew-pet-box"> 펫정보
-										<em class="review-pet-name">${pet.petName} |</em>
-										<em class="review-pet-name">${pet.petGender} |</em>
-										<em class="review-pet-name">${pet.petAge}살 |</em>
-										<em class="review-pet-name">${pet.petWeight}kg |</em>
-										<em class="review-pet-name">${pet.petBreed} </em>
-									</div>
+								<c:forEach items="${reviews}" var="review" varStatus="rs">
+								    <c:set var="pet" value="${reviewPetsMap[review.reviewId]}" />
+								    <c:if test="${not empty pet}">
+								        <div class="reivew-pet-box"> 펫정보
+								            <em class="review-pet-name">${pet.petName} |</em>
+								            <em class="review-pet-name">${pet.petGender} |</em>
+								            <em class="review-pet-name">${pet.petAge}살 |</em>
+								            <em class="review-pet-name">${pet.petWeight}kg |</em>
+								            <em class="review-pet-name">${pet.petBreed} </em>
+								        </div>
+								    </c:if>
 								</c:forEach>
 							<div class="review-detail-box"> 리뷰 제목/별점/사진/내용
 							<em class="review-info-id">${review.reviewTitle}</em>

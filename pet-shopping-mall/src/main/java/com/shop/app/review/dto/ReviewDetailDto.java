@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class ReviewDetailDto {
 
 	private int reviewId;
+	private String reviewMemberId;
 	private String reviewTitle;
 	private String reviewContent;
 	private int reviewStarRate;
@@ -24,6 +25,7 @@ public class ReviewDetailDto {
 	public Review toReview() {
 		return Review.builder()
 				.reviewId(reviewId)
+				.reviewMemberId(reviewMemberId)
 				.reviewTitle(reviewTitle)
 				.reviewContent(reviewContent)
 				.reviewStarRate(reviewStarRate)

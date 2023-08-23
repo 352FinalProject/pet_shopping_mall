@@ -488,5 +488,10 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
-select pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, to_char(pet_adoption, 'YYYY-MM-DD') as pet_adoption, pet_gender, pet_created_at from pet where pet_id = '3' and member_id = 'member1';
-     
+
+SELECT pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, TO_CHAR(pet_adoption, 'YYYY-MM-DD') AS pet_adoption, pet_gender, pet_created_at FROM pet WHERE pet_id = '4' AND member_id = 'member2';
+
+SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE p.pet_id = '4' AND r.review_member_id = 'member2';
+
+SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_id, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '4' AND r.review_member_id = 'member2';
+SELECT p.* FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '4' AND r.review_member_id = 'member2';

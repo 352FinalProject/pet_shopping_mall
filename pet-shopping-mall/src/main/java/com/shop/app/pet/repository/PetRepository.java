@@ -60,8 +60,8 @@ public interface PetRepository {
     @Select("select * from pet where member_id = #{memberId}")
 	List<Pet> findProductRevicePet(String memberId);
 
-    @Select("select pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, to_char(pet_adoption, 'YYYY-MM-DD') as pet_adoption, pet_gender, pet_created_at from pet where pet_id = #{petId} and member_id = #{memberId, jdbcType=VARCHAR}")
-    	List<Pet> findReviewPetByIdAndMemberId(int petId, String memberId);
+    @Select("SELECT p.* FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = #{reviewId} AND r.review_member_id = #{reviewMemberId}")
+    List<Pet> findReviewPetByIdAndMemberId(int reviewId, String reviewMemberId);
 
     
 	
