@@ -355,8 +355,28 @@ select
     ot.discount
 from
     orderTbl ot left join member m on ot.member_id = m.member_id 
-    left join payment p on p.order_id = ot.order_id;
-    
+    left join payment p on p.order_id = ot.order_id
+where
+    order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})
+ 
+	select
+		m.name,
+		m.phone,
+		ot.order_no,
+		ot.order_date,
+		ot.order_status,
+		ot.total_price,
+		p.payment_method,
+		p.payment_date,
+		ot.payment_status,
+		ot.amount,
+		ot.discount
+	from
+		orderTbl ot left join member m on ot.member_id = m.member_id
+		left join payment p on p.order_id = ot.order_id
+		left join cancel_order c on ot.order_id = c.order_id
+	where
+		c.request_date >= ADD_MONTHS(TRUNC(SYSDATE), -3);
 -------------------------------------------------------------------
 
 select * from member;
