@@ -57,8 +57,10 @@ public class ProductServiceImpl implements ProductService {
 				log.debug("imageId = {}", imageId);
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
 				int result3 = productRepository.insertMapping(refId, imageId);
+				int result4 = productRepository.updateImageIdByProductId(productId, imageId);
 			}
 		}
+		// 상품에 이미지아이디 저장
 		return productId;
 	}
 
