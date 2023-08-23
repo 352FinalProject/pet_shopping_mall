@@ -67,5 +67,11 @@ public interface OrderRepository {
 
 	OrderCancelInfoDto getCancelInfo(String orderNo);
 
+
+	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
+
+
+	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+
 	
 }
