@@ -47,6 +47,7 @@ import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.service.OrderService;
 
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductUpdateDto;
@@ -504,7 +505,7 @@ public class AdminController {
 	
 	@PostMapping("/adminProductDetailUpdate.do")
 	public String adminProductDetailUpdate(
-	        @RequestBody ProductDetailUpdateDto _product,
+			@Valid @RequestBody ProductDetailUpdateDto _product,
 	        BindingResult bindingResult,
 	        RedirectAttributes redirectAttr
 			) {
@@ -535,11 +536,12 @@ public class AdminController {
 	 */
 	@PostMapping("/adminProductDelete.do")
 	public String adminDeleteProduct(
-			@RequestParam int productId,
+			@Valid @RequestBody ProductDeleteDto _product,
 			@AuthenticationPrincipal MemberDetails member
 			){
-		log.debug("productId = {}", productId);
-		int result = productService.deleteProduct(productId);
+		log.debug("ProductDeleteDto = {}", _product);
+		
+		int result = productService.deleteProduct(_product.getProductId());
 		
 		return "redirect:/admin/adminProductList.do";
 	}
