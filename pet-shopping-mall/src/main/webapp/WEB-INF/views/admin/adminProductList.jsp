@@ -77,7 +77,7 @@
 											<c:if test="${not empty productInfo.attachments}">
 												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
 			                                        class="product-img"
-			                                        src="${pageContext.request.contextPath}/resources/images/상품/2.jpeg">
+			                                        src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
 											</c:if>
 										</td>
 										<td>

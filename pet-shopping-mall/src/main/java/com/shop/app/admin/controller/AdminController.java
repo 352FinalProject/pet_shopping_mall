@@ -407,14 +407,18 @@ public class AdminController {
 			Model model
 			) {
 		
-		// 상품카테고리 조회 후 전달
+		// 상품카테고리 가져오기
 		List<ProductCategory> categories = productService.findAll();
-		model.addAttribute("categories", categories);
-		
-		// 상품아이디로 상품정보 조회해서 가져오기
-		ProductDetail product = productService.findProductDetailById(productId);
+		// 상품정보 가져오기
+		Product product = productService.findProductById(productId);
 		log.debug("product = {}", product);
+		// 상품옵션 가져오기(리스트)
+		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
+		log.debug("productDetails = {}", productDetails);
+		
+		model.addAttribute("categories", categories);
 		model.addAttribute("product", product);
+		model.addAttribute("productDetails", productDetails);
 	}
 	
 	

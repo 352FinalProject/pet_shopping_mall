@@ -68,29 +68,37 @@
 }
 
 /* 돌아가기 버튼 */
-.resetAndSubmit input[type="reset"] {
-	background-color: #c8c8c8;
-	margin-right: 10px;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	color: white;
-	border: 1px solid #e7e7e7;
-	margin-top: 30px;
+.return-button {
+    background-color: #c8c8c8;
+    margin-right: 10px;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    color: white;
+    border: 1px solid #e7e7e7;
+    margin-top: 30px;
+    cursor: pointer;
 }
 
-/* 가입하기 버튼 */
-.resetAndSubmit input[type="submit"] {
-	background-color: #5886d3;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	border: 1px solid #e7e7e7;
-	color: white;
-	
+/* 수정하기 버튼 */
+.edit-button {
+    background-color: #5886d3;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
 }
 
 /* 성별선택 버튼 */
+
+.gender-button-container {
+    display: flex;
+	ustify-content: flex-start;
+    margin-top: 10px; /* 버튼과의 간격을 설정하거나 필요에 따라 조정하세요 */
+    margin-left: 10px; 
+}
     input[type="button"][name="gender"] {
         border: 1px solid lightgray;
         border-radius: 20px;
@@ -184,14 +192,18 @@
                     </tr>
                     <tr>
                         <th>성별</th>
-                        <td>
-                            <input type="hidden" name="petGender" id="genderInput" value="${petInfo.petGender}">
-                            <input type="button" name="gender" value="M" onclick="selectGender('M')" ${petInfo.petGender == 'M' ? 'class="selected"' : ''}>
-                            <input type="button" name="gender" value="F" onclick="selectGender('F')" ${petInfo.petGender == 'F' ? 'class="selected"' : ''}>
-                        </td>
+					<td>
+					    <input type="hidden" name="petGender" id="genderInput" value="${petInfo.petGender}">
+					    <div class="gender-button-container">
+					        <input type="button" name="gender" value="M" onclick="selectGender('M')" ${petInfo.petGender == 'M' ? 'class="selected"' : ''}>
+					        <input type="button" name="gender" value="F" onclick="selectGender('F')" ${petInfo.petGender == 'F' ? 'class="selected"' : ''}>
+					    </div>
+					</td>
                     </tr>
                 </table>
-                <button type="submit" class="edit-button">수정</button>
+                <button type="button" class="return-button" onclick="location.href='${pageContext.request.contextPath}/pet/petList.do'">돌아가기</button>
+                <button type="submit" class="edit-button">수정하기</button>
+
             </form:form>
         </div>
     </div>
@@ -209,14 +221,6 @@
     }
 </script>
 
-<section class="common-section" id="back-button-section">
-    <div class="common-container">
-        <div class="common-div">
-            <form action="${pageContext.request.contextPath}/pet/petList.do" class="form-inline">
-                <button class="btn-add">돌아가기</button>
-            </form>
-        </div>
-    </div>
-</section>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

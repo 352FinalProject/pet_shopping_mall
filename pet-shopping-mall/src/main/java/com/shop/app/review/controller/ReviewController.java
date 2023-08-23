@@ -138,6 +138,7 @@ public class ReviewController {
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
+				.petId(pet.getPetId())
 				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
@@ -146,7 +147,6 @@ public class ReviewController {
 				.attachments(attachments)
 				.build();
 
-		 log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 		
 		// petId 연결하기
 		String memberId = principal.getName();
@@ -160,7 +160,9 @@ public class ReviewController {
 //			reviews.setPetName(firstPet.getPetName());
 //			reviews.setPetGender(firstPet.getPetGender());
 		}
->>>>>>> Stashed changes
+
+		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+
 		
 		int reviewId = reviewService.insertReview(reviews);
 		Review pointReviewId = reviewService.findReviewId(reviews);

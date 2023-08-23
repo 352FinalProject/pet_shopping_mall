@@ -6,8 +6,8 @@ select * from member;
 --sample data 생성
 --==============================
 -- member insert
-insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
+insert into member (member_id, password, name, phone, email, enroll_date, address, birthday, subscribe)
+values ('member1', '$2a$10$V6DMY985chA4/fMc/vY20e15i/OaPr.GpQ0v2W0zNqshEWutOxm9q', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('member2', '1234', '대한훈', '01028283939', 'ghjwf@naver.com', '서울시 송파구 마니동', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');

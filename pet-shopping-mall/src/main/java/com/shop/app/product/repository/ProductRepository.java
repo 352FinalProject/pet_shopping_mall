@@ -63,11 +63,21 @@ public interface ProductRepository {
 	ProductImages findImageAttachmentsByProductId(int productId);
 
 	// 상품 이미지 파일 저장
+	@Insert("insert into image_attachment (image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, image_created_at) values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)")
+	@SelectKey(
+			before = false,
+			keyProperty = "imageId",
+			resultType = int.class,
+			statement = "select seq_image_attachment_id.currval from dual"
+			)
 	int insertAttachment(imageAttachment attach);
 
 	// 상품 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'product', #{refId}, #{imageId})")
 	int insertMapping(int refId, int imageId);
+
+	@Select("select * from product_detail where product_id = #{productId}")
+	List<ProductDetail> findAllProductDetailsByProductId(int productId);
 
 
 }

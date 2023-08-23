@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 				
 				// 2. 이미지파일 DB저장후 생성된 이미지 아이디 가져오기
 				int imageId = attach.getImageId(); 
-				
+				log.debug("imageId = {}", imageId);
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
 				int result3 = productRepository.insertMapping(refId, imageId);
 			}
@@ -100,6 +100,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int insertProductDetail(ProductDetail productDetail) {
 		return productRepository.insertProductDetail(productDetail);
+	}
+	
+	@Override
+	public List<ProductDetail> findAllProductDetailsByProductId(int productId) {
+		return productRepository.findAllProductDetailsByProductId(productId);
 	}
 
 
