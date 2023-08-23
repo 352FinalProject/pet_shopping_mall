@@ -61,7 +61,8 @@
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-chart-area"></i>
 							</div> 상품별 매출
-						</a> <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+						</a> 
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
 							data-bs-target="#collapsePages" aria-expanded="false"
 							aria-controls="collapsePages">
 							<div class="sb-nav-link-icon">
@@ -75,19 +76,15 @@
 							aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav accordion"
 								id="sidenavAccordionPages">
-								<a class="nav-link collapsed"
-									href="${pageContext.request.contextPath}/admin/adminStatisticsMonthly.do"
-									data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
-									aria-expanded="false" aria-controls="pagesCollapseAuth"> 월별
-									매출
-									<div class="sb-sidenav-collapse-arrow"></div>
-								</a> 
-								<a class="nav-link collapsed"
-									href="${pageContext.request.contextPath}/admin/adminStatisticsDaily.do"
-									data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
-									aria-expanded="false" aria-controls="pagesCollapseAuth"> 일별
-									매출
-									<div class="sb-sidenav-collapse-arrow"></div>
+								<a class="nav-link"
+									href="${pageContext.request.contextPath}/admin/adminStatisticsMonthly.do">
+									<div class="sb-nav-link-icon">
+									</div> 월별 매출
+								</a>
+								<a class="nav-link"
+									href="${pageContext.request.contextPath}/admin/adminStatisticsDaily.do">
+									<div class="sb-nav-link-icon">
+									</div> 일별 매출
 								</a>
 							</nav>
 						</div>
