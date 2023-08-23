@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -179,7 +178,7 @@ public class MemberSecurityController {
       session.removeAttribute("emailVerified");
 
       redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
-      return "redirect:/memberCreateComplete.do";
+      return "redirect:/member/memberCreateComplete.do";
    }
 
    // 약관 동의 정보를 세션에 임시 저장 (예라)
