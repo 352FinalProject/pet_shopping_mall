@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
 <style>
 .table-bordered {
 	display: flex;
@@ -69,7 +70,7 @@
 .saveId input {
 	margin-left: 50px;
 	margin-top: -2px;
-} 
+}
 
 .saveId p {
 	margin-right: 40px;
@@ -188,9 +189,36 @@ button, input {
 							<div class="search-id">
 								<p>아이디저장</p>
 								<button type="button" class="search" id="searchId"
-								onclick='location.href="${pageContext.request.contextPath}/member/memberSearchId"'
-								>아이디찾기</button>
+									onclick='location.href="${pageContext.request.contextPath}/member/memberSearchId"'>아이디찾기</button>
 								<button type="button" class="search" id="searchPasword">비밀번호찾기</button>
+								<!-- find password modal -->
+								<div id="passwordResetModal" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+										<!-- modal content -->
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">비밀번호 찾기</h4>
+												<button type="button" class="close" data-dismiss="modal">×</button>
+											</div>
+											<div class="modal-body">
+												<!-- password retrieval form -->
+												<form id="passwordResetForm">
+													<div class="form-group">
+														<label for="email">이메일 주소:</label> <input type="email"
+															class="form-control" id="email" name="email" required>
+													</div>
+													<button type="submit" class="btn btn-primary">재설정
+														링크 전송</button>
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">닫기</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</td>
@@ -240,6 +268,9 @@ button, input {
 		</form:form>
 	</div>
 </section>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 
  const checkInputs = () => {
@@ -261,14 +292,13 @@ button, input {
 
 	checkInputs();
 
-	document.getElementById('searchId').addEventListener('click', () => {
+/* 	document.getElementById('searchId').addEventListener('click', () => {
 		
-	});
+	}); */
 
-	document.getElementById('searchPasword').addEventListener('click', () => {
-		
-	}); 		
-	
+/* 	document.getElementById('searchPassword').addEventListener('click', function() {
+	    $('#passwordResetModal').modal('show');
+	}); */
 	</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

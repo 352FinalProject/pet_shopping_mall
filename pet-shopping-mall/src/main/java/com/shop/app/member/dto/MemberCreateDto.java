@@ -46,10 +46,10 @@ public class MemberCreateDto {
 	
 	private boolean isPromotion;
 
-	public void setPoint(int i) {
+	public void setPoint(int i){}
 		// TODO Auto-generated method stub
 		
-	}
+	
 
 	
 }

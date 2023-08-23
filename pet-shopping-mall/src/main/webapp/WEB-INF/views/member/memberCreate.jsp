@@ -87,28 +87,27 @@
 button, input {
 	cursor: pointer;
 }
+
 .guide.ok, .guide.error {
-    display: none;
-    color: red;
+	display: none;
+	color: red;
 }
 
 span duplicate {
-    border: 2px solid red; /* 아이디 중복일 때 테두리 색상: 빨간색 */
+	border: 2px solid red; /* 아이디 중복일 때 테두리 색상: 빨간색 */
 }
 
 #memberId-container {
-    position: relative;
+	position: relative;
 }
 
 #memberId-container.valid input {
-    border: 1px solid #5886d3; /* 파란색 테두리 */
+	border: 1px solid #5886d3; /* 파란색 테두리 */
 }
 
 #memberId-container.duplicate input {
-    border: 1px solid red; /* 빨간색 테두리 */
+	border: 1px solid red; /* 빨간색 테두리 */
 }
-
-
 </style>
 <!-- 회원가입 (혜령) -->
 <section class="common-section" id="#">
@@ -116,85 +115,85 @@ span duplicate {
 	<br>
 	<div class="common-container">
 		<div class="common-div">
-			<form:form name="memberCreateFrm" action="" method="POST">
+			<form:form name="memberCreateFrm"
+				action="${pageContext.request.contextPath}/member/memberCreate.do"
+				method="POST">
 				<table>
 					<tr>
 						<th>아이디</th>
 						<td>
-						<div id="memberId-container">
-						<input type="text" 
-							   class="form-control" 
-							   placeholder="아이디"
-							   name="memberId" 
-							   id="memberId"
-							   value=""
-							   pattern="\w{4,}"
-							   required>
-						<input type="hidden" id="idValid" value="0"/>
-						<span class="guide error">이 아이디는 이미 사용중입니다.</span>
-					</div>
+							<div id="memberId-container">
+								<input type="text" class="form-control" placeholder="아이디"
+									name="memberId" id="memberId" value=""  pattern='[A-Za-z0-9_]{4,}' 
+									title="알파벳 대소문자, 숫자, - 를 사용하여 4자 이상 입력하세요."
+									required> <input type="hidden" id="idValid" value="0" />
+								<span class="guide error">이 아이디는 이미 사용중입니다.</span>
+							</div>
 						</td>
 					</tr>
-					
+
 					<tr>
 						<th>이름</th>
 						<td>
-						<div class="memberName-container">
-						<input type="text"
-								 name="name"
-								 id="name"
-								 value=""
-								 placeholder="이름"
-							     pattern="[가-힣A-Za-z]+"
-								 required>
-								 <br>
-						</div>
+							<div class="memberName-container">
+								<input type="text" name="name" id="name" value=""
+									placeholder="이름" pattern="[가-힣A-Za-z]+" 
+									title="한글 또는 영어 대소문자 한 글자 이상의 길이를 가져야 합니다. "
+									required> <br>
+							</div>
 						</td>
 					</tr>
-					
+
 					<tr>
 						<th>비밀번호</th>
 						<td><input type="password" name="password" id="password"
-							placeholder="비밀번호" value="" required>
-						</td>
+							placeholder="비밀번호" value=""
+							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+							title="최소 8자, 대소문자 및 숫자를 포함해야 합니다." required></td>
 					</tr>
-					
+
 					<tr>
 						<th>비밀번호 확인</th>
 						<td><input type="password" id="passwordConfirm" value=""
 							placeholder="비밀번호 확인" required></td>
 					</tr>
-					
+
 					<tr>
 						<th>핸드폰 번호</th>
 						<td><input class="" type="tel" name="phone" id="tel" value=""
-							placeholder="핸드폰번호" required></td>
+							pattern="^010\d{8}$" title="010으로 시작하며 뒤에 8자리의 숫자가 오는 11자리 입력. "
+							placeholder="핸드폰번호" required>
+							</td>
 					</tr>
-					
+
 					<tr>
 						<th>생일</th>
 						<td><input type="date" name="birthday" id="birthday"
-							placeholder="생년월일" required></td>
+							placeholder="생년월일" required
+							pattern=" ^\d{4}-\d{2}-\d{2}$" title="연도, 월, 일이 각각 4자리, 2자리, 2자리 숫자입력.">
+						</td>
 					</tr>
-					
+
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="emailInput"
 							placeholder="이메일" value="" required> <input type="button"
-							id="emailButton" value="이메일 인증" onclick="emailCheck()">
+							id="emailButton" value="이메일 인증" onclick="emailCheck()"
+							pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$" title="부적합한 이메일 형식입니다.">
+						</td>
 					</tr>
-					
+
 					<tr>
 						<th>주소</th>
 						<td><input type="text" name="address" id="address"
 							placeholder="주소" value="" required> <input type="button"
-							value="주소 검색"></td>
+							value="주소 검색" pattern="^[가-힣0-9a-zA-Z\s-]+$" title="부적합한 주소 형식입니다.">
+							</td>
 					</tr>
-					
+
 					<tr>
-						<td class="resetAndSubmit" colspan="2">
-								<input type="reset" value="돌아가기"> <input type="submit"
-									value="가입하기">
+						<td class="resetAndSubmit" colspan="2"><input type="reset"
+							value="돌아가기"> <input type="submit" value="가입하기">
 						</td>
 					</tr>
 				</table>
@@ -306,11 +305,11 @@ $(document).ready(function() {
             return;
         }
 
-        if (password.val() !== passwordConfirmation.val()) {
+   /*      if (password.val() !== passwordConfirmation.val()) {
             alert("비밀번호가 일치하지 않습니다.");
             e.preventDefault(); // 폼 제출을 중단
             return;
-        }
+        } */
         
     });
 });
@@ -319,6 +318,7 @@ window.onload = function() {
     // 필요한 요소들을 가져오기
     var passwordInput = document.getElementById("password");
     var confirmPasswordInput = document.getElementById("passwordConfirm");
+    var nameInput = document.getElementById("name");
     
     // 비밀번호 일치 여부 확인 함수
     function validatePassword() {
@@ -339,6 +339,22 @@ window.onload = function() {
     // 입력이 변경될 때마다 비밀번호 일치 여부 확인
     passwordInput.addEventListener("input", validatePassword);
     confirmPasswordInput.addEventListener("input", validatePassword);
+
+    // 이름 유효성 검사 함수
+    function validateName() {
+        var name = nameInput.value;
+        
+        if (name.length >= 2) {
+            // 이름 조건에 맞을 때 스타일 변경
+            nameInput.style.border = "1px solid #5886d3";
+        } else {
+            // 이름 조건에 맞지 않을 때 스타일 변경
+            nameInput.style.border = "1px solid red";
+        }
+    }
+    
+    // 입력이 변경될 때마다 이름 유효성 검사 실행
+    nameInput.addEventListener("input", validateName);
 }
 
 
@@ -358,29 +374,9 @@ function validateEmail() {
         emailValidationMessage.style.display = "none";
         emailInput.style.border = "1px solid #58586d3"; // 이메일 형식이 유효할 때 기본 색상으로 변경
     }
+    nameInput.addEventListener("input", validateEmail);
 }
 
-
-window.onload = function() {
-    // 필요한 요소들을 가져오기
-    var nameInput = document.getElementById("name");
-    
-    // 이름 및 아이디 일치 여부 확인 함수
-    function validateName() {
-        var name = nameInput.value;
-        
-        if (name.length >= 2) {
-            // 이름 조건에 맞을 때 스타일 변경
-            nameInput.style.border = "1px solid #5886d3";
-        } else {
-            // 이름 조건에 맞지 않을 때 스타일 변경
-            nameInput.style.border = "1px solid red";
-        }
-    }
-    
-    // 입력이 변경될 때마다 이름 일치 여부 확인
-    nameInput.addEventListener("input", validateName);
-}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
