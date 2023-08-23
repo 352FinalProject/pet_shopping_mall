@@ -29,7 +29,7 @@
 	    r.review_id = #{reviewId}
 	</select>
 	
-	<select id="findProductImageAttachmentsByReviewId" resultMap="ReviewDetailsResultMap">
+	<select id="findImageAttachmentsByReviewMemberId" resultMap="ReviewDetailsResultMap">
 	SELECT
 	    r.review_id,
 	    r.review_title,

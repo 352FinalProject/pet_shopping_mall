@@ -35,6 +35,7 @@ import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
+import com.shop.app.product.entity.Product;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.dto.ReviewUpdateDto;
@@ -86,6 +87,8 @@ public class ReviewController {
 		List<Review> reviews = reviewService.findReviewAll(params);
 
 		model.addAttribute("reviews", reviews);
+		
+		log.debug("reviews = {}", reviews);
 	}
 
 
@@ -103,7 +106,8 @@ public class ReviewController {
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
 			Point point, 
 			Pet pet,
-			Principal principal)
+			Principal principal,
+			Product product)
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
@@ -162,6 +166,9 @@ public class ReviewController {
 
 		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 		
+		int productId = _review.getProductId();
+		
+		
 		int reviewId = reviewService.insertReview(reviews);
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 
@@ -190,7 +197,6 @@ public class ReviewController {
 		newPoint.setReviewId(pointReviewId.getReviewId());
 		
 		// log.debug("newPoint = {}", newPoint);
-
 		int newPointResult = pointService.insertPoint(newPoint);
 
 		return "redirect:/review/reviewList.do";
@@ -246,7 +252,7 @@ public class ReviewController {
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
 		// log.debug("reviewDetails = {}", reviewDetails);
 		model.addAttribute("reviewDetails", reviewDetails);
-
+		
 	}
 
 

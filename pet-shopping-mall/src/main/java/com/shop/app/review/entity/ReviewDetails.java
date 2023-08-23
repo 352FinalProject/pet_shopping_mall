@@ -22,12 +22,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class ReviewDetails extends Review {
 	
-	
+
 	private List<imageAttachment> attachments;
 	private List<imageAttachmentMapping> attachmentMapping;
-	
-	private String petName;
-	private PetGender petGender;
 	
 	
 

@@ -132,7 +132,11 @@ public class ProductController {
 	@GetMapping("/productDetail.do")
 	public void productDetail(
 		@RequestParam(defaultValue = "1") int page,
-		Model model) {
+		@RequestParam(required=true) int productId,
+		Model model,
+		Pet pet,
+		Review review,
+		Product product) {
 
 		int limit = 3;
 
@@ -146,19 +150,25 @@ public class ProductController {
 		model.addAttribute("totalPages", totalPages);
 
 		List<Review> reviews = reviewService.findProductReviewAll(params);
-
-		log.debug("토탈카운트 = {} ", totalCount);
-		log.debug("페이지, 리밋, 멤버아이디 params = {}", params);
-		log.debug("파람스 들어가있는거 reviews = {}", reviews);
-
 		model.addAttribute("reviews", reviews);
+		
+//		List<ReviewDetailDto> productReviews = reviewService.findProductReviewDetails(reviews);
+		
+//		int reviewId = review.getReviewId();
+		
+//		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewMemberId(reviewId);
+//		model.addAttribute("reviewDetails", reviewDetails);
+		
+		log.debug("토탈카운트 = {} ", totalCount);
+		log.debug("params = {}", params);
+		log.debug("reviews = {}", reviews);
+//		log.debug("reviewDetails = {}", reviewDetails);
 
 	}
 	
 	
 	@GetMapping("/productList.do")
 	public void productList() {
-		
 	}
 	
 	@GetMapping("/addProduct.do")

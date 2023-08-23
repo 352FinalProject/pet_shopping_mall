@@ -19,8 +19,7 @@ public class Review {
 
 	private int reviewId;
 	private int petId;
-	private int orderId;
-	private int productDetailId;
+	private int productId;
 	private String reviewMemberId;
 	private String reviewTitle;
 	private String reviewContent;
@@ -31,6 +30,5 @@ public class Review {
 	
 	// review와 연결된 pet 정보
 //	private Pet pet;
-	
 	
 }

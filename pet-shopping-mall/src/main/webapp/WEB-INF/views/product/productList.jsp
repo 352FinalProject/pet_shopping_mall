@@ -171,7 +171,8 @@ ul.nav {
 		<div class="product-gallery">
 			<ul class="gallery">
 				<div class="product-card">
-					<a href="${pageContext.request.contextPath}/product/productDetail.do">
+				<c:forEach items="${reviews}" var="review" varStatus="vs">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do?reviewId=${review.reviewId}">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
 					</figure>
@@ -183,7 +184,9 @@ ul.nav {
 						<span class="review-cnt">후기 113건</span>
 					</div>
 					</a>
+					</c:forEach>
 				</div>
+			
 				<div class="product-card">
 					<a href="${pageContext.request.contextPath}/product/productDetail.do">
 					<figure class="product-thumbnail">

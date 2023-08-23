@@ -12,6 +12,8 @@ import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.repository.PetRepository;
 import com.shop.app.pet.service.PetService;
+import com.shop.app.product.entity.Product;
+import com.shop.app.product.repository.ProductRepository;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
@@ -29,6 +31,9 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Autowired
 	private PetRepository petRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 	
 	
 	// 리뷰추가
@@ -89,6 +94,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDetailDto findReviewId(int reviewId) {
 		Review review = reviewRepository.findReviewId(reviewId);
 		Pet pet = petRepository.findPetById(review.getPetId());
+		Product product = productRepository.findProductById(review.getProductId());
 		
 	    ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
 	    reviewDetailDto.setReviewId(review.getReviewId());
@@ -103,6 +109,11 @@ public class ReviewServiceImpl implements ReviewService {
 	    reviewDetailDto.setPetBreed(pet.getPetBreed());
 	    reviewDetailDto.setPetWeight(pet.getPetWeight());
 	    reviewDetailDto.setPetGender(pet.getPetGender());
+	    
+	    reviewDetailDto.setProductId(product.getProductId());
+	    reviewDetailDto.setProductName(product.getProductName());
+	    
+	    log.debug("reviewDetailDto = {}", reviewDetailDto );
 
 	    return reviewDetailDto;
 	}
@@ -148,6 +159,14 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDetails findProductImageAttachmentsByReviewId(int reviewId) {
 		return reviewRepository.findProductImageAttachmentsByReviewId(reviewId);
 	}
+
+	@Override
+	public ReviewDetails findImageAttachmentsByReviewMemberId(int reviewId) {
+		return reviewRepository.findImageAttachmentsByReviewMemberId(reviewId);
+	}
+
+
+
 
 
 
