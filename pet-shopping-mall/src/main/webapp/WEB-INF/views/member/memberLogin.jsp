@@ -213,6 +213,85 @@ button, input {
 	cursor: pointer;
 	margin-bottom: 5px;
 }
+
+/* 전체 페이지 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 모달 스타일 */
+.modal {
+  display: none; /* 기본적으로 모달은 숨김 상태 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  width: 70%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 폼 스타일 */
+form {
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 결과 메시지 스타일 */
+#idResult {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f3f3f3;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* 추가적인 스타일링을 원하시면 여기에 추가해주세요 */
+
 </style>
 <section class="common-section" id="#">
 	<div class="common-container">
@@ -250,7 +329,7 @@ button, input {
 							<div class="search-id">
 								<p>아이디저장</p>
 								<button type="button" class="search" id="searchId"
-									onclick='location.href="${pageContext.request.contextPath}/member/memberSearchId"'>아이디찾기</button>
+									onclick="openIdFinderModal();">아이디찾기</button>
 								<button type="button" class="search" id="searchPassword">비밀번호찾기</button>
 							</div>
 						</div>
@@ -298,14 +377,15 @@ button, input {
 					</td>
 				</tr>
 			</table>
-		</form:form >
+		</form:form>
 	</div>
-	<!-- 모달 창 -->
+	<!-- 비밀번호 찾기 모달 -->
 	<div id="passwordResetModal" class="modal">
 		<div class="modal-content">
 			<h2>비밀번호 찾기</h2>
 			<p>이메일을 입력하여 비밀번호 재설정 링크를 받아보세요.</p>
-			<form:form id="passwordResetForm" action="${pageContext.request.contextPath}/email/sendTemporaryPassword.do"
+			<form:form id="passwordResetForm"
+				action="${pageContext.request.contextPath}/email/sendTemporaryPassword.do"
 				method="post" name="sendEmail">
 				<div class="form-group">
 					<label for="email">이메일 주소:</label> <input type="email"
@@ -315,6 +395,25 @@ button, input {
 					전송</button>
 			</form:form>
 			<button type="button" id="closeModalBtn">닫기</button>
+		</div>
+	</div>
+	<!-- id 찾기 모달 -->
+	<div id="idFinderModal" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeIdFinderModal()">&times;</span>
+			<h2>ID 찾기</h2>
+			<p>회원가입 시 등록한 정보를 입력하여 ID를 찾아보세요.</p>
+			<form id="idFinderForm"
+				onsubmit="submitIdFinderForm(); return false;">
+				<label for="email">이메일:</label> <input type="email" id="email"
+					name="email" required>
+				<button type="submit">ID 찾기</button>
+			</form>
+			<div id="idResult" style="display: none;">
+				<p>
+					회원님의 ID는 <span id="foundId"></span> 입니다.
+				</p>
+			</div>
 		</div>
 	</div>
 </section>
@@ -334,6 +433,7 @@ const checkInputs = () => {
     }
 };
 
+// 로그인 버튼 이벤트
 document.getElementById('inputId').addEventListener('input', checkInputs);
 document.getElementById('inputPassword').addEventListener('input', checkInputs);
 
@@ -353,6 +453,7 @@ closeModalBtn.addEventListener("click", function() {
     passwordResetModal.style.display = "none";
 });
 
+// 비밀번호 찾기 모달
 $(document).ready(function() {
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
@@ -385,6 +486,28 @@ $(document).ready(function() {
     });
 });
 
+// 아이디 찾기 모달
+//모달 열기
+function openIdFinderModal() {
+  var modal = document.getElementById("idFinderModal");
+  modal.style.display = "block";
+}
+
+// 모달 닫기
+function closeIdFinderModal() {
+  var modal = document.getElementById("idFinderModal");
+  modal.style.display = "none";
+  document.getElementById("idResult").style.display = "none";
+}
+
+// ID 찾기 폼 제출 처리
+function submitIdFinderForm() {
+  var email = document.getElementById("email").value;
+  // 이메일을 사용하여 서버에서 ID 찾기 로직 실행
+  var foundId = "your_found_id"; // 실제로 서버에서 받은 ID로 변경
+  document.getElementById("foundId").textContent = foundId;
+  document.getElementById("idResult").style.display = "block";
+}
 
 </script>
 
