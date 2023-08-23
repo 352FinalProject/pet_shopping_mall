@@ -68,7 +68,7 @@ public class MailSender {
 	        try {
 	            msg.setSentDate(new Date());
 	            InternetAddress from = new InternetAddress();
-	            from = new InternetAddress("vldzmf0877@naver.com");
+	            from = new InternetAddress("ari_0_0@naver.com");
 	            msg.setFrom(from);
 	            InternetAddress to = new InternetAddress(recipient);
 	            msg.setRecipient(Message.RecipientType.TO, to);
@@ -89,8 +89,8 @@ class MyAuthentication extends Authenticator {
 	PasswordAuthentication pa;
 	public MyAuthentication(){
 
-		String id = "vldzmf0877@naver.com";  //네이버 이메일 아이디
-		String pw = "dPfk7311!";        //네이버 비밀번호
+		String id = "ari_0_0@naver.com";  //네이버 이메일 아이디
+		String pw = "dnehdcls!";        //네이버 비밀번호
 
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);

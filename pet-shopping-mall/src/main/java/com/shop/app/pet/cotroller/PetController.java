@@ -117,7 +117,10 @@ public class PetController {
 	    }
 	
 	    return "redirect:/pet/petList.do"; // 목록 페이지로 리다이렉트
+	    
+	    
 	}
+
 }
 
 
