@@ -42,7 +42,7 @@
 		            <label for="productName" class="form-label">제품 이름</label>
 		      	</div>
 		      	<div class="col">
-		            <input type="text" name="productName" id="productName" class="form-control" value="${product.productName}" required>
+		            <input type="text" name="productName" id="productName" class="form-control" placeholder="상품명 예시) 사이즈" required>
 		      	</div>
 	    	</div> 
 		</div>
@@ -54,7 +54,7 @@
 		            <label for="productPrice" class="form-label">상품금액</label>		
 				</div>
 				<div class="col">
-		            <input type="number" name="productPrice" id="productPrice" class="form-control" value="${product.productPrice}" required>
+		            <input type="number" name="productPrice" id="productPrice" class="form-control" placeholder="상품값 예시) S" required>
 				</div>
 			</div>
 		</div>
@@ -64,76 +64,56 @@
 		      	<div class="col">
 		            <label for="file" class="form-label">제품 사진</label>
 		      	</div>
-		      	<c:if test="${not empty productInfo.attachments}">
-			      	<c:forEach items="${productInfo.attachments}" var="attach" varStatus="vs">
-			      		${vs }<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-	                        class="product-img"
-	                        src="${pageContext.request.contextPath}/resources/upload/product/${attach[vs].imageRenamedFilename}">
-			      	</c:forEach>
-		      	</c:if>
-		      	<c:if test="${empty productInfo.attachments}">
-			      	<div class="col">
-			            <input type="file" name="upFile" id="file" class="form-control">
-			      	</div>
-		      	</c:if>
+		      	<div class="col">
+		            <input type="file" name="upFile" id="file" class="form-control">
+		      	</div>
 	    	</div> 
 		</div>
-		<div class="col-md-6">
-        	<button type="button" class="btn btn-secondary" onclick="updateProduct();">상품수정</button>
-        	<button type="button" class="btn btn-danger" onclick="deleteProduct(${product.productId})">삭제</button>
-        </div>
-		
 	</div>
 	
 	<!-- 상품옵션 정보 -->
-	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-	    <div class="productDetail-container-${productDetail.productDetailId}">
-	        <div class="row mb-3">
-	            <div class="col">
-	                <label for="optionName_${productDetail.productDetailId}" class="form-label">옵션명</label>
-	            </div>
-	            <div class="col">
-	                <input type="text" name="optionName" id="optionName_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionName}">
-	            </div>
-	        </div>
-	        <div class="row mb-3">
-	            <div class="col">
-	                <label for="optionValue_${productDetail.productDetailId}" class="form-label">옵션값</label>
-	            </div>
-	            <div class="col">
-	                <input type="text" name="optionValue" id="optionValue_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionValue}">
-	            </div>
-	        </div>
-	        <div class="row mb-3">
-	            <div class="col">
-	                <label for="additionalPrice_${productDetail.productDetailId}" class="form-label">옵션추가금</label>
-	            </div>
-	            <div class="col">
-	                <input type="number" name="additionalPrice" id="additionalPrice_${productDetail.productDetailId}" class="form-control" value="0">
-	            </div>
-	        </div>
-	        <div class="row mb-3">
-	            <div class="col">
-	                <label for="saleState_${productDetail.productDetailId}" class="form-label">판매상태</label>
-	            </div>
-	            <div class="col">
-	                <select name="saleState" id="saleState_${productDetail.productDetailId}" class="form-select">
-	                    <option value="0">판매대기</option>
-	                    <option value="1">판매중</option>
-	                    <option value="2">품절</option>
-	                    <option value="3">기타</option>
-	                </select>
-	            </div>
-	        </div>
-	        <div class="col-md-6">
-	            <button type="button" class="btn btn-secondary" onclick='updateProductOption("${productDetail.productDetailId}");'>옵션수정</button>
-	            <button type="button" class="btn btn-danger" onclick="deleteProductOption(${productDetail.productDetailId});">삭제</button>
-	        </div>
-	    </div>
-	</c:forEach> 	
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" type="reset">초기화</button>
-      </div>
+    <div class="productDetail-container-${productDetail.productDetailId}">
+        <div class="row mb-3">
+            <div class="col">
+                <label for="optionName_${productDetail.productDetailId}" class="form-label">옵션명</label>
+            </div>
+            <div class="col">
+                <input type="text" name="optionName" id="optionName_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionName}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="optionValue_${productDetail.productDetailId}" class="form-label">옵션값</label>
+            </div>
+            <div class="col">
+                <input type="text" name="optionValue" id="optionValue_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionValue}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="additionalPrice_${productDetail.productDetailId}" class="form-label">옵션추가금</label>
+            </div>
+            <div class="col">
+                <input type="number" name="additionalPrice" id="additionalPrice_${productDetail.productDetailId}" class="form-control" value="0">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="saleState_${productDetail.productDetailId}" class="form-label">판매상태</label>
+            </div>
+            <div class="col">
+                <select name="saleState" id="saleState_${productDetail.productDetailId}" class="form-select">
+                    <option value="0">판매대기</option>
+                    <option value="1">판매중</option>
+                    <option value="2">품절</option>
+                    <option value="3">기타</option>
+                </select>
+            </div>
+        </div>
+    </div> 	
+     <div class="d-flex justify-content-end">
+       <button class="btn btn-secondary me-2" type="reset">초기화</button>
+     </div>
 	
 </div><!-- productInfo-container -->
 </div>
