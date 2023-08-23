@@ -3,43 +3,51 @@ package com.shop.app.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import java.util.Arrays;
+
+import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
-import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.service.OrderService;
-import com.shop.app.point.entity.Point;
 
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
@@ -48,7 +56,6 @@ import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
-import com.shop.app.review.entity.ReviewDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -169,7 +176,6 @@ public class AdminController {
 	        	question.setQuestionTitle(titleString); 
 	        	question.setQuestionContent(contentString);
 		    }
-
 	        model.addAttribute("questions", questions);
 	    }
 	    return "admin/adminQuestionList";
@@ -194,11 +200,11 @@ public class AdminController {
 		        
 		        member.setSubscribe(subscribe);
 		    }
-			int totalCount = adminService.findTotalAdminCount();
-			model.addAttribute("totalCount", totalCount);
-			
 			model.addAttribute("members", members);
 	    }
+	    int totalCount = adminService.findTotalAdminCount();
+	    model.addAttribute("totalCount", totalCount);
+	    
 	    return "admin/adminMemberList";
 	}
 	
@@ -228,22 +234,74 @@ public class AdminController {
 	                subscribedMembers.add(member);
 		        }
 	        }
-	        int totalCount = adminService.findTotalubscribeCount();
-			model.addAttribute("totalCount", totalCount);
-			
 	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
+	    int totalCount = adminService.findTotalubscribeCount();
+	    model.addAttribute("totalCount", totalCount);
 			
 	    return "admin/adminSubscribeList";
 	}
 	
+	/**
+	 * 주문 조회
+	 * @param model
+	 */
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList(Model model) {
 		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
-		log.debug("orderlists = {}", orderlists);
 		model.addAttribute("orderlists", orderlists);
+		String[] method = {"카카오", "신용카드"};
+		String[] status = {"결제대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
+		model.addAttribute("method", method);
+		model.addAttribute("status", status);
 	}
-
+	
+	/**
+	 * 주문검색 조회
+	 * @param model
+	 */
+	@GetMapping("/adminOrderSearch.do")
+	public String adminOrderSearch(
+			@RequestParam(required = false) String searchKeyword,
+	        @RequestParam(required = false) String startDate,
+	        @RequestParam(required = false) String endDate,
+	        @RequestParam(required = false) List<String> paymentMethod,
+	        @RequestParam(required = false) List<String> orderStatus,
+			Model model) {
+		
+		if(paymentMethod == null || paymentMethod.size() == 3) {
+			paymentMethod = Arrays.asList("0", "1");
+		}
+		if(orderStatus == null || orderStatus.size() == 8) {
+			orderStatus = Arrays.asList("0", "1", "2", "3", "4", "5", "6");
+		}		
+		List<OrderAdminListDto> orderlists =
+				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
+		
+		model.addAttribute("orderlists", orderlists);
+		return "admin/adminOrderList";
+	}
+	
+	
+	
+//	/**
+//	 * 상품정보 조회 
+//	 * 
+//	 * @param member
+//	 * @param model
+//	 */
+//	@GetMapping("/adminProductList.do")
+//	public void adminProductList(
+//		@AuthenticationPrincipal MemberDetails member,
+//		Model model
+//			) {
+//		log.debug("member = {}", member);
+//		
+//		// 기본 상품들 조회해서 가져오기.
+//		List<Product> basicProducts = productService.findAllBasicProduct();
+//		log.debug("basicProducts = {}", basicProducts);
+//		model.addAttribute("basicProducts", basicProducts);
+//	}
 	
 	/**
 	 * 상품별 판매량통계
@@ -412,6 +470,8 @@ public class AdminController {
 		// 상품정보 가져오기
 		Product product = productService.findProductById(productId);
 		log.debug("product = {}", product);
+		// 상품이미지 가져오기
+//		List<imageAttachment> attachments = productService.findImageAttachmentsByProductId(productId);
 		// 상품옵션 가져오기(리스트)
 		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		log.debug("productDetails = {}", productDetails);
@@ -433,9 +493,13 @@ public class AdminController {
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
 			) {
+		
 		log.debug("ProductUpdateDto = {}", _product);
 		Product product = _product.toProduct();
-
+		
+	
+		
+		
 		
 		// 상품정보 수정하기
 		int result = productService.updateProduct(product);
@@ -444,6 +508,33 @@ public class AdminController {
 		
 		return "redirect:/admin/adminProductList.do";
 	}
+	
+	@PostMapping("/adminProductDetailUpdate.do")
+	public String adminProductDetailUpdate(
+	        @RequestBody ProductDetailUpdateDto _product,
+	        BindingResult bindingResult,
+	        RedirectAttributes redirectAttr
+			) {
+
+		if(bindingResult.hasErrors()) {
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			String message = null;
+			for(ObjectError err : errors) {
+				log.error("message = {} {}", err.getCodes()[1], err.getDefaultMessage());
+				message = err.getDefaultMessage();
+			}
+			redirectAttr.addFlashAttribute("msg", message);
+			return "redirect:/admin/adminProductList.do";
+		}
+    	
+    	ProductDetail productDetail = _product.toProductDetail();
+        // 상품 옵션 업데이트 로직 수행
+        int result = productService.updateProductDetail(productDetail);
+
+        return "redirect:/admin/adminProductList.do";// 업데이트 성공 시 200 OK 응답 반환
+
+	}
+	
 	
 	/**
 	 * @author 전수경
@@ -464,6 +555,17 @@ public class AdminController {
 		return "redirect:/admin/adminProductList.do";
 	}
 
+
+	@PostMapping("/adminProductOptionDelete.do")
+	@ResponseBody
+	public ResponseEntity<?> adminProductOptionDelete(
+	        @RequestParam int productDetailId
+	) {
+		
+		int result = productService.deleteProductDetail(productDetailId);
+		
+	    return ResponseEntity.ok("상품옵션을 삭제했습니다.");
+	}
 
 
 	/**

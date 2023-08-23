@@ -59,6 +59,9 @@ public interface ProductRepository {
 			)
 	int insertProductDetail(ProductDetail productDetail);
 
+	// 상품 아이디를 통해 이미지 아이디 조회해서 가져오기
+	
+	
 	// 상품이미지 조회
 	ProductImages findImageAttachmentsByProductId(int productId);
 
@@ -78,6 +81,12 @@ public interface ProductRepository {
 
 	@Select("select * from product_detail where product_id = #{productId}")
 	List<ProductDetail> findAllProductDetailsByProductId(int productId);
+
+	@Insert("update product_detail set option_name = #{optionName}, option_value = #{optionValue}, additional_price = #{additionalPrice}, sale_state = #{saleState} where product_detail_id = #{productDetailId}")
+	int updateProductDetail(ProductDetail productDetail);
+
+	@Delete("delete from product_detail where product_detail_id = #{productDetailId}")
+	int deleteProductDetail(int productDetailId);
 
 
 }
