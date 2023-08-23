@@ -149,14 +149,14 @@
                   <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" name="memberId" id="memberId" value="<sec:authentication property="name"/>" required>
+                            <input type="text" name="memberId" id="memberId" value="<sec:authentication property="name"/>" required="readonly">
                         </td>
                     </tr>
                     
                     <tr>
                         <th>펫 이름</th>
                         <td>
-                            <input type="text" name="petName" id="petName" value="두부" required="readonly">
+                            <input type="text" name="petName" id="petName" placeholder="이름을 입력해 주세요.">
                         </td>
                     </tr>
                     
@@ -183,7 +183,7 @@
                     <tr>
                         <th>몸무게</th>
                         <td>
-                            <input type="text" name="petWeight" placeholder="반려동물의 몸무게를 입력해 주세요." >
+                            <input type="text" name="petWeight" placeholder="몸무게를 입력해 주세요." >
                         </td>
                     </tr>                    
                     <tr>
