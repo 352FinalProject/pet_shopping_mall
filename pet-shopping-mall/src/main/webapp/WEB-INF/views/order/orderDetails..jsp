@@ -1,227 +1,216 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-    <!DOCTYPE html>
-    <html lang="en">
+    <style>
+        .container {
+            margin: 0 auto;
+            max-width: 1200px;
+        }
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
+        .sub_title {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 120px;
+        }
 
-    <body>
-        <style>
-            .container {
-                margin: 0 auto;
-                max-width: 1200px;
-            }
+        .s_title {
+            height: 30px;
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 30px;
+            display: flex;
+            align-items: center;
+        }
 
-            .sub_title {
-                font-size: 32px;
-                font-weight: bold;
-                text-align: center;
-                line-height: 120px;
-            }
+        .s_title a {
+            height: 23px;
+            line-height: 25px;
+            padding: 0 8px;
+            color: #555;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            margin-left: 5px;
+        }
 
+        .details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+        }
 
-            .s_title {
-                height: 30px;
-                font-size: 22px;
-                font-weight: bold;
-                line-height: 30px;
-                display: flex;
-                align-items: center;
-            }
+        .area {
+            width: 47%;
 
-            .s_title a {
-                height: 23px;
-                line-height: 25px;
-                padding: 0 8px;
-                color: #555;
-                font-size: 14px;
-                border: 1px solid #ccc;
-                margin-left: 5px;
-            }
+        }
 
-            .details {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 50px;
-            }
+        .box {
+            width: 100%;
+            height: 300px;
 
-            .area {
-                width: 47%;
+        }
 
-            }
+        .mb {
+            margin-bottom: 50px;
+        }
 
-            .box {
-                width: 100%;
-                height: 300px;
+        .s_box {
+            width: 100%;
+            height: 150px;
+        }
 
-            }
+        .border {
+            width: 100%;
+            min-height: 220px;
+            border: 1px solid #ccc;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
 
-            .mb {
-                margin-bottom: 50px;
-            }
-
-            .s_box {
-                width: 100%;
-                height: 150px;
-            }
-
-            .border {
-                width: 100%;
-                min-height: 220px;
-                border: 1px solid #ccc;
-                padding-top: 10px;
-                margin-top: 10px;
-            }
-
-            a {
-                color: #999;
-                text-decoration: none;
-            }
+        a {
+            color: #999;
+            text-decoration: none;
+        }
 
 
-            table a {
-                color: #333;
-            }
+        table a {
+            color: #333;
+        }
 
-            #order_table {
-                width: 100%;
-                border-collapse: collapse;
-                text-align: center;
-            }
+        #order_table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
 
-            #order_table thead {
-                width: 100%;
-                height: 50px;
-                border-top: 1px solid #ccc;
-                border-bottom: 1px solid #ccc;
-            }
+        #order_table thead {
+            width: 100%;
+            height: 50px;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
 
-            #order_table tr td {
-                height: 150px;
-                border-bottom: 1px solid #ccc;
-            }
+        #order_table tr td {
+            height: 150px;
+            border-bottom: 1px solid #ccc;
+        }
 
-            #order_table tr td:nth-child(1) {
-                width: 15%;
-            }
+        #order_table tr td:nth-child(1) {
+            width: 15%;
+        }
 
-            #order_table tr td:nth-child(2) {
-                width: 15%;
-            }
+        #order_table tr td:nth-child(2) {
+            width: 15%;
+        }
 
-            #order_table tr td:nth-child(3) {
-                width: 40%;
-            }
+        #order_table tr td:nth-child(3) {
+            width: 40%;
+        }
 
-            #order_table tr td:nth-child(4) {
-                width: 15%;
-            }
+        #order_table tr td:nth-child(4) {
+            width: 15%;
+        }
 
-            #order_table tr td:nth-child(5) {
-                width: 15%;
-            }
+        #order_table tr td:nth-child(5) {
+            width: 15%;
+        }
 
-            #order_table img {
-                width: 130px;
-                height: 130px;
-                margin: 10px;
-                margin-right: 30px;
-                margin-left: 50px;
-            }
+        #order_table img {
+            width: 130px;
+            height: 130px;
+            margin: 10px;
+            margin-right: 30px;
+            margin-left: 50px;
+        }
 
-            #order_table button {
-                border: 1px solid #ccc;
-                color: #ccc;
-                width: 80%;
-                margin: 0 auto;
-                height: 35px;
-                font-size: 17px;
-                background-color: #fff;
-                cursor: pointer;
-            }
+        #order_table button {
+            border: 1px solid #ccc;
+            color: #ccc;
+            width: 80%;
+            margin: 0 auto;
+            height: 35px;
+            font-size: 17px;
+            background-color: #fff;
+            cursor: pointer;
+        }
 
-            .flex div {
-                height: 130px;
-            }
+        .flex div {
+            height: 130px;
+        }
 
-            .flex p {
-                margin: 0;
-                margin-bottom: 5px;
-            }
+        .flex p {
+            margin: 0;
+            margin-bottom: 5px;
+        }
 
-            .flex {
-                margin-top: 10px;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                text-align: left;
+        .flex {
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-align: left;
 
-            }
+        }
 
-            .flex_b {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 15px;
-            }
+        .flex_b {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
 
-            .flex_b p {
-                line-height: 40px;
-                margin: 0;
-            }
+        .flex_b p {
+            line-height: 40px;
+            margin: 0;
+        }
 
-            .flex_b p a {
-                padding: 2px 7px;
-                border: 1px solid #ccc;
-                font-size: 14px;
-                color: #555;
-                margin-left: 5px;
-            }
+        .flex_b p a {
+            padding: 2px 7px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            color: #555;
+            margin-left: 5px;
+        }
 
-            .flex_b p span {
-                color: red;
-                margin-right: 5px;
-            }
+        .flex_b p span {
+            color: red;
+            margin-right: 5px;
+        }
 
-            .flex_b_B {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 15px;
-            }
+        .flex_b_B {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
 
-            .flex_b_B p {
-                line-height: 40px;
-                margin: 0;
-                font-size: 20px;
-                font-weight: bold;
-            }
+        .flex_b_B p {
+            line-height: 40px;
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
 
-            .flex_b_h3 {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 15px;
-            }
+        .flex_b_h3 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
 
-            .flex_b_h3 p {
-                line-height: 50px;
-                margin: 0;
-                font-size: 24px;
-                font-weight: bold;
-            }
+        .flex_b_h3 p {
+            line-height: 50px;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-            .line {
-                width: 100%;
-                height: 1px;
-                background-color: #333;
-            }
-        </style>
+        .line {
+            width: 100%;
+            height: 1px;
+            background-color: #333;
+        }
+    </style>
         <div class="container">
             <div class="sub_title">상세내용</div>
             <table id="order_table">
@@ -350,9 +339,4 @@
                 </div>
             </div>
         </div>
-
-
-    </body>
-
-    </html>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

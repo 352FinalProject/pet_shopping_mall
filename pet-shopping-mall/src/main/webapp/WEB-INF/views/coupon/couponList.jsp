@@ -7,9 +7,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp"></jsp:include>
-<%-- 포인트 내역 (예라) --%>
+<%-- 쿠폰 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
-	<div class="common-title">포인트 내역</div>
+	<div class="common-title">쿠폰 내역</div>
 	<div class="common-container">
 		<div class="common-div">
 			<div class="service-util-div-point">
@@ -18,33 +18,33 @@
 						<tr>
 							<th>번호</th>
 							<th>내역</th>
-							<th>적립/사용</th>
-							<th>잔액</th>
-							<th>날짜</th>
+							<th>발급일</th>
+							<th>유효기간</th>
+							<th>사용날짜</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${points}" var="point" varStatus="vs">
+						<c:forEach items="${memberCoupons}" var="coupon" varStatus="vs">
 							<sec:authentication var="currentUsername" property="principal.username"/>
-								<c:if test="${point.pointMemberId == currentUsername}">
+								<c:if test="${coupon.pointMemberId == currentUsername}">
 									<tr class="question-row">
-										<td>${point.pointId}</td>
-										<td>${point.pointType}</td>
+										<td>${coupon.couponId}</td>
+										<td>${coupon.pointType}</td>
 										<td>
 										    <c:choose>
-										        <c:when test="${point.pointAmount >= 0}">
-										            <span class="plus">+ ${point.pointAmount}</span>
+										        <c:when test="${coupon.pointAmount >= 0}">
+										            <span class="plus">+ ${coupon.pointAmount}</span>
 										        </c:when>
 										        <c:otherwise>
-										            <span class="minus">${point.pointAmount}</span>
+										            <span class="minus">${coupon.pointAmount}</span>
 										        </c:otherwise>
 										    </c:choose>
 										</td>
-										<td>${point.pointCurrent}</td>
+										<td>${coupon.pointCurrent}</td>
 										<td class="qna-date">
-											<input type="hidden" name="pointDate" value="${point.pointDate}" />
-											<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${point.pointDate}">
-											<fmt:parseDate value="${point.pointDate}" pattern="yyyy-MM-dd'T'HH:mm" var="pointDate" />
+											<input type="hidden" name="pointDate" value="${coupon.pointDate}" />
+											<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${coupon.pointDate}">
+											<fmt:parseDate value="${coupon.pointDate}" pattern="yyyy-MM-dd'T'HH:mm" var="pointDate" />
 											<fmt:formatDate value="${pointDate}" pattern="yy/MM/dd" /></a>
 										</td>
 									</tr>

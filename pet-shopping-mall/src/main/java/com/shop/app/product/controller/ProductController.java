@@ -88,7 +88,6 @@ public class ProductController {
 		log.debug("파람스 들어가있는거 reviews = {}", reviews);
 		log.debug("펫아이디 들어가있는거 petId = {}", petId);
 //		log.debug("리뷰이미지 파일 조회 = {}", reviewDetails);
-		log.debug("reviews = {}", reviews);
 
 		
 	}
