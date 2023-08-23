@@ -331,6 +331,7 @@ public class AdminController {
 		
 	}
 	
+
 	
 	/**
 	 * @author 전수경
@@ -488,23 +489,15 @@ public class AdminController {
 	 */
 	@PostMapping("/adminProductUpdate.do")
 	public String adminProductDetailUpdate(
-			@Valid ProductUpdateDto _product,
-			BindingResult bindingResult,
-			@AuthenticationPrincipal MemberDetails member, 
-			Model model
+			@Valid @RequestBody ProductUpdateDto _product,
+			@AuthenticationPrincipal MemberDetails member 
 			) {
 		
 		log.debug("ProductUpdateDto = {}", _product);
 		Product product = _product.toProduct();
 		
-	
-		
-		
-		
 		// 상품정보 수정하기
 		int result = productService.updateProduct(product);
-		log.debug("product = {}", product);
-		model.addAttribute("product", product);
 		
 		return "redirect:/admin/adminProductList.do";
 	}
@@ -540,28 +533,25 @@ public class AdminController {
 	 * @author 전수경
 	 * 상품 삭제
 	 */
-	@PostMapping("/adminProductDetailDelete.do")
+	@PostMapping("/adminProductDelete.do")
 	public String adminDeleteProduct(
-			@Valid ProductUpdateDto _product,
-			BindingResult bindingResult,
-			@AuthenticationPrincipal MemberDetails member, 
-			Model model
+			@RequestParam int productId,
+			@AuthenticationPrincipal MemberDetails member
 			){
-		
-		Product product = _product.toProduct();
-		int productId = product.getProductId();
+		log.debug("productId = {}", productId);
 		int result = productService.deleteProduct(productId);
 		
 		return "redirect:/admin/adminProductList.do";
 	}
 
 
+	// 상품옵션 삭제
 	@PostMapping("/adminProductOptionDelete.do")
 	@ResponseBody
 	public ResponseEntity<?> adminProductOptionDelete(
 	        @RequestParam int productDetailId
 	) {
-		
+		log.debug("productDetailId = {}", productDetailId);
 		int result = productService.deleteProductDetail(productDetailId);
 		
 	    return ResponseEntity.ok("상품옵션을 삭제했습니다.");
