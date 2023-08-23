@@ -140,9 +140,9 @@
 		ot.amount,
 		ot.discount
 	from
-		orderTbl ot left join member m on ot.member_id = m.member_id
-		left join payment p on p.order_id = ot.order_id
-		left join cancel_order c on ot.order_id = c.order_id
+        cancel_order c left join orderTbl ot on c.order_id = ot.order_id
+        left join payment p on p.order_id = c.order_id
+        left join member m on ot.member_id = m.member_id
 	where
 		ot.member_id = #{memberId} and c.request_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})
 	</select>
