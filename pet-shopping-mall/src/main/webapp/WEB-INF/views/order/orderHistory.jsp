@@ -68,7 +68,7 @@ div.product-desc span{
 }
 
 </style>
-<div>${order }</div>
+<div>${order}</div>
 <div class="common-section">
 	<!-- 컨테이너 -->
 	<div class="common-container">

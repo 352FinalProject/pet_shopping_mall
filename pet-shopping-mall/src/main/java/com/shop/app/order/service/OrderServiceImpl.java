@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
 
 import com.shop.app.order.dto.OrderAdminListDto;
-
+import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.getOrderList(memberId);
 	}
 
+	
 	@Override
 	public int insertCancelOrder(String orderNo, String isRefund) {
 		int result = 0;
@@ -78,10 +79,11 @@ public class OrderServiceImpl implements OrderService {
 				.build();
 		result = orderRepository.insertCancelOrder(cancel);
 		
-		if(isRefund.equals("N"))
+		if(isRefund.equals("N")) 
 			result = orderRepository.updateOrderStatus(orderNo, 5);
 		else if(isRefund.equals("Y"))
 			result = orderRepository.updateOrderStatus(orderNo, 6);
+			
 			
 		return result;
 	}
@@ -89,5 +91,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period) {
 		return orderRepository.getOrderListByPeriod(memberId, period);
+	}
+
+	@Override
+	public OrderCancelInfoDto getCancelInfo(String orderNo) {
+		return orderRepository.getCancelInfo(orderNo);
 	}
 }

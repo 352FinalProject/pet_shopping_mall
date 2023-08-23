@@ -6,8 +6,8 @@ select * from member;
 --sample data 생성
 --==============================
 -- member insert
-insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member1', '1234', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
+insert into member (member_id, password, name, phone, email, enroll_date, address, birthday, subscribe)
+values ('member1', '$2a$10$V6DMY985chA4/fMc/vY20e15i/OaPr.GpQ0v2W0zNqshEWutOxm9q', '김상훈', '01012345678', 'kim@naver.com', '서울시 송파구 애냐동', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('member2', '1234', '대한훈', '01028283939', 'ghjwf@naver.com', '서울시 송파구 마니동', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
@@ -115,13 +115,13 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 select * from product_category;
 
 -- 제품등록 (이미지는 현재 null 처리)
-insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
-insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, null, default, null, 31, 156);
-insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 4, '말랑 하네스', 15000, null, default, null, default, default);
-insert into product (product_id, category_id, product_name, product_price, img_id, create_date, expire_date, like_cnt, view_cnt)
+insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 6, '츄릅츄릅 츄르 10개입', 20000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 select * from product;
 
@@ -179,6 +179,15 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
     
     
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-06-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-01-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
+        
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '231231', 'honggd', default, 2, 1, 27000,3000, 0, 30000, 0);
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
@@ -259,6 +268,8 @@ delete from product where product_id = 4;
 update cartitem set product_detail_id=1 where product_detail_id=0;
 select * from cartitem;
 
+select * from payment;
+
 select * from product_detail;
 
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2);
@@ -308,6 +319,26 @@ from
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
 where 
     ci.product_detail_id = 2;
+    
+    
+
+-- 주문 취소 내역 불러오기
+select
+    m.name,
+    m.phone,
+    ot.order_no,
+    ot.order_date,
+    ot.order_status,
+    ot.total_price,
+    p.payment_method,
+    p.payment_date,
+    ot.payment_status,
+    ot.amount,
+    ot.discount
+from
+    orderTbl ot left join member m on ot.member_id = m.member_id 
+    left join payment p on p.order_id = ot.order_id;
+    
 -------------------------------------------------------------------
 
     
@@ -613,6 +644,7 @@ SELECT
             AND (ot.order_no LIKE '%' || '오' || '%' OR p.product_name LIKE '%' || '오' || '%')
 	ORDER BY
 	    ot.order_id DESC;
+
 
 
 

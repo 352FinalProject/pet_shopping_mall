@@ -37,7 +37,7 @@ public interface PetRepository {
     @Delete("DELETE FROM pet WHERE pet_id = #{petId}")
     int petDelete(int petId);
     
-    @Select("SELECT pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed"
+    @Select("SELECT pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight"
     		+ ", TO_CHAR(pet_adoption, 'YYYY-MM-DD') AS pet_adoption_date_fix, pet_gender, pet_created_at FROM pet WHERE pet_id = #{petId}")
     Pet findPetById(int petId);
     
@@ -55,6 +55,10 @@ public interface PetRepository {
     // 리뷰-펫 정보 가져오기(혜령)
     @Select("select * from pet where member_id = #{memberId}")
 	List<Pet> findPetId(Pet pet, String memberId);
+
+    // 상품 상세페이지 - 리뷰 - 펫 정보 가져오기 (혜령) 
+    @Select("select * from pet where member_id = #{memberId}")
+	List<Pet> findProductRevicePet(Pet pet, String memberId);
     
 	
 

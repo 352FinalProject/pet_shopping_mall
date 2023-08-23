@@ -1,10 +1,14 @@
 package com.shop.app.product.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
+
+import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.imageAttachmentMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,10 +28,10 @@ public class Product {
 	private String productName;
 	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
-	private int imgId;
+	private int imageId;
 	private Timestamp createDate;
 	private Timestamp expireDate; // default: null
 	private int likeCnt;
 	private int viewCnt;
-	
+
 }

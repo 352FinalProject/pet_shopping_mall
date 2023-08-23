@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class OrderController {
+	
 	
 	@Autowired
 	OrderService orderService;
@@ -55,19 +58,26 @@ public class OrderController {
 	}
 	
 	
+	
+	@GetMapping("/cancelOrderDetail.do")
+	public void cancelOrder(Model model, @RequestParam String orderNo) {
+		OrderCancelInfoDto cancelInfos = orderService.getCancelInfo(orderNo);
+		model.addAttribute("cancelInfo", cancelInfos);
+	}
+	
+	
 	/**
-	 * 주문 취소
+	 * 미입금 주문의 주문 취소 (환불은 paymentController)
 	 */
 	@PostMapping("/cancelOrder.do")
 	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo, @RequestParam String isRefund) {
-		log.debug("isRefund = {}", isRefund);
 		int result = orderService.insertCancelOrder(orderNo, isRefund);
 		return "redirect:/order/orderList.do";
 	}
 	
-	@PostMapping("/refundOrder.do")
-	public String refundOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo) {
-//		 int result = orderService.refundOrder(orderNo);
-		return "redirect:/";
+	
+	@GetMapping("/orderDetail.do")
+	public void orderDetail(Model model, @RequestParam String orderNo) {
 	}
+	
 }

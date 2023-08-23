@@ -42,7 +42,7 @@
 								<td>${formattedDate}</td>
 								<td>
 									<p>${order.orderNo}</p>
-									<form:form id="cancelFrm" action="${pageContext.request.contextPath}/order/cancelOrder.do" method="POST">
+									<form:form id="cancelFrm" action="" method="POST">
 										<input type="hidden" name="orderNo" value="${order.orderNo}" />
 										<input type="hidden" name="amount" value="${order.amount}" />
 										<input type="hidden" name="isRefund" value="" />
@@ -67,14 +67,15 @@
 											</div>
 										</div>
 								</a></td>
-								<td>${order.amount}원</td>
+								<td><span id="total-price"><fmt:formatNumber
+											value="${order.amount}" groupingUsed="true" />원</span></td>
 								<td>
 									<c:choose>
 										<c:when test="${index eq 0}">
-										    <button class="cancel-btn" onclick="cancelOrder('cancel');">취소신청</button>
+										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소신청</button></a>
 										</c:when>
 										<c:when test="${index ge 1 && index le 4}">
-										    <button class="cancel-btn" onclick="cancelOrder('refund');">취소/환불신청</button>
+										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소/환불신청</button></a>
 										</c:when>
 										<c:otherwise>
 										</c:otherwise>
@@ -104,29 +105,14 @@
 	
 	const cancelOrder = (text) => {
 		if(confirm("정말 주문을 취소하시겠습니까?") && text === 'cancel') {
-			cancelFrm.isRefund.value="N";
+			cancelFrm.isRefund.value = "N"
+			cancelFrm.action = "${pageContext.request.contextPath}/order/cancelOrder.do";
 			cancelFrm.submit();
 			alert("주문이 정상적으로 취소되었습니다.");
 		} else {
- 			$.ajax({
-				url : "https://api.iamport.kr/payments/cancel",
-				type : "POST",
-				dataType: "json",
-				contentType: "application/json",
-				data : JSON.stringify({
-					merchant_uid: cancelFrm.orderNo.value,
-					cancel_request_amount: amount
-				}),
-				success(response) {
-					if(response.code == 200) {
-						alert("환불이 정상적으로 처리되었습니다.");
-						cancelFrm.isRefund.value="Y";
-						cancelFrm.submit();
-					} else {
-						alert("환불 실패! 관리자에게 문의하세요.")
-					}
-				}
-			});
+			cancelFrm.isRefund.value = "Y"
+			cancelFrm.action = "${pageContext.request.contextPath}/payment/refundOrder.do";
+			cancelFrm.submit();
 		}
 	};
 
