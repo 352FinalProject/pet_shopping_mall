@@ -1,198 +1,83 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<style>
-.common-section {
-	display: flex;
-	flex-direction: column;
-	margin: 100px;
-}
-
-.common-div {
-	justify-content: center;
-	align-items: left;
-	display: flex;
-}
-
-/* 회원가입 타이틀 */
-.common-title {
-	font-size: 24px;
-	justify-content: center;
-	display: flex;
-}
-
-/* input 글씨 왼쪽정렬 */
-.common-div table th {
-	text-align: left;
-}
-
-/* 테이블 사이 간격 */
-.common-div table td {
-	padding: 5px;
-}
-
-/* input-button 태그 */
-.common-div table td input {
-	height: 30px;
-	border-radius: 10px;
-	border: 1px solid lightgray;
-	background-color: white;
-}
-
-.common-div table td input[type="email"] {
-	margin-bottom: 12px;
-}
-
-/* input 태그 */
-.common-div table td input[type="text"], .common-div table td input[type="password"],
-	.common-div table td input[type="tel"], .common-div table td input[type="date"],
-	.common-div table td input[type="email"] {
-	margin-right: 10px;
-	margin-left: 10px;
-	width: 250px;
-	border-radius: 20px;
-	height: 40px;
-	border: 1px solid lightgray;
-	padding: 2px 15px; /* 위아래 2px 좌우 15px 패딩 조정 */
-}
-
-/* 돌아가기&가입하기 버튼 */
-.resetAndSubmit {
-	text-align: center;
-}
-
-/* 돌아가기 버튼 */
-.resetAndSubmit input[type="reset"] {
-	background-color: #c8c8c8;
-	margin-right: 10px;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	color: white;
-	border: 1px solid #e7e7e7;
-	margin-top: 30px;
-}
-
-/* 가입하기 버튼 */
-.resetAndSubmit input[type="submit"] {
-	background-color: #5886d3;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	border: 1px solid #e7e7e7;
-	color: white;
-}
-/* 펫 정보 행 스타일 */
-.pet-info-container {
-	vertical-align: top; /* 맨 위로 정렬 */
-}
-
-/* pet-info 요소들 오른쪽 정렬 */
-.pet-info {
-	display: flex;
-	flex-direction: column;
-	align-items: center; /* 가운데 정렬 */
-	margin-top: 10px; /* 각 요소 사이 간격 조정 */
-}
-
-.pet-info div {
-	color: blue;
-}
-
-button, input {
-	cursor: pointer;
-}
-</style>
-
-<!-- 마이페이지 (혜령) -->
-<!-- 아이디, 이름, 생일 수정X -->
-<section class="common-section" id="#">
-	<div class="common-title">회원정보 수정</div>
-	<br>
-	<div class="common-container">
-		<div class="common-div">
-			<form:form name="memberUpdateFrm"
-				action="${pageContext.request.contextPath}/member/memberUpdate.do"
-				method="POST">
-				<table>
-					<tr>
-						<th>아이디</th>
-						<td><input type="text" name="memberId" id="memberId"
-							value="${member.memberId}"  required readonly/></td>
-						<td rowspan="2" class="pet-info-container">
-							<div class="pet-info">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/마이페이지/1.png" />
-								<div></div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>이름</th>
-						<td><input type="text" name="name" id="name"
-							value="${member.name}" required readonly></td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td><input type="password" name="password" id="password"
-							value="" required></td>
-						<td rowspan="2" class="pet-info-container">
-							<div class="pet-info">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/마이페이지/2.png" />
-								<div></div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>비밀번호 확인</th>
-						<td><input type="password" id="passwordConfirm" value=""
-							required></td>
-					</tr>
-					<tr>
-						<th>핸드폰 번호</th>
-						<td><input type="tel" name="tel" id="tel"
-							value="${member.phone}" required></td>
-						<td rowspan="2" class="pet-info-container">
-							<div class="pet-info">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/마이페이지/3.png" />
-								<div></div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>생일</th>
-						<td><input type="date" name="birthday" id="birthday"
-							value="${member.birthday}" readonly required></td>
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td><input type="email" name="email" id="email"
-							placeholder="이메일" value="${member.email}" required readonly>
-							<input
-							type="button" value="이메일 인증" onclick="emailCheck()">
-						</td>
-					</tr>
-					<tr>
-						<th>주소</th> <!-- value="${member.address}" 생략되었지만 getter 사용됨 -->
-						<td><input type="text" name="address" id="address"
-							value="${member.address}" required> <input 
-							type="button" value="주소 검색"></td>
-					</tr>
-					<tr>
-						<td class="resetAndSubmit" colspan="2"><input type="reset"
-							value="돌아가기"
-							onclick="location.href='${pageContext.request.contextPath}/'">
-							<input type="submit" value="수정하기"></td>
-					</tr>
-				</table>
-			</form:form>
-		</div>
-	</div>
-</section>
+    <section class="common-section" id="#">
+        <div class="common-title">마이페이지</div>
+        <br>
+        <div class="common-container">
+            <div class="common-div">
+                <div class="profile-div">
+                    <div class="user-profile">
+                        <div>
+                            <img class="user-profile-img" src="${pageContext.request.contextPath}/resources/images/chat/chat.png" alt="User Profile">
+                        </div>
+                        <div class="user-info">
+                            <div>
+                                <p id="member-id">${myPage.name}</p>
+                                <c:if test="${(myPage.subscribe) eq 'Y'}">
+	                            <p>${myPage.name}님은 <span class="grade">우동친</span> 등급입니다</p>
+                                </c:if>
+                                <c:if test="${(myPage.subscribe) eq 'N'}">
+	                            <p>${myPage.name}님은 <span class="grade">일반</span> 등급입니다</p>
+                                </c:if>
+                                <p>현재 포인트 : <span class="grade"><fmt:formatNumber value="${myPage.pointCurrent}"
+										groupingUsed="true" /></span>점</p>
+                            </div>
+                            <div>
+                                <a class="benefits-link" href="#">🔎 멤버쉽 혜택보기</a>
+                                <a class="benefits-link" href="#" onclick="subscribe();">📌 구독하기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="options">
+                        <div class="option"><a href="${pageContext.request.contextPath}/point/pointList.do">포인트내역</a></div>
+                        <div class="option"><a href="${pageContext.request.contextPath}/member/myWishlist.do">찜한 상품</a></div>
+                        <div class="option"><a href="#">쿠폰 0장</a></div>
+                    </div>
+                    <div class="recent-orders">
+                        <div class="common-title">최근 1개월 주문내역</div>
+                        <c:if test="${empty myPage.orderHistory}">
+                        	<div class="order-div">최근 1개월 간 구매한 내역이 없습니다.</div>
+                        </c:if>
+                        <c:if test="${not empty myPage.orderHistory}">
+                        	<div>
+								<table id="order-table">
+									<thead>
+										<tr>
+											<th>날짜</th>
+											<th>주문번호</th>
+											<th>상품</th>
+										</tr>
+									</thead>
+									<tbody>
+									<c:forEach items="${myPage.orderHistory}" var="order" varStatus="vs">
+                        			<fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
+										<tr>
+											<td>${formattedDate}</td>
+											<td>${order.orderNo}</td>
+											<td>${order.productName}</td>
+										</tr>
+									</c:forEach>
+									</tbody>
+								</table>
+                        	</div>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <script>
+	const subscribe = () => {
+		if(confirm("정말 구독하시겠습니까?")) {
+			// 정기결제 코드
+		}
+	}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

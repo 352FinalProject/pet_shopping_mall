@@ -44,7 +44,7 @@ public interface ProductRepository {
 	@Select("select * from product where product_id = #{productId}")
 	Product findProductById(int productId);
 
-	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, img_id = #{imgId}, expire_date = #{expireDate} where product_id = #{productId}")
+	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, image_id = #{imageId} where product_id = #{productId}")
 	int updateProduct(Product product);
 
 	@Delete("delete from product where product_id = #{productId}")
@@ -59,6 +59,9 @@ public interface ProductRepository {
 			)
 	int insertProductDetail(ProductDetail productDetail);
 
+	// 상품 아이디를 통해 이미지 아이디 조회해서 가져오기
+	
+	
 	// 상품이미지 조회
 	ProductImages findImageAttachmentsByProductId(int productId);
 
@@ -78,6 +81,15 @@ public interface ProductRepository {
 
 	@Select("select * from product_detail where product_id = #{productId}")
 	List<ProductDetail> findAllProductDetailsByProductId(int productId);
+
+	@Insert("update product_detail set option_name = #{optionName}, option_value = #{optionValue}, additional_price = #{additionalPrice}, sale_state = #{saleState} where product_detail_id = #{productDetailId}")
+	int updateProductDetail(ProductDetail productDetail);
+
+	@Delete("delete from product_detail where product_detail_id = #{productDetailId}")
+	int deleteProductDetail(int productDetailId);
+
+	@Update("update product set image_id = #{imageId} where product_id = #{productId}")
+	int updateImageIdByProductId(int productId, int imageId);
 
 
 }

@@ -4,126 +4,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
     <style>
-        .sub_title {
-            font-size: 32px;
-            font-weight: bold;
-            text-align: center;
-            line-height: 120px;
-        }
 
-        #selectPeriod {
-            position: relative;
-            outline: none;
-            display: block;
-            width: 150px;
-            margin: 30px 0;
-            font-size: 17px;
-            color: #333;
-            height: 40px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding-right: 30px;
-            padding-left: 10px;
-            background: url('${pageContext.request.contextPath }/resources/images/상품/arrow-down.png') no-repeat 95% 50%/15px auto;
-            border: 1px solid #999;
-        }
-
-        .order_top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        a {
-            color: #999;
-            text-decoration: none;
-        }
-
-        table a {
-            color: #333;
-        }
-
-        #order-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-        #order-table thead {
-            width: 100%;
-            height: 50px;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-        }
-
-        #order-table tr td {
-            height: 150px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        #order-table tr td:nth-child(1) {
-            width: 15%;
-        }
-
-        #order-table tr td:nth-child(2) {
-            width: 15%;
-        }
-
-        #order-table tr td:nth-child(3) {
-            width: 40%;
-        }
-
-        #order-table tr td:nth-child(4) {
-            width: 15%;
-        }
-
-        #order-table tr td:nth-child(5) {
-            width: 15%;
-        }
-
-        #order-table img {
-            width: 130px;
-            height: 130px;
-            margin: 10px;
-            margin-right: 30px;
-            margin-left: 50px;
-        }
-
-        #order-table button {
-            border: 1px solid #ccc;
-            color: #ccc;
-            width: 80%;
-            margin: 0 auto;
-            height: 35px;
-            font-size: 17px;
-            background-color: #fff;
-            cursor: pointer;
-        }
-
-        .flex div {
-            height: 130px;
-        }
-
-        .flex p {
-            margin: 0;
-            margin-bottom: 5px;
-        }
-
-        .flex {
-            margin-top: 10px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            text-align: left;
-        }
 	</style>
 	<section class="common-section" id="#">
 		<div class="common-title">주문내역</div>
 		<div class="common-container">
 			<div class="order">
-				<div class="order_top">
+				<div class="order-top">
 					<select name="selectPeriod" id="selectPeriod">
 						<option>전체</option>
 						<option value="3">최근 3개월</option>
@@ -138,6 +27,7 @@
 							<th>주문번호</th>
 							<th>상품</th>
 							<th>주문금액</th>
+							<th>주문취소</th>
 							<th>상태</th>
 						</tr>
 					</thead>
@@ -152,17 +42,7 @@
 								<td>${formattedDate}</td>
 								<td>
 									<p>${order.orderNo}</p>
-  									<c:choose>
-										<c:when test="${index eq 0}">
-										    <button onclick="cancelOrder('cancel');">취소신청</button>
-										</c:when>
-										<c:when test="${index ge 1 && index le 4}">
-										    <button onclick="cancelOrder('refund');">취소/환불신청</button>
-										</c:when>
-										<c:otherwise>
-										</c:otherwise>
-									</c:choose>
-									<form:form id="cancelFrm" action="${pageContext.request.contextPath}/order/cancelOrder.do" method="POST">
+									<form:form id="cancelFrm" action="" method="POST">
 										<input type="hidden" name="orderNo" value="${order.orderNo}" />
 										<input type="hidden" name="amount" value="${order.amount}" />
 										<input type="hidden" name="isRefund" value="" />
@@ -187,7 +67,20 @@
 											</div>
 										</div>
 								</a></td>
-								<td>${order.amount}원</td>
+								<td><span id="total-price"><fmt:formatNumber
+											value="${order.amount}" groupingUsed="true" />원</span></td>
+								<td>
+									<c:choose>
+										<c:when test="${index eq 0}">
+										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소신청</button></a>
+										</c:when>
+										<c:when test="${index ge 1 && index le 4}">
+										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소/환불신청</button></a>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</td>
 								<td>
 									<p>${status[index]}</p>
 								</td>
@@ -197,7 +90,7 @@
 					</tbody>
 				</table>
 			<c:if test="${empty orderHistories}">
-				<div>조회된 주문 내역이 없습니다.</div>
+				<div class="empty-message">조회된 주문 내역이 없습니다.</div>
 			</c:if>
 			</div>
 		</div>
@@ -212,35 +105,18 @@
 	
 	const cancelOrder = (text) => {
 		if(confirm("정말 주문을 취소하시겠습니까?") && text === 'cancel') {
-			cancelFrm.isRefund.value="N";
+			cancelFrm.isRefund.value = "N"
+			cancelFrm.action = "${pageContext.request.contextPath}/order/cancelOrder.do";
 			cancelFrm.submit();
 			alert("주문이 정상적으로 취소되었습니다.");
 		} else {
- 			$.ajax({
-				url : "https://api.iamport.kr/payments/cancel",
-				type : "POST",
-				dataType: "json",
-				contentType: "application/json",
-				data : JSON.stringify({
-					merchant_uid: cancelFrm.orderNo.value,
-					cancel_request_amount: amount
-				}),
-				success(response) {
-					if(response.code == 200) {
-						alert("환불이 정상적으로 처리되었습니다.");
-						cancelFrm.isRefund.value="Y";
-						cancelFrm.submit();
-					} else {
-						alert("환불 실패! 관리자에게 문의하세요.")
-					}
-				}
-			});
+			cancelFrm.isRefund.value = "Y"
+			cancelFrm.action = "${pageContext.request.contextPath}/payment/refundOrder.do";
+			cancelFrm.submit();
 		}
 	};
 
 	/* 셀렉트 박스 */
-	
-	
 const periodSelect = document.querySelector("#selectPeriod");
 const table = document.querySelector("#order-table tbody")
 	

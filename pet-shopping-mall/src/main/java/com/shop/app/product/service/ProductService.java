@@ -33,5 +33,9 @@ public interface ProductService {
 
 	List<ProductDetail> findAllProductDetailsByProductId(int productId);
 
+	int updateProductDetail(ProductDetail productDetail);
+
+	int deleteProductDetail(int productDetailId);
+
 
 }

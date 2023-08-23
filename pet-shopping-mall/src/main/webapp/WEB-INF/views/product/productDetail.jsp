@@ -102,7 +102,7 @@
 				<li class="review-regdate">등록일</li>
 			</ul> -->
 			<ul class="review-product-utility">
- 				<c:if test="${empty reviews}">
+				<c:if test="${empty reviews}">
 					작성된 리뷰가 없습니다.
 				</c:if>
 				<c:if test="${not empty reviews}">
@@ -116,6 +116,7 @@
 									<fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd"/>
 								</em>
 							</div>
+
 <%--  							<c:if test="${not empty petId}">
 								<div class="reivew-pet-box"> 펫정보
 									<em class="review-pet-name">${petId[0].petName} |</em>
@@ -133,6 +134,21 @@
 									<em class="review-pet-name">${petId[0].petBreed} </em>
 								</div> --%>
 							<div class="review-detail-box"> 
+
+
+	 							<c:forEach items="${pets}" var="pet" varStatus="vs">
+									<div class="reivew-pet-box"> 펫정보
+										<em class="review-pet-name">${pet.petName} |</em>
+										<em class="review-pet-name">${pet.petGender} |</em>
+										<em class="review-pet-name">${pet.petAge}살 |</em>
+										<em class="review-pet-name">${pet.petWeight}kg |</em>
+										<em class="review-pet-name">${pet.petBreed} </em>
+									</div>
+								</c:forEach>
+							<div class="review-detail-box"> 리뷰 제목/별점/사진/내용
+							<em class="review-info-id">${review.reviewTitle}</em>
+							<em class="review-info-id">${review.reviewContent}</em>
+
 								<div class="score_star">
 									 <c:choose>
 								        <c:when test="${review.reviewStarRate == 1}">
@@ -163,8 +179,8 @@
 					</c:forEach>
 				</c:if>
 			</ul>
-		</div> 
-		
+		</div>
+
 		
 		<div id="Accordion_wrap">
 			
@@ -271,9 +287,11 @@
 				<span id="product-bottom-title">제품명 나오는 곳</span> <br /> <span>11,000원</span>
 			</div>
 			<div class="heart-img">
-				<img
-					src="${pageContext.request.contextPath}/resources/images/product/pink_heart.png"
-					width="28px" /> <br /> <span>1,562</span>
+			<button class="heart-button" id="heartButton">
+			  <img
+			    src="${pageContext.request.contextPath}/resources/images/product/pink_heart.png"
+			    width="28px" />
+			</button> <span>1,562</span>
 			</div>
 			<div>
 				<button class="btn btn1">장바구니</button>
