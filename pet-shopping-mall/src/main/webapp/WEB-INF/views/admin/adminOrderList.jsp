@@ -20,37 +20,25 @@
           checkbox.checked = selectAll.checked;
         });
       }
-    $(document).ready(function() {
-        // Handle form submission with AJAX
-        $("#searchForm").submit(function(event) {
-            event.preventDefault(); // Prevent default form submission
-            
-            // Get form data
-            var formData = $(this).serialize();
-            
-            // Send AJAX request
-            $.ajax({
-                type: "GET",
-                url: "/adminOrderSearch.do", // URL of your controller method
-                data: formData,
-                dataType: "json", // Expect JSON response
-                success: function(response) {
-                    // Handle the response data (orderlists)
-                    // You can update your table or perform other actions here
-                    console.log(response); // Log the response for debugging
-                },
-                error: function(xhr, status, error) {
-                    // Handle error (if any)
-                    console.error(error);
-                }
-            });
-        });
-    });
-
-
-
-
-
+  
+      
+	$(".admin-order-search").submit(function(event) {
+	    event.preventDefault();
+	    
+	    var formData = $(this).serialize();
+	    
+	    $.ajax({
+	        type: "GET",
+	        url: "${pageContext.request.contextPath}/admin/adminOrderSearch.do",
+	        data: formData,
+	        dataType: "json",
+	        success: function(response) {
+	            
+	            console.log(response);
+	        },
+	    });
+	});
+   
 </script>
 <div id="layoutSidenav_content">
 	<main>
@@ -66,7 +54,11 @@
 			</div>
 			
 			<div class="admin-order-search-container">
-			    <form method="GET" class="admin-order-search" action="${pageContext.request.contextPath}/admin/adminOrderSearch.do">
+			    <form:form 
+			    	method="GET" 
+			    	class="admin-order-search" 
+			    	action="${pageContext.request.contextPath}/admin/adminOrderSearch.do"
+			    	enctype="multipart/form-data">
 			        <label for="searchKeyword">상품검색:</label>
 			        	<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드"><br>
 
@@ -77,23 +69,33 @@
 			        <label>결제방법:</label>
 				    <input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
 					<label for="all">전체</label>
-					<c:forEach items="${method}" var="orderMethod" varStatus="vs">
-					    <input type="checkbox" id="${orderMethod}" name="paymentMethod" value="${vs}">
-					    <label for="${orderMethod}">${orderMethod}</label>
-				    </c:forEach>
+				    <input type="checkbox" id="deposit" name="paymentMethod" value="0">
+				    <label for="deposit">무통장</label>
+				    <input type="checkbox" id="creditcard" name="paymentMethod" value="1">
+				    <label for="creditcard">신용카드</label>
 			        <br>
 			        
 			        <label>주문상태:</label>
 				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
 				    <label for="orderStatusAll">전체</label>
-				    <c:forEach items="${status}" var="orderStatus" varStatus="vs">
-					    <input type="checkbox" id="${orderStatus}" name="orderStatus" value="${vs}">
-					    <label for="${orderStatus}">${orderStatus}</label>
-				    </c:forEach>
+				    <input type="checkbox" id="waiting" name="orderStatus" value="0">
+				    <label for="waiting">결제대기</label>
+				    <input type="checkbox" id="completeDeposit" name="orderStatus" value="1">
+				    <label for="completePayment">결제완료</label>
+				    <input type="checkbox" id="readyDelivery" name="orderStatus" value="2">
+				    <label for="readyDelivery">배송준비</label>
+				    <input type="checkbox" id="delivering" name="orderStatus" value="3">
+				    <label for="delivering">배송중</label>
+				    <input type="checkbox" id="delivered" name="orderStatus" value="4">
+				    <label for="delivered">배송완료</label>
+				    <input type="checkbox" id="canceled" name="orderStatus" value="5">
+				    <label for="canceled">취소</label>
+				    <input type="checkbox" id="refunded" name="orderStatus" value="6">
+				    <label for="refunded">환불</label>
 			        <br>
 			        
 			        <button type="submit">검색</button>
-			    </form>
+			    </form:form>
 			</div>
 			
 			<div class="card mb-4">
