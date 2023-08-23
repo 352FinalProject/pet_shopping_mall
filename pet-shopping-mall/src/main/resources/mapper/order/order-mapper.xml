@@ -29,6 +29,131 @@
 	order by
 		ot.order_id desc
 	</select>
+
+  	<resultMap type="OrderAdminListDto" id="orderAdminListDto">
+	  	<id column="order_id" property="orderId" />
+	  	<result column="order_date" property="orderDate" />
+	  	<result column="order_no" property="orderNo" />
+	  	<result column="product_name" property="productName" />
+	  	<result column="order_status" property="orderStatus" />
+	  	<result column="payment_status" property="paymentState" />
+	  	<result column="member_id" property="memberId" />
+	  	<result column="amount" property="amount" />
+	  	<result column="delivery_fee" property="deliveryFee" />
+	  	<result column="payment_method" property="paymentMethod" />
+  	</resultMap> 
+  
+  
+  <select id="getOrderList" resultType="orderHistoryDto">
+select
+    ot.order_date,
+    ot.order_no,
+    ot.order_status,
+    (select product_name from product where product_id = pd.product_id) product_name,
+    od.product_detail_id,
+    od.quantity,
+    ot.amount
+from
+    orderTbl ot left join order_detail od on ot.order_id = od.order_id
+    left join product_detail pd on od.product_detail_id = pd.product_detail_id
+    left join product p on p.product_id = pd.product_id
+where
+    ot.member_id = #{memberId}
+order by
+	ot.order_date desc
+  </select>
+  
+  <select id="getOrderListByPeriod" resultType="orderHistoryDto">
+  select
+    ot.order_date,
+    ot.order_no,
+    ot.order_status,
+    (select product_name from product where product_id = pd.product_id) product_name,
+    od.product_detail_id,
+    od.quantity,
+    ot.amount
+from
+    orderTbl ot left join order_detail od on ot.order_id = od.order_id
+    left join product_detail pd on od.product_detail_id = pd.product_detail_id
+    left join product p on p.product_id = pd.product_id
+where
+    order_date &gt;= ADD_MONTHS(TRUNC(SYSDATE), -#{period})
+    and
+    ot.member_id = #{memberId}
+order by
+	ot.order_date desc
+  </select>
+  
+  
+  
+  <resultMap type="OrderHistoryDto" id="orderHistoryDto">
+  	<result column="order_date" property="orderDate" />
+  	<result column="order_no" property="orderNo" />
+  	<result column="order_status" property="orderStatus" />
+  	<result column="product_name" property="productName" />
+  	<result column="product_detail_id" property="productDetailId" />
+  	<result column="quantity" property="quantity" />
+  	<result column="amount" property="amount" />
+  </resultMap>
+  
+  
+  <select id="adminOrderSearch" resultMap="orderAdminListDto">
+  	SELECT
+	    ot.order_id,
+	    ot.order_date,
+	    ot.order_no,
+	    p.product_name,
+	    ot.order_status,
+	    ot.payment_status,
+	    ot.member_id,
+	    ot.amount,
+	    ot.delivery_fee,
+	    pay.payment_method
+	FROM
+	    orderTbl ot
+	LEFT JOIN
+	    order_detail od ON ot.order_id = od.order_id
+	LEFT JOIN
+	    product_detail pd ON od.product_detail_id = pd.product_detail_id
+	LEFT JOIN
+	    product p ON pd.product_id = p.product_id
+	LEFT JOIN
+	    payment pay ON ot.order_id = pay.order_id
+    <where>
+   		ot.order_status IN
+        <foreach 
+        	collection="orderStatus" 
+        	item="status" 
+        	open="(" 
+        	separator="," 
+        	close=")">
+            #{status}
+        </foreach>
+   		AND pay.payment_method IN
+        <foreach 
+        	collection="paymentMethod" 
+        	item="method" 
+        	open="(" 
+        	separator="," 
+        	close=")">
+            #{method}
+        </foreach>
+    	<if test="searchKeyword != ''">
+		    AND (ot.order_no LIKE '%' || #{searchKeyword} || '%' OR p.product_name LIKE '%' || #{searchKeyword} || '%')
+	    </if>
+    	<if test="startDate != ''">
+		    AND ot.order_date &gt;= #{startDate}
+    	</if>
+    	<if test="endDate != ''">
+		    AND ot.order_date &lt;= #{endDate}
+    	</if>
+   	</where>
+	ORDER BY
+	    ot.order_id DESC
+  </select>
+  
+  
+
 	<resultMap type="OrderAdminListDto" id="orderAdminListDto">
 		<id column="order_id" property="orderId" />
 		<result column="order_date" property="orderDate" />
@@ -172,5 +297,6 @@
 		<result column="quantity" property="quantity" />
 		<result column="amount" property="amount" />
 	</resultMap>
+
 </mapper>
 

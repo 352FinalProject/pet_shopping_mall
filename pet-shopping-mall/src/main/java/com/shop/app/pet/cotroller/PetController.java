@@ -39,6 +39,7 @@ public class PetController {
 	// 1. 펫 디테일 클래스 만들기. 2.펫에 빌더 추가하기. 3.펫 컨트롤러에 빌더 가져오기. 4.인서트 쿼리문 작성 레파지토리에(했고)
 
 	@GetMapping("/petProfile.do")
+	
 	public void petProfile() {}
 	
 	@PostMapping("/petProfile.do") // 1. 이부분 .do 추가
