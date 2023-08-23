@@ -38,6 +38,7 @@ import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.entity.TermsHistory;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
@@ -84,10 +85,6 @@ public class MemberSecurityController {
 	        return "redirect:/member/memberCreate.do";
 	    }
 
-			@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
-			BindingResult bindingResult, // 유효성 검사 결과
-			RedirectAttributes redirectAttr) { // 리다이렉트시 전달 할 속성
-		
 		
 		if(bindingResult.hasErrors()) {
 		    ObjectError error = bindingResult.getAllErrors().get(0);
