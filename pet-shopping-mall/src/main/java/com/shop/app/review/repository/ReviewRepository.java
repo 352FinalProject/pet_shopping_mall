@@ -18,7 +18,7 @@ import com.shop.app.review.entity.ReviewDetails;
 public interface ReviewRepository {
 
 	// 리뷰작성
-	@Insert("insert into review (review_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{reviewMemberId}, #{reviewStarRate}, #{reviewTitle}, #{reviewContent}, default)")
+	@Insert("insert into review (review_id, pet_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId}, #{reviewMemberId}, #{reviewStarRate}, #{reviewTitle}, #{reviewContent}, default)")
 	@SelectKey(
 			before = false, 
 			keyProperty = "reviewId", 
@@ -46,7 +46,8 @@ public interface ReviewRepository {
 	int reviewDelete(int reviewId);
 	
 	// 리뷰 상세조회
-	@Select("select * from review where review_id = #{reviewId}")
+	@Select("select * from review r join pet p on r.pet_id = p.pet_id where review_id = #{reviewId}")
+	// "select * from review where review_id = #{reviewId}"
 	Review findReviewId(Review review);
 
 	// 리뷰 상세조회 - 이미지 조회

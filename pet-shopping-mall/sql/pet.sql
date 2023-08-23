@@ -274,7 +274,6 @@ create table cancel_order (
     order_id number,
     constraint pk_cancel_id primary key(cancel_id),
     constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
-
 );
 
 -- 대충 시큐리티 테이블 없으면 오류남

@@ -1,5 +1,14 @@
 package com.shop.app.payment.controller;
 
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.apache.taglibs.standard.lang.jstl.NamedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,8 +27,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.apache.http.HttpResponse;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +40,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.dto.CartListDto;
 import com.shop.app.cart.service.CartService;
@@ -64,13 +78,13 @@ public class PaymentController {
 	PointService pointService;
 
 	private IamportClient iamportClient;
-	private IamportApi IamportApi;
-
+	private IamportApi iamportApi;
+	public static final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
+	public static final String IMPORT_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
 
 	public PaymentController(IamportApi api) {
-		this.IamportApi = api;
+		this.iamportApi = api;
 		String IMP_API = api.getApiKey();
-		log.debug("IMP_API = {}" , IMP_API);
 		String IMP_SECRET = api.getApiSecret();
 		this.iamportClient = new IamportClient(IMP_API, IMP_SECRET);
 	}
@@ -173,9 +187,10 @@ public class PaymentController {
 	@ResponseBody
 	public IamportResponse<Payment> paymentByImpUid(Model model, Locale locale, HttpSession session
 			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException{
-		log.debug("imp_uid= {}", imp_uid);
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
+	
+	
 	
 	
 	
@@ -183,12 +198,8 @@ public class PaymentController {
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid, @AuthenticationPrincipal MemberDetails member) {
 		String orderNo = merchantUid;
+		// payment 테이블에 삽입 및 orderTbl 상태 업데이트
 		int result = paymentService.updatePayStatus(orderNo);
-		
-		// 주문이 완료되면 장바구니 전체 비우기
-		String memberId = member.getMemberId();
-		 int deleteCart = cartService.deleteCartAll(memberId);
-		
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(Map.of("result", 1));
@@ -199,13 +210,16 @@ public class PaymentController {
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted() {}
 	
+	
+	
+	
+	
 	/*
 	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)
 	 * */
 	@PostMapping("/verifyAndHandleCancelledPayment/{imp_uid}")
 	@ResponseBody
 	public ResponseEntity<?> verifyAndHandleCancelledPayment(@Valid @RequestBody OrderCreateDto _order, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException {
-	    log.debug("imp_uid_rollback = {}", imp_uid);
 	    
 	    // 1. 결제 정보 가져오기
 	    IamportResponse<Payment> paymentResponse = iamportClient.paymentByImpUid(imp_uid);
@@ -221,13 +235,9 @@ public class PaymentController {
 	    
 	    // 2. db에서 주문 정보 가져오기
 	    Order findOrder = orderService.findByOrder(order);
-	    log.debug("findOrder = {}", findOrder);
 
 	    String memberId = _order.getMemberId();
 		int pointsUsed = findOrder.getDiscount();
-	    
-	    log.debug("_order = {}", _order);
-	    log.debug("pointsUsed = {}", pointsUsed);
 	    
 	    // 3. 결제 상태가 'failed'인지 확인
 	    if ("failed".equalsIgnoreCase(payment.getStatus())) {
@@ -238,6 +248,8 @@ public class PaymentController {
 
 	    return ResponseEntity.ok(paymentResponse);
 	}
+	
+	
 
 	private void handleCancelledPayment(String memberId, int usedPoints) {
 	    // 1. 포인트 반환 로직
@@ -256,6 +268,81 @@ public class PaymentController {
 
 	    // 4. 취소된 포인트를 db에 저장
 	    int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
-	    log.debug("pointRollback = {}", pointRollback);
+	}
+	
+	
+	
+	@PostMapping("/refundOrder.do")
+	public String refundOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr, @RequestParam String isRefund) {
+		String token = getImportToken();
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(IMPORT_CANCEL_URL);
+		Map<String, String> map = new HashMap<>();
+		
+        post.setHeader("Authorization", token); 
+        map.put("merchant_uid", orderNo); 
+        String result = "";
+        try { 
+            post.setEntity(new UrlEncodedFormEntity(convertParameter(map))); 
+            HttpResponse res = client.execute(post); 
+            ObjectMapper mapper = new ObjectMapper(); 
+            String enty = EntityUtils.toString(res.getEntity()); 
+            JsonNode rootNode = mapper.readTree(enty); result = rootNode.get("response").asText();
+        } catch (Exception e) { 
+            e.printStackTrace(); 
+        } 
+        
+        if (result.equals("null")) { 
+        	redirectAttr.addFlashAttribute("msg", "환불 실패");
+        	return "redirect:/order/orderList.do";
+        } else { 
+        	orderService.insertCancelOrder(orderNo, isRefund);
+        	redirectAttr.addFlashAttribute("msg", "환불 성공");
+        	return "redirect:/order/orderList.do";
+        }
+	}
+	
+	
+	
+	/**
+	 * 아임포트 토큰을 받아오는 함수
+	 */
+	public String getImportToken() {
+		String result = "";
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(IMPORT_TOKEN_URL);
+		Map<String, String> map = new HashMap<>();
+		
+		
+		map.put("imp_key", iamportApi.getApiKey());
+	    map.put("imp_secret", iamportApi.getApiSecret());
+		
+	    try {
+			post.setEntity(new UrlEncodedFormEntity(convertParameter(map)));
+			HttpResponse response = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			
+			String body = EntityUtils.toString(response.getEntity());
+			JsonNode rootNode = mapper.readTree(body);
+			log.debug("rootNode = {}", rootNode);
+			JsonNode resNode =  rootNode.get("response");
+			log.debug("resNode = {}", resNode);
+			 result = resNode.get("access_token").asText(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * Map을 List<NameValuePair>으로 형변환하는 메소드 (담희)
+	 */
+	public List<NameValuePair> convertParameter(Map<String, String> paramMap) {
+		List<NameValuePair> params = new ArrayList<>();
+		for(Map.Entry<String, String> entry : paramMap.entrySet()) {
+			params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+		}
+		return params;
 	}
 }

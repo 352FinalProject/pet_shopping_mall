@@ -116,15 +116,15 @@
 									<fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd"/>
 								</em>
 							</div>
- 							<c:if test="${not empty petId}">
-								<div class="reivew-pet-box"> <%-- 펫정보 --%>
+<%--  							<c:if test="${not empty petId}">
+								<div class="reivew-pet-box"> 펫정보
 									<em class="review-pet-name">${petId[0].petName} |</em>
 									<em class="review-pet-name">${petId[0].petGender} |</em>
 									<em class="review-pet-name">${petId[0].petAge}살 |</em>
 									<em class="review-pet-name">${petId[0].petWeight}kg |</em>
 									<em class="review-pet-name">${petId[0].petBreed} </em>
 								</div>
-							</c:if> 
+							</c:if>  --%>
 							<div class="review-detail-box"> <%-- 리뷰 제목/별점/사진/내용 --%>
 								<div class="score_star">
 									 <c:choose>
