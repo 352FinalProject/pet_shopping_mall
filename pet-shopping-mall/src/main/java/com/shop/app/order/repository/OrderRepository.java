@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
@@ -72,6 +73,9 @@ public interface OrderRepository {
 
 
 	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+
+	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
+	List<OrderAdminProductStatisticsDto> adminStatisticsProduct();
 
 	
 }

@@ -277,7 +277,7 @@ insert into product_detail values(seq_product_detail_id.nextval, 2, '추가1', '
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9);
 
 insert into cart values(1, 'honggd');
-
+select * from cart;
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
 insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
 select * from cartitem;
@@ -665,10 +665,24 @@ SELECT
 	ORDER BY
 	    ot.order_id DESC;
 
-
-
-
-
+SELECT
+    p.product_id,
+    p.category_id,
+    p.product_name,
+    pc.category_name,
+    SUM(od.quantity) AS total_quantity_sold
+FROM
+    product p
+    JOIN product_category pc ON p.category_id = pc.category_id
+    JOIN product_detail pd ON p.product_id = pd.product_id
+    LEFT JOIN order_detail od ON pd.product_detail_id = od.product_detail_id
+    LEFT JOIN orderTbl ot ON od.order_id = ot.order_id
+WHERE
+    ot.payment_status = 1
+GROUP BY
+    p.product_id, p.product_name, pc.category_name
+ORDER BY
+    total_quantity_sold DESC;
 
 
 

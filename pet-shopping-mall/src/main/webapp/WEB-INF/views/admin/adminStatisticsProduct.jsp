@@ -27,7 +27,7 @@
 					<i class="fas fa-chart-bar me-1"></i>전체 상품별 매출 top6
 				</div>
 				<div class="card-body">
-					<canvas id="myBarChart" width="100%" height="40"></canvas>
+					<canvas id="productChartBar" width="100%" height="40"></canvas>
 				</div>
 				<div class="card-footer small text-muted">Updated yesterday at
 					11:59 PM</div>
@@ -35,31 +35,39 @@
 			
 			<div class="card mb-4">
 				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 매출 조회
+					<i class="fas fa-table me-1"></i> 매출액 순위
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple">
 						<thead>
-							<th>순위</th>
-							<th>이미지</th>
-							<th>상품코드</th>
-							<th>상품명</th>
-							<th>판매가</th>
+							<tr>
+								<th>순위</th>
+								<th>상품코드</th>
+								<th>상품명</th>
+								<th>카테고리</th>
+								<th>상품가격</th>
+								<th>판매수량</th>
+								<th>판매액</th>
+							</tr>
 						</thead>
 						<tbody>
-							<c:forEach begin="0" end="20" step="1" varStatus="status">
+							<c:forEach items="${productStatistics}" var="productStatistic" varStatus="vs">
 								<tr>
-									<td>순위</td>
-									<td>이미지</td>
-									<td>상품코드</td>
-									<td>상품명</td>
-									<td>판매가</td>
+									<td>${vs.count}</td>
+									<td>${productStatistic.productId}</td>
+									<td>${productStatistic.productName}</td>
+									<td>${productStatistic.categoryName}</td>
+									<td>${productStatistic.productPrice}</td>
+									<td>${productStatistic.totalSold}</td>
+									<td>${productStatistic.totalPrice}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 			</div>
+			
+			
 			
 		</div>
 	</main>

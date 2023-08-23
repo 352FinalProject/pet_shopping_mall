@@ -27,7 +27,7 @@
 						<a class="nav-link"	href="${pageContext.request.contextPath}/admin/admin.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
-							</div> 관리자 홈
+							</div> 대시보드
 						</a>
 						<div class="sb-sidenav-menu-heading">회원목록</div>
 						<a class="nav-link"

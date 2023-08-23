@@ -84,7 +84,7 @@
 						<tbody>
 							<c:forEach items="${orderlists}" var="orderlist" varStatus="vs">
 								<tr>
-									<td>${orderlist.orderId}</td>
+									<td>${vs.count}</td>
 									<td>${orderlist.orderDate}</td>
 									<td>${orderlist.orderNo}</td>
 									<td>${orderlist.productName}</td>

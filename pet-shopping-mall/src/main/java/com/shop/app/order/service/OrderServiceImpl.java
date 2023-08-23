@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
 
 import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
@@ -50,6 +51,12 @@ public class OrderServiceImpl implements OrderService {
 			List<String> paymentMethod, List<String> orderStatus) {
 		return orderRepository.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
 	}
+	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
+	@Override
+	public List<OrderAdminProductStatisticsDto> adminStatisticsProduct() {
+		return orderRepository.adminStatisticsProduct();
+	}
+	
 
 	// 2. db에서 주문 정보 가져오기 (예라)
 	@Override

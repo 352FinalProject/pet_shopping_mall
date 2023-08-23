@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Arrays;
-
+import java.util.Comparator;
 import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -44,6 +45,7 @@ import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
 
 import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.service.OrderService;
 
 import com.shop.app.product.dto.ProductCreateDto;
@@ -73,9 +75,6 @@ public class AdminController {
 	
 	@Autowired
 	private ProductService productService;
-	
-	@GetMapping("/admin.do")
-	public void admin() {}
 	
 	@GetMapping("/index.do")
 	public void admin2() {}
@@ -246,7 +245,7 @@ public class AdminController {
 	 * 주문 조회
 	 * @param model
 	 */
-	@GetMapping("/adminOrderList.do")
+	@GetMapping({"/adminOrderList.do", "/admin.do"})
 	public void adminOrderList(Model model) {
 		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
 		model.addAttribute("orderlists", orderlists);
@@ -307,7 +306,19 @@ public class AdminController {
 	 * 상품별 판매량통계
 	 */
 	@GetMapping("/adminStatisticsProduct.do")
-	public void adminStatisticsProduct() {
+	public void adminStatisticsProduct(Model model) {
+		List<OrderAdminProductStatisticsDto> productStatistics = orderService.adminStatisticsProduct();
+		model.addAttribute("productStatistics", productStatistics);
+		
+		productStatistics.sort(Comparator.comparingInt(OrderAdminProductStatisticsDto::getTotalSold).reversed());
+	    
+	    List<OrderAdminProductStatisticsDto> topProducts = productStatistics.stream()
+	            .limit(10)
+	            .collect(Collectors.toList());
+	    
+	    model.addAttribute("topProducts", topProducts);
+		
+		
 		
 		
 	}

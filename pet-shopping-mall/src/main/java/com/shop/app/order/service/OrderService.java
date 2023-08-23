@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.Order;
@@ -39,6 +40,9 @@ public interface OrderService {
 	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
 
 	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+	
+	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
+	List<OrderAdminProductStatisticsDto> adminStatisticsProduct();
 
 
 	

@@ -85,46 +85,72 @@
 					</div>
 					<div class="card mb-4">
 						<div class="card-header">
-							<i class="fas fa-table me-1"></i> 주문 목록
+							<i class="fas fa-table me-1"></i> 최근 주문 목록
 						</div>
 						<div class="card-body">
-							<table id="datatablesSimple">
-								<thead>
-									<tr>
-										<th>번호</th>
-										<th>주문일시</th>
-										<th>주문번호</th>
-										<th>이미지</th>
-										<th>주문상품</th>
-										<th>수량</th>
-										<th>상품금액</th>
-										<th>배송비</th>
-										<th>주문상태</th>
-										<th>주문자</th>
-										<th>총주문액</th>
-										<th>결제방법</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach begin="0" end="20" step="1" varStatus="status">
-										<tr>
-											<th>${status.count}</th>
-											<th>주문일시</th>
-											<th><a href="#" />주문번호</th>
-											<th><a href="#" />이미지</th>
-											<th><a href="#" />주문상품</th>
-											<th>수량</th>
-											<th>상품금액</th>
-											<th>배송비</th>
-											<th>주문상태</th>
-											<th>주문자</th>
-											<th>총주문액</th>
-											<th>결제방법</th>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+					<table id="datatablesSimple">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>주문일시</th>
+								<th>주문번호</th>
+								<th>주문상품</th>
+								<th>주문상태</th>
+								<th>주문자</th>
+								<th>결제액</th>
+								<th>배송비</th>
+								<th>결제방법</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${orderlists}" var="orderlist" varStatus="vs">
+								<tr>
+									<td>${vs.count}</td>
+									<td>${orderlist.orderDate}</td>
+									<td>${orderlist.orderNo}</td>
+									<td>${orderlist.productName}</td>
+									<td>
+										<c:if test="${orderlist.orderStatus == 0}">
+											결제대기
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 1}">
+											결제완료
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 2}">
+											배송준비
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 3}">
+											배송중
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 4}">
+											배송완료
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 5}">
+											주문취소
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 6}">
+											환불
+										</c:if>
+										<c:if test="${orderlist.orderStatus == 7}">
+											반품
+										</c:if>
+									</td>
+									<td>${orderlist.memberId}</td>
+									<td>${orderlist.amount}</td>
+									<td>${orderlist.deliveryFee}</td>
+									<td>
+										<c:if test="${orderlist.paymentMethod == 0}">
+											카카오페이
+										</c:if>
+										<c:if test="${orderlist.paymentMethod == 1}">
+											신용카드
+										</c:if>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 					</div>
 				</div>
 			</main>

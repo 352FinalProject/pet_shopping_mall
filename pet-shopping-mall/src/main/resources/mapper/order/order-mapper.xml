@@ -41,6 +41,7 @@
       <result column="delivery_fee" property="deliveryFee" />
       <result column="payment_method" property="paymentMethod" />
    </resultMap>
+   
 	<select id="adminOrderSearch" resultMap="orderAdminListDto">
 	  	SELECT
 		    ot.order_id,
@@ -96,6 +97,38 @@
 		    ot.order_id DESC
 	  </select>
 
+	<select id="adminStatisticsProduct" resultMap="orderAdminProductStatisticsDto">
+	SELECT
+	    p.product_id,
+	    p.product_name,
+	    p.category_id,
+	    pc.category_name,
+	    p.product_price,
+	    SUM(od.quantity) AS total_sold,
+	    SUM(od.quantity * p.product_price) AS total_price
+	FROM
+	    product p
+	    JOIN product_category pc ON p.category_id = pc.category_id
+	    JOIN product_detail pd ON p.product_id = pd.product_id
+	    LEFT JOIN order_detail od ON pd.product_detail_id = od.product_detail_id
+	    LEFT JOIN orderTbl ot ON od.order_id = ot.order_id
+	WHERE
+	    ot.payment_status = 1
+	GROUP BY
+	    p.product_id, p.product_name, p.category_id, pc.category_name, p.product_price
+	ORDER BY
+	    total_sold DESC
+   </select>
+   <resultMap type="OrderAdminProductStatisticsDto" id="orderAdminProductStatisticsDto">
+      <id column="product_id" property="productId" />
+      <result column="product_name" property="productName" />
+      <result column="category_id" property="categoryId" />
+      <result column="category_name" property="categoryName" />
+      <result column="product_price" property="productPrice" />
+      <result column="total_sold" property="totalSold" />
+      <result column="total_price" property="totalPrice" />
+   </resultMap>
+   
    <select id="getOrderList" resultType="orderHistoryDto">
    select
       ot.order_date,
