@@ -126,7 +126,7 @@
 	            </div>
 	        </div>
 	        <div class="col-md-6">
-	            <button type="button" class="btn btn-secondary" onclick="updateProductOption(${productDetail.productDetailId});">옵션수정</button>
+	            <button type="button" class="btn btn-secondary" onclick='updateProductOption("${productDetail.productDetailId}");'>옵션수정</button>
 	            <button type="button" class="btn btn-danger" onclick="deleteProductOption(${productDetail.productDetailId});">삭제</button>
 	        </div>
 	    </div>
@@ -182,19 +182,28 @@ const updateProduct = () => {
 // 상품 삭제 
 const deleteProduct = (productId) => {
     if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
+        const requestData = {
+            productId: productId // Remove unnecessary backticks and curly braces
+        };
+		console.log(requestData);
         $.ajax({
-            url: '${pageContext.request.contextPath}/admin/adminProductDelete.do?productId=' + productId,
+            url: '${pageContext.request.contextPath}/admin/adminProductDelete.do',
             type: 'POST',
             dataType: 'json',
+            data: JSON.stringify(requestData),
+            contentType: 'application/json',
             success: function(response) {
-                if (response.code === 200) {
-                    alert('상품이 성공적으로 삭제되었습니다.');
-                    // Refresh the page or update the UI as needed
-                }
+                alert('삭제 성공했습니다');
+                window.location.href = '${pageContext.request.contextPath}/admin/adminProductList.do';
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                // Handle error if needed
+                alert('삭제 실패했습니다');
             }
         });
     }
 };
+
 
 
 //상품 옵션 업데이트 함수
@@ -213,7 +222,8 @@ const updateProductOption = (productDetailId) => {
         saleState: saleState
         // 여기에 다른 필드들도 추가하면 됩니다.
     };
-
+	console.log(requestData);
+    
     // Ajax 요청
     $.ajax({
         url: '${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?id=' + productDetailId,
@@ -237,19 +247,19 @@ const updateProductOption = (productDetailId) => {
 // 상품옵션 삭제 요청
 const deleteProductOption = (productDetailId) => {
     const requestData = {
-            productDetailId: productDetailId
+            productDetailId: `\${productDetailId}`
         };
-	
+	console.log(requestData);
 	if (confirm('정말로 이 옵션을 삭제하시겠습니까?')) {
         $.ajax({
             url: '${pageContext.request.contextPath}/admin/adminProductOptionDelete.do',
             type: 'POST',
             dataType: 'json',
+            contentType: 'application/json',
             data: JSON.stringify(requestData),
             success: function(response) {
                 if (response.code === 200) {
                     alert('옵션이 성공적으로 삭제되었습니다.');
-                    // Refresh the page or update the UI as needed
                 } else {
                     alert('옵션 삭제 실패! 관리자에게 문의하세요.');
                 }
