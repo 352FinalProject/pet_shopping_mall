@@ -185,7 +185,8 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
     values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-01-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
         
-
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '231231', 'honggd', default, 2, 1, 27000,3000, 0, 30000, 0);
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
 values (seq_point_id.nextval, 'member1', 3000, '회원가입', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
@@ -265,6 +266,8 @@ delete from product where product_id = 4;
 update cartitem set product_detail_id=1 where product_detail_id=0;
 select * from cartitem;
 
+select * from payment;
+
 select * from product_detail;
 
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2);
@@ -334,6 +337,26 @@ from
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
 where 
     ci.product_detail_id = 2;
+    
+    
+
+-- 주문 취소 내역 불러오기
+select
+    m.name,
+    m.phone,
+    ot.order_no,
+    ot.order_date,
+    ot.order_status,
+    ot.total_price,
+    p.payment_method,
+    p.payment_date,
+    ot.payment_status,
+    ot.amount,
+    ot.discount
+from
+    orderTbl ot left join member m on ot.member_id = m.member_id 
+    left join payment p on p.order_id = ot.order_id;
+    
 -------------------------------------------------------------------
 
 select * from member;
