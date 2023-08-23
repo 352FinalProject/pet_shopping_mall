@@ -19,7 +19,7 @@ public class Review {
 
 	private int reviewId;
 	private int petId;
-	private int orderId;
+	private int productId;
 	private int productDetailId;
 	private String reviewMemberId;
 	private String reviewTitle;
@@ -30,7 +30,7 @@ public class Review {
 	private LocalDateTime reviewCreatedAt;
 	
 	// review와 연결된 pet 정보
-	private Pet pet;
+//	private Pet pet;
 	
 	
 }

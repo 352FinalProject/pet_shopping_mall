@@ -508,7 +508,7 @@ insert into order_detail (order_id, product_detail_id, quantity) values (26,1,de
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
 
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+insert into product (product_id, category_id, product_name, product_price, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 2, '말랑 개껌', 35000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
     
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(1, 0, systimestamp, 38000, 13);    
@@ -523,8 +523,8 @@ insert into payment (payment_id, payment_method, payment_date, amount, order_id)
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(14, 1, systimestamp, 30000, 25);    
 
 ------------------------
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
+insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 2, '말랑 개껌', 10000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
@@ -554,6 +554,8 @@ insert into product_detail (product_detail_id, product_id, option_name, option_v
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
     values (seq_product_detail_id.nextval, 2, '맛', '닭고기', default, 20, 1);
 select * from product_detail;
+
+insert into product_category (category_id, category_name) values (seq_category_id.nextval, '카테고리');
 
 ----주문테이블 더미
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
