@@ -113,7 +113,9 @@ isELIgnored="false" %>
 				<li class="review-regdate">등록일</li>
 			</ul> -->
       <ul class="review-product-utility">
-        <c:if test="${empty reviews}"> 작성된 리뷰가 없습니다. </c:if>
+        <c:if test="${empty reviews}"> 
+        	작성된 리뷰가 없습니다. 
+        </c:if>
         <c:if test="${not empty reviews}">
           <c:forEach items="${reviews}" var="review" varStatus="vs">
             <li>
@@ -167,17 +169,22 @@ isELIgnored="false" %>
                       </c:when>
                     </c:choose>
                   </div>
-                  <div class="review-warp"></div>
+					    <div class="review-warp">
+					        <div class="detail-upload">
+									<img src="${pageContext.request.contextPath}/resources/upload/product/${reviewImageMap[review.reviewId]}" alt="Review Image">
+					            </div>
+					        </div>
+					   </div>
                   <div class="review-data-wrap">
                     <span class="review-data"></span>
                   </div>
                 </div>
               </div>
             </li>
-          </c:forEach>
-        </c:if>
-      </ul>
-    </div>
+      	</c:forEach>
+      </c:if>
+   </ul>
+</div>
 
     <div id="Accordion_wrap">
       <%--

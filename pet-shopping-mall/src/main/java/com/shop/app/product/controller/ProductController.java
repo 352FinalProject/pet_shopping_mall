@@ -34,6 +34,7 @@ import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
+import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -147,21 +148,34 @@ public class ProductController {
 	    model.addAttribute("totalPages", totalPages);
 
 	    List<Review> reviews = reviewService.findProductReviewAll(params);
-	    log.debug("reviews = {}", reviews);
 	    model.addAttribute("reviews", reviews);
 
+	    // 상품 상세 페이지에 펫 정보 뿌려주기
 	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 
-	    log.debug("reviewPetsMap = {}", reviewPetsMap);
 	    for (Review review : reviews) {
 	        List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
 	        reviewPetsMap.put(review.getReviewId(), pets);
-	        
-	        log.debug("pets = {}", pets);
-	        log.debug("review.getReviewMemberId() = {}", review.getReviewMemberId());
-	        log.debug("review.getReviewId() = {}", review.getReviewId());
 	    }
-
+	    
+	    // 상품 상세 페이지에 이미지 파일 뿌려주기
+	    Map<Integer, String> reviewImageMap = new HashMap<>();
+	    for (Review review : reviews) {
+	        int reviewId2 = review.getReviewId();
+	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
+	        
+	        log.debug("reviewDetails = {}", reviewDetails);
+	        
+	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+	            String imageFilename = reviewDetails.getAttachments().get(0).getImageOriginalFilename();
+	            log.debug("imageFilename = {}", imageFilename);
+	            reviewImageMap.put(reviewId2, imageFilename);
+	        }
+	    }
+	    
+	    log.debug("reviewImageMap = {}", reviewImageMap);
+	    
+	    model.addAttribute("reviewImageMap", reviewImageMap);
 	    model.addAttribute("reviewPetsMap", reviewPetsMap);
 	}
 

@@ -173,7 +173,7 @@ ul.nav {
 		<div class="product-gallery">
 			<ul class="gallery">
 				<div class="product-card">
-					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=1&reviewId=1">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=1&reviewId=3">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
 					</figure>

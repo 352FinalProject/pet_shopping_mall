@@ -46,6 +46,8 @@ public interface ReviewService {
 	// 상품 상세페이지 이미지 조회
 	ReviewDetails findImageAttachmentsByReviewMemberId(int reviewId);
 
+	String findImageFilenameByReviewId(int reviewId2);
+
 
 //	List<ReviewDetailDto> findProductReviewDetails(List<Review> reviews);
 

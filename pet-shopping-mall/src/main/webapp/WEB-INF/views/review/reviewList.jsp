@@ -43,7 +43,7 @@
                                         src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"
                                         onclick="toggleAccordion(this);">
                                     <div style="text-align: center;">
-                                        ${review.productName}
+                                        <%-- ${review.productName} --%>
                                     </div>
                                 </div>
                             </td>

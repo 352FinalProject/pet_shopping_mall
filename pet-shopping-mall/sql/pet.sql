@@ -198,13 +198,14 @@ create table image_attachment_mapping (
     constraint pk_question_image_mapping_id primary key(mapping_id),
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
-select * from image_attachment_mapping;
+
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
+
 
 -- 상품 테이블
 create table product (
@@ -323,9 +324,6 @@ create table review (
     constraint fk_product_product_id foreign key (product_id) references product(product_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
-
-
-select * from review;
 
 create table community (
     community_id number,
@@ -456,18 +454,6 @@ create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
 
-select * from member;
-select * from point;
-select * from pet;
-select * from review;
-select * from coupon;
-select * from member_coupon;
-select * from terms;
-select * from terms_history;
-select * from product;
-
-select * from pet where member_id = 'member2';
-
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
 after insert on member
@@ -485,14 +471,3 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
-
-SELECT pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, TO_CHAR(pet_adoption, 'YYYY-MM-DD') AS pet_adoption, pet_gender, pet_created_at FROM pet WHERE pet_id = '4' AND member_id = 'member2';
-
-SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE p.pet_id = '1' AND r.review_member_id = 'member1';
-
-SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_id, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '1' AND r.review_member_id = 'member1';
-SELECT p.* FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '1' AND r.review_member_id = 'member1';
-
-SELECT p.*, r.* FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.pet_id = '1' AND r.review_member_id = 'member1';
-
-SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_id, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_member_id = 'member1';

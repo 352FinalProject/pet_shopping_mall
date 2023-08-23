@@ -92,10 +92,8 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	@Transactional
 	public ReviewDetailDto findReviewId(int reviewId) {
-		return reviewRepository.findReviewId(reviewId);
 		Review review = reviewRepository.findReviewId(reviewId);
 		Pet pet = petRepository.findPetById(review.getPetId());
-		Product product = productRepository.findProductById(review.getProductId());
 		
 	    ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
 	    reviewDetailDto.setReviewId(review.getReviewId());
@@ -110,11 +108,6 @@ public class ReviewServiceImpl implements ReviewService {
 	    reviewDetailDto.setPetBreed(pet.getPetBreed());
 	    reviewDetailDto.setPetWeight(pet.getPetWeight());
 	    reviewDetailDto.setPetGender(pet.getPetGender());
-	    
-	    reviewDetailDto.setProductId(product.getProductId());
-	    reviewDetailDto.setProductName(product.getProductName());
-	    
-	    log.debug("reviewDetailDto = {}", reviewDetailDto );
 
 	    return reviewDetailDto;
 	}
@@ -165,6 +158,12 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDetails findImageAttachmentsByReviewMemberId(int reviewId) {
 		return reviewRepository.findImageAttachmentsByReviewMemberId(reviewId);
 	}
+
+	@Override
+	public String findImageFilenameByReviewId(int reviewId2) {
+		return reviewRepository.findImageFilenameByReviewId(reviewId2);
+	}
+}
 
 
 
