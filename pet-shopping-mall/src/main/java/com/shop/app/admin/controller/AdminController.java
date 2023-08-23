@@ -253,11 +253,20 @@ public class AdminController {
 	        @RequestParam(required = false) List<String> paymentMethod,
 	        @RequestParam(required = false) List<String> orderStatus,
 				Model model) {
+		
+		if(paymentMethod.size() == 3) {
+			paymentMethod.remove(0);
+		}
+		if(orderStatus.size() == 8) {
+			orderStatus.remove(0);
+		}
+		
 		System.out.println(searchKeyword);
 		System.out.println(startDate);
 		System.out.println(endDate);
 		System.out.println(paymentMethod);
 		System.out.println(orderStatus);
+		
 		List<OrderAdminListDto> orderlists =
 				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
 		

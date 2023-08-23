@@ -593,4 +593,41 @@ from
 where
     ot.member_id = 'honggd';
     
-      
+
+
+SELECT
+	    ot.order_id,
+	    ot.order_date,
+	    ot.order_no,
+	    p.product_name,
+	    ot.order_status,
+	    ot.payment_status,
+	    ot.member_id,
+	    ot.amount,
+	    ot.delivery_fee,
+	    pay.payment_method
+	FROM
+	    orderTbl ot
+	LEFT JOIN
+	    order_detail od ON ot.order_id = od.order_id
+	LEFT JOIN
+	    product_detail pd ON od.product_detail_id = pd.product_detail_id
+	LEFT JOIN
+	    product p ON pd.product_id = p.product_id
+	LEFT JOIN
+	    payment pay ON ot.order_id = pay.order_id
+    WHERE
+            AND ot.order_date >= '23/08/20'
+		    AND ot.order_date <= '23/08/22'
+            AND pay.payment_method IN (0)
+            AND ot.order_status IN (1)
+            
+	ORDER BY
+	    ot.order_id DESC;
+
+
+
+
+
+
+
