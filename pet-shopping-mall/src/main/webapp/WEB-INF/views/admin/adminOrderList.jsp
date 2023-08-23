@@ -128,7 +128,7 @@
 									<td>${orderlist.deliveryFee}</td>
 									<td>
 										<c:if test="${orderlist.paymentMethod == 0}">
-											무통장입금
+											카카오페이
 										</c:if>
 										<c:if test="${orderlist.paymentMethod == 1}">
 											신용카드
