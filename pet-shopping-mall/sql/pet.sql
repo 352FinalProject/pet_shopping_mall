@@ -53,8 +53,11 @@ SELECT *  FROM all_tables;
 --drop table chat;
 --drop table chat_room;
 --drop table breed;
+--drop table coupon;
+--drop table member_coupon;
 --
----- 외래키 붙어있는 테이블삭제
+----
+------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
 --drop table product cascade constraints;
@@ -140,6 +143,7 @@ CREATE TABLE pet (
     CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
 );
 
+
 -- 품종 테이블
 CREATE TABLE breed (
     breed_id number,
@@ -160,30 +164,6 @@ create table question(
     review_id number,
     constraints pk_question_id primary key(question_id),
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
-);
-
--- 쿠폰 테이블
-create table coupon (
- coupon_id number,
- coupon_name varchar(100) not null, -- 쿠폰 이름 (ex. 배송비 무료 쿠폰 / 생일축하 쿠폰)
- discount_amount number, -- 할인 금액 (ex. 3,000원 - 배송비 무료 쿠폰)
- discount_percentage number(5, 2), -- 할인 비율 (ex. 10% - 생일 쿠폰)
- validity_start_date timestamp not null, -- 유효기간 (생일을 기준으로 언제부터)
- validity_end_date timestamp not null, -- 유효기간 (언제까지)
- constraint pk_coupon_id primary key(coupon_id)
-);
-
--- 멤버 쿠폰 테이블
-create table member_coupon (
- member_coupon_id number,
- coupon_id number,
- member_id varchar2(50),
- create_date timestamp default systimestamp not null, -- 발급 날짜
- use_status number(1) default 0, -- 사용 여부 (사용 안 하면 0, 사용하면 1)
- use_date timestamp, -- 사용 날짜
- constraint pk_member_coupon_id primary key(member_coupon_id),
- constraint fk_member_coupon_member_id foreign key(member_id) references member(member_id) on delete cascade,
- constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
 );
 
 -- qna 답변 테이블
@@ -343,6 +323,8 @@ create table review (
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
+select * from review;
+
 create table community (
     community_id number,
     community_member_id varchar2(50),
@@ -466,6 +448,17 @@ create sequence seq_chat_id;
 create sequence seq_chat_room_id;
 create sequence seq_terms_id;
 create sequence seq_terms_history_id;
+create sequence seq_terms_id;
+create sequence seq_member_coupon_id;
+create sequence seq_coupon_id;
+create sequence seq_history_id;
+
+select * from member;
+select * from point;
+select * from coupon;
+select * from member_coupon;
+select * from terms;
+select * from terms_history;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
@@ -484,3 +477,5 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
+
+select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.coupon_id = '1';

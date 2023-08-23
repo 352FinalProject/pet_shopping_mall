@@ -35,7 +35,7 @@ public class CouponServiceImpl implements CouponService {
 		return couponRepository.insertDeliveryCoupon(memberCoupon);
 	}
 	
-	@Scheduled(cron = "0 38 19 * * ?")  // 매월 1일 자정에 실행
+	@Scheduled(cron = "0 48 10 * * ?")  // 매월 1일 자정에 실행
 	public void issueBirthdayCoupons() {
 	    
 	    // 오늘 날짜 (매월 1일)
@@ -60,6 +60,13 @@ public class CouponServiceImpl implements CouponService {
 	        int result = couponRepository.insertDeliveryCoupon(memberCoupon);
 	    }
 	}
+
+	// 멤버 쿠폰 전체 조회 (예라)
+	@Override
+	public List<MemberCoupon> findMemberCouponAll(MemberCoupon memberCoupon) {
+		return couponRepository.findMemberCouponAll(memberCoupon);
+	}
+
 
 
 }
