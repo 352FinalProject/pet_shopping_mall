@@ -32,5 +32,8 @@ public interface OrderService {
 	// 주문 취소 내역 조회
 	OrderCancelInfoDto getCancelInfo(String orderNo);
 
+	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
+
+	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
 	
 }
