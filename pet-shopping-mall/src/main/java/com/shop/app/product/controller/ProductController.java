@@ -134,6 +134,7 @@ public class ProductController {
 	//	}
 
 	@GetMapping("/productDetail.do")
+
 	public void productDetail(@RequestParam int reviewId,
 	                          @RequestParam(defaultValue = "1") int page,
 	                          Model model) {

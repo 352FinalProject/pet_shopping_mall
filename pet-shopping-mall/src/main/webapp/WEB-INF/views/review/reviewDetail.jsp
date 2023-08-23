@@ -50,7 +50,7 @@ a {
 		<%-- 상품 옵션 --%>
 		<div id="review-div"></div>
 			<div id="review-div">
-			색상 : 노란색
+			${reviews.productName}
 			</div><span class="small-space"></span>
 		<br>
 		<%-- 별점 --%>

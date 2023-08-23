@@ -382,7 +382,7 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록 폼으로 이동
 	 */
-	@GetMapping("/adminProductDetailCreate.do")
+	@GetMapping("/adminProductCreate.do")
 	public void adminProductDetailCreate(
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.entity.PetGender;
+import com.shop.app.product.entity.Product;
 import com.shop.app.review.entity.Review;
 
 import lombok.AllArgsConstructor;
@@ -51,4 +52,13 @@ public class ReviewDetailDto {
 				.build();
 	}
 	
+	private int productId;
+	private String productName;
+	
+	public Product toProduct() {
+		return Product.builder()
+				.productId(productId)
+				.productName(productName)
+				.build();
+	}
 }
