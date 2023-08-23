@@ -37,6 +37,8 @@ public interface MemberRepository {
 
 	@Select("select * from member where email=#{email}")
 	Member findByEmail(String email);
+
+	List<Member> findThisMonthBirthdayMembers(int currentMonth);
 	
 
 	

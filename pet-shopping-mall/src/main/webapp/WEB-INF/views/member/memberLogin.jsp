@@ -151,7 +151,7 @@
 button, input {
 	cursor: pointer;
 }
-/* 모달 스타일 */
+/* 비밀번호찾기 모달 */
 .modal {
 	display: none; /* 모달 창 숨김 */
 	position: fixed;
@@ -191,6 +191,7 @@ button, input {
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
+	margin-bottom: 20px;
 }
 
 .btn-primary {
@@ -207,91 +208,82 @@ button, input {
 	background-color: #ccc;
 	color: white;
 	border: none;
-	padding: 5px 10px;
+	padding: 10px 40px;
 	border-radius: 5px;
 	float: right;
 	cursor: pointer;
-	margin-bottom: 5px;
+	position: relative;
+	top: -30px; /* 위쪽으로 10px만큼 이동하여 버튼을 위로 올림 */
 }
 
-/* 전체 페이지 스타일 */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+/* id찾기 모달  */
+.idFinderForm-modal {
+	display: none; /* 모달 창 숨김 */
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* 모달 스타일 */
-.modal {
-  display: none; /* 기본적으로 모달은 숨김 상태 */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+.idFinderForm-modal-content {
+	background-color: #fefefe;
+	margin: 10% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 70%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
 }
 
-.modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  border-radius: 5px;
-  width: 70%;
-  max-width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.close {
-  float: right;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
+.idFinderForm-close {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 20px;
+	cursor: pointer;
 }
 
 /* 폼 스타일 */
-form {
-  margin-top: 10px;
+.idFinderForm-input-email {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+.idFinderForm-findId {
+	background-color: #5886d3;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
 }
-
-input[type="email"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.close{
+background-color: #ccc;
+	color: white;
+	border: none;
+	padding: 10px 40px;
+	border-radius: 5px;
+	float: right;
+	cursor: pointer;
+	position: relative;
+	top: -30px; /* 위쪽으로 10px만큼 이동하여 버튼을 위로 올림 */
 }
-
-button[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 /* 결과 메시지 스타일 */
-#idResult {
-  display: none;
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #f3f3f3;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+#idFinderForm-idResult {
+	display: none;
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #f3f3f3;
+	border: 1px solid #ddd;
+	border-radius: 5px;
 }
-
-/* 추가적인 스타일링을 원하시면 여기에 추가해주세요 */
-
 </style>
 <section class="common-section" id="#">
 	<div class="common-container">
@@ -394,22 +386,27 @@ button[type="submit"] {
 				<button type="submit" id="sendEmail" class="btn-primary">이메일
 					전송</button>
 			</form:form>
-			<button type="button" id="closeModalBtn">닫기</button>
+			<div class="password-close-modal">
+				<button type="button" id="closeModalBtn">닫기</button>
+			</div>
 		</div>
 	</div>
 	<!-- id 찾기 모달 -->
-	<div id="idFinderModal" class="modal">
-		<div class="modal-content">
-			<span class="close" onclick="closeIdFinderModal()">&times;</span>
+	<div id="idFinderModal" class="idFinderForm-modal">
+		<div class="idFinderForm-modal-content">
+			<span class="idFinderForm-close" onclick="closeIdFinderModal()">&times;</span>
 			<h2>ID 찾기</h2>
 			<p>회원가입 시 등록한 정보를 입력하여 ID를 찾아보세요.</p>
-			<form id="idFinderForm"
+			<form:form id="idFinderForm"
 				onsubmit="submitIdFinderForm(); return false;">
-				<label for="email">이메일:</label> <input type="email" id="email"
+				<label for="email">이메일 주소:</label> <input
+					class="idFinderForm-input-email" type="email" id="email"
 					name="email" required>
-				<button type="submit">ID 찾기</button>
-			</form>
-			<div id="idResult" style="display: none;">
+				<button class="idFinderForm-findId" type="submit">ID 찾기</button>
+					<button type="button" id="idFinderForm-closeModalBtn">닫기</button>
+			</form:form>
+		
+			<div id="idFinderForm-idResult">
 				<p>
 					회원님의 ID는 <span id="foundId"></span> 입니다.
 				</p>
