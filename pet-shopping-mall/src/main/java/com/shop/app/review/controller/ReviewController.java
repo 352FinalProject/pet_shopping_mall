@@ -36,6 +36,7 @@ import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.review.dto.ReviewCreateDto;
+import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.dto.ReviewUpdateDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
@@ -132,9 +133,6 @@ public class ReviewController {
 			}
 		}
 		
-		_review.setPetId(pet.getPetId());
-		log.debug("펫아이디 = {}", _review);
-
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
@@ -143,32 +141,29 @@ public class ReviewController {
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
 				.reviewContent(_review.getReviewContent())
-				.petId(_review.getPetId()) // petId를 pet의 Id와 연결
 				.attachments(attachments)
 				.build();
 
 		
 		// petId 연결하기
-		String memberId = principal.getName();
-		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 로그인 한 회원의 펫정보 가져오기
+//		String memberId = principal.getName();
+//		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 로그인 한 회원의 펫정보 가져오기
+
+		// petId 로그인 멤버 말고 리뷰작성자랑 연결하기
+		String memberId = _review.getReviewMemberId();
+		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 리뷰작성자의 펫정보 가져오기
 		
 		// log.debug("petInfo = {}", petInfo);
 		
 		if (!petInfo.isEmpty()) { // 펫정보가 비어있지 않다면
 			Pet firstPet = petInfo.get(0); // 첫번째 Pet 객체 가져오기
 			reviews.setPetId(firstPet.getPetId()); // db에 pet정보 저장 
-//			reviews.setPetName(firstPet.getPetName());
-//			reviews.setPetGender(firstPet.getPetGender());
 		}
 
 		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
-
 		
 		int reviewId = reviewService.insertReview(reviews);
-		Review pointReviewId = reviewService.findReviewId(reviews);
-		
-
-		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
@@ -241,24 +236,15 @@ public class ReviewController {
 			Model model, 
 			Pet pet, 
 			Principal principal) {
-
-		// 펫 정보 가져오기
-		String memberId = principal.getName(); // 로그인한 멤버 아이디
-		List<Pet> petId = petService.findPetId(pet, memberId);
 		
-		Review review = Review.builder()
-				.reviewId(reviewId)
-				.build();
-
-		Review reviews = reviewService.findReviewId(review);
+		ReviewDetailDto reviews = reviewService.findReviewId(reviewId);
 		model.addAttribute("reviews", reviews);
-		model.addAttribute("petId", petId);
 
-		log.debug("펫정보 reviews 가져올수있니 = {}", reviews);
+		// log.debug("펫정보 reviews 가져올수있니 = {}", reviews);
 		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
-		log.debug("reviewDetails = {}", reviewDetails);
+		// log.debug("reviewDetails = {}", reviewDetails);
 		model.addAttribute("reviewDetails", reviewDetails);
 
 	}
@@ -268,11 +254,7 @@ public class ReviewController {
 	@GetMapping("/reviewUpdate.do")
 	public void reviewUpdate(@RequestParam int reviewId, Model model) {
 
-		Review review = Review.builder()
-				.reviewId(reviewId)
-				.build();
-
-		Review reviews = reviewService.findReviewId(review);
+		ReviewDetailDto reviews = reviewService.findReviewId(reviewId);
 		model.addAttribute("reviews", reviews);
 
 	}

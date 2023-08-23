@@ -28,7 +28,7 @@ public interface PetRepository {
 //    List<Pet> findPetByAll(Pet pet);
     
 	   @Select("SELECT * FROM pet WHERE member_id = #{memberId}")
-	    List<Pet> findPetsByMemberId(String memberId);
+	   List<Pet> findPetsByMemberId(String memberId);
 
 
 //    @Select("select * from pet")
@@ -58,7 +58,7 @@ public interface PetRepository {
 
     // 상품 상세페이지 - 리뷰 - 펫 정보 가져오기 (혜령) 
     @Select("select * from pet where member_id = #{memberId}")
-	List<Pet> findProductRevicePet(Pet pet, String memberId);
+	List<Pet> findProductRevicePet(String memberId);
     
 	
 

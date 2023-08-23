@@ -102,21 +102,21 @@
 				<li class="review-regdate">등록일</li>
 			</ul> -->
 			<ul class="review-product-utility">
-				<c:if test="${empty reviews}">
+<%-- 				<c:if test="${empty reviews}">
 					작성된 리뷰가 없습니다.
 				</c:if>
 				<c:if test="${not empty reviews}">
 					<c:forEach items="${reviews}" var="review" varStatus="vs">
 						<li>
 						<div class="review-box">
-							<div class="review-info-box"> <%-- 회원정보 --%>
+							<div class="review-info-box"> 회원정보
 								<em class="review-info-id">${review.reviewMemberId}</em>
 								<em class="review-info-date">
 									<fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 									<fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd"/>
 								</em>
 							</div>
-<%--  							<c:if test="${not empty petId}">
+ 							<c:if test="${not empty petId}">
 								<div class="reivew-pet-box"> 펫정보
 									<em class="review-pet-name">${petId[0].petName} |</em>
 									<em class="review-pet-name">${petId[0].petGender} |</em>
@@ -124,8 +124,8 @@
 									<em class="review-pet-name">${petId[0].petWeight}kg |</em>
 									<em class="review-pet-name">${petId[0].petBreed} </em>
 								</div>
-							</c:if>  --%>
-							<div class="review-detail-box"> <%-- 리뷰 제목/별점/사진/내용 --%>
+							</c:if> 
+							<div class="review-detail-box"> 리뷰 제목/별점/사진/내용
 								<div class="score_star">
 									 <c:choose>
 								        <c:when test="${review.reviewStarRate == 1}">
@@ -156,7 +156,7 @@
 					</c:forEach>
 				</c:if>
 			</ul>
-		</div>
+		</div> --%>
 		
 		
 		<div id="Accordion_wrap">
