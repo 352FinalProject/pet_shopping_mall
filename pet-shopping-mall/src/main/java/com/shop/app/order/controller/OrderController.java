@@ -82,11 +82,10 @@ public class OrderController {
 		List<OrderCancelInfoDto> cancelInfos;
 		
 		if (period != null) {
-			cancelInfos = orderService.getCancelInfoAll(memberId);
-		} else {
 			cancelInfos = orderService.getCancelInfoByPeriod(memberId, period);
+		} else {
+			cancelInfos = orderService.getCancelInfoAll(memberId);
 		}
-		
 	    model.addAttribute("status", status);
 		model.addAttribute("cancelInfoList", cancelInfos);
 	}
