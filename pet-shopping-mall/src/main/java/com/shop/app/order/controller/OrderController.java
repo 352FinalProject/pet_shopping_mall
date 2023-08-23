@@ -18,6 +18,7 @@ import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class OrderController {
+	
 	
 	@Autowired
 	OrderService orderService;

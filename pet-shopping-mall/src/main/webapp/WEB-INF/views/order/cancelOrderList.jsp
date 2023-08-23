@@ -95,38 +95,6 @@
 			</div>
 		</div>
 	</section>
-	<script
-  		src="https://code.jquery.com/jquery-3.3.1.min.js"
-  		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  		crossorigin="anonymous"></script>
-	<script>
-	const cancelFrm = document.querySelector("#cancelFrm");
-	const amount = Number(cancelFrm.amount.value);
-	
-	const cancelOrder = (text) => {
-		if(confirm("정말 주문을 취소하시겠습니까?") && text === 'cancel') {
-			cancelFrm.isRefund.value = "N"
-			cancelFrm.action = "${pageContext.request.contextPath}/order/cancelOrder.do";
-			cancelFrm.submit();
-			alert("주문이 정상적으로 취소되었습니다.");
-		} else {
-			cancelFrm.isRefund.value = "Y"
-			cancelFrm.action = "${pageContext.request.contextPath}/payment/refundOrder.do";
-			cancelFrm.submit();
-		}
-	};
 
-	/* 셀렉트 박스 */
-const periodSelect = document.querySelector("#selectPeriod");
-const table = document.querySelector("#order-table tbody")
-	
-const handleSelectChange = () => {
-    const period = periodSelect.value;
-
-    location.href="${pageContext.request.contextPath}/order/orderList.do?period=" + period;
-};
-
-periodSelect.addEventListener('change', handleSelectChange);
-	</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
