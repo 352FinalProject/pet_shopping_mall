@@ -46,9 +46,9 @@ public interface ReviewRepository {
 	int reviewDelete(int reviewId);
 	
 	// 리뷰 상세조회
-	@Select("select * from review r join pet p on r.pet_id = p.pet_id where review_id = #{reviewId}")
-	// "select * from review where review_id = #{reviewId}"
-	Review findReviewId(Review review);
+//	@Select("select * from review r join pet p on r.pet_id = p.pet_id where review_id = #{reviewId}")
+	@Select("select * from review where review_id = #{reviewId}")
+	Review findReviewId(int reviewId);
 
 	// 리뷰 상세조회 - 이미지 조회
 	ReviewDetails findImageAttachmentsByReviewId(int reviewId);

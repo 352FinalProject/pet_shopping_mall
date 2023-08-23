@@ -30,7 +30,7 @@ public class Review {
 	private LocalDateTime reviewCreatedAt;
 	
 	// review와 연결된 pet 정보
-	private Pet pet;
+//	private Pet pet;
 	
 	
 }
