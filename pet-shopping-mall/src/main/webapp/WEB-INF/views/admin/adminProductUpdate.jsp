@@ -28,7 +28,7 @@
 		              </c:if>
 		              <c:if test="${not empty categories}">
 		                <c:forEach items="${categories}" var="category" varStatus="vs">
-		                  <option value="${category.categoryId}">${category.categoryName}</option>
+		                  <option value="${category.categoryId}" ${category.categoryId eq product.categoryId ? "selected" : ""} >${category.categoryName}</option>
 		                </c:forEach>
 		              </c:if>
 		            </select>

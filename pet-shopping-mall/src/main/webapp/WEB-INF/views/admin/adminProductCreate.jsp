@@ -1,16 +1,116 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
+<!DOCTYPE html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>관리자 페이지</title>
+
+<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+
+
+</head>
+<body class="sb-nav-fixed">
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+		<!-- Navbar Brand-->
+		<a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/">펫쇼핑몰</a>
+		<!-- Sidebar Toggle-->
+		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+			<i class="fas fa-bars"></i>
+		</button>
+	</nav>
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+				<div class="sb-sidenav-menu">
+					<div class="nav">
+						<a class="nav-link"	href="${pageContext.request.contextPath}/admin/admin.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 관리자 홈
+						</a>
+						<div class="sb-sidenav-menu-heading">회원목록</div>
+						<a class="nav-link"
+							href="${pageContext.request.contextPath}/admin/adminMemberList.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 전체 회원목록
+						</a> <a class="nav-link"
+							href="${pageContext.request.contextPath}/admin/adminSubscribeList.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 구독 회원목록
+						</a>
+						<div class="sb-sidenav-menu-heading">상품</div>
+						<a class="nav-link"
+							href="${pageContext.request.contextPath}/admin/adminProductList.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 상품목록
+						</a>
+						<div class="sb-sidenav-menu-heading">주문</div>
+						<a class="nav-link"
+							href="${pageContext.request.contextPath}/admin/adminOrderList.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 주문목록
+						</a>
+						<div class="sb-sidenav-menu-heading">매출</div>
+						<a class="nav-link"
+							href="${pageContext.request.contextPath}/admin/adminStatisticsProduct.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-chart-area"></i>
+							</div> 상품별 매출
+						</a> <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapsePages" aria-expanded="false"
+							aria-controls="collapsePages">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-chart-area"></i>
+							</div> 날짜별 매출
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapsePages"
+							aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav accordion"
+								id="sidenavAccordionPages">
+								<a class="nav-link collapsed"
+									href="${pageContext.request.contextPath}/admin/adminStatisticsMonthly.do"
+									data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
+									aria-expanded="false" aria-controls="pagesCollapseAuth"> 월별
+									매출
+									<div class="sb-sidenav-collapse-arrow"></div>
+								</a> 
+								<a class="nav-link collapsed"
+									href="${pageContext.request.contextPath}/admin/adminStatisticsDaily.do"
+									data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
+									aria-expanded="false" aria-controls="pagesCollapseAuth"> 일별
+									매출
+									<div class="sb-sidenav-collapse-arrow"></div>
+								</a>
+							</nav>
+						</div>
+						<div class="sb-sidenav-menu-heading">문의관련</div>
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminQuestionList.do">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 문의 관리
+						</a>
+					</div>
+				</div>
+			</nav>
+		</div>
 
 </div><!-- layoutSidenav -->
 <main>
 <div class="container-fluid px-4">
+<h1 class="mt-4">상품 등록</h1>
+<div class="card mb-4">
 <div class="productInfo-container justify-content-around">
-	<h1>상품수정</h1>
 	
 	<!-- 상품기본 정보 -->
 	<div class="product-container ">
@@ -28,7 +128,7 @@
 		              </c:if>
 		              <c:if test="${not empty categories}">
 		                <c:forEach items="${categories}" var="category" varStatus="vs">
-		                  <option value="${category.categoryId}">${category.categoryName}</option>
+		                  <option value="${category.categoryId}" >${category.categoryName}</option>
 		                </c:forEach>
 		              </c:if>
 		            </select>
@@ -116,6 +216,7 @@
      </div>
 	
 </div><!-- productInfo-container -->
+</div>
 </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

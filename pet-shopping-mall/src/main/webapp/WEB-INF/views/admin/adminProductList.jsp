@@ -90,7 +90,7 @@
 										<td>${productInfo.additionalPrice}</td>
 										<td>${productInfo.saleState}</td>
 										<td>
-											<button onclick="updateProduct();">수정</button> 
+											<button onclick="deleteProduct();">삭제</button> 
 										</td>
 									</tr>
 								</c:forEach>
@@ -103,7 +103,7 @@
 		</div>
 	</main>
 	<script>
-	const updateProduct = () => {
+	const deleteProduct = () => {
 		
 	};
 	

@@ -124,7 +124,9 @@ ul.nav {
 		<section class="product-board">
 			<!-- 게시판 이름 -->
 	        <div class="board-title"">
-		        <span>사료</span>
+		        <span>
+		        상품 카테고리명 
+		        </span>
 	        </div>
 	        <!-- 게시판 카테고리 -->
 	        <div class="board-category">
