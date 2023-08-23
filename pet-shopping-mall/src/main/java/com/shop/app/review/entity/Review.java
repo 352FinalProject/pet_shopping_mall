@@ -19,7 +19,7 @@ public class Review {
 
 	private int reviewId;
 	private int petId;
-	private int orderId;
+	private int productId;
 	private int productDetailId;
 	private String reviewMemberId;
 	private String reviewTitle;

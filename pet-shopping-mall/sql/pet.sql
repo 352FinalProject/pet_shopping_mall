@@ -311,7 +311,7 @@ create table wishlist(
 create table review (
     review_id number,
     pet_id number,
-    order_id number,
+    product_id number,
     review_member_id varchar(20) not null,
     product_detail_id number,
     review_title varchar2(50),
@@ -320,9 +320,10 @@ create table review (
     review_created_at timestamp default systimestamp,
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-    constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
+    constraint fk_product_product_id foreign key (product_id) references product(product_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
+
 
 select * from review;
 
@@ -456,13 +457,19 @@ create sequence seq_terms_id;
 create sequence seq_member_coupon_id;
 create sequence seq_coupon_id;
 create sequence seq_history_id;
+create sequence seq_category_id;
 
 select * from member;
 select * from point;
+select * from pet;
+select * from review;
 select * from coupon;
 select * from member_coupon;
 select * from terms;
 select * from terms_history;
+select * from product;
+
+select * from pet where member_id = 'member2';
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
@@ -481,6 +488,5 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
-
-select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.coupon_id = '1';
-select * from member_coupon where coupon_id = 1;
+select pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, to_char(pet_adoption, 'YYYY-MM-DD') as pet_adoption, pet_gender, pet_created_at from pet where pet_id = '3' and member_id = 'member1';
+     

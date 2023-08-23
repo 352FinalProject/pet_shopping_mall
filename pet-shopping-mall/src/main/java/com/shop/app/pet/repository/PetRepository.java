@@ -59,6 +59,10 @@ public interface PetRepository {
     // 상품 상세페이지 - 리뷰 - 펫 정보 가져오기 (혜령) 
     @Select("select * from pet where member_id = #{memberId}")
 	List<Pet> findProductRevicePet(String memberId);
+
+    @Select("select pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, to_char(pet_adoption, 'YYYY-MM-DD') as pet_adoption, pet_gender, pet_created_at from pet where pet_id = #{petId} and member_id = #{memberId, jdbcType=VARCHAR}")
+    	List<Pet> findReviewPetByIdAndMemberId(int petId, String memberId);
+
     
 	
 

@@ -148,8 +148,4 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDetails findProductImageAttachmentsByReviewId(int reviewId) {
 		return reviewRepository.findProductImageAttachmentsByReviewId(reviewId);
 	}
-
-
-
-
 }
