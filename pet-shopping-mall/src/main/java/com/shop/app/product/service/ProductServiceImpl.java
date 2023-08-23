@@ -106,6 +106,15 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDetail> findAllProductDetailsByProductId(int productId) {
 		return productRepository.findAllProductDetailsByProductId(productId);
 	}
+	
+	@Override
+	public int updateProductDetail(ProductDetail productDetail) {
+		return productRepository.updateProductDetail(productDetail);
+	}
 
+	@Override
+	public int deleteProductDetail(int productDetailId) {
+		return productRepository.deleteProductDetail(productDetailId);
+	}
 
 }
