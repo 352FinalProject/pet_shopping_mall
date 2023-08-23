@@ -375,9 +375,6 @@ create table terms (
  constraint fk_terms_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
-drop table terms;
-drop table terms_history;
-
 -- 약관동의 이력 테이블
 create table terms_history (
  terms_id number,
@@ -491,7 +488,11 @@ end;
 
 SELECT pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, TO_CHAR(pet_adoption, 'YYYY-MM-DD') AS pet_adoption, pet_gender, pet_created_at FROM pet WHERE pet_id = '4' AND member_id = 'member2';
 
-SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE p.pet_id = '4' AND r.review_member_id = 'member2';
+SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE p.pet_id = '1' AND r.review_member_id = 'member1';
 
-SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_id, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '4' AND r.review_member_id = 'member2';
-SELECT p.* FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '4' AND r.review_member_id = 'member2';
+SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_id, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '1' AND r.review_member_id = 'member1';
+SELECT p.* FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_id = '1' AND r.review_member_id = 'member1';
+
+SELECT p.*, r.* FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.pet_id = '1' AND r.review_member_id = 'member1';
+
+SELECT p.pet_id, p.member_id, p.pet_name, p.pet_age, p.pet_kind, p.pet_breed, p.pet_weight, TO_CHAR(p.pet_adoption, 'YYYY-MM-DD') AS pet_adoption, p.pet_gender, p.pet_created_at, r.review_id, r.review_member_id FROM pet p JOIN review r ON p.pet_id = r.pet_id WHERE r.review_member_id = 'member1';

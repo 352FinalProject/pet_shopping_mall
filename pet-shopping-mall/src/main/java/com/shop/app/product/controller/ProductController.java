@@ -135,8 +135,8 @@ public class ProductController {
 
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int reviewId,
-	        @RequestParam(defaultValue = "1") int page,
-	        Model model) {
+	                          @RequestParam(defaultValue = "1") int page,
+	                          Model model) {
 
 	    int limit = 3;
 	    Map<String, Object> params = Map.of("page", page, "limit", limit);
@@ -146,20 +146,23 @@ public class ProductController {
 	    model.addAttribute("totalPages", totalPages);
 
 	    List<Review> reviews = reviewService.findProductReviewAll(params);
+	    log.debug("reviews = {}", reviews);
 	    model.addAttribute("reviews", reviews);
 
 	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 
+	    log.debug("reviewPetsMap = {}", reviewPetsMap);
 	    for (Review review : reviews) {
-	        List<Pet> pets = petService.findReviewPetByIdAndMemberId(review.getReviewId(), review.getReviewMemberId());
+	        List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
 	        reviewPetsMap.put(review.getReviewId(), pets);
+	        
+	        log.debug("pets = {}", pets);
+	        log.debug("review.getReviewMemberId() = {}", review.getReviewMemberId());
+	        log.debug("review.getReviewId() = {}", review.getReviewId());
 	    }
 
 	    model.addAttribute("reviewPetsMap", reviewPetsMap);
 	}
-
-
-
 
 
 	@GetMapping("/productList.do")

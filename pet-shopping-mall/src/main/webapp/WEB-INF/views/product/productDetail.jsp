@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<%@ page isELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Image Slider Example</title>
 <!-- Bootstrap CSS 포함 -->
@@ -116,18 +116,19 @@
 									<fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd"/>
 								</em>
 							</div>
-								<c:forEach items="${reviews}" var="review" varStatus="rs">
-								    <c:set var="pet" value="${reviewPetsMap[review.reviewId]}" />
-								    <c:if test="${not empty pet}">
+								    <c:set var="pets" value="${reviewPetsMap[review.reviewId]}" />
+								    <c:if test="${not empty pets}">
 								        <div class="reivew-pet-box"> 펫정보
-								            <em class="review-pet-name">${pet.petName} |</em>
-								            <em class="review-pet-name">${pet.petGender} |</em>
-								            <em class="review-pet-name">${pet.petAge}살 |</em>
-								            <em class="review-pet-name">${pet.petWeight}kg |</em>
-								            <em class="review-pet-name">${pet.petBreed} </em>
+								            <c:forEach items="${pets}" var="pet">
+								                <em class="review-pet-name">${pet.petName} |</em>
+								                <em class="review-pet-name">${pet.petGender} |</em>
+								                <em class="review-pet-name">${pet.petAge}살 |</em>
+								                <em class="review-pet-name">${pet.petWeight}kg |</em>
+								                <em class="review-pet-name">${pet.petBreed}</em>
+								            </c:forEach>
 								        </div>
 								    </c:if>
-								</c:forEach>
+								<c:set var="myReviewId" value="${review.reviewId}"/>
 							<div class="review-detail-box"> 리뷰 제목/별점/사진/내용
 							<em class="review-info-id">${review.reviewTitle}</em>
 							<em class="review-info-id">${review.reviewContent}</em>
