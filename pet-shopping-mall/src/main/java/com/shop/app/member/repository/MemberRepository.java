@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.member.dto.MemberCreateDto;
+import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 
@@ -33,4 +34,14 @@ public interface MemberRepository {
 	
 	@Select("select * from member where name=#{name} and email=#{email}")
 	public String memberSearchId(@Param("name") String name, @Param("email") String email);
+
+	@Select("select * from member where birthday = #{birthday}")
+	List<Member> findBirthdayMember();
+
+	// 그달 생일인 회원을 찾아서 쿠폰 넣어주기
+	@Select("select * from member Where to_char(birthday, 'MM') = to_char(SYSDATE, 'MM')")
+	List<Member> findThisMonthBirthdayMembers(int currentMonth);
+
+	MypageDto getMyPage(String memberId);
+
 }

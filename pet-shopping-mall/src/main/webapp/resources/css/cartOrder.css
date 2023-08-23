@@ -19,8 +19,10 @@
 	display: flex;
 	margin-left: 23px;
 }
-#cart-option div:last-child{
+
+#cart-option div:last-child {
 	/* margin-left:140px; */
+	
 }
 
 #cart-option {
@@ -38,7 +40,6 @@
 .cart-right {
 	margin-left: 30px;
 }
-
 
 #buy-title {
 	margin-left: 23px;
@@ -62,9 +63,9 @@
 
 .discount-point-btn {
 	font-size: 12px;
-	padding-left : 8px;
-	padding-right : 8px;
-	display: inline-block; 
+	padding-left: 8px;
+	padding-right: 8px;
+	display: inline-block;
 	border: 1px #ccc solid;
 	background-color: white;
 	height: 30px;
@@ -75,7 +76,6 @@
 	height: 30px;
 	border: 1px #ccc solid;
 }
-
 
 .payment-info {
 	width: 400px;
@@ -89,7 +89,6 @@
 	justify-content: space-between;
 	margin-top: 5px;
 }
-
 
 .price {
 	font-size: 24px;
@@ -106,7 +105,7 @@
 .cart-btn-update {
 	border: 1px solid #e7e7e7;
 	background: white;
-	padding:5px;
+	padding: 5px;
 	border-radius: 2px;
 }
 
@@ -146,7 +145,6 @@
 	width: 500px;
 	border: 1px solid #e7e7e7;
 	padding: 10px;
-	
 }
 
 .payment-info2 {
@@ -154,10 +152,7 @@
 	border: 1px solid #e7e7e7;
 	padding: 10px;
 	margin-bottom: 30px;
-	
 }
-
-
 
 .have-point {
 	font-size: 13px;
@@ -233,59 +228,206 @@
 	color: #ffffff;
 }
 
-
-
-
-
-
-
-
-
 #modal {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
 }
 
 div.modal-div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 300px;
-  padding: 40px;
-  text-align: center;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-  transform: translateX(-50%) translateY(-50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	height: 300px;
+	padding: 40px;
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+	transform: translateX(-50%) translateY(-50%);
 }
 
 #modal-content select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-bottom: 10px;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px;
+	margin-bottom: 10px;
 }
 
 #close-modal {
-    display: block;
-    margin-top: 10px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+	display: block;
+	margin-top: 10px;
+	cursor: pointer;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
 }
 
 /* Additional styling for the modal content */
 #modal-content {
-    margin-top: 10px;
+	margin-top: 10px;
+}
+
+.order {
+	margin: 20px;
+	padding: 20px;
+	margin-left: 160px;
+}
+
+.order-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+#order-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#order-table th, #order-table td {
+	padding: 10px;
+	text-align: center;
+}
+
+#order-table th {
+	background-color: #f2f2f2;
+	font-weight: bold;
+}
+
+#order-table td {
+	padding: 10px;
+	text-align: center; /* Add this line for center aligning text */
+}
+
+#order-table td p {
+	margin: 0;
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.flex img {
+	width: 80px;
+	height: 80px;
+	margin-right: 10px;
+}
+
+.flex div {
+	margin-top: 10px;
+}
+
+.empty-message {
+	text-align: center;
+	color: #777;
+	margin-top: 20px;
+}
+
+#selectPeriod {
+	position: relative;
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 5px 15px;
+	cursor: pointer;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
+.cancel-btn {
+	display: inline-block;
+	padding: 10px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	border: 1px solid #c8c8c8;
+	background: #fff;
+}
+
+/* 마이페이지 */
+.profile-div {
+	padding: 20px;
+	margin-left: 160px;
+}
+
+.user-profile {
+	width: 700px;
+	height: 200px;
+	background-color: #F2F2F2;
+	display: flex;
+	align-items: center;
+}
+
+.user-profile img {
+	width: 120px;
+	margin-left: 70px;
+	margin-right: 70px;
+}
+
+.user-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.user-info p {
+	margin: 5px 0;
+}
+
+.benefits-link {
+	color: #007bff;
+	text-decoration: none;
+	font-weight: bold;
+	margin-top: 5px;
+}
+
+.options {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.option {
+	text-align: center;
+	flex: 1;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	margin-right: 10px;
+}
+
+.recent-orders {
+	margin-top: 20px;
+}
+
+#member-id {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.order-div {
+	display: flex;
+	border: 1px solid #ccc;
+	justify-content: space-between;
+}
+
+.order-div div {
+	margin: 10px;
+}
+
+.grade {
+	color: #007bff;
+	font-weight: 600;
 }

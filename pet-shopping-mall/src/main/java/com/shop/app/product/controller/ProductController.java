@@ -64,7 +64,7 @@ public class ProductController {
 		log.debug("토탈카운트 = {} ", totalCount);
 		log.debug("페이지, 리밋, 멤버아이디 params = {}", params);
 		log.debug("파람스 들어가있는거 reviews = {}", reviews);
-//		log.debug("펫아이디 들어가있는거 petId = {}", petId);
+		log.debug("펫아이디 들어가있는거 petId = {}", petId);
 
 		model.addAttribute("reviews", reviews);
 		

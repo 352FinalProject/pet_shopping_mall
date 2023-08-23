@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.pet.entity.Pet;
+import com.shop.app.pet.service.PetService;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
@@ -21,6 +23,9 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
+	
+	@Autowired
+	private PetService petService;
 	
 	// 리뷰추가
 	@Override
@@ -79,6 +84,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public Review findReviewId(Review review) {
 		return reviewRepository.findReviewId(review);
 	}
+	
 
 	// 리뷰 상세조회 - 이미지 조회
 	@Override
@@ -120,6 +126,8 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDetails findProductImageAttachmentsByReviewId(int reviewId) {
 		return reviewRepository.findProductImageAttachmentsByReviewId(reviewId);
 	}
+
+
 
 
 }
