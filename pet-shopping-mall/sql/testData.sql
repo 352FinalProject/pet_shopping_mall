@@ -443,8 +443,7 @@ select * from product;
 select * from product_detail;
 select * from orderTbl;
 select * from order_detail;
-select * from payment;
-
+update member set password ='$2a$10$9/aPwGMhBiSQLRhXC1E4k.7qoZiNeeTgvO0XVG6m79pzxAJa6NPpi';
 ------------------------
 insert into order_detail (order_id, product_detail_id, quantity) values (17,6,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (18,6,default);
