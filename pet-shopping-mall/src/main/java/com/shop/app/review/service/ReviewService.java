@@ -20,6 +20,7 @@ public interface ReviewService {
 	
 	// 리뷰 상세조회
 	Review findReviewId(Review review);
+	
 
 	// 리뷰 상세 - 이미지 조회
 	ReviewDetails findImageAttachmentsByReviewId(int reviewId);

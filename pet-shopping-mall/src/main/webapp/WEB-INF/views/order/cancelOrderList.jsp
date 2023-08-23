@@ -72,10 +72,10 @@
 								<td>
 									<c:choose>
 										<c:when test="${index eq 0}">
-										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소신청</button></a>
+										    <a href="${pageContext.request.contextPath}/order/cancelOrder.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소신청</button></a>
 										</c:when>
 										<c:when test="${index ge 1 && index le 4}">
-										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소/환불신청</button></a>
+										    <a href="${pageContext.request.contextPath}/order/cancelOrder.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소/환불신청</button></a>
 										</c:when>
 										<c:otherwise>
 										</c:otherwise>

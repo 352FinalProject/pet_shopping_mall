@@ -9,8 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.shop.app.member.dto.MemberCreateDto;
+import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.repository.MemberRepository;
+import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.repository.OrderRepository;
 import com.shop.app.point.entity.Point;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberRepository memberRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@Override
 	public int insertMember(MemberCreateDto member) {
@@ -62,6 +68,17 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return result ;
 		
+	}
+
+	/**
+	 * 마이페이지 조회
+	 */
+	@Override
+	public MypageDto getMyPage(String memberId) {
+		MypageDto myPage = memberRepository.getMyPage(memberId);
+		List<OrderHistoryDto> histories = orderRepository.getOrderListByPeriod(memberId, 1);
+		myPage.setOrderHistory(histories);
+		return myPage;
 	}
 
 
