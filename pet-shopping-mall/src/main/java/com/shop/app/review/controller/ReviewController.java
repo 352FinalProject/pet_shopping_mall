@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.ImageService;
 import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
@@ -100,7 +101,8 @@ public class ReviewController {
 			BindingResult bindingResult, 
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
 			Point point, 
-			Pet pet) 
+			Pet pet,
+			Principal principal)
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
@@ -146,9 +148,25 @@ public class ReviewController {
 
 		 log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 		
+		// petId 연결하기
+		String memberId = principal.getName();
+		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 로그인 한 회원의 펫정보 가져오기
+		
+		// log.debug("petInfo = {}", petInfo);
+		
+		if (!petInfo.isEmpty()) { // 펫정보가 비어있지 않다면
+			Pet firstPet = petInfo.get(0); // 첫번째 Pet 객체 가져오기
+			reviews.setPetId(firstPet.getPetId()); // db에 pet정보 저장 
+//			reviews.setPetName(firstPet.getPetName());
+//			reviews.setPetGender(firstPet.getPetGender());
+		}
+>>>>>>> Stashed changes
+		
 		int reviewId = reviewService.insertReview(reviews);
 		Review pointReviewId = reviewService.findReviewId(reviews);
 		
+
+		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
@@ -216,7 +234,11 @@ public class ReviewController {
 
 	// 리뷰 상세조회 
 	@GetMapping("/reviewDetail.do")
-	public void reviewDetail(@RequestParam(required=true) int reviewId, Model model, Pet pet, Principal principal) {
+	public void reviewDetail(
+			@RequestParam(required=true) int reviewId, 
+			Model model, 
+			Pet pet, 
+			Principal principal) {
 
 		// 펫 정보 가져오기
 		String memberId = principal.getName(); // 로그인한 멤버 아이디
@@ -230,7 +252,7 @@ public class ReviewController {
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("petId", petId);
 
-		log.debug("펫정보 petId = {}", petId);
+		log.debug("펫정보 reviews 가져올수있니 = {}", reviews);
 		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);

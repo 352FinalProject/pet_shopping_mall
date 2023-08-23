@@ -1,12 +1,19 @@
 package com.shop.app.review.dto;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 
+import com.shop.app.pet.entity.PetGender;
 import com.shop.app.review.entity.Review;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReviewCreateDto {
 	
 	private int reviewId;
