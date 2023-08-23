@@ -29,7 +29,6 @@
 				<li><a href="${pageContext.request.contextPath}/pet/myPage.do">회원정보 수정</a></li>
 				<li><a href="${pageContext.request.contextPath}/pet/petList.do">펫 목록</a></li>
 				<li><a href="${pageContext.request.contextPath}/pet/petProfile.do">펫 등록</a></li>
-				<li><a href="#">펫정보 수정</a></li>
 			</ul>
 		</li>
 	</ul>

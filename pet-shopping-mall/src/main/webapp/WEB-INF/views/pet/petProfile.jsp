@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .common-section{
@@ -148,21 +149,21 @@
                   <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" name="memberId" id="memberId" value="admin" required>
+                            <input type="text" name="memberId" id="memberId" value="<sec:authentication property="name"/>" required>
                         </td>
                     </tr>
                     
                     <tr>
                         <th>펫 이름</th>
                         <td>
-                            <input type="text" name="petName" id="petName" value="두부" required>
+                            <input type="text" name="petName" id="petName" value="두부" required="readonly">
                         </td>
                     </tr>
                     
                     <tr>
                         <th>나이</th>
                         <td>
-                            <input type="text" name="petAge" id="petAge" required>
+                            <input type="text" name="petAge" id="petAge" placeholder="나이를 입력해 주세요.">
                         </td>
                     </tr>
 

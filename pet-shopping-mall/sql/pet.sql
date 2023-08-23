@@ -131,6 +131,7 @@ CREATE TABLE pet (
     pet_age number,
     pet_kind VARCHAR2(50),
     pet_breed VARCHAR2(50),
+    pet_weight NUMBER,
     pet_adoption timestamp,
     pet_gender CHAR(1),
     pet_created_at timestamp default systimestamp,
