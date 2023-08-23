@@ -667,10 +667,12 @@ SELECT
 
 SELECT
     p.product_id,
-    p.category_id,
     p.product_name,
+    p.category_id,
     pc.category_name,
-    SUM(od.quantity) AS total_quantity_sold
+    p.product_price,
+    SUM(od.quantity) AS total_sold,
+    SUM(od.quantity * p.product_price) AS total_price
 FROM
     product p
     JOIN product_category pc ON p.category_id = pc.category_id
@@ -680,9 +682,30 @@ FROM
 WHERE
     ot.payment_status = 1
 GROUP BY
-    p.product_id, p.product_name, pc.category_name
+    p.product_id, p.product_name, p.category_id, pc.category_name, p.product_price
 ORDER BY
-    total_quantity_sold DESC;
+    total_sold DESC;
+
+SELECT
+    p.product_id,
+    p.product_name,
+    p.category_id,
+    pc.category_name,
+    p.product_price,
+    SUM(od.quantity) AS total_sold,
+    SUM(od.quantity * p.product_price) AS total_price
+FROM
+    product p
+    JOIN product_category pc ON p.category_id = pc.category_id
+    JOIN product_detail pd ON p.product_id = pd.product_id
+    LEFT JOIN order_detail od ON pd.product_detail_id = od.product_detail_id
+    LEFT JOIN orderTbl ot ON od.order_id = ot.order_id
+WHERE
+    ot.payment_status = 1
+GROUP BY
+    p.product_id, p.product_name, p.category_id, pc.category_name, p.product_price
+ORDER BY
+    total_price DESC;
 
 
 
