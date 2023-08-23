@@ -29,8 +29,17 @@ public interface OrderService {
 
 	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
 
+
+	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
+			List<String> paymentMethod, List<String> orderStatus);
+
 	// 주문 취소 내역 조회
 	OrderCancelInfoDto getCancelInfo(String orderNo);
+
+	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
+
+	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+
 
 	
 }
