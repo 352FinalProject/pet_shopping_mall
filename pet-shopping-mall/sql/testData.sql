@@ -443,7 +443,7 @@ select * from product;
 select * from product_detail;
 select * from orderTbl;
 select * from order_detail;
-update member set password ='$2a$10$9/aPwGMhBiSQLRhXC1E4k.7qoZiNeeTgvO0XVG6m79pzxAJa6NPpi';
+select * from payment;
 ------------------------
 insert into order_detail (order_id, product_detail_id, quantity) values (17,6,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (18,6,default);
@@ -452,7 +452,7 @@ insert into order_detail (order_id, product_detail_id, quantity) values (20,6,de
 insert into order_detail (order_id, product_detail_id, quantity) values (21,6,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (22,6,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (23,2,default);
-insert into order_detail (order_id, product_detail_id, quantity) values (24,5,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (26,1,default);
 ------------------------
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9, 1);
@@ -468,25 +468,9 @@ insert into payment (payment_id, payment_method, payment_date, amount, order_id)
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(7, 0, systimestamp, 27000, 19);    
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(8, 0, systimestamp, 25000, 20);    
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(9, 0, systimestamp, 22000, 21);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(10, 0, systimestamp, 23000, 22);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(13, 0, systimestamp, 30000, 16);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(15, 1, systimestamp, 23000, 26);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(14, 1, systimestamp, 30000, 25);    
 
-------------------------
-insert into orderTbl  (
-    order_id,
-    order_no,
-    member_id,
-    order_date,
-    order_status,
-    payment_status,
-    total_price,
-    delivery_fee,
-    discount,
-    amount,
-    discount_code)
-values (
-    
-);
 ------------------------
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
@@ -556,6 +540,13 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
+    
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230823-001', 'honggd', sysdate, 5, 1, 27000,3000, 0, 30000, null);    
+
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+    values (seq_orderTbl_id.nextval, '230823-002', 'honggd', sysdate, 1, 0, 27000,3000, 0, 30000, null);
+    
 -----------------------------------------
 -- 통계조회 쿼리
 -----------------------------------------
@@ -617,11 +608,9 @@ SELECT
 	LEFT JOIN
 	    payment pay ON ot.order_id = pay.order_id
     WHERE
-            AND ot.order_date >= '23/08/20'
-		    AND ot.order_date <= '23/08/22'
-            AND pay.payment_method IN (0)
-            AND ot.order_status IN (1)
-            
+            pay.payment_method IN (0,1)
+            AND ot.order_status IN (0,1,2,3,4,5,6)
+            AND (ot.order_no LIKE '%' || '오' || '%' OR p.product_name LIKE '%' || '오' || '%')
 	ORDER BY
 	    ot.order_id DESC;
 

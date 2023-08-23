@@ -245,32 +245,25 @@ public class AdminController {
 	 * @param model
 	 */
 	@GetMapping("/adminOrderSearch.do")
-	@ResponseBody
-	public List<OrderAdminListDto> adminOrderSearch(
+	public String adminOrderSearch(
 			@RequestParam(required = false) String searchKeyword,
 	        @RequestParam(required = false) String startDate,
 	        @RequestParam(required = false) String endDate,
 	        @RequestParam(required = false) List<String> paymentMethod,
 	        @RequestParam(required = false) List<String> orderStatus,
-				Model model) {
+			Model model) {
 		
-		if(paymentMethod.size() == 3) {
-			paymentMethod.remove(0);
+		if(paymentMethod == null || paymentMethod.size() == 3) {
+			paymentMethod = Arrays.asList("0", "1");
 		}
-		if(orderStatus.size() == 8) {
-			orderStatus.remove(0);
-		}
-		
-		System.out.println(searchKeyword);
-		System.out.println(startDate);
-		System.out.println(endDate);
-		System.out.println(paymentMethod);
-		System.out.println(orderStatus);
-		
+		if(orderStatus == null || orderStatus.size() == 8) {
+			orderStatus = Arrays.asList("0", "1", "2", "3", "4", "5", "6");
+		}		
 		List<OrderAdminListDto> orderlists =
 				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
 		
-		return orderlists;
+		model.addAttribute("orderlists", orderlists);
+		return "admin/adminOrderList";
 	}
 	
 	

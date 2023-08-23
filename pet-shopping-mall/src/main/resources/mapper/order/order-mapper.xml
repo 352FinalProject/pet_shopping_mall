@@ -119,27 +119,34 @@ order by
 	LEFT JOIN
 	    payment pay ON ot.order_id = pay.order_id
     <where>
-    	<if test="searchKeyword != null">
-		    (ot.order_no LIKE '%' || #{searchKeyword} || '%'
-		    OR p.product_name LIKE '%' || #{searchKeyword} || '%')
+   		ot.order_status IN
+        <foreach 
+        	collection="orderStatus" 
+        	item="status" 
+        	open="(" 
+        	separator="," 
+        	close=")">
+            #{status}
+        </foreach>
+   		AND pay.payment_method IN
+        <foreach 
+        	collection="paymentMethod" 
+        	item="method" 
+        	open="(" 
+        	separator="," 
+        	close=")">
+            #{method}
+        </foreach>
+    	<if test="searchKeyword != ''">
+		    AND (ot.order_no LIKE '%' || #{searchKeyword} || '%' OR p.product_name LIKE '%' || #{searchKeyword} || '%')
 	    </if>
-    	<if test="startDate != null and endDate != null">
+    	<if test="startDate != ''">
 		    AND ot.order_date &gt;= #{startDate}
+    	</if>
+    	<if test="endDate != ''">
 		    AND ot.order_date &lt;= #{endDate}
     	</if>
-    	<if test="paymentMethod != null">
-    		AND pay.payment_method IN
-	        <foreach collection="paymentMethod" item="method" open="(" separator="," close=")">
-	            #{method}
-	        </foreach>
-        </if>
-    	<if test="orderStatus != null">
-    		AND ot.order_status IN
-	        <foreach collection="orderStatus" item="status" open="(" separator="," close=")">
-	            #{status}
-	        </foreach>
-        </if>
-    </where> 
+   	</where>
 	ORDER BY
 	    ot.order_id DESC
   </select>

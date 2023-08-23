@@ -4,42 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
-<script>
-    function selectAllpaymentMethod(selectAll)  {
-      const checkboxes = document.getElementsByName('paymentMethod');
-      
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = selectAll.checked; // Use the selectAll argument here
-      });
-    }
-    
-    function selectAllOrderStatus(selectAll)  {
-        const orderStatusCheckboxes = document.getElementsByName('orderStatus');
-        
-        orderStatusCheckboxes.forEach((checkbox) => {
-          checkbox.checked = selectAll.checked;
-        });
-      }
-  
-      
-	$(".admin-order-search").submit(function(event) {
-	    event.preventDefault();
-	    
-	    var formData = $(this).serialize();
-	    
-	    $.ajax({
-	        type: "GET",
-	        url: "${pageContext.request.contextPath}/admin/adminOrderSearch.do",
-	        data: formData,
-	        dataType: "json",
-	        success: function(response) {
-	            
-	            console.log(response);
-	        },
-	    });
-	});
-   
-</script>
+
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
@@ -56,9 +21,8 @@
 			<div class="admin-order-search-container">
 			    <form:form 
 			    	method="GET" 
-			    	class="admin-order-search" 
-			    	action="${pageContext.request.contextPath}/admin/adminOrderSearch.do"
-			    	enctype="multipart/form-data">
+			    	name="adminOrderSearch"
+			    	action="${pageContext.request.contextPath}/admin/adminOrderSearch.do">
 			        <label for="searchKeyword">상품검색:</label>
 			        	<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드"><br>
 
@@ -153,7 +117,7 @@
 									</td>
 									<td>
 										<c:if test="${orderlist.paymentState == 0}">
-											결제 전
+											결제 대기
 										</c:if>
 										<c:if test="${orderlist.paymentState == 1}">
 											결제 완료
@@ -167,7 +131,7 @@
 											무통장입금
 										</c:if>
 										<c:if test="${orderlist.paymentMethod == 1}">
-											카드결제
+											신용카드
 										</c:if>
 									</td>
 								</tr>
@@ -178,4 +142,21 @@
 			</div>
 		</div>
 	</main>
+<script>
+    function selectAllpaymentMethod(selectAll) {
+      const checkboxes = document.getElementsByName('paymentMethod');
+      
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = selectAll.checked; // Use the selectAll argument here
+      });
+    }
+    
+    function selectAllOrderStatus(selectAll) {
+        const orderStatusCheckboxes = document.getElementsByName('orderStatus');
+        
+        orderStatusCheckboxes.forEach((checkbox) => {
+          checkbox.checked = selectAll.checked;
+        });
+      }
+</script>
 	<jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>
