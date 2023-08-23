@@ -12,9 +12,16 @@
 	width: 100%;
 	cursor: pointer;
 }
+#button-div {
+	text-align: center;
+	font-size: 24px;
+}
+#refund-success-div {
+	margin-top: 50px;
+}
 </style>
 <section class="common-section" id="#">
-	<div class="common-title">주문/결제</div>
+	<div class="common-title">취소 상세 내역</div>
 	<div class="common-container">
 		<div class="common-div">
 			<div class="payment-div">
@@ -118,6 +125,7 @@
 							</p>
 						</div>
 					</div>
+					<div id="button-div">
 					<c:set var="index" value="${cancelInfo.orderStatus}"/>
 					<c:choose>
 						<c:when test="${index eq 0}">
@@ -127,8 +135,10 @@
 							<button class="btn" id="cancel-btn" onclick="cancelOrder('refund');">취소/환불신청</button>
 						</c:when>
 						<c:otherwise>
+							<div id="refund-success-div">환불이 완료된 주문입니다.</div>
 						</c:otherwise>
 					</c:choose>
+					</div>
 				</div>
 			</div>
 		</div>
