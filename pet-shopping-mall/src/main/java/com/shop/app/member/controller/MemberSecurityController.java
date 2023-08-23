@@ -38,6 +38,7 @@ import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
+import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.entity.TermsHistory;
@@ -206,21 +207,14 @@ public class MemberSecurityController {
 	// 로그인처리하는 요청 작성 X
 	// 로그아웃처리하는 요청 작성 X
 
-	// 멤버 상세 조회
+	/**
+	 * 마이페이지 (담희)
+	 */
 	@GetMapping("/myPage.do")
-	public void memberDetail(Authentication authentication, // 현재 사용자 인증 정보와 멤버 정보를 가져와서 상세 정보 페이지에 표시.
-			@AuthenticationPrincipal MemberDetails _member, // member: 현재 사용자 멤버 정보
-			Model model) { // model: 뷰와 컨트롤러 사이에서 데이터를 전달하는 객체
-
-		// 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
-		// 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
-		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-		Object credentials = authentication.getCredentials(); // 열람불가
-		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
-		Member member = memberService.findMemberById(_member.getMemberId());
-
-		model.addAttribute("member", member);
+	public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
+		String memberId = member.getMemberId();
+		MypageDto myPage = memberService.getMyPage(memberId);
+		model.addAttribute("myPage", myPage);
 	}
 
 	// 멤버 정보 업데이트

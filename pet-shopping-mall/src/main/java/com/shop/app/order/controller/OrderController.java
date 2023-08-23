@@ -18,6 +18,7 @@ import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -25,6 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class OrderController {
+	
+	public static String[] status = {"입금대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
+ 
 	
 	@Autowired
 	OrderService orderService;
@@ -43,13 +47,11 @@ public class OrderController {
 	    String memberId = member.getMemberId();
 	    List<OrderHistoryDto> orderHistories;
 
-	    if (period != null) {
+	    if (period != null) 
 	        orderHistories = orderService.getOrderListByPeriod(memberId, period);
-	    } else {
+	    else 
 	        orderHistories = orderService.getOrderList(memberId);
-	    }
-
-	    String[] status = {"입금대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
+	    
 
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderHistories);
@@ -72,6 +74,23 @@ public class OrderController {
 		int result = orderService.insertCancelOrder(orderNo, isRefund);
 		return "redirect:/order/orderList.do";
 	}
+	
+	
+	@GetMapping("/cancelOrderList.do")
+	public void getCancelOrderList(Model model, @RequestParam(name = "period", required = false) Integer period, @AuthenticationPrincipal MemberDetails member) {
+		String memberId = member.getMemberId();
+		List<OrderCancelInfoDto> cancelInfos;
+		
+		if (period != null) {
+			cancelInfos = orderService.getCancelInfoAll(memberId);
+		} else {
+			cancelInfos = orderService.getCancelInfoByPeriod(memberId, period);
+		}
+		
+	    model.addAttribute("status", status);
+		model.addAttribute("cancelInfoList", cancelInfos);
+	}
+	
 	
 	
 	@GetMapping("/orderDetail.do")
