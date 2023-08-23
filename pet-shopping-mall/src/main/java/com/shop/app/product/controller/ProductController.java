@@ -33,7 +33,6 @@ import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
-import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
 
 import lombok.extern.slf4j.Slf4j;

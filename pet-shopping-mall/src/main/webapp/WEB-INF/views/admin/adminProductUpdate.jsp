@@ -5,11 +5,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
-<div id="layoutSidenav_content">
+
+</div><!-- layoutSidenav -->
 <main>
-<div class="productInfo-container">
+<div class="container-fluid px-4">
+<div class="productInfo-container justify-content-around">
+	<h1>상품수정</h1>
+	
 	<!-- 상품기본 정보 -->
-	<div class="product-container">
+	<div class="product-container ">
 		<!-- 상품카테고리 정보 -->
 		<div class="product-category-info">
 			<div class="row mb-3">
@@ -122,20 +126,29 @@
 	            </div>
 	        </div>
 	        <div class="col-md-6">
-	            <button type="button" class="btn btn-secondary" onclick="updateProductOption(${productDetail.productDetailId});">옵션수정</button>
+	            <button type="button" class="btn btn-secondary" onclick='updateProductOption("${productDetail.productDetailId}");'>옵션수정</button>
 	            <button type="button" class="btn btn-danger" onclick="deleteProductOption(${productDetail.productDetailId});">삭제</button>
 	        </div>
 	    </div>
 	</c:forEach> 	
-	
-</div>
       <div class="d-flex justify-content-end">
         <button class="btn btn-secondary me-2" type="reset">초기화</button>
       </div>
-
+	
+</div><!-- productInfo-container -->
+</div>
 </main>
-
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+//ajax 요청시 사용할 csrf 글로벌 변수설정
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
 //상품 업데이트 함수
 const updateProduct = () => {
     const productId = '${product.productId}'; // 상품 ID
@@ -145,30 +158,23 @@ const updateProduct = () => {
 
     const requestData = {
         productId: productId,
+        categoryId: '${product.categoryId}',
         productName: productName,
         productPrice: productPrice,
         categoryId: categoryId,
         imgageId : '${product.imageId}'
         // 여기에 다른 필드들도 추가하면 됩니다.
     };
-
+	console.log(requestData);
     // Ajax 요청
     $.ajax({
-        url: '${pageContext.request.contextPath}/admin/adminProductUpdate.do?id=' + productId,
+        url: '${pageContext.request.contextPath}/admin/adminProductUpdate.do',
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(requestData),
         success: function(response) {
-            if (response.code === 200) {
-                alert('상품이 성공적으로 업데이트되었습니다.');
-                // 업데이트된 내용을 화면에 반영하거나 다른 작업을 수행할 수 있습니다.
-            } else {
-                alert('상품 업데이트 실패! 관리자에게 문의하세요.');
-            }
-        },
-        error: function() {
-            alert('상품 업데이트 요청 실패! 서버 오류가 발생했습니다.');
+          alert('상품이 성공적으로 업데이트되었습니다.');
         }
     });
 };
@@ -176,20 +182,23 @@ const updateProduct = () => {
 // 상품 삭제 
 const deleteProduct = (productId) => {
     if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
+        const requestData = {
+            productId: productId // Remove unnecessary backticks and curly braces
+        };
+		console.log(requestData);
         $.ajax({
-            url: '${pageContext.request.contextPath}/admin/adminProductDelete.do?id=' + productId,
+            url: '${pageContext.request.contextPath}/admin/adminProductDelete.do',
             type: 'POST',
             dataType: 'json',
+            data: JSON.stringify(requestData),
+            contentType: 'application/json',
             success: function(response) {
-                if (response.code === 200) {
-                    alert('상품이 성공적으로 삭제되었습니다.');
-                    // Refresh the page or update the UI as needed
-                } else {
-                    alert('상품 삭제 실패! 관리자에게 문의하세요.');
-                }
+                alert('삭제 성공했습니다');
+                window.location.href = '${pageContext.request.contextPath}/admin/adminProductList.do';
             },
-            error: function() {
-                alert('상품 삭제 요청 실패! 서버 오류가 발생했습니다.');
+            error: function(xhr, textStatus, errorThrown) {
+                // Handle error if needed
+                alert('삭제 실패했습니다');
             }
         });
     }
@@ -200,10 +209,10 @@ const deleteProduct = (productId) => {
 //상품 옵션 업데이트 함수
 const updateProductOption = (productDetailId) => {
 	console.log(productDetailId);
-    const optionName = document.getElementById(`optionName_`+${productDetailId}).value;
-    const optionValue = document.getElementById(`optionValue_${productDetailId}`).value;
-    const additionalPrice = document.getElementById(`additionalPrice_${productDetailId}`).value;
-    const saleState = document.getElementById(`saleState_${productDetailId}`).value;
+    const optionName = document.getElementById(`optionName_\${productDetailId}`).value;
+    const optionValue = document.getElementById(`optionValue_\${productDetailId}`).value;
+    const additionalPrice = document.getElementById(`additionalPrice_\${productDetailId}`).value;
+    const saleState = document.getElementById(`saleState_\${productDetailId}`).value;
 
     const requestData = {
         productDetailId: productDetailId,
@@ -213,7 +222,8 @@ const updateProductOption = (productDetailId) => {
         saleState: saleState
         // 여기에 다른 필드들도 추가하면 됩니다.
     };
-
+	console.log(requestData);
+    
     // Ajax 요청
     $.ajax({
         url: '${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?id=' + productDetailId,
@@ -236,27 +246,27 @@ const updateProductOption = (productDetailId) => {
 };
 // 상품옵션 삭제 요청
 const deleteProductOption = (productDetailId) => {
-    if (confirm('정말로 이 옵션을 삭제하시겠습니까?')) {
+    const requestData = {
+            productDetailId: `\${productDetailId}`
+        };
+	console.log(requestData);
+	if (confirm('정말로 이 옵션을 삭제하시겠습니까?')) {
         $.ajax({
-            url: '${pageContext.request.contextPath}/admin/adminProductOptionDelete.do?id=' + productDetailId,
+            url: '${pageContext.request.contextPath}/admin/adminProductOptionDelete.do',
             type: 'POST',
             dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
             success: function(response) {
                 if (response.code === 200) {
                     alert('옵션이 성공적으로 삭제되었습니다.');
-                    // Refresh the page or update the UI as needed
                 } else {
                     alert('옵션 삭제 실패! 관리자에게 문의하세요.');
                 }
-            },
-            error: function() {
-                alert('옵션 삭제 요청 실패! 서버 오류가 발생했습니다.');
             }
         });
     }
 };
-
-
 
 // 파일업로드
 document.querySelectorAll("[name=upFile]").forEach((input) => {
@@ -272,4 +282,29 @@ document.querySelectorAll("[name=upFile]").forEach((input) => {
 	}
 });
 </script>
-<jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>
+
+
+
+
+			<footer class="py-4 bg-light mt-auto">
+				<div class="container-fluid px-4">
+					<div
+						class="d-flex align-items-center justify-content-between small">
+						<div class="text-muted">Copyright &copy; 김대원김대원김대원입니다?</div>
+						<div>
+							<a href="#">Privacy Policy</a> &middot; <a href="#">Terms
+								&amp; Conditions</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+	</div>
+	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+	<script	src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	
+</body>
+</html>

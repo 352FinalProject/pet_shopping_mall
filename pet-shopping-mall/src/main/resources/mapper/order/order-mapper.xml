@@ -176,6 +176,8 @@
       left join payment p on p.order_id = ot.order_id
    where
       ot.member_id = #{memberId}
+      and
+      ot.order_status >=5
    </select>
    
    
@@ -198,6 +200,8 @@
         left join member m on ot.member_id = m.member_id
    where
       ot.member_id = #{memberId} and c.request_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})
+      and
+      ot.order_status >=5
    </select>
    
    

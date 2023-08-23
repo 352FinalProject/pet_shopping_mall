@@ -266,9 +266,11 @@
 				<span id="product-bottom-title">제품명 나오는 곳</span> <br /> <span>11,000원</span>
 			</div>
 			<div class="heart-img">
-				<img
-					src="${pageContext.request.contextPath}/resources/images/product/pink_heart.png"
-					width="28px" /> <br /> <span>1,562</span>
+			<button class="heart-button" id="heartButton">
+			  <img
+			    src="${pageContext.request.contextPath}/resources/images/product/pink_heart.png"
+			    width="28px" />
+			</button> <span>1,562</span>
 			</div>
 			<div>
 				<button class="btn btn1">장바구니</button>
