@@ -149,7 +149,6 @@ public class MemberSecurityController {
 		// 회원 정보 세션 제거 (예라)
 		session.removeAttribute("emailVerified");
 		
-		redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
 		return "redirect:/memberCreateComplete.do";
 	}
 	
@@ -199,6 +198,7 @@ public class MemberSecurityController {
 		log.debug("member = {}", member);
 		
 	    model.addAttribute("member", member);
+	    
 	}
 	
 	// 멤버 정보 업데이트
@@ -264,22 +264,12 @@ public class MemberSecurityController {
 
 	//아이디 찾기 
 	@GetMapping("/memberSearchId.do")
-	public String memberSearchId() {
-		return "redirect/member/memberSearchId.do"; 
-	}
+	public void memberSearchId(){}
+	
 	
 	@GetMapping("/memberCreateComplete.do")
 	public void memberCreateComplete() {}
-	 // 이메일 보내기
-//    @Transactional
-//    @PostMapping("/sendEmail")
-//    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
-//        MailDto dto = ms.createMailAndChangePassword(memberEmail);
-//        ms.mailSend(dto);
-//
-//        return "/member/login.do";
-//    }
-//	
+	
 	
 	@GetMapping("/terms.do")
 	public void getTerms() {}

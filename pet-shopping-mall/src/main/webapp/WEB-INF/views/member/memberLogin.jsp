@@ -152,6 +152,68 @@
 button, input {
 	cursor: pointer;
 }
+/* 모달 스타일 */
+.modal {
+	display: none; /* 모달 창 숨김 */
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 10% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 70%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+}
+
+.modal-content h2 {
+	margin-top: 0;
+}
+
+.modal-content form {
+	margin-top: 20px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.modal-form-control {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.btn-primary {
+	background-color: #5886d3;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+/* 닫기 버튼 스타일 */
+#closeModalBtn {
+	background-color: #ccc;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	float: right;
+	cursor: pointer;
+	margin-bottom: 5px;
+}
 </style>
 <section class="common-section" id="#">
 	<div class="common-container">
@@ -190,35 +252,7 @@ button, input {
 								<p>아이디저장</p>
 								<button type="button" class="search" id="searchId"
 									onclick='location.href="${pageContext.request.contextPath}/member/memberSearchId"'>아이디찾기</button>
-								<button type="button" class="search" id="searchPasword">비밀번호찾기</button>
-								<!-- find password modal -->
-								<div id="passwordResetModal" class="modal fade" role="dialog">
-									<div class="modal-dialog">
-										<!-- modal content -->
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title">비밀번호 찾기</h4>
-												<button type="button" class="close" data-dismiss="modal">×</button>
-											</div>
-											<div class="modal-body">
-												<!-- password retrieval form -->
-												<form id="passwordResetForm">
-													<div class="form-group">
-														<label for="email">이메일 주소:</label> <input type="email"
-															class="form-control" id="email" name="email" required>
-													</div>
-													<button type="submit" class="btn btn-primary">재설정
-														링크 전송</button>
-												</form>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary"
-													data-dismiss="modal">닫기</button>
-											</div>
-										</div>
-									</div>
-								</div>
-
+								<button type="button" class="search" id="searchPassword">비밀번호찾기</button>
 							</div>
 						</div>
 					</td>
@@ -265,40 +299,95 @@ button, input {
 					</td>
 				</tr>
 			</table>
-		</form:form>
+		</form:form >
+	</div>
+	<!-- 모달 창 -->
+	<div id="passwordResetModal" class="modal">
+		<div class="modal-content">
+			<h2>비밀번호 찾기</h2>
+			<p>이메일을 입력하여 비밀번호 재설정 링크를 받아보세요.</p>
+			<form:form id="passwordResetForm" action="${pageContext.request.contextPath}/email/sendTemporaryPassword.do"
+				method="post" name="sendEmail">
+				<div class="form-group">
+					<label for="email">이메일 주소:</label> <input type="email"
+						class="modal-form-control" id="userEmail" name="email" required>
+				</div>
+				<button type="submit" id="sendEmail" class="btn-primary">이메일
+					전송</button>
+			</form:form>
+			<button type="button" id="closeModalBtn">닫기</button>
+		</div>
 	</div>
 </section>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+const checkInputs = () => {
+    const id = document.getElementById('inputId').value;
+    const password = document.getElementById('inputPassword').value;
+    const loginButton = document.getElementById('loginButton');
 
- const checkInputs = () => {
-	  const id = document.getElementById('inputId').value;
-	  const password = document.getElementById('inputPassword').value;
-	  const loginButton = document.getElementById('loginButton');
+    if (id && password) {
+        loginButton.style.backgroundColor = '#5886d3';
+        loginButton.disabled = false; // 버튼 활성화
+    } else {
+        loginButton.style.backgroundColor = '#c8c8c8';
+        loginButton.disabled = true; // 버튼 비활성화
+    }
+};
 
-	  if (id && password) {
-	    loginButton.style.backgroundColor = '#5886d3';
-	    loginButton.disabled = false; // 버튼 활성화
-	  } else {
-	    loginButton.style.backgroundColor = '#c8c8c8';
-	    loginButton.disabled = true; // 버튼 비활성화
-	  }
-	};
+document.getElementById('inputId').addEventListener('input', checkInputs);
+document.getElementById('inputPassword').addEventListener('input', checkInputs);
 
-	document.getElementById('inputId').addEventListener('input', checkInputs);
-	document.getElementById('inputPassword').addEventListener('input', checkInputs);
+checkInputs();
 
-	checkInputs();
+const searchPasswordBtn = document.getElementById("searchPassword");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const passwordResetModal = document.getElementById("passwordResetModal");
 
-/* 	document.getElementById('searchId').addEventListener('click', () => {
-		
-	}); */
+// 비밀번호 찾기 버튼 클릭 시
+searchPasswordBtn.addEventListener("click", function() {
+    passwordResetModal.style.display = "block";
+});
 
-/* 	document.getElementById('searchPassword').addEventListener('click', function() {
-	    $('#passwordResetModal').modal('show');
-	}); */
-	</script>
+// 모달 닫기 버튼 클릭 시
+closeModalBtn.addEventListener("click", function() {
+    passwordResetModal.style.display = "none";
+});
+
+$(document).ready(function() {
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+	const sendEmail = document.getElementById("sendEmail");
+    $("#sendEmail").click(function() {
+        const userEmail = $("#userEmail").val();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/email/sendTemporaryPassword.do',
+            data: {
+                'email': userEmail
+            },
+            dataType: "text",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
+            },
+            success: function(result) {
+            	console.log(result);
+                if (result === "no") {
+                    alert('임시비밀번호를 전송 했습니다.');
+                    userEmail.submit();
+                } else {
+                    alert('임시비밀번호를 전송 했습니다.');
+                }
+            },
+            error: function() {
+                console.log('에러 체크!!');
+            }
+        });
+    });
+});
+
+
+</script>
+
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

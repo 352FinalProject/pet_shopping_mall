@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 22 Aug 2023 20:12:25 GMT</lastBuildDate><item><title><![CDATA[Spring Authorization Server 1.1.2 available now]]></title><link>https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now</guid><dc:creator><![CDATA[Joe Grandja]]></dc:creator><pubDate>Tue, 22 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, it is my pleasure to announce the general availability of Spring Authorization Server 1.1.2.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 23 Aug 2023 07:06:26 GMT</lastBuildDate><item><title><![CDATA[This Week in Spring - August 22, 2023]]></title><link>https://spring.io/blog/2023/08/23/this-week-in-spring-august-22-2023</link><guid isPermaLink="true">https://spring.io/blog/2023/08/23/this-week-in-spring-august-22-2023</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Wed, 23 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! And, would you believe it, I&apos;m writing this at SpringOne 2023, in sunny Las Vegas, Nevada. This is the &lt;em&gt;first&lt;/em&gt; in-person SpringOne since 2019, and I&apos;m so, so, so glad to be here!&lt;/p&gt;
+&lt;p&gt;We&apos;ve got a &lt;em&gt;ton&lt;/em&gt; of things to get into this week, let&apos;s dive right into it!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This year we&apos;re celebrating twenty (20!) years since the early builds of Spring Framework 1.0, and ten (10!!) years since the early builds of Spring Boot 1.0. Did you see this amazing easter-egg, &lt;a href=&quot;https://springone.io/history-of-spring&quot;&gt;&lt;em&gt;The History of Spring?&lt;/em&gt;&lt;/a&gt;? It&apos;s amazing!&lt;/li&gt;
+&lt;li&gt;We announced a new project called Spring AI that provides a convenient abstraction to allow developers to work with Large Language Models like Azure OpenAI and regular OpenAI, and - hopefully - more in the future. I did a live stream with its founder, &lt;a href=&quot;https://www.youtube.com/watch?v=0P8UU5vkvI8&quot;&gt;Dr. Mark Pollack, here&lt;/a&gt;, and we did &lt;a href=&quot;https://github.com/coffee-software-show/spring-ai.git&quot;&gt;a demo you can look at here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now&quot;&gt;Spring Authorization Server 1.1.2 available now&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/18/spring-data-2023-1-0-m2-2023-0-3-2022-0-9-and-2021-2-15-released&quot;&gt;Spring Data 2023.1.0-M2, 2023.0.3, 2022.0.9, and 2021.2.15 released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/17/spring-framework-6-1-m4-released&quot;&gt;Spring Framework 6.1 M4 released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/21/spring-modulith-1-0-ga-released&quot;&gt;Spring Modulith 1.0 GA released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/16/spring-modulith-1-0-rc2-released&quot;&gt;Spring Modulith 1.0 RC2 released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/22/tackling-the-oauth2-client-component-model-in-spring-security&quot;&gt;Tackling the OAuth2 Client component model in Spring Security&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://oracle.github.io/microservices-datadriven/spring/&quot;&gt;Oracle Backend for Spring Boot - Developer Preview&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Authorization Server 1.1.2 available now]]></title><link>https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now</guid><dc:creator><![CDATA[Joe Grandja]]></dc:creator><pubDate>Tue, 22 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, it is my pleasure to announce the general availability of Spring Authorization Server 1.1.2.&lt;/p&gt;
 &lt;p&gt;See the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/releases/tag/1.1.2&quot;&gt;1.1.2&lt;/a&gt; release notes for complete details.&lt;/p&gt;
 &lt;p&gt;To get started using Spring Authorization Server, see the &lt;a href=&quot;https://docs.spring.io/spring-authorization-server/docs/current/reference/html/getting-started.html&quot;&gt;Getting Started&lt;/a&gt; chapter of the reference documentation and the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/tree/1.1.x/samples&quot;&gt;samples&lt;/a&gt; to become familiar with setup and configuration.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-authorization-server&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/issues&quot;&gt;GitHub Issues&lt;/a&gt; | &lt;a href=&quot;https://github.com/orgs/spring-projects/projects/8/views/21&quot;&gt;Project Board&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Tackling the OAuth2 Client component model in Spring Security]]></title><link>https://spring.io/blog/2023/08/22/tackling-the-oauth2-client-component-model-in-spring-security</link><guid isPermaLink="true">https://spring.io/blog/2023/08/22/tackling-the-oauth2-client-component-model-in-spring-security</guid><dc:creator><![CDATA[Steve Riesenberg]]></dc:creator><pubDate>Tue, 22 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;In Spring Security 5, we saw many developments in the OAuth2 story with the introduction of OAuth2 Resource Server and OAuth2 Client into the framework.&lt;/p&gt;
@@ -502,191 +514,4 @@ And the Spring community gathers, in passion and peace.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/09/spring-modulith-1-0-rc1-released&quot;&gt;Spring Modulith 1.0 RC1 released&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.innoq.com/en/news/2023/08/stefan-tilkov-english/&quot;&gt;On a more somber note, I want to mark the tragic passing of industry legend, architect-extraordinairre, friend Stefan Tilkov, co-founder and CEO of INNOQ&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Spring Cloud cofounder and lead Spencer Gibb on Spring Cloud Gateway for the Servlet API in the era of Project Loom ]]></title><link>https://spring.io/blog/2023/08/11/a-bootiful-podcast-spring-cloud-cofounder-and-lead-spencer-gibb-on-spring</link><guid isPermaLink="true">https://spring.io/blog/2023/08/11/a-bootiful-podcast-spring-cloud-cofounder-and-lead-spencer-gibb-on-spring</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Fri, 11 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment, my first since I returned from two blistering hot but super fun months in Asia, I talk to Spring Cloud cofounder and lead &lt;a href=&quot;https://twitter.com/SpencerBGibb&quot;&gt;Spencer Gibb (@SpencerBGibb)&lt;/a&gt; about the new Servlet-friendly Spring Cloud Gateway project.&lt;/p&gt;
-&lt;iframe title=&quot;Spring Cloud cofounder and lead Spencer Gibb on Spring Cloud Gateway for the Servlet API in the era of Project Loom &quot; allowtransparency=&quot;true&quot; height=&quot;150&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:150px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?i=vfd5b-147a250-pb&amp;from=pb6admin&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;logo_link=episode_page&amp;btn-skin=7&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2023.0.0-M1 (aka Leyton) has been released]]></title><link>https://spring.io/blog/2023/08/10/spring-cloud-2023-0-0-m1-aka-leyton-has-been-released</link><guid isPermaLink="true">https://spring.io/blog/2023/08/10/spring-cloud-2023-0-0-m1-aka-leyton-has-been-released</guid><dc:creator><![CDATA[Spencer Gibb]]></dc:creator><pubDate>Thu, 10 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the Milestone 1 (M1) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2023.0&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href=&quot;https://repo.spring.io/milestone/&quot;&gt;Spring Milestone&lt;/a&gt; repository. You can check out the 2023.0 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2023.0-Release-Notes&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Notable Changes in the 2023.0.0-M1 Release Train&lt;/h2&gt;
-&lt;p&gt;See all issues and pull requests &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/103/views/1&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Spring Cloud Gateway&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Initial support for MVC Server. See &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/pull/2949&quot;&gt;PR 2949&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/issues/36&quot;&gt;Issue 36&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Spring Cloud Stream&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Initial support for runtime Kafka Streams binder error handling via a special processor&lt;/li&gt;
-&lt;li&gt;Kafka binder health check improvements&lt;/li&gt;
-&lt;li&gt;Partition handling improvements&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Spring Cloud Openfeign&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Java HttpClient Support (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/issues/689&quot;&gt;#689&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Spring Cloud Kubernetes&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Upgrade fabric8 to 6.7.2 by @ryanjbaxter in (&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/pull/1373&quot;&gt;#1373&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The following modules were updated as part of 2023.0.0-M1:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Module&lt;/th&gt;
-&lt;th&gt;Version&lt;/th&gt;
-&lt;th&gt;Issues&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Consul&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-consul/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Gateway&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Zookeeper&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-zookeeper/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Bus&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-bus/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Function&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Openfeign&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Vault&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-vault/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Commons&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Task&lt;/td&gt;
-&lt;td&gt;3.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-task/releases/tag/v3.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
-&lt;td&gt;3.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/releases/tag/v3.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Starter Build&lt;/td&gt;
-&lt;td&gt;2023.0.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-starter-build/releases/tag/v2023.0.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Config&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Build&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-build/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Circuitbreaker&lt;/td&gt;
-&lt;td&gt;3.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/releases/tag/v3.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Contract&lt;/td&gt;
-&lt;td&gt;4.1.0-M1&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-contract/releases/tag/v4.1.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;repositories&gt;
-    &amp;#x3C;repository&gt;
-        &amp;#x3C;id&gt;spring-milestones&amp;#x3C;/id&gt;
-        &amp;#x3C;name&gt;Spring Milestones&amp;#x3C;/name&gt;
-        &amp;#x3C;url&gt;https://repo.spring.io/milestone&amp;#x3C;/url&gt;
-        &amp;#x3C;snapshots&gt;
-            &amp;#x3C;enabled&gt;false&amp;#x3C;/enabled&gt;
-        &amp;#x3C;/snapshots&gt;
-    &amp;#x3C;/repository&gt;
-&amp;#x3C;/repositories&gt;
-&amp;#x3C;dependencyManagement&gt;
-    &amp;#x3C;dependencies&gt;
-        &amp;#x3C;dependency&gt;
-            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
-            &amp;#x3C;version&gt;2023.0.0-M1&amp;#x3C;/version&gt;
-            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
-            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
-        &amp;#x3C;/dependency&gt;
-    &amp;#x3C;/dependencies&gt;
-&amp;#x3C;/dependencyManagement&gt;
-&amp;#x3C;dependencies&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    ...
-&amp;#x3C;/dependencies&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;or with Gradle:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;plugins {
-  id &apos;java&apos;
-  id &apos;org.springframework.boot&apos; version &apos;3.2.0-M1&apos;
-  id &apos;io.spring.dependency-management&apos; version &apos;1.1.3&apos;
-}
-
-group = &apos;com.example&apos;
-version = &apos;0.0.1-SNAPSHOT&apos;
-
-java {
-  sourceCompatibility = &apos;17&apos;
-}
-
-repositories {
-  mavenCentral()
-  maven { url &apos;https://repo.spring.io/milestone&apos; }
-}
-
-ext {
-  set(&apos;springCloudVersion&apos;, &quot;2023.0.0-M1&quot;)
-}
-
-dependencies {
-  implementation &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
-  implementation &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
-  testImplementation &apos;org.springframework.boot:spring-boot-starter-test&apos;
-}
-
-dependencyManagement {
-  imports {
-    mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}&quot;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item></channel></rss>
+&lt;iframe title=&quot;Spring Cloud cofounder and lead Spencer Gibb on Spring Cloud Gateway for the Servlet API in the era of Project Loom &quot; allowtransparency=&quot;true&quot; height=&quot;150&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:150px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?i=vfd5b-147a250-pb&amp;from=pb6admin&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;logo_link=episode_page&amp;btn-skin=7&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;</content:encoded></item></channel></rss>
