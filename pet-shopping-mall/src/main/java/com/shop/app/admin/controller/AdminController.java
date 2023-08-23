@@ -50,6 +50,7 @@ import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductOptionDeleteDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
 
@@ -503,13 +504,16 @@ public class AdminController {
 		return "redirect:/admin/adminProductList.do";
 	}
 	
+	// 상품옵션 수정
 	@PostMapping("/adminProductDetailUpdate.do")
 	public String adminProductDetailUpdate(
 			@Valid @RequestBody ProductDetailUpdateDto _product,
 	        BindingResult bindingResult,
 	        RedirectAttributes redirectAttr
 			) {
-
+		log.debug("ProductDetailUpdateDto = {}", _product);
+		ProductDetail productDetail = _product.toProductDetail();
+		
 		if(bindingResult.hasErrors()) {
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			String message = null;
@@ -521,7 +525,6 @@ public class AdminController {
 			return "redirect:/admin/adminProductList.do";
 		}
     	
-    	ProductDetail productDetail = _product.toProductDetail();
         // 상품 옵션 업데이트 로직 수행
         int result = productService.updateProductDetail(productDetail);
 
@@ -551,10 +554,11 @@ public class AdminController {
 	@PostMapping("/adminProductOptionDelete.do")
 	@ResponseBody
 	public ResponseEntity<?> adminProductOptionDelete(
-	        @RequestParam int productDetailId
+			@Valid @RequestBody ProductOptionDeleteDto _product,
+			@AuthenticationPrincipal MemberDetails member
 	) {
-		log.debug("productDetailId = {}", productDetailId);
-		int result = productService.deleteProductDetail(productDetailId);
+		log.debug("ProductDeleteDto = {}", _product);
+		int result = productService.deleteProductDetail(_product.getProductDetailId());
 		
 	    return ResponseEntity.ok("상품옵션을 삭제했습니다.");
 	}
