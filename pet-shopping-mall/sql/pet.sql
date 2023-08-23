@@ -198,7 +198,7 @@ create table image_attachment_mapping (
     constraint pk_question_image_mapping_id primary key(mapping_id),
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
-
+select * from image_attachment_mapping;
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
