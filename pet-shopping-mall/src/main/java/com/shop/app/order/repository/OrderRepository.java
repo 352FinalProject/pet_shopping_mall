@@ -61,6 +61,17 @@ public interface OrderRepository {
 
 	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
 
+
+	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
+			List<String> paymentMethod, List<String> orderStatus);
+
 	OrderCancelInfoDto getCancelInfo(String orderNo);
+
+
+	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
+
+
+	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+
 	
 }
