@@ -53,11 +53,11 @@
                         <c:forEach items="${pets}" var="pet" varStatus="vs">
                             <tr class="pet-row">
                                 <td>${vs.index + 1}</td>
-                                <td>${pet.petKind}</td>
-                                <td>${pet.petBreed}</td>
-                                <td>${pet.petGender == 'M' ? '수컷' : '암컷'}</td>
-                                <td>${pet.petWeight}</td>
-                                <td>${pet.petAge}</td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petKind}</a></td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petBreed}</a></td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petGender == 'M' ? '♂' : '♀'}</a></td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petWeight}</a></td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petAge}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petGoDetail.do?petId=${pet.petId}"> 수정 </a></td>
                                 <td><a href="javascript:void(0)" onclick="fnDelete('${pet.petId}');"> 삭제 </a></td>

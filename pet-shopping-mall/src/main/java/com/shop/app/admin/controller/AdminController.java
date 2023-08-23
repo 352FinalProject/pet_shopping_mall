@@ -3,51 +3,61 @@ package com.shop.app.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import java.util.Arrays;
+
+import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
-import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.service.OrderService;
-import com.shop.app.point.entity.Point;
 
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductDeleteDto;
+import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductOptionDeleteDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
 
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
-import com.shop.app.review.entity.ReviewDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -168,7 +178,6 @@ public class AdminController {
 	        	question.setQuestionTitle(titleString); 
 	        	question.setQuestionContent(contentString);
 		    }
-
 	        model.addAttribute("questions", questions);
 	    }
 	    return "admin/adminQuestionList";
@@ -193,11 +202,11 @@ public class AdminController {
 		        
 		        member.setSubscribe(subscribe);
 		    }
-			int totalCount = adminService.findTotalAdminCount();
-			model.addAttribute("totalCount", totalCount);
-			
 			model.addAttribute("members", members);
 	    }
+	    int totalCount = adminService.findTotalAdminCount();
+	    model.addAttribute("totalCount", totalCount);
+	    
 	    return "admin/adminMemberList";
 	}
 	
@@ -227,22 +236,74 @@ public class AdminController {
 	                subscribedMembers.add(member);
 		        }
 	        }
-	        int totalCount = adminService.findTotalubscribeCount();
-			model.addAttribute("totalCount", totalCount);
-			
 	        model.addAttribute("subscribedMembers", subscribedMembers);
 	    }
+	    int totalCount = adminService.findTotalubscribeCount();
+	    model.addAttribute("totalCount", totalCount);
 			
 	    return "admin/adminSubscribeList";
 	}
 	
+	/**
+	 * 주문 조회
+	 * @param model
+	 */
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList(Model model) {
 		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
-		log.debug("orderlists = {}", orderlists);
 		model.addAttribute("orderlists", orderlists);
+		String[] method = {"카카오", "신용카드"};
+		String[] status = {"결제대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
+		model.addAttribute("method", method);
+		model.addAttribute("status", status);
 	}
-
+	
+	/**
+	 * 주문검색 조회
+	 * @param model
+	 */
+	@GetMapping("/adminOrderSearch.do")
+	public String adminOrderSearch(
+			@RequestParam(required = false) String searchKeyword,
+	        @RequestParam(required = false) String startDate,
+	        @RequestParam(required = false) String endDate,
+	        @RequestParam(required = false) List<String> paymentMethod,
+	        @RequestParam(required = false) List<String> orderStatus,
+			Model model) {
+		
+		if(paymentMethod == null || paymentMethod.size() == 3) {
+			paymentMethod = Arrays.asList("0", "1");
+		}
+		if(orderStatus == null || orderStatus.size() == 8) {
+			orderStatus = Arrays.asList("0", "1", "2", "3", "4", "5", "6");
+		}		
+		List<OrderAdminListDto> orderlists =
+				orderService.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
+		
+		model.addAttribute("orderlists", orderlists);
+		return "admin/adminOrderList";
+	}
+	
+	
+	
+//	/**
+//	 * 상품정보 조회 
+//	 * 
+//	 * @param member
+//	 * @param model
+//	 */
+//	@GetMapping("/adminProductList.do")
+//	public void adminProductList(
+//		@AuthenticationPrincipal MemberDetails member,
+//		Model model
+//			) {
+//		log.debug("member = {}", member);
+//		
+//		// 기본 상품들 조회해서 가져오기.
+//		List<Product> basicProducts = productService.findAllBasicProduct();
+//		log.debug("basicProducts = {}", basicProducts);
+//		model.addAttribute("basicProducts", basicProducts);
+//	}
 	
 	/**
 	 * 상품별 판매량통계
@@ -272,6 +333,7 @@ public class AdminController {
 		
 	}
 	
+
 	
 	/**
 	 * @author 전수경
@@ -288,7 +350,12 @@ public class AdminController {
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(ProductDetail productDetail : productDetails) {
+			// 상품
 			Product product = productService.findProductById(productDetail.getProductId());
+			// 상품이미지
+			ProductImages productImages = productService.findImageAttachmentsByProductId(productDetail.getProductId());
+			
+			// 카테고리
 			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
 			// 옵션값
 			ProductInfoDto productInfo = ProductInfoDto.builder()
@@ -299,6 +366,8 @@ public class AdminController {
 					.optionValue(productDetail.getOptionValue())
 					.additionalPrice(productDetail.getAdditionalPrice())
 					.saleState(productDetail.getSaleState())
+					.attachments(productImages.getAttachments())
+					.attachmentMapping(productImages.getAttachmentMapping())
 					.build();
 			// 리스트에 추가
 			productInfos.add(productInfo);
@@ -307,7 +376,6 @@ public class AdminController {
 		log.debug("productInfos = {}", productInfos);
 		model.addAttribute("productInfos", productInfos);
 	}
-	
 
 	
 	/**
@@ -363,11 +431,16 @@ public class AdminController {
 
 		// 2. db저장
 		// 2.1. product 객체 저장
-		Product product = Product.builder()
+		ProductImages productImages = ProductImages.builder()
+				.categoryId(_product.getCategoryId())
+				.productName(_product.getProductName())
+				.productPrice(_product.getProductPrice())
+				.attachments(attachments)
 				.build(); // 상품카테고리아이디, 상품명, 가격
-		int result = productService.insertProduct(product);
-		int productId = product.getProductId();
+		
+		int productId = productService.insertProduct(productImages); // 여기서 이미지도 저장
 		log.debug("productId = {}", productId);
+		
 		// 2.1. productDetail 객체 저장
 		ProductDetail productDetail = ProductDetail.builder()
 				.productId(productId)
@@ -375,9 +448,9 @@ public class AdminController {
 				.optionValue(_product.getOptionValue())
 				.additionalPrice(_product.getAdditionalPrice())
 				.saleState(_product.getSaleState())
-				.attachments(attachments)
 				.build();
-		result = productService.insertProductDetail(productDetail);
+		
+		int result = productService.insertProductDetail(productDetail);
 		int productDetailId = productDetail.getProductDetailId();
 		log.debug("productDetailId = {}", productDetailId);
 		
@@ -388,21 +461,27 @@ public class AdminController {
 	 * @author 전수경
 	 * 상품수정 폼으로 연결
 	 */
-	@GetMapping("/adminProductDetailUpdate.do")
+	@GetMapping("/adminProductUpdate.do")
 	public void adminProductDetailUpdate(
 			@RequestParam int productId,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
 			) {
 		
-		// 상품카테고리 조회 후 전달
+		// 상품카테고리 가져오기
 		List<ProductCategory> categories = productService.findAll();
-		model.addAttribute("categories", categories);
-		
-		// 상품아이디로 상품정보 조회해서 가져오기
-		ProductDetail product = productService.findProductDetailById(productId);
+		// 상품정보 가져오기
+		Product product = productService.findProductById(productId);
 		log.debug("product = {}", product);
+		// 상품이미지 가져오기
+//		List<imageAttachment> attachments = productService.findImageAttachmentsByProductId(productId);
+		// 상품옵션 가져오기(리스트)
+		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
+		log.debug("productDetails = {}", productDetails);
+		
+		model.addAttribute("categories", categories);
 		model.addAttribute("product", product);
+		model.addAttribute("productDetails", productDetails);
 	}
 	
 	
@@ -410,44 +489,79 @@ public class AdminController {
 	 * @author 전수경
 	 * 상품 수정
 	 */
-	@PostMapping("/adminProductDetailUpdate.do")
+	@PostMapping("/adminProductUpdate.do")
 	public String adminProductDetailUpdate(
-			@Valid ProductUpdateDto _product,
-			BindingResult bindingResult,
-			@AuthenticationPrincipal MemberDetails member, 
-			Model model
+			@Valid @RequestBody ProductUpdateDto _product,
+			@AuthenticationPrincipal MemberDetails member 
 			) {
+		
 		log.debug("ProductUpdateDto = {}", _product);
 		Product product = _product.toProduct();
-
 		
 		// 상품정보 수정하기
 		int result = productService.updateProduct(product);
-		log.debug("product = {}", product);
-		model.addAttribute("product", product);
 		
 		return "redirect:/admin/adminProductList.do";
 	}
+	
+	// 상품옵션 수정
+	@PostMapping("/adminProductDetailUpdate.do")
+	public String adminProductDetailUpdate(
+			@Valid @RequestBody ProductDetailUpdateDto _product,
+	        BindingResult bindingResult,
+	        RedirectAttributes redirectAttr
+			) {
+		log.debug("ProductDetailUpdateDto = {}", _product);
+		ProductDetail productDetail = _product.toProductDetail();
+		
+		if(bindingResult.hasErrors()) {
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			String message = null;
+			for(ObjectError err : errors) {
+				log.error("message = {} {}", err.getCodes()[1], err.getDefaultMessage());
+				message = err.getDefaultMessage();
+			}
+			redirectAttr.addFlashAttribute("msg", message);
+			return "redirect:/admin/adminProductList.do";
+		}
+    	
+        // 상품 옵션 업데이트 로직 수행
+        int result = productService.updateProductDetail(productDetail);
+
+        return "redirect:/admin/adminProductList.do";// 업데이트 성공 시 200 OK 응답 반환
+
+	}
+	
 	
 	/**
 	 * @author 전수경
 	 * 상품 삭제
 	 */
-	@PostMapping("/adminProductDetailDelete.do")
+	@PostMapping("/adminProductDelete.do")
 	public String adminDeleteProduct(
-			@Valid ProductUpdateDto _product,
-			BindingResult bindingResult,
-			@AuthenticationPrincipal MemberDetails member, 
-			Model model
+			@Valid @RequestBody ProductDeleteDto _product,
+			@AuthenticationPrincipal MemberDetails member
 			){
+		log.debug("ProductDeleteDto = {}", _product);
 		
-		Product product = _product.toProduct();
-		int productId = product.getProductId();
-		int result = productService.deleteProduct(productId);
+		int result = productService.deleteProduct(_product.getProductId());
 		
 		return "redirect:/admin/adminProductList.do";
 	}
 
+
+	// 상품옵션 삭제
+	@PostMapping("/adminProductOptionDelete.do")
+	@ResponseBody
+	public ResponseEntity<?> adminProductOptionDelete(
+			@Valid @RequestBody ProductOptionDeleteDto _product,
+			@AuthenticationPrincipal MemberDetails member
+	) {
+		log.debug("ProductDeleteDto = {}", _product);
+		int result = productService.deleteProductDetail(_product.getProductDetailId());
+		
+	    return ResponseEntity.ok("상품옵션을 삭제했습니다.");
+	}
 
 
 	/**

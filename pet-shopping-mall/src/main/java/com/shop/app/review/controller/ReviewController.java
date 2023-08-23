@@ -2,6 +2,7 @@ package com.shop.app.review.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.ImageService;
 import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
@@ -82,10 +84,6 @@ public class ReviewController {
 
 		List<Review> reviews = reviewService.findReviewAll(params);
 
-		log.debug("토탈카운트 = {} ", totalCount);
-		log.debug("페이지, 리밋, 멤버아이디 params = {}", params);
-		log.debug("파람스 들어가있는거 reviews = {}", reviews);
-
 		model.addAttribute("reviews", reviews);
 	}
 
@@ -101,7 +99,10 @@ public class ReviewController {
 	public String reviewCreate(
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
-			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, Point point, Pet pet) 
+			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
+			Point point, 
+			Pet pet,
+			Principal principal)
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
@@ -131,21 +132,43 @@ public class ReviewController {
 			}
 		}
 		
+		_review.setPetId(pet.getPetId());
+		log.debug("펫아이디 = {}", _review);
 
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
+				.petId(pet.getPetId())
 				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
 				.reviewContent(_review.getReviewContent())
+				.petId(_review.getPetId()) // petId를 pet의 Id와 연결
 				.attachments(attachments)
 				.build();
 
-		// log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+		
+		// petId 연결하기
+		String memberId = principal.getName();
+		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 로그인 한 회원의 펫정보 가져오기
+		
+		// log.debug("petInfo = {}", petInfo);
+		
+		if (!petInfo.isEmpty()) { // 펫정보가 비어있지 않다면
+			Pet firstPet = petInfo.get(0); // 첫번째 Pet 객체 가져오기
+			reviews.setPetId(firstPet.getPetId()); // db에 pet정보 저장 
+//			reviews.setPetName(firstPet.getPetName());
+//			reviews.setPetGender(firstPet.getPetGender());
+		}
+
+		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+
 		
 		int reviewId = reviewService.insertReview(reviews);
 		Review pointReviewId = reviewService.findReviewId(reviews);
+		
+
+		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
@@ -213,12 +236,15 @@ public class ReviewController {
 
 	// 리뷰 상세조회 
 	@GetMapping("/reviewDetail.do")
-	public void reviewDetail(@RequestParam(required=true) int reviewId, Model model, Pet pet) {
+	public void reviewDetail(
+			@RequestParam(required=true) int reviewId, 
+			Model model, 
+			Pet pet, 
+			Principal principal) {
 
 		// 펫 정보 가져오기
-		Pet petId = petService.findPetId(pet);
-
-		log.debug("펫정보 petId = {}", petId);
+		String memberId = principal.getName(); // 로그인한 멤버 아이디
+		List<Pet> petId = petService.findPetId(pet, memberId);
 		
 		Review review = Review.builder()
 				.reviewId(reviewId)
@@ -228,6 +254,8 @@ public class ReviewController {
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("petId", petId);
 
+		log.debug("펫정보 reviews 가져올수있니 = {}", reviews);
+		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
 		log.debug("reviewDetails = {}", reviewDetails);
@@ -262,63 +290,6 @@ public class ReviewController {
 
 	}
 
-//	-- 리뷰 테이블
-//	create table review (
-//	    review_id number,
-//	    pet_id number,
-//	    order_id number,
-//	    review_member_id varchar(20) not null,
-//	    product_detail_id number,
-//	    review_title varchar2(50) not null,
-//	    review_content varchar2(3000) not null,
-//	    review_star_rate number default 1 not null,
-//	    review_created_at timestamp default systimestamp,
-//	    constraint pk_review_id primary key(review_id),
-//	    constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-//	    constraint fk_review_member_id foreign key(review_member_id) references member(member_id) on delete cascade,
-//	    constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
-//	    constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
-//	);
-//
-//	-- 펫 테이블
-//	CREATE TABLE pet (
-//	    pet_id number,
-//	    member_id varchar2(20),
-//	    pet_name VARCHAR2(50) NOT NULL,
-//	    pet_DofB timestamp,
-//	    pet_kind VARCHAR2(50),
-//	    pet_breed VARCHAR2(50),
-//	    pet_adoption timestamp,
-//	    pet_gender CHAR(1),
-//	    pet_created_at timestamp default systimestamp,
-//	    pet_text VARCHAR2(2000),
-//	    constraints pk_pet_id primary key(pet_id),
-//	    constraints fk_member_id foreign key(member_id) references member(member_id) on delete cascade,
-//	    CONSTRAINT chk_pet_gender CHECK (pet_gender IN ('M', 'F'))
-//	);
-//
-//	-- 멤버 테이블
-//	create table member (
-//	    member_id varchar2(20),
-//	    password varchar2(300) not null,
-//	    name varchar2(50) not null,
-//	    phone varchar2(11),
-//	    email varchar2(200),
-//	    enroll_date timestamp default systimestamp,
-//	    address varchar2(500),
-//	    birthday timestamp,
-//	    subscribe char(1) default 'N' not null,
-//	    constraints pk_member_id primary key(member_id)
-//	);
-//
-//	각각 테이블이 이렇게 되어있는 상황이고
-//	리뷰 작성 후 조회를 하면 펫 정보를 가져오려고 하거든
-//
-//
-//	There was an unexpected error (type=Internal Server Error, status=500).
-//	nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'reviewMemberId' in 'class com.shop.app.pet.entity.Pet'
-//	org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'reviewMemberId' in 'class com.shop.app.pet.entity.Pet'
-//	
-	
+
 
 }

@@ -3,6 +3,7 @@ package com.shop.app.pet.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.shop.app.point.entity.Point;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@Builder
 public class Pet {
 	private int petId;
 	private String memberId;
@@ -27,6 +29,7 @@ public class Pet {
     private String petDofBFix;
     private String petAdoptionDateFix;
     
+    private String reviewMemberId;
     
 
 }

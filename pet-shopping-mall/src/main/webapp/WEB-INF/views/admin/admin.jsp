@@ -38,10 +38,10 @@
 						</div>
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-success text-white mb-4">
-								<div class="card-body">회원 포인트</div>
+								<div class="card-body">회원 관리</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do">회원 관리</a>
+									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminMemberList.do">회원 조회</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>

@@ -14,7 +14,7 @@ public class OrderHistoryDto {
 	private String optionName; // product_detail
 	private String optionValue; // product_detail
 	private String quantity; // order_detail
-	private int totalPrice; // orderTbl
+	private int amount; // orderTbl
 	
 	// 0: 입금대기 / 1: 입금완료 / 2: 배송준비 / 3: 배송중 / 4: 배송완료 / 5: 주문취소 / 6: 환불 / 7:반품
 	private int orderStatus;

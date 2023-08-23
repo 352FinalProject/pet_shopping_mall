@@ -7,7 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp"></jsp:include>
-<%-- 1:1 문의 내역 (예라) --%>
+<%-- 포인트 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
 	<div class="common-title">포인트 내역</div>
 	<div class="common-container">

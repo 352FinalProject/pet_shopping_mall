@@ -4,140 +4,30 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
     <style>
-        .sub_title {
-            font-size: 32px;
-            font-weight: bold;
-            text-align: center;
-            line-height: 120px;
-        }
 
-        #select {
-            position: relative;
-            outline: none;
-            display: block;
-            width: 150px;
-            margin: 30px 0;
-            font-size: 17px;
-            color: #333;
-            height: 40px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            padding-right: 30px;
-            padding-left: 10px;
-            background: url('${pageContext.request.contextPath }/resources/images/상품/arrow-down.png') no-repeat 95% 50%/15px auto;
-            border: 1px solid #999;
-        }
-
-        .order_top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        a {
-            color: #999;
-            text-decoration: none;
-        }
-
-        table a {
-            color: #333;
-        }
-
-        #order_table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-        #order_table thead {
-            width: 100%;
-            height: 50px;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-        }
-
-        #order_table tr td {
-            height: 150px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        #order_table tr td:nth-child(1) {
-            width: 15%;
-        }
-
-        #order_table tr td:nth-child(2) {
-            width: 15%;
-        }
-
-        #order_table tr td:nth-child(3) {
-            width: 40%;
-        }
-
-        #order_table tr td:nth-child(4) {
-            width: 15%;
-        }
-
-        #order_table tr td:nth-child(5) {
-            width: 15%;
-        }
-
-        #order_table img {
-            width: 130px;
-            height: 130px;
-            margin: 10px;
-            margin-right: 30px;
-            margin-left: 50px;
-        }
-
-        #order_table button {
-            border: 1px solid #ccc;
-            color: #ccc;
-            width: 80%;
-            margin: 0 auto;
-            height: 35px;
-            font-size: 17px;
-            background-color: #fff;
-            cursor: pointer;
-        }
-
-        .flex div {
-            height: 130px;
-        }
-
-        .flex p {
-            margin: 0;
-            margin-bottom: 5px;
-        }
-
-        .flex {
-            margin-top: 10px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            text-align: left;
-        }
 	</style>
 	<section class="common-section" id="#">
 		<div class="common-title">주문내역</div>
 		<div class="common-container">
 			<div class="order">
-				<div class="order_top">
-					<select name="select" id="select">
+				<div class="order-top">
+					<select name="selectPeriod" id="selectPeriod">
+						<option>전체</option>
 						<option value="3">최근 3개월</option>
 						<option value="6">최근 6개월</option>
-						<option value="9">최근 9개월</option>
 						<option value="12">최근 12개월</option>
 					</select> <a style="margin-bottom: 10px;" href="#">내가 쓴 상품 후기 ▶</a>
 				</div>
-				<table id="order_table">
+				<table id="order-table">
 					<thead>
 						<tr>
 							<th>날짜</th>
 							<th>주문번호</th>
 							<th>상품</th>
 							<th>주문금액</th>
+							<th>주문취소</th>
 							<th>상태</th>
 						</tr>
 					</thead>
@@ -146,23 +36,16 @@
 						<c:forEach items="${orderHistories}" var="order" varStatus="vs">
 							<c:set var="index" value="${order.orderStatus}"/>
 							<c:set var="option" value="${order.optionName}" />
+							<c:set var="amount" value="${order.amount}" />
 							<fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
 							<tr>
 								<td>${formattedDate}</td>
 								<td>
 									<p>${order.orderNo}</p>
-  									<c:choose>
-										<c:when test="${index ge 0 && index le 2}">
-										    <button onclick="cancelOrder('cancel');">취소신청</button>
-										</c:when>
-										<c:when test="${index ge 3 && index le 4}">
-										    <button onclick="cancelOrder('refund');">취소/환불신청</button>
-										</c:when>
-										<c:otherwise>
-										</c:otherwise>
-									</c:choose>
 									<form:form id="cancelFrm" action="" method="POST">
 										<input type="hidden" name="orderNo" value="${order.orderNo}" />
+										<input type="hidden" name="amount" value="${order.amount}" />
+										<input type="hidden" name="isRefund" value="" />
 									</form:form>
 								</td>
 								<td><a
@@ -174,17 +57,30 @@
 											<div>
 												<p>${order.productName}</p>
 												<br />
-											<c:if test="${option} eq null">
+											<c:if test="${option eq null}">
 												<p>선택된 옵션이 없습니다.</p>
 											</c:if>
-											<c:if test="${option} ne null">
+											<c:if test="${option ne null}">
 												<p>${order.optionName} : ${order.optionValue}</p>
 											</c:if>
 												<p>수량: ${order.quantity}개</p>
 											</div>
 										</div>
 								</a></td>
-								<td>${order.totalPrice}원</td>
+								<td><span id="total-price"><fmt:formatNumber
+											value="${order.amount}" groupingUsed="true" />원</span></td>
+								<td>
+									<c:choose>
+										<c:when test="${index eq 0}">
+										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소신청</button></a>
+										</c:when>
+										<c:when test="${index ge 1 && index le 4}">
+										    <a href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button class="cancel-btn">취소/환불신청</button></a>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</td>
 								<td>
 									<p>${status[index]}</p>
 								</td>
@@ -194,24 +90,43 @@
 					</tbody>
 				</table>
 			<c:if test="${empty orderHistories}">
-				<div>조회된 주문 내역이 없습니다.</div>
+				<div class="empty-message">조회된 주문 내역이 없습니다.</div>
 			</c:if>
 			</div>
 		</div>
 	</section>
+	<script
+  		src="https://code.jquery.com/jquery-3.3.1.min.js"
+  		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  		crossorigin="anonymous"></script>
 	<script>
 	const cancelFrm = document.querySelector("#cancelFrm");
+	const amount = Number(cancelFrm.amount.value);
 	
 	const cancelOrder = (text) => {
-		if(text === 'cancel') {
-			cancelFrm.action ="${pageContext.request.contextPath}/order/cancelOrder.do";
+		if(confirm("정말 주문을 취소하시겠습니까?") && text === 'cancel') {
+			cancelFrm.isRefund.value = "N"
+			cancelFrm.action = "${pageContext.request.contextPath}/order/cancelOrder.do";
+			cancelFrm.submit();
+			alert("주문이 정상적으로 취소되었습니다.");
 		} else {
-			cancelFrm.action ="${pageContext.request.contextPath}/order/refundOrder.do";
+			cancelFrm.isRefund.value = "Y"
+			cancelFrm.action = "${pageContext.request.contextPath}/payment/refundOrder.do";
+			cancelFrm.submit();
 		}
-		cancelFrm.submit();
-		
 	};
 
+	/* 셀렉트 박스 */
+const periodSelect = document.querySelector("#selectPeriod");
+const table = document.querySelector("#order-table tbody")
+	
+const handleSelectChange = () => {
+    const period = periodSelect.value;
+
+    location.href="${pageContext.request.contextPath}/order/orderList.do?period=" + period;
+};
+
+periodSelect.addEventListener('change', handleSelectChange);
 	</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

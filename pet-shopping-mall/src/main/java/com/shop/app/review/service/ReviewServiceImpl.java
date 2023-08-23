@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.pet.entity.Pet;
+import com.shop.app.pet.service.PetService;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
@@ -21,6 +23,9 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
+	
+	@Autowired
+	private PetService petService;
 	
 	// 리뷰추가
 	@Override
@@ -79,6 +84,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public Review findReviewId(Review review) {
 		return reviewRepository.findReviewId(review);
 	}
+	
 
 	// 리뷰 상세조회 - 이미지 조회
 	@Override
@@ -97,6 +103,31 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDetails getDeleteReviewById(int reviewId) {
 		return reviewRepository.getDeleteReviewById(reviewId);
 	}
+	
+	
+	// 상품 상세페이지 리뷰 전체 카운트
+	@Override
+	public int findProductTotalReviewCount() {
+		return reviewRepository.findProductTotalReviewCount();
+	}
+
+	// 상품 상세페이지 전체 리뷰 
+	@Override
+	public List<Review> findProductReviewAll(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return reviewRepository.findProductReviewAll(rowBounds);
+	}
+
+	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
+	@Override
+	public ReviewDetails findProductImageAttachmentsByReviewId(int reviewId) {
+		return reviewRepository.findProductImageAttachmentsByReviewId(reviewId);
+	}
+
+
 
 
 }

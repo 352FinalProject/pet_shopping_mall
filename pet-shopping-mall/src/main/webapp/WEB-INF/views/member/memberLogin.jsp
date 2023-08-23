@@ -58,13 +58,12 @@
 }
 
 .saveId { /*    ̵      */
-	margin-right: 50px;
+	margin-right: 56px;
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
 	margin-botom: 10px;
 	align-items: center;
-	margin-top: -3px;
 }
 
 .saveId input {

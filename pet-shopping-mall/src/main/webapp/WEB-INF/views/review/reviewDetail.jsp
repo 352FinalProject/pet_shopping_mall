@@ -24,30 +24,62 @@ a {
 	<div class="common-title">리뷰 상세</div>
 	<br>
 	<div class="review-container">
-		<div id="review-div">제목</div>
-			<div class="review-detail-title input[type="text"]" style="display: inline-block;">
-				<input type="text" name="reviewTitle" id="reivewTitle" value="${reviews.reviewTitle}" readonly required>
-			</div>
-		<br><br>
-		<div id="review-div">작성일</div>
+		<%-- 작성일 --%>
+		<div id="review-div"></div>
 			<div class="review-createdAt">					
 				<fmt:parseDate value="${reviews.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm"
 							   var="createdAt" /> <fmt:formatDate value="${createdAt}"
-							   pattern="yy/MM/dd HH:mm" />
+							   pattern="yyyy.MM.dd" /><span class="small-space"></span>
 			</div>
-		<br><br>
-		<div id="review-div">별점</div>
+		<br>
+		<%-- 리뷰제목 --%>
+		<div id="review-div"></div>
+<%-- 			<div class="review-detail-title input[type="text"]" style="display: inline-block;">
+				<input type="text" name="reviewTitle" id="reivewTitle" value="${reviews.reviewTitle}" readonly required>
+			</div> --%>
+			<span class="review-div-title">${reviews.reviewTitle}${reviews.petId}</span><span class="small-space"></span>
+		<br>
+		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
+		<div id="review-div"></div>
 			<div id="review-div">
-				<div class="star-rating-detail" id="starContainer"></div>
-			</div>
-		<br><br>
-		<div id="review-div">품종</div>
+				<c:if test="${not empty petId}">
+				    ${reviews.petName} | | ${petId[0].petAge}살 | ${petId[0].petWeight}kg | ${petId[0].petBreed}
+				</c:if>
+			</div><span class="small-space"></span>
+		<br>
+		<%-- 상품 옵션 --%>
+		<div id="review-div"></div>
 			<div id="review-div">
-				${petId.petName}
-			</div>
-		<br><br>
+			색상 : 노란색
+			</div><span class="small-space"></span>
+		<br>
+		<%-- 별점 --%>
+		<div id="review-div"></div>
+			<div id="review-div-star">
+				<!-- <div class="star-rating-detail" id="starContainer"></div></div> -->
+	            <c:choose>
+			        <c:when test="${reviews.reviewStarRate == 1}">
+			            <span class="star-rating-detail">★</span> (1)
+			        </c:when>
+			        <c:when test="${reviews.reviewStarRate == 2}">
+			            <span class="star-rating-detail">★</span>  (2)
+			        </c:when>
+			        <c:when test="${reviews.reviewStarRate == 3}">
+			            <span class="star-rating-detail">★</span> (3)
+			        </c:when> 
+			        <c:when test="${reviews.reviewStarRate == 4}">
+			            <span class="star-rating-detail">★</span> (4)
+			        </c:when>
+			        <c:when test="${reviews.reviewStarRate == 5}">
+			            <span class="star-rating-detail">★</span> (5)
+			        </c:when>
+				</c:choose>
+			</div><span class="small-space"></span>
+		<br>
+		
+		<%-- 이미지 --%>
 		<div class="review-img">
-			<div style="display: inline-block;">이미지</div><br>
+			<div style="display: inline-block;"></div>
 			<br>
 				<div id="imageCarousel" class="carousel slide"
 					data-interval="false">
@@ -137,6 +169,7 @@ function displayStars(starRate) {
 // 별 찍히게 하기
 const reviewStarRate = ${reviews.reviewStarRate};
 displayStars(reviewStarRate);
+
 
 
 </script>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
 .common-section{
@@ -75,7 +76,7 @@
 	margin-top: 30px;
 }
 
-/* 가입하기 버튼 */
+/* 등록하기 버튼 */
 .resetAndSubmit input[type="submit"] {
 	background-color: #5886d3;
 	width: 120px;
@@ -87,6 +88,13 @@
 }
 
 /* 성별선택 버튼 */
+
+.gender-button-container {
+    display: flex;
+	ustify-content: flex-start;
+    margin-top: 10px; /* 버튼과의 간격을 설정하거나 필요에 따라 조정하세요 */
+    margin-left: 10px; 
+}
     input[type="button"][name="gender"] {
         border: 1px solid lightgray;
         border-radius: 20px;
@@ -141,20 +149,21 @@
                   <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" name="memberId" id="memberId" value="admin" required>
+                            <input type="text" name="memberId" id="memberId" value="<sec:authentication property="name"/>" required="readonly">
                         </td>
                     </tr>
+                    
                     <tr>
                         <th>펫 이름</th>
                         <td>
-                            <input type="text" name="petName" id="petName" value="두부" required>
+                            <input type="text" name="petName" id="petName" placeholder="이름을 입력해 주세요.">
                         </td>
                     </tr>
                     
                     <tr>
                         <th>나이</th>
                         <td>
-                            <input type="text" name="petAge" id="petAge" required>
+                            <input type="text" name="petAge" id="petAge" placeholder="나이를 입력해 주세요.">
                         </td>
                     </tr>
 
@@ -174,7 +183,7 @@
                     <tr>
                         <th>몸무게</th>
                         <td>
-                            <input type="text" name="petWeight" placeholder="반려동물의 몸무게를 입력해 주세요." >
+                            <input type="text" name="petWeight" placeholder="몸무게를 입력해 주세요." >
                         </td>
                     </tr>                    
                     <tr>
@@ -185,17 +194,18 @@
                     </tr>
                     <tr>
                         <th>성별</th>
-	                        <td>
-							    <input type="hidden" name="petGender" id="genderInput">
-						        <input type="button" name="gender" value="M" onclick="selectGender('M')">
-						        <input type="button" name="gender" value="F" onclick="selectGender('F')">
-                        	</td>
+					<td>
+					    <input type="hidden" name="petGender" id="genderInput" value="${petInfo.petGender}">
+					    <div class="gender-button-container">
+					        <input type="button" name="gender" value="M" onclick="selectGender('M')" ${petInfo.petGender == 'M' ? 'class="selected"' : ''}>
+					        <input type="button" name="gender" value="F" onclick="selectGender('F')" ${petInfo.petGender == 'F' ? 'class="selected"' : ''}>
+					    </div>
+					</td>
                     </tr>
                     <tr>
-						<td class="resetAndSubmit" colspan="2"><input type="reset"
-							value="돌아가기"
+						<td class="resetAndSubmit" colspan="2"><input type="reset" value="돌아가기"
 							onclick="location.href='${pageContext.request.contextPath}/'">
-                            <input type="submit" value="등록하기">
+							<input type="submit" value="등록하기">
                         </td>
                     </tr>
                 </table>

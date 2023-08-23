@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
@@ -20,7 +21,7 @@ import com.shop.app.order.entity.OrderDetail;
 @Mapper
 public interface OrderRepository {
 
-	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{amount}, #{discountCode, jdbcType=VARCHAR})")
+	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{amount})")
 	@SelectKey(
 			before = false,
 			keyProperty = "orderId",
@@ -56,5 +57,21 @@ public interface OrderRepository {
 	
 	@Select("select * from orderTbl where order_no = #{orderNo}")
 	Order findOrderByOrderNo(String orderNo);
+
+
+	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
+
+
+	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
+			List<String> paymentMethod, List<String> orderStatus);
+
+	OrderCancelInfoDto getCancelInfo(String orderNo);
+
+
+	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
+
+
+	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+
 	
 }
