@@ -319,7 +319,8 @@ public class AdminController {
 	    model.addAttribute("topProducts", topProducts);
 		
 		
-		
+		// https://mag1c.tistory.com/220 
+	    // https://w-giraffe.tistory.com/164
 		
 	}
 	

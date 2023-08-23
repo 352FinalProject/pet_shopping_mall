@@ -4,6 +4,39 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
+<script type="text/javascript">
+var ctx = document.getElementById("productSalesChart");
+var productSalesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [${},
+        datasets: [{
+            label: '판매액',
+            backgroundColor: 'rgba(2,117,216,1)',
+            borderColor: 'rgba(2,117,216,1)',
+            data: data,
+        }],
+    },
+    options: {
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Product Name'
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Total Sold'
+                }
+            }
+        }
+    }
+});
+</script>
+
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
