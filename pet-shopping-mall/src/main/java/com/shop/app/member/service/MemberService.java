@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.shop.app.member.dto.MemberCreateDto;
+import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.point.entity.Point;
 
@@ -24,5 +25,7 @@ public interface MemberService extends UserDetailsService {
 	String memberSearchId(String name, String email);
 
 	Member findByEmail(String email);
+
+	MypageDto getMyPage(String memberId);
 
 }

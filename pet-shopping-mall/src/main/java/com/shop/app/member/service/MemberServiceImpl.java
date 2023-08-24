@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.shop.app.member.dto.MemberCreateDto;
+import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.repository.MemberRepository;
 import com.shop.app.point.entity.Point;
@@ -66,6 +67,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member findByEmail(String email) {
 		return memberRepository.findByEmail(email);
+	}
+
+	@Override
+	public MypageDto getMyPage(String memberId) {
+		return memberRepository.getMyPage(memberId);
 	}
 
 

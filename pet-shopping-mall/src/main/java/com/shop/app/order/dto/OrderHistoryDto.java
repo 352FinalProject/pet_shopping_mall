@@ -18,7 +18,12 @@ public class OrderHistoryDto {
 	private int amount; // orderTbl
 	private int productId; // 상품 아이디 (예라)
 	
-	// 0: 입금대기 / 1: 입금완료 / 2: 배송준비 / 3: 배송중 / 4: 배송완료 / 5: 주문취소 / 6: 환불 / 7:반품
+	// 1: 결제완료 / 2: 배송준비 / 3: 배송중 / 4: 배송완료 / 5: 주문취소(환불) / 6: 구매확정
 	private int orderStatus;
+	
+	private int productId;
+	
+	private String imageOriginalFileName; // 이미지 파일 불러오기
+	private String imageRenamedFileName;
 	
 }

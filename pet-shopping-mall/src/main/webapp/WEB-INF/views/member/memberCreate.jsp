@@ -47,7 +47,7 @@
 /* input 태그 */
 .common-div table td input[type="text"], .common-div table td input[type="password"],
 	.common-div table td input[type="tel"], .common-div table td input[type="date"],
-	.common-div table td input[type="email"] {
+	.common-div table td input[type="email"], .common-div table td input[type="address"] {
 	margin-right: 10px;
 	margin-left: 10px;
 	width: 250px;
@@ -124,10 +124,11 @@ span duplicate {
 						<td>
 							<div id="memberId-container">
 								<input type="text" class="form-control" placeholder="아이디"
-									name="memberId" id="memberId" value=""  pattern='[A-Za-z0-9_]{4,}' 
-									title="알파벳 대소문자, 숫자, - 를 사용하여 4자 이상 입력하세요."
-									required> <input type="hidden" id="idValid" value="0" />
-								<span class="guide error">이 아이디는 이미 사용중입니다.</span>
+									name="memberId" id="memberId" value=""
+									pattern='[A-Za-z0-9_]{4,}'
+									title="알파벳 대소문자, 숫자, - 를 사용하여 4자 이상 입력하세요." required> <input
+									type="hidden" id="idValid" value="0" /> <span
+									class="guide error">이 아이디는 이미 사용중입니다.</span>
 							</div>
 						</td>
 					</tr>
@@ -137,9 +138,9 @@ span duplicate {
 						<td>
 							<div class="memberName-container">
 								<input type="text" name="name" id="name" value=""
-									placeholder="이름" pattern="[가-힣A-Za-z]+" 
-									title="한글 또는 영어 대소문자 한 글자 이상의 길이를 가져야 합니다. "
-									required> <br>
+									placeholder="이름" pattern="[가-힣A-Za-z]+"
+									title="한글 또는 영어 대소문자 한 글자 이상의 길이를 가져야 합니다. " required>
+								<br>
 							</div>
 						</td>
 					</tr>
@@ -162,16 +163,14 @@ span duplicate {
 						<th>핸드폰 번호</th>
 						<td><input class="" type="tel" name="phone" id="tel" value=""
 							pattern="^010\d{8}$" title="010으로 시작하며 뒤에 8자리의 숫자가 오는 11자리 입력. "
-							placeholder="핸드폰번호" required>
-							</td>
+							placeholder="핸드폰번호" required></td>
 					</tr>
 
 					<tr>
 						<th>생일</th>
 						<td><input type="date" name="birthday" id="birthday"
-							placeholder="생년월일" required
-							pattern=" ^\d{4}-\d{2}-\d{2}$" title="연도, 월, 일이 각각 4자리, 2자리, 2자리 숫자입력.">
-						</td>
+							placeholder="생년월일" required pattern=" ^\d{4}-\d{2}-\d{2}$"
+							title="연도, 월, 일이 각각 4자리, 2자리, 2자리 숫자입력."></td>
 					</tr>
 
 					<tr>
@@ -179,18 +178,24 @@ span duplicate {
 						<td><input type="email" name="email" id="emailInput"
 							placeholder="이메일" value="" required> <input type="button"
 							id="emailButton" value="이메일 인증" onclick="emailCheck()"
-							pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$" title="부적합한 이메일 형식입니다.">
-						</td>
+							pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$"
+							title="부적합한 이메일 형식입니다."></td>
 					</tr>
 
 					<tr>
 						<th>주소</th>
-						<td><input type="text" name="address" id="address"
+						<td>
+							<!-- <input type="text" name="address" id="address"
 							placeholder="주소" value="" required> <input type="button"
-							value="주소 검색" pattern="^[가-힣0-9a-zA-Z\s-]+$" title="부적합한 주소 형식입니다.">
-							</td>
+							value="주소 검색" onclick="sample4_execDaumPostcode()"
+							pattern="^[가-힣0-9a-zA-Z\s-]+$" title="부적합한 주소 형식입니다.">
+							<input type="text" id="sample4_postcode" placeholder="우편번호"> -->
+							<div style=" text-align: right;"><input type="button" class="address" onclick="sample4_execDaumPostcode()" value="주소 검색" ></div><br>
+							<div style="margin-top: -60px; position: absolute;"><input type="text" class="address" id="sample4_roadAddress" placeholder="도로명주소"></div><br>
+							<div style="margin-top: -30px; "><input type="text" class="address" id="sample4_jibunAddress" placeholder="지번주소"></div><br>
+							<span id="guide" style="color:#999;display:none"></span>
+							<div style="margin-top: -10px;"><input type="text" class="address" id="sample4_detailAddress" placeholder="상세주소"></div>
 					</tr>
-
 					<tr>
 						<td class="resetAndSubmit" colspan="2"><input type="reset"
 							value="돌아가기"> <input type="submit" value="가입하기">
@@ -200,8 +205,11 @@ span duplicate {
 			</form:form>
 		</div>
 	</div>
+
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 /* 이메일 인증 처리 */
 let token = $("meta[name='_csrf']").attr("content");
@@ -357,8 +365,6 @@ window.onload = function() {
     nameInput.addEventListener("input", validateName);
 }
 
-
-
 function validateEmail() {
     const emailInput = document.getElementById("emailInput");
     const emailValidationMessage = document.getElementById("emailValidationMessage");
@@ -377,6 +383,64 @@ function validateEmail() {
     nameInput.addEventListener("input", validateEmail);
 }
 
-</script>
+function sample4_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
+            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var roadAddr = data.roadAddress; // 도로명 주소 변수
+            var extraRoadAddr = ''; // 참고 항목 변수
+
+            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
+            }
+            // 건물명이 있고, 공동주택일 경우 추가한다.
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('sample4_postcode').value = data.zonecode;
+            document.getElementById("sample4_roadAddress").value = roadAddr;
+            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+            console.log("첫번째병신",sample4_extraAddress);
+
+            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+            if(roadAddr !== ''){
+                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                console.log("문자열병신",sample4_extraAddress);
+
+            } else {
+                document.getElementById("sample4_extraAddress").value = '';
+            }
+            document.getElementById('sample4_roadAddress').value = roadAddr;
+            
+            var guideTextBox = document.getElementById("guide");
+            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+            if(data.autoRoadAddress) {
+                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                guideTextBox.style.display = 'block';
+
+            } else if(data.autoJibunAddress) {
+                var expJibunAddr = data.autoJibunAddress;
+                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                guideTextBox.style.display = 'block';
+            } else {
+                guideTextBox.innerHTML = '';
+                guideTextBox.style.display = 'none';
+            }
+        }
+    }).open();
+}
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

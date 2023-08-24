@@ -25,7 +25,6 @@
 						<tr>
 							<th>날짜</th>
 							<th>주문번호</th>
-							<th>상품</th>
 							<th>주문금액</th>
 							<th>주문취소</th>
 							<th>상태</th>
@@ -35,38 +34,18 @@
 					<c:if test="${not empty orderHistories}">
 						<c:forEach items="${orderHistories}" var="order" varStatus="vs">
 							<c:set var="index" value="${order.orderStatus}"/>
-							<c:set var="option" value="${order.optionName}" />
 							<c:set var="amount" value="${order.amount}" />
 							<fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
 							<tr>
 								<td>${formattedDate}</td>
 								<td>
-									<p>${order.orderNo}</p>
+									<a href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}"><p>${order.orderNo}</p></a>
 									<form:form id="cancelFrm" action="" method="POST">
 										<input type="hidden" name="orderNo" value="${order.orderNo}" />
 										<input type="hidden" name="amount" value="${order.amount}" />
 										<input type="hidden" name="isRefund" value="" />
 									</form:form>
 								</td>
-								<td>
-									<a href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
-										<div class="flex">
-											<img
-												src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg"
-												alt="">
-											<div class="order-flex">
-												<p>${order.productName}</p>
-												<br />
-											<c:if test="${option eq null}">
-												<p>선택된 옵션이 없습니다.</p>
-											</c:if>
-											<c:if test="${option ne null}">
-												<p>${order.optionName} : ${order.optionValue}</p>
-											</c:if>
-												<p>수량: ${order.quantity}개</p>
-											</div>
-										</div>
-								</a></td>
 								<td><span id="total-price"><fmt:formatNumber
 											value="${order.amount}" groupingUsed="true" />원</span></td>
 								<td>
@@ -83,16 +62,6 @@
 								</td>
 								<td>
 									<p>${status[index]}</p>
-								<form:form action="/your-action-here">
-									<c:if test="${status[index] == '배송완료'}">
-										<c:forEach items="${orderHistories}" var="order" >
-											<input type="hidden" name="productId" value="${order.productId}">
-											<a href="${pageContext.request.contextPath}/review/reviewCreate.do?productId=${order.productId}" 
-   											class="createReview" data-product-id="${order.productId}">
-										</c:forEach>
-										<button class="review-btn" type="button" name="productId">리뷰쓰기</button></a>
-									</c:if>
-								</form:form>
 								</td>
 							</tr>
 						</c:forEach>
@@ -137,49 +106,6 @@ const handleSelectChange = () => {
 };
 
 periodSelect.addEventListener('change', handleSelectChange);
-
-let token = $("meta[name='_csrf']").attr("content");
-let header = $("meta[name='_csrf_header']").attr("content");
-
-
-$(document).ready(function() {
-    $('.createReview').click(function(event) {
-        
-        let productId = $(this).data('product-id');
-        let form = $('#reviewForm'); // 폼 아이디를 직접 지정
-        console.log(productId);
-        
-        if (form.length) {
-            let formData = new FormData(form[0]);
-            formData.append('productId', productId); // productId 추가
-
-            formData.forEach(function(value, key) { // 폼 데이터 로깅
-                console.log(key + ', ' + value);
-            });
-
-            $.ajax({
-                type: 'POST',
-                url: '${pageContext.request.contextPath}/review/reviewCreate.do',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    '${_csrf_header}': '${_csrf.token}'
-                },
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    // 성공적으로 서버 응답을 받았을 때 실행할 코드
-                },
-                error: function(xhr, status, error) {
-                    // 서버 응답이 실패했을 때 실행할 코드
-                }
-            });
-        }
-    });
-});
-
-
-
 	</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

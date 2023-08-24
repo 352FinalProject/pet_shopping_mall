@@ -39,6 +39,8 @@ public interface MemberRepository {
 	Member findByEmail(String email);
 
 	List<Member> findThisMonthBirthdayMembers(int currentMonth);
+
+	MypageDto getMyPage(String memberId);
 	
 
 	

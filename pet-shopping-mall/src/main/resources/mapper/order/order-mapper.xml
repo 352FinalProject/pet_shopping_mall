@@ -96,7 +96,7 @@
 		    ot.order_id DESC
 	  </select>
 
-   <select id="getOrderList" resultType="orderHistoryDto">
+<!--    <select id="getOrderList" resultType="orderHistoryDto">
    select
    	  ot.order_id,
       ot.order_date,
@@ -109,16 +109,20 @@
       od.quantity,
       ot.amount
    from
-      orderTbl ot left join order_detail od on ot.order_id = od.order_id
-      left join product_detail pd on od.product_detail_id = pd.product_detail_id
-      left join product p on p.product_id = pd.product_id
+      orderTbl ot 
+      left join 
+          order_detail od on ot.order_id = od.order_id
+      left join 
+          product_detail pd on od.product_detail_id = pd.product_detail_id
+      left join 
+          product p on p.product_id = pd.product_id
    where
       ot.member_id = #{memberId}
       order by
       ot.order_date desc
-   </select>
+   </select> -->
 
-   <select id="getOrderListByPeriod" resultType="orderHistoryDto">
+<!--    <select id="getOrderListByPeriod" resultType="orderHistoryDto">
    select
    	  ot.order_id,
       ot.order_date,
@@ -131,16 +135,20 @@
       od.quantity,
       ot.amount
    from
-      orderTbl ot left join order_detail od on ot.order_id = od.order_id
-      left join product_detail pd on od.product_detail_id = pd.product_detail_id
-      left join product p on p.product_id = pd.product_id
+      orderTbl ot 
+      left join 
+          order_detail od on ot.order_id = od.order_id
+      left join 
+          product_detail pd on od.product_detail_id = pd.product_detail_id
+      left join 
+          product p on p.product_id = pd.product_id
    where
       order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})
    and
       ot.member_id = #{memberId}
       order by
       ot.order_date desc
-   </select>
+   </select> -->
 
    <select id="getCancelInfo" resultType="OrderCancelInfoDto">
    select
@@ -209,7 +217,8 @@
    </select>
    
    <select id="getOrderDetail" resultType="orderHistoryDto">
-     select
+   select
+      p.product_id,
       ot.order_id,
       ot.order_date,
       ot.order_no,
@@ -218,11 +227,21 @@
       product_name,
       od.product_detail_id,
       od.quantity,
-      ot.amount
+      ot.amount,
+      ia.image_original_filename,
+	  ia.image_renamed_filename
    from
-      orderTbl ot left join order_detail od on ot.order_id = od.order_id
-      left join product_detail pd on od.product_detail_id = pd.product_detail_id
-      left join product p on p.product_id = pd.product_id
+      orderTbl ot 
+      left join 
+          order_detail od on ot.order_id = od.order_id
+      left join 
+          product_detail pd on od.product_detail_id = pd.product_detail_id
+      left join 
+          product p on p.product_id = pd.product_id
+      left join 
+	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+      left join
+	    image_attachment ia ON iam.image_id = ia.image_id
    where
       ot.order_no = #{orderNo}
    </select>
@@ -244,6 +263,7 @@
 
    <resultMap type="OrderHistoryDto" id="orderHistoryDto">
       <result column="order_id" property="orderId" />
+      <result column="product_id" property="productId" />
       <result column="order_date" property="orderDate" />
       <result column="order_no" property="orderNo" />
       <result column="order_status" property="orderStatus" />
@@ -252,5 +272,7 @@
       <result column="product_detail_id" property="productDetailId" />
       <result column="quantity" property="quantity" />
       <result column="amount" property="amount" />
+      <result column="image_original_filename" property="imageOriginalFileName" />
+      <result column="image_renamed_filename" property="imageRenamedFileName" />
    </resultMap>
 </mapper>

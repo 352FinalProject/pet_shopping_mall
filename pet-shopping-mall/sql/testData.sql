@@ -1,4 +1,6 @@
-
+------------------ member insert ---------------------------
+insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
+values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 select * from member;
 select * from point;
 select * from pet;
@@ -523,7 +525,7 @@ insert into order_detail (order_id, product_detail_id, quantity) values (26,1,de
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9);
 
-insert into product (product_id, category_id, product_name, product_price, product_img, create_date, expire_date, like_cnt, view_cnt)
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 2, '말랑 개껌', 35000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
     
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(1, 0, systimestamp, 38000, 13);    
@@ -538,8 +540,8 @@ insert into payment (payment_id, payment_method, payment_date, amount, order_id)
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(14, 1, systimestamp, 30000, 25);    
 
 ------------------------
-insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
+insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 2, '말랑 개껌', 10000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
@@ -569,8 +571,6 @@ insert into product_detail (product_detail_id, product_id, option_name, option_v
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
     values (seq_product_detail_id.nextval, 2, '맛', '닭고기', default, 20, 1);
 select * from product_detail;
-
-insert into product_category (category_id, category_name) values (seq_category_id.nextval, '카테고리');
 
 ----주문테이블 더미
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
@@ -615,6 +615,10 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
     values (seq_orderTbl_id.nextval, '230823-002', 'honggd', sysdate, 1, 0, 27000,3000, 0, 30000, null);
     
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '230823-002', 'honggd', sysdate, 5, 0, 27000,3000, 0, 30000, null);
+
+select * from orderTbl;    
 -----------------------------------------
 -- 통계조회 쿼리
 -----------------------------------------
@@ -683,27 +687,26 @@ SELECT
 	    ot.order_id DESC;
 
 
------------------------------------------
--- 이용약관 쿼리
------------------------------------------
-insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, '이용약관 동의 (필수)', '여러분을 환영합니다.우리집동물친구 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 우리집동물친구 서비스의 이용과 관련하여 반려동물 쇼핑몰 서비스를 제공하는 우리집동물친구(이하 ‘우동친’)와 이를 이용하는 우리집동물친구 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 우리집동물친구 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.', 'Y');
-insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, '개인정보 수집 및 이용에 대한 안내 (필수)', '개인정보보호법에 따라 우동친에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다. 1. 수집하는 개인정보 이용자는 회원가입을 하지 않아도 정보 검색, 뉴스 보기 등 대부분의 우동친 서비스를 회원과 동일하게 이용할 수 있습니다. 이용자가 메일, 캘린더, 카페, 블로그 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우, 우동친는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.', 'Y');
-insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, '이벤트 등 프로모션 알림 메일 수신 (선택)', '우동친 서비스 및 제휴 이벤트・혜택 등의 정보를 휴대전화(우동친앱 알림 또는 문자), 이메일로 받을 수 있습니다. 일부 서비스(별개의 회원 체계 운영, 우동친 가입 후 추가 가입하는 서비스 등)의 경우, 수신에 대해 별도로 안내드리며 동의를 구합니다.', 'N');
 
------------------------------------------
--- 쿠폰 데이터
------------------------------------------
--- 회원가입시 배송비 쿠폰 (3000원)
-insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
-values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
+select * from image_attachment;
 
--- 생일 축하 10% 쿠폰
-insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
-values (2, '생일축하 10% 할인 쿠폰', null, 10);
-
-
-
-
+select 
+	ci.cartitem_id,
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity,
+    ia.image_original_filename,
+    ia.image_renamed_filename
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+    left join 
+	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product';
 
 select
   ot.order_id,
@@ -724,3 +727,6 @@ where
   ot.member_id = 'member2'
   order by
   ot.order_date desc;
+
+select * from point;
+select * from member;
