@@ -28,7 +28,5 @@ public class Review {
 	private int imageId;
 	private LocalDateTime reviewCreatedAt;
 	
-	// review와 연결된 pet 정보
-//	private Pet pet;
 	
 }

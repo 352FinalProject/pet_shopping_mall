@@ -26,5 +26,8 @@ public class CommunityController {
 	@GetMapping("/communityList.do")
 	public void commnityList() {}
 	
+	// 커뮤니티 글 작성
+	@GetMapping("/communityCreate.do")
+	public void communityCreate() {}
 	
 }

@@ -108,11 +108,7 @@ public class ReviewController {
 		String memberId = member.getMemberId();
 		List<OrderHistoryDto> orderHistories;
 		
-		if (period != null) {
-			orderHistories = orderService.getOrderListByPeriod(memberId, period);
-		} else {
-			orderHistories = orderService.getOrderList(memberId);
-		}
+		orderHistories = orderService.getOrderList(memberId);
 			
 		log.debug("orderHistories = {}", orderHistories);
 		model.addAttribute("orderHistories", orderHistories);

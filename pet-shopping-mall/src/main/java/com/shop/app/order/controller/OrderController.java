@@ -54,7 +54,6 @@ public class OrderController {
 	    	orderHistories = orderService.getOrderListByPeriod(memberId, period);
 	    else 
 	        orderHistories = orderService.getOrderList(memberId);
-	    
 
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderHistories);
