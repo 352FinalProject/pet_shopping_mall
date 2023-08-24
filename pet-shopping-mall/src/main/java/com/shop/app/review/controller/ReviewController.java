@@ -123,10 +123,10 @@ public class ReviewController {
 //		
 //		
 //		
-		orderHistories = orderService.getOrderList(memberId);
+//		orderHistories = orderService.getOrderList(memberId);
 			
-		log.debug("orderHistories = {}", orderHistories);
-		model.addAttribute("orderHistories", orderHistories);
+//		log.debug("orderHistories = {}", orderHistories);
+//		model.addAttribute("orderHistories", orderHistories);
 		
 	
 	}

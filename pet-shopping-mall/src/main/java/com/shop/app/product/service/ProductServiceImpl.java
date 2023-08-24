@@ -128,4 +128,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductsByCategoryId(categoryId);
 	}
 
+	// 찜 수 증가 (선모)
+	@Override
+	public int updateLikeCnt(int productId) {
+		return productRepository.updateLikeCnt(productId);
+	}
 }

@@ -296,10 +296,6 @@ public class MemberSecurityController {
    public void myReview() {
    }
 
-   @GetMapping("/myWishlist.do")
-   public void myWishlist() {
-   }
-
    @GetMapping("/petUpdate.do")
    public void petUpdate() {
    }

@@ -52,6 +52,9 @@ public interface ProductService {
 	
 	// 수경
 	List<Product> findProductsByCategoryId(int categoryId);
+	
+	// 찜 수 증가 (선모)
+	int updateLikeCnt(int productId);
 
 
 }
