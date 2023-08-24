@@ -89,9 +89,6 @@
 									<td>${orderlist.orderNo}</td>
 									<td>${orderlist.productName}</td>
 									<td>
-										<c:if test="${orderlist.orderStatus == 0}">
-											결제대기
-										</c:if>
 										<c:if test="${orderlist.orderStatus == 1}">
 											결제완료
 										</c:if>
@@ -108,9 +105,6 @@
 											주문취소
 										</c:if>
 										<c:if test="${orderlist.orderStatus == 6}">
-											환불
-										</c:if>
-										<c:if test="${orderlist.orderStatus == 7}">
 											반품
 										</c:if>
 									</td>

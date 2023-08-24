@@ -65,7 +65,7 @@
 						<div class="col-xl-6">
 							<div class="card mb-4">
 								<div class="card-header">
-									<i class="fas fa-chart-area me-1"></i> 일별 매출
+									<i class="fas fa-chart-area me-1"></i> 날짜별 매출
 								</div>
 								<div class="card-body">
 									<canvas id="myAreaChart" width="100%" height="40"></canvas>
@@ -75,10 +75,10 @@
 						<div class="col-xl-6">
 							<div class="card mb-4">
 								<div class="card-header">
-									<i class="fas fa-chart-bar me-1"></i> 월별 매출
+									<i class="fas fa-chart-bar me-1"></i> 상품별 매출
 								</div>
 								<div class="card-body">
-									<canvas id="myBarChart" width="100%" height="40"></canvas>
+									<canvas id="myBarChart-totalPrice" width="100%" height="40"></canvas>
 								</div>
 							</div>
 						</div>
@@ -110,9 +110,6 @@
 									<td>${orderlist.orderNo}</td>
 									<td>${orderlist.productName}</td>
 									<td>
-										<c:if test="${orderlist.orderStatus == 0}">
-											결제대기
-										</c:if>
 										<c:if test="${orderlist.orderStatus == 1}">
 											결제완료
 										</c:if>
@@ -129,9 +126,6 @@
 											주문취소
 										</c:if>
 										<c:if test="${orderlist.orderStatus == 6}">
-											환불
-										</c:if>
-										<c:if test="${orderlist.orderStatus == 7}">
 											반품
 										</c:if>
 									</td>
@@ -154,5 +148,53 @@
 					</div>
 				</div>
 			</main>
-			
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script>
+Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#292b2c';
+
+	var labelsPrice = [];
+	var totalPrice = [];
+
+	<c:forEach items="${priceStatistics}" var="priceStatistic" end="10">
+		labelsPrice.push('${priceStatistic.productName}');
+	    totalPrice.push(${priceStatistic.totalPrice});
+	</c:forEach>
+	
+	var ctx = document.getElementById("myBarChart-totalPrice").getContext("2d");
+	var myBarChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: labelsPrice,
+	        datasets: [{
+	            label: '매출액',
+	            data: totalPrice,  // Use the correct variable name here
+	            backgroundColor: 'rgba(135, 206, 235, 0.8)',
+	            borderColor: 'rgba(0, 0, 0, 0.8)',
+	            borderWidth: 2
+	        }]
+	    },
+	    options: {
+	        scales: {//x,y축 설정
+				yAxes: [{
+					ticks: {
+						stepSize: 50000, //y축 간격
+						suggestedMin: 0,//y축 최소 값
+					},
+					gridLines: {//y축 라인 스타일 설정
+						borderDash: [2, 2],
+						borderDashOffset: 0.2
+					}
+				}],
+				xAxes: [{//x축 설정
+					categoryPercentage: 1,
+                	barPercentage: 0.5, 
+					ticks: {
+						
+					}
+				}]
+	   		}
+	    }
+	});
+</script>	
 <jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>

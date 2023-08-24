@@ -19,55 +19,22 @@
 				<div class="col-xl-6">
 					<div class="card mb-4">
 						<div class="card-header">
-							<i class="fas fa-chart-bar me-1"></i> 매출액 순위
+							<i class="fas fa-chart-area me-1"></i> 월별 매출
 						</div>
 						<div class="card-body">
-							<canvas id="myBarChart-totalPrice" width="100%" height="40"></canvas>
+							<canvas id="myAreaChart-montly" width="100%" height="40"></canvas>
 						</div>
 					</div>
 				</div>
 				<div class="col-xl-6">
 					<div class="card mb-4">
 						<div class="card-header">
-							<i class="fas fa-chart-bar me-1"></i> 판매량 순위
+							<i class="fas fa-chart-area me-1"></i> 일별 매출
 						</div>
 						<div class="card-body">
-							<canvas id="myBarChart-totalSold" width="100%" height="40"></canvas>
+							<canvas id="myAreaChart-daily" width="100%" height="40"></canvas>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 판매 순위
-				</div>
-				<div class="card-body">
-					<table id="datatablesSimple">
-						<thead>
-							<tr>
-								<th>순위</th>
-								<th>상품코드</th>
-								<th>상품명</th>
-								<th>카테고리</th>
-								<th>상품가격</th>
-								<th>판매수량</th>
-								<th>판매액</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${productStatistics}" var="productStatistic" varStatus="vs">
-								<tr>
-									<td>${vs.count}</td>
-									<td>${productStatistic.productId}</td>
-									<td>${productStatistic.productName}</td>
-									<td>${productStatistic.categoryName}</td>
-									<td>${productStatistic.productPrice}</td>
-									<td>${productStatistic.totalSold}</td>
-									<td>${productStatistic.totalPrice}</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
 				</div>
 			</div>
 		</div>
@@ -78,32 +45,39 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-	var labelsProduct = [];
-	var labelsPrice = [];
-	var totalSold = [];
-	var totalPrice = [];
+	var labelsDaily = [];
+	var dailyTotalSales = [];
+	var labelsMonthly = [];
+	var monthlyTotalSales = [];
 
-	<c:forEach items="${productStatistics}" var="productStatistic" end="10">
-		labelsProduct.push('${productStatistic.productName}');
-	    totalSold.push(${productStatistic.totalSold});
+	<c:forEach items="${dailyStatistics}" var="dailyStatistic" end="30">
+		labelsDaily.push('${dailyStatistic.orderDaily}');
+	    dailyTotalSales.push(${dailyStatistic.dailyTotalSales});
 	</c:forEach>
 	
-	<c:forEach items="${priceStatistics}" var="priceStatistic" end="10">
-		labelsPrice.push('${priceStatistic.productName}');
-	    totalPrice.push(${priceStatistic.totalPrice});
+	<c:forEach items="${monthlyStatistics}" var="monthlyStatistic" end="12">
+		labelsMonthly.push('${monthlyStatistic.orderMonthly}');
+	    monthlyTotalSales.push(${monthlyStatistic.monthlyTotalSales});
 	</c:forEach>
 	
-	var ctx = document.getElementById("myBarChart-totalSold").getContext("2d");
+	var ctx = document.getElementById("myAreaChart-montly").getContext("2d");
 	var myBarChart = new Chart(ctx, {
-	    type: 'bar',
+	    type: 'line',
 	    data: {
-	        labels: labelsProduct,
+	        labels: labelsMonthly,
 	        datasets: [{
-	            label: '판매수량',
-	            data: totalSold,  // Use the correct variable name here
-	            backgroundColor: 'rgba(144, 238, 144, 0.8)',
-	            borderColor: 'rgba(0, 0, 0, 0.8)',
-	            borderWidth: 1.3
+	            label: '월별',
+	            data: monthlyTotalSales,  // Use the correct variable name here
+	            lineTension: 0.3,
+				backgroundColor: "rgba(2,117,216,0.2)",
+				borderColor: "rgba(2,117,216,1)",
+				pointRadius: 5,
+				pointBackgroundColor: "rgba(2,117,216,1)",
+				pointBorderColor: "rgba(255,255,255,0.8)",
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: "rgba(2,117,216,1)",
+				pointHitRadius: 50,
+				pointBorderWidth: 2,
 	        }]
 	    },
 	    options: {
@@ -130,13 +104,13 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 	});
 	
 	
-	var ctx = document.getElementById("myBarChart-totalPrice").getContext("2d");
+	var ctx = document.getElementById("myAreaChart-daily").getContext("2d");
 	var myBarChart = new Chart(ctx, {
-	    type: 'bar',
+	    type: 'line',
 	    data: {
 	        labels: labelsPrice,
 	        datasets: [{
-	            label: '매출액',
+	            label: '일별',
 	            data: totalPrice,  // Use the correct variable name here
 	            backgroundColor: 'rgba(135, 206, 235, 0.8)',
 	            borderColor: 'rgba(0, 0, 0, 0.8)',

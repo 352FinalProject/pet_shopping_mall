@@ -152,6 +152,40 @@
       <result column="total_price" property="totalPrice" />
    </resultMap>
    
+	<select id="adminStatisticsByMonthly" resultMap="orderAdminStatisticsByDateDto">
+   	SELECT
+	    TO_CHAR(order_date, 'YYYY-MM-DD') AS order_daily,
+	    SUM(total_price) AS monthly_total_sales
+	FROM
+	    orderTbl
+	WHERE
+	    payment_status = 1
+	GROUP BY
+	    TO_CHAR(order_date, 'YYYY-MM-DD')
+	ORDER BY
+	    TO_CHAR(order_date, 'YYYY-MM-DD')
+  	</select>
+  	<select id="adminStatisticsByDaily" resultMap="orderAdminStatisticsByDateDto">
+   	SELECT
+	    TO_CHAR(order_date, 'YYYY-MM-DD') AS order_daily,
+	    SUM(total_price) AS daily_total_sales
+	FROM
+	    orderTbl
+	WHERE
+	    payment_status = 1
+	GROUP BY
+	    TO_CHAR(order_date, 'YYYY-MM-DD')
+	ORDER BY
+	    TO_CHAR(order_date, 'YYYY-MM-DD')
+  	</select>
+  	
+   <resultMap type="OrderAdminStatisticsByDateDto" id="orderAdminStatisticsByDateDto">
+      <result column="order_monthly" property="orderMonthly" />
+      <result column="order_daily" property="orderDaily" />
+      <result column="daily_total_sales" property="dailyTotalSales" />
+      <result column="monthly_total_sales" property="monthlyTotalSales" />
+   </resultMap>
+ 
    <select id="getOrderList" resultType="orderHistoryDto">
    select
       ot.order_date,

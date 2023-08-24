@@ -697,5 +697,3 @@ GROUP BY
 ORDER BY
     total_price DESC;
 
-
-

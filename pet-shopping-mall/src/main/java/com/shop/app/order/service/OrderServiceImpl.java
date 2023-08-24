@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
+import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
@@ -62,7 +63,19 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderAdminProductStatisticsDto> adminStatisticsPrice() {
 		return orderRepository.adminStatisticsPrice();
 	}
-
+	
+	// 관리자페이지 날짜별 상품매출통계 조회 - 일별 (대원)
+	@Override
+	public List<OrderAdminStatisticsByDateDto> adminStatisticsByDaily() {
+		return orderRepository.adminStatisticsByDaily();
+	}
+	
+	// 관리자페이지 날짜별 상품매출통계 조회 -월별 (대원)
+	@Override
+	public List<OrderAdminStatisticsByDateDto> adminStatisticsByMonthly() {
+		return orderRepository.adminStatisticsByMonthly();
+	}
+	
 	// 2. db에서 주문 정보 가져오기 (예라)
 	@Override
 	public Order findByOrder(Order order) {

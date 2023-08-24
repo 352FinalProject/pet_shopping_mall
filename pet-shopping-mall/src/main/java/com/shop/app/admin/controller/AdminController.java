@@ -46,6 +46,7 @@ import com.shop.app.member.entity.Subscribe;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
+import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.service.OrderService;
 
 import com.shop.app.product.dto.ProductCreateDto;
@@ -76,8 +77,24 @@ public class AdminController {
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("/index.do")
-	public void admin2() {}
+	
+	/**
+	 * 주문 조회
+	 * @param model
+	 */
+	@GetMapping("/admin.do")
+	public void admin(Model model) {
+		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
+		model.addAttribute("orderlists", orderlists);
+		String[] method = {"카카오", "신용카드"};
+		String[] status = {"결제대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
+		model.addAttribute("method", method);
+		model.addAttribute("status", status);
+		
+		List<OrderAdminProductStatisticsDto> priceStatistics = orderService.adminStatisticsPrice();
+		model.addAttribute("priceStatistics", priceStatistics);
+		
+	}
 	
 	/**
 	 * 회원목록
@@ -245,7 +262,7 @@ public class AdminController {
 	 * 주문 조회
 	 * @param model
 	 */
-	@GetMapping({"/adminOrderList.do", "/admin.do"})
+	@GetMapping("/adminOrderList.do")
 	public void adminOrderList(Model model) {
 		List<OrderAdminListDto> orderlists = orderService.adminOrderList();
 		model.addAttribute("orderlists", orderlists);
@@ -253,6 +270,7 @@ public class AdminController {
 		String[] status = {"결제대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불" , "반품"};
 		model.addAttribute("method", method);
 		model.addAttribute("status", status);
+		
 	}
 	
 	/**
@@ -316,22 +334,16 @@ public class AdminController {
 	
 	
 	/**
-	 * 월별 판매량통계
+	 * 날짜별 판매량통계
 	 */
-	@GetMapping("/adminStatisticsMonthly.do")
-	public void adminStatisticsMonthly() {
-		
-		
+	@GetMapping("/adminStatisticsByDate.do")
+	public void adminStatisticsByDate(Model model) {
+		List<OrderAdminStatisticsByDateDto> dailyStatistics = orderService.adminStatisticsByDaily();
+		List<OrderAdminStatisticsByDateDto> monthlyStatistics = orderService.adminStatisticsByMonthly();
+		model.addAttribute("dailyStatistics", dailyStatistics);
+		model.addAttribute("monthlyStatistics", monthlyStatistics);
 	}
 	
-	/**
-	 * 일별 판매량통계
-	 */
-	@GetMapping("/adminStatisticsDaily.do")
-	public void adminStatisticsDaily() {
-		
-		
-	}
 	
 	
 	/**
