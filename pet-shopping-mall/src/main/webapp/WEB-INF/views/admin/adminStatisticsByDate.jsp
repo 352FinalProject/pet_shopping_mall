@@ -84,7 +84,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 			scales: {
 			xAxes: [{
 				time: {
-				unit: 'date'
+				unit: 'month'
 				},
 				gridLines: {
 				display: false
@@ -107,8 +107,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 			display: false
 	   		}
 		}
-	});
-	
+	}); 
 	
 	var ctx = document.getElementById("myAreaChart-daily").getContext("2d");
 	var myBarChart = new Chart(ctx, {
