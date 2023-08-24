@@ -100,7 +100,7 @@
 	                <label for="additionalPrice_${productDetail.productDetailId}" class="form-label">옵션추가금</label>
 	            </div>
 	            <div class="col">
-	                <input type="number" name="additionalPrice" id="additionalPrice_${productDetail.productDetailId}" class="form-control" value="0">
+	                <input type="number" name="additionalPrice" id="additionalPrice_${productDetail.productDetailId}" class="form-control" value="${productDetail.additionalPrice}">
 	            </div>
 	        </div>
 	        <div class="row mb-3">
@@ -109,10 +109,10 @@
 	            </div>
 	            <div class="col">
 	                <select name="saleState" id="saleState_${productDetail.productDetailId}" class="form-select">
-	                    <option value="0">판매대기</option>
-	                    <option value="1">판매중</option>
-	                    <option value="2">품절</option>
-	                    <option value="3">기타</option>
+	                    <option value="0" ${productDetail.saleState eq 0 ? "selected" : ""} >판매대기</option>
+	                    <option value="1" ${productDetail.saleState eq 1 ? "selected" : ""}>판매중</option>
+	                    <option value="2" ${productDetail.saleState eq 2 ? "selected" : ""}>품절</option>
+	                    <option value="3" ${productDetail.saleState eq 3 ? "selected" : ""}>기타</option>
 	                </select>
 	            </div>
 	        </div>
@@ -216,13 +216,12 @@ const updateProductOption = (productDetailId) => {
         optionValue: optionValue,
         additionalPrice: additionalPrice,
         saleState: saleState
-        // 여기에 다른 필드들도 추가하면 됩니다.
     };
 	console.log(requestData);
     
     // Ajax 요청
     $.ajax({
-        url: '${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do?id=' + productDetailId,
+        url: '${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do',
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
@@ -230,7 +229,6 @@ const updateProductOption = (productDetailId) => {
         success: function(response) {
             if (response.code === 200) {
                 alert('상품 옵션이 성공적으로 업데이트되었습니다.');
-                // 업데이트된 내용을 화면에 반영하거나 다른 작업을 수행할 수 있습니다.
             } else {
                 alert('상품 옵션 업데이트 실패! 관리자에게 문의하세요.');
             }
