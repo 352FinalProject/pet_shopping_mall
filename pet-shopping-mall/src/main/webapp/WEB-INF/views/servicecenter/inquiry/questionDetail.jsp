@@ -7,6 +7,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 
 <%-- 1:1 문의 상세 조회 (예라) --%>
 <section class="common-section" id="#">

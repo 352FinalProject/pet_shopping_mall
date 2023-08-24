@@ -26,6 +26,7 @@ import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductImages;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -3,6 +3,7 @@ package com.shop.app.member.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.shop.app.member.dto.MemberCreateDto;
@@ -21,10 +22,8 @@ public interface MemberService extends UserDetailsService {
 
 	int deleteMember(String memberId);
 
-	String memberSearchId(String name, String email);
+	Member findByEmail(String email);
 
-	// 담희
 	MypageDto getMyPage(String memberId);
 
-	
 }

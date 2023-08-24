@@ -100,7 +100,7 @@
 	gap: 200px;
 	justify-content: flex-start;
 	margin-left: 80px;
-	
+	margin-bottom: 100px;
 }
 
 .review-title{
@@ -286,4 +286,13 @@ select[name=product-option] {
 	font-size: 15px;
 	margin-top: 12px;
 	color: #828282;
+}
+
+.reivew-pet-box {
+	margon-bottom: 100px;
+}
+
+.detail-upload img {
+    width: 300px;
+    height: 300px;
 }

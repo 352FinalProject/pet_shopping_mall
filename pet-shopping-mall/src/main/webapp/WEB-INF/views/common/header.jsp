@@ -82,7 +82,10 @@
 					</li>
 				</sec:authorize>
 				<li class="community_li"><a
-					href="<%=request.getContextPath()%>/community/community.do">펫스토리</a>
+					href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
+				</li>
+				<li class="community_li"><a
+					href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
 				</li>
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/review/reviewCreate.do">리뷰작성</a>

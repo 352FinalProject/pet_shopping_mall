@@ -17,11 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.payment.entity.Payment;
-import com.shop.app.payment.service.PaymentService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.product.service.ProductService;
+import com.shop.app.review.entity.Review;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -36,6 +38,9 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	@GetMapping("/orderDetails.do")
 	public void orderDetails() {}
 	
@@ -48,19 +53,16 @@ public class OrderController {
 	@GetMapping("/orderList.do")
 	public void getOrderList(Model model, @RequestParam(name = "period", required = false) Integer period, @AuthenticationPrincipal MemberDetails member) {
 	    String memberId = member.getMemberId();
-	    List<OrderHistoryDto> orderHistories;
+	    List<Order> orderList;
 
 	    if (period != null) 
-	    	orderHistories = orderService.getOrderListByPeriod(memberId, period);
+	    	orderList = orderService.getOrderListByPeriod(memberId, period);
 	    else 
-	        orderHistories = orderService.getOrderList(memberId);
-	    
-
+	    	orderList = orderService.getOrderList(memberId);
+			
 	    model.addAttribute("status", status);
-	    model.addAttribute("orderHistories", orderHistories);
+	    model.addAttribute("orderHistories", orderList);
 	}
-	
-	
 	
 	@GetMapping("/cancelOrderDetail.do")
 	public void cancelOrder(Model model, @RequestParam String orderNo) {
@@ -104,7 +106,7 @@ public class OrderController {
 	
 	@GetMapping("/orderDetail.do")
 	public void getOrderDetail(Model model, @RequestParam String orderNo) {
-		Map<OrderHistoryDto, Payment> orderDetailMap = orderService.getOrderDetail(orderNo);
+		List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
 		model.addAttribute("status", status);
 		model.addAttribute("orderDetail", orderDetailMap);
 	}

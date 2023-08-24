@@ -109,6 +109,8 @@ public class ReviewServiceImpl implements ReviewService {
 	    reviewDetailDto.setPetWeight(pet.getPetWeight());
 	    reviewDetailDto.setPetGender(pet.getPetGender());
 
+	    
+	    log.debug("reviewDetailDto = {}", reviewDetailDto);
 	    return reviewDetailDto;
 	}
 	
@@ -163,4 +165,15 @@ public class ReviewServiceImpl implements ReviewService {
 	public String findImageFilenameByReviewId(int reviewId2) {
 		return reviewRepository.findImageFilenameByReviewId(reviewId2);
 	}
+
+	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
+	@Override
+	public Review findPoductListReviewId(int reviewId) {
+		return reviewRepository.findPoductListReviewId(reviewId);
+	}
 }
+
+
+
+
+

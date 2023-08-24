@@ -11,7 +11,9 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.common.entity.ImageAttachment;
+
 import com.shop.app.review.dto.ReviewDetailDto;
+
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 
@@ -76,6 +78,10 @@ public interface ReviewRepository {
 	ReviewDetails findImageAttachmentsByReviewMemberId(int reviewId);
 
 	String findImageFilenameByReviewId(int reviewId2);
+
+	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
+	@Select("select * from review where review_id = #{reviewId}")
+	Review findPoductListReviewId(int reviewId);
 
 
 

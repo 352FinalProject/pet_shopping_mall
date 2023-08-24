@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import com.shop.app.point.entity.Point;
+
 import lombok.Data;
 import lombok.ToString;
 
