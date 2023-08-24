@@ -102,6 +102,8 @@ public class OrderController {
 	@GetMapping("/orderDetail.do")
 	public void getOrderDetail(Model model, @RequestParam String orderNo) {
 		OrderHistoryDto orderDetail = orderService.getOrderDetail(orderNo);
+		model.addAttribute("status", status);
+		model.addAttribute("orderDetail", orderDetail);
 	}
 	
 }
