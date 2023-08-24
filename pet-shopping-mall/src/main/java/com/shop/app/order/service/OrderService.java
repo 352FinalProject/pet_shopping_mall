@@ -1,6 +1,7 @@
 package com.shop.app.order.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,6 +11,7 @@ import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.order.repository.OrderRepository;
+import com.shop.app.payment.entity.Payment;
 
 public interface OrderService {
 
@@ -39,6 +41,10 @@ public interface OrderService {
 	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
 
 	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+
+	int deleteOrder(String orderNo);
+
+	Map<OrderHistoryDto, Payment> getOrderDetail(String orderNo);
 
 
 	

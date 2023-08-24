@@ -1,6 +1,7 @@
 package com.shop.app.order.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +18,8 @@ import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
+import com.shop.app.payment.entity.Payment;
+import com.shop.app.payment.service.PaymentService;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -90,10 +93,20 @@ public class OrderController {
 		model.addAttribute("cancelInfoList", cancelInfos);
 	}
 	
+	// 결제창이 넘어가기 전에 취소하면 주문 테이블 자체에서 삭제
+	@PostMapping("/deleteOrder.do")
+	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr) {
+		int result = orderService.deleteOrder(orderNo);
+		
+		return "redirect:/cart/shoppingCart.do";
+	}
 	
 	
 	@GetMapping("/orderDetail.do")
-	public void orderDetail(Model model, @RequestParam String orderNo) {
+	public void getOrderDetail(Model model, @RequestParam String orderNo) {
+		Map<OrderHistoryDto, Payment> orderDetailMap = orderService.getOrderDetail(orderNo);
+		model.addAttribute("status", status);
+		model.addAttribute("orderDetail", orderDetailMap);
 	}
 	
 }
