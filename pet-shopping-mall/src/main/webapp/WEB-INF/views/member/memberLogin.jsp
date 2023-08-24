@@ -213,7 +213,7 @@ button, input {
 	float: right;
 	cursor: pointer;
 	position: relative;
-	top: -30px; /* 위쪽으로 10px만큼 이동하여 버튼을 위로 올림 */
+	top: -40px; /* 위쪽으로 10px만큼 이동하여 버튼을 위로 올림 */
 }
 
 /* id찾기 모달  */
@@ -260,26 +260,26 @@ button, input {
 	background-color: #5886d3;
 	color: white;
 	border: none;
-	padding: 10px 20px;
+	padding: 10px 30px;
 	border-radius: 5px;
 	cursor: pointer;
 }
-.close{
+#idFinderForm-closeModalBtn{
 background-color: #ccc;
+	background-color: #ccc;
 	color: white;
 	border: none;
-	padding: 10px 40px;
+	padding: 10px 30px;
 	border-radius: 5px;
 	float: right;
 	cursor: pointer;
 	position: relative;
-	top: -30px; /* 위쪽으로 10px만큼 이동하여 버튼을 위로 올림 */
 }
 /* 결과 메시지 스타일 */
 #idFinderForm-idResult {
 	display: none;
 	margin-top: 10px;
-	padding: 10px;
+	padding: 10px; 30px;
 	background-color: #f3f3f3;
 	border: 1px solid #ddd;
 	border-radius: 5px;
@@ -330,12 +330,6 @@ background-color: #ccc;
 				<tr>
 					<td>
 						<div class="login-btnAll">
-							<!-- 로그인 오류 메시지 출력 -->
-							<c:if test="${param.error ne null}">
-								<script>
-					            alert('아이디 또는 비밀번호가 일치하지 않습니다.');
-					        </script>
-							</c:if>
 							<!-- 로그인 버튼 -->
 							<button type="submit" name="btn-outline-success" id="loginButton"
 								class="login-btn">로그인</button>
@@ -394,7 +388,7 @@ background-color: #ccc;
 	<!-- id 찾기 모달 -->
 	<div id="idFinderModal" class="idFinderForm-modal">
 		<div class="idFinderForm-modal-content">
-			<span class="idFinderForm-close" onclick="closeIdFinderModal()">&times;</span>
+			<span class="idFinderForm-close" >&times;</span>
 			<h2>ID 찾기</h2>
 			<p>회원가입 시 등록한 정보를 입력하여 ID를 찾아보세요.</p>
 			<form:form id="idFinderForm"
@@ -403,7 +397,7 @@ background-color: #ccc;
 					class="idFinderForm-input-email" type="email" id="email"
 					name="email" required>
 				<button class="idFinderForm-findId" type="submit">ID 찾기</button>
-					<button type="button" id="idFinderForm-closeModalBtn">닫기</button>
+					<button type="button" id="idFinderForm-closeModalBtn" onclick="closeIdFinderModal();">닫기</button>
 			</form:form>
 		
 			<div id="idFinderForm-idResult">
@@ -436,6 +430,7 @@ document.getElementById('inputPassword').addEventListener('input', checkInputs);
 
 checkInputs();
 
+// 비밀번호 찾기 모달
 const searchPasswordBtn = document.getElementById("searchPassword");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const passwordResetModal = document.getElementById("passwordResetModal");
@@ -484,27 +479,44 @@ $(document).ready(function() {
 });
 
 // 아이디 찾기 모달
+const findIdModal = document.getElementById("findIdModal");
 //모달 열기
 function openIdFinderModal() {
-  var modal = document.getElementById("idFinderModal");
+  const modal = document.getElementById("idFinderModal");
   modal.style.display = "block";
 }
 
 // 모달 닫기
 function closeIdFinderModal() {
-  var modal = document.getElementById("idFinderModal");
+  const modal = document.getElementById("idFinderModal");
   modal.style.display = "none";
-  document.getElementById("idResult").style.display = "none";
 }
 
-// ID 찾기 폼 제출 처리
-function submitIdFinderForm() {
-  var email = document.getElementById("email").value;
-  // 이메일을 사용하여 서버에서 ID 찾기 로직 실행
-  var foundId = "your_found_id"; // 실제로 서버에서 받은 ID로 변경
-  document.getElementById("foundId").textContent = foundId;
-  document.getElementById("idResult").style.display = "block";
-}
+
+$(".idFinderForm-findId").click(function() {
+    const userEmail = $(".idFinderForm-input-email").val();
+    $.ajax({
+        type: 'GET',
+        url: '${pageContext.request.contextPath}/email/findMemberIdByEmail.do',
+        data: {
+            'email': userEmail
+        },
+        dataType: "text",
+        success: function(result) {
+        	console.log(result);
+            if (result === "not_found") {
+                alert('해당 이메일로 등록된 회원이 없습니다');
+            } else {
+                alert('해당 이메일로 등록된 id는 : ' + result); // css 먹여놓은걸로 바꾸기
+            }
+        },
+        error: function() {
+            console.log('에러 체크!!');
+        }
+    });
+});
+
+
 
 </script>
 
