@@ -11,6 +11,9 @@ import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.repository.MemberRepository;
+import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.entity.Order;
+import com.shop.app.order.repository.OrderRepository;
 import com.shop.app.point.entity.Point;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberServiceImpl implements MemberService {
 
+	@Autowired
+	private OrderRepository orderRepository;
 	@Autowired
 	private MemberRepository memberRepository;
 
@@ -71,7 +76,10 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MypageDto getMyPage(String memberId) {
-		return memberRepository.getMyPage(memberId);
+		MypageDto myPage = memberRepository.getMyPage(memberId);
+		List<Order> histories = orderRepository.getOrderListByPeriod(memberId, 1);
+		myPage.setOrderHistory(histories);
+		return myPage;
 	}
 
 

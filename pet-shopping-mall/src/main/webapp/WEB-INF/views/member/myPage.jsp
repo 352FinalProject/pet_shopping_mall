@@ -51,7 +51,7 @@
 										<tr>
 											<th>날짜</th>
 											<th>주문번호</th>
-											<th>상품</th>
+											<th>상세내역</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -60,7 +60,7 @@
 										<tr>
 											<td>${formattedDate}</td>
 											<td>${order.orderNo}</td>
-											<td>${order.productName}</td>
+											<td><a href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">📜<a></td>
 										</tr>
 									</c:forEach>
 									</tbody>
