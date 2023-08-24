@@ -11,6 +11,9 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.common.entity.ImageAttachment;
+
+import com.shop.app.review.dto.ReviewDetailDto;
+
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 
@@ -46,9 +49,9 @@ public interface ReviewRepository {
 	int reviewDelete(int reviewId);
 	
 	// 리뷰 상세조회
-	@Select("select * from review r join pet p on r.pet_id = p.pet_id where review_id = #{reviewId}")
-	// "select * from review where review_id = #{reviewId}"
-	Review findReviewId(Review review);
+//	@Select("select * from review r join pet p on r.pet_id = p.pet_id where review_id = #{reviewId}")
+	@Select("select * from review where review_id = #{reviewId}")
+	Review findReviewId(int reviewId);
 
 	// 리뷰 상세조회 - 이미지 조회
 	ReviewDetails findImageAttachmentsByReviewId(int reviewId);
@@ -66,11 +69,16 @@ public interface ReviewRepository {
 	int findProductTotalReviewCount();
 	
 	// 상품 상세페이지 전체 리뷰
-	@Select("select * from review")
+	@Select("select * from review ORDER BY review_id DESC")
 	List<Review> findProductReviewAll(RowBounds rowBounds);
 
 	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
 	ReviewDetails findProductImageAttachmentsByReviewId(int reviewId);
+
+	ReviewDetails findImageAttachmentsByReviewMemberId(int reviewId);
+
+	String findImageFilenameByReviewId(int reviewId2);
+
 
 
 

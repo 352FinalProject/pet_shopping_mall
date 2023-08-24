@@ -44,13 +44,13 @@ public interface ProductRepository {
 	@Select("select * from product where product_id = #{productId}")
 	Product findProductById(int productId);
 
-	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, img_id = #{imgId}, expire_date = #{expireDate} where product_id = #{productId}")
+	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, image_id = #{imageId} where product_id = #{productId}")
 	int updateProduct(Product product);
 
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
 
-	@Insert("insert into product_detail(product_detail_id, product_id, option_name, option_value, additional_price,sale_state) values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
+	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId, jdbcType=INTEGER}, #{optionName, jdbcType=VARCHAR}, #{optionValue, jdbcType=VARCHAR}, #{additionalPrice, jdbcType=INTEGER}, #{saleState, jdbcType=INTEGER})")
 	@SelectKey(
 			before = false,
 			keyProperty = "productDetailId",
@@ -87,6 +87,12 @@ public interface ProductRepository {
 
 	@Delete("delete from product_detail where product_detail_id = #{productDetailId}")
 	int deleteProductDetail(int productDetailId);
+
+	@Update("update product set image_id = #{imageId} where product_id = #{productId}")
+	int updateImageIdByProductId(int productId, int imageId);
+
+	@Select("select * from product")
+	List<Product> findProduct();
 
 
 }

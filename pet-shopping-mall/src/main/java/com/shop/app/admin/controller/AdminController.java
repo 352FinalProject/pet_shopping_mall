@@ -48,8 +48,10 @@ import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.service.OrderService;
 
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductOptionDeleteDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
 
@@ -335,6 +337,7 @@ public class AdminController {
 		
 	}
 	
+
 	
 	/**
 	 * @author 전수경
@@ -347,7 +350,6 @@ public class AdminController {
 			) {
 		// 등록된 상품 가져오기
 		List<ProductDetail> productDetails = productService.findAllProductDetails();
-		log.debug("productDetails = {}", productDetails);
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(ProductDetail productDetail : productDetails) {
@@ -383,8 +385,8 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록 폼으로 이동
 	 */
-	@GetMapping("/adminProductDetailCreate.do")
-	public void adminProductDetailCreate(
+	@GetMapping("/adminProductCreate.do")
+	public void adminProductCreate(
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
 			) {
@@ -397,13 +399,15 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록
 	 */
-	@PostMapping("/adminProductDetailCreate.do")
-	public String adminProductDetailCreate(
+	
+	@PostMapping("/adminProductCreate.do")
+	public String adminProductCreate(
 			@Valid ProductCreateDto _product,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model,
 			@RequestParam(value="upFile", required= false) List<MultipartFile> upFiles) throws IllegalStateException, IOException {
 
+		log.debug("ProductCreateDto = {}", _product);
 		// 1. 파일저장
 		List<ImageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
@@ -445,17 +449,15 @@ public class AdminController {
 		log.debug("productId = {}", productId);
 		
 		// 2.1. productDetail 객체 저장
-		ProductDetail productDetail = ProductDetail.builder()
-				.productId(productId)
-				.optionName(_product.getOptionName())
-				.optionValue(_product.getOptionValue())
-				.additionalPrice(_product.getAdditionalPrice())
-				.saleState(_product.getSaleState())
-				.build();
-		
-		int result = productService.insertProductDetail(productDetail);
-		int productDetailId = productDetail.getProductDetailId();
-		log.debug("productDetailId = {}", productDetailId);
+		List<ProductDetail> productDetails = _product.getProductDetail();
+		for(ProductDetail productDetail : productDetails) {
+			productDetail.setProductId(productId);
+			log.debug("productDetail = {}", productDetail);
+			int result = productService.insertProductDetail(productDetail);
+			int productDetailId = productDetail.getProductDetailId();
+			log.debug("productDetailId = {}", productDetailId);
+			
+		}
 		
 		return "redirect:/admin/adminProductList.do";
 	}
@@ -494,34 +496,29 @@ public class AdminController {
 	 */
 	@PostMapping("/adminProductUpdate.do")
 	public String adminProductDetailUpdate(
-			@Valid ProductUpdateDto _product,
-			BindingResult bindingResult,
-			@AuthenticationPrincipal MemberDetails member, 
-			Model model
+			@Valid @RequestBody ProductUpdateDto _product,
+			@AuthenticationPrincipal MemberDetails member 
 			) {
 		
 		log.debug("ProductUpdateDto = {}", _product);
 		Product product = _product.toProduct();
 		
-	
-		
-		
-		
 		// 상품정보 수정하기
 		int result = productService.updateProduct(product);
-		log.debug("product = {}", product);
-		model.addAttribute("product", product);
 		
 		return "redirect:/admin/adminProductList.do";
 	}
 	
+	// 상품옵션 수정
 	@PostMapping("/adminProductDetailUpdate.do")
 	public String adminProductDetailUpdate(
-	        @RequestBody ProductDetailUpdateDto _product,
+			@Valid @RequestBody ProductDetailUpdateDto _product,
 	        BindingResult bindingResult,
 	        RedirectAttributes redirectAttr
 			) {
-
+		log.debug("ProductDetailUpdateDto = {}", _product);
+		ProductDetail productDetail = _product.toProductDetail();
+		
 		if(bindingResult.hasErrors()) {
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			String message = null;
@@ -533,11 +530,15 @@ public class AdminController {
 			return "redirect:/admin/adminProductList.do";
 		}
     	
-    	ProductDetail productDetail = _product.toProductDetail();
         // 상품 옵션 업데이트 로직 수행
         int result = productService.updateProductDetail(productDetail);
+        if (result > 0) {
+            redirectAttr.addFlashAttribute("successMsg", "Product updated successfully!");
+        } else {
+            redirectAttr.addFlashAttribute("errorMsg", "Failed to update the product.");
+        }
 
-        return "redirect:/admin/adminProductList.do";// 업데이트 성공 시 200 OK 응답 반환
+        return "redirect:/admin/adminProductDetailUpdate.do?id=";
 
 	}
 	
@@ -546,29 +547,28 @@ public class AdminController {
 	 * @author 전수경
 	 * 상품 삭제
 	 */
-	@PostMapping("/adminProductDetailDelete.do")
+	@PostMapping("/adminProductDelete.do")
 	public String adminDeleteProduct(
-			@Valid ProductUpdateDto _product,
-			BindingResult bindingResult,
-			@AuthenticationPrincipal MemberDetails member, 
-			Model model
+			@Valid @RequestBody ProductDeleteDto _product,
+			@AuthenticationPrincipal MemberDetails member
 			){
+		log.debug("ProductDeleteDto = {}", _product);
 		
-		Product product = _product.toProduct();
-		int productId = product.getProductId();
-		int result = productService.deleteProduct(productId);
+		int result = productService.deleteProduct(_product.getProductId());
 		
 		return "redirect:/admin/adminProductList.do";
 	}
 
 
+	// 상품옵션 삭제
 	@PostMapping("/adminProductOptionDelete.do")
 	@ResponseBody
 	public ResponseEntity<?> adminProductOptionDelete(
-	        @RequestParam int productDetailId
+			@Valid @RequestBody ProductOptionDeleteDto _product,
+			@AuthenticationPrincipal MemberDetails member
 	) {
-		
-		int result = productService.deleteProductDetail(productDetailId);
+		log.debug("ProductDeleteDto = {}", _product);
+		int result = productService.deleteProductDetail(_product.getProductDetailId());
 		
 	    return ResponseEntity.ok("상품옵션을 삭제했습니다.");
 	}

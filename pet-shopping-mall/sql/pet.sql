@@ -198,13 +198,14 @@ create table image_attachment_mapping (
     constraint pk_question_image_mapping_id primary key(mapping_id),
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
-select * from image_attachment_mapping;
+
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
+
 
 -- 상품 테이블
 create table product (
@@ -311,7 +312,7 @@ create table wishlist(
 create table review (
     review_id number,
     pet_id number,
-    order_id number,
+    product_id number,
     review_member_id varchar(20) not null,
     product_detail_id number,
     review_title varchar2(50),
@@ -320,11 +321,9 @@ create table review (
     review_created_at timestamp default systimestamp,
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-    constraint fk_order_detail_id foreign key (order_id, product_detail_id) references order_detail(order_id, product_detail_id) on delete cascade,
+    constraint fk_product_product_id foreign key (product_id) references product(product_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
-
-select * from review;
 
 create table community (
     community_id number,
@@ -371,7 +370,7 @@ create table terms (
  accept_yn char(1) not null,
  accept_date timestamp default systimestamp not null,
  constraint pk_history_id primary key(history_id, terms_id),
- constraint fk_terms_member_id foreign key(member_id) references member(member_id)
+ constraint fk_terms_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
 -- 약관동의 이력 테이블
@@ -453,13 +452,7 @@ create sequence seq_terms_id;
 create sequence seq_member_coupon_id;
 create sequence seq_coupon_id;
 create sequence seq_history_id;
-
-select * from member;
-select * from point;
-select * from coupon;
-select * from member_coupon;
-select * from terms;
-select * from terms_history;
+create sequence seq_category_id;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
@@ -478,5 +471,3 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
-
-select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.coupon_id = '1';

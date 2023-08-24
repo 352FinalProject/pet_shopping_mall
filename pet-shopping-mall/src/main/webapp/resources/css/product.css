@@ -29,15 +29,20 @@
 	padding: 13px;
 }
 
+#product-notice-box {
+	margin-top: 800px;
+}
+
 /* 상품 상세페이지 리뷰박스 */
 .review-div {
 	/* border-bottom: 1px solid #e7e7e7; */
-	border-top: 1px solid #e7e7e7;
+	/* border-top: 1px solid #e7e7e7; */
 	height: 50px;
 	margin-top: 20px;
 	font-size: 15px;
 	padding: 13px;
 }
+
 
 .common-container2 {
 	display: flex;
@@ -75,8 +80,19 @@
 .product-utility {
 	display: flex;
 	gap: 200px;
-	justify-content: center
+	justify-content: center;
 }
+
+/* 리뷰 전체길이 */
+.review-div {
+	margin-bottom: 400px;
+}
+
+/* 리뷰 페이징 바 */
+.product-review-paging{
+	margin-bottom: 50px;
+}
+
 
 .review-product-utility{
 	display: flex;
@@ -84,7 +100,7 @@
 	gap: 200px;
 	justify-content: flex-start;
 	margin-left: 80px;
-	
+	margin-bottom: 100px;
 }
 
 .review-title{
@@ -98,7 +114,6 @@
 .review-regdate {
 	margin-left: -20px;
 }
-
 
 select[name=product-option] {
 	width: 100%;
@@ -271,4 +286,8 @@ select[name=product-option] {
 	font-size: 15px;
 	margin-top: 12px;
 	color: #828282;
+}
+
+.reivew-pet-box {
+	margon-bottom: 100px;
 }

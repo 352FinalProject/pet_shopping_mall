@@ -2,6 +2,7 @@ package com.shop.app.coupon.service;
 
 import java.util.List;
 
+import com.shop.app.coupon.dto.MemberCouponDto;
 import com.shop.app.coupon.entity.Coupon;
 import com.shop.app.coupon.entity.MemberCoupon;
 
@@ -14,6 +15,10 @@ public interface CouponService {
 	int insertDeliveryCoupon(MemberCoupon memberCoupon);
 	
 	// 멤버 쿠폰 전체 조회 (예라)
-	List<MemberCoupon> findMemberCouponAll(MemberCoupon memberCoupon);
+	List<MemberCouponDto> findCouponsByMemberId(String memberId);
+
+	// 멤버 쿠폰 아이디 조회 (예라)
+	int findCouponById();
+
 
 }

@@ -61,7 +61,13 @@ public class PetServiceImpl implements PetService {
 
 	// 상품 상세페이지 - 리뷰 - 펫 정보 가져오기 (혜령) 
 	@Override
-	public List<Pet> findProductRevicePet(Pet pet, String memberId) {
-		return petRepository.findProductRevicePet(pet, memberId);
+	public List<Pet> findProductRevicePet(String memberId) {
+		return petRepository.findProductRevicePet(memberId);
 	}
+
+	@Override
+	public List<Pet> findReviewPetByMemberId(String reviewMemberId) {
+		return petRepository.findReviewPetByMemberId(reviewMemberId);
+	}
+
 }

@@ -90,7 +90,7 @@
 										<td>${productInfo.additionalPrice}</td>
 										<td>${productInfo.saleState}</td>
 										<td>
-											<button onclick="updateProduct();">수정</button> 
+											<button onclick="deleteProduct();">삭제</button> 
 										</td>
 									</tr>
 								</c:forEach>
@@ -103,12 +103,12 @@
 		</div>
 	</main>
 	<script>
-	const updateProduct = () => {
+	const deleteProduct = () => {
 		
 	};
 	
 	document.querySelector("#btn-add").onclick = () => {
-		location.href = '${pageContext.request.contextPath}/admin/adminProductDetailCreate.do';
+		location.href = '${pageContext.request.contextPath}/admin/adminProductCreate.do';
 	};
 	</script>
 	<jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>

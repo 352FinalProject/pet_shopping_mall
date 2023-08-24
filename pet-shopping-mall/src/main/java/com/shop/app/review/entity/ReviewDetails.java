@@ -27,11 +27,10 @@ public class ReviewDetails extends Review {
 	
 //	private int petId;
 	
-	private List<ImageAttachment> attachments;
-	private List<ImageAttachmentMapping> attachmentMapping;
+	private List<imageAttachment> attachments;
+	private List<imageAttachmentMapping> attachmentMapping;
+
 	
-	private String petName;
-	private PetGender petGender;
 	
 
 }
