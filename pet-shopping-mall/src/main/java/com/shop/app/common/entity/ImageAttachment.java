@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class imageAttachment {
+public class ImageAttachment {
 	
 	private int imageId;
 	private int imageType;

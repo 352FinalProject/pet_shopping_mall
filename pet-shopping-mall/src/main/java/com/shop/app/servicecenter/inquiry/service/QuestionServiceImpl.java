@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
@@ -54,9 +54,9 @@ public class QuestionServiceImpl implements QuestionService {
 	    int refId = question.getQuestionId();
 	    System.out.println("refId = " + refId);
 	    
-	    List<imageAttachment> attachments = ((QuestionDetails) question).getAttachments();
+	    List<ImageAttachment> attachments = ((QuestionDetails) question).getAttachments();
 	    if(attachments != null && !attachments.isEmpty()) {
-	        for(imageAttachment attach : attachments) {
+	        for(ImageAttachment attach : attachments) {
 	            
 	            
 	            // 1. 이미지 파일 DB에 저장

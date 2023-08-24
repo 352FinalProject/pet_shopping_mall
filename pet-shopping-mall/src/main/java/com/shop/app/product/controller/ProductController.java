@@ -2,6 +2,7 @@ package com.shop.app.product.controller;
 
 import java.lang.reflect.Member;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,10 @@ import com.shop.app.member.service.MemberService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
+import com.shop.app.product.entity.ProductCategory;
+import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
@@ -181,7 +185,32 @@ public class ProductController {
 
 
 	@GetMapping("/productList.do")
-	public void productList() {
+	public void productList(
+			@RequestParam int id,
+			Model model
+			) {
+		log.debug("categoryId = {}", id);
+		// 카테고리 정보 가져오기
+		ProductCategory productCategory = productService.findProductCategoryById(id); 
+		log.debug("productCategory = {}", productCategory);
+		
+		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
+		
+		// 해당 카테고리의 상품 가져오기
+		List<Product> products = productService.findProductsByCategoryId(id);
+		
+		for(Product product : products) {
+			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+			
+			productInfos.add(ProductInfoDto.builder()
+					.product(product)
+					.attachments(productImages.getAttachments())
+					.attachmentMapping(productImages.getAttachmentMapping())
+					.build());
+		}
+		
+		model.addAttribute("productCategory", productCategory);
+		model.addAttribute("productInfos", productInfos);
 
 	}
 
