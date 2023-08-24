@@ -90,6 +90,13 @@ public class OrderController {
 		model.addAttribute("cancelInfoList", cancelInfos);
 	}
 	
+	// 결제창이 넘어가기 전에 취소하면 주문 테이블 자체에서 삭제
+	@PostMapping("/deleteOrder.do")
+	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr) {
+		int result = orderService.deleteOrder(orderNo);
+		
+		return "redirect:/cart/shoppingCart.do";
+	}
 	
 	
 	@GetMapping("/orderDetail.do")

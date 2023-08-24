@@ -102,4 +102,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period) {
 		return orderRepository.getCancelInfoByPeriod(memberId, period);
 	}
+
+	@Override
+	public int deleteOrder(String orderNo) {
+		return orderRepository.deleteOrder(orderNo);
+	}
 }
