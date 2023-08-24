@@ -318,9 +318,10 @@ $(document).ready(function() {
         if (idValid.val() === "0") {
             memberIdContainer.addClass("duplicate");
             alert("사용가능한 아이디를 작성해주세요.");
-            e.preventDefault(); // 폼 제출을 중단
             return;
         };
+        
+        e.preventDefault();
 
    /*      if (password.val() !== passwordConfirmation.val()) {
             alert("비밀번호가 일치하지 않습니다.");
@@ -429,14 +430,18 @@ function sample4_execDaumPostcode() {
                 document.getElementById("extraAddress").value = '';
             }
             document.getElementById('roadAddress').value = roadAddr;
-            
+           
+            var fullAddress = roadAddr + " " + jibunAddress + " " + detailAddress;
+            document.getElementById("address").value = fullAddress;
         }
     }).open();
 };
-
 document.querySelector("#memberCreateFrm").on("submit", function() {
     const roadAddress = document.getElementById("roadAddress").value;
     const jibunAddress = document.getElementById("jibunAddress").value;
+    
+    console.log(roadAddress);
+    console.log(jibunAddress);
     
     const address = document.memberCreateFrm.address;
     address.value = roadAddress + ' ' + jibunAddress + detailAddress;  

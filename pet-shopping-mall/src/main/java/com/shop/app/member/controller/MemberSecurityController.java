@@ -210,6 +210,7 @@ public class MemberSecurityController {
       Member member = memberService.findMemberById(_member.getMemberId());
 
       log.debug("member = {}", member);
+   }
 
 	@GetMapping("/myPage.do")
 	public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
@@ -218,13 +219,6 @@ public class MemberSecurityController {
 		log.debug("myPage = {}", myPage);
 		model.addAttribute("myPage", myPage);
       model.addAttribute("member", member);
-   }
-
-   @GetMapping("/myPage.do")
-   public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
-      String memberId = member.getMemberId();
-      MypageDto myPage = memberService.getMyPage(memberId);
-      model.addAttribute("myPage", myPage);
    }
 
    // 멤버 정보 업데이트
