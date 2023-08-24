@@ -122,5 +122,10 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findProduct() {
 		return productRepository.findProduct();
 	}
+	
+	@Override
+	public List<Product> findProductsByCategoryId(int categoryId) {
+		return productRepository.findProductsByCategoryId(categoryId);
+	}
 
 }
