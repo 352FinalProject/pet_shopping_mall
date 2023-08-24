@@ -23,7 +23,7 @@
 							<c:set var="amount" value="${amount + productTotal}" />
 							<div class="product-thumbnail">
 								<img
-									src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg"
+									src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
 									width="110px">
 							</div>
 							<div>
@@ -348,7 +348,7 @@ const successPay = (imp_uid, merchant_uid) => {
 		 success(data){
 			if(data.result > 0){
          		alert("결제 및 검증 완료");
-           		location.href="${pageContext.request.contextPath}/payment/paymentCompleted.do"
+           		location.href="${pageContext.request.contextPath}/payment/paymentCompleted.do?orderNo=" + merchant_uid;
             }else{
               	alert("결제 완료 되었으나 에러 발생하였습니다. 관리자에게 문의하세요.")
               	location.href="${pageContext.request.contextPath}/member/mypage.do"

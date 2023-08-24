@@ -1,5 +1,6 @@
 package com.shop.app.order.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	
+	
 
 	// 주문 내역 및 주문 상세내역 테이블에 저장 (담희)
 	@Override
@@ -67,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderHistoryDto> getOrderList(String memberId) {
+	public List<Order> getOrderList(String memberId) {
 		return orderRepository.getOrderList(memberId);
 	}
 
@@ -88,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period) {
+	public List<Order> getOrderListByPeriod(String memberId, int period) {
 		return orderRepository.getOrderListByPeriod(memberId, period);
 	}
 
@@ -113,11 +117,26 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Map<OrderHistoryDto, Payment> getOrderDetail(String orderNo) {
+	public List<Map<OrderHistoryDto, Payment>> getOrderDetail(String orderNo) {
+		List<Map<OrderHistoryDto, Payment>> orderList = new ArrayList<>();
+		
 		Map<OrderHistoryDto, Payment> orderDetailMap = new HashMap<>();
-		OrderHistoryDto history = orderRepository.getOrderDetail(orderNo);
-		Payment payment = paymentRepository.getPaymentInfo(history.getOrderId());
-		orderDetailMap.put(history, payment);
-		return orderDetailMap;
+		
+		
+		List<OrderHistoryDto> history = orderRepository.getOrderDetail(orderNo);
+		Payment payment = paymentRepository.getPaymentInfo(history.get(0).getOrderId());
+		
+		for(OrderHistoryDto o : history) {
+			orderDetailMap.put(o, payment);
+		}
+		
+		orderList.add(orderDetailMap);
+		
+		return orderList;
+	}
+
+	@Override
+	public Order findOrderByOrderNo(String orderNo) {
+		return orderRepository.findOrderByOrderNo(orderNo);
 	}
 }
