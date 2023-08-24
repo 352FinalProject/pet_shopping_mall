@@ -69,11 +69,11 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 	            label: '월별',
 	            data: monthlyTotalSales,  // Use the correct variable name here
 	            lineTension: 0.3,
-				backgroundColor: "rgba(2,117,216,0.2)",
-				borderColor: "rgba(135, 206, 235, 0.8)",
+				backgroundColor: "rgba(255, 255, 255, 0.2)",
+				borderColor: "rgba(2,117,216,1)",
 				pointRadius: 5,
-				pointBackgroundColor: "rgba(144, 238, 144, 0.8)",
-				pointBorderColor: "rgba(255,255,255,0.8)",
+				pointBackgroundColor: "rgba(2,117,216,1)",
+				pointBorderColor: "rgba(135, 206, 235, 0.8)",
 				pointHoverRadius: 5,
 				pointHoverBackgroundColor: "rgba(2,117,216,1)",
 				pointHitRadius: 50,
@@ -99,7 +99,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 				maxTicksLimit: 5
 				},
 				gridLines: {
-				color: "rgba(0, 0, 0, .125)",
+				color: "rgba(2,117,216,1)",
 				}
 			}],
 			},
@@ -119,11 +119,11 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 	            label: '일별',
 	            data: dailyTotalSales,  // Use the correct variable name here
 	            lineTension: 0.3,
-				backgroundColor: "rgba(2,117,216,0.2)",
-				borderColor: "rgba(2,117,216,1)",
+				backgroundColor: "rgba(255, 255, 255, 0.2)",
+				borderColor: "rgba(139, 0, 0, 0.8)",
 				pointRadius: 5,
-				pointBackgroundColor: "rgba(2,117,216,1)",
-				pointBorderColor: "rgba(135, 206, 235, 0.8)",
+				pointBackgroundColor: "rgba(139, 0, 0, 0.8)",
+				pointBorderColor: "rgba(255, 0, 0, 0.2)",
 				pointHoverRadius: 5,
 				pointHoverBackgroundColor: "rgba(2,117,216,1)",
 				pointHitRadius: 50,
@@ -149,7 +149,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 				maxTicksLimit: 5
 				},
 				gridLines: {
-				color: "rgba(0, 0, 0, .125)",
+				color: "rgba(139, 0, 0, 0.8)",
 				}
 			}],
 			},

@@ -53,7 +53,7 @@
 								<div class="card-body">매출 통계</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminStatistics.do">매출 관리</a>
+									<a class="small text-white stretched-link" href="${pageContext.request.contextPath}/admin/adminStatisticsProduct.do">매출 관리</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
@@ -68,7 +68,7 @@
 									<i class="fas fa-chart-area me-1"></i> 날짜별 매출
 								</div>
 								<div class="card-body">
-									<canvas id="myAreaChart" width="100%" height="40"></canvas>
+									<canvas id="myAreaChart-daily" width="100%" height="40"></canvas>
 								</div>
 							</div>
 						</div>
@@ -195,6 +195,63 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 				}]
 	   		}
 	    }
+	});
+	
+	var labelsDaily = [];
+	var dailyTotalSales = [];
+
+	<c:forEach items="${dailyStatistics}" var="dailyStatistic" end="30">
+		labelsDaily.push('${dailyStatistic.orderDaily}');
+	    dailyTotalSales.push(${dailyStatistic.dailyTotalSales});
+	</c:forEach>
+	
+	var ctx = document.getElementById("myAreaChart-daily").getContext("2d");
+	var myBarChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: labelsDaily,
+	        datasets: [{
+	            label: '일별',
+	            data: dailyTotalSales,  // Use the correct variable name here
+	            lineTension: 0.3,
+				backgroundColor: "rgba(255, 255, 255, 0.2)",
+				borderColor: "rgba(139, 0, 0, 0.8)",
+				pointRadius: 5,
+				pointBackgroundColor: "rgba(139, 0, 0, 0.8)",
+				pointBorderColor: "rgba(255, 0, 0, 0.2)",
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: "rgba(2,117,216,1)",
+				pointHitRadius: 50,
+				pointBorderWidth: 2,
+	        }]
+	    },
+	    options: {
+			scales: {
+			xAxes: [{
+				time: {
+				unit: 'date'
+				},
+				gridLines: {
+				display: false
+				},
+				ticks: {
+				maxTicksLimit: 30
+				}
+			}],
+			yAxes: [{
+				ticks: {
+				min: 0,
+				maxTicksLimit: 5
+				},
+				gridLines: {
+				color: "rgba(139, 0, 0, 0.8)",
+				}
+			}],
+			},
+			legend: {
+			display: false
+	   		}
+		}
 	});
 </script>	
 <jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>

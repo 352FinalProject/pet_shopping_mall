@@ -94,6 +94,9 @@ public class AdminController {
 		List<OrderAdminProductStatisticsDto> priceStatistics = orderService.adminStatisticsPrice();
 		model.addAttribute("priceStatistics", priceStatistics);
 		
+		List<OrderAdminStatisticsByDateDto> dailyStatistics = orderService.adminStatisticsByDaily();
+		model.addAttribute("dailyStatistics", dailyStatistics);
+		
 	}
 	
 	/**
