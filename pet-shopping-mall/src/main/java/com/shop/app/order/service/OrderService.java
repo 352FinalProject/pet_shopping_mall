@@ -40,6 +40,10 @@ public interface OrderService {
 
 	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
 
+	int deleteOrder(String orderNo);
+
+	OrderHistoryDto getOrderDetail(String orderNo);
+
 
 	
 }

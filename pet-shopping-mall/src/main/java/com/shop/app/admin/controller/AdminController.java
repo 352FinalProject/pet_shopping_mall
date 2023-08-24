@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,10 @@ import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.service.OrderService;
 
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductOptionDeleteDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;
 
@@ -64,6 +67,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
+	
+	@Autowired
+	private ServletContext application;
 	
 	@Autowired
 	private AdminService adminService;
@@ -380,8 +386,8 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록 폼으로 이동
 	 */
-	@GetMapping("/adminProductDetailCreate.do")
-	public void adminProductDetailCreate(
+	@GetMapping("/adminProductCreate.do")
+	public void adminProductCreate(
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
 			) {
@@ -394,8 +400,9 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록
 	 */
-	@PostMapping("/adminProductDetailCreate.do")
-	public String adminProductDetailCreate(
+	
+	@PostMapping("/adminProductCreate.do")
+	public String adminProductCreate(
 			@Valid ProductCreateDto _product,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model,
@@ -405,11 +412,13 @@ public class AdminController {
 		List<imageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
 
+		String saveDirectory = application.getRealPath("/resources/upload/product");
+		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
-				File destFile = new File(imageRenamedFilename);
+				File destFile = new File(saveDirectory, imageRenamedFilename);
 				upFile.transferTo(destFile);
 
 				int imageType = 1;
@@ -440,17 +449,16 @@ public class AdminController {
 		log.debug("productId = {}", productId);
 		
 		// 2.1. productDetail 객체 저장
-		ProductDetail productDetail = ProductDetail.builder()
-				.productId(productId)
-				.optionName(_product.getOptionName())
-				.optionValue(_product.getOptionValue())
-				.additionalPrice(_product.getAdditionalPrice())
-				.saleState(_product.getSaleState())
-				.build();
+		List<ProductDetail> productDetails = _product.getProductDetail();
+		for(ProductDetail productDetail : productDetails) {
+			productDetail.setProductId(productId);
+			log.debug("productDetail = {}", productDetail);
+			int result = productService.insertProductDetail(productDetail);
+			int productDetailId = productDetail.getProductDetailId();
+			log.debug("productDetailId = {}", productDetailId);
+			
+		}
 		
-		int result = productService.insertProductDetail(productDetail);
-		int productDetailId = productDetail.getProductDetailId();
-		log.debug("productDetailId = {}", productDetailId);
 		
 		return "redirect:/admin/adminProductList.do";
 	}
@@ -502,13 +510,16 @@ public class AdminController {
 		return "redirect:/admin/adminProductList.do";
 	}
 	
+	// 상품옵션 수정
 	@PostMapping("/adminProductDetailUpdate.do")
 	public String adminProductDetailUpdate(
-	        @RequestBody ProductDetailUpdateDto _product,
+			@Valid @RequestBody ProductDetailUpdateDto _product,
 	        BindingResult bindingResult,
 	        RedirectAttributes redirectAttr
 			) {
-
+		log.debug("ProductDetailUpdateDto = {}", _product);
+		ProductDetail productDetail = _product.toProductDetail();
+		
 		if(bindingResult.hasErrors()) {
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			String message = null;
@@ -520,11 +531,15 @@ public class AdminController {
 			return "redirect:/admin/adminProductList.do";
 		}
     	
-    	ProductDetail productDetail = _product.toProductDetail();
         // 상품 옵션 업데이트 로직 수행
         int result = productService.updateProductDetail(productDetail);
+        if (result > 0) {
+            redirectAttr.addFlashAttribute("successMsg", "Product updated successfully!");
+        } else {
+            redirectAttr.addFlashAttribute("errorMsg", "Failed to update the product.");
+        }
 
-        return "redirect:/admin/adminProductList.do";// 업데이트 성공 시 200 OK 응답 반환
+        return "redirect:/admin/adminProductDetailUpdate.do?id=";
 
 	}
 	
@@ -535,11 +550,12 @@ public class AdminController {
 	 */
 	@PostMapping("/adminProductDelete.do")
 	public String adminDeleteProduct(
-			@RequestParam int productId,
+			@Valid @RequestBody ProductDeleteDto _product,
 			@AuthenticationPrincipal MemberDetails member
 			){
-		log.debug("productId = {}", productId);
-		int result = productService.deleteProduct(productId);
+		log.debug("ProductDeleteDto = {}", _product);
+		
+		int result = productService.deleteProduct(_product.getProductId());
 		
 		return "redirect:/admin/adminProductList.do";
 	}
@@ -549,10 +565,11 @@ public class AdminController {
 	@PostMapping("/adminProductOptionDelete.do")
 	@ResponseBody
 	public ResponseEntity<?> adminProductOptionDelete(
-	        @RequestParam int productDetailId
+			@Valid @RequestBody ProductOptionDeleteDto _product,
+			@AuthenticationPrincipal MemberDetails member
 	) {
-		log.debug("productDetailId = {}", productDetailId);
-		int result = productService.deleteProductDetail(productDetailId);
+		log.debug("ProductDeleteDto = {}", _product);
+		int result = productService.deleteProductDetail(_product.getProductDetailId());
 		
 	    return ResponseEntity.ok("상품옵션을 삭제했습니다.");
 	}

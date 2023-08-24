@@ -6,10 +6,15 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.pet.entity.Pet;
+import com.shop.app.pet.repository.PetRepository;
 import com.shop.app.pet.service.PetService;
+import com.shop.app.product.entity.Product;
+import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
@@ -25,7 +30,11 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewRepository reviewRepository;
 	
 	@Autowired
-	private PetService petService;
+	private PetRepository petRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
+	
 	
 	// 리뷰추가
 	@Override
@@ -81,8 +90,26 @@ public class ReviewServiceImpl implements ReviewService {
 
 	// 리뷰 상세조회
 	@Override
-	public Review findReviewId(Review review) {
-		return reviewRepository.findReviewId(review);
+	@Transactional
+	public ReviewDetailDto findReviewId(int reviewId) {
+		Review review = reviewRepository.findReviewId(reviewId);
+		Pet pet = petRepository.findPetById(review.getPetId());
+		
+	    ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
+	    reviewDetailDto.setReviewId(review.getReviewId());
+	    reviewDetailDto.setReviewTitle(review.getReviewTitle());
+	    reviewDetailDto.setReviewContent(review.getReviewContent());
+	    reviewDetailDto.setReviewStarRate(review.getReviewStarRate());
+	    reviewDetailDto.setReviewCreatedAt(review.getReviewCreatedAt());
+
+	    reviewDetailDto.setPetId(pet.getPetId());
+	    reviewDetailDto.setPetName(pet.getPetName());
+	    reviewDetailDto.setPetAge(pet.getPetAge());
+	    reviewDetailDto.setPetBreed(pet.getPetBreed());
+	    reviewDetailDto.setPetWeight(pet.getPetWeight());
+	    reviewDetailDto.setPetGender(pet.getPetGender());
+
+	    return reviewDetailDto;
 	}
 	
 
@@ -127,7 +154,18 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.findProductImageAttachmentsByReviewId(reviewId);
 	}
 
+	@Override
+	public ReviewDetails findImageAttachmentsByReviewMemberId(int reviewId) {
+		return reviewRepository.findImageAttachmentsByReviewMemberId(reviewId);
+	}
 
-
-
+	@Override
+	public String findImageFilenameByReviewId(int reviewId2) {
+		return reviewRepository.findImageFilenameByReviewId(reviewId2);
+	}
 }
+
+
+
+
+

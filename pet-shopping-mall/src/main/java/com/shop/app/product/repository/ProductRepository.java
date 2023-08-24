@@ -51,7 +51,7 @@ public interface ProductRepository {
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
 
-	@Insert("insert into product_detail(product_detail_id, product_id, option_name, option_value, additional_price,sale_state) values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
+	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId, jdbcType=INTEGER}, #{optionName, jdbcType=VARCHAR}, #{optionValue, jdbcType=VARCHAR}, #{additionalPrice, jdbcType=INTEGER}, #{saleState, jdbcType=INTEGER})")
 	@SelectKey(
 			before = false,
 			keyProperty = "productDetailId",

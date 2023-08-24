@@ -43,7 +43,7 @@
                                         src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"
                                         onclick="toggleAccordion(this);">
                                     <div style="text-align: center;">
-                                        귀여운 리드줄
+                                        <%-- ${review.productName} --%>
                                     </div>
                                 </div>
                             </td>
