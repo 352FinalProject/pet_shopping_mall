@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.ImageService;
 import com.shop.app.common.entity.imageAttachment;
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
@@ -51,6 +51,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/review")
 public class ReviewController {
+	
+	@Autowired
+	private ServletContext application;
+	
 
 	@Autowired
 	private ReviewService reviewService;
@@ -108,12 +112,16 @@ public class ReviewController {
 		// 1. 파일저장
 		List<imageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
-
+		
+		
+		String saveDirectory = application.getRealPath("/resources/upload/review");
+		// 예제 File destFile = new File(saveDirectory, renamedFilename);
+		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
-				File destFile = new File(imageRenamedFilename);
+				File destFile = new File(saveDirectory, imageRenamedFilename);
 				upFile.transferTo(destFile);
 
 				int imageType = 1;

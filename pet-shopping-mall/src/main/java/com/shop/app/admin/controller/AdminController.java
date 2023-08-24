@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
+	
+	@Autowired
+	private ServletContext application;
 	
 	@Autowired
 	private AdminService adminService;
@@ -404,11 +408,13 @@ public class AdminController {
 		List<imageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
 
+		String saveDirectory = application.getRealPath("/resources/upload/product");
+		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
-				File destFile = new File(imageRenamedFilename);
+				File destFile = new File(saveDirectory, imageRenamedFilename);
 				upFile.transferTo(destFile);
 
 				int imageType = 1;

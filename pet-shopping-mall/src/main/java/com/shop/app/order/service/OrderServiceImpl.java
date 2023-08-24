@@ -107,4 +107,9 @@ public class OrderServiceImpl implements OrderService {
 	public int deleteOrder(String orderNo) {
 		return orderRepository.deleteOrder(orderNo);
 	}
+
+	@Override
+	public OrderHistoryDto getOrderDetail(String orderNo) {
+		return orderRepository.getOrderDetail(orderNo);
+	}
 }

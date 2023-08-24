@@ -76,5 +76,7 @@ public interface OrderRepository {
 	@Delete("delete from orderTbl where order_no = #{orderNo}")
 	int deleteOrder(String orderNo);
 
+	OrderHistoryDto getOrderDetail(String orderNo);
+
 	
 }

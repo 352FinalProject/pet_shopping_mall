@@ -42,6 +42,8 @@ public interface OrderService {
 
 	int deleteOrder(String orderNo);
 
+	OrderHistoryDto getOrderDetail(String orderNo);
+
 
 	
 }

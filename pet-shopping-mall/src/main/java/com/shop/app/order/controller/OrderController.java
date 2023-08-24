@@ -100,7 +100,8 @@ public class OrderController {
 	
 	
 	@GetMapping("/orderDetail.do")
-	public void orderDetail(Model model, @RequestParam String orderNo) {
+	public void getOrderDetail(Model model, @RequestParam String orderNo) {
+		OrderHistoryDto orderDetail = orderService.getOrderDetail(orderNo);
 	}
 	
 }
