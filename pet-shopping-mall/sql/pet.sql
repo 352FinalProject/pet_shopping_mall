@@ -55,8 +55,8 @@ SELECT *  FROM all_tables;
 --drop table breed;
 --drop table coupon;
 --drop table member_coupon;
---
-----
+
+
 ------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
@@ -471,3 +471,6 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
+--select * from member;
+--delete from member where email='hulk1512@naver.com'
+--commit;

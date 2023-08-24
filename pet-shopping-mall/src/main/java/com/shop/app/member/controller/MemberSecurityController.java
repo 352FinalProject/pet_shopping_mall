@@ -275,10 +275,6 @@ public class MemberSecurityController {
             .status(HttpStatus.OK).body(Map.of("available", available, "memberId", memberId));
    }
 
-   // 아이디 찾기
-   @GetMapping("/memberSearchId.do")
-   public void memberSearchId() {
-   }
 
    @GetMapping("/memberCreateComplete.do")
    public void memberCreateComplete() {
