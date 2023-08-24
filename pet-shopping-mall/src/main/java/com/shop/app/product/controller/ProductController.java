@@ -140,14 +140,14 @@ public class ProductController {
 
 	@GetMapping("/productDetail.do")
 
-	public void productDetail(@RequestParam(required = false) Integer reviewId, @RequestParam(defaultValue = "1") int page, Model model) {
+	public void productDetail(@RequestParam int productId,
+			  @RequestParam(required = false) Integer reviewId,
+            @RequestParam(defaultValue = "1") int page,
+            Model model) {
 		
 		int limit = 3;
 		Map<String, Object> params = Map.of("page", page, "limit", limit);
-	public void productDetail(@RequestParam int productId,
-							  @RequestParam(required = false) Integer reviewId,
-	                          @RequestParam(defaultValue = "1") int page,
-	                          Model model) {
+		
 
 		int totalCount = reviewService.findProductTotalReviewCount();
 		int totalPages = (int) Math.ceil((double) totalCount / limit);

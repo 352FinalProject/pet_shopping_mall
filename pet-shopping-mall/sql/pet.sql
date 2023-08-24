@@ -492,3 +492,4 @@ values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
 -- 생일 축하 10% 쿠폰
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
 values (2, '생일축하 10% 할인 쿠폰', null, 10);
+

@@ -1,5 +1,6 @@
 package com.shop.app.member.controller;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.app.coupon.entity.Coupon;
+import com.shop.app.coupon.entity.MemberCoupon;
+import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MemberUpdateDto;
 import com.shop.app.member.dto.MypageDto;
@@ -62,6 +66,9 @@ public class MemberSecurityController {
 
 	@Autowired
 	private TermsService termsService; // 회원가입시 약관동의
+	
+	@Autowired
+	private CouponService couponService; // 회원가입시 쿠폰 발급
 
 	@GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
 	public void memberCreate() {
@@ -107,17 +114,30 @@ public class MemberSecurityController {
 		
 		int resultPoint = pointService.insertPoint(point);
 		
+		 // 회원가입시 무료배송 쿠폰 발급 (예라)
+	    List<Coupon> resultCoupon = couponService.findCoupon();
+	    for (Coupon coupon : resultCoupon) {
+	        MemberCoupon memberCoupon = new MemberCoupon();
+	        memberCoupon.setCouponId(coupon.getCouponId());
+	        memberCoupon.setMemberId(member.getMemberId());
+
+	        // 발급받은 날짜로부터 한달 뒤의 날짜 계산
+	        LocalDateTime issuanceDate = LocalDateTime.now();
+	        LocalDateTime endDate = issuanceDate.plusMonths(1);
+	        
+	        memberCoupon.setCreateDate(issuanceDate); 
+	        memberCoupon.setEndDate(endDate); 
+	        memberCoupon.setUseStatus(0);
+
+	        // memberCoupon db 추가
+	        int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
+	    }
+		
 	    // 약관 동의 정보 가져오기
 	    Object obj = session.getAttribute("userAgreements");
 	    log.debug("obj = {}", obj);
 	    // Terms 객체 생성
 	    Terms terms = new Terms();
-
-		// 약관 동의 정보 가져오기
-		Object obj = session.getAttribute("userAgreements");
-		log.debug("obj = {}", obj);
-		// Terms 객체 생성
-		Terms terms = new Terms();
 
 		if (obj instanceof HashMap) {
 			HashMap<Integer, Accept> userAgreements = (HashMap<Integer, Accept>) obj;
@@ -199,6 +219,7 @@ public class MemberSecurityController {
 	public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
 		String memberId = member.getMemberId();
 		MypageDto myPage = memberService.getMyPage(memberId);
+		log.debug("myPage = {}", myPage);
 		model.addAttribute("myPage", myPage);
 	}
 

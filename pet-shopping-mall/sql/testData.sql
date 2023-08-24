@@ -19,6 +19,8 @@ select * from order_detail;
 select * from product_detail;
 select * from product;
 
+select count(*) from member_coupon where member_id = 'member4';
+
 --==============================
 --sample data 생성
 --==============================

@@ -60,8 +60,6 @@ public class OrderController {
 	    else 
 	    	orderList = orderService.getOrderList(memberId);
 	    
-	    log.debug("orderHistories = {}", orderHistories);
-	    
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderList);
 	}

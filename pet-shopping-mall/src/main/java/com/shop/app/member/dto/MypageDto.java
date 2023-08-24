@@ -19,4 +19,5 @@ public class MypageDto {
 	private String subscribe; // N: 구독안함 / Y: 구독함
 	private int pointCurrent;
 	private List<OrderHistoryDto> orderHistory; // 최근주문내역
+	private int memberCount; // 쿠폰 카운트
 }

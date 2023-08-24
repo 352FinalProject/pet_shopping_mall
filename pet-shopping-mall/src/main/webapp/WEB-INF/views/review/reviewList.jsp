@@ -7,6 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 
 <%-- 내 리뷰 조회 (혜령) --%>
 <section class="common-section" id="common-section-List" style="padding-bottom: 350px;" >
