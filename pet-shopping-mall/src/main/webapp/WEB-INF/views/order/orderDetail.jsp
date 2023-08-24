@@ -77,6 +77,7 @@
 			</c:if>
 			</div>
 			<div class="payment-div">
+				<c:if test="${not empty payment}" >
 				<div class="payment-left">
 					<sec:authentication property="principal" var="loginMember" />
 					<c:set var="amount" value="0" />
@@ -98,7 +99,6 @@
 							[<span id="zip-code">818181</span>]<span id="address">${loginMember.address}</span>
 						</p>
 					</div>
-					<c:if test="${not empty payment}">
 					<div>
 						<p class="order-info-title">주문결제정보</p>
 						<div class="payment-info2">
@@ -180,10 +180,6 @@
 					</div>
 				</div>
 			</div>
-			</c:if>
-			<c:if test="${null eq payment}">
-			<div id="info-message">아직 결제된 상품이 아닙니다. 결제를 진행해주세요.</div>
-			<button class="btn">결제하러가기</button>
 			</c:if>
 		</div>
 	</div>

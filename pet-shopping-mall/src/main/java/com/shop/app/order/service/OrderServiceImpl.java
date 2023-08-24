@@ -82,11 +82,7 @@ public class OrderServiceImpl implements OrderService {
 				.orderId(orderId)
 				.build();
 		result = orderRepository.insertCancelOrder(cancel);
-		
-		if(isRefund.equals("N")) 
-			result = orderRepository.updateOrderStatus(orderNo, 5);
-		else if(isRefund.equals("Y"))
-			result = orderRepository.updateOrderStatus(orderNo, 6);
+		result = orderRepository.updateOrderStatus(orderNo, 5);
 			
 		return result;
 	}

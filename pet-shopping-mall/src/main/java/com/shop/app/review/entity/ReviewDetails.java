@@ -27,8 +27,8 @@ public class ReviewDetails extends Review {
 	
 //	private int petId;
 	
-	private List<imageAttachment> attachments;
-	private List<imageAttachmentMapping> attachmentMapping;
+	private List<ImageAttachment> attachments;
+	private List<ImageAttachmentMapping> attachmentMapping;
 
 	
 	

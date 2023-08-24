@@ -595,9 +595,10 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
     values (seq_orderTbl_id.nextval, '230823-001', 'honggd', sysdate, 5, 1, 27000,3000, 0, 30000, null);    
 
-insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
-    values (seq_orderTbl_id.nextval, '230823-002', 'honggd', sysdate, 1, 0, 27000,3000, 0, 30000, null);
-    
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
+    values (seq_orderTbl_id.nextval, '230823-002', 'honggd', sysdate, 5, 0, 27000,3000, 0, 30000, null);
+
+select * from orderTbl;    
 -----------------------------------------
 -- 통계조회 쿼리
 -----------------------------------------
@@ -685,7 +686,7 @@ from
     product p left join product_detail pd on p.product_id = pd.product_id
     left join cartitem ci on pd.product_detail_id = ci.product_detail_id
     left join 
-	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product';
 
-
-
+select * from point;
+select * from member;

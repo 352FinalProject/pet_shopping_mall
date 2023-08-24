@@ -170,7 +170,7 @@ span duplicate {
 						<th>생일</th>
 						<td><input type="date" name="birthday" id="birthday"
 							placeholder="생년월일" required
-							pattern=" ^\d{4}-\d{2}-\d{2}$" title="연도, 월, 일이 각각 4자리, 2자리, 2자리 숫자입력.">
+							title="연도, 월, 일이 각각 4자리, 2자리, 2자리 숫자입력.">
 						</td>
 					</tr>
 
