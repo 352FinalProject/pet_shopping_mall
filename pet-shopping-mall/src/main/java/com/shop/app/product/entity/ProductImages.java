@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.common.entity.imageAttachmentMapping;
+import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.ImageAttachmentMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,8 +29,8 @@ public class ProductImages {
 	private int viewCnt;
 	
 	
-	private List<imageAttachment> attachments;
-	private List<imageAttachmentMapping> attachmentMapping;
+	private List<ImageAttachment> attachments;
+	private List<ImageAttachmentMapping> attachmentMapping;
 	
 	public Product toProduct() {
 		return Product.builder()

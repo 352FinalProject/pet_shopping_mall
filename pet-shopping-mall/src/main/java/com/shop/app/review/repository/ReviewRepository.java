@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
@@ -28,7 +28,7 @@ public interface ReviewRepository {
 	int insertReview(Review review);
 
 	// 리뷰 파일첨부
-	int insertAttachment(imageAttachment attach);
+	int insertAttachment(ImageAttachment attach);
 
 	// 리뷰 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'review', #{reviewId}, #{imageId})")

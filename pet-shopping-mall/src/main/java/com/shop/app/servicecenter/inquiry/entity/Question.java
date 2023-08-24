@@ -3,7 +3,7 @@ package com.shop.app.servicecenter.inquiry.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.shop.app.common.entity.imageAttachmentMapping;
+import com.shop.app.common.entity.ImageAttachmentMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
