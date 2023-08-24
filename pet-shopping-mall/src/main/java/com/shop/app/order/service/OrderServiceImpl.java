@@ -57,6 +57,11 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.adminStatisticsProduct();
 	}
 	
+	// 관리자페이지 상품매출통계 조회 - 매출액(대원)
+	@Override
+	public List<OrderAdminProductStatisticsDto> adminStatisticsPrice() {
+		return orderRepository.adminStatisticsPrice();
+	}
 
 	// 2. db에서 주문 정보 가져오기 (예라)
 	@Override

@@ -44,6 +44,8 @@ public interface OrderService {
 	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
 	List<OrderAdminProductStatisticsDto> adminStatisticsProduct();
 
+	// 관리자페이지 상품매출통계 조회 - 매출액(대원)
+	List<OrderAdminProductStatisticsDto> adminStatisticsPrice();
 
 	
 }

@@ -310,18 +310,8 @@ public class AdminController {
 		List<OrderAdminProductStatisticsDto> productStatistics = orderService.adminStatisticsProduct();
 		model.addAttribute("productStatistics", productStatistics);
 		
-		productStatistics.sort(Comparator.comparingInt(OrderAdminProductStatisticsDto::getTotalSold).reversed());
-	    
-	    List<OrderAdminProductStatisticsDto> topProducts = productStatistics.stream()
-	            .limit(10)
-	            .collect(Collectors.toList());
-	    
-	    model.addAttribute("topProducts", topProducts);
-		
-		
-		// https://mag1c.tistory.com/220 
-	    // https://w-giraffe.tistory.com/164
-		
+		List<OrderAdminProductStatisticsDto> priceStatistics = orderService.adminStatisticsPrice();
+		model.addAttribute("priceStatistics", priceStatistics);
 	}
 	
 	
