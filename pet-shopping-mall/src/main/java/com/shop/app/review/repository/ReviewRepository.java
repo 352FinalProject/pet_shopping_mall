@@ -21,7 +21,7 @@ import com.shop.app.review.entity.ReviewDetails;
 public interface ReviewRepository {
 
 	// 리뷰작성
-	@Insert("insert into review (review_id, pet_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId}, #{reviewMemberId}, #{reviewStarRate}, #{reviewTitle}, #{reviewContent}, default)")
+	@Insert("insert into review (review_id, pet_id, product_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId}, #{productId}, #{reviewMemberId, jdbcType=VARCHAR}, #{reviewStarRate}, #{reviewTitle, jdbcType=VARCHAR}, #{reviewContent, jdbcType=VARCHAR}, default)")
 	@SelectKey(
 			before = false, 
 			keyProperty = "reviewId", 
@@ -37,11 +37,11 @@ public interface ReviewRepository {
 	int insertMapping(int reviewId, int imageId);
 
 	// 내가 쓴 리뷰 조회
-	@Select("SELECT * FROM review WHERE review_member_id = #{reviewMemberId} ORDER BY review_id DESC")
+	@Select("SELECT * FROM review WHERE review_member_id = #{reviewMemberId, jdbcType=VARCHAR} ORDER BY review_id DESC")
 	List<Review> findReviewAll(String reviewMemberId, RowBounds rowBounds);
 
 	// 리뷰 전체 카운트
-	@Select("select count (*) from review where review_member_id = #{reviewMemberId}")
+	@Select("select count (*) from review where review_member_id = #{reviewMemberId, jdbcType=VARCHAR}")
 	int findTotalReviewCount(String reviewMemberId);
 
 	// 리뷰삭제
