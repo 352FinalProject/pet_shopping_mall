@@ -350,7 +350,6 @@ public class AdminController {
 			) {
 		// 등록된 상품 가져오기
 		List<ProductDetail> productDetails = productService.findAllProductDetails();
-		log.debug("productDetails = {}", productDetails);
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(ProductDetail productDetail : productDetails) {
@@ -408,6 +407,7 @@ public class AdminController {
 			Model model,
 			@RequestParam(value="upFile", required= false) List<MultipartFile> upFiles) throws IllegalStateException, IOException {
 
+		log.debug("ProductCreateDto = {}", _product);
 		// 1. 파일저장
 		List<imageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
@@ -458,7 +458,6 @@ public class AdminController {
 			log.debug("productDetailId = {}", productDetailId);
 			
 		}
-		
 		
 		return "redirect:/admin/adminProductList.do";
 	}
