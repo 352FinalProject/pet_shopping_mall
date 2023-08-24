@@ -732,3 +732,6 @@ where
 
 select * from point;
 select * from member;
+
+delete from member where email='hulk1512@naver.com';
+commit;

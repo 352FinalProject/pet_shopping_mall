@@ -55,8 +55,8 @@ SELECT *  FROM all_tables;
 --drop table breed;
 --drop table coupon;
 --drop table member_coupon;
---
-----
+
+
 ------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
@@ -475,6 +475,7 @@ end;
 /
 
 
+
 -----------------------------------------
 -- 이용약관 쿼리
 -----------------------------------------
@@ -493,3 +494,6 @@ values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
 values (2, '생일축하 10% 할인 쿠폰', null, 10);
 
+--select * from member;
+--delete from member where email='hulk1512@naver.com'
+--commit;

@@ -22,8 +22,6 @@ public interface MemberService extends UserDetailsService {
 
 	int deleteMember(String memberId);
 
-	String memberSearchId(String name, String email);
-
 	Member findByEmail(String email);
 
 	MypageDto getMyPage(String memberId);

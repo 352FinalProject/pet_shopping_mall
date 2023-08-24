@@ -53,18 +53,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String memberSearchId(String name, String email) {
-		String result = "";
-		try {
-		 result= memberRepository.memberSearchId(name, email);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return result ;
-		
-	}
-
-	@Override
 	public Member findByEmail(String email) {
 		return memberRepository.findByEmail(email);
 	}
