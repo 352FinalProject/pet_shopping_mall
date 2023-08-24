@@ -34,6 +34,7 @@ import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
+import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
@@ -140,7 +141,7 @@ public class ProductController {
 
 	@GetMapping("/productDetail.do")
 
-	public void productDetail(@RequestParam int reviewId,
+	public void productDetail(@RequestParam int productId,
 	                          @RequestParam(defaultValue = "1") int page,
 	                          Model model) {
 
@@ -154,6 +155,19 @@ public class ProductController {
 	    List<Review> reviews = reviewService.findProductReviewAll(params);
 	    model.addAttribute("reviews", reviews);
 
+	    // 상품 아이디로 정보 가져오기
+	    Product product = productService.findProductById(productId);
+	    List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
+	    ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
+	    log.debug("productDetails = {}", productDetails);
+	    log.debug("productImages = {}", productImages);
+	    
+	    // 상품정보 담아주기
+	    model.addAttribute("product", product); // 상품정보
+	    model.addAttribute("productImages", productImages); // 상품이미지
+	    model.addAttribute("productDetails", productDetails); // 상품옵션
+	    
+	    
 	    // 상품 상세 페이지에 펫 정보 뿌려주기
 	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 

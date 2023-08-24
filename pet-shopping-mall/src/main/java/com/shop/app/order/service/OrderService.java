@@ -24,12 +24,12 @@ public interface OrderService {
 	Order findByOrder(Order order);
 
 	// 주문내역 조회 (담희)
-	List<OrderHistoryDto> getOrderList(String memberId);
+	List<Order> getOrderList(String memberId);
 
 	// 주문 취소
 	int insertCancelOrder(String orderNo, String isRefund);
 
-	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
+	List<Order> getOrderListByPeriod(String memberId, int period);
 
 
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
@@ -44,8 +44,9 @@ public interface OrderService {
 
 	int deleteOrder(String orderNo);
 
-	Map<OrderHistoryDto, Payment> getOrderDetail(String orderNo);
+	List<Map<OrderHistoryDto, Payment>> getOrderDetail(String orderNo);
 
+	Order findOrderByOrderNo(String orderNo);
 
 	
 }

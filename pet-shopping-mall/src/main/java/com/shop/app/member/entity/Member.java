@@ -1,6 +1,6 @@
 package com.shop.app.member.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class Member {
 	private String name;
 	private String phone;
 	private String email;
-	private Date enrollDate;
+	private Timestamp enrollDate;
 	private String address;
 	private LocalDate birthday;
 	private Subscribe subscribe;

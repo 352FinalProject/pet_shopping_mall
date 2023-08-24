@@ -30,15 +30,13 @@ public interface MemberRepository {
 	int deleteMember(String memberId);
 
 	MemberDetails loadUserByUsername(String username);
-
 	
-	@Select("select * from member where name=#{name} and email=#{email}")
-	public String memberSearchId(@Param("name") String name, @Param("email") String email);
-
 	@Select("select * from member where email=#{email}")
 	Member findByEmail(String email);
 
 	List<Member> findThisMonthBirthdayMembers(int currentMonth);
+
+	MypageDto getMyPage(String memberId);
 	
 
 	

@@ -80,10 +80,8 @@ public class EmailController {
 	public String findMemberIdByEmail(@RequestParam String email) {
 		Member member = memberService.findByEmail(email);
 		if (member == null) {
-			log.debug("조회안된 미친놈email={}", email);
 			return "not_found";
 		} else {
-			log.debug("조회되도 안나오는 미친놈email={}", email);
 			return member.getMemberId(); // 회원의 ID를 반환합니다.
 		}
 	}

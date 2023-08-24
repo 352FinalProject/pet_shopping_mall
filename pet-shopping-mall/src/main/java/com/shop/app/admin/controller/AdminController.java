@@ -538,8 +538,7 @@ public class AdminController {
             redirectAttr.addFlashAttribute("errorMsg", "Failed to update the product.");
         }
 
-        return "redirect:/admin/adminProductDetailUpdate.do?id=";
-
+        return "redirect:/admin/adminProductDetailUpdate.do";
 	}
 	
 	
