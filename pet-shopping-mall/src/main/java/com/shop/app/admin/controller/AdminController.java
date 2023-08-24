@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
+	
+	@Autowired
+	private ServletContext application;
 	
 	@Autowired
 	private AdminService adminService;
@@ -408,11 +412,13 @@ public class AdminController {
 		List<imageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
 
+		String saveDirectory = application.getRealPath("/resources/upload/product");
+		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
-				File destFile = new File(imageRenamedFilename);
+				File destFile = new File(saveDirectory, imageRenamedFilename);
 				upFile.transferTo(destFile);
 
 				int imageType = 1;
@@ -443,17 +449,16 @@ public class AdminController {
 		log.debug("productId = {}", productId);
 		
 		// 2.1. productDetail 객체 저장
-		ProductDetail productDetail = ProductDetail.builder()
-				.productId(productId)
-				.optionName(_product.getOptionName())
-				.optionValue(_product.getOptionValue())
-				.additionalPrice(_product.getAdditionalPrice())
-				.saleState(_product.getSaleState())
-				.build();
+		List<ProductDetail> productDetails = _product.getProductDetail();
+		for(ProductDetail productDetail : productDetails) {
+			productDetail.setProductId(productId);
+			log.debug("productDetail = {}", productDetail);
+			int result = productService.insertProductDetail(productDetail);
+			int productDetailId = productDetail.getProductDetailId();
+			log.debug("productDetailId = {}", productDetailId);
+			
+		}
 		
-		int result = productService.insertProductDetail(productDetail);
-		int productDetailId = productDetail.getProductDetailId();
-		log.debug("productDetailId = {}", productDetailId);
 		
 		return "redirect:/admin/adminProductList.do";
 	}
@@ -528,8 +533,13 @@ public class AdminController {
     	
         // 상품 옵션 업데이트 로직 수행
         int result = productService.updateProductDetail(productDetail);
+        if (result > 0) {
+            redirectAttr.addFlashAttribute("successMsg", "Product updated successfully!");
+        } else {
+            redirectAttr.addFlashAttribute("errorMsg", "Failed to update the product.");
+        }
 
-        return "redirect:/admin/adminProductList.do";// 업데이트 성공 시 200 OK 응답 반환
+        return "redirect:/admin/adminProductDetailUpdate.do?id=";
 
 	}
 	

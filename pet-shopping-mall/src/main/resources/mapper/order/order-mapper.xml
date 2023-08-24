@@ -204,6 +204,23 @@
       ot.order_status >=5
    </select>
    
+   <select id="getOrderDetail" resultType="orderHistoryDto">
+     select
+      ot.order_date,
+      ot.order_no,
+      ot.order_status,
+      (select product_name from product where product_id = pd.product_id)
+      product_name,
+      od.product_detail_id,
+      od.quantity,
+      ot.amount
+   from
+      orderTbl ot left join order_detail od on ot.order_id = od.order_id
+      left join product_detail pd on od.product_detail_id = pd.product_detail_id
+      left join product p on p.product_id = pd.product_id
+   where
+      ot.order_no = #{orderNo}
+   </select>
    
    <resultMap type="OrderCancelInfoDto" id="orderCancelnfoDto">
       <result column="name" property="name" />

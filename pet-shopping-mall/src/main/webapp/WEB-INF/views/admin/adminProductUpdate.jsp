@@ -1,90 +1,81 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
+<div id="layoutSidenav_content">
+	<main>
+		<div class="container-fluid px-4">
+			<h1 class="mt-4">상품 수정</h1>
+			<ol class="breadcrumb mb-4">
+				<li class="breadcrumb-item"><a
+					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+			</ol>
 
-</div><!-- layoutSidenav -->
-<main>
-<div class="container-fluid px-4">
-<div class="productInfo-container justify-content-around">
-	<h1>상품수정</h1>
-	
-	<!-- 상품기본 정보 -->
-	<div class="product-container ">
-		<!-- 상품카테고리 정보 -->
-		<div class="product-category-info">
-			<div class="row mb-3">
-				<div class="col">
-				  <label for="categoryId" class="col-sm-6">상품 카테고리</label>
+
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> 기본상품목록
 				</div>
-				  <div class="col">
-		              <select name="categoryId" id="categoryId" class="form-select form-control ">
-		              <option value="-선택-">-선택-</option>
-		              <c:if test="${empty categories}">
-		                <option value="1">카테고리가 없습니다. 카테고리를 추가해주세요</option>
-		              </c:if>
-		              <c:if test="${not empty categories}">
-		                <c:forEach items="${categories}" var="category" varStatus="vs">
-		                  <option value="${category.categoryId}" ${category.categoryId eq product.categoryId ? "selected" : ""} >${category.categoryName}</option>
-		                </c:forEach>
-		              </c:if>
-		            </select>
-				  </div>
-			</div>
-		</div>
-		<!-- 상품이름 정보 -->
-		<div class="product-name-info">
-			<div class="row mb-3">
-		      	<div class="col">
-		            <label for="productName" class="form-label">제품 이름</label>
-		      	</div>
-		      	<div class="col">
-		            <input type="text" name="productName" id="productName" class="form-control" value="${product.productName}" required>
-		      	</div>
-	    	</div> 
-		</div>
-		
-		<!-- 가격 정보 -->
-		<div class="product-price-info">
-			<div class="row mb-3">
-				<div class="col">
-		            <label for="productPrice" class="form-label">상품금액</label>		
-				</div>
-				<div class="col">
-		            <input type="number" name="productPrice" id="productPrice" class="form-control" value="${product.productPrice}" required>
-				</div>
-			</div>
-		</div>
-		<!-- 상품사진 -->
-		<div class="product-attachment-info">
-			<div class="row mb-3">
-		      	<div class="col">
-		            <label for="file" class="form-label">제품 사진</label>
-		      	</div>
-		      	<c:if test="${not empty productInfo.attachments}">
-			      	<c:forEach items="${productInfo.attachments}" var="attach" varStatus="vs">
-			      		${vs }<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-	                        class="product-img"
-	                        src="${pageContext.request.contextPath}/resources/upload/product/${attach[vs].imageRenamedFilename}">
-			      	</c:forEach>
-		      	</c:if>
-		      	<c:if test="${empty productInfo.attachments}">
-			      	<div class="col">
-			            <input type="file" name="upFile" id="file" class="form-control">
-			      	</div>
-		      	</c:if>
-	    	</div> 
-		</div>
-		<div class="col-md-6">
-        	<button type="button" class="btn btn-secondary" onclick="updateProduct();">상품수정</button>
-        	<button type="button" class="btn btn-danger" onclick="deleteProduct(${product.productId})">삭제</button>
-        </div>
-		
-	</div>
-	
+				<div class="card-body">
+					  <div class="container-fluid px-4">
+					    <form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" enctype="multipart/form-data" method="post" class="mt-4">
+					
+					      <div class="mb-3">
+					        
+					        <div class="row mb-3">
+					          <div class="col-md-3">
+					            <label for="categoryId" class="form-label">상품 카테고리</label>
+					          </div>
+					          <div class="col-md-3">
+					              <select name="categoryId" id="categoryId" class="form-select form-control ">
+					              <option value="-선택-">-선택-</option>
+					              <c:if test="${empty categories}">
+					                <option value="1">카테고리가 없습니다. 카테고리를 추가해주세요</option>
+					              </c:if>
+					              <c:if test="${not empty categories}">
+					                <c:forEach items="${categories}" var="category" varStatus="vs">
+					                  <option value="${category.categoryId}" ${category.categoryId eq product.categoryId ? "selected" : ""} >${category.categoryName}</option>
+					                </c:forEach>
+					              </c:if>
+					            </select>
+					          </div>
+					        </div>
+					        <div class="row mb-3">
+					          <div class="col-md-3">
+					            <label for="ProductName" class="form-label">상품명</label>
+					            <input type="text" name="ProductName" id="ProductName" value="${product.productName}" class="form-control" required>
+					          </div>
+					          <div class="col-md-3">
+					            <label for="productPrice" class="form-label">상품금액</label>
+					            <input type="number" name="productPrice" id="productPrice" value="${product.productPrice}" class="form-control" required>
+					          </div>
+					        </div>
+					        <div class="row mb-5">
+					          <div class="col-md-3">
+					            <label for="file" class="form-label">제품 사진</label>
+					          </div>
+					          <div class="col-md-3">
+					          
+							      	<c:if test="${not empty productInfo.attachments}">
+								      	<c:forEach items="${productInfo.attachments}" var="attach" varStatus="vs">
+								      		${vs }<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
+						                        class="product-img"
+						                        src="${pageContext.request.contextPath}/resources/upload/product/${attach[vs].imageRenamedFilename}">
+								      	</c:forEach>
+							      	</c:if>
+							      	<c:if test="${empty productInfo.attachments}">
+								      	<div class="col">
+								            <input type="file" name="upFile" id="file" class="form-control">
+								      	</div>
+							      	</c:if>
+					          
+					          </div>
+					        </div>
+					        
+					        
+					        
 	<!-- 상품옵션 정보 -->
 	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
 	    <div class="productDetail-container-${productDetail.productDetailId}">
@@ -130,14 +121,19 @@
 	            <button type="button" class="btn btn-danger" onclick="deleteProductOption(${productDetail.productDetailId});">삭제</button>
 	        </div>
 	    </div>
-	</c:forEach> 	
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" type="reset">초기화</button>
-      </div>
-	
-</div><!-- productInfo-container -->
-</div>
-</main>
+	</c:forEach> 
+					      
+					      
+					    </form:form>
+					  </div>
+				</div>
+			</div>
+
+
+
+			
+		</div>
+	</main>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 //ajax 요청시 사용할 csrf 글로벌 변수설정
