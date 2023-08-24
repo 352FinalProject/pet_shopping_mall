@@ -190,12 +190,13 @@ span duplicate {
 							value="주소 검색" onclick="sample4_execDaumPostcode()"
 							pattern="^[가-힣0-9a-zA-Z\s-]+$" title="부적합한 주소 형식입니다.">
 							<input type="text" id="sample4_postcode" placeholder="우편번호"> -->
-							<div style=" text-align: right;"><input type="button" class="address" onclick="sample4_execDaumPostcode()" value="주소 검색" ></div><br>
+							<div style=" text-align: right;"><input type="button" class="address" onclick="sample4_execDaumPostcode();" value="주소 검색" ></div><br>
 							<div style="margin-top: -60px; position: absolute;"><input type="text" class="address" id="roadAddress" placeholder="도로명주소"></div><br>
 							<div style="margin-top: -30px; "><input type="text" class="address" id="jibunAddress" placeholder="지번주소"></div><br>
 							<span id="guide" style="color:#999;display:none"></span>
 							<div style="margin-top: -10px;"><input type="text" class="address" id="detailAddress" placeholder="상세주소"></div>
-							<input type="hidden">
+							<input type="hidden" name="address" id="address" value="" />
+						</td>
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2"><input type="reset"
@@ -419,7 +420,7 @@ function sample4_execDaumPostcode() {
             document.getElementById('sample4_postcode').value = data.zonecode;
             document.getElementById("roadAddress").value = roadAddr;
             document.getElementById("jibunAddress").value = data.jibunAddress;
-
+			
             // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
             if(roadAddr !== ''){
                 document.getElementById("extraAddress").value = extraRoadAddr;
@@ -428,31 +429,16 @@ function sample4_execDaumPostcode() {
                 document.getElementById("extraAddress").value = '';
             }
             document.getElementById('roadAddress').value = roadAddr;
-            
+           
+            var fullAddress = roadAddr + " " + jibunAddress + " " + detailAddress;
+            document.getElementById("address").value = fullAddress;
         }
     }).open();
 };
 
-const roadAddress = document.getElementById("roadAddress").value;
-const jibunAddress = document.getElementById("jibunAddress").value;
+document.querySelector()
 
-const addressData = {
-    roadAddress: roadAddress,
-    jibunAddress: jibunAddress
-};
 
-$.ajax({
-    url: "/${pageContext.request.contextPath}/address/saveAddress.do", // 서버 엔드포인트 URL
-    method: "POST",
-    data: addressData,
-    success: function(response) {
-        console.log(response);
-        // 서버로부터의 응답을 처리할 수 있습니다.
-    },
-    error: function(error) {
-        console.error(error);
-    }
-});
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

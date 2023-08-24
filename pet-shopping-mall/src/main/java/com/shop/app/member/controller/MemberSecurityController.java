@@ -82,6 +82,9 @@ public class MemberSecurityController {
    public String memberCreate(@Valid MemberCreateDto member, BindingResult bindingResult,
          RedirectAttributes redirectAttr, HttpSession session) {
 
+	   
+	   log.debug("member = {}", member);
+	   
       // 이메일 인증 확인 (예라)
       Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
       if (isVerified == null || !isVerified) {
