@@ -51,7 +51,7 @@ public class OrderController {
 	    List<OrderHistoryDto> orderHistories;
 
 	    if (period != null) 
-	        orderHistories = orderService.getOrderListByPeriod(memberId, period);
+	    	orderHistories = orderService.getOrderListByPeriod(memberId, period);
 	    else 
 	        orderHistories = orderService.getOrderList(memberId);
 	    

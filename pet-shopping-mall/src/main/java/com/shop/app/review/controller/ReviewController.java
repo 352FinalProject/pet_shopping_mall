@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,14 +30,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.ImageService;
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.service.OrderService;
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
+import com.shop.app.product.entity.Product;
+import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
+import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.dto.ReviewUpdateDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
@@ -60,11 +67,22 @@ public class ReviewController {
 	
 	@Autowired
 	private PetService petService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private ServletContext application;
 
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
 	@GetMapping("/reviewList.do")
 	public void reviewList(
 			@RequestParam(defaultValue = "1") int page,
+			@AuthenticationPrincipal MemberDetails member,
+			@RequestParam(name = "period", required = false) Integer period,
 			Model model) {
 
 		int limit = 5;
@@ -83,8 +101,24 @@ public class ReviewController {
 		model.addAttribute("totalPages", totalPages);
 
 		List<Review> reviews = reviewService.findReviewAll(params);
-
 		model.addAttribute("reviews", reviews);
+		log.debug("reviews = {}", reviews);
+		
+		// 구매한 상품과 연결
+		String memberId = member.getMemberId();
+		List<OrderHistoryDto> orderHistories;
+		
+		if (period != null) {
+			orderHistories = orderService.getOrderListByPeriod(memberId, period);
+		} else {
+			orderHistories = orderService.getOrderList(memberId);
+		}
+			
+		log.debug("orderHistories = {}", orderHistories);
+		model.addAttribute("orderHistories", orderHistories);
+		
+		
+		
 	}
 
 
@@ -109,11 +143,16 @@ public class ReviewController {
 		List<ImageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
 
+		// 이미지 상대경로 지정
+		String saveDirectory = application.getRealPath("/resources/upload/review");
+		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
-				File destFile = new File(imageRenamedFilename);
+//				File destFile = new File(imageRenamedFilename);
+				File destFile = new File(saveDirectory, imageRenamedFilename);
+				
 				upFile.transferTo(destFile);
 
 				int imageType = 1;
@@ -132,9 +171,6 @@ public class ReviewController {
 			}
 		}
 		
-		_review.setPetId(pet.getPetId());
-		log.debug("펫아이디 = {}", _review);
-
 		// 2. db저장
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
@@ -143,32 +179,42 @@ public class ReviewController {
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
 				.reviewContent(_review.getReviewContent())
-				.petId(_review.getPetId()) // petId를 pet의 Id와 연결
 				.attachments(attachments)
 				.build();
 
 		
 		// petId 연결하기
-		String memberId = principal.getName();
-		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 로그인 한 회원의 펫정보 가져오기
+//		String memberId = principal.getName();
+//		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 로그인 한 회원의 펫정보 가져오기
+
+		// petId 로그인 멤버 말고 리뷰작성자랑 연결하기
+		String memberId = _review.getReviewMemberId();
+		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 리뷰작성자의 펫정보 가져오기
 		
 		// log.debug("petInfo = {}", petInfo);
 		
 		if (!petInfo.isEmpty()) { // 펫정보가 비어있지 않다면
 			Pet firstPet = petInfo.get(0); // 첫번째 Pet 객체 가져오기
 			reviews.setPetId(firstPet.getPetId()); // db에 pet정보 저장 
-//			reviews.setPetName(firstPet.getPetName());
-//			reviews.setPetGender(firstPet.getPetGender());
 		}
 
 		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
-
+		
+		// 상품 - 리뷰 연결
+		// Product 객체 생성
+		Product product = new Product();
+		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
+		log.debug("findProduct = {}", findProduct); 
+		
+		for(Product p : findProduct) {
+			product.setProductId(p.getProductId());
+		}
+		
+		// int productId = _review.getProductId();
+		
 		
 		int reviewId = reviewService.insertReview(reviews);
-		Review pointReviewId = reviewService.findReviewId(reviews);
-		
-
-		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
+		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
@@ -195,7 +241,6 @@ public class ReviewController {
 		newPoint.setReviewId(pointReviewId.getReviewId());
 		
 		// log.debug("newPoint = {}", newPoint);
-
 		int newPointResult = pointService.insertPoint(newPoint);
 
 		return "redirect:/review/reviewList.do";
@@ -241,26 +286,17 @@ public class ReviewController {
 			Model model, 
 			Pet pet, 
 			Principal principal) {
-
-		// 펫 정보 가져오기
-		String memberId = principal.getName(); // 로그인한 멤버 아이디
-		List<Pet> petId = petService.findPetId(pet, memberId);
 		
-		Review review = Review.builder()
-				.reviewId(reviewId)
-				.build();
-
-		Review reviews = reviewService.findReviewId(review);
+		ReviewDetailDto reviews = reviewService.findReviewId(reviewId);
 		model.addAttribute("reviews", reviews);
-		model.addAttribute("petId", petId);
 
-		log.debug("펫정보 reviews 가져올수있니 = {}", reviews);
+		// log.debug("펫정보 reviews 가져올수있니 = {}", reviews);
 		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
-		log.debug("reviewDetails = {}", reviewDetails);
+		// log.debug("reviewDetails = {}", reviewDetails);
 		model.addAttribute("reviewDetails", reviewDetails);
-
+		
 	}
 
 
@@ -268,11 +304,7 @@ public class ReviewController {
 	@GetMapping("/reviewUpdate.do")
 	public void reviewUpdate(@RequestParam int reviewId, Model model) {
 
-		Review review = Review.builder()
-				.reviewId(reviewId)
-				.build();
-
-		Review reviews = reviewService.findReviewId(review);
+		ReviewDetailDto reviews = reviewService.findReviewId(reviewId);
 		model.addAttribute("reviews", reviews);
 
 	}
