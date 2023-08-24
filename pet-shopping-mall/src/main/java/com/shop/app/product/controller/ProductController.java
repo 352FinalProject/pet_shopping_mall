@@ -167,7 +167,7 @@ public class ProductController {
 	        log.debug("reviewDetails = {}", reviewDetails);
 	        
 	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-	            String imageFilename = reviewDetails.getAttachments().get(0).getImageOriginalFilename();
+	            String imageFilename = reviewDetails.getAttachments().get(0).getImageRenamedFilename();
 	            log.debug("imageFilename = {}", imageFilename);
 	            reviewImageMap.put(reviewId2, imageFilename);
 	        }
@@ -175,8 +175,8 @@ public class ProductController {
 	    
 	    log.debug("reviewImageMap = {}", reviewImageMap);
 	    
-	    model.addAttribute("reviewImageMap", reviewImageMap);
-	    model.addAttribute("reviewPetsMap", reviewPetsMap);
+	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
+	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	}
 
 
