@@ -100,7 +100,7 @@
 					        </div>
 
 							<!-- 옵션추가용 태그 -->
-					        <div class="optionValueInput" id="optionValueInput"></div>
+					        <div class="optionValueInput" id="optionValueInput"> </div>
 					        
 					      <div class="row mb-5">
 						      <div class="col-md-5 d-flex justify-content-end">
@@ -157,8 +157,10 @@
       </div>	
 		`;
 		
+		if(optionValueInput != null){
 		optionValueInput.innerHTML += optionAddDiv;
-		optionNumber += 1;
+		optionNumber += 1;			
+		}
 	}
 	
 	document.querySelectorAll("[name=upFile]").forEach((input) => {

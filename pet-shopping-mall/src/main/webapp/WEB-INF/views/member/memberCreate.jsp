@@ -191,10 +191,11 @@ span duplicate {
 							pattern="^[가-힣0-9a-zA-Z\s-]+$" title="부적합한 주소 형식입니다.">
 							<input type="text" id="sample4_postcode" placeholder="우편번호"> -->
 							<div style=" text-align: right;"><input type="button" class="address" onclick="sample4_execDaumPostcode()" value="주소 검색" ></div><br>
-							<div style="margin-top: -60px; position: absolute;"><input type="text" class="address" id="sample4_roadAddress" placeholder="도로명주소"></div><br>
-							<div style="margin-top: -30px; "><input type="text" class="address" id="sample4_jibunAddress" placeholder="지번주소"></div><br>
+							<div style="margin-top: -60px; position: absolute;"><input type="text" class="address" id="roadAddress" placeholder="도로명주소"></div><br>
+							<div style="margin-top: -30px; "><input type="text" class="address" id="jibunAddress" placeholder="지번주소"></div><br>
 							<span id="guide" style="color:#999;display:none"></span>
-							<div style="margin-top: -10px;"><input type="text" class="address" id="sample4_detailAddress" placeholder="상세주소"></div>
+							<div style="margin-top: -10px;"><input type="text" class="address" id="detailAddress" placeholder="상세주소"></div>
+							<input type="hidden">
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2"><input type="reset"
@@ -205,7 +206,14 @@ span duplicate {
 			</form:form>
 		</div>
 	</div>
-
+	<div id="kakaoInput" hidden="true">	
+		<input type="text" id="sample4_postcode" placeholder="우편번호">
+		<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+		<input type="text" id="roadAddress" placeholder="도로명주소">
+		<input type="text" id="jibunAddress" placeholder="지번주소">
+		<input type="text" id="detailAddress" placeholder="상세주소">
+		<input type="text" id="extraAddress" placeholder="참고항목">
+	</div>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script
@@ -245,7 +253,7 @@ function emailCheck() {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader("X-CSRF-TOKEN", token);
     xhr.send(JSON.stringify({ email: email }));
-}
+};
 	
 /* 유효성 검사 */
 $(document).ready(function() {
@@ -259,7 +267,7 @@ $(document).ready(function() {
         } else {
             memberIdContainer.removeClass("valid duplicate");
         }
-    }
+    };
 
     $("#memberId").on("keyup", function(e) {
         const value = e.target.value;
@@ -311,7 +319,7 @@ $(document).ready(function() {
             alert("사용가능한 아이디를 작성해주세요.");
             e.preventDefault(); // 폼 제출을 중단
             return;
-        }
+        };
 
    /*      if (password.val() !== passwordConfirmation.val()) {
             alert("비밀번호가 일치하지 않습니다.");
@@ -342,7 +350,7 @@ window.onload = function() {
             passwordInput.style.border = "1px solid red";
             confirmPasswordInput.style.border = "1px solid red";
         }
-    }
+    };
     
     // 입력이 변경될 때마다 비밀번호 일치 여부 확인
     passwordInput.addEventListener("input", validatePassword);
@@ -359,11 +367,11 @@ window.onload = function() {
             // 이름 조건에 맞지 않을 때 스타일 변경
             nameInput.style.border = "1px solid red";
         }
-    }
+    };
     
     // 입력이 변경될 때마다 이름 유효성 검사 실행
     nameInput.addEventListener("input", validateName);
-}
+};
 
 function validateEmail() {
     const emailInput = document.getElementById("emailInput");
@@ -380,8 +388,8 @@ function validateEmail() {
         emailValidationMessage.style.display = "none";
         emailInput.style.border = "1px solid #58586d3"; // 이메일 형식이 유효할 때 기본 색상으로 변경
     }
-    nameInput.addEventListener("input", validateEmail);
-}
+    emailInput.addEventListener("input", validateEmail);
+};
 
 function sample4_execDaumPostcode() {
     new daum.Postcode({
@@ -409,38 +417,42 @@ function sample4_execDaumPostcode() {
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('sample4_postcode').value = data.zonecode;
-            document.getElementById("sample4_roadAddress").value = roadAddr;
-            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-            console.log("첫번째병신",sample4_extraAddress);
+            document.getElementById("roadAddress").value = roadAddr;
+            document.getElementById("jibunAddress").value = data.jibunAddress;
 
             // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
             if(roadAddr !== ''){
-                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                console.log("문자열병신",sample4_extraAddress);
+                document.getElementById("extraAddress").value = extraRoadAddr;
 
             } else {
-                document.getElementById("sample4_extraAddress").value = '';
+                document.getElementById("extraAddress").value = '';
             }
-            document.getElementById('sample4_roadAddress').value = roadAddr;
+            document.getElementById('roadAddress').value = roadAddr;
             
-            var guideTextBox = document.getElementById("guide");
-            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-            if(data.autoRoadAddress) {
-                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                guideTextBox.style.display = 'block';
-
-            } else if(data.autoJibunAddress) {
-                var expJibunAddr = data.autoJibunAddress;
-                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                guideTextBox.style.display = 'block';
-            } else {
-                guideTextBox.innerHTML = '';
-                guideTextBox.style.display = 'none';
-            }
         }
     }).open();
-}
+};
+
+const roadAddress = document.getElementById("roadAddress").value;
+const jibunAddress = document.getElementById("jibunAddress").value;
+
+const addressData = {
+    roadAddress: roadAddress,
+    jibunAddress: jibunAddress
+};
+
+$.ajax({
+    url: "/${pageContext.request.contextPath}/address/saveAddress.do", // 서버 엔드포인트 URL
+    method: "POST",
+    data: addressData,
+    success: function(response) {
+        console.log(response);
+        // 서버로부터의 응답을 처리할 수 있습니다.
+    },
+    error: function(error) {
+        console.error(error);
+    }
+});
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
