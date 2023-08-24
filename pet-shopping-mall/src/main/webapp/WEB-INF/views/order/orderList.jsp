@@ -49,7 +49,7 @@
 									</form:form>
 								</td>
 								<td><a
-									href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
+									href="${pageContext.request.contextPath}/member/orderDetail.do">
 										<div class="flex">
 											<img
 												src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg"

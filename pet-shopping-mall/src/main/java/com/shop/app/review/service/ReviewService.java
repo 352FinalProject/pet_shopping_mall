@@ -3,7 +3,6 @@ package com.shop.app.review.service;
 import java.util.List;
 import java.util.Map;
 
-import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 
@@ -20,7 +19,8 @@ public interface ReviewService {
 	//	List<Review> findReviewAll(int reviewId);
 	
 	// 리뷰 상세조회
-	ReviewDetailDto findReviewId(int reviewId);
+	Review findReviewId(Review review);
+	
 
 	// 리뷰 상세 - 이미지 조회
 	ReviewDetails findImageAttachmentsByReviewId(int reviewId);
@@ -42,14 +42,6 @@ public interface ReviewService {
 
 	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
 	ReviewDetails findProductImageAttachmentsByReviewId(int reviewId);
-
-	// 상품 상세페이지 이미지 조회
-	ReviewDetails findImageAttachmentsByReviewMemberId(int reviewId);
-
-	String findImageFilenameByReviewId(int reviewId2);
-
-
-//	List<ReviewDetailDto> findProductReviewDetails(List<Review> reviews);
 
 
 }

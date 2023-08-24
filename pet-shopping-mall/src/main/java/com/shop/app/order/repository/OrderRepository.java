@@ -51,7 +51,7 @@ public interface OrderRepository {
 	
 	
 	
-	@Insert("insert into cancel_order (cancel_id, request_date, receipt_date, cancel_status, order_id) values (seq_cancel_id.nextVal, default, null, default, #{orderId})")
+	@Delete("insert into cancel_order (cancel_id, request_date, receipt_date, cancel_status, order_id) values (seq_cancel_id.nextVal, default, null, default, #{orderId})")
 	int insertCancelOrder(CancelOrder cancel);
 	
 	
@@ -72,11 +72,6 @@ public interface OrderRepository {
 
 
 	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
-
-	@Delete("delete from orderTbl where order_no = #{orderNo}")
-	int deleteOrder(String orderNo);
-
-	OrderHistoryDto getOrderDetail(String orderNo);
 
 	
 }

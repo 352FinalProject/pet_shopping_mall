@@ -124,9 +124,7 @@ ul.nav {
 		<section class="product-board">
 			<!-- 게시판 이름 -->
 	        <div class="board-title"">
-		        <span>
-		        상품 카테고리명 
-		        </span>
+		        <span>사료</span>
 	        </div>
 	        <!-- 게시판 카테고리 -->
 	        <div class="board-category">
@@ -172,23 +170,25 @@ ul.nav {
 		<!-- 상품사진 갤러리 -->
 		<div class="product-gallery">
 			<ul class="gallery">
-				<div class="product-card">
-					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=1&reviewId=3">
-					<figure class="product-thumbnail">
-						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
-					</figure>
-					<div class="product-desc">
-						<p class="product-name">강아지 리드줄 목줄</p>
-						<p class="product-price">10,000원</p>
-						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
-						<span> &nbsp;|&nbsp; </span>
-						<span class="review-cnt">후기 113건</span>
+			<%-- <c:forEach items="[[컨트롤러에서 모델에 담은 값]]" var="[[리스트의 각 행을 담을 변수]]">
+					<div class="product-card">
+						<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${var에서 선언한값.productId}">
+						<figure class="product-thumbnail">
+							<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+						</figure>
+						<div class="product-desc">
+							<p class="product-name">강아지 리드줄 목줄</p>
+							<p class="product-price">10,000원</p>
+							<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+							<span> &nbsp;|&nbsp; </span>
+							<span class="review-cnt">후기 113건</span>
+						</div>
+						</a>
 					</div>
-					</a>
-				</div>
+				</c:forEach> --%>
 			
 				<div class="product-card">
-					<a href="${pageContext.request.contextPath}/product/productDetail.do">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=1">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
 					</figure>
@@ -202,7 +202,21 @@ ul.nav {
 					</a>
 				</div>
 				<div class="product-card">
-					<a href="${pageContext.request.contextPath}/product/productDetail.do">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=2">
+					<figure class="product-thumbnail">
+						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+					</figure>
+					<div class="product-desc">
+						<p class="product-name">강아지 리드줄 목줄</p>
+						<p class="product-price">10,000원</p>
+						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+						<span> &nbsp;|&nbsp; </span>
+						<span class="review-cnt">후기 113건</span>
+					</div>
+					</a>
+				</div>
+				<div class="product-card">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=3">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
 					</figure>

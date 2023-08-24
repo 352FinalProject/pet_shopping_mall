@@ -76,22 +76,7 @@
 <script>
 	const subscribe = () => {
 		if(confirm("정말 구독하시겠습니까?")) {
-			IMP.request_pay({
-				pay_method : 'card', // 기능 없음.
-				merchant_uid: "order_monthly_0001", // 상점에서 관리하는 주문 번호
-				name : '최초인증결제',
-				amount : 1004, // 빌링키 발급과 함께 1,004원 결제승인을 시도합니다.
-				customer_uid : 'your-customer-unique-id', // 필수 입력
-				buyer_email : 'iamport@siot.do',
-				buyer_name : '아임포트',
-				buyer_tel : '02-1234-1234'
-			}, function(rsp) {
-				if ( rsp.success ) {
-					alert('빌링키 발급 성공');
-				} else {
-					alert('빌링키 발급 실패');
-				}
-			});
+			// 정기결제 코드
 		}
 	}
 </script>
