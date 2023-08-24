@@ -19,7 +19,6 @@
 						<tr>
 							<th>번호</th>
 							<th>상품명</th>
-							<th>옵션</th>
 							<th>별점</th>
 							<th>작성일</th>
 						</tr>
@@ -42,15 +41,9 @@
                                         class="product-img"
                                         src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"
                                         onclick="toggleAccordion(this);">
-                                    <div style="text-align: center;">
+                                    <div style="text-align: center;"> 상품이름
                                         <%-- ${review.productName} --%>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="display: flex; flex-direction: column;">
-                                    <div>색상 : 노란색</div>
-                                    <div>수량 : 1개</div>
                                 </div>
                             </td>
                             <td>

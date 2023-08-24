@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib prefix="fmt"
-uri="http://java.sun.com/jsp/jstl/fmt"%> <%@ taglib prefix="fn"
-uri="http://java.sun.com/jsp/jstl/functions"%> <%@ taglib prefix="form"
-uri="http://www.springframework.org/tags/form" %> <%@ taglib prefix="sec"
-uri="http://www.springframework.org/security/tags" %> <%@ page
-isELIgnored="false" %>
+pageEncoding="UTF-8"%> 
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+<%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Image Slider Example</title>
 <!-- Bootstrap CSS 포함 -->
@@ -82,8 +84,8 @@ isELIgnored="false" %>
     <div class="util-div">
       <ul class="product-utility">
         <li><a href="#">상품정보</a></li>
-        <li><a href="#">상품후기</a></li>
-        <li><a href="#">교환/반품/배송</a></li>
+        <li><a href="#product-review-box">상품후기</a></li>
+        <li><a href="#product-notice-box">교환/반품/배송</a></li>
         <li><a href="#">1:1문의</a></li>
       </ul>
     </div>
@@ -96,22 +98,18 @@ isELIgnored="false" %>
         />
       </div>
     </div>
+    </div>
+    <br>
     <!-- 상품 후기 -->
-    <div class="util-div">
-      <ul class="product-utility">
+     <br><div class="util-div" id="product-review-box">
+      <ul class="product-utility" >
         <li><a href="#">상품정보</a></li>
         <li><a href="#">상품후기</a></li>
         <li><a href="#">교환/반품/배송</a></li>
         <li><a href="#">1:1문의</a></li>
       </ul>
     </div>
-    <div class="review-div">
-      <!-- 			<ul class="review-product-utility">
-				<li>별점</li>
-				<li class="review-title">제목</li>
-				<li class="review-title-name">작성자</li>
-				<li class="review-regdate">등록일</li>
-			</ul> -->
+    <div class="review-div" > 
       <ul class="review-product-utility">
         <c:if test="${empty reviews}"> 
         	작성된 리뷰가 없습니다. 
@@ -121,8 +119,8 @@ isELIgnored="false" %>
             <li>
               <div class="review-box">
                 <div class="review-info-box">
-                  <em class="review-info-id">${review.reviewMemberId}</em>
-                  <em class="review-info-date">
+                  <em class="review-info-id">${review.reviewMemberId}</em> <!-- 리뷰 작성자 -->
+                  <em class="review-info-date"> <!-- 작성일 -->
                     <fmt:parseDate
                       value="${review.reviewCreatedAt}"
                       pattern="yyyy-MM-dd'T'HH:mm"
@@ -133,8 +131,7 @@ isELIgnored="false" %>
                 </div>
                 <c:set var="pets" value="${reviewPetsMap[review.reviewId]}" />
                 <c:if test="${not empty pets}">
-                  <div class="reivew-pet-box">
-                    펫정보
+                  <div class="reivew-pet-box"> <!-- 펫정보 -->
                     <c:forEach items="${pets}" var="pet">
                       <em class="review-pet-name">${pet.petName} |</em>
                       <em class="review-pet-name">${pet.petGender} |</em>
@@ -146,161 +143,65 @@ isELIgnored="false" %>
                 </c:if>
                 <c:set var="myReviewId" value="${review.reviewId}" />
                 <div class="review-detail-box">
-                  리뷰 제목/별점/사진/내용
-                  <em class="review-info-id">${review.reviewTitle}</em>
-                  <em class="review-info-id">${review.reviewContent}</em>
-
-                  <div class="score_star">
-                    <c:choose>
-                      <c:when test="${review.reviewStarRate == 1}">
-                        <span class="star-rating">★☆☆☆☆</span> (1)
-                      </c:when>
-                      <c:when test="${review.reviewStarRate == 2}">
-                        <span class="star-rating">★★☆☆☆</span> (2)
-                      </c:when>
-                      <c:when test="${review.reviewStarRate == 3}">
-                        <span class="star-rating">★★★☆☆</span> (3)
-                      </c:when>
-                      <c:when test="${review.reviewStarRate == 4}">
-                        <span class="star-rating">★★★★☆</span> (4)
-                      </c:when>
-                      <c:when test="${review.reviewStarRate == 5}">
-                        <span class="star-rating">★★★★★</span> (5)
-                      </c:when>
-                    </c:choose>
-                  </div>
-					    <div class="review-warp">
-					        <div class="detail-upload">
-									<img src="${pageContext.request.contextPath}/resources/upload/product/${reviewImageMap[review.reviewId]}" alt="Review Image">
-					            </div>
-					        </div>
-					   </div>
-                  <div class="review-data-wrap">
-                    <span class="review-data"></span>
-                  </div>
+	                  <em class="review-info-id">${review.reviewTitle}</em> <!-- 리뷰제목 -->
+	                  <div class="score_star"> <!-- 별점 -->
+	                    <c:choose>
+	                      <c:when test="${review.reviewStarRate == 1}">
+	                        <span class="star-rating">★☆☆☆☆</span> (1)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 2}">
+	                        <span class="star-rating">★★☆☆☆</span> (2)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 3}">
+	                        <span class="star-rating">★★★☆☆</span> (3)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 4}">
+	                        <span class="star-rating">★★★★☆</span> (4)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 5}">
+	                        <span class="star-rating">★★★★★</span> (5)
+	                      </c:when>
+	                    </c:choose>
+	                  </div>
+	                  <em class="review-info-id">${review.reviewContent}</em> <!-- 리뷰내용 -->
+						<!-- 리뷰 이미지 -->
+						<c:if test="${not empty reviewImageMap[review.reviewId]}"> 
+						  <div class="review-warp">
+						    <div class="detail-upload">
+						      <img src="${pageContext.request.contextPath}/resources/upload/review/${reviewImageMap[review.reviewId]}" 
+						        alt="Review Image">
+						    </div>
+						  </div>
+						</c:if>
+				  </div>
                 </div>
-              </div>
             </li>
       	</c:forEach>
       </c:if>
    </ul>
 </div>
+<!-- 페이징 바 -->
+<nav aria-label="..." class="product-review-paging">
+  <ul class="pagination pagination-sm">
+    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+      <li class="page-item ${page == pageNumber ? 'active' : ''}">
+        <a
+          class="page-link"
+          href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
+        >
+          <span class="page-number">${pageNumber}</span>
+        </a>
+      </li>
+    </c:forEach>
+  </ul>
+</nav>
 
-    <div id="Accordion_wrap">
-      <%--
-      <div class="anw">
-        <div class="review-profile">
-          호두누나
-          <span
-            >2023.08.06 <br />
-            호두 | 수컷 | 3살 | 5.7kg | 푸숑</span
-          >
-        </div>
-        <img
-          src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"
-          alt="리뷰사진"
-        />
-        <div class="review-desc">
-          너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무
-          좋아요~ <br />
-          너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~
-        </div>
-      </div>
-      <div class="que">
-        <div class="score_star">
-          <img
-            src="${pageContext.request.contextPath}/resources/images/상품/star.png"
-            alt="별점"
-          /><span class="star_test">5.0</span>
-        </div>
-        <span
-          >너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~
-        </span>
-        <div class="review-warp">
-          <span class="review-name">몽이쥔</span>
-        </div>
-        <div class="review-data-wrap">
-          <span class="review-data">23.08.06</span>
-        </div>
-      </div>
-      <div class="anw">
-        <div class="review-profile">
-          몽이쥔
-          <span
-            >2023.08.06 <br />
-            몽이 | 수컷 | 3살 | 5.7kg | 요크셔테리어</span
-          >
-        </div>
-        <img
-          src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"
-          alt="리뷰사진"
-        />
-        <div class="review-desc">
-          너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무
-          좋아요~ <br />
-          너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~
-        </div>
-      </div>
-      <div class="que">
-        <div class="score_star">
-          <img
-            src="${pageContext.request.contextPath}/resources/images/상품/star.png"
-            alt="별점"
-          /><span class="star_test">5.0</span>
-        </div>
-        <span
-          >너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~
-        </span>
-        <div class="review-warp">
-          <span class="review-name">두부누나</span>
-        </div>
-        <div class="review-data-wrap">
-          <span class="review-data">23.08.06</span>
-        </div>
-      </div>
-      <div class="anw">
-        <div class="review-profile">
-          두부누나
-          <span
-            >2023.08.06 <br />
-            두부 | 수컷 | 3살 | 5.7kg | 비숑프리제</span
-          >
-        </div>
-        <img
-          src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"
-          alt="리뷰사진"
-        />
-        <div class="review-desc">
-          너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무
-          좋아요~ <br />
-          너무 좋아요~ 너무 좋아요~ 너무 좋아요~ 너무 좋아요~
-        </div>
-      </div>
-      --%>
-    </div>
-    <!-- 페이징 바 -->
-    <nav aria-label="...">
-      <ul class="pagination pagination-sm">
-        <c:forEach begin="1" end="${totalPages}" var="pageNumber">
-          <li class="page-item ${page == pageNumber ? 'active' : ''}">
-            <a
-              class="page-link"
-              href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
-            >
-              <span class="page-number">${pageNumber}</span>
-            </a>
-          </li>
-        </c:forEach>
-      </ul>
-    </nav>
-
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     <!-- 교환/반품/배송 -->
-    <div class="util-div">
-      <ul class="product-utility">
+    <div class="util-div" id="product-notice-box">
+      <ul class="product-utility" >
         <li><a href="#">상품정보</a></li>
-        <li><a href="#">상품후기</a></li>
-        <li><a href="#">교환/반품/배송</a></li>
+        <li><a href="#product-review-box">상품후기</a></li>
+        <li><a href="#product-notice-box">교환/반품/배송</a></li>
         <li><a href="#">1:1문의</a></li>
       </ul>
     </div>
