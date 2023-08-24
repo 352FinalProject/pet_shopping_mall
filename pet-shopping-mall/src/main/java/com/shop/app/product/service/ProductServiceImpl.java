@@ -119,4 +119,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.deleteProductDetail(productDetailId);
 	}
 
+	@Override
+	public List<Product> findProduct() {
+		return productRepository.findProduct();
+	}
+
 }

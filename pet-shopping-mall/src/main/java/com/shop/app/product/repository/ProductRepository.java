@@ -91,5 +91,8 @@ public interface ProductRepository {
 	@Update("update product set image_id = #{imageId} where product_id = #{productId}")
 	int updateImageIdByProductId(int productId, int imageId);
 
+	@Select("select * from product")
+	List<Product> findProduct();
+
 
 }

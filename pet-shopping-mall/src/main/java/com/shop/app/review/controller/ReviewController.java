@@ -36,6 +36,7 @@ import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.product.entity.Product;
+import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.dto.ReviewUpdateDto;
@@ -62,6 +63,9 @@ public class ReviewController {
 	
 	@Autowired
 	private PetService petService;
+	
+	@Autowired
+	private ProductService productService;
 
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
 	@GetMapping("/reviewList.do")
@@ -106,8 +110,7 @@ public class ReviewController {
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
 			Point point, 
 			Pet pet,
-			Principal principal,
-			Product product)
+			Principal principal)
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
@@ -166,7 +169,15 @@ public class ReviewController {
 
 		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 		
-		int productId = _review.getProductId();
+		// 상품 - 리뷰 연결
+		// Product 객체 생성
+		Product product = new Product();
+		
+		List<Product> findProduct = productService.findProduct();
+		
+		log.debug("findProduct = {}", findProduct);
+		
+		// int productId = _review.getProductId();
 		
 		
 		int reviewId = reviewService.insertReview(reviews);
