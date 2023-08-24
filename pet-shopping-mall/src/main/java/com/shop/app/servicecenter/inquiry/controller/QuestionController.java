@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberRole;
 import com.shop.app.member.entity.Subscribe;
@@ -108,7 +108,7 @@ public class QuestionController {
 					throws IllegalStateException, IOException {
 		
 		// 1. 파일 저장
-		List<imageAttachment> attachments = new ArrayList<>();
+		List<ImageAttachment> attachments = new ArrayList<>();
 		for(MultipartFile upFile : upFiles) {			
 		    if(!upFile.isEmpty()) {
 		        String imageOriginalFilename = upFile.getOriginalFilename();
@@ -118,8 +118,8 @@ public class QuestionController {
 
 		        int imageType = 1; 
 
-		        imageAttachment attach = 
-		            imageAttachment.builder()
+		        ImageAttachment attach = 
+		            ImageAttachment.builder()
 		            .imageOriginalFilename(imageOriginalFilename)
 		            .imageRenamedFilename(imageRenamedFilename)
 		            .imageType(imageType)

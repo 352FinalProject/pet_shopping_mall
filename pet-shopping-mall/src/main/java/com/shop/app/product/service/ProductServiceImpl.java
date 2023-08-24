@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -44,9 +44,9 @@ public class ProductServiceImpl implements ProductService {
 		int productId = refId;
 		
 		// 첨부이미지 저장
-		List<imageAttachment> attachments = productImages.getAttachments();
+		List<ImageAttachment> attachments = productImages.getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
-			for(imageAttachment attach : attachments) {
+			for(ImageAttachment attach : attachments) {
 				
 				// 1. 이미지 파일 저장
 				int result2 = productRepository.insertAttachment(attach);
