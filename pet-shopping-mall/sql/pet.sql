@@ -161,8 +161,7 @@ create table question(
     question_email varchar2(200),
     question_title varchar2(500) not null,
     question_content varchar2(4000) not null,
-    question_created_at timestamp default systimestamp,
-    review_id number,
+    question_created_at timestamp default systimestamp
     constraints pk_question_id primary key(question_id),
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
