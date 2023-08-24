@@ -1,6 +1,8 @@
 package com.shop.app.order.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
@@ -13,6 +15,8 @@ import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.order.repository.OrderRepository;
+import com.shop.app.payment.entity.Payment;
+import com.shop.app.payment.repository.PaymentRepository;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
+	
 	
 	@Autowired
 	private OrderRepository orderRepository;
@@ -109,7 +117,11 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderHistoryDto getOrderDetail(String orderNo) {
-		return orderRepository.getOrderDetail(orderNo);
+	public Map<OrderHistoryDto, Payment> getOrderDetail(String orderNo) {
+		Map<OrderHistoryDto, Payment> orderDetailMap = new HashMap<>();
+		OrderHistoryDto history = orderRepository.getOrderDetail(orderNo);
+		Payment payment = paymentRepository.getPaymentInfo(history.getOrderId());
+		orderDetailMap.put(history, payment);
+		return orderDetailMap;
 	}
 }
