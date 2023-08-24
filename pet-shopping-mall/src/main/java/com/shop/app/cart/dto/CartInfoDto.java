@@ -1,6 +1,11 @@
 package com.shop.app.cart.dto;
 
 
+import java.util.List;
+
+import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.ImageAttachmentMapping;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +26,6 @@ public class CartInfoDto{
 	private int additionalPrice; // product.getProductPrice +  productDetail.additionalPrice
 	private int quantity; // cartitemId
 	
+	private String imageOriginalFileName; // 이미지 파일 불러오기
+	private String imageRenamedFileName;
 }
