@@ -1,6 +1,7 @@
 package com.shop.app.product.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
@@ -53,8 +54,8 @@ public interface ProductService {
 	// 수경
 	List<Product> findProductsByCategoryId(int categoryId);
 	
-	// 찜 수 증가 (선모)
-	int updateLikeCnt(int productId);
+	// 찜 수 증감 (선모)
+	int updateLikeCnt(Map<String, Object> param);
 
 
 }

@@ -320,32 +320,34 @@ ques.forEach(que => {
 	});
 	
 	$("#clickHeart").on("click", function() {
-		if(!$(this).hasClass("pink")) {
-			$.ajax({
-				type: "POST",
-				url: "${pageContext.request.contextPath}/product/insertPick.do",
-				dataType: "JSON",
-				async: true,
-				contentType:'application/json',
-				data: JSON.stringify({
-					"productId": ${product.productId}
-				}),
-				success: function(result) {
-					if(result.rs == "success") {
-						$("#clickHeart").addClass("pink");
-						$("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-					}
-					
-					alert(result.msg);
-				},
-				error: function(req, status, error) {
-					alert("에러가 발생하였습니다.");
-					console.log(req.responseText);
+		var state = $(this).hasClass("pink") ? "delete" : "insert";
+		
+		$.ajax({
+			type: "POST",
+			url: "${pageContext.request.contextPath}/product/insertPick.do",
+			dataType: "JSON",
+			async: true,
+			contentType:'application/json',
+			data: JSON.stringify({
+				"productId": ${product.productId},
+				"state": state
+			}),
+			success: function(result) {
+				if(result.rs == "insertS") {
+					$("#clickHeart").addClass("pink");
+					$("#likeCnt").text(Number($("#likeCnt").text()) + 1);
+				} else if(result.rs == "deleteS") {
+					$("#clickHeart").removeClass("pink");
+					$("#likeCnt").text(Number($("#likeCnt").text()) - 1);
 				}
-			});	
-		} else {
-			alert("이미 찜 한 상품입니다.");
-		}
+				
+				alert(result.msg);
+			},
+			error: function(req, status, error) {
+				alert("에러가 발생하였습니다.");
+				console.log(req.responseText);
+			}
+		});	
 	});
 </script>
 

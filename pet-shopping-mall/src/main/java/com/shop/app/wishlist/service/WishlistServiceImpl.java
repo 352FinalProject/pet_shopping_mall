@@ -31,11 +31,16 @@ public class WishlistServiceImpl implements WishlistService {
 	public int insertPick(int productId, String memberId) {
 		return wishlistRepository.insertPick(productId, memberId);
 	}
+	
+	// 찜 제거 (선모)
+	@Override
+	public int deletePick(int productId, String memberId) {
+		return wishlistRepository.deletePick(productId, memberId);
+	}
 
 	// 내 찜 목록 가져오기 (선모)
 	@Override
 	public List<Map<String, Object>> getMyWishList(String memberId) {
 		return wishlistRepository.getMyWishList(memberId);
-	}
-	
+	}	
 }

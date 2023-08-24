@@ -240,16 +240,34 @@ public class ProductController {
 	@PostMapping("/insertPick.do")
 	public Map insertPick(@Valid @RequestBody Map<String, Object> param, @AuthenticationPrincipal MemberDetails member) {
 		Map<String, Object> resultMap = new HashMap<>();
-		resultMap.put("rs", "success");
-		resultMap.put("msg", "찜 등록에 실패하였습니다.");
+		String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제";
 		String getProductId = param.get("productId").toString();
-		
 		int productId = getProductId.isEmpty() ? 0 : Integer.parseInt(getProductId);
+		resultMap.put("rs", "fail");
+		resultMap.put("msg", "찜 " + state + "에 실패하였습니다.");
 		
-		if(productId != 0 && wishlistService.insertPick(productId, member.getMemberId()) > 0) {
-			if(productService.updateLikeCnt(productId) > 0) {
-				resultMap.put("rs", "success");
-				resultMap.put("msg", "찜 등록하였습니다.");
+		if(productId != 0) {
+			// 데이터 Setting
+			param.put("productId", productId);
+			
+			if("insert".equals(param.get("state").toString())) {
+				param.put("cnt", 1);
+				
+				if(wishlistService.insertPick(productId, member.getMemberId()) > 0) {
+					if(productService.updateLikeCnt(param) > 0) {
+						resultMap.put("rs", "insertS");
+						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+					}
+				}
+			} else if("delete".equals(param.get("state").toString())) {
+				param.put("cnt", -1);
+				
+				if(wishlistService.deletePick(productId, member.getMemberId()) > 0) {
+					if(productService.updateLikeCnt(param) > 0) {
+						resultMap.put("rs", "deleteS");
+						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+					}
+				}
 			}
 		}
 		

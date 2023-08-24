@@ -24,6 +24,10 @@ public interface WishlistRepository {
 			)
 	int insertPick(int productId, String memberId);
 	
+	// 찜 제거 (선모)
+	@Insert("DELETE FROM wishlist WHERE WISHLIST_MEMBER_ID = #{memberId} AND WISHLIST_PRODUCT_ID = #{productId}")
+	int deletePick(int productId, String memberId);
+	
 	// 내 찜 목록 가져오기 (선모)
 	@Select("SELECT *"
 			+ "  FROM wishlist wl"
