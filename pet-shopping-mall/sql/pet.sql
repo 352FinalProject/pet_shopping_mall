@@ -471,6 +471,3 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
---select * from member;
---delete from member where email='hulk1512@naver.com'
---commit;

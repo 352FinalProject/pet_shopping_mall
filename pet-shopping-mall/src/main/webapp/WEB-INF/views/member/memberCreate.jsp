@@ -429,17 +429,21 @@ function sample4_execDaumPostcode() {
                 document.getElementById("extraAddress").value = '';
             }
             document.getElementById('roadAddress').value = roadAddr;
-            
+           
+            var fullAddress = roadAddr + " " + jibunAddress + " " + detailAddress;
+            document.getElementById("address").value = fullAddress;
+            console.log(fullAddress);
         }
     }).open();
 };
 
-document.querySelector("#memberCreateFrm").on("submit", function() {
+document.querySelector("#memberCreateFrm").on("submit", function(e) {
+	e.preventDefault;
     const roadAddress = document.getElementById("roadAddress").value;
     const jibunAddress = document.getElementById("jibunAddress").value;
     
     const address = document.memberCreateFrm.address;
-    address.value = roadAddress + ' ' + jibunAddress + detailAddress;  
+    address.value = roadAddress + ' ' + jibunAddress;  
 });
 
 </script>
