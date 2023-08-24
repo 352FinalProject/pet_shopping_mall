@@ -6,7 +6,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
     <section class="common-section" id="#">
         <div class="common-title">마이페이지</div>
         <br>

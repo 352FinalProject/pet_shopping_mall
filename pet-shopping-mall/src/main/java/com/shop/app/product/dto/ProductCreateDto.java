@@ -20,10 +20,6 @@ public class ProductCreateDto {
 	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
 	private List<ProductDetail> productDetail;
-//	private String optionName;
-//	private String optionValue;
-//	private int additionalPrice;
-//	private int saleState;
 	
 	public Product toProduct() {
 		return Product.builder()
@@ -32,13 +28,5 @@ public class ProductCreateDto {
 				.productPrice(productPrice)
 				.build();
 	}
-	
-//	public ProductDetail toproductDetail() {
-//		return ProductDetail.builder()
-//				.optionName(optionName)
-//				.optionValue(optionValue)
-//				.additionalPrice(additionalPrice)
-//				.saleState(saleState)
-//				.build();
-//	}
+
 }

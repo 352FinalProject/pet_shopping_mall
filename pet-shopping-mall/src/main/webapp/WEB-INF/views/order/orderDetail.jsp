@@ -6,9 +6,13 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 <style>
 #order-table {
 	width: 100%;
+}
+#info-message {
+	font-size: 20px;
 }
 </style>
 <section class="common-section" id="#">
@@ -28,15 +32,16 @@
 						</thead>
 						<tbody>
 						<c:if test="${not empty orderDetail}">
+							<c:forEach var="entry" items="${orderDetail}">
 							<sec:authentication property="principal" var="loginMember" />
-							<c:set var="index" value="${orderDetail.orderStatus}"/>
-							<c:set var="option" value="${orderDetail.optionName}" />
-							<c:set var="amount" value="${orderDetail.amount}" />
-							<fmt:formatDate value="${orderDetail.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
+							<c:set var="index" value="${entry.key.orderStatus}"/>
+							<c:set var="option" value="${entry.key.optionName}" />
+							<c:set var="amount" value="${entry.key.amount}" />
+							<fmt:formatDate value="${entry.key.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
 							<tr>
 								<td>${formattedDate}</td>
 								<td>
-									<p>${orderDetail.orderNo}</p>
+									<p>${entry.key.orderNo}</p>
 								</td>
 								<td><a
 									href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
@@ -45,24 +50,25 @@
 												src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg"
 												alt="">
 											<div>
-												<p>${orderDetail.productName}</p>
+												<p>${entry.key.productName}</p>
 												<br />
 											<c:if test="${option eq null}">
 												<p>선택된 옵션이 없습니다.</p>
 											</c:if>
 											<c:if test="${option ne null}">
-												<p>${order.optionName} : ${order.optionValue}</p>
+												<p>${entry.key.optionName} : ${entry.key.optionValue}</p>
 											</c:if>
-												<p>수량: ${orderDetail.quantity}개</p>
+												<p>수량: ${entry.key.quantity}개</p>
 											</div>
 										</div>
 								</a></td>
 								<td><span id="total-price"><fmt:formatNumber
-											value="${orderDetail.amount}" groupingUsed="true" />원</span></td>
+											value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 								<td>
 									<p>${status[index]}</p>
 								</td>
 							</tr>
+							</c:forEach>
 						</c:if>
 						</tbody>
 					</table>
@@ -92,6 +98,7 @@
 							[<span id="zip-code">818181</span>]<span id="address">${loginMember.address}</span>
 						</p>
 					</div>
+					<c:if test="${not empty payment}">
 					<div>
 						<p class="order-info-title">주문결제정보</p>
 						<div class="payment-info2">
@@ -173,6 +180,11 @@
 					</div>
 				</div>
 			</div>
+			</c:if>
+			<c:if test="${null eq payment}">
+			<div id="info-message">아직 결제된 상품이 아닙니다. 결제를 진행해주세요.</div>
+			<button class="btn">결제하러가기</button>
+			</c:if>
 		</div>
 	</div>
 </section>
