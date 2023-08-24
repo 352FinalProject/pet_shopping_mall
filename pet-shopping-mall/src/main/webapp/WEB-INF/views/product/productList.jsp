@@ -160,7 +160,7 @@ ul.nav {
 			<ul class="gallery">
 			<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
 				<div class="product-card">
-					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}&reviewId=null">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
 					</figure>
