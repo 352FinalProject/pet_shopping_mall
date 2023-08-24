@@ -99,7 +99,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 				maxTicksLimit: 5
 				},
 				gridLines: {
-				color: "rgba(2,117,216,1)",
+				color: "rgba(200, 200, 200, 0.5)",
 				}
 			}],
 			},
@@ -125,7 +125,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 				pointBackgroundColor: "rgba(139, 0, 0, 0.8)",
 				pointBorderColor: "rgba(255, 0, 0, 0.2)",
 				pointHoverRadius: 5,
-				pointHoverBackgroundColor: "rgba(2,117,216,1)",
+				pointHoverBackgroundColor: "rgba(139, 0, 0, 0.8)",
 				pointHitRadius: 50,
 				pointBorderWidth: 2,
 	        }]
@@ -149,7 +149,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 				maxTicksLimit: 5
 				},
 				gridLines: {
-				color: "rgba(139, 0, 0, 0.8)",
+				color: "rgba(200, 200, 200, 0.5)",
 				}
 			}],
 			},

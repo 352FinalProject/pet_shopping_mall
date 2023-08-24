@@ -516,6 +516,10 @@ select * from orderTbl;
 select * from order_detail;
 select * from payment;
 
+UPDATE orderTbl
+SET order_date = TO_TIMESTAMP('2023-08-19 00:00:00', 'YYYY-MM-DD HH24:MI:SS')
+WHERE order_id = ;
+
 ------------------------
 insert into order_detail (order_id, product_detail_id, quantity) values (31,7,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (32,7,default);
@@ -696,4 +700,31 @@ GROUP BY
     p.product_id, p.product_name, p.category_id, pc.category_name, p.product_price
 ORDER BY
     total_price DESC;
+
+SELECT
+    TO_CHAR(order_date, 'YYYY-MM-DD') AS order_daily,
+    SUM(total_price) AS daily_total_sales
+FROM
+    orderTbl
+WHERE
+    payment_status = 1
+GROUP BY
+    TO_CHAR(order_date, 'YYYY-MM-DD')
+ORDER BY
+    TO_CHAR(order_date, 'YYYY-MM-DD');
+    
+SELECT
+    TO_CHAR(order_date, 'YYYY-MM') AS order_month,
+    SUM(total_price) AS monthly_total_sales
+FROM
+    orderTbl
+WHERE
+    payment_status = 1
+GROUP BY
+    TO_CHAR(order_date, 'YYYY-MM')
+ORDER BY
+    TO_CHAR(order_date, 'YYYY-MM');
+--------------------------------------------------------------------- 통계조회쿼리 끝
+
+
 
