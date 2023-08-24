@@ -7,7 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.review.entity.Review;
@@ -39,9 +39,9 @@ public class ReviewServiceImpl implements ReviewService {
 		System.out.println("review refId = " + refId);
 		
 		// attachment 저장
-		List<imageAttachment> attachments = ((ReviewDetails) review).getAttachments();
+		List<ImageAttachment> attachments = ((ReviewDetails) review).getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
-			for(imageAttachment attach : attachments) {
+			for(ImageAttachment attach : attachments) {
 				
 				// 1. 이미지 파일 DB에 저장
 				int result2 = reviewRepository.insertAttachment(attach);

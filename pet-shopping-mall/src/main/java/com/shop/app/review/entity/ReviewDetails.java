@@ -2,8 +2,8 @@ package com.shop.app.review.entity;
 
 import java.util.List;
 
-import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.common.entity.imageAttachmentMapping;
+import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.ImageAttachmentMapping;
 import com.shop.app.pet.entity.PetGender;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
@@ -27,8 +27,8 @@ public class ReviewDetails extends Review {
 	
 //	private int petId;
 	
-	private List<imageAttachment> attachments;
-	private List<imageAttachmentMapping> attachmentMapping;
+	private List<ImageAttachment> attachments;
+	private List<ImageAttachmentMapping> attachmentMapping;
 	
 	private String petName;
 	private PetGender petGender;

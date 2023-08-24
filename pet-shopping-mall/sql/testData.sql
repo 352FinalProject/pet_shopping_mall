@@ -667,8 +667,25 @@ SELECT
 
 
 
+select * from image_attachment;
 
-
+select 
+	ci.cartitem_id,
+    p.product_id,
+    ci.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+    ci.quantity,
+    ia.image_original_filename,
+    ia.image_renamed_filename
+from 
+    product p left join product_detail pd on p.product_id = pd.product_id
+    left join cartitem ci on pd.product_detail_id = ci.product_detail_id
+    left join 
+	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
 
 
 

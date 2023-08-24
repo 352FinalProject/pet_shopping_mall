@@ -52,7 +52,7 @@
 									href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
 										<div class="flex">
 											<img
-												src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg"
+												src="${pageContext.request.contextPath }/resources/upload/product/"
 												alt="">
 											<div>
 												<p>${order.productName}</p>
