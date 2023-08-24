@@ -13,32 +13,30 @@
 					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
 			</ol>
 			<div class="card mb-4">
-				<div class="card-body">
-					김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원</div>
+				<div class="admin-product-search-container">
+					<form method="GET" class="admin-product-search">
+						<label for="searchKeyword">검색어:</label> <select
+							name="searchCategory">
+							<option value="productName">상품명</option>
+							<option value="productCode">상품코드</option>
+						</select> <input type="text" id="searchKeyword" name="searchKeyword"
+							placeholder="상품명 또는 상품코드"><br> <label for="minStock">재고검색:</label>
+						<input type="number" id="minStock" name="minStock"> ~ <label
+							for="maxStock"></label> <input type="number" id="maxStock"
+							name="maxStock"><br> <label>판매 여부:</label> <input
+							type="radio" id="saleStatusAll" name="saleStatus" value="all">
+						<label for="saleStatusAll">전체</label> <input type="radio"
+							id="saleStatusSoldOut" name="saleStatus" value="soldOut">
+						<label for="saleStatusSoldOut">품절</label> <input type="radio"
+							id="saleStatusDiscontinued" name="saleStatus" value="discontinued">
+						<label for="saleStatusDiscontinued">단종</label> <input type="radio"
+							id="saleStatusPaused" name="saleStatus" value="paused"> <label
+							for="saleStatusPaused">중지</label><br>
+						<button type="submit">검색</button>
+					</form>
+				</div>
 			</div>
 
-			<div class="admin-product-search-container">
-				<form method="GET" class="admin-product-search">
-					<label for="searchKeyword">검색어:</label> <select
-						name="searchCategory">
-						<option value="productName">상품명</option>
-						<option value="productCode">상품코드</option>
-					</select> <input type="text" id="searchKeyword" name="searchKeyword"
-						placeholder="상품명 또는 상품코드"><br> <label for="minStock">재고검색:</label>
-					<input type="number" id="minStock" name="minStock"> ~ <label
-						for="maxStock"></label> <input type="number" id="maxStock"
-						name="maxStock"><br> <label>판매 여부:</label> <input
-						type="radio" id="saleStatusAll" name="saleStatus" value="all">
-					<label for="saleStatusAll">전체</label> <input type="radio"
-						id="saleStatusSoldOut" name="saleStatus" value="soldOut">
-					<label for="saleStatusSoldOut">품절</label> <input type="radio"
-						id="saleStatusDiscontinued" name="saleStatus" value="discontinued">
-					<label for="saleStatusDiscontinued">단종</label> <input type="radio"
-						id="saleStatusPaused" name="saleStatus" value="paused"> <label
-						for="saleStatusPaused">중지</label><br>
-					<button type="submit">검색</button>
-				</form>
-			</div>
 
 			<div class="card mb-4">
 				<div class="card-header">
@@ -53,11 +51,9 @@
 							<th>상품명</th>
 							<th>카테고리</th>
 							<th>상품가격</th>
-							<th>옵션명</th>
-							<th>옵션값</th>
+							<th>옵션</th>
 							<th>옵션추가금</th>
 							<th>판매상태</th>
-							<th>관리</th>
 						</thead>
 						<tbody>
 
@@ -81,16 +77,24 @@
 											</c:if>
 										</td>
 										<td>
-										<a href="${pageContext.request.contextPath}/admin/adminProductUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
+											<a href="${pageContext.request.contextPath}/admin/adminProductUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
 										</td>
 										<td>${productInfo.productCategory.categoryName}</td>
 										<td>${productInfo.product.productPrice}</td>
-										<td>${productInfo.optionName}</td>
-										<td>${productInfo.optionValue}</td>
-										<td>${productInfo.additionalPrice}</td>
-										<td>${productInfo.saleState}</td>
 										<td>
-											<button onclick="deleteProduct();">삭제</button> 
+											<c:if test="${empty productInfo.optionName || ''}">
+												옵션없음
+											</c:if>
+											<c:if test="${not empty productInfo.optionName}">
+												${productInfo.optionName} - ${productInfo.optionValue}
+											</c:if>
+										</td>
+										<td>${productInfo.additionalPrice}</td>
+										<td>
+											<c:if test="${productInfo.saleState eq 0}">판매대기</c:if>
+											<c:if test="${productInfo.saleState eq 1}">판매중</c:if>
+											<c:if test="${productInfo.saleState eq 2}">품절</c:if>
+											<c:if test="${productInfo.saleState eq 3}">기타</c:if>										
 										</td>
 									</tr>
 								</c:forEach>

@@ -2,6 +2,7 @@ package com.shop.app.product.controller;
 
 import java.lang.reflect.Member;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,11 @@ import com.shop.app.member.service.MemberService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
+import com.shop.app.product.entity.ProductCategory;
+import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
@@ -136,7 +141,7 @@ public class ProductController {
 
 	@GetMapping("/productDetail.do")
 
-	public void productDetail(@RequestParam int reviewId,
+	public void productDetail(@RequestParam int productId,
 	                          @RequestParam(defaultValue = "1") int page,
 	                          Model model) {
 
@@ -150,6 +155,19 @@ public class ProductController {
 	    List<Review> reviews = reviewService.findProductReviewAll(params);
 	    model.addAttribute("reviews", reviews);
 
+	    // 상품 아이디로 정보 가져오기
+	    Product product = productService.findProductById(productId);
+	    List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
+	    ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
+	    log.debug("productDetails = {}", productDetails);
+	    log.debug("productImages = {}", productImages);
+	    
+	    // 상품정보 담아주기
+	    model.addAttribute("product", product); // 상품정보
+	    model.addAttribute("productImages", productImages); // 상품이미지
+	    model.addAttribute("productDetails", productDetails); // 상품옵션
+	    
+	    
 	    // 상품 상세 페이지에 펫 정보 뿌려주기
 	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 
@@ -181,7 +199,32 @@ public class ProductController {
 
 
 	@GetMapping("/productList.do")
-	public void productList() {
+	public void productList(
+			@RequestParam int id,
+			Model model
+			) {
+		log.debug("categoryId = {}", id);
+		// 카테고리 정보 가져오기
+		ProductCategory productCategory = productService.findProductCategoryById(id); 
+		log.debug("productCategory = {}", productCategory);
+		
+		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
+		
+		// 해당 카테고리의 상품 가져오기
+		List<Product> products = productService.findProductsByCategoryId(id);
+		
+		for(Product product : products) {
+			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+			
+			productInfos.add(ProductInfoDto.builder()
+					.product(product)
+					.attachments(productImages.getAttachments())
+					.attachmentMapping(productImages.getAttachmentMapping())
+					.build());
+		}
+		
+		model.addAttribute("productCategory", productCategory);
+		model.addAttribute("productInfos", productInfos);
 
 	}
 

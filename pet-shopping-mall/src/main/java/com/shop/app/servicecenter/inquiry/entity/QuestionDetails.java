@@ -2,8 +2,8 @@ package com.shop.app.servicecenter.inquiry.entity;
 
 import java.util.List;
 
-import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.common.entity.imageAttachmentMapping;
+import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.ImageAttachmentMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder 
 public class QuestionDetails extends Question{
 
-	private List<imageAttachment> attachments;
-	private List<imageAttachmentMapping> attachmentMapping;
+	private List<ImageAttachment> attachments;
+	private List<ImageAttachmentMapping> attachmentMapping;
 	
 }

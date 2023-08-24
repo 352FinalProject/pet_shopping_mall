@@ -205,12 +205,11 @@ public class PaymentController {
 	}
 	
 	
-	
 	@GetMapping("/paymentCompleted.do")
-	public void paymentCompleted() {}
-	
-	
-	
+	public void paymentCompleted(@RequestParam String orderNo, Model model) {
+		Order order = orderService.findOrderByOrderNo(orderNo);
+		model.addAttribute("order", order);
+	}
 	
 	
 	/*

@@ -32,42 +32,42 @@
 						</thead>
 						<tbody>
 						<c:if test="${not empty orderDetail}">
-							<c:forEach var="entry" items="${orderDetail}">
 							<sec:authentication property="principal" var="loginMember" />
-							<c:set var="index" value="${entry.key.orderStatus}"/>
-							<c:set var="option" value="${entry.key.optionName}" />
-							<c:set var="amount" value="${entry.key.amount}" />
-							<fmt:formatDate value="${entry.key.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
-							<tr>
-								<td>${formattedDate}</td>
-								<td>
-									<p>${entry.key.orderNo}</p>
-								</td>
-								<td><a
-									href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
-										<div class="flex">
-											<img
-												src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg"
-												alt="">
-											<div>
-												<p>${entry.key.productName}</p>
-												<br />
-											<c:if test="${option eq null}">
-												<p>선택된 옵션이 없습니다.</p>
-											</c:if>
-											<c:if test="${option ne null}">
-												<p>${entry.key.optionName} : ${entry.key.optionValue}</p>
-											</c:if>
-												<p>수량: ${entry.key.quantity}개</p>
+							<c:forEach var="orderMap" items="${orderDetail}">
+								<c:forEach var="entry" items="${orderMap}">
+								<c:set var="index" value="${entry.key.orderStatus}"/>
+								<c:set var="option" value="${entry.key.optionName}" />
+								<c:set var="amount" value="${entry.key.amount}" />
+								<fmt:formatDate value="${entry.key.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
+								<tr>
+									<td>${formattedDate}</td>
+									<td>
+										<p>${entry.key.orderNo}</p>
+									</td>
+									<td><a
+										href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
+											<div class="flex">
+												<img src="${pageContext.request.contextPath}/resources/upload/product/${entry.key.imageRenamedFileName}" width="110px">
+												<div>
+													<p>${entry.key.productName}</p>
+													<br />
+												<c:if test="${option eq null}">
+													<p>선택된 옵션이 없습니다.</p>
+												</c:if>
+												<c:if test="${option ne null}">
+													<p>${entry.key.optionName} : ${entry.key.optionValue}</p>
+												</c:if>
+													<p>수량: ${entry.key.quantity}개</p>
+												</div>
 											</div>
-										</div>
-								</a></td>
-								<td><span id="total-price"><fmt:formatNumber
-											value="${entry.key.amount}" groupingUsed="true" />원</span></td>
-								<td>
-									<p>${status[index]}</p>
-								</td>
-							</tr>
+									</a></td>
+									<td><span id="total-price"><fmt:formatNumber
+												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
+									<td>
+										<p>${status[index]}</p>
+									</td>
+								</tr>
+								</c:forEach>
 							</c:forEach>
 						</c:if>
 						</tbody>
@@ -77,6 +77,7 @@
 			</c:if>
 			</div>
 			<div class="payment-div">
+				<c:if test="${not empty payment}" >
 				<div class="payment-left">
 					<sec:authentication property="principal" var="loginMember" />
 					<c:set var="amount" value="0" />
@@ -98,7 +99,6 @@
 							[<span id="zip-code">818181</span>]<span id="address">${loginMember.address}</span>
 						</p>
 					</div>
-					<c:if test="${not empty payment}">
 					<div>
 						<p class="order-info-title">주문결제정보</p>
 						<div class="payment-info2">
@@ -180,10 +180,6 @@
 					</div>
 				</div>
 			</div>
-			</c:if>
-			<c:if test="${null eq payment}">
-			<div id="info-message">아직 결제된 상품이 아닙니다. 결제를 진행해주세요.</div>
-			<button class="btn">결제하러가기</button>
 			</c:if>
 		</div>
 	</div>

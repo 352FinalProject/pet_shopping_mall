@@ -21,7 +21,7 @@
 		                	<c:forEach items="${cartList}" var="product" varStatus="vs">
 		                	<fmt:formatNumber value='${(product.productPrice + product.additionalPrice) * product.quantity}' pattern="0,000" var="formattedPrice" />
 		                	<div class="cart-product-info">
-		                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
+		                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}" width="110px"></div>
 		                		<div>
 		                			<div>
 		                				<input type="checkbox" class="checkbox" name="productName" value="${formattedPrice}">
@@ -104,7 +104,7 @@
 		    	<div>
 		    		옵션변경
 		    	    <select id="modal-option" onchange="updateProduct(this);">
-		    	    	<option>옵션을 선택해주세요</option>
+		    	    	<option value="">옵션을 선택해주세요</option>
 		    		</select>
 		    	</div>
 		    	<form:form id="updateFrm">

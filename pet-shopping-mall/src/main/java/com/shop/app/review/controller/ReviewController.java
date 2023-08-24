@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
+
+import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.service.OrderService;
+
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
@@ -54,10 +60,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/review")
 public class ReviewController {
-	
-	@Autowired
-	private ServletContext application;
-	
 
 	@Autowired
 	private ReviewService reviewService;
@@ -70,11 +72,19 @@ public class ReviewController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private ServletContext application;
 
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
 	@GetMapping("/reviewList.do")
 	public void reviewList(
 			@RequestParam(defaultValue = "1") int page,
+			@AuthenticationPrincipal MemberDetails member,
+			@RequestParam(name = "period", required = false) Integer period,
 			Model model) {
 
 		int limit = 5;
@@ -93,10 +103,24 @@ public class ReviewController {
 		model.addAttribute("totalPages", totalPages);
 
 		List<Review> reviews = reviewService.findReviewAll(params);
-
 		model.addAttribute("reviews", reviews);
-		
 		log.debug("reviews = {}", reviews);
+		
+		// 구매한 상품과 연결
+		String memberId = member.getMemberId();
+		List<OrderHistoryDto> orderHistories;
+		
+		if (period != null) {
+			orderHistories = orderService.getOrderListByPeriod(memberId, period);
+		} else {
+			orderHistories = orderService.getOrderList(memberId);
+		}
+			
+		log.debug("orderHistories = {}", orderHistories);
+		model.addAttribute("orderHistories", orderHistories);
+		
+		
+		
 	}
 
 
@@ -118,24 +142,25 @@ public class ReviewController {
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
-		List<imageAttachment> attachments = new ArrayList<>();
+		List<ImageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
-		
-		
+
+		// 이미지 상대경로 지정
 		String saveDirectory = application.getRealPath("/resources/upload/review");
-		// 예제 File destFile = new File(saveDirectory, renamedFilename);
 		
 		for(MultipartFile upFile : upFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
+//				File destFile = new File(imageRenamedFilename);
 				File destFile = new File(saveDirectory, imageRenamedFilename);
+				
 				upFile.transferTo(destFile);
 
 				int imageType = 1;
 
-				imageAttachment attach =
-						imageAttachment.builder()
+				ImageAttachment attach =
+						ImageAttachment.builder()
 						.imageOriginalFilename(imageOriginalFilename)
 						.imageRenamedFilename(imageRenamedFilename)
 						.imageType(imageType)
@@ -180,10 +205,12 @@ public class ReviewController {
 		// 상품 - 리뷰 연결
 		// Product 객체 생성
 		Product product = new Product();
+		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
+		log.debug("findProduct = {}", findProduct); 
 		
-		List<Product> findProduct = productService.findProduct();
-		
-		log.debug("findProduct = {}", findProduct);
+		for(Product p : findProduct) {
+			product.setProductId(p.getProductId());
+		}
 		
 		// int productId = _review.getProductId();
 		

@@ -22,14 +22,14 @@ pageEncoding="UTF-8"%>
     <div class="product-div">
       <div class="product-img">
         <img
-          src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg"
+          src="${pageContext.request.contextPath}/resources/upload/product/${productImages.attachments[0].imageRenamedFilename}"
           width="400px"
         />
       </div>
       <div class="product-info">
-        <div id="product-title">이탈리아에서 찍은 어떤 고양이 귀엽죠</div>
+        <div id="product-title">${product.productName}</div>
         <div class="product-assist">
-          <div id="price-info">11,000원</div>
+          <div id="price-info"><fmt:formatNumber value="${product.productPrice}" pattern="#,###" />원</div>
           <div class="product-assist">
             <img
               src="${pageContext.request.contextPath}/resources/images/상품/star.png"
@@ -75,7 +75,7 @@ pageEncoding="UTF-8"%>
         </div>
         <div class="product-price">
           <div class="product-price-desc">
-            총 상품 금액 <span>11,000</span>원
+            총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
           </div>
         </div>
       </div>
@@ -240,7 +240,7 @@ pageEncoding="UTF-8"%>
   <div class="product-bottom">
     <div class="product-bottom2">
       <div>
-        <span id="product-bottom-title">제품명 나오는 곳</span> <br />
+        <span id="product-bottom-title">${product.productName}</span> <br />
         <span>11,000원</span>
       </div>
       <div class="heart-img">
