@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/product")
 @Controller
 public class ProductController {
-
 	@Autowired
 	private ProductService productService;
 
