@@ -70,9 +70,9 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 	            data: monthlyTotalSales,  // Use the correct variable name here
 	            lineTension: 0.3,
 				backgroundColor: "rgba(2,117,216,0.2)",
-				borderColor: "rgba(2,117,216,1)",
+				borderColor: "rgba(135, 206, 235, 0.8)",
 				pointRadius: 5,
-				pointBackgroundColor: "rgba(2,117,216,1)",
+				pointBackgroundColor: "rgba(144, 238, 144, 0.8)",
 				pointBorderColor: "rgba(255,255,255,0.8)",
 				pointHoverRadius: 5,
 				pointHoverBackgroundColor: "rgba(2,117,216,1)",
@@ -81,24 +81,30 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 	        }]
 	    },
 	    options: {
-	        scales: {//x,y축 설정
-				yAxes: [{
-					ticks: {
-						stepSize: 2, //y축 간격
-						suggestedMin: 0,//y축 최소 값
-					},
-					gridLines: {//y축 라인 스타일 설정
-						borderDash: [2, 2],
-						borderDashOffset: 0.2
-					}
-				}],
-				xAxes: [{//x축 설정
-					categoryPercentage: 1,
-                	barPercentage: 0.5, 
-					ticks: {
-						
-					}
-				}]
+			scales: {
+			xAxes: [{
+				time: {
+				unit: 'date'
+				},
+				gridLines: {
+				display: false
+				},
+				ticks: {
+				maxTicksLimit: 12
+				}
+			}],
+			yAxes: [{
+				ticks: {
+				min: 0,
+				maxTicksLimit: 5
+				},
+				gridLines: {
+				color: "rgba(0, 0, 0, .125)",
+				}
+			}],
+			},
+			legend: {
+			display: false
 	   		}
 		}
 	});
@@ -108,36 +114,49 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 	var myBarChart = new Chart(ctx, {
 	    type: 'line',
 	    data: {
-	        labels: labelsPrice,
+	        labels: labelsDaily,
 	        datasets: [{
 	            label: '일별',
-	            data: totalPrice,  // Use the correct variable name here
-	            backgroundColor: 'rgba(135, 206, 235, 0.8)',
-	            borderColor: 'rgba(0, 0, 0, 0.8)',
-	            borderWidth: 2
+	            data: dailyTotalSales,  // Use the correct variable name here
+	            lineTension: 0.3,
+				backgroundColor: "rgba(2,117,216,0.2)",
+				borderColor: "rgba(2,117,216,1)",
+				pointRadius: 5,
+				pointBackgroundColor: "rgba(2,117,216,1)",
+				pointBorderColor: "rgba(135, 206, 235, 0.8)",
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: "rgba(2,117,216,1)",
+				pointHitRadius: 50,
+				pointBorderWidth: 2,
 	        }]
 	    },
 	    options: {
-	        scales: {//x,y축 설정
-				yAxes: [{
-					ticks: {
-						stepSize: 50000, //y축 간격
-						suggestedMin: 0,//y축 최소 값
-					},
-					gridLines: {//y축 라인 스타일 설정
-						borderDash: [2, 2],
-						borderDashOffset: 0.2
-					}
-				}],
-				xAxes: [{//x축 설정
-					categoryPercentage: 1,
-                	barPercentage: 0.5, 
-					ticks: {
-						
-					}
-				}]
+			scales: {
+			xAxes: [{
+				time: {
+				unit: 'date'
+				},
+				gridLines: {
+				display: false
+				},
+				ticks: {
+				maxTicksLimit: 30
+				}
+			}],
+			yAxes: [{
+				ticks: {
+				min: 0,
+				maxTicksLimit: 5
+				},
+				gridLines: {
+				color: "rgba(0, 0, 0, .125)",
+				}
+			}],
+			},
+			legend: {
+			display: false
 	   		}
-	    }
+		}
 	});
 </script>	
 <jsp:include page="/WEB-INF/views/admin/adminFooter.jsp"></jsp:include>
