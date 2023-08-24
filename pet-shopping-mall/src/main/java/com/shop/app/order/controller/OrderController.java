@@ -59,7 +59,7 @@ public class OrderController {
 	    	orderList = orderService.getOrderListByPeriod(memberId, period);
 	    else 
 	    	orderList = orderService.getOrderList(memberId);
-	    
+			
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderList);
 	}
