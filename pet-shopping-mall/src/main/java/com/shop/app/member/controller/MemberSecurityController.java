@@ -149,7 +149,7 @@ public class MemberSecurityController {
 		// 회원 정보 세션 제거 (예라)
 		session.removeAttribute("emailVerified");
 		
-		return "redirect:/memberCreateComplete.do";
+		return "redirect:/member/memberCreateComplete.do";
 	}
 	
 	// 약관 동의 정보를 세션에 임시 저장 (예라)
