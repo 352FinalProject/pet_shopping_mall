@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.ImageService;
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
@@ -106,7 +106,7 @@ public class ReviewController {
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
-		List<imageAttachment> attachments = new ArrayList<>();
+		List<ImageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
 
 		for(MultipartFile upFile : upFiles) {
@@ -118,8 +118,8 @@ public class ReviewController {
 
 				int imageType = 1;
 
-				imageAttachment attach =
-						imageAttachment.builder()
+				ImageAttachment attach =
+						ImageAttachment.builder()
 						.imageOriginalFilename(imageOriginalFilename)
 						.imageRenamedFilename(imageRenamedFilename)
 						.imageType(imageType)

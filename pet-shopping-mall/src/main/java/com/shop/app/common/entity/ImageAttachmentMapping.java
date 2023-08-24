@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class imageAttachmentMapping {
+public class ImageAttachmentMapping {
 	private int mappingId;
 	private String refTable;
 	private int refId;

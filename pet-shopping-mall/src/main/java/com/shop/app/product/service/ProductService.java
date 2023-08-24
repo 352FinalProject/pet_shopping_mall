@@ -20,7 +20,7 @@ public interface ProductService {
 	
 	List<ProductDetail> findAllProductDetails();
 
-	ProductInfoDto findProductById(int productId);
+	Product findProductById(int productId);
 
 	int updateProduct(Product product);
 

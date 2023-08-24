@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
-import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.common.entity.imageAttachmentMapping;
+import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.ImageAttachmentMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
