@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <style>
@@ -73,33 +77,28 @@
 		<div class="check-image">
 			<img
 				src="${pageContext.request.contextPath}/resources/images/회원가입/check.png" />
-			<h1>결제가 완료되었습니다.</h1>
+			<h1>${order.memberId}님 결제가 완료되었습니다.</h1>
 
 		</div>
 		<div class="table-bordered-payment">
 			<table>
 				<tr>
-					<th>주문 상품</th>
-					<td><span class="order-number">${order.productName}리드줄</span></td>
-				</tr>
-				<tr>
 					<th>결제 금액</th>
-					<td><span class="order-number">${order.totalAmount}7,990원</span></td>
+					<td><fmt:formatNumber value='${order.amount}' pattern="0,000" var="formattedAmount" />
+									<p id="point"><span></span>${formattedAmount}원</p></td>
 				</tr>
 				<tr>
 					<th>주문 번호</th>
-					<td><span class="order-number">${order.orderNumber}232-322-22231</span></td>
+					<td><span class="order-number">${order.orderNo}</span></td>
 				</tr>
 			</table>
 		</div>
 		<div class="payment-main-button">
-			<form action="<%=request.getContextPath()%>/" method="get">
-				<button id="payment-btn1" type="submit">메인으로 가기</button>
-			</form>
-			<form action="<%=request.getContextPath()%>/orderHistory" method="get">
-				<!-- 주문 조회 URL을 수정하실 수 있습니다 -->
+				<button id="payment-btn1" onclick="location.href='/pet'">메인으로 가기</button>
+			<form:form action="${pageContext.request.contextPath}/order/orderDetail.do" method="get">
+				<input type="hidden" name="orderNo" value="${order.orderNo}" />
 				<button type="submit">주문 조회</button>
-			</form>
+			</form:form>
 		</div>
 
 	</div>

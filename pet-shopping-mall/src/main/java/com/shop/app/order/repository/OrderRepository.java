@@ -1,6 +1,7 @@
 package com.shop.app.order.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -17,6 +18,7 @@ import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
+import com.shop.app.payment.entity.Payment;
 
 @Mapper
 public interface OrderRepository {
@@ -42,8 +44,8 @@ public interface OrderRepository {
 	@Update("update orderTbl set order_status = #{i} where order_no = #{orderNo}")
 	int updateOrderStatus(String orderNo, int i);
 
-	
-	List<OrderHistoryDto> getOrderList(String memberId);
+	@Select("select * from orderTbl where member_id = #{memberId}")
+	List<Order> getOrderList(String memberId);
 	
 	
 	@Insert("insert into order_detail (order_id, product_detail_id, quantity) values (#{orderId}, #{productDetailId}, #{quantity})")
@@ -58,8 +60,9 @@ public interface OrderRepository {
 	@Select("select * from orderTbl where order_no = #{orderNo}")
 	Order findOrderByOrderNo(String orderNo);
 
-
-	List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period);
+	
+	@Select("select * from orderTbl where member_id = #{memberId} and order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})")
+	List<Order> getOrderListByPeriod(String memberId, int period);
 
 
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
@@ -76,7 +79,7 @@ public interface OrderRepository {
 	@Delete("delete from orderTbl where order_no = #{orderNo}")
 	int deleteOrder(String orderNo);
 
-	OrderHistoryDto getOrderDetail(String orderNo);
+	List<OrderHistoryDto> getOrderDetail(String orderNo);
 
 	
 }

@@ -25,7 +25,6 @@
 						<tr>
 							<th>날짜</th>
 							<th>주문번호</th>
-							<th>상품</th>
 							<th>주문금액</th>
 							<th>주문취소</th>
 							<th>상태</th>
@@ -35,38 +34,18 @@
 					<c:if test="${not empty orderHistories}">
 						<c:forEach items="${orderHistories}" var="order" varStatus="vs">
 							<c:set var="index" value="${order.orderStatus}"/>
-							<c:set var="option" value="${order.optionName}" />
 							<c:set var="amount" value="${order.amount}" />
 							<fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
 							<tr>
 								<td>${formattedDate}</td>
 								<td>
-									<p>${order.orderNo}</p>
+									<a href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}"><p>${order.orderNo}</p></a>
 									<form:form id="cancelFrm" action="" method="POST">
 										<input type="hidden" name="orderNo" value="${order.orderNo}" />
 										<input type="hidden" name="amount" value="${order.amount}" />
 										<input type="hidden" name="isRefund" value="" />
 									</form:form>
 								</td>
-								<td><a
-									href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
-										<div class="flex">
-											<img
-												src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg"
-												alt="">
-											<div>
-												<p>${order.productName}</p>
-												<br />
-											<c:if test="${option eq null}">
-												<p>선택된 옵션이 없습니다.</p>
-											</c:if>
-											<c:if test="${option ne null}">
-												<p>${order.optionName} : ${order.optionValue}</p>
-											</c:if>
-												<p>수량: ${order.quantity}개</p>
-											</div>
-										</div>
-								</a></td>
 								<td><span id="total-price"><fmt:formatNumber
 											value="${order.amount}" groupingUsed="true" />원</span></td>
 								<td>

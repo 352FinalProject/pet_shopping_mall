@@ -54,7 +54,7 @@
     <result property="questionCreatedAt" column="question_created_at"/>
 
     <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
-    <collection property="attachments" ofType="imageAttachment">
+    <collection property="attachments" ofType="ImageAttachment">
         <result property="imageId" column="image_id"/>
         <result property="imageType" column="image_type"/>
         <result property="imageCategory" column="image_category"/>
