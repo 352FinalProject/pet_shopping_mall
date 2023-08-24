@@ -104,7 +104,7 @@
 		    	<div>
 		    		옵션변경
 		    	    <select id="modal-option" onchange="updateProduct(this);">
-		    	    	<option>옵션을 선택해주세요</option>
+		    	    	<option value="">옵션을 선택해주세요</option>
 		    		</select>
 		    	</div>
 		    	<form:form id="updateFrm">
