@@ -39,7 +39,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.common.HelloSpringUtils;
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
@@ -409,7 +409,7 @@ public class AdminController {
 			@RequestParam(value="upFile", required= false) List<MultipartFile> upFiles) throws IllegalStateException, IOException {
 
 		// 1. 파일저장
-		List<imageAttachment> attachments = new ArrayList<>();
+		List<ImageAttachment> attachments = new ArrayList<>();
 		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
 
 		String saveDirectory = application.getRealPath("/resources/upload/product");
@@ -423,8 +423,8 @@ public class AdminController {
 
 				int imageType = 1;
 
-				imageAttachment attach =
-						imageAttachment.builder()
+				ImageAttachment attach =
+						ImageAttachment.builder()
 						.imageOriginalFilename(imageOriginalFilename)
 						.imageRenamedFilename(imageRenamedFilename)
 						.imageType(imageType)

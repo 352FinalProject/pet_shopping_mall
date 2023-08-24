@@ -291,3 +291,8 @@ select[name=product-option] {
 .reivew-pet-box {
 	margon-bottom: 100px;
 }
+
+.detail-upload img {
+    width: 300px;
+    height: 300px;
+}

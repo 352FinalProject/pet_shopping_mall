@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.repository.PetRepository;
 import com.shop.app.pet.service.PetService;
@@ -48,9 +48,9 @@ public class ReviewServiceImpl implements ReviewService {
 		System.out.println("review refId = " + refId);
 		
 		// attachment 저장
-		List<imageAttachment> attachments = ((ReviewDetails) review).getAttachments();
+		List<ImageAttachment> attachments = ((ReviewDetails) review).getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
-			for(imageAttachment attach : attachments) {
+			for(ImageAttachment attach : attachments) {
 				
 				// 1. 이미지 파일 DB에 저장
 				int result2 = reviewRepository.insertAttachment(attach);
@@ -109,6 +109,8 @@ public class ReviewServiceImpl implements ReviewService {
 	    reviewDetailDto.setPetWeight(pet.getPetWeight());
 	    reviewDetailDto.setPetGender(pet.getPetGender());
 
+	    
+	    log.debug("reviewDetailDto = {}", reviewDetailDto);
 	    return reviewDetailDto;
 	}
 	
@@ -162,6 +164,12 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public String findImageFilenameByReviewId(int reviewId2) {
 		return reviewRepository.findImageFilenameByReviewId(reviewId2);
+	}
+
+	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
+	@Override
+	public Review findPoductListReviewId(int reviewId) {
+		return reviewRepository.findPoductListReviewId(reviewId);
 	}
 }
 

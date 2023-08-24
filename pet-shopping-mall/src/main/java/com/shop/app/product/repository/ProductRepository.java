@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -73,7 +73,7 @@ public interface ProductRepository {
 			resultType = int.class,
 			statement = "select seq_image_attachment_id.currval from dual"
 			)
-	int insertAttachment(imageAttachment attach);
+	int insertAttachment(ImageAttachment attach);
 
 	// 상품 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'product', #{refId}, #{imageId})")

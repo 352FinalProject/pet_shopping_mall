@@ -48,6 +48,9 @@ public interface ReviewService {
 
 	String findImageFilenameByReviewId(int reviewId2);
 
+	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
+	Review findPoductListReviewId(int reviewId);
+
 
 //	List<ReviewDetailDto> findProductReviewDetails(List<Review> reviews);
 

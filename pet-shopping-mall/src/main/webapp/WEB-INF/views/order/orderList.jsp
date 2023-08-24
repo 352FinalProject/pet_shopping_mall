@@ -48,13 +48,13 @@
 										<input type="hidden" name="isRefund" value="" />
 									</form:form>
 								</td>
-								<td><a
-									href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
+								<td>
+									<a href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
 										<div class="flex">
 											<img
 												src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg"
 												alt="">
-											<div>
+											<div class="order-flex">
 												<p>${order.productName}</p>
 												<br />
 											<c:if test="${option eq null}">
@@ -83,6 +83,9 @@
 								</td>
 								<td>
 									<p>${status[index]}</p>
+								<c:if test="${status[index] == '배송완료'}">
+								<a href="${pageContext.request.contextPath}/review/reviewCreate.do?productId=${product.productId}"><button class="review-btn" type="button" >리뷰쓰기</button></a>
+								</c:if>
 								</td>
 							</tr>
 						</c:forEach>
