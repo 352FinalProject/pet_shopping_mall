@@ -220,7 +220,6 @@ const proceedPay = () => {
 		title = "${cartList[0].productName}" +" 외" + (cartListLength - 1) + "개";
 	}
 	
-	// 포인트 입력 값 가져오기 (예라)
     let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
 	
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
@@ -257,26 +256,28 @@ const proceedPay = () => {
 	
 	data.forms = formDatas;
 	
-	console.log(data);
 	
-	$.ajax({
-		url: '${pageContext.request.contextPath}/payment/proceed.do',
-		type: 'POST',
-		async: true,
-		contentType:'application/json',
-		data : JSON.stringify(data),
-		success(response) {
-			console.log(response);
-			if(response.result > 0){
-				alert('주문하시겠습니까?')
-				requestPaymentByCard(data);
-			} else {
-				alert(response.msg);
+	if(confirm('정말 주문하시겠습니까?')) {
+		$.ajax({
+			url: '${pageContext.request.contextPath}/payment/proceed.do',
+			type: 'POST',
+			async: true,
+			contentType:'application/json',
+			data : JSON.stringify(data),
+			success(response) {
+				console.log(response);
+				if(response.result > 0){
+					alert('주문을 진행합니다.');
+					requestPaymentByCard(data);
+				} else {
+					alert('주문이 취소되었습니다.');
+					location.href = "${pageContext.request.contextPath}/order/deleteOrder.do";
+				}
 			}
-		}
-	});
-
+		});
+	}
 };
+
 
 const requestPaymentByCard = (data) => {
 	
