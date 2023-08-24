@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -42,7 +43,7 @@ public interface ProductRepository {
 	List<ProductDetail> findAllProductDetails();
 
 	@Select("select * from product where product_id = #{productId}")
-	Product findProductById(int productId);
+	ProductInfoDto findProductById(int productId);
 
 	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, image_id = #{imageId} where product_id = #{productId}")
 	int updateProduct(Product product);

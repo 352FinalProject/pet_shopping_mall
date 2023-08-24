@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -75,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Product findProductById(int productId) {
+	public ProductInfoDto findProductById(int productId) {
 		return productRepository.findProductById(productId);
 	}
 	

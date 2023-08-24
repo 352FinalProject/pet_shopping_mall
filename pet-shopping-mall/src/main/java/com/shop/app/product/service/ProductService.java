@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -19,7 +20,7 @@ public interface ProductService {
 	
 	List<ProductDetail> findAllProductDetails();
 
-	Product findProductById(int productId);
+	ProductInfoDto findProductById(int productId);
 
 	int updateProduct(Product product);
 

@@ -3,6 +3,7 @@ package com.shop.app.product.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.product.dto.ProductCreateDto;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.service.ReviewService;
+import com.shop.app.wishlist.service.WishlistService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,10 +44,15 @@ public class ProductController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	@Autowired
+	private WishlistService wishlistService;
+	
 	
 	// 상품 상세페이지 리뷰 연결
 	@GetMapping("/productDetail.do")
 	public void productDetail(
+			@Valid ProductInfoDto productInfoDto,
+			@AuthenticationPrincipal MemberDetails member,
 			@RequestParam(defaultValue = "1") int page,
 			Model model) {
 		
@@ -68,6 +76,11 @@ public class ProductController {
 
 		model.addAttribute("reviews", reviews);
 		
+		// 상품 정보 가져오기
+		model.addAttribute("productInfo", productService.findProductById(productInfoDto.getProductId()));
+		
+		// 찜 여부 가져오기
+		model.addAttribute("likeState", wishlistService.getLikeProduct(productInfoDto.getProductId(), member.getMemberId()));
 	}
 	
 	@GetMapping("/productList.do")
