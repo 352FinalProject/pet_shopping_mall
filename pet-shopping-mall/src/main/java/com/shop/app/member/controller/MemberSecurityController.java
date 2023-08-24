@@ -112,6 +112,8 @@ public class MemberSecurityController {
 		point.setPointType("회원가입");
 		point.setPointAmount(3000);
 		
+		int resultPoint = pointService.insertPoint(point);
+		
 	    // 약관 동의 정보 가져오기
 	    Object obj = session.getAttribute("userAgreements");
 	    log.debug("obj = {}", obj);

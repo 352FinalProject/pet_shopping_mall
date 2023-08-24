@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
@@ -111,6 +113,7 @@ public class ReviewController {
 	public String reviewCreate(
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
+			@RequestParam int productId,
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
 			Point point, 
 			Pet pet,
@@ -187,7 +190,8 @@ public class ReviewController {
 		
 		// int productId = _review.getProductId();
 		
-		
+		reviews.setProductId(productId);
+		log.debug("product Id reviews = {}", reviews);
 		int reviewId = reviewService.insertReview(reviews);
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 

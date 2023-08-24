@@ -19,9 +19,10 @@ import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.payment.entity.Payment;
-import com.shop.app.payment.service.PaymentService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.product.service.ProductService;
+import com.shop.app.review.entity.Review;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -35,6 +36,9 @@ public class OrderController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@GetMapping("/orderDetails.do")
 	public void orderDetails() {}
@@ -55,12 +59,11 @@ public class OrderController {
 	    else 
 	        orderHistories = orderService.getOrderList(memberId);
 	    
-
+	    log.debug("orderHistories = {}", orderHistories);
+	    
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderHistories);
 	}
-	
-	
 	
 	@GetMapping("/cancelOrderDetail.do")
 	public void cancelOrder(Model model, @RequestParam String orderNo) {

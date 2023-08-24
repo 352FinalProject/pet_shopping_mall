@@ -12,6 +12,10 @@ select * from terms_history;
 select * from image_attachment;
 select * from image_attachment_mapping;
 select * from product;
+select * from orderTbl;
+select * from order_detail;
+select * from product_detail;
+select * from product;
 
 --==============================
 --sample data 생성
@@ -162,7 +166,7 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
  insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
     values (seq_orderTbl_id.nextval, '230811-003', 'member5', sysdate, 1,  1, 35000, 3000, 0, 38000, null);
 
-insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
+insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
     values (seq_orderTbl_id.nextval, '230811-004', 'member2', sysdate, 1,  1, 35000, 3000, 0, 38000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
@@ -507,8 +511,8 @@ select * from orderTbl;
 select * from order_detail;
 select * from payment;
 ------------------------
-insert into order_detail (order_id, product_detail_id, quantity) values (17,6,default);
-insert into order_detail (order_id, product_detail_id, quantity) values (18,6,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (4,29,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (15,29,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (19,6,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (20,6,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (21,6,default);
@@ -570,37 +574,37 @@ insert into product_category (category_id, category_name) values (seq_category_i
 
 ----주문테이블 더미
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-001', 'honggd', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
+    values (seq_orderTbl_id.nextval, '230811-001', 'member1', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-002', 'honggd', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
+    values (seq_orderTbl_id.nextval, '230811-002', 'member2', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
     
  insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-003', 'member5', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
+    values (seq_orderTbl_id.nextval, '230811-003', 'member2', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-004', 'member2', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
+    values (seq_orderTbl_id.nextval, '230811-004', 'member1', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-005', 'member3', sysdate, 1,  1, 25000, 3000, 0, 28000, null);
+    values (seq_orderTbl_id.nextval, '230811-005', 'member2', sysdate, 1,  1, 25000, 3000, 0, 28000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-006', 'member5', sysdate, 1,  1, 22000, 3000, 0, 25000, null);
+    values (seq_orderTbl_id.nextval, '230811-006', 'member2', sysdate, 1,  1, 22000, 3000, 0, 25000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-007', 'member6', sysdate, 1,  1, 17000, 3000, 0, 20000, null);
+    values (seq_orderTbl_id.nextval, '230811-007', 'member1', sysdate, 1,  1, 17000, 3000, 0, 20000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-008', 'member7', sysdate, 1,  1, 24000,3000, 0, 27000, null);
+    values (seq_orderTbl_id.nextval, '230811-008', 'member1', sysdate, 1,  1, 24000,3000, 0, 27000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-009', 'member8', sysdate, 2,  1, 22000,3000, 0, 25000, null);
+    values (seq_orderTbl_id.nextval, '230811-009', 'member1', sysdate, 2,  1, 22000,3000, 0, 25000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-010', 'member9', sysdate, 3,  1, 19000,3000, 0, 22000, null);
+    values (seq_orderTbl_id.nextval, '230811-010', 'member1', sysdate, 3,  1, 19000,3000, 0, 22000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
-    values (seq_orderTbl_id.nextval, '230811-011', 'member10', sysdate, 2, 1, 20000,3000, 0, 23000, null);
+    values (seq_orderTbl_id.nextval, '230811-011', 'member1', sysdate, 2, 1, 20000,3000, 0, 23000, null);
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
@@ -701,3 +705,22 @@ values (2, '생일축하 10% 할인 쿠폰', null, 10);
 
 
 
+select
+  ot.order_id,
+  ot.order_date,
+  ot.order_no,
+  ot.order_status,
+  pd.product_id,
+  (select product_name from product where product_id = pd.product_id)
+  product_name,
+  od.product_detail_id,
+  od.quantity,
+  ot.amount
+from
+  orderTbl ot left join order_detail od on ot.order_id = od.order_id
+  left join product_detail pd on od.product_detail_id = pd.product_detail_id
+  left join product p on p.product_id = pd.product_id
+where
+  ot.member_id = 'member2'
+  order by
+  ot.order_date desc;

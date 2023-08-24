@@ -102,6 +102,7 @@
       ot.order_date,
       ot.order_no,
       ot.order_status,
+      pd.product_id,
       (select product_name from product where product_id = pd.product_id)
       product_name,
       od.product_detail_id,
@@ -123,6 +124,7 @@
       ot.order_date,
       ot.order_no,
       ot.order_status,
+      pd.product_id,
       (select product_name from product where product_id = pd.product_id)
       product_name,
       od.product_detail_id,
@@ -245,6 +247,7 @@
       <result column="order_date" property="orderDate" />
       <result column="order_no" property="orderNo" />
       <result column="order_status" property="orderStatus" />
+      <result column="product_id" property="productId"/>
       <result column="product_name" property="productName" />
       <result column="product_detail_id" property="productDetailId" />
       <result column="quantity" property="quantity" />

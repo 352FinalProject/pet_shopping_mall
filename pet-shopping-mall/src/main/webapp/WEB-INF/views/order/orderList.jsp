@@ -83,9 +83,16 @@
 								</td>
 								<td>
 									<p>${status[index]}</p>
-								<c:if test="${status[index] == '배송완료'}">
-								<a href="${pageContext.request.contextPath}/review/reviewCreate.do?productId=${product.productId}"><button class="review-btn" type="button" >리뷰쓰기</button></a>
-								</c:if>
+								<form:form action="/your-action-here">
+									<c:if test="${status[index] == '배송완료'}">
+										<c:forEach items="${orderHistories}" var="order" >
+											<input type="hidden" name="productId" value="${order.productId}">
+											<a href="${pageContext.request.contextPath}/review/reviewCreate.do?productId=${order.productId}" 
+   											class="createReview" data-product-id="${order.productId}">
+										</c:forEach>
+										<button class="review-btn" type="button" name="productId">리뷰쓰기</button></a>
+									</c:if>
+								</form:form>
 								</td>
 							</tr>
 						</c:forEach>
@@ -130,6 +137,49 @@ const handleSelectChange = () => {
 };
 
 periodSelect.addEventListener('change', handleSelectChange);
+
+let token = $("meta[name='_csrf']").attr("content");
+let header = $("meta[name='_csrf_header']").attr("content");
+
+
+$(document).ready(function() {
+    $('.createReview').click(function(event) {
+        
+        let productId = $(this).data('product-id');
+        let form = $('#reviewForm'); // 폼 아이디를 직접 지정
+        console.log(productId);
+        
+        if (form.length) {
+            let formData = new FormData(form[0]);
+            formData.append('productId', productId); // productId 추가
+
+            formData.forEach(function(value, key) { // 폼 데이터 로깅
+                console.log(key + ', ' + value);
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '${pageContext.request.contextPath}/review/reviewCreate.do',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    '${_csrf_header}': '${_csrf.token}'
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    // 성공적으로 서버 응답을 받았을 때 실행할 코드
+                },
+                error: function(xhr, status, error) {
+                    // 서버 응답이 실패했을 때 실행할 코드
+                }
+            });
+        }
+    });
+});
+
+
+
 	</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
