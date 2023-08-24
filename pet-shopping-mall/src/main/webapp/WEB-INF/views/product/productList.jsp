@@ -165,8 +165,8 @@ ul.nav {
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
 					</figure>
 					<div class="product-desc">
-						<p class="product-name">"${productInfo.product.productName}"</p>
-						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> </p>
+						<p class="product-name">${productInfo.product.productName}</p>
+						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> 원</p>
 						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
 						<span> &nbsp;|&nbsp; </span>
 						<span class="review-cnt">후기 113건</span>
