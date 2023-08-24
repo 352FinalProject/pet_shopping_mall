@@ -8,6 +8,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class OrderHistoryDto {
+	private int orderId;
 	private Timestamp orderDate; // orderTbl
 	private String orderNo; // orderTbl
 	private String productName; // product

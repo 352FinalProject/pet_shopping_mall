@@ -1,6 +1,7 @@
 package com.shop.app.order.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +18,8 @@ import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
+import com.shop.app.payment.entity.Payment;
+import com.shop.app.payment.service.PaymentService;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -101,9 +104,9 @@ public class OrderController {
 	
 	@GetMapping("/orderDetail.do")
 	public void getOrderDetail(Model model, @RequestParam String orderNo) {
-		OrderHistoryDto orderDetail = orderService.getOrderDetail(orderNo);
+		Map<OrderHistoryDto, Payment> orderDetailMap = orderService.getOrderDetail(orderNo);
 		model.addAttribute("status", status);
-		model.addAttribute("orderDetail", orderDetail);
+		model.addAttribute("orderDetail", orderDetailMap);
 	}
 	
 }
