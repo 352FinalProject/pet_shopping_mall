@@ -101,13 +101,13 @@
 			<div>
 				<br>
 				<div class="" style="display: flex; align-items: center;">
-					<a href="${pageContext.request.contextPath}/member/petProfile.do"></a>
-					<a href="${pageContext.request.contextPath}/member/petProfile.do"
+					<a href="${pageContext.request.contextPath}/pet/petProfile.do"></a>
+					<a href="${pageContext.request.contextPath}/pet/petProfile.do"
 						style="color: #5886d3; font-size: 20px; ">펫 등록하러 가기</a>
 				</div>
 				<div class="pet-create">
 					<div>
-						<a href="${pageContext.request.contextPath}/member/petProfile.do">
+						<a href="${pageContext.request.contextPath}/pet/petProfile.do">
 							<img
 							src="${pageContext.request.contextPath}/resources/images/chat/chat.png" />
 						</a>

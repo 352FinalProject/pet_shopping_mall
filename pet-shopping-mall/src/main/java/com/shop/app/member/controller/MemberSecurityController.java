@@ -26,8 +26,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.dto.MemberCreateDto;
@@ -76,7 +78,7 @@ public class MemberSecurityController {
 	        @Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
 	        BindingResult bindingResult, // 유효성 검사 결과
 	        RedirectAttributes redirectAttr, HttpSession session) { // 리다이렉트시 전달 할 속성
-	    
+	    	log.debug("member={}", member);
 	    // 이메일 인증 확인 (예라)
 	    Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
 	    if (isVerified == null || !isVerified) {
@@ -262,14 +264,10 @@ public class MemberSecurityController {
 				.body(Map.of("available", available, "memberId", memberId));
 	}
 
-	//아이디 찾기 
-	@GetMapping("/memberSearchId.do")
-	public void memberSearchId(){}
 	
 	
 	@GetMapping("/memberCreateComplete.do")
 	public void memberCreateComplete() {}
-	
 	
 	@GetMapping("/terms.do")
 	public void getTerms() {}
