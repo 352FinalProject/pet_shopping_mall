@@ -22,6 +22,10 @@ public interface PetService {
 
 	// 상품 상세페이지 - 리뷰 - 펫 정보 가져오기 (혜령) 
 	List<Pet> findProductRevicePet(String memberId);
+
+	List<Pet> findReviewPetByMemberId(String reviewMemberId);
+
+
 	
-	List<Pet> findReviewPetByIdAndMemberId(int petId, String memberId);
+
 }

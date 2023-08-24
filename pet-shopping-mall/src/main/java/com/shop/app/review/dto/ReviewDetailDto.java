@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.entity.PetGender;
+import com.shop.app.product.entity.Product;
 import com.shop.app.review.entity.Review;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class ReviewDetailDto {
 
 	private int reviewId;
+	private String reviewMemberId;
 	private String reviewTitle;
 	private String reviewContent;
 	private int reviewStarRate;
@@ -24,6 +26,7 @@ public class ReviewDetailDto {
 	public Review toReview() {
 		return Review.builder()
 				.reviewId(reviewId)
+				.reviewMemberId(reviewMemberId)
 				.reviewTitle(reviewTitle)
 				.reviewContent(reviewContent)
 				.reviewStarRate(reviewStarRate)
@@ -49,4 +52,13 @@ public class ReviewDetailDto {
 				.build();
 	}
 	
+	private int productId;
+	private String productName;
+	
+	public Product toProduct() {
+		return Product.builder()
+				.productId(productId)
+				.productName(productName)
+				.build();
+	}
 }

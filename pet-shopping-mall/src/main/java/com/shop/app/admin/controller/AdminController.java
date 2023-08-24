@@ -382,8 +382,8 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록 폼으로 이동
 	 */
-	@GetMapping("/adminProductDetailCreate.do")
-	public void adminProductDetailCreate(
+	@GetMapping("/adminProductCreate.do")
+	public void adminProductCreate(
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
 			) {
@@ -396,8 +396,9 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록
 	 */
-	@PostMapping("/adminProductDetailCreate.do")
-	public String adminProductDetailCreate(
+	
+	@PostMapping("/adminProductCreate.do")
+	public String adminProductCreate(
 			@Valid ProductCreateDto _product,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model,

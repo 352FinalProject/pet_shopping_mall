@@ -2,6 +2,7 @@ package com.shop.app.product.controller;
 
 import java.lang.reflect.Member;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
+import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -133,12 +135,11 @@ public class ProductController {
 	//	}
 
 	@GetMapping("/productDetail.do")
-	public void productDetail(@RequestParam int reviewId,
-	        @RequestParam(defaultValue = "1") int page,
-	        Model model, HttpSession session) {
 
-		String memberId = (String) session.getAttribute("memberId");
-		
+	public void productDetail(@RequestParam int reviewId,
+	                          @RequestParam(defaultValue = "1") int page,
+	                          Model model) {
+
 	    int limit = 3;
 	    Map<String, Object> params = Map.of("page", page, "limit", limit);
 
@@ -149,16 +150,34 @@ public class ProductController {
 	    List<Review> reviews = reviewService.findProductReviewAll(params);
 	    model.addAttribute("reviews", reviews);
 
-	    ReviewDetailDto review = reviewService.findReviewId(reviewId);
+	    // 상품 상세 페이지에 펫 정보 뿌려주기
+	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
+
+	    for (Review review : reviews) {
+	        List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
+	        reviewPetsMap.put(review.getReviewId(), pets);
+	    }
 	    
-	    List<Pet> pets = petService.findReviewPetByIdAndMemberId(review.getPetId(), memberId);
-
-	    log.debug("review = {}", review);
-	    log.debug("pets = {}", pets);
-
-	    model.addAttribute("pet", pets.get(0));
+	    // 상품 상세 페이지에 이미지 파일 뿌려주기
+	    Map<Integer, String> reviewImageMap = new HashMap<>();
+	    for (Review review : reviews) {
+	        int reviewId2 = review.getReviewId();
+	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
+	        
+	        log.debug("reviewDetails = {}", reviewDetails);
+	        
+	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+	            String imageFilename = reviewDetails.getAttachments().get(0).getImageOriginalFilename();
+	            log.debug("imageFilename = {}", imageFilename);
+	            reviewImageMap.put(reviewId2, imageFilename);
+	        }
+	    }
+	    
+	    log.debug("reviewImageMap = {}", reviewImageMap);
+	    
+	    model.addAttribute("reviewImageMap", reviewImageMap);
+	    model.addAttribute("reviewPetsMap", reviewPetsMap);
 	}
-
 
 
 	@GetMapping("/productList.do")

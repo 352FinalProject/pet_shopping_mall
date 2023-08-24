@@ -198,13 +198,14 @@ create table image_attachment_mapping (
     constraint pk_question_image_mapping_id primary key(mapping_id),
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
-select * from image_attachment_mapping;
+
 -- 상품 카테고리 테이블
 create table product_category (
     category_id number,
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
+
 
 -- 상품 테이블
 create table product (
@@ -324,9 +325,6 @@ create table review (
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
-
-select * from review;
-
 create table community (
     community_id number,
     community_member_id varchar2(50),
@@ -374,9 +372,6 @@ create table terms (
  constraint pk_history_id primary key(history_id, terms_id),
  constraint fk_terms_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
-
-drop table terms;
-drop table terms_history;
 
 -- 약관동의 이력 테이블
 create table terms_history (
@@ -459,18 +454,6 @@ create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
 
-select * from member;
-select * from point;
-select * from pet;
-select * from review;
-select * from coupon;
-select * from member_coupon;
-select * from terms;
-select * from terms_history;
-select * from product;
-
-select * from pet where member_id = 'member2';
-
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
 after insert on member
@@ -488,5 +471,3 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
-select pet_id, member_id, pet_name, pet_age, pet_kind, pet_breed, pet_weight, to_char(pet_adoption, 'YYYY-MM-DD') as pet_adoption, pet_gender, pet_created_at from pet where pet_id = '3' and member_id = 'member1';
-     

@@ -66,8 +66,8 @@ public class PetServiceImpl implements PetService {
 	}
 
 	@Override
-	public List<Pet> findReviewPetByIdAndMemberId(int petId, String memberId) {
-		return petRepository.findReviewPetByIdAndMemberId(petId, memberId);
+	public List<Pet> findReviewPetByMemberId(String reviewMemberId) {
+		return petRepository.findReviewPetByMemberId(reviewMemberId);
 	}
 
 }

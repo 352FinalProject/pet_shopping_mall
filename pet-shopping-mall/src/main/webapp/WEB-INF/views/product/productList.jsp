@@ -124,7 +124,9 @@ ul.nav {
 		<section class="product-board">
 			<!-- 게시판 이름 -->
 	        <div class="board-title"">
-		        <span>사료</span>
+		        <span>
+		        상품 카테고리명 
+		        </span>
 	        </div>
 	        <!-- 게시판 카테고리 -->
 	        <div class="board-category">
@@ -171,7 +173,7 @@ ul.nav {
 		<div class="product-gallery">
 			<ul class="gallery">
 				<div class="product-card">
-					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=3&reviewId=3">
+					<a href="${pageContext.request.contextPath}/product/productDetail.do?productId=1&reviewId=3">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
 					</figure>
@@ -184,6 +186,7 @@ ul.nav {
 					</div>
 					</a>
 				</div>
+			
 				<div class="product-card">
 					<a href="${pageContext.request.contextPath}/product/productDetail.do">
 					<figure class="product-thumbnail">
