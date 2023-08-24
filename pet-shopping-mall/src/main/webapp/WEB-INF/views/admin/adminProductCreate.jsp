@@ -12,10 +12,6 @@
 				<li class="breadcrumb-item"><a
 					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
 			</ol>
-			<div class="card mb-4">
-				<div class="card-body">
-					김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원</div>
-			</div>
 
 			<div class="card mb-4">
 				<div class="card-header">
@@ -23,7 +19,7 @@
 				</div>
 				<div class="card-body">
 					  <div class="container-fluid px-4">
-					    <form:form action="${pageContext.request.contextPath}/admin/adminProductDetailCreate.do" enctype="multipart/form-data" method="post" class="mt-4">
+					    <form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" enctype="multipart/form-data" method="post" class="mt-4">
 					
 					      <div class="mb-3">
 					        
@@ -64,8 +60,7 @@
 					          </div>
 					        </div>
 					        
-					        <div class="optionValueInput">
-					        
+					        <div class="optionValueInput" id="optionValueInput">
 					          <div class="row mb-3">
 						          <div class="col-md-2">
 						            <label for="optionName" class="form-label">옵션명</label>
@@ -111,9 +106,45 @@
 	</main>
 	<script>
 	const addOptionValue = () => {
-		const optionValueInput = document.getElementsByClassName("optionValueInput");
+		let optionValueInput = document.getElementById('optionValueInput');
 		console.log(optionValueInput);
-
+		
+		const optionAddDiv = `
+	        <div class="optionValueInput">
+	          <div class="row mb-3">
+		          <div class="col-md-2">
+		            <label for="optionName" class="form-label">옵션명</label>
+		            <input type="text" name="optionName" id="optionName" class="form-control">
+		          </div>
+	            <div class="col-md-2">
+	              <label for="optionValue" class="form-label">옵션값</label>
+	              <input type="text" name="optionValue" id="optionValue" class="form-control">
+	            </div>
+	            <div class="col-md-2">
+	              <label for="additionalPrice" class="form-label">옵션추가금</label>
+	              <input type="number" name="additionalPrice" id="additionalPrice" class="form-control" value="0">
+	            </div>
+	          </div>
+		        <div class="row mb-3">
+		          <div class="col-md-1">
+		            <label for="saleState" class="form-label">판매상태</label>
+		          </div>
+		          <div class="col-md-2">
+		            <select name="saleState" id="saleState" class="form-select">
+		              <option value="0">판매대기</option>
+		              <option value="1">판매중</option>
+		              <option value="2">품절</option>
+		              <option value="3">기타</option>
+		            </select>
+		          </div>
+	            <div class="col-md-3">
+	              <button type="button" class="btn btn-secondary" onclick="addOptionValue()">추가</button>
+	            </div>
+		        </div>
+	        </div>		
+		`;
+		
+		optionValueInput.innerHTML += optionAddDiv;
 		
 	}
 	
