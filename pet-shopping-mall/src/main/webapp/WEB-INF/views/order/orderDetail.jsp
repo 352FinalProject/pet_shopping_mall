@@ -43,37 +43,48 @@
 									<td>
 										<p>${entry.key.orderNo}</p>
 									</td>
-									<td><a
-										href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">
-											<div class="flex">
-												<img src="${pageContext.request.contextPath}/resources/upload/product/${entry.key.imageRenamedFileName}" width="110px">
-												<div>
-													<p>${entry.key.productName}</p>
-													<br />
-												<c:if test="${option eq null}">
-													<p>선택된 옵션이 없습니다.</p>
-												</c:if>
-												<c:if test="${option ne null}">
-													<p>${entry.key.optionName} : ${entry.key.optionValue}</p>
-												</c:if>
-													<p>수량: ${entry.key.quantity}개</p>
-												</div>
+									<td>
+										<div class="flex">
+											<img src="${pageContext.request.contextPath}/resources/upload/product/${entry.key.imageRenamedFileName}" width="110px">
+											<div>
+												<p>${entry.key.productName}</p>
+												<br />
+											<c:if test="${option eq null}">
+												<p>선택된 옵션이 없습니다.</p>
+											</c:if>
+											<c:if test="${option ne null}">
+												<p>${entry.key.optionName} : ${entry.key.optionValue}</p>
+											</c:if>
+												<p>수량: ${entry.key.quantity}개</p>
 											</div>
-									</a></td>
+										</div>
+									</td>
 									<td><span id="total-price"><fmt:formatNumber
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
 										<p>${status[index]}</p>
 										<c:if test="${status[index] == '배송완료'}">
 										  <c:forEach var="order" items="${orderMap}">
-											<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+											<form:form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
 											    <input type="hidden" name="productId" value="${order.key.productId}">
 										  	</c:forEach>
 											    <button class="review-btn" type="submit">리뷰쓰기</button>
-											</form>
+											</form:form>
 										</c:if>
 									</td>
 								</tr>
+								<c:if test="${payment ne null}">
+								<tr class="detail-row">
+								    <td colspan="5">
+								        <div class="detail-content">
+								            <!-- 이곳에 주문에 대한 디테일 정보를 넣으세요 -->
+								            <!-- 예시: -->
+								            <p>추가 정보 1</p>
+								            <p>추가 정보 2</p>
+								        </div>
+								    </td>
+								</tr>
+								</c:if>
 								</c:forEach>
 							</c:forEach>
 						</c:if>

@@ -41,8 +41,6 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("/orderDetails.do")
-	public void orderDetails() {}
 	
 	@GetMapping("/orderExchange.do")
 	public void orderExchange() {}
@@ -112,4 +110,6 @@ public class OrderController {
 		model.addAttribute("orderDetail", orderDetailMap);
 	}
 	
+	@GetMapping("/orderHistory.do")
+	public void getOrderHistory() {}
 }
