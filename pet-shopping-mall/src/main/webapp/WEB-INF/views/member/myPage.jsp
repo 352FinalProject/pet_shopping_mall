@@ -36,8 +36,8 @@
                     </div>
                     <div class="options">
                         <div class="option"><a href="${pageContext.request.contextPath}/point/pointList.do">포인트내역</a></div>
-                        <div class="option"><a href="${pageContext.request.contextPath}/member/myWishlist.do">찜한 상품</a></div>
-                        <div class="option"><a href="#">쿠폰 0장</a></div>
+                        <div class="option"><a href="${pageContext.request.contextPath}/wishlist/myWishlist.do">찜한 상품</a></div>
+                        <div class="option"><a href="${pageContext.request.contextPath}/coupon/couponList.do?couponId=${coupon.couponId}">쿠폰 ${myPage.memberCount}장</a></div>
                     </div>
                     <div class="recent-orders">
                         <div class="common-title">최근 1개월 주문내역</div>
@@ -51,7 +51,7 @@
 										<tr>
 											<th>날짜</th>
 											<th>주문번호</th>
-											<th>상품</th>
+											<th>상세내역</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -60,7 +60,7 @@
 										<tr>
 											<td>${formattedDate}</td>
 											<td>${order.orderNo}</td>
-											<td>${order.productName}</td>
+											<td><a href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">📜<a></td>
 										</tr>
 									</c:forEach>
 									</tbody>
@@ -75,22 +75,7 @@
 <script>
 	const subscribe = () => {
 		if(confirm("정말 구독하시겠습니까?")) {
-			IMP.request_pay({
-				pay_method : 'card', // 기능 없음.
-				merchant_uid: "order_monthly_0001", // 상점에서 관리하는 주문 번호
-				name : '최초인증결제',
-				amount : 1004, // 빌링키 발급과 함께 1,004원 결제승인을 시도합니다.
-				customer_uid : 'your-customer-unique-id', // 필수 입력
-				buyer_email : 'iamport@siot.do',
-				buyer_name : '아임포트',
-				buyer_tel : '02-1234-1234'
-			}, function(rsp) {
-				if ( rsp.success ) {
-					alert('빌링키 발급 성공');
-				} else {
-					alert('빌링키 발급 실패');
-				}
-			});
+			// 정기결제 코드
 		}
 	}
 </script>

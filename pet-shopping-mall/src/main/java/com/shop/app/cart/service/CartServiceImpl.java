@@ -56,8 +56,8 @@ public class CartServiceImpl implements CartService {
 
 
 	@Override
-	public List<ProductDetail> findProdById(int id) {
-		return cartRepository.findProdById(id);
+	public List<CartInfoDto> findProductOptionById(int id) {
+		return cartRepository.findProductOptionById(id);
 	}
 
 

@@ -20,9 +20,10 @@ import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.payment.entity.Payment;
-import com.shop.app.payment.service.PaymentService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.product.service.ProductService;
+import com.shop.app.review.entity.Review;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -36,6 +37,12 @@ public class OrderController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@GetMapping("/orderDetails.do")
+	public void orderDetails() {}
 	
 	@GetMapping("/orderExchange.do")
 	public void orderExchange() {}
@@ -52,13 +59,10 @@ public class OrderController {
 	    	orderList = orderService.getOrderListByPeriod(memberId, period);
 	    else 
 	    	orderList = orderService.getOrderList(memberId);
-	    
-
+			
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderList);
 	}
-	
-	
 	
 	@GetMapping("/cancelOrderDetail.do")
 	public void cancelOrder(Model model, @RequestParam String orderNo) {
@@ -103,6 +107,7 @@ public class OrderController {
 	@GetMapping("/orderDetail.do")
 	public void getOrderDetail(Model model, @RequestParam String orderNo) {
 		List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
+		log.debug("orderDetailMap = {}", orderDetailMap);
 		model.addAttribute("status", status);
 		model.addAttribute("orderDetail", orderDetailMap);
 	}

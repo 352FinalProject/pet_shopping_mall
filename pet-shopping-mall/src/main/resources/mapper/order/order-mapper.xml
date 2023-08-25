@@ -41,6 +41,7 @@
       <result column="delivery_fee" property="deliveryFee" />
       <result column="payment_method" property="paymentMethod" />
    </resultMap>
+   
 	<select id="adminOrderSearch" resultMap="orderAdminListDto">
 	  	SELECT
 		    ot.order_id,
@@ -96,12 +97,103 @@
 		    ot.order_id DESC
 	  </select>
 
+
+	<select id="adminStatisticsProduct" resultMap="orderAdminProductStatisticsDto">
+		SELECT
+		    p.product_id,
+		    p.product_name,
+		    p.category_id,
+		    pc.category_name,
+		    p.product_price,
+		    SUM(od.quantity) AS total_sold,
+		    SUM(od.quantity * p.product_price) AS total_price
+		FROM
+		    product p
+		    JOIN product_category pc ON p.category_id = pc.category_id
+		    JOIN product_detail pd ON p.product_id = pd.product_id
+		    LEFT JOIN order_detail od ON pd.product_detail_id = od.product_detail_id
+		    LEFT JOIN orderTbl ot ON od.order_id = ot.order_id
+		WHERE
+		    ot.payment_status = 1
+		GROUP BY
+		    p.product_id, p.product_name, p.category_id, pc.category_name, p.product_price
+		ORDER BY
+		    total_sold DESC
+  	</select>
+  	
+  	<select id="adminStatisticsPrice" resultMap="orderAdminProductStatisticsDto">
+		SELECT
+		    p.product_id,
+		    p.product_name,
+		    p.category_id,
+		    pc.category_name,
+		    p.product_price,
+		    SUM(od.quantity) AS total_sold,
+		    SUM(od.quantity * p.product_price) AS total_price
+		FROM
+		    product p
+		    JOIN product_category pc ON p.category_id = pc.category_id
+		    JOIN product_detail pd ON p.product_id = pd.product_id
+		    LEFT JOIN order_detail od ON pd.product_detail_id = od.product_detail_id
+		    LEFT JOIN orderTbl ot ON od.order_id = ot.order_id
+		WHERE
+		    ot.payment_status = 1
+		GROUP BY
+		    p.product_id, p.product_name, p.category_id, pc.category_name, p.product_price
+		ORDER BY
+		    total_price DESC
+  	</select>
+   <resultMap type="OrderAdminProductStatisticsDto" id="orderAdminProductStatisticsDto">
+      <id column="product_id" property="productId" />
+      <result column="product_name" property="productName" />
+      <result column="category_id" property="categoryId" />
+      <result column="category_name" property="categoryName" />
+      <result column="product_price" property="productPrice" />
+      <result column="total_sold" property="totalSold" />
+      <result column="total_price" property="totalPrice" />
+   </resultMap>
+   
+	<select id="adminStatisticsByMonthly" resultMap="orderAdminStatisticsByDateDto">
+		SELECT
+		    TO_CHAR(order_date, 'YYYY-MM') AS order_monthly,
+		    SUM(total_price) AS monthly_total_sales
+		FROM
+		    orderTbl
+		WHERE
+		    payment_status = 1
+		GROUP BY
+		    TO_CHAR(order_date, 'YYYY-MM')
+		ORDER BY
+		    TO_CHAR(order_date, 'YYYY-MM')
+  	</select>
+  	<select id="adminStatisticsByDaily" resultMap="orderAdminStatisticsByDateDto">
+	   	SELECT
+		    TO_CHAR(order_date, 'YYYY-MM-DD') AS order_daily,
+		    SUM(total_price) AS daily_total_sales
+		FROM
+		    orderTbl
+		WHERE
+		    payment_status = 1
+		GROUP BY
+		    TO_CHAR(order_date, 'YYYY-MM-DD')
+		ORDER BY
+		    TO_CHAR(order_date, 'YYYY-MM-DD')
+  	</select>
+  	
+   <resultMap type="OrderAdminStatisticsByDateDto" id="orderAdminStatisticsByDateDto">
+      <result column="order_monthly" property="orderMonthly" />
+      <result column="order_daily" property="orderDaily" />
+      <result column="daily_total_sales" property="dailyTotalSales" />
+      <result column="monthly_total_sales" property="monthlyTotalSales" />
+   </resultMap>
+
 <!--    <select id="getOrderList" resultType="orderHistoryDto">
    select
    	  ot.order_id,
       ot.order_date,
       ot.order_no,
       ot.order_status,
+      pd.product_id,
       (select product_name from product where product_id = pd.product_id)
       product_name,
       od.product_detail_id,
@@ -127,6 +219,7 @@
       ot.order_date,
       ot.order_no,
       ot.order_status,
+      pd.product_id,
       (select product_name from product where product_id = pd.product_id)
       product_name,
       od.product_detail_id,
@@ -265,6 +358,7 @@
       <result column="order_date" property="orderDate" />
       <result column="order_no" property="orderNo" />
       <result column="order_status" property="orderStatus" />
+      <result column="product_id" property="productId"/>
       <result column="product_name" property="productName" />
       <result column="product_detail_id" property="productDetailId" />
       <result column="quantity" property="quantity" />

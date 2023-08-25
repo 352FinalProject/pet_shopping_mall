@@ -20,5 +20,4 @@ public interface CouponService {
 	// 멤버 쿠폰 아이디 조회 (예라)
 	int findCouponById();
 
-
 }

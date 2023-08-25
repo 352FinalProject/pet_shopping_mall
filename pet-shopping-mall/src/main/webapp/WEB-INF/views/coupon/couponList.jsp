@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp"></jsp:include>
 <%-- 쿠폰 내역 (예라) --%>
@@ -17,6 +16,7 @@
 				<table class="service-product-utility-point">
 					<thead>
 						<tr>
+							<th>번호</th>
 							<th>내역</th>
 							<th>발급일</th>
 							<th>유효기간</th>
@@ -43,17 +43,17 @@
 			</div>
 		</div>
 	</div>
-	<nav aria-label="...">
-		<ul class="pagination pagination-sm">
-			<c:forEach begin="1" end="${totalPages}" var="pageNumber">
-				<li class="page-item ${page == pageNumber ? 'active' : ''}"><a
-					class="page-link"
-					href="${pageContext.request.contextPath}/servicecenter/inquiry/questionList.do?page=${pageNumber}">
-						<span class="page-number">${pageNumber}</span>
-				</a></li>
-			</c:forEach>
-		</ul>
-	</nav>
+<nav aria-label="...">
+  	<ul class="pagination pagination-sm">
+	    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+	        <li class="page-item ${page == pageNumber ? 'active' : ''}">
+	            <a class="page-link" href="${pageContext.request.contextPath}/servicecenter/inquiry/questionList.do?page=${pageNumber}">
+                    <span class="page-number">${pageNumber}</span>
+                </a>
+	        </li>
+	    </c:forEach>
+	</ul>
+</nav>
 </section>
 <script>
 </script>

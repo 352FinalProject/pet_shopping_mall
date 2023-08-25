@@ -63,7 +63,6 @@ public class CouponServiceImpl implements CouponService {
 	}
 
 	// 멤버 쿠폰 전체 조회 (예라)
-	@Override
 	public List<MemberCouponDto> findCouponsByMemberId(String memberId) {
 		return couponRepository.findCouponsByMemberId(memberId);
 	}
@@ -73,7 +72,6 @@ public class CouponServiceImpl implements CouponService {
 	public int findCouponById() {
 		return couponRepository.findCouponById();
 	}
-
 
 
 }

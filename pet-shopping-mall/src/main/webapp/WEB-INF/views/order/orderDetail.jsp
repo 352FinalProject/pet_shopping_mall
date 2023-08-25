@@ -3,8 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 <style>
@@ -65,6 +64,14 @@
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
 										<p>${status[index]}</p>
+										<c:if test="${status[index] == '배송완료'}">
+										  <c:forEach var="order" items="${orderMap}">
+											<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+											    <input type="hidden" name="productId" value="${order.key.productId}">
+										  	</c:forEach>
+											    <button class="review-btn" type="submit">리뷰쓰기</button>
+											</form>
+										</c:if>
 									</td>
 								</tr>
 								</c:forEach>

@@ -74,12 +74,12 @@ public class CartController {
 	}
 	
 	
-	// 상품 한 개 조회하려고 만든 메소드
+	// 장바구니 옵션 수정
 	@ResponseBody
-	@GetMapping("/findProdById.do")
-	public List<ProductDetail> findProdById(@RequestParam("id") String _id) {
+	@GetMapping("/findProductOptionById.do")
+	public List<CartInfoDto> findProductOptionById(@RequestParam("id") String _id) {
 		int id = Integer.parseInt(_id);
-		List<ProductDetail> productInfo =  cartService.findProdById(id);
+		List<CartInfoDto> productInfo =  cartService.findProductOptionById(id);
 		log.debug("productInfo = {}", productInfo);
 		return productInfo;
 	}

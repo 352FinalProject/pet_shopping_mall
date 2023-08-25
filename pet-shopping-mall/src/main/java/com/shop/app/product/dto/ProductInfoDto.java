@@ -31,6 +31,8 @@ public class ProductInfoDto {
 	private String optionValue;
 	private int additionalPrice;
 	private int saleState;
+	private String productName;
+	private int likeCnt;
 	
 	private ProductCategory productCategory; // 카테고리명 저장용
 	private Product product; // 상품정보 저장용

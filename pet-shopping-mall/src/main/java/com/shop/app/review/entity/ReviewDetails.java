@@ -29,7 +29,6 @@ public class ReviewDetails extends Review {
 	
 	private List<ImageAttachment> attachments;
 	private List<ImageAttachmentMapping> attachmentMapping;
-
-
+	
 
 }

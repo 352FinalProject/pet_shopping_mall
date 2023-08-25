@@ -11,7 +11,7 @@
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/order/orderList.do">주문내역</a></li>
 				<li><a href="${pageContext.request.contextPath}/order/cancelOrderList.do">취소내역</a></li>
-				<li><a href="${pageContext.request.contextPath}/">찜한상품</a></li>
+				<li><a href="${pageContext.request.contextPath}/wishlist/myWishlist.do">찜한상품</a></li>
 				<li><a href="<%= request.getContextPath() %>/servicecenter/inquiry/questionList.do">내가 쓴 문의</a></li>
 				<li><a href="${pageContext.request.contextPath}/review/reviewList.do">내가 쓴 리뷰</a></li>
 			</ul>

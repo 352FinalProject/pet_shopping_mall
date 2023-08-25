@@ -13,6 +13,8 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.order.dto.OrderAdminListDto;
+import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
+import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.CancelOrder;
@@ -76,10 +78,23 @@ public interface OrderRepository {
 
 	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
 
+	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
+	List<OrderAdminProductStatisticsDto> adminStatisticsProduct();
+
+	// 관리자페이지 상품매출통계 조회 - 매출액 (대원)
+	List<OrderAdminProductStatisticsDto> adminStatisticsPrice();
+
+	// 관리자페이지 날짜별 상품매출통계 조회 -일별 (대원)
+	List<OrderAdminStatisticsByDateDto> adminStatisticsByDaily();
+
+	// 관리자페이지 날짜별 상품매출통계 조회 - 월별 (대원)
+	List<OrderAdminStatisticsByDateDto> adminStatisticsByMonthly();
+
 	@Delete("delete from orderTbl where order_no = #{orderNo}")
 	int deleteOrder(String orderNo);
 
 	List<OrderHistoryDto> getOrderDetail(String orderNo);
+
 
 	
 }
