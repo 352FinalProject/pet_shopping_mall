@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
@@ -87,7 +88,8 @@ public class ReviewController {
 			@RequestParam(defaultValue = "1") int page,
 			@AuthenticationPrincipal MemberDetails member,
 			@RequestParam(name = "period", required = false) Integer period,
-			Model model) {
+			Model model
+			) {
 
 		int limit = 5;
 
@@ -123,10 +125,12 @@ public class ReviewController {
 //		
 //		
 //		
-//		orderHistories = orderService.getOrderList(memberId);
-			
-//		log.debug("orderHistories = {}", orderHistories);
-//		model.addAttribute("orderHistories", orderHistories);
+		/*
+		 * orderHistories = orderService.getOrderList(memberId);
+		 * 
+		 * log.debug("orderHistories = {}", orderHistories);
+		 * model.addAttribute("orderHistories", orderHistories);
+		 */
 		
 	
 	}
@@ -134,20 +138,20 @@ public class ReviewController {
 
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
-	public void reviewCreate() {
-
+	public void reviewCreate(@RequestParam("productId") int productId, Model model) {
+		model.addAttribute("productId", productId);
+	   
 	}
 
 	// 리뷰 작성
 	@PostMapping("/reviewCreate.do")
-	public String reviewCreate(
+	public String reviewCreate(@ModelAttribute
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
-			@RequestParam int productId,
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
 			Point point, 
 			Pet pet,
-			Principal principal)
+			Principal principal, Model model)
 					throws IllegalStateException, IOException {
 
 		// 1. 파일저장
@@ -186,6 +190,7 @@ public class ReviewController {
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
 				.petId(pet.getPetId())
+				.productId(_review.getProductId()) // 리뷰작성할 때 productId 넘기기 (예라)
 				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
@@ -215,19 +220,19 @@ public class ReviewController {
 		// Product 객체 생성
 		Product product = new Product();
 		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
+		
 		log.debug("findProduct = {}", findProduct); 
 		
 		for(Product p : findProduct) {
 			product.setProductId(p.getProductId());
 		}
 		
-		// int productId = _review.getProductId();
-		
-		reviews.setProductId(productId);
-		log.debug("product Id reviews = {}", reviews);
 		int reviewId = reviewService.insertReview(reviews);
+		
+		log.debug("_review = {}", _review);
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 
+		
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
 		point.setReviewId(_review.getReviewId());
