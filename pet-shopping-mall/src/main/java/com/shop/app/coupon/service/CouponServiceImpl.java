@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.shop.app.coupon.dto.MemberCouponDto;
 import com.shop.app.coupon.entity.Coupon;
 import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.repository.CouponRepository;
@@ -62,11 +63,15 @@ public class CouponServiceImpl implements CouponService {
 	}
 
 	// 멤버 쿠폰 전체 조회 (예라)
-	@Override
-	public List<MemberCoupon> findMemberCouponAll(MemberCoupon memberCoupon) {
-		return couponRepository.findMemberCouponAll(memberCoupon);
+	public List<MemberCouponDto> findCouponsByMemberId(String memberId) {
+		return couponRepository.findCouponsByMemberId(memberId);
 	}
 
+	// 멤버 쿠폰 아이디 조회 (예라)
+	@Override
+	public int findCouponById() {
+		return couponRepository.findCouponById();
+	}
 
 
 }
