@@ -19,6 +19,8 @@ select * from order_detail;
 select * from product_detail;
 select * from product;
 select * from member_coupon;
+select * from question;
+select * from answer;
 
 select count(*) from member_coupon where member_id = 'member4';
 
@@ -104,7 +106,7 @@ insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
-insert into authority values ('member1', 'ROLE_ADMIN');
+insert into authority values ('member3', 'ROLE_ADMIN');
 
 ------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
