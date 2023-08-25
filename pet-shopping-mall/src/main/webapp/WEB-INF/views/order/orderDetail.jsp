@@ -16,7 +16,7 @@
 /* 아코디언 스타일 */
 .detail-row {
     display: none;
-    transition: display 0.3s ease; /* 펼치기/접기 애니메이션 효과 추가 */
+    transition: max-height 0.3s ease; /* 펼치기/접기 애니메이션 효과 추가 */
 }
 
 .detail-row.show {
