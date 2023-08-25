@@ -14,7 +14,7 @@ public interface CartService {
 
 	int deleteCartAll(String memberId);
 
-	List<ProductDetail> findProdById(int id);
+	List<CartInfoDto> findProductOptionById(int id);
 
 	int updateCart(CartItem cartitem);
 

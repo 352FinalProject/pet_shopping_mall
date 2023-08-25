@@ -477,7 +477,6 @@ end;
 /
 
 
-
 -----------------------------------------
 -- 이용약관 쿼리
 -----------------------------------------
@@ -495,3 +494,15 @@ values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
 -- 생일 축하 10% 쿠폰
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
 values (2, '생일축하 10% 할인 쿠폰', null, 10);
+
+
+----------------------------------------------
+-- 카테고리
+----------------------------------------------
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '간식');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');

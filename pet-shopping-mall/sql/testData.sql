@@ -298,11 +298,12 @@ insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '
 
 insert into cart values(1, 'honggd');
 
+select * from cart;
 insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
 insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
 select * from cartitem;
 select * from member;
-
+delete from cartitem where cart_id = 5;
 select * from cancel_order;
 select 
     *
@@ -736,3 +737,24 @@ select * from member;
 
 delete from member where email='hulk1512@naver.com';
 commit;
+
+
+select 
+    p.product_id,
+    pd.product_detail_id,
+    p.product_name,
+    pd.option_name,
+    pd.option_value,
+    (select sum(product_price) from product where product_id = p.product_id) product_price,
+    (select sum(additional_price) from product_detail where product_detail_id = pd.product_detail_id) additional_price,
+	ia.image_renamed_filename
+from 
+    product p 
+    left join 
+        product_detail pd on p.product_id = pd.product_id
+    left join 
+	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+    left join
+	    image_attachment ia ON iam.image_id = ia.image_id
+where 
+    p.product_id = 1;
