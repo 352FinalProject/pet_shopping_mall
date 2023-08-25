@@ -65,6 +65,7 @@ drop table member_coupon;
 --drop table pet cascade constraints;
 --drop table breed cascade constraints;
 --drop table order_detail cascade constraints;
+--drop table notification cascade constraints;
 --
 --
 --drop sequence seq_question_id;
@@ -431,6 +432,17 @@ create table member_coupon (
  constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
 );
 
+-- 알림 테이블
+create table notification (
+    id number,
+    noti_category number, -- // 0.공지사항 1.주문알림 2.구독알림 3.기타알림
+    noti_content varchar2(2000),
+    noti_created_at timestamp default systimestamp not null,
+    member_id varchar2(50),
+    constraint pk_notification_id primary key(id),
+    constraint fk_notification_member_id foreign key(member_id) references member(member_id) on delete cascade    
+);
+
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -457,6 +469,7 @@ create sequence seq_member_coupon_id;
 create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
+create sequence seq_notification_id;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger

@@ -1,6 +1,6 @@
 package com.shop.app.order.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class Order {
 	private int orderId; // 시퀀스
 	private String orderNo; // 주문번호 (ex 230811-001)
 	private String memberId;
-	private Date orderDate; // 주문날짜
+	private Timestamp orderDate; // 주문날짜
 	
 	// 주문 상태
 	// 1: 결제완료 / 2: 배송준비 / 3: 배송중 / 4: 배송완료 / 5: 주문취소(환불) / 6: 구매확정
