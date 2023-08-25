@@ -85,9 +85,12 @@ pageEncoding="UTF-8"%>
         <c:if test="${empty productDetails}">
         	<!-- 상품구입 개수 입력 -->
         	<div class="purchase-cnt">
-        		<button class="quantity-down">-</button>
-        			<span>1</span>
-        		<button class="quantity-up">+</button>
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
         	</div>
         	
         </c:if>
@@ -102,6 +105,17 @@ pageEncoding="UTF-8"%>
 	        	</c:forEach>
 	          </select>
 	        </div>
+	        
+            	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
+        	</div>
+	        
         </c:if>
         <div class="product-price">
           <div class="product-price-desc">
@@ -295,6 +309,27 @@ pageEncoding="UTF-8"%>
   </div>
 </section>
 <script>
+/* 상품수량에 따라 가격 바꾸기(수경) */
+
+/* 수량버튼 */
+const quantityInput = document.querySelector('.quantity-input');
+const minusButton = document.querySelector('.minus');
+const plusButton = document.querySelector('.plus');
+
+minusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+        currentValue--;
+        quantityInput.value = currentValue;
+    }
+});
+
+plusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    currentValue++;
+    quantityInput.value = currentValue;
+});
+
   // 리뷰 페이지 아코디언 효과
   /* const ques = document.querySelectorAll(".que");
 const anws = document.querySelectorAll(".anw");
