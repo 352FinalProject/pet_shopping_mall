@@ -21,40 +21,40 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 --
---drop table review;
---drop table image_attachment;
---drop table image_attachment_mapping;
---drop table answer;
---drop table question;
---drop table point;
---drop table discount_rule;
---drop table product_category;
---drop table product;
---drop table product_detail;
---drop table cart;
---drop table payment;
---drop table cartitem;
---drop table orderTbl;
---drop table order_detail;
---drop table refund;
---drop table cancel_order;
---drop table authority;
---drop table product_category;
---drop table community;
---drop table wishlist;
---drop table pet;
---drop table persistent_logins;
---drop table image_attachment_mapping;
---drop table member;
---drop table ordertbl;
---drop table return;
---drop table terms;
---drop table terms_history;
---drop table chat;
---drop table chat_room;
---drop table breed;
---drop table coupon;
---drop table member_coupon;
+drop table review;
+drop table image_attachment;
+drop table image_attachment_mapping;
+drop table answer;
+drop table question;
+drop table point;
+drop table discount_rule;
+drop table product_category;
+drop table product;
+drop table product_detail;
+drop table cart;
+drop table payment;
+drop table cartitem;
+drop table orderTbl;
+drop table order_detail;
+drop table refund;
+drop table cancel_order;
+drop table authority;
+drop table product_category;
+drop table community;
+drop table wishlist;
+drop table pet;
+drop table persistent_logins;
+drop table image_attachment_mapping;
+drop table member;
+drop table ordertbl;
+drop table return;
+drop table terms;
+drop table terms_history;
+drop table chat;
+drop table chat_room;
+drop table breed;
+drop table coupon;
+drop table member_coupon;
 
 --
 ------ 외래키 붙어있는 테이블삭제
@@ -117,7 +117,6 @@ create table member (
     subscribe char(1) default 'N' not null,
     constraints pk_member_id primary key(member_id)
 );
-
 
 -- 권한 테이블
 create table authority(
@@ -496,11 +495,7 @@ values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
 values (2, '생일축하 10% 할인 쿠폰', null, 10);
 
-insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('pet1234', '1234', '덩셍훈', '01013366334', 'dfhdfg@naver.com', '서울시 송파구 메메동', to_date('1987-01-01', 'YYYY-MM-DD'), 'N');
-insert into authority values ('pet123', 'ROLE_ADMIN');
 
-select * from member;
 ----------------------------------------------
 -- 카테고리
 ----------------------------------------------
