@@ -81,12 +81,42 @@ pageEncoding="UTF-8"%>
         </div>
         <hr class="hr-line" />
         <!-- 선택 옵션 -->
-        <div>
-          <select name="product-option">
-            <option value="">[필수]옵션선택</option>
-            <option value="">귀여워요</option>
-          </select>
-        </div>
+        <!-- 옵션 없을 때 -->
+        <c:if test="${empty productDetails}">
+        	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
+        	</div>
+        	
+        </c:if>
+        <!-- 옵션 있을 때 -->
+        <c:if test="${not empty productDetails}">
+	        <div>
+	          <select name="product-option">
+	            <option value="">[필수]옵션선택</option>
+	            <!-- 옵션나열 -->
+	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+	            	<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        	</c:forEach>
+	          </select>
+	        </div>
+	        
+            	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
+        	</div>
+	        
+        </c:if>
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -279,6 +309,27 @@ pageEncoding="UTF-8"%>
   </div>
 </section>
 <script>
+/* 상품수량에 따라 가격 바꾸기(수경) */
+
+/* 수량버튼 */
+const quantityInput = document.querySelector('.quantity-input');
+const minusButton = document.querySelector('.minus');
+const plusButton = document.querySelector('.plus');
+
+minusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+        currentValue--;
+        quantityInput.value = currentValue;
+    }
+});
+
+plusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    currentValue++;
+    quantityInput.value = currentValue;
+});
+
   // 리뷰 페이지 아코디언 효과
   /* const ques = document.querySelectorAll(".que");
 const anws = document.querySelectorAll(".anw");

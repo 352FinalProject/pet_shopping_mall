@@ -6,7 +6,18 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
     <style>
+.detail-row {
+    display: none;
+    background-color: #f9f9f9;
+}
 
+.detail-row.show {
+    display: table-row;
+}
+
+.detail-content {
+    padding: 10px;
+}
 	</style>
 	<section class="common-section" id="#">
 		<div class="common-title">주문내역</div>
