@@ -1,6 +1,6 @@
 ------------------ member insert ---------------------------
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('admin', '1234', 'ê´€ë¦¬ì', '01011112222', 'admin@naver.com', 'ì„œìš¸ì‹œ ê°•ë‚¨êµ¬ ì—­ì‚¼ë™', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
+values ('admin', '1234', '°ü¸®ÀÚ', '01011112222', 'admin@naver.com', '¼­¿ï½Ã °­³²±¸ ¿ª»ïµ¿', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 select * from member;
 select * from point;
 select * from pet;
@@ -23,80 +23,80 @@ select * from member_coupon;
 select count(*) from member_coupon where member_id = 'member4';
 
 --==============================
---sample data ìƒì„±
+--sample data »ı¼º
 --==============================
 -- member insert
 insert into member (member_id, password, name, phone, email, enroll_date, address, birthday, subscribe)
-values ('member1', '$2a$10$V6DMY985chA4/fMc/vY20e15i/OaPr.GpQ0v2W0zNqshEWutOxm9q', 'ê¹€ìƒí›ˆ', '01012345678', 'kim@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì• ëƒë™', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
+values ('member1', '$2a$10$V6DMY985chA4/fMc/vY20e15i/OaPr.GpQ0v2W0zNqshEWutOxm9q', '±è»óÈÆ', '01012345678', 'kim@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¾Ö³Äµ¿', to_date('1977-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member2', '1234', 'ëŒ€í•œí›ˆ', '01028283939', 'ghjwf@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë§ˆë‹ˆë™', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
+values ('member2', '1234', '´ëÇÑÈÆ', '01028283939', 'ghjwf@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¸¶´Ïµ¿', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member3', '1234', 'ê±´ê³¤í›ˆ', '01011223344', 'qwerrt@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë² ë‚´ë™', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
+values ('member3', '1234', '°Ç°ïÈÆ', '01011223344', 'qwerrt@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ º£³»µ¿', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member4', '1234', 'ë©ì…í›ˆ', '010133663344', 'dfhdfg@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë©”ë©”ë™', to_date('1987-01-01', 'YYYY-MM-DD'), 'N');
+values ('member4', '1234', 'µ¢¼ÄÈÆ', '010133663344', 'dfhdfg@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¸Ş¸Şµ¿', to_date('1987-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member5', '1234', 'ëˆ„ë‚˜í›ˆ', '01012347755', 'kim@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì°¨ì°¨ë™', to_date('1993-01-01', 'YYYY-MM-DD'), 'N');
+values ('member5', '1234', '´©³ªÈÆ', '01012347755', 'kim@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ Â÷Â÷µ¿', to_date('1993-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member6', '1234', 'ì‚¼ì´Œí›ˆ', '01099007766', 'fghew@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì¬ì¬ë™', to_date('1992-01-01', 'YYYY-MM-DD'), 'N');
+values ('member6', '1234', '»ïÃÌÈÆ', '01099007766', 'fghew@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ÀçÀçµ¿', to_date('1992-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member7', '1234', 'í• ë©ˆí›ˆ', '01088776655', 'rtyhm@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì–´ì–´ë™', to_date('1991-01-01', 'YYYY-MM-DD'), 'N');
+values ('member7', '1234', 'ÇÒ¸ØÈÆ', '01088776655', 'rtyhm@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¾î¾îµ¿', to_date('1991-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member8', '1234', 'í• ì•„ë²„ì§€í›ˆ', '01012123232', 'kdfhim@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ í•˜í•˜ë™', to_date('1994-01-01', 'YYYY-MM-DD'), 'Y');
+values ('member8', '1234', 'ÇÒ¾Æ¹öÁöÈÆ', '01012123232', 'kdfhim@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ÇÏÇÏµ¿', to_date('1994-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member9', '1234', 'ë”¸í›ˆ', '01011556633', 'kinjmm@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë§¤ë§¤ë™', to_date('1997-01-01', 'YYYY-MM-DD'), 'Y');
+values ('member9', '1234', 'µşÈÆ', '01011556633', 'kinjmm@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¸Å¸Åµ¿', to_date('1997-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member10', '1234', 'ì•„ë“¤í›ˆ', '01012322678', 'kixvm@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë‚´ë‚´ë™', to_date('1999-01-01', 'YYYY-MM-DD'), 'N');
+values ('member10', '1234', '¾ÆµéÈÆ', '01012322678', 'kixvm@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ³»³»µ¿', to_date('1999-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member11', '1234', 'ì•„ë¹ í›ˆ', '01012552278', 'kewim@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë°°ë°°ë™', to_date('1993-01-01', 'YYYY-MM-DD'), 'N');
+values ('member11', '1234', '¾ÆºüÈÆ', '01012552278', 'kewim@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¹è¹èµ¿', to_date('1993-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member12', '1234', 'ì—„ë§ˆí›ˆ', '01012342238', 'ghjkim@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë§ˆìë™', to_date('1994-01-01', 'YYYY-MM-DD'), 'N');
+values ('member12', '1234', '¾ö¸¶ÈÆ', '01012342238', 'ghjkim@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¸¶ÀÚµ¿', to_date('1994-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member13', '1234', 'ì´ëª¨í›ˆ', '01012123418', 'svxkim@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ìš°ë™', to_date('1996-01-01', 'YYYY-MM-DD'), 'N');
+values ('member13', '1234', 'ÀÌ¸ğÈÆ', '01012123418', 'svxkim@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¿ìµ¿', to_date('1996-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('member14', '1234', 'ê³ ëª¨í›ˆ', '01012244238', 'qwewkim@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì„ë¹„ì´Œë™', to_date('1999-01-01', 'YYYY-MM-DD'), 'Y');
+values ('member14', '1234', '°í¸ğÈÆ', '01012244238', 'qwewkim@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¼®ºñÃÌµ¿', to_date('1999-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('honggd', '1234', 'í™ì§€ë””', '01014567828', 'honggd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ í•˜í•˜ë™', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
+values ('honggd', '1234', 'È«Áöµğ', '01014567828', 'honggd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ÇÏÇÏµ¿', to_date('1991-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('hogd', '1234', 'í™ë°•ì‚¬', '01015314318', 'honggd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ íƒ€íŒŒë™', to_date('1978-01-01', 'YYYY-MM-DD'), 'N');
+values ('hogd', '1234', 'È«¹Ú»ç', '01015314318', 'honggd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ Å¸ÆÄµ¿', to_date('1978-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('ho12d', '1234', 'í™ì‚¬', '01015315558', 'ho12d@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ìì¹´ë™', to_date('1989-01-01', 'YYYY-MM-DD'), 'Y');
+values ('ho12d', '1234', 'È«»ç', '01015315558', 'ho12d@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ÀÚÄ«µ¿', to_date('1989-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('haad', '1234', 'í™ë°•', '01015315538', 'haad@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì‚¬ì•„ë™', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
+values ('haad', '1234', 'È«¹Ú', '01015315538', 'haad@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ »ç¾Æµ¿', to_date('1998-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('hoeerd', '1234', 'í™ì–‘íŒŒ', '01012314328', 'hoeerd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë§ˆë°”ë™', to_date('1988-01-01', 'YYYY-MM-DD'), 'Y');
+values ('hoeerd', '1234', 'È«¾çÆÄ', '01012314328', 'hoeerd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ¸¶¹Ùµ¿', to_date('1988-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('htruyd', '1234', 'í™ëŒ€íŒŒ', '01011231238', 'htruyd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë‹¤ë¼ë™', to_date('1999-01-01', 'YYYY-MM-DD'), 'N');
+values ('htruyd', '1234', 'È«´ëÆÄ', '01011231238', 'htruyd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ´Ù¶óµ¿', to_date('1999-01-01', 'YYYY-MM-DD'), 'N');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('hfnd', '1234', 'í™ìª½íŒŒ', '01015123458', 'hfnd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ê°€ë‚˜ë™', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
+values ('hfnd', '1234', 'È«ÂÊÆÄ', '01015123458', 'hfnd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ °¡³ªµ¿', to_date('1995-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('hsssd', '1234', 'í™ë‹¹ê·¼', '01015314128', 'hsssd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì´Œë™', to_date('1994-01-01', 'YYYY-MM-DD'), 'Y');
+values ('hsssd', '1234', 'È«´ç±Ù', '01015314128', 'hsssd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ÃÌµ¿', to_date('1994-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('hoqfghhd', '1234', 'í™ë§ˆëŠ˜', '01015124328', 'hoqfghhd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë‹ˆì´Œë™', to_date('1992-01-01', 'YYYY-MM-DD'), 'Y');
+values ('hoqfghhd', '1234', 'È«¸¶´Ã', '01015124328', 'hoqfghhd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ´ÏÃÌµ¿', to_date('1992-01-01', 'YYYY-MM-DD'), 'Y');
 
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
-values ('h123qd', '1234', 'í™ë‹¹ë¬´', '01015312328', 'h123qd@naver.com', 'ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ë‚˜ë™', to_date('1991-07-01', 'YYYY-MM-DD'), 'Y');
+values ('h123qd', '1234', 'È«´ç¹«', '01015312328', 'h123qd@naver.com', '¼­¿ï½Ã ¼ÛÆÄ±¸ ³ªµ¿', to_date('1991-07-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
 insert into authority values ('abcde', 'ROLE_USER');
@@ -108,79 +108,79 @@ insert into authority values ('member1', 'ROLE_ADMIN');
 
 ------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
-values (seq_question_question_id.nextval, 'ìš°ë™ì¹œì´ ë¨¸ì—ìš”?', 'ìƒí’ˆ' ,'member1', 'kh@naver.com', 'ìš°ë™ì¹œì´ ë¨¼ê°€ìš”???? ìš°ë™ì¹œì´ ë¨¼ê°€ìš”???? ìš°ë™ì¹œì´ ë¨¼ê°€ìš”???? ìš°ë™ì¹œì´ ë¨¼ê°€ìš”????', to_date('18/02/14', 'rr/mm/dd'));
+values (seq_question_question_id.nextval, '¿ìµ¿Ä£ÀÌ ¸Ó¿¡¿ä?', '»óÇ°' ,'member1', 'kh@naver.com', '¿ìµ¿Ä£ÀÌ ¸Õ°¡¿ä???? ¿ìµ¿Ä£ÀÌ ¸Õ°¡¿ä???? ¿ìµ¿Ä£ÀÌ ¸Õ°¡¿ä???? ¿ìµ¿Ä£ÀÌ ¸Õ°¡¿ä????', to_date('18/02/14', 'rr/mm/dd'));
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
-values (seq_question_question_id.nextval, 'ë°°ê°€ ê³ íŒŒìš”', 'ë°°ì†¡', 'member1', 'kh@daum.net', 'ë°°ê°€ ê³ í”„ë‹¤', to_date('18/02/14', 'rr/mm/dd'));
+values (seq_question_question_id.nextval, '¹è°¡ °íÆÄ¿ä', '¹è¼Û', 'member1', 'kh@daum.net', '¹è°¡ °íÇÁ´Ù', to_date('18/02/14', 'rr/mm/dd'));
 
 ------------------ answer insert ---------------------------
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
-values (seq_answer_answer_id.nextval, 'ê´€ë¦¬ì', 1, 'ìš°ë™ì¹œì€ ìš°ë¦¬ì§‘ë™ë¬¼ì¹œêµ¬ì˜ ì¤„ì„ë§ì…ë‹ˆë‹¤~', sysdate);
+values (seq_answer_answer_id.nextval, '°ü¸®ÀÚ', 1, '¿ìµ¿Ä£Àº ¿ì¸®Áıµ¿¹°Ä£±¸ÀÇ ÁÙÀÓ¸»ÀÔ´Ï´Ù~', sysdate);
 
 insert into answer (answer_id, answer_admin_name, answer_question_id, answer_content, answer_created_at)
-values (seq_answer_answer_id.nextval, 'ê´€ë¦¬ì', 2, 'ë°°ê³ í”„ë©´ ë°¥ì„ ë“œì„¸ìš”', sysdate);
+values (seq_answer_answer_id.nextval, '°ü¸®ÀÚ', 2, '¹è°íÇÁ¸é ¹äÀ» µå¼¼¿ä', sysdate);
 
 ------------------ point insert ---------------------------
 INSERT INTO point (point_id, point_member_id, point_current, point_type, point_amount)
-VALUES (2, 'ì‚¬ìš©ì2', 50, 'ì‚¬ìš©', -500);
+VALUES (2, '»ç¿ëÀÚ2', 50, '»ç¿ë', -500);
 
 ------------------ product insert ---------------------------
--- ì¹´í…Œê³ ë¦¬ ìƒì„±
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ì‚¬ë£Œ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ê°„ì‹');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'íŒ¨ì…˜ìš©í’ˆ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ì‚°ì±…ìš©í’ˆ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ìœ„ìƒìš©í’ˆ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ê³ ì–‘ì´');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ê¸°íƒ€ìš©í’ˆ');
+-- Ä«Å×°í¸® »ı¼º
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '»ç·á');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '°£½Ä');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ÆĞ¼Ç¿ëÇ°');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '»êÃ¥¿ëÇ°');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'À§»ı¿ëÇ°');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '°í¾çÀÌ');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '±âÅ¸¿ëÇ°');
 select * from product_category;
 
--- ì œí’ˆë“±ë¡ (ì´ë¯¸ì§€ëŠ” í˜„ì¬ null ì²˜ë¦¬)
+-- Á¦Ç°µî·Ï (ÀÌ¹ÌÁö´Â ÇöÀç null Ã³¸®)
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 1, 'ì˜¤ë¦¬ì   í¼í”¼', 32000, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
+    values (seq_product_id.nextval, 1, '¿À¸®Á¨ ÆÛÇÇ', 32000, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 3, 'í”„ë¦´í”„ë¦´ ì›í”¼ìŠ¤ ì†Œí˜•ê²¬', 20000, null, default, null, 31, 156);
+    values (seq_product_id.nextval, 3, 'ÇÁ¸±ÇÁ¸± ¿øÇÇ½º ¼ÒÇü°ß', 20000, null, default, null, 31, 156);
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 4, 'ë§ë‘ í•˜ë„¤ìŠ¤', 15000, null, default, null, default, default);
+    values (seq_product_id.nextval, 4, '¸»¶û ÇÏ³×½º', 15000, null, default, null, default, default);
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 6, 'ì¸„ë¦…ì¸„ë¦… ì¸„ë¥´ 10ê°œì…', 20000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 6, 'Ãò¸¨Ãò¸¨ Ãò¸£ 10°³ÀÔ', 20000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
     
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 6, 'ê°œê³ ê¸° ê°œê»Œ', 50000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 6, '°³°í±â °³²­', 50000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
     
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 6, 'ê³ ì–‘ì´ê³ ê¸°', 21000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 6, '°í¾çÀÌ°í±â', 21000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 2, 'ì¹´ì¹´ì˜¤74í¼', 26000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 2, 'Ä«Ä«¿À74ÆÛ', 26000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 3, 'ë¬¼ë¬¼ë¬¼', 31000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 3, '¹°¹°¹°', 31000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 4, 'ì—ì–´íŒŸ', 43000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 4, '¿¡¾îÆÌ', 43000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 5, 'ì•„ì´í°', 32000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 5, '¾ÆÀÌÆù', 32000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
 insert into product (product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 6, 'ëƒ‰ì¥ê³ ', 16000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 6, '³ÃÀå°í', 16000, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
     
     
 select * from product;
 
--- ì œí’ˆìƒì„¸ ë“±ë¡
+-- Á¦Ç°»ó¼¼ µî·Ï
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
     values (seq_product_detail_id.nextval, 1, null, null, default, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
-    values (seq_product_detail_id.nextval, 9, 'ìƒ‰', 'ë¹¨ê°•', default, 1);
+    values (seq_product_detail_id.nextval, 9, '»ö', '»¡°­', default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
-    values (seq_product_detail_id.nextval, 4, 'ìƒ‰', 'ë¯¼íŠ¸', default, 1);
+    values (seq_product_detail_id.nextval, 4, '»ö', '¹ÎÆ®', default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
     values (seq_product_detail_id.nextval, 5, null, null, default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
-    values (seq_product_detail_id.nextval, 4, 'ë§›', 'ë‹­ê³ ê¸°ë§›', default, 1);
+    values (seq_product_detail_id.nextval, 4, '¸À', '´ß°í±â¸À', default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
-    values (seq_product_detail_id.nextval, 4, 'ë§›', 'ì—°ì–´ë§›', 2000, 1);
+    values (seq_product_detail_id.nextval, 4, '¸À', '¿¬¾î¸À', 2000, 1);
 select * from product_detail;
 commit;
 
--- ì£¼ë¬¸í…Œì´ë¸” ë“±ë¡
+-- ÁÖ¹®Å×ÀÌºí µî·Ï
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
     values (seq_orderTbl_id.nextval, '230811-001', 'honggd', sysdate, 0,  0, 35000, 3000, 0, 38000, null);
 
@@ -231,13 +231,13 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
-values (seq_point_id.nextval, 'member1', 3000, 'íšŒì›ê°€ì…', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_id.nextval, 'member1', 3000, 'È¸¿ø°¡ÀÔ', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
-values (seq_point_id.nextval, 'member1', 3000, 'êµ¬ë§¤ì ë¦½', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_id.nextval, 'member1', 3000, '±¸¸ÅÀû¸³', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
-values (seq_point_point_id.nextval, 'member1', 800, 'ì‚¬ìš©', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_point_id.nextval, 'member1', 800, '»ç¿ë', -200, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 
 commit;
@@ -286,12 +286,12 @@ select * from member;
 select * from point where point_member_id = 'member1';
 delete from point where point_id = 2;
 
--- ì¥ë°”êµ¬ë‹ˆ í…ŒìŠ¤íŠ¸ ë°ì´í„°
+-- Àå¹Ù±¸´Ï Å×½ºÆ® µ¥ÀÌÅÍ
 select * from product_category;
-insert into product_category values(1, 'ì‚¬ë£Œ');
-insert into product_category values(2, 'ì˜·');
-insert into product values(seq_product_id.nextval, 1, 'ì—ë¥´ë©”ìŠ¤ ì‚¬ë£Œ', 15000, 1, 1, systimestamp, systimestamp, 111, 111);
-insert into product values(seq_product_id.nextval, 2, 'ìœ¡í¬', 17000, 2, 2, systimestamp, systimestamp, 222, 222);
+insert into product_category values(1, '»ç·á');
+insert into product_category values(2, '¿Ê');
+insert into product values(seq_product_id.nextval, 1, '¿¡¸£¸Ş½º »ç·á', 15000, 1, 1, systimestamp, systimestamp, 111, 111);
+insert into product values(seq_product_id.nextval, 2, 'À°Æ÷', 17000, 2, 2, systimestamp, systimestamp, 222, 222);
 select * from cartitem;
 select * from cart;
 update cartitem set product_detail_id = 1 where cart_id = (select cart_id from cart where member_id='honggd');
@@ -312,9 +312,9 @@ select * from payment;
 
 select * from product_detail;
 
-insert into product_detail values(seq_product_detail_id.nextval, 1, 'ì¶”ê°€1', 'ê¸ˆì¹  ì¶”ê°€', 190000, 2);
-insert into product_detail values(seq_product_detail_id.nextval, 2, 'ì¶”ê°€1', 'íŒŒë€ë§í† ', 1900, 9);
-insert into product_detail values(seq_product_detail_id.nextval, 2, 'ì¶”ê°€2', 'ë¹¨ê°„ë§í† ', 1900, 9);
+insert into product_detail values(seq_product_detail_id.nextval, 1, 'Ãß°¡1', '±İÄ¥ Ãß°¡', 190000, 2);
+insert into product_detail values(seq_product_detail_id.nextval, 2, 'Ãß°¡1', 'ÆÄ¶õ¸ÁÅä', 1900, 9);
+insert into product_detail values(seq_product_detail_id.nextval, 2, 'Ãß°¡2', '»¡°£¸ÁÅä', 1900, 9);
 
 insert into cart values(1, 'honggd');
 
@@ -344,7 +344,7 @@ JOIN
     product p ON pd.product_id = p.product_id;
     
 select * from cart;
--- ì´ë ‡ê²Œ ë¶ˆëŸ¬ì˜¤ê¸°..    
+-- ÀÌ·¸°Ô ºÒ·¯¿À±â..    
 select 
     ci.cartitem_id,
     p.product_id,
@@ -363,7 +363,7 @@ where
     
     
 
--- ì£¼ë¬¸ ì·¨ì†Œ ë‚´ì—­ ë¶ˆëŸ¬ì˜¤ê¸°
+-- ÁÖ¹® Ãë¼Ò ³»¿ª ºÒ·¯¿À±â
 select
     m.name,
     m.phone,
@@ -468,7 +468,7 @@ values (
     seq_point_id.nextval,
     'member1',
     0,
-    'êµ¬ë§¤ì‚¬ìš©',
+    '±¸¸Å»ç¿ë',
     -3000
 );
 
@@ -480,7 +480,7 @@ alter table point add review_id number;
 alter table point add constraint fk_point_review_id foreign key (review_id) references review(review_id) on delete cascade;
 
 -------------------------------------------------
--- ì£¼ë¬¸ì¡°íšŒìš© ì¿¼ë¦¬
+-- ÁÖ¹®Á¶È¸¿ë Äõ¸®
 -------------------------------------------------
 SELECT
     ot.order_id,
@@ -505,7 +505,7 @@ LEFT JOIN
     payment pay ON ot.order_id = pay.order_id;
     
 -------------------------------------------------------------------
--- ì£¼ë¬¸ì¡°íšŒ í…ŒìŠ¤íŠ¸ ì¿¼ë¦¬ 
+-- ÁÖ¹®Á¶È¸ Å×½ºÆ® Äõ¸® 
 -------------------------------------------------
 SELECT
     ot.order_id,
@@ -553,12 +553,12 @@ insert into order_detail (order_id, product_detail_id, quantity) values (22,6,de
 insert into order_detail (order_id, product_detail_id, quantity) values (23,2,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (26,1,default);
 ------------------------
-insert into product_detail values(seq_product_detail_id.nextval, 1, 'ì¶”ê°€1', 'ê¸ˆì¹  ì¶”ê°€', 190000, 2);
-insert into product_detail values(seq_product_detail_id.nextval, 2, 'ì¶”ê°€2', 'ë¹¨ê°„ë§í† ', 1900, 9);
+insert into product_detail values(seq_product_detail_id.nextval, 1, 'Ãß°¡1', '±İÄ¥ Ãß°¡', 190000, 2);
+insert into product_detail values(seq_product_detail_id.nextval, 2, 'Ãß°¡2', '»¡°£¸ÁÅä', 1900, 9);
 
 
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 2, 'ë§ë‘ ê°œê»Œ', 35000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
+    values (seq_product_id.nextval, 2, '¸»¶û °³²­', 35000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
     
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(19, 1, systimestamp, 100000, 19);    
 insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(20, 1, systimestamp, 11000, 20);    
@@ -578,38 +578,38 @@ insert into payment (payment_id, payment_method, payment_date, amount, order_id)
 
 ------------------------
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 1, 'ì˜¤ë¦¬ì   í¼í”¼', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
+    values (seq_product_id.nextval, 1, '¿À¸®Á¨ ÆÛÇÇ', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 2, 'ë§ë‘ ê°œê»Œ', 10000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
+    values (seq_product_id.nextval, 2, '¸»¶û °³²­', 10000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 3, 'í”„ë¦´í”„ë¦´ ì›í”¼ìŠ¤ ì†Œí˜•ê²¬', 20000, null, null, default, null, 31, 156);
+    values (seq_product_id.nextval, 3, 'ÇÁ¸±ÇÁ¸± ¿øÇÇ½º ¼ÒÇü°ß', 20000, null, null, default, null, 31, 156);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 4, 'ë§ë‘ í•˜ë„¤ìŠ¤', 15000, null, null, default, null, default, default);
+    values (seq_product_id.nextval, 4, '¸»¶û ÇÏ³×½º', 15000, null, null, default, null, default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 4, 'ì§± ë¶€ë“œëŸ¬ìš´ ëª©ì¤„', 25000, null, null, default, null, 10, 112);
+    values (seq_product_id.nextval, 4, 'Â¯ ºÎµå·¯¿î ¸ñÁÙ', 25000, null, null, default, null, 10, 112);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 6, 'ì¸„ë¦…ì¸„ë¦… ì¸„ë¥´ 10ê°œì…', 20000, null, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
+    values (seq_product_id.nextval, 6, 'Ãò¸¨Ãò¸¨ Ãò¸£ 10°³ÀÔ', 20000, null, null, default, to_date('2023-10-11', 'yyyy-mm-DD'), 33, 120);
     
--- ì œí’ˆìƒì„¸ ë“±ë¡
+-- Á¦Ç°»ó¼¼ µî·Ï
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, 'ìš©ëŸ‰', '1kg', default, 10, default);
+    values (seq_product_detail_id.nextval, 1, '¿ë·®', '1kg', default, 10, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, 'ìš©ëŸ‰', '2kg', 20000, 20, default);
+    values (seq_product_detail_id.nextval, 1, '¿ë·®', '2kg', 20000, 20, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, 'ìš©ëŸ‰', '5kg', 40000, 10, default);
+    values (seq_product_detail_id.nextval, 1, '¿ë·®', '5kg', 40000, 10, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, 'ë§›', 'ì†Œê³ ê¸°', default, 10, default);
+    values (seq_product_detail_id.nextval, 1, '¸À', '¼Ò°í±â', default, 10, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, 'ë§›', 'ë‹­ê³ ê¸°', 20000, 20, default);
+    values (seq_product_detail_id.nextval, 1, '¸À', '´ß°í±â', 20000, 20, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 1, 'ë§›', 'ì—°ì–´', 40000, 10, default);
+    values (seq_product_detail_id.nextval, 1, '¸À', '¿¬¾î', 40000, 10, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 2, 'ë§›', 'ì†Œê³ ê¸°', default, 20, 1);
+    values (seq_product_detail_id.nextval, 2, '¸À', '¼Ò°í±â', default, 20, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price, stock, sale_state)
-    values (seq_product_detail_id.nextval, 2, 'ë§›', 'ë‹­ê³ ê¸°', default, 20, 1);
+    values (seq_product_detail_id.nextval, 2, '¸À', '´ß°í±â', default, 20, 1);
 select * from product_detail;
 
-----ì£¼ë¬¸í…Œì´ë¸” ë”ë¯¸
+----ÁÖ¹®Å×ÀÌºí ´õ¹Ì
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_detail)
     values (seq_orderTbl_id.nextval, '230811-001', 'member1', sysdate, 4,  1, 35000, 3000, 0, 38000, null);
 
@@ -658,7 +658,7 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 select * from orderTbl;    
 
 -----------------------------------------
--- í†µê³„ì¡°íšŒ ì¿¼ë¦¬
+-- Åë°èÁ¶È¸ Äõ¸®
 -----------------------------------------
 SELECT
     ot.order_id,
@@ -720,7 +720,7 @@ SELECT
     WHERE
             pay.payment_method IN (0,1)
             AND ot.order_status IN (0,1,2,3,4,5,6)
-            AND (ot.order_no LIKE '%' || 'ì˜¤' || '%' OR p.product_name LIKE '%' || 'ì˜¤' || '%')
+            AND (ot.order_no LIKE '%' || '¿À' || '%' OR p.product_name LIKE '%' || '¿À' || '%')
 	ORDER BY
 	    ot.order_id DESC;
 
@@ -790,7 +790,7 @@ GROUP BY
     TO_CHAR(order_date, 'YYYY-MM')
 ORDER BY
     TO_CHAR(order_date, 'YYYY-MM');
---------------------------------------------------------------------- í†µê³„ì¡°íšŒì¿¼ë¦¬ ë
+--------------------------------------------------------------------- Åë°èÁ¶È¸Äõ¸® ³¡
 
 
 
