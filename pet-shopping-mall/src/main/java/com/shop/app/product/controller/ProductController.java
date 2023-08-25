@@ -66,13 +66,13 @@ public class ProductController {
 	private PetService petService;
 
 	@GetMapping("/productDetail.do")
-
 	public void productDetail(@RequestParam int productId,
 			@RequestParam(required = false) Integer reviewId,
             @RequestParam(defaultValue = "1") int page,
             @AuthenticationPrincipal MemberDetails member,
             Model model) {
 		
+		// 상품상세 - 리뷰 - 페이징바
 		int limit = 3;
 		Map<String, Object> params = Map.of("page", page, "limit", limit);
 		

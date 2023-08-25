@@ -95,7 +95,7 @@ public interface ProductRepository {
 	List<Product> findProduct();
 
 	
-	@Select("select * from product where PRODUCT_CATEGORY = #{categoryId}")
+	@Select("select * from product where category_id = #{categoryId}")
 	List<Product> findProductsByCategoryId(int categoryId);
 
 	/* 좋아요 개수 증감 (선모) */
