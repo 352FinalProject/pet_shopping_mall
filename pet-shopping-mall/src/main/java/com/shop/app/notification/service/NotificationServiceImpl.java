@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import com.shop.app.notification.entity.Notification;
+import com.shop.app.notification.repository.NotificationRepository;
 import com.shop.app.order.dto.OrderCompleteNotificationDto;
 import com.shop.app.ws.dto.Payload;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
+	@Autowired
+	NotificationRepository notificationRepository;
 	
 	@Autowired
 	SimpMessagingTemplate simpMessagingTemplate;
@@ -25,8 +29,8 @@ public class NotificationServiceImpl implements NotificationService {
 		// 1. 작성자의 구독자 조회
 		// 2. 각 사용자에게 알림메세지 발송(stomp)
         String to = orderCompleteNotificationDto.getMemberId();
-
-        Payload payload = Payload.builder()
+        				
+        Notification notification = Notification.builder()
             .id(orderCompleteNotificationDto.getOrderId())
             .notiCategory(1)
             .notiContent(orderCompleteNotificationDto.getProductName() + "상품 주문완료 되었습니다.")
@@ -34,10 +38,9 @@ public class NotificationServiceImpl implements NotificationService {
             .memberId(to) 
             .build();
 
-		
-		simpMessagingTemplate.convertAndSend("/app/notice/" + to, payload);
+		simpMessagingTemplate.convertAndSend("/app/notice/" + to, notification);
 		
 		// 3. db 알림행 등록
-		return 0;
+		return notificationRepository.notifyOrderComplete(notification);
 	}
 }

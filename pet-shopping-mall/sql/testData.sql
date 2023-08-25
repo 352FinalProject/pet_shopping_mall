@@ -865,3 +865,12 @@ from
 where 
     p.product_id = 1;
 
+--------------------------------------------알림
+insert into (id, noti_category, noti_content, noti_created_at, member_id) 
+    values (seq_notification_id.nextval, ?, ?, default, ?);
+
+
+
+
+
+
