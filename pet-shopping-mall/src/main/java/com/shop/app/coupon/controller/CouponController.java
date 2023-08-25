@@ -23,9 +23,7 @@ public class CouponController {
 	private CouponService couponService;
 	
 	@GetMapping("/couponList.do")
-	public void couponList(@RequestParam int couponId, MemberCoupon memberCoupon, Model model) {
-		
-		memberCoupon.setCouponId(couponId);
+	public void couponList(MemberCoupon memberCoupon, Model model) {
 		
 		List<MemberCoupon> memberCoupons = couponService.findMemberCouponAll(memberCoupon);
 		model.addAttribute("memberCoupons", memberCoupons);

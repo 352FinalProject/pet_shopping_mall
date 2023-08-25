@@ -3,6 +3,7 @@ package com.shop.app.member.dto;
 import java.util.List;
 
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.entity.Order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,8 @@ public class MypageDto {
 	private String name;
 	private String subscribe; // N: 구독안함 / Y: 구독함
 	private int pointCurrent;
-	private List<OrderHistoryDto> orderHistory; // 최근주문내역
+
 	private int memberCount; // 쿠폰 카운트
+	
+	private List<Order> orderHistory; // 최근주문내역
 }

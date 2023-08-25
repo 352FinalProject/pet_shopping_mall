@@ -21,42 +21,42 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 --
---drop table review;
---drop table image_attachment;
---drop table image_attachment_mapping;
---drop table answer;
---drop table question;
---drop table point;
---drop table discount_rule;
---drop table product_category;
---drop table product;
---drop table product_detail;
---drop table cart;
---drop table payment;
---drop table cartitem;
---drop table orderTbl;
---drop table order_detail;
---drop table refund;
---drop table cancel_order;
---drop table authority;
---drop table product_category;
---drop table community;
---drop table wishlist;
---drop table pet;
---drop table persistent_logins;
---drop table image_attachment_mapping;
---drop table member;
---drop table ordertbl;
---drop table return;
---drop table terms;
---drop table terms_history;
---drop table chat;
---drop table chat_room;
---drop table breed;
---drop table coupon;
---drop table member_coupon;
+drop table review;
+drop table image_attachment;
+drop table image_attachment_mapping;
+drop table answer;
+drop table question;
+drop table point;
+drop table discount_rule;
+drop table product_category;
+drop table product;
+drop table product_detail;
+drop table cart;
+drop table payment;
+drop table cartitem;
+drop table orderTbl;
+drop table order_detail;
+drop table refund;
+drop table cancel_order;
+drop table authority;
+drop table product_category;
+drop table community;
+drop table wishlist;
+drop table pet;
+drop table persistent_logins;
+drop table image_attachment_mapping;
+drop table member;
+drop table ordertbl;
+drop table return;
+drop table terms;
+drop table terms_history;
+drop table chat;
+drop table chat_room;
+drop table breed;
+drop table coupon;
+drop table member_coupon;
 
-
+--
 ------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
@@ -96,6 +96,8 @@ SELECT *  FROM all_tables;
 --drop sequence seq_product_option_id;
 --drop sequence seq_member_coupon_id;
 --drop sequence seq_coupon_id;
+--drop sequence seq_category_id;
+--drop sequence seq_terms_history_id;
 
 
 --==============================
@@ -475,7 +477,6 @@ end;
 /
 
 
-
 -----------------------------------------
 -- 이용약관 쿼리
 -----------------------------------------
@@ -494,6 +495,14 @@ values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
 values (2, '생일축하 10% 할인 쿠폰', null, 10);
 
---select * from member;
---delete from member where email='hulk1512@naver.com'
---commit;
+
+----------------------------------------------
+-- 카테고리
+----------------------------------------------
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '간식');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');

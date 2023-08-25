@@ -122,15 +122,17 @@ public class ReviewController {
 //			
 //		log.debug("orderHistories = {}", orderHistories);
 //		model.addAttribute("orderHistories", orderHistories);
-//		
-//		
-//		
-//		orderHistories = orderService.getOrderList(memberId);
-//			
-//		log.debug("orderHistories = {}", orderHistories);
-//		model.addAttribute("orderHistories", orderHistories);
 
-		
+//		
+//		
+//		
+		/*
+		 * orderHistories = orderService.getOrderList(memberId);
+		 * 
+		 * log.debug("orderHistories = {}", orderHistories);
+		 * model.addAttribute("orderHistories", orderHistories);
+		 */
+
 	
 	}
 

@@ -34,7 +34,7 @@
 				    <input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
 					<label for="all">전체</label>
 				    <input type="checkbox" id="deposit" name="paymentMethod" value="0">
-				    <label for="deposit">무통장</label>
+				    <label for="deposit">카카오페이</label>
 				    <input type="checkbox" id="creditcard" name="paymentMethod" value="1">
 				    <label for="creditcard">신용카드</label>
 			        <br>
@@ -53,7 +53,7 @@
 				    <input type="checkbox" id="delivered" name="orderStatus" value="4">
 				    <label for="delivered">배송완료</label>
 				    <input type="checkbox" id="canceled" name="orderStatus" value="5">
-				    <label for="canceled">취소</label>
+				    <label for="canceled">주문취소</label>
 				    <input type="checkbox" id="refunded" name="orderStatus" value="6">
 				    <label for="refunded">환불</label>
 			        <br>
@@ -75,7 +75,6 @@
 								<th>주문번호</th>
 								<th>주문상품</th>
 								<th>주문상태</th>
-								<th>결제상태</th>
 								<th>주문자</th>
 								<th>결제액</th>
 								<th>배송비</th>
@@ -85,14 +84,11 @@
 						<tbody>
 							<c:forEach items="${orderlists}" var="orderlist" varStatus="vs">
 								<tr>
-									<td>${orderlist.orderId}</td>
+									<td>${vs.count}</td>
 									<td>${orderlist.orderDate}</td>
 									<td>${orderlist.orderNo}</td>
 									<td>${orderlist.productName}</td>
 									<td>
-										<c:if test="${orderlist.orderStatus == 0}">
-											결제대기
-										</c:if>
 										<c:if test="${orderlist.orderStatus == 1}">
 											결제완료
 										</c:if>
@@ -109,18 +105,7 @@
 											주문취소
 										</c:if>
 										<c:if test="${orderlist.orderStatus == 6}">
-											환불
-										</c:if>
-										<c:if test="${orderlist.orderStatus == 7}">
 											반품
-										</c:if>
-									</td>
-									<td>
-										<c:if test="${orderlist.paymentState == 0}">
-											결제 대기
-										</c:if>
-										<c:if test="${orderlist.paymentState == 1}">
-											결제 완료
 										</c:if>
 									</td>
 									<td>${orderlist.memberId}</td>

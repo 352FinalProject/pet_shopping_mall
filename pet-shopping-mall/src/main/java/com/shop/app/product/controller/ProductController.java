@@ -140,20 +140,21 @@ public class ProductController {
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		
 		// 해당 카테고리의 상품 가져오기
-		List<Product> products = productService.findProductsByCategoryId(id);
+//		List<Product> products = productService.findProductsByCategoryId(id);
 		
-		for(Product product : products) {
-			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
-			
-			productInfos.add(ProductInfoDto.builder()
-					.product(product)
-					.attachments(productImages.getAttachments())
-					.attachmentMapping(productImages.getAttachmentMapping())
-					.build());
-		}
-		
-		model.addAttribute("productCategory", productCategory);
-		model.addAttribute("productInfos", productInfos);
+//		for(Product product : products) {
+//			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+//			
+//			productInfos.add(ProductInfoDto.builder()
+//					.product(product)
+//					.attachments(productImages.getAttachments())
+//					.attachmentMapping(productImages.getAttachmentMapping())
+//					.build());
+//		}
+//		
+//		model.addAttribute("productCategory", productCategory);
+//		model.addAttribute("productInfos", productInfos);
+
 	}
 	
 	/* 하트 클릭 (선모) */
