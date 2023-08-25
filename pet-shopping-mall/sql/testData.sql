@@ -521,9 +521,9 @@ SET order_date = TO_TIMESTAMP('2023-08-19 00:00:00', 'YYYY-MM-DD HH24:MI:SS')
 WHERE order_id = ;
 
 ------------------------
-insert into order_detail (order_id, product_detail_id, quantity) values (31,7,default);
-insert into order_detail (order_id, product_detail_id, quantity) values (32,7,default);
-insert into order_detail (order_id, product_detail_id, quantity) values (33,7,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (19,7,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (20,7,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (21,7,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (22,10,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (23,11,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (24,12,default);
@@ -533,6 +533,9 @@ insert into order_detail (order_id, product_detail_id, quantity) values (27,9,de
 insert into order_detail (order_id, product_detail_id, quantity) values (28,9,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (29,9,default);
 insert into order_detail (order_id, product_detail_id, quantity) values (30,7,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (31,7,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (32,7,default);
+insert into order_detail (order_id, product_detail_id, quantity) values (33,7,default);
 ------------------------
 insert into product_detail values(seq_product_detail_id.nextval, 5, '추가1', '금칠 추가', 20000, 1);
 insert into product_detail values(seq_product_detail_id.nextval, 6, '추가2', '빨간망토', 1900, 1);
@@ -545,16 +548,21 @@ insert into product_detail values(seq_product_detail_id.nextval, 11, '추가2', 
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 2, '말랑 개껌', 35000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
     
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(1, 0, systimestamp, 38000, 9);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(2, 0, systimestamp, 38000, 14);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(3, 0, systimestamp, 38000, 15);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(4, 0, systimestamp, 25000, 17);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(6, 0, systimestamp, 20000, 18);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(7, 0, systimestamp, 27000, 19);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(8, 0, systimestamp, 25000, 20);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(9, 0, systimestamp, 22000, 21);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(15, 1, systimestamp, 23000, 26);    
-insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(2, 1, systimestamp, 38000, 2);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(19, 1, systimestamp, 100000, 19);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(20, 1, systimestamp, 11000, 20);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(21, 1, systimestamp, 12000, 21);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(22, 1, systimestamp, 120000, 22);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(23, 1, systimestamp, 80000, 23);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(24, 1, systimestamp, 90000, 24);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(25, 1, systimestamp, 160000, 25);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(26, 1, systimestamp, 140000, 26);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(27, 1, systimestamp, 160000, 27);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(28, 1, systimestamp, 70000, 28);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(29, 1, systimestamp, 750000, 29);  
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(30, 1, systimestamp, 61000, 30);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(31, 1, systimestamp, 61000, 31);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(32, 1, systimestamp, 61000, 32);    
+insert into payment (payment_id, payment_method, payment_date, amount, order_id) values(33, 1, systimestamp, 61000, 33);    
 
 ------------------------
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)

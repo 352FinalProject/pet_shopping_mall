@@ -330,7 +330,6 @@ public class AdminController {
 	public void adminStatisticsProduct(Model model) {
 		List<OrderAdminProductStatisticsDto> productStatistics = orderService.adminStatisticsProduct();
 		model.addAttribute("productStatistics", productStatistics);
-		
 		List<OrderAdminProductStatisticsDto> priceStatistics = orderService.adminStatisticsPrice();
 		model.addAttribute("priceStatistics", priceStatistics);
 	}
