@@ -6,6 +6,7 @@ import java.util.Map;
 import com.shop.app.wishlist.dto.WishlistDto;
 
 public interface WishlistService {
+	
 	// 찜 여부 체크 (선모)
 	int getLikeProduct(int productId, String memberId);
 	

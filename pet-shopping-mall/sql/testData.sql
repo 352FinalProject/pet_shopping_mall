@@ -18,7 +18,7 @@ select * from orderTbl;
 select * from order_detail;
 select * from product_detail;
 select * from product;
-
+select * from member_coupon;
 
 select count(*) from member_coupon where member_id = 'member4';
 

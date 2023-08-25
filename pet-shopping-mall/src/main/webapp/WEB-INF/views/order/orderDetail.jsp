@@ -68,9 +68,9 @@
 										  <c:forEach var="order" items="${orderMap}">
 											<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
 											    <input type="hidden" name="productId" value="${order.key.productId}">
+										  	</c:forEach>
 											    <button class="review-btn" type="submit">리뷰쓰기</button>
 											</form>
-										  </c:forEach>
 										</c:if>
 									</td>
 								</tr>
