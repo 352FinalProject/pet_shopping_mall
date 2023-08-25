@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -44,13 +44,13 @@ public interface ProductRepository {
 	@Select("select * from product where product_id = #{productId}")
 	Product findProductById(int productId);
 
-	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, img_id = #{imgId}, expire_date = #{expireDate} where product_id = #{productId}")
+	@Update("update product set category_id = #{categoryId}, product_name = #{productName}, product_price = #{productPrice}, image_id = #{imageId} where product_id = #{productId}")
 	int updateProduct(Product product);
 
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
 
-	@Insert("insert into product_detail(product_detail_id, product_id, option_name, option_value, additional_price,sale_state) values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
+	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId, jdbcType=INTEGER}, #{optionName, jdbcType=VARCHAR}, #{optionValue, jdbcType=VARCHAR}, #{additionalPrice, jdbcType=INTEGER}, #{saleState, jdbcType=INTEGER})")
 	@SelectKey(
 			before = false,
 			keyProperty = "productDetailId",
@@ -73,7 +73,7 @@ public interface ProductRepository {
 			resultType = int.class,
 			statement = "select seq_image_attachment_id.currval from dual"
 			)
-	int insertAttachment(imageAttachment attach);
+	int insertAttachment(ImageAttachment attach);
 
 	// 상품 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'product', #{refId}, #{imageId})")
@@ -88,5 +88,17 @@ public interface ProductRepository {
 	@Delete("delete from product_detail where product_detail_id = #{productDetailId}")
 	int deleteProductDetail(int productDetailId);
 
+	@Update("update product set image_id = #{imageId} where product_id = #{productId}")
+	int updateImageIdByProductId(int productId, int imageId);
 
+	@Select("select * from product")
+	List<Product> findProduct();
+
+	
+	@Select("select * from product where PRODUCT_CATEGORY = #{categoryId}")
+	List<Product> findProductsByCategoryId(int categoryId);
+
+	/* 좋아요 개수 증감 (선모) */
+	@Update("UPDATE product SET LIKE_CNT = NVL(LIKE_CNT, 0) + #{cnt} WHERE PRODUCT_ID  = #{productId}")
+	int updateLikeCnt(Map<String, Object> param);
 }

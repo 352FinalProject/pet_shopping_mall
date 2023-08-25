@@ -1,6 +1,7 @@
 package com.shop.app.order.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,9 +17,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
+import com.shop.app.payment.entity.Payment;
+import com.shop.app.point.entity.Point;
+import com.shop.app.product.service.ProductService;
+import com.shop.app.review.entity.Review;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -33,6 +38,9 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	@GetMapping("/orderDetails.do")
 	public void orderDetails() {}
 	
@@ -45,19 +53,16 @@ public class OrderController {
 	@GetMapping("/orderList.do")
 	public void getOrderList(Model model, @RequestParam(name = "period", required = false) Integer period, @AuthenticationPrincipal MemberDetails member) {
 	    String memberId = member.getMemberId();
-	    List<OrderHistoryDto> orderHistories;
+	    List<Order> orderList;
 
 	    if (period != null) 
-	        orderHistories = orderService.getOrderListByPeriod(memberId, period);
+	    	orderList = orderService.getOrderListByPeriod(memberId, period);
 	    else 
-	        orderHistories = orderService.getOrderList(memberId);
-	    
-
+	    	orderList = orderService.getOrderList(memberId);
+			
 	    model.addAttribute("status", status);
-	    model.addAttribute("orderHistories", orderHistories);
+	    model.addAttribute("orderHistories", orderList);
 	}
-	
-	
 	
 	@GetMapping("/cancelOrderDetail.do")
 	public void cancelOrder(Model model, @RequestParam String orderNo) {
@@ -90,10 +95,21 @@ public class OrderController {
 		model.addAttribute("cancelInfoList", cancelInfos);
 	}
 	
+	// 결제창이 넘어가기 전에 취소하면 주문 테이블 자체에서 삭제
+	@PostMapping("/deleteOrder.do")
+	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr) {
+		int result = orderService.deleteOrder(orderNo);
+		
+		return "redirect:/cart/shoppingCart.do";
+	}
 	
 	
 	@GetMapping("/orderDetail.do")
-	public void orderDetail(Model model, @RequestParam String orderNo) {
+	public void getOrderDetail(Model model, @RequestParam String orderNo) {
+		List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
+		log.debug("orderDetailMap = {}", orderDetailMap);
+		model.addAttribute("status", status);
+		model.addAttribute("orderDetail", orderDetailMap);
 	}
 	
 }

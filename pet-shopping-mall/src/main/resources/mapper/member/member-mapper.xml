@@ -36,22 +36,26 @@
 
   <select id="getMyPage" resultMap="myPageDto">
 	select 
-		member_id, name, subscribe, point_current
-	from
-		(
-			select
-				m.member_id,
-				m.name,
-				m.subscribe,
-				p.point_current,
-				row_number() over(partition by m.member_id order by p.point_date desc) as rn
-			from
-				member m
-			left join
-				point p on m.member_id = p.point_member_id
-		) subquery
+	    member_id, name, subscribe, point_current, 
+	    (
+	        select count(*) 
+	        from member 
+	        where member_id = #{memberId}
+	    ) as member_count
+	from (
+	    select
+	        m.member_id,
+	        m.name,
+	        m.subscribe,
+	        p.point_current,
+	        row_number() over(partition by m.member_id order by p.point_date desc) as rn
+	    from
+	        member m
+	    left join
+	        point p on m.member_id = p.point_member_id
+	) subquery
 	where
-		rn = 1 and member_id = #{memberId}
+	    rn = 1 and member_id = #{memberId}
   </select>
   
   <resultMap type="MyPageDto" id="myPageDto">
@@ -59,5 +63,6 @@
   	<result column="name" property="name" />
   	<result column="subscribe" property="subscribe" />
   	<result column="point_current" property="pointCurrent" />
+  	<result column="member_count" property="memberCount" />
   </resultMap>
 </mapper>

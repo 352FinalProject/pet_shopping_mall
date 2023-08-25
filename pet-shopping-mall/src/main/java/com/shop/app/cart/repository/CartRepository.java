@@ -29,8 +29,7 @@ public interface CartRepository {
 	@Delete("delete from cartitem ci where ci.cart_id = (select cart_id from cart where member_id =#{memberId})")
 	int deleteCartAll(String memberId);
 	
-	@Select("select * from product_detail where product_id = #{productId}")
-	List<ProductDetail> findProdById(int productId);
+	List<CartInfoDto> findProductOptionById(int productId);
 	
 	@Update("update cartitem set product_detail_id = #{productDetailId}, quantity = #{quantity} where cartitem_id = #{cartitemId}")
 	int updateCart(CartItem cartitem);

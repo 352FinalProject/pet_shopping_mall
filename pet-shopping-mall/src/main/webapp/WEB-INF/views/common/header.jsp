@@ -82,7 +82,10 @@
 					</li>
 				</sec:authorize>
 				<li class="community_li"><a
-					href="<%=request.getContextPath()%>/community/community.do">펫스토리</a>
+					href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
+				</li>
+				<li class="community_li"><a
+					href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
 				</li>
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/review/reviewCreate.do">리뷰작성</a>
@@ -132,28 +135,28 @@
 				<ul class="nav">
 					<ul>
 						<li class="on"><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=1"
 							class="font">사료</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=2"
 							class="font">간식</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=3"
 							class="font">패션용품</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=4"
 							class="font">산책용품</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=5"
 							class="font">위생용품</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=6"
 							class="font">장난감</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=7"
 							class="font">고양이</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/product/productList.do"
+							href="${pageContext.request.contextPath}/product/productList.do?id=8"
 							class="font">기타용품</a></li>
 					</ul>
 				</ul>

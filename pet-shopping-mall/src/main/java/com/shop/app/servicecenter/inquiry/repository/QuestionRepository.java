@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
-import com.shop.app.common.entity.imageAttachment;
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
@@ -34,7 +34,7 @@ public interface QuestionRepository {
 	int insertQuestion(Question question);
 	
 	// 1:1 문의 파일 첨부 (예라)
-	int insertAttachment(imageAttachment attach);
+	int insertAttachment(ImageAttachment attach);
 
 	// 1:1 목록 삭제 (예라)
 	@Delete("delete from question where question_id = #{questionId}")

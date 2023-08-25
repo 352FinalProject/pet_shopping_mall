@@ -1,8 +1,6 @@
 package com.shop.app.member.controller;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -66,11 +64,11 @@ public class MemberSecurityController {
    @Autowired
    private PointService pointService; // 회원가입시 포인트 3000원 적립
 
-   @Autowired
-   private TermsService termsService; // 회원가입시 약관동의
-
-   @Autowired
-   private CouponService couponService; // 쿠폰
+	@Autowired
+	private TermsService termsService; // 회원가입시 약관동의
+	
+	@Autowired
+	private CouponService couponService; // 회원가입시 쿠폰 발급
 
    @GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
    public void memberCreate() {
@@ -80,11 +78,13 @@ public class MemberSecurityController {
 
    Map<Integer, Accept> userAgreements = new HashMap<>();
 
-   @PostMapping("/memberCreate.do") // 회원 생성 처리
-   public String memberCreate(@Valid MemberCreateDto member, // 입력된 회원 정보 유효성 검사
-         BindingResult bindingResult, // 유효성 검사 결과
-         RedirectAttributes redirectAttr, HttpSession session) { // 리다이렉트시 전달 할 속성
+   @PostMapping("/memberCreate.do")
+   public String memberCreate(@Valid MemberCreateDto member, BindingResult bindingResult,
+         RedirectAttributes redirectAttr, HttpSession session) {
 
+	   
+	   log.debug("member = {}", member);
+	   
       // 이메일 인증 확인 (예라)
       Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
       if (isVerified == null || !isVerified) {
@@ -93,13 +93,9 @@ public class MemberSecurityController {
       }
 
       if (bindingResult.hasErrors()) {
-         // bindingResult에 오류가 있을 경우, 즉 유효성 검사에서 문제가 발견된 경우 실행됩니다.
          ObjectError error = bindingResult.getAllErrors().get(0);
-         // getAllErrors 메서드를 통해 발생한 모든 오류를 가져오고, 첫 번째 오류를 선택.
          redirectAttr.addFlashAttribute("msg", error.getDefaultMessage());
-         // 오류 메시지를 리다이렉트 애트리뷰트에 "msg"라는 이름으로 추가하여, 리다이렉트 후에도 데이터가 유지.
          return "redirect:/member/memberCreate.do";
-         // 유효성 검사 오류 발생 시 사용자를 회원 생성 페이지로 리다이렉트합니다.
       }
 
       // 비밀번호 암호화 처리
@@ -113,39 +109,38 @@ public class MemberSecurityController {
       // 회원 정보 DB에 저장
       int result = memberService.insertMember(member);
 
-      Point point = new Point();
-      point.setPointMemberId(member.getMemberId());
-      point.setPointCurrent(3000);
-      point.setPointType("회원가입");
-      point.setPointAmount(3000);
+		Point point = new Point();
+		point.setPointMemberId(member.getMemberId());
+		point.setPointCurrent(3000);
+		point.setPointType("회원가입");
+		point.setPointAmount(3000);
+		
+		int resultPoint = pointService.insertPoint(point);
+		
+		 // 회원가입시 무료배송 쿠폰 발급 (예라)
+	    List<Coupon> resultCoupon = couponService.findCoupon();
+	    for (Coupon coupon : resultCoupon) {
+	        MemberCoupon memberCoupon = new MemberCoupon();
+	        memberCoupon.setCouponId(coupon.getCouponId());
+	        memberCoupon.setMemberId(member.getMemberId());
 
-      int resultPoint = pointService.insertPoint(point);
+	        // 발급받은 날짜로부터 한달 뒤의 날짜 계산
+	        LocalDateTime issuanceDate = LocalDateTime.now();
+	        LocalDateTime endDate = issuanceDate.plusMonths(1);
+	        
+	        memberCoupon.setCreateDate(issuanceDate); 
+	        memberCoupon.setEndDate(endDate); 
+	        memberCoupon.setUseStatus(0);
 
-      // 회원가입시 무료배송 쿠폰 발급 (예라)
-      List<Coupon> resultCoupon = couponService.findCoupon();
-      for (Coupon coupon : resultCoupon) {
-         MemberCoupon memberCoupon = new MemberCoupon();
-         memberCoupon.setCouponId(coupon.getCouponId());
-         memberCoupon.setMemberId(member.getMemberId());
-
-         // 발급받은 날짜로부터 한달 뒤의 날짜 계산
-         LocalDateTime issuanceDate = LocalDateTime.now();
-         LocalDateTime endDate = issuanceDate.plusMonths(1);
-
-         memberCoupon.setCreateDate(issuanceDate);
-         memberCoupon.setEndDate(endDate);
-         memberCoupon.setUseStatus(0);
-
-         // memberCoupon db 추가
-         int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
-      }
-
-      // 약관 동의 정보 가져오기
-      Object obj = session.getAttribute("userAgreements");
-      log.debug("obj = {}", obj);
-
-      // Terms 객체 생성
-      Terms terms = new Terms();
+	        // memberCoupon db 추가
+	        int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
+	    }
+		
+	    // 약관 동의 정보 가져오기
+	    Object obj = session.getAttribute("userAgreements");
+	    log.debug("obj = {}", obj);
+	    // Terms 객체 생성
+	    Terms terms = new Terms();
 
       if (obj instanceof HashMap) {
          HashMap<Integer, Accept> userAgreements = (HashMap<Integer, Accept>) obj;
@@ -178,8 +173,7 @@ public class MemberSecurityController {
       // 회원 정보 세션 제거 (예라)
       session.removeAttribute("emailVerified");
 
-      redirectAttr.addFlashAttribute("msg", "🎉🎉🎉 회원가입을 축하드립니다.🎉🎉🎉");
-      return "redirect:/memberCreateComplete.do";
+      return "redirect:/member/memberCreateComplete.do";
    }
 
    // 약관 동의 정보를 세션에 임시 저장 (예라)
@@ -204,17 +198,30 @@ public class MemberSecurityController {
    public void memberLogin() {
    }
 
-   // 로그인처리하는 요청 작성 X
-   // 로그아웃처리하는 요청 작성 X
+   // 멤버 상세 조회
+   @GetMapping("/updateMember.do")
+   public void memberDetail(Authentication authentication, // 현재 사용자 인증 정보와 멤버 정보를 가져와서 상세 정보 페이지에 표시.
+         @AuthenticationPrincipal MemberDetails _member, // member: 현재 사용자 멤버 정보
+         Model model) { // model: 뷰와 컨트롤러 사이에서 데이터를 전달하는 객체
 
-   /**
-    * 마이페이지 (담희)
-    */
-   @GetMapping("/myPage.do")
-   public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
-      String memberId = member.getMemberId();
-      MypageDto myPage = memberService.getMyPage(memberId);
-      model.addAttribute("myPage", myPage);
+      // 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
+      // 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
+      MemberDetails principal = (MemberDetails) authentication.getPrincipal();
+      Object credentials = authentication.getCredentials(); // 열람불가
+      Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+      Member member = memberService.findMemberById(_member.getMemberId());
+
+      log.debug("member = {}", member);
+   }
+
+	@GetMapping("/myPage.do")
+	public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
+		String memberId = member.getMemberId();
+		MypageDto myPage = memberService.getMyPage(memberId);
+		log.debug("myPage = {}", myPage);
+		model.addAttribute("myPage", myPage);
+      model.addAttribute("member", member);
    }
 
    // 멤버 정보 업데이트
@@ -271,25 +278,10 @@ public class MemberSecurityController {
             .status(HttpStatus.OK).body(Map.of("available", available, "memberId", memberId));
    }
 
-   // 아이디 찾기
-   @GetMapping("/memberSearchId.do")
-   public String memberSearchId() {
-      return "redirect/member/memberSearchId.do";
-   }
 
    @GetMapping("/memberCreateComplete.do")
    public void memberCreateComplete() {
    }
-   // 이메일 보내기
-//    @Transactional
-//    @PostMapping("/sendEmail")
-//    public String sendEmail(@RequestParam("memberEmail") String memberEmail){
-//        MailDto dto = ms.createMailAndChangePassword(memberEmail);
-//        ms.mailSend(dto);
-//
-//        return "/member/login.do";
-//    }
-//   
 
    @GetMapping("/terms.do")
    public void getTerms() {
@@ -307,7 +299,7 @@ public class MemberSecurityController {
    public void myReview() {
    }
 
-   @GetMapping("/myWishlist.do")
-   public void myWishlist() {}
-
+   @GetMapping("/petUpdate.do")
+   public void petUpdate() {
+   }
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.shop.app.common.entity.imageAttachment;
-import com.shop.app.common.entity.imageAttachmentMapping;
+import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.ImageAttachmentMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

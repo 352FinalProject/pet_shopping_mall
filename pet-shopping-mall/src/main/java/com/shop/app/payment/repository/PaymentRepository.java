@@ -2,6 +2,7 @@ package com.shop.app.payment.repository;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.payment.entity.Payment;
@@ -14,4 +15,8 @@ public interface PaymentRepository {
 
 	@Insert("insert into payment (payment_id, payment_method, payment_date, amount, order_id) values (seq_payment_id.nextVal, 1, default, #{amount}, #{orderId})")
 	int insertPayment(Payment payment);
+
+	@Select("select * from payment where order_id = ${orderId}")
+	Payment getPaymentInfo(int orderId);
+	
 }

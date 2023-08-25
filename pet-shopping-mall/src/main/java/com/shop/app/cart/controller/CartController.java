@@ -26,6 +26,7 @@ import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.product.entity.ProductImages;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,7 +49,9 @@ public class CartController {
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
 
 		model.addAttribute("cartList", cartList);
-		model.addAttribute("pointCurrent", point.getPointCurrent());
+
+
+//		model.addAttribute("pointCurrent", point.getPointCurrent());
 
 	}
 	
@@ -71,12 +74,12 @@ public class CartController {
 	}
 	
 	
-	// 상품 한 개 조회하려고 만든 메소드
+	// 장바구니 옵션 수정
 	@ResponseBody
-	@GetMapping("/findProdById.do")
-	public List<ProductDetail> findProdById(@RequestParam("id") String _id) {
+	@GetMapping("/findProductOptionById.do")
+	public List<CartInfoDto> findProductOptionById(@RequestParam("id") String _id) {
 		int id = Integer.parseInt(_id);
-		List<ProductDetail> productInfo =  cartService.findProdById(id);
+		List<CartInfoDto> productInfo =  cartService.findProductOptionById(id);
 		log.debug("productInfo = {}", productInfo);
 		return productInfo;
 	}

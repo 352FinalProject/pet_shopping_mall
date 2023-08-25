@@ -21,7 +21,7 @@
 		                	<c:forEach items="${cartList}" var="product" varStatus="vs">
 		                	<fmt:formatNumber value='${(product.productPrice + product.additionalPrice) * product.quantity}' pattern="0,000" var="formattedPrice" />
 		                	<div class="cart-product-info">
-		                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/images/product/sampleImg.jpg" width="110px"></div>
+		                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}" width="110px"></div>
 		                		<div>
 		                			<div>
 		                				<input type="checkbox" class="checkbox" name="productName" value="${formattedPrice}">
@@ -102,9 +102,8 @@
 				    <button class="quantity-btn plus">+</button>
 				</div>
 		    	<div>
-		    		옵션변경
 		    	    <select id="modal-option" onchange="updateProduct(this);">
-		    	    	<option>옵션을 선택해주세요</option>
+		    	    	<option class="options" value="">옵션을 선택해주세요</option>
 		    		</select>
 		    	</div>
 		    	<form:form id="updateFrm">
@@ -209,23 +208,32 @@ openModalBtns.forEach(btn => {
         cartitemIdInput.value = btn.value;
         
      	$.ajax({
-    		url: "${pageContext.request.contextPath}/cart/findProdById.do?id=" + productId,
-			method: 'GET',
-			success(products) {
-				console.log(products);
-				products.forEach((product) => {
-					modalContent.innerHTML = `
-	                    <h2>\${product.productName}</h2>
-	                `;
+     		url: "${pageContext.request.contextPath}/cart/findProductOptionById.do?id=" + productId,
+            method: 'GET',
+            success(productInfo) {
+                console.log(productInfo);
+                modalContent.innerHTML = "";
+
+                if (productInfo.length > 0) {
+                    modalContent.innerHTML = `
+                        <h2>${productInfo[0].productName}</h2>
+                    `;
+                } else {
+                    modalContent.innerHTML = "<p>No product information available.</p>";
+                }
+                
+				productInfo.forEach((product) => {
+					const optionName = product.optionName ? product.optionName : "옵션 없음";
+					const optionValue = product.optionValue ? product.optionValue : " ";
+					const addtionalPrice = product.additionalPrice ? "(+ " + product.additionalPrice + "원 )" : " ";
 					options.innerHTML += `
-						<option value="\${product.productDetailId}"> \${product.optionName} \${product.optionValue}</option>
+							<option class="options" value="\${product.productDetailId}"> \${optionName} \${optionValue} \${addtionalPrice}</option>
 					`;
 				});
-			}
+            }
     	});
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
-        
     });
 });
 

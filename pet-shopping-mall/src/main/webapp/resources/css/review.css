@@ -35,6 +35,12 @@
 	vertical-align: middle;
 }
 
+/* 상품상세 - 리뷰 */
+.review-product-utility li {
+  margin-bottom: -100px; 
+  
+}
+
 /* 리뷰상세 부트스트랩 */
 .carousel-inner img {
     width: 250px;

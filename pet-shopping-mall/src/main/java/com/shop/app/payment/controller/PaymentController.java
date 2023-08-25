@@ -92,10 +92,9 @@ public class PaymentController {
 
 	@GetMapping("/paymentInfo.do")
 	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
-		// 폼으로 가져오기
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
+		
 		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
-
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
 
 		model.addAttribute("cartList", cartList);
@@ -206,12 +205,11 @@ public class PaymentController {
 	}
 	
 	
-	
 	@GetMapping("/paymentCompleted.do")
-	public void paymentCompleted() {}
-	
-	
-	
+	public void paymentCompleted(@RequestParam String orderNo, Model model) {
+		Order order = orderService.findOrderByOrderNo(orderNo);
+		model.addAttribute("order", order);
+	}
 	
 	
 	/*

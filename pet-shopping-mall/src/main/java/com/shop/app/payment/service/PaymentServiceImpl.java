@@ -1,5 +1,7 @@
 package com.shop.app.payment.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +31,8 @@ public class PaymentServiceImpl implements PaymentService {
 				.orderId(order.getOrderId())
 				.amount(order.getAmount())
 				.build();
-		
 		int result = paymentRepository.insertPayment(payment);
-		// 결제가 완료되면 결제 상태 업데이트
 		result =  paymentRepository.updatePayStatus(orderNo);
-		// 주문 테이블의 주문 상태 업데이트
 		result = orderRepository.updateOrderStatus(orderNo, 1);
 		// 장바구니 비우기
 		result= cartRepository.deleteCartAll(order.getMemberId());
@@ -45,4 +44,5 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 		
 	}
+
 }

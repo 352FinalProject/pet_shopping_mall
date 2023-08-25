@@ -6,7 +6,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
     <section class="common-section" id="#">
         <div class="common-title">마이페이지</div>
         <br>
@@ -37,8 +36,8 @@
                     </div>
                     <div class="options">
                         <div class="option"><a href="${pageContext.request.contextPath}/point/pointList.do">포인트내역</a></div>
-                        <div class="option"><a href="${pageContext.request.contextPath}/member/myWishlist.do">찜한 상품</a></div>
-                        <div class="option"><a href="#">쿠폰 0장</a></div>
+                        <div class="option"><a href="${pageContext.request.contextPath}/wishlist/myWishlist.do">찜한 상품</a></div>
+                        <div class="option"><a href="${pageContext.request.contextPath}/coupon/couponList.do?couponId=${coupon.couponId}">쿠폰 ${myPage.memberCount}장</a></div>
                     </div>
                     <div class="recent-orders">
                         <div class="common-title">최근 1개월 주문내역</div>
@@ -52,7 +51,7 @@
 										<tr>
 											<th>날짜</th>
 											<th>주문번호</th>
-											<th>상품</th>
+											<th>상세내역</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -61,7 +60,7 @@
 										<tr>
 											<td>${formattedDate}</td>
 											<td>${order.orderNo}</td>
-											<td>${order.productName}</td>
+											<td><a href="${pageContext.request.contextPath}/order/orderDetail.do?orderNo=${order.orderNo}">📜<a></td>
 										</tr>
 									</c:forEach>
 									</tbody>

@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 
 
 <%-- 리뷰작성 (혜령) --%>
@@ -65,6 +66,7 @@
             </table>
             <div class="review-create-btn">
                 <button class="review-btn-rset" type="reset">초기화</button>
+				    <input type="hidden" name="productId" value="${productId}" />
 				<button class="review-btn-submit" type="submit" >작성하기</button>
             </div>
         </form:form>

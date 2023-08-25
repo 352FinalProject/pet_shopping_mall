@@ -1,6 +1,9 @@
 package com.shop.app.order.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
@@ -15,6 +18,8 @@ import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.order.repository.OrderRepository;
+import com.shop.app.payment.entity.Payment;
+import com.shop.app.payment.repository.PaymentRepository;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +29,14 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
+	private PaymentRepository paymentRepository;
+	
+	
+	@Autowired
 	private OrderRepository orderRepository;
+	
+	
+	
 
 	// 주문 내역 및 주문 상세내역 테이블에 저장 (담희)
 	@Override
@@ -84,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderHistoryDto> getOrderList(String memberId) {
+	public List<Order> getOrderList(String memberId) {
 		return orderRepository.getOrderList(memberId);
 	}
 
@@ -99,17 +111,13 @@ public class OrderServiceImpl implements OrderService {
 				.orderId(orderId)
 				.build();
 		result = orderRepository.insertCancelOrder(cancel);
-		
-		if(isRefund.equals("N")) 
-			result = orderRepository.updateOrderStatus(orderNo, 5);
-		else if(isRefund.equals("Y"))
-			result = orderRepository.updateOrderStatus(orderNo, 6);
+		result = orderRepository.updateOrderStatus(orderNo, 5);
 			
 		return result;
 	}
 
 	@Override
-	public List<OrderHistoryDto> getOrderListByPeriod(String memberId, int period) {
+	public List<Order> getOrderListByPeriod(String memberId, int period) {
 		return orderRepository.getOrderListByPeriod(memberId, period);
 	}
 
@@ -126,5 +134,34 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period) {
 		return orderRepository.getCancelInfoByPeriod(memberId, period);
+	}
+
+	@Override
+	public int deleteOrder(String orderNo) {
+		return orderRepository.deleteOrder(orderNo);
+	}
+
+	@Override
+	public List<Map<OrderHistoryDto, Payment>> getOrderDetail(String orderNo) {
+		List<Map<OrderHistoryDto, Payment>> orderList = new ArrayList<>();
+		
+		Map<OrderHistoryDto, Payment> orderDetailMap = new HashMap<>();
+		
+		
+		List<OrderHistoryDto> history = orderRepository.getOrderDetail(orderNo);
+		Payment payment = paymentRepository.getPaymentInfo(history.get(0).getOrderId());
+		
+		for(OrderHistoryDto o : history) {
+			orderDetailMap.put(o, payment);
+		}
+		
+		orderList.add(orderDetailMap);
+		
+		return orderList;
+	}
+
+	@Override
+	public Order findOrderByOrderNo(String orderNo) {
+		return orderRepository.findOrderByOrderNo(orderNo);
 	}
 }
