@@ -186,8 +186,6 @@
       <result column="daily_total_sales" property="dailyTotalSales" />
       <result column="monthly_total_sales" property="monthlyTotalSales" />
    </resultMap>
- 
-   <select id="getOrderList" resultType="orderHistoryDto">
 
 <!--    <select id="getOrderList" resultType="orderHistoryDto">
    select

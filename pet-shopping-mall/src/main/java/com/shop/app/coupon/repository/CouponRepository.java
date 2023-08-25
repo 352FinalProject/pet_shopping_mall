@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.shop.app.coupon.dto.MemberCouponDto;
 import com.shop.app.coupon.entity.Coupon;
 import com.shop.app.coupon.entity.MemberCoupon;
 
@@ -21,8 +22,11 @@ public interface CouponRepository {
 	@Insert("insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_date) values (seq_member_coupon_id.nextval, #{couponId}, #{memberId}, default, #{endDate}, #{useDate, jdbcType=DATE} )")
 	int insertDeliveryCoupon(MemberCoupon memberCoupon);
 
-	// 멤버 쿠폰 전체 조회 (예라)
-	@Select("select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.coupon_id = #{couponId}")
-	List<MemberCoupon> findMemberCouponAll(MemberCoupon memberCoupon); 
+	@Select("select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = #{memberId}")
+	List<MemberCouponDto> findCouponsByMemberId(String memberId);
+
+	// 멤버 쿠폰 아이디 조회 (예라)
+	@Select("select * from member_coupon where coupon_id = #{couponId}")
+	int findCouponById(); 
 
 }
