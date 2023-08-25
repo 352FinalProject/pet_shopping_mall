@@ -181,39 +181,43 @@ span duplicate {
                      pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$"
                      title="부적합한 이메일 형식입니다."></td>
                </tr>
-					<tr>
-						<th>주소</th>
-						<td>
-							<!-- <input type="text" name="address" id="address"
-							placeholder="주소" value="" required> <input type="button"
-							value="주소 검색" onclick="sample4_execDaumPostcode()"
-							pattern="^[가-힣0-9a-zA-Z\s-]+$" title="부적합한 주소 형식입니다.">
-							<input type="text" id="sample4_postcode" placeholder="우편번호"> -->
-							<div style=" text-align: right;"><input type="button" class="address" onclick="sample4_execDaumPostcode();" value="주소 검색" ></div><br>
-							<div style="margin-top: -60px; position: absolute;"><input type="text" class="address" id="roadAddress" placeholder="도로명주소"></div><br>
-							<div style="margin-top: -30px; "><input type="text" class="address" id="jibunAddress" placeholder="지번주소"></div><br>
-							<span id="guide" style="color:#999;display:none"></span>
-							<div style="margin-top: -10px;"><input type="text" class="address" id="detailAddress" placeholder="상세주소"></div>
-							<input type="hidden" name="address" id="address" value="" />
-						</td>
-					</tr>
-					<tr>
-						<td class="resetAndSubmit" colspan="2"><input type="reset"
-							value="돌아가기"> <input type="submit" value="가입하기">
-						</td>
-					</tr>
-				</table>
-			</form:form>
-		</div>
-	</div>
-	<div id="kakaoInput" hidden="true">	
-		<input type="text" id="sample4_postcode" placeholder="우편번호">
-		<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" id="roadAddress" placeholder="도로명주소">
-		<input type="text" id="jibunAddress" placeholder="지번주소">
-		<input type="text" id="detailAddress" placeholder="상세주소">
-		<input type="text" id="extraAddress" placeholder="참고항목">
-	</div>
+               <tr>
+               <th>주소</th>
+               <td>
+                   <div style="text-align: right;">
+                       <input type="button" class="address" onclick="sample4_execDaumPostcode();" value="주소 검색">
+                   </div>
+                   <br>
+                   <div style="margin-top: -60px; position: absolute;">
+                       <input type="text" class="address" id="roadAddress" placeholder="도로명주소" oninput="updateAddress()">
+                   </div>
+                   <br>
+                   <div style="margin-top: -30px;">
+                       <input type="text" class="address" id="jibunAddress" placeholder="지번주소" oninput="updateAddress()">
+                   </div>
+                   <br>
+                   <span id="guide" style="color:#999;display:none"></span>
+                   <div style="margin-top: -10px;">
+                       <input type="text" class="address" id="detailAddress" placeholder="상세주소" oninput="updateAddress()">
+                   </div>
+                   <input type="hidden" name="address" id="address" value="" />
+               </td>
+               </tr>
+               <tr>
+                  <td class="resetAndSubmit" colspan="2"><input type="reset"
+                     value="돌아가기"> <input type="submit" value="가입하기">
+                  </td>
+               </tr>
+            </table>
+         </form:form>
+         <button onclick="test();">눌러봐</button>
+      </div>
+   </div>
+   <div id="kakaoInput" hidden="true">   
+      <input type="text" id="sample4_postcode" placeholder="우편번호">
+      <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+      <input type="text" id="extraAddress" placeholder="참고항목">
+   </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script
@@ -420,7 +424,7 @@ function sample4_execDaumPostcode() {
             document.getElementById('sample4_postcode').value = data.zonecode;
             document.getElementById("roadAddress").value = roadAddr;
             document.getElementById("jibunAddress").value = data.jibunAddress;
-			
+         
             // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
             if(roadAddr !== ''){
                 document.getElementById("extraAddress").value = extraRoadAddr;
@@ -430,21 +434,22 @@ function sample4_execDaumPostcode() {
             }
             document.getElementById('roadAddress').value = roadAddr;
            
-            var fullAddress = roadAddr + " " + jibunAddress + " " + detailAddress;
+            // 도로명 주소와 지번 주소, 상세 주소를 합쳐서 전체 주소로 설정한다.
+            var jibunAddress = data.jibunAddress; // Add this line
+            var fullAddress = roadAddr + jibunAddress + " " + document.getElementById("detailAddress").value;
             document.getElementById("address").value = fullAddress;
         }
     }).open();
 };
-document.querySelector("#memberCreateFrm").on("submit", function() {
+
+function updateAddress() {
     const roadAddress = document.getElementById("roadAddress").value;
     const jibunAddress = document.getElementById("jibunAddress").value;
-    
-    console.log(roadAddress);
-    console.log(jibunAddress);
-    
-    const address = document.memberCreateFrm.address;
-    address.value = roadAddress + ' ' + jibunAddress;  
-});
+    const detailAddress = document.getElementById("detailAddress").value;
+
+    var fullAddress = roadAddress + jibunAddress + " " + detailAddress;
+    document.getElementById("address").value = fullAddress;
+}
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

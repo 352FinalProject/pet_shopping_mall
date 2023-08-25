@@ -12,71 +12,72 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}" />
 <style>
 /* 모달 배경 스타일 */
 .deleteMember-class {
-    display: none; /* 초기에는 보이지 않도록 설정 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
-    z-index: 9999; /* 다른 요소보다 위에 표시 */
-    justify-content: center;
-    align-items: center;
+	display: none; /* 초기에는 보이지 않도록 설정 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
+	z-index: 9999; /* 다른 요소보다 위에 표시 */
+	justify-content: center;
+	align-items: center;
 }
 
 /* 모달 내부 컨테이너 스타일 */
 .deleteMember {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    width: 300px;
+	background-color: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+	width: 300px;
 }
 
 /* 모달 내부 요소 스타일 */
 .deleteMember h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+	font-size: 24px;
+	margin-bottom: 10px;
 }
 
 .deleteMember p {
-    font-size: 16px;
-    margin-bottom: 20px;
+	font-size: 16px;
+	margin-bottom: 20px;
 }
 
 .deleteMemberForm-input-password {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	
 }
 
 .deleteMemberForm-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 /* 닫기 버튼 스타일 */
-.deleteMemberForm-close,
 #deleteMemberForm-closeModalBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
+	background-color: #c8c8c8;
+	color: white;
+	border: none;
+	padding: 8px 30px;
+	border-radius: 4px;
+	margin-left: 80px;
 }
-
 </style>
 <title>반려동물 쇼핑몰</title>
 
@@ -115,10 +116,10 @@
 		<div class="header">
 			<span id="notification"></span>
 			<ul class="utility">
-			<sec:authorize access="isAuthenticated()">
-				권한 : <sec:authentication property="authorities"/>
-				아이디 : <sec:authentication property="principal.username"/>
-			</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+				권한 : <sec:authentication property="authorities" />
+				아이디 : <sec:authentication property="principal.username" />
+				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<li class="login_li"><a
 						href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
@@ -137,11 +138,12 @@
 					<li><a class="" type="button" href="#"
 						onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
 					</li>
-					<li>
-						<form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
-							<a  type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
-						</form:form>
-					</li>
+					<li><form:form id="deleteMemberForm"
+							action="${pageContext.request.contextPath}/member/deleteMember.do"
+							method="post">
+							<a type="button" id="deleteMemberBtn" onclick=""
+								style="cursor: pointer;">회원 탈퇴</a>
+						</form:form></li>
 				</sec:authorize>
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
@@ -224,60 +226,86 @@
 	</header>
 	<div id="deleteMember-div" class="deleteMember-class">
 		<div class=deleteMember>
-			<span class="deletememberForm-close" >&times;</span>
+			<span onclick=>&times;</span>
 			<h2>회원 탈퇴</h2>
 			<p>정말 탈퇴하시겠습니까??</p>
 			<form:form id="deleteMemberForm"
 				onsubmit="submitIdFinderForm(); return false;">
-				<label for="deleteMember-password">비밀번호입력:</label> <input
-					class="deleteMemberForm-input-password" type="password" id="password"
-					name="password" required>
+				<label for="deleteMember-password">비밀번호입력:</label>
+				<input class="deleteMemberForm-input-password" type="password"
+					id="password" name="password" required>
 				<button class="deleteMemberForm-button" type="submit">회원탈퇴</button>
-					<button type="button" id="deleteMemberForm-closeModalBtn" onclick="closDeleteMemberModal();">닫기</button>
+				<button type="button" id="deleteMemberForm-closeModalBtn"
+					onclick="closDeleteMemberModal();">닫기</button>
 			</form:form>
 		</div>
 	</div>
-<script>
-/* alert('${msg}'); */
-/* const deleteMember = () => {
-    if (confirm('정말로 회원 탈퇴하시겠습니까?')) {
-        document.getElementById('deleteMemberForm').submit();
-    } else {
-        alert('회원 탈퇴를 실패했습니다.');
-    }
-}; */
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		/* alert('${msg}'); */
+		/* const deleteMember = () => {
+		 if (confirm('정말로 회원 탈퇴하시겠습니까?')) {
+		 document.getElementById('deleteMemberForm').submit();
+		 } else {
+		 alert('회원 탈퇴를 실패했습니다.');
+		 }
+		 }; */
 
-$(document).deleteMemberForm-button(function() {
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-	const deleteMember = document.getElementById("sendEmail");
-    $("#deleteMemberForm-closeModalBtn").click(function() {
-        const deleteMember = $("#deleteMember-password").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/member/deleteMember.do',
-            data: {
-                'password': password
-            },
-            dataType: "text",
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
-            },
-            success: function(result) {
-            	console.log(result);
-                if (result === "no") {
-                    alert('비밀번호가 틀렸습니다.');
-                    userEmail.submit();
-                } else {
-                    alert('회원 탈퇴완료ㅠㅠ.');
-                }
-            },
-            error: function() {
-                console.log('에러 체크!!');
-            }
-        });
-    });
-});
-</script>
+		const deleteMemberBtn = document.getElementById("deleteMemberBtn");
+		const closeDeleteModalBtn = document
+				.getElementById("deleteMemberForm-closeModalBtn");
+		const deleteMemberModal = document.getElementById("deleteMember-div");
 
+		// 회원탈퇴 버튼 클릭 시 모달 열기
+		deleteMemberBtn.addEventListener("click", function() {
+			deleteMemberModal.style.display = "block";
+		});
+
+		// 모달 닫기 버튼 클릭 시 모달 닫기
+		closeDeleteModalBtn.addEventListener("click", function() {
+			deleteMemberModal.style.display = "none";
+		});
+
+		$(document).deleteMemberForm
+				- button(function() {
+					const csrfToken = document.querySelector(
+							'meta[name="_csrf"]').getAttribute('content');
+					const csrfHeader = document.querySelector(
+							'meta[name="_csrf_header"]')
+							.getAttribute('content');
+					const deleteMember = document.getElementById("sendEmail");
+					$("#deleteMemberForm-closeModalBtn")
+							.click(
+									function() {
+										const deleteMember = $(
+												"#deleteMember-password").val();
+										$
+												.ajax({
+													type : 'POST',
+													url : '${pageContext.request.contextPath}/member/deleteMember.do',
+													data : {
+														'password' : password
+													},
+													dataType : "text",
+													beforeSend : function(xhr) {
+														xhr.setRequestHeader(
+																csrfHeader,
+																csrfToken); // 헤더에 CSRF 토큰 추가
+													},
+													success : function(result) {
+														console.log(result);
+														if (result === "no") {
+															alert('비밀번호가 틀렸습니다.');
+															userEmail.submit();
+														} else {
+															alert('회원 탈퇴완료ㅠㅠ.');
+														}
+													},
+													error : function() {
+														console.log('에러 체크!!');
+													}
+												});
+									});
+				});
+	</script>
 	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>
