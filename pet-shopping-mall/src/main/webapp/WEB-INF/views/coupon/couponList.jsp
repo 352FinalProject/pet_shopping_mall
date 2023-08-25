@@ -20,35 +20,23 @@
 							<th>내역</th>
 							<th>발급일</th>
 							<th>유효기간</th>
+							<th>사용유무</th>
 							<th>사용날짜</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${memberCoupons}" var="coupon" varStatus="vs">
-							<sec:authentication var="currentUsername" property="principal.username"/>
-								<c:if test="${coupon.pointMemberId == currentUsername}">
-									<tr class="question-row">
-										<td>${coupon.couponId}</td>
-										<td>${coupon.pointType}</td>
-										<td>
-										    <c:choose>
-										        <c:when test="${coupon.pointAmount >= 0}">
-										            <span class="plus">+ ${coupon.pointAmount}</span>
-										        </c:when>
-										        <c:otherwise>
-										            <span class="minus">${coupon.pointAmount}</span>
-										        </c:otherwise>
-										    </c:choose>
-										</td>
-										<td>${coupon.pointCurrent}</td>
-										<td class="qna-date">
-											<input type="hidden" name="pointDate" value="${coupon.pointDate}" />
-											<a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${coupon.pointDate}">
-											<fmt:parseDate value="${coupon.pointDate}" pattern="yyyy-MM-dd'T'HH:mm" var="pointDate" />
-											<fmt:formatDate value="${pointDate}" pattern="yy/MM/dd" /></a>
-										</td>
-									</tr>
-								</c:if>
+							<tr class="question-row">
+								<td>${coupon.couponName}</td>
+								<td><fmt:parseDate value="${coupon.createDate}" pattern="yyyy-MM-dd'T'HH:mm" var="couponCreateDate" />
+								<fmt:formatDate value="${couponCreateDate}" pattern="yy/MM/dd HH:MM" /></td>
+								<td><fmt:parseDate value="${coupon.endDate}" pattern="yyyy-MM-dd'T'HH:mm" var="couponEndDate" />
+								<fmt:formatDate value="${couponEndDate}" pattern="yy/MM/dd HH:MM" /></td>
+								<td><c:if test="${coupon.useStatus == 0}">미사용</c:if>
+							    <c:if test="${coupon.useStatus == 1}">사용</c:if></td>
+								<td><fmt:parseDate value="${coupon.useDate}" pattern="yyyy-MM-dd'T'HH:mm" var="couponUseDate" />
+								<fmt:formatDate value="${couponUseDate}" pattern="yy/MM/dd HH:MM" /></td>
+							</tr>
 						</c:forEach>
 					</tbody>
 				</table>

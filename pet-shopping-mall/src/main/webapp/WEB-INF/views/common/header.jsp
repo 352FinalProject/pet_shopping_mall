@@ -87,9 +87,6 @@
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
 				</li>
-				<li class="community_li"><a
-					href="<%=request.getContextPath()%>/review/reviewCreate.do">리뷰작성</a>
-				</li>
 			</ul>
 			<div class="logo_top_wrap">
 				<div class="logo_wrap">
