@@ -93,8 +93,10 @@ public class MailSender {
 		}
 	}
 
+	
+	
 	// 임시 비밀번호 생성 메소드
-	private String generateTemporaryPassword(int length) {
+	public String generateTemporaryPassword(int length) {
 		String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		StringBuilder temporaryPassword = new StringBuilder();
 
@@ -102,17 +104,18 @@ public class MailSender {
 			int randomIndex = (int) (Math.random() * charset.length());
 			temporaryPassword.append(charset.charAt(randomIndex));
 		}
-
+		
 		return temporaryPassword.toString();
 	}
+	
+	
+	
 
 	// 임시 비밀번호 이메일 전송 메소드
 	public void sendTemporaryPasswordEmail(String userEmail, String temporaryPassword) {
 		// 임시 비밀번호 생성
 		String subject = "[우리집동물친구] 임시 비밀번호를 발급해드립니다.\n";
 	
-		
-		
 		String htmlMessage = "<html><body><div style='width: 800px; margin: auto;'>";
 		htmlMessage += "<br/><br/><p style='font-size: 22px;'><strong>우리집동물친구</strong>";
 		htmlMessage += "<hr style='border: 1px solid #c8c8c8;'/>";

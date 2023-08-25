@@ -443,7 +443,7 @@ document.querySelector("#memberCreateFrm").on("submit", function() {
     console.log(jibunAddress);
     
     const address = document.memberCreateFrm.address;
-    address.value = roadAddress + ' ' + jibunAddress + detailAddress;  
+    address.value = roadAddress + ' ' + jibunAddress;  
 });
 
 </script>
