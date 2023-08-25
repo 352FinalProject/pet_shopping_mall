@@ -65,6 +65,7 @@
 										<p>${status[index]}</p>
 									</td>
 								</tr>
+								<c:if test="${payment eq null}">
 								<tr class="detail-row">
 							        <td colspan="5">
 							            <div class="detail-content">
@@ -73,6 +74,7 @@
 							            </div>
 							        </td>
 							    </tr>
+							    </c:if>
 								</c:forEach>
 							</c:forEach>
 						</c:if>
@@ -86,25 +88,6 @@
 	</div>
 </section>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const orderRows = document.querySelectorAll(".order-row");
-
-    orderRows.forEach(row => {
-        row.addEventListener("click", function() {
-            const detailRow = row.nextElementSibling;
-            if (detailRow.classList.contains("detail-row")) {
-                const paymentInfo = JSON.parse(row.getAttribute("data-payment"));
-                const detailContent = detailRow.querySelector(".detail-content");
-                detailContent.innerHTML = `
-                    <p>Payment ID: ${paymentInfo.paymentId}</p>
-                    <p>Payment Method: ${paymentInfo.paymentMethod}</p>
-                    <!-- 추가 필드 -->
-                `;
-                detailRow.classList.toggle("show");
-            }
-        });
-    });
-});
 
 </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
