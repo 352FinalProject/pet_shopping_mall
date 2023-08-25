@@ -1,9 +1,10 @@
 package com.shop.app.notification.service;
 
-import com.sh.app.board.entity.BoardDetails;
+import com.shop.app.order.dto.OrderCompleteNotificationDto;
+import com.shop.app.order.dto.OrderHistoryDto;
 
 public interface NotificationService {
 
-	int notifyBoardCreate(BoardDetails board);
+	int notifyOrderComplete(OrderCompleteNotificationDto orderCompleteNotificationDto);
 
 }

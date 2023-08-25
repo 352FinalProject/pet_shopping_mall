@@ -1,16 +1,15 @@
 package com.shop.app.notification.service;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import com.sh.app.board.entity.BoardDetails;
-import com.sh.app.ws.dto.Payload;
-
-import lombok.extern.slf4j.Slf4j;
+import com.shop.app.order.dto.OrderCompleteNotificationDto;
+import com.shop.app.ws.dto.Payload;
 
 @Service
-@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
@@ -21,16 +20,20 @@ public class NotificationServiceImpl implements NotificationService {
 	 * 2. notification db 저장
 	 */
 	@Override
-	public int notifyBoardCreate(BoardDetails board) {
+	public int notifyOrderComplete(OrderCompleteNotificationDto orderCompleteNotificationDto ) {
 		// board 작성자의 구독자에게 실시간 알림을 보낸다.
 		// 1. 작성자의 구독자 조회
 		// 2. 각 사용자에게 알림메세지 발송(stomp)
-		String to = "sinsa";
-		Payload payload = Payload.builder()
-				.to(to)
-				.content(board.getMemberId() + "가 새글을 게시했습니다. : " + board.getTitle())
-				.createdAt(System.currentTimeMillis())
-				.build();
+        String to = orderCompleteNotificationDto.getMemberId();
+
+        Payload payload = Payload.builder()
+            .id(orderCompleteNotificationDto.getOrderId())
+            .notiCategory(1)
+            .notiContent(orderCompleteNotificationDto.getProductName() + "상품 주문완료 되었습니다.")
+            .notiCreatedAt(new Timestamp(System.currentTimeMillis()))
+            .memberId(to) 
+            .build();
+
 		
 		simpMessagingTemplate.convertAndSend("/app/notice/" + to, payload);
 		
