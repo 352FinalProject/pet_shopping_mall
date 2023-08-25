@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<title>Image Slider Example</title>
+<title>우리집동물친구[상품]</title>
 <!-- Bootstrap CSS 포함 -->
 <link
   rel="stylesheet"
@@ -101,7 +101,12 @@ pageEncoding="UTF-8"%>
 	            <option value="">[필수]옵션선택</option>
 	            <!-- 옵션나열 -->
 	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-	            	<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		<c:if test="${empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	        		</c:if>
+	        		<c:if test="${not empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		</c:if>
 	        	</c:forEach>
 	          </select>
 	        </div>
@@ -117,6 +122,9 @@ pageEncoding="UTF-8"%>
         	</div>
 	        
         </c:if>
+        
+        
+        
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -311,12 +319,15 @@ pageEncoding="UTF-8"%>
 <script>
 /* 상품수량에 따라 가격 바꾸기(수경) */
 
+
+/* 옵션을 선택하면  */
+
 /* 수량버튼 */
 const quantityInput = document.querySelector('.quantity-input');
-const minusButton = document.querySelector('.minus');
-const plusButton = document.querySelector('.plus');
+const optionMinusButton = document.querySelector('.minus');
+const optionPlusButton = document.querySelector('.plus');
 
-minusButton.addEventListener('click', () => {
+optionMinusButton.addEventListener('click', () => {
     let currentValue = parseInt(quantityInput.value);
     if (currentValue > 1) {
         currentValue--;
@@ -324,7 +335,7 @@ minusButton.addEventListener('click', () => {
     }
 });
 
-plusButton.addEventListener('click', () => {
+optionPlusButton.addEventListener('click', () => {
     let currentValue = parseInt(quantityInput.value);
     currentValue++;
     quantityInput.value = currentValue;
