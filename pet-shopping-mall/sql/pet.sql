@@ -471,3 +471,4 @@ begin
     insert into authority(member_id, auth ) values(:NEW.member_id, default);
 end;
 /
+select * from member;

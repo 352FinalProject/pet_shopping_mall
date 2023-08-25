@@ -409,6 +409,7 @@ background-color: #ccc;
 	</div>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
 <script>
 const checkInputs = () => {
     const id = document.getElementById('inputId').value;
@@ -515,9 +516,6 @@ $(".idFinderForm-findId").click(function() {
         }
     });
 });
-
-
-
 </script>
 
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
