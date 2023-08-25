@@ -431,3 +431,21 @@ div.modal-div {
 	color: #007bff;
 	font-weight: 600;
 }
+
+.quantity-input {
+    font-size: 16px;
+    text-align: center;
+    width: 80px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 0 10px;
+}
+
+#modal-option {
+	font-size: 16px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80%;
+    margin-top: 10px;
+}
