@@ -21,41 +21,41 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 --
---drop table review;
---drop table image_attachment;
---drop table image_attachment_mapping;
---drop table answer;
---drop table question;
---drop table point;
---drop table discount_rule;
---drop table product_category;
---drop table product;
---drop table product_detail;
---drop table cart;
---drop table payment;
---drop table cartitem;
---drop table orderTbl;
---drop table order_detail;
---drop table refund;
---drop table cancel_order;
---drop table authority;
---drop table product_category;
---drop table community;
---drop table wishlist;
---drop table pet;
---drop table persistent_logins;
---drop table image_attachment_mapping;
---drop table member;
---drop table ordertbl;
---drop table return;
---drop table terms;
---drop table terms_history;
---drop table chat;
---drop table chat_room;
---drop table breed;
---drop table coupon;
---drop table member_coupon;
---
+drop table review;
+drop table image_attachment;
+drop table image_attachment_mapping;
+drop table answer;
+drop table question;
+drop table point;
+drop table discount_rule;
+drop table product_category;
+drop table product;
+drop table product_detail;
+drop table cart;
+drop table payment;
+drop table cartitem;
+drop table orderTbl;
+drop table order_detail;
+drop table refund;
+drop table cancel_order;
+drop table authority;
+drop table product_category;
+drop table community;
+drop table wishlist;
+drop table pet;
+drop table persistent_logins;
+drop table image_attachment_mapping;
+drop table member;
+drop table ordertbl;
+drop table return;
+drop table terms;
+drop table terms_history;
+drop table chat;
+drop table chat_room;
+drop table breed;
+drop table coupon;
+drop table member_coupon;
+
 --
 ------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;

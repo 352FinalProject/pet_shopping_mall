@@ -65,93 +65,14 @@ public class ProductController {
 	@Autowired
 	private PetService petService;
 
-	// // 상품 상세페이지 리뷰 연결
-	// @GetMapping("/productDetail.do")
-	// public void productDetail(
-	// @RequestParam(defaultValue = "1") int page,
-	// @RequestParam(required=false) int reviewId,
-	// Model model,
-	// Pet pet,
-	// Principal principal) {
-	//
-	// int limit = 3;
-	//
-	// // 펫-리뷰 연결
-	//// String memberId = _review.getReviewMemberId();
-	//// List<Pet> petId = petService.findProductRevicePet(memberId);
-	//
-	// Map<String, Object> params = Map.of(
-	// "page", page,
-	// "limit", limit
-	// );
-	//
-	// int totalCount = reviewService.findProductTotalReviewCount();
-	// int totalPages = (int) Math.ceil((double) totalCount / limit);
-	//
-	// List<Review> reviews = reviewService.findProductReviewAll(params);
-	//
-	// ReviewDetailDto productReviews = reviewService.findReviewId(reviewId);
-	// log.debug("productReviews = {}", productReviews);
-	// model.addAttribute("productReviews", productReviews);
-	//
-	// // 이미지 파일
-	//
-	//
-	//// ReviewDetails reviewDetails =
-	// reviewService.findProductImageAttachmentsByReviewId(reviewId);
-	//
-	// model.addAttribute("totalPages", totalPages);
-	//// model.addAttribute("petId", petId);
-	//// model.addAttribute("reviewDetails", reviewDetails);
-	//
-	// log.debug("토탈카운트 = {} ", totalCount);
-	// log.debug("페이지, 리밋, 멤버아이디 params = {}", params);
-	//// log.debug("펫아이디 들어가있는거 petId = {}", petId);
-	//// log.debug("리뷰이미지 파일 조회 = {}", reviewDetails);
-	//
-	//
-	// }
-
-	// @GetMapping("/productDetail.do")
-	// public void productDetail(
-	// @RequestParam(defaultValue = "1") int page,
-	// @RequestParam(required=true) int reviewId,
-	// Model model,
-	// Pet pet,
-	// Principal principal) {
-	//
-	// int limit = 3;
-	//
-	// Map<String, Object> params = Map.of(
-	// "page", page,
-	// "limit", limit
-	// );
-	//
-	// int totalCount = reviewService.findProductTotalReviewCount();
-	// int totalPages = (int) Math.ceil((double) totalCount / limit);
-	//
-	// List<Review> reviews = reviewService.findProductReviewAll(params);
-	// log.debug("params = {}", params);
-	//
-	// ReviewDetailDto productReviews = reviewService.findReviewId(reviewId);
-	// log.debug("productReviews = {}", productReviews);
-	//
-	// model.addAttribute("productReviews", productReviews);
-	// model.addAttribute("totalPages", totalPages);
-	//
-	// model.addAttribute("reviews", reviews);
-	//
-	// log.debug("토탈카운트 = {} ", totalCount);
-	// }
-
 	@GetMapping("/productDetail.do")
-
 	public void productDetail(@RequestParam int productId,
 			@RequestParam(required = false) Integer reviewId,
             @RequestParam(defaultValue = "1") int page,
             @AuthenticationPrincipal MemberDetails member,
             Model model) {
 		
+		// 상품상세 - 리뷰 - 페이징바
 		int limit = 3;
 		Map<String, Object> params = Map.of("page", page, "limit", limit);
 		
@@ -163,13 +84,14 @@ public class ProductController {
 		List<Review> reviews = reviewService.findProductReviewAll(params);
 		model.addAttribute("reviews", reviews);
 
-		// 상품 상세 페이지에 펫 정보 뿌려주기
+		// 상품 상세 페이지 - 리뷰 펫 정보 뿌려주기
 		Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 
 		for (Review review : reviews) {
 			List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
 			reviewPetsMap.put(review.getReviewId(), pets);
 		}
+		
 	    // 상품 아이디로 정보 가져오기
 	    Product product = productService.findProductById(productId);
 	    List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
@@ -181,7 +103,6 @@ public class ProductController {
 	    model.addAttribute("product", product); // 상품정보
 	    model.addAttribute("productImages", productImages); // 상품이미지
 	    model.addAttribute("productDetails", productDetails); // 상품옵션
-	    
 
 		// 상품 상세 페이지에 이미지 파일 뿌려주기
 		Map<Integer, String> reviewImageMap = new HashMap<>();

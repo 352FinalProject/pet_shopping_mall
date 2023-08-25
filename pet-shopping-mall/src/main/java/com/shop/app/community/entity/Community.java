@@ -22,5 +22,6 @@ public class Community {
 	private String communityContent;
 	private Date communityCreatedAt;
 	
-
+	private int imageId;
+	
 }
