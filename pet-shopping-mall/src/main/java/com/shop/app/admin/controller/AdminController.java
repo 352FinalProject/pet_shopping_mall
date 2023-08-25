@@ -391,7 +391,6 @@ public class AdminController {
 			productInfos.add(productInfo);
 		}
 		
-		log.debug("productInfos = {}", productInfos);
 		model.addAttribute("productInfos", productInfos);
 	}
 

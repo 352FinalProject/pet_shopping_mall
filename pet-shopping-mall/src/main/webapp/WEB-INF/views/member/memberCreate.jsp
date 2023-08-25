@@ -193,13 +193,13 @@ span duplicate {
 							<div style="margin-top: -60px; position: absolute;"><input type="text" class="address" id="roadAddress" placeholder="도로명주소"></div><br>
 							<div style="margin-top: -30px; "><input type="text" class="address" id="jibunAddress" placeholder="지번주소"></div><br>
 							<span id="guide" style="color:#999;display:none"></span>
-							<div style="margin-top: -10px;"><input type="text" class="address" id="detailAddress" placeholder="상세주소"></div>
+							<div style="margin-top: -10px;"><input type="text" class="address" name="detailAddress" placeholder="상세주소"></div>
 							<input type="hidden" name="address" id="address" value="" />
 						</td>
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2"><input type="reset"
-							value="돌아가기"> <input type="submit" value="가입하기">
+							value="돌아가기"> <input type="submit" id="submitButton2" value="가입하기">
 						</td>
 					</tr>
 				</table>
@@ -392,6 +392,9 @@ function validateEmail() {
     emailInput.addEventListener("input", validateEmail);
 };
 
+var jibunAddress = "";
+var detailAddress = "";
+
 function sample4_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -420,6 +423,7 @@ function sample4_execDaumPostcode() {
             document.getElementById('sample4_postcode').value = data.zonecode;
             document.getElementById("roadAddress").value = roadAddr;
             document.getElementById("jibunAddress").value = data.jibunAddress;
+            document.getElementById("detailAddress").value = data.detailAddress;
 			
             // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
             if(roadAddr !== ''){
@@ -430,20 +434,21 @@ function sample4_execDaumPostcode() {
             }
             document.getElementById('roadAddress').value = roadAddr;
            
+            document.getElementById("detailAddress").value = detailAddress;
+            
             var fullAddress = roadAddr + " " + jibunAddress + " " + detailAddress;
             document.getElementById("address").value = fullAddress;
+            jibunAddress = data.jibunAddress;
         }
     }).open();
 };
-document.querySelector("#memberCreateFrm").on("submit", function() {
+document.querySelector("#memberCreateFrm").addEventListener("submit", function() {
     const roadAddress = document.getElementById("roadAddress").value;
     const jibunAddress = document.getElementById("jibunAddress").value;
-    
-    console.log(roadAddress);
-    console.log(jibunAddress);
-    
+    const detailAddress = document.querySelector("detailAddress").value;
+
     const address = document.memberCreateFrm.address;
-    address.value = roadAddress + ' ' + jibunAddress + detailAddress;  
+    address.value = roadAddress + ' ' + jibunAddress + ' ' + detailAddress;
 });
 
 </script>

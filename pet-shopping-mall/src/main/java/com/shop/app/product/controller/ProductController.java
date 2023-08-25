@@ -152,6 +152,8 @@ public class ProductController {
 					.build());
 		}
 		
+		log.debug("productInfos = {}", productInfos);
+		
 		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productInfos", productInfos);
 	}
