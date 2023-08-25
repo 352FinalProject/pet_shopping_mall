@@ -38,20 +38,20 @@ a {
 <%-- 			<div class="review-detail-title input[type="text"]" style="display: inline-block;">
 				<input type="text" name="reviewTitle" id="reivewTitle" value="${reviews.reviewTitle}" readonly required>
 			</div> --%>
-			<span class="review-div-title">${reviews.reviewTitle}</span><span class="small-space"></span>
+			<span class="review-div-title">${reviews.reviewTitle}${reviews.petId}</span><span class="small-space"></span>
 		<br>
 		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
- 		<div id="review-div"></div>
+		<div id="review-div"></div>
 			<div id="review-div">
-				<%-- <c:if test="${not empty petId}"> --%>
-				    ${reviews.petName} | ${reviews.petAge}살 | ${reviews.petWeight}kg | ${reviews.petBreed}
-				<%-- </c:if> --%>
+				<c:if test="${not empty petId}">
+				    ${reviews.petName} | | ${petId[0].petAge}살 | ${petId[0].petWeight}kg | ${petId[0].petBreed}
+				</c:if>
 			</div><span class="small-space"></span>
-		<br> 
+		<br>
 		<%-- 상품 옵션 --%>
 		<div id="review-div"></div>
 			<div id="review-div">
-			${reviews.productName}
+			색상 : 노란색
 			</div><span class="small-space"></span>
 		<br>
 		<%-- 별점 --%>

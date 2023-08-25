@@ -36,25 +36,6 @@
 	    r.review_content,
 	    r.review_star_rate,
 	    ia.image_original_filename,
-	    ia.image_renamed_filename,
-	    ia.image_id
-	FROM 
-	    review r
-	LEFT JOIN 
-	    image_attachment_mapping iam ON r.review_id = iam.ref_id AND iam.ref_table = 'review'
-	LEFT JOIN
-	    image_attachment ia ON iam.image_id = ia.image_id
-	WHERE 
-	    r.review_id = #{reviewId}
-	</select>
-	
-	<select id="findImageFilenameByReviewId">
-	SELECT
-	    r.review_id,
-	    r.review_title,
-	    r.review_content,
-	    r.review_star_rate,
-	    ia.image_original_filename,
 	    ia.image_renamed_filename
 	FROM 
 	    review r

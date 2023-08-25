@@ -9,12 +9,26 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <title>Image Slider Example</title>
 <!-- Bootstrap CSS 포함 -->
 <link
   rel="stylesheet"
   href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 />
+
+<style>
+	.heart-button {
+        display: inline-block;
+        font-size: 24px;
+        color: black; /* 검은색 하트의 기본 색상 */
+        cursor: pointer;
+    }
+    
+    .pink {
+        color: pink; /* 핑크색 하트 */
+    }
+</style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <section class="common-section" id="#">
@@ -245,12 +259,17 @@ pageEncoding="UTF-8"%>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
-          <img
-            src="${pageContext.request.contextPath}/resources/images/product/pink_heart.png"
-            width="28px"
-          />
+        	<c:choose>
+        		<c:when test="${likeState == 0}">
+					<span class="heart-button" id="clickHeart">♡</span>
+				</c:when>
+				<c:otherwise>
+					<span class="heart-button pink" id="clickHeart">♥</span>
+					
+				</c:otherwise>
+			</c:choose>
         </button>
-        <span>1,562</span>
+        <span id="likeCnt">${product.likeCnt}</span>
       </div>
       <div>
         <button class="btn btn1">장바구니</button>
@@ -289,9 +308,48 @@ ques.forEach(que => {
     });
   });
 }); */
-</script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	// 하트 클릭 이벤트 (선모)
+	let token = $("meta[name='_csrf']").attr("content");
+	let header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(function() {
+	    $(document).ajaxSend(function(e, xhr, options) {
+	        xhr.setRequestHeader(header, token);
+	    });
+	});
+	
+	$("#clickHeart").on("click", function() {
+		var state = $(this).hasClass("pink") ? "delete" : "insert";
+		
+		$.ajax({
+			type: "POST",
+			url: "${pageContext.request.contextPath}/product/insertPick.do",
+			dataType: "JSON",
+			async: true,
+			contentType:'application/json',
+			data: JSON.stringify({
+				"productId": ${product.productId},
+				"state": state
+			}),
+			success: function(result) {
+				if(result.rs == "insertS") {
+					$("#clickHeart").addClass("pink");
+					$("#likeCnt").text(Number($("#likeCnt").text()) + 1);
+				} else if(result.rs == "deleteS") {
+					$("#clickHeart").removeClass("pink");
+					$("#likeCnt").text(Number($("#likeCnt").text()) - 1);
+				}
+				
+				alert(result.msg);
+			},
+			error: function(req, status, error) {
+				alert("에러가 발생하였습니다.");
+				console.log(req.responseText);
+			}
+		});	
+	});
+</script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

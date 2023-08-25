@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <jsp:include page="/WEB-INF/views/common/header.jsp" />
-    <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
-
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -74,77 +76,15 @@
         <div class="container">
             <div class="sub_title">찜 목록</div>
             <div class="list">
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-                <div class="box">
-                    <img src="${pageContext.request.contextPath }/resources/images/상품/1.jpeg" alt="">
-                    <p>초경량 강아지 목줄 부드러운 초소형견 소형견 중형견 목줄</p>
-                    <h5>11,000원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                </div>
-
+            	<c:forEach items = "${myWishList}" var = "list">            		
+            		<div class="box">
+	                    <img src="${pageContext.request.contextPath}${list.IMAGE_RENAMED_FILENAME}" alt="">
+	                    <p>${list.PRODUCT_NAME}</p>
+	                    <h5>11,000원</h5>
+	                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
+	                        153건</span>
+	                </div>
+            	</c:forEach>
             </div>
         </div>
 

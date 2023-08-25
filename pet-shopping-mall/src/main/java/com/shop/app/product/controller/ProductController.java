@@ -22,8 +22,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.entity.MemberDetails;
@@ -42,6 +44,7 @@ import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
+import com.shop.app.wishlist.service.WishlistService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,6 +58,9 @@ public class ProductController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private WishlistService wishlistService;
 
 	@Autowired
 	private PetService petService;
@@ -62,8 +68,9 @@ public class ProductController {
 	@GetMapping("/productDetail.do")
 
 	public void productDetail(@RequestParam int productId,
-			  @RequestParam(required = false) Integer reviewId,
+			@RequestParam(required = false) Integer reviewId,
             @RequestParam(defaultValue = "1") int page,
+            @AuthenticationPrincipal MemberDetails member,
             Model model) {
 		
 		int limit = 3;
@@ -116,6 +123,8 @@ public class ProductController {
 
 		model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 		model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
+		/* 찜 등록 여부 가져오기 (선모) */
+		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId())); // 찜 여부 가져오기
 	}
 
 	@GetMapping("/productList.do")
@@ -145,7 +154,45 @@ public class ProductController {
 		
 		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productInfos", productInfos);
-
+	}
+	
+	/* 하트 클릭 (선모) */
+	@ResponseBody
+	@PostMapping("/insertPick.do")
+	public Map insertPick(@Valid @RequestBody Map<String, Object> param, @AuthenticationPrincipal MemberDetails member) {
+		Map<String, Object> resultMap = new HashMap<>();
+		String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제";
+		String getProductId = param.get("productId").toString();
+		int productId = getProductId.isEmpty() ? 0 : Integer.parseInt(getProductId);
+		resultMap.put("rs", "fail");
+		resultMap.put("msg", "찜 " + state + "에 실패하였습니다.");
+		
+		if(productId != 0) {
+			// 데이터 Setting
+			param.put("productId", productId);
+			
+			if("insert".equals(param.get("state").toString())) {
+				param.put("cnt", 1);
+				
+				if(wishlistService.insertPick(productId, member.getMemberId()) > 0) {
+					if(productService.updateLikeCnt(param) > 0) {
+						resultMap.put("rs", "insertS");
+						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+					}
+				}
+			} else if("delete".equals(param.get("state").toString())) {
+				param.put("cnt", -1);
+				
+				if(wishlistService.deletePick(productId, member.getMemberId()) > 0) {
+					if(productService.updateLikeCnt(param) > 0) {
+						resultMap.put("rs", "deleteS");
+						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+					}
+				}
+			}
+		}
+		
+		return resultMap;
 	}
 	
 

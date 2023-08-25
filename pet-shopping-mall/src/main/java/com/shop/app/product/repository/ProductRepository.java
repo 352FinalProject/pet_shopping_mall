@@ -95,8 +95,10 @@ public interface ProductRepository {
 	List<Product> findProduct();
 
 	
-	@Select("select * from product where category_id = #{categoryId}")
+	@Select("select * from product where PRODUCT_CATEGORY = #{categoryId}")
 	List<Product> findProductsByCategoryId(int categoryId);
 
-
+	/* 좋아요 개수 증감 (선모) */
+	@Update("UPDATE product SET LIKE_CNT = NVL(LIKE_CNT, 0) + #{cnt} WHERE PRODUCT_ID  = #{productId}")
+	int updateLikeCnt(Map<String, Object> param);
 }

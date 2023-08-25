@@ -1,6 +1,7 @@
 package com.shop.app.product.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -128,4 +129,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductsByCategoryId(categoryId);
 	}
 
+	// 찜 수 증감 (선모)
+	@Override
+	public int updateLikeCnt(Map<String, Object> param) {
+		return productRepository.updateLikeCnt(param);
+	}
 }

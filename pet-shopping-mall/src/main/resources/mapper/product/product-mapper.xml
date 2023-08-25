@@ -7,7 +7,7 @@
 	<select id="findImageAttachmentsByProductId" resultMap="ProductImagesResultMap">
 	select
 	    p.product_id,
-	    p.category_id,
+	    p.product_category,
 	    p.product_name,
 	    p.product_price,
 	    p.product_name,
