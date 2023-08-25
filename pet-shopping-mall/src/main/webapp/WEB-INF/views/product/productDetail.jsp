@@ -81,9 +81,17 @@ pageEncoding="UTF-8"%>
         </div>
         <hr class="hr-line" />
         <!-- 선택 옵션 -->
-        <!-- 없을 때 -->
-        <c:if test="${empty productDetails}"></c:if>
-        <!-- 있을 때 -->
+        <!-- 옵션 없을 때 -->
+        <c:if test="${empty productDetails}">
+        	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+        		<button class="quantity-down">-</button>
+        			<span>1</span>
+        		<button class="quantity-up">+</button>
+        	</div>
+        	
+        </c:if>
+        <!-- 옵션 있을 때 -->
         <c:if test="${not empty productDetails}">
 	        <div>
 	          <select name="product-option">
