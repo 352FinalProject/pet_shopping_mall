@@ -105,6 +105,17 @@ pageEncoding="UTF-8"%>
 	        	</c:forEach>
 	          </select>
 	        </div>
+	        
+            	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
+        	</div>
+	        
         </c:if>
         <div class="product-price">
           <div class="product-price-desc">
