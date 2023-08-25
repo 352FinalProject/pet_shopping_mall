@@ -1,27 +1,5 @@
 INDEX VERSION 1.131
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1431233060.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3066835145.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2342757822.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\820581306.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1632431162.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2872086029.index
-\pet-shopping-mall\src\main\java
 C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2727867827.index
 \pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\609282902.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3236519589.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3356361993.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4135861072.index
-\pet-shopping-mall\src\main\java
 C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\933199770.index
-\pet-shopping-mall\src\main\java
-C:\Workspaces\documents\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3744361626.index
 \pet-shopping-mall\src\main\java

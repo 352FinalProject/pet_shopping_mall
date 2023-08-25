@@ -222,7 +222,6 @@
 			</div>
 		</div>
 	</header>
-<<<<<<< Updated upstream
 	<div id="deleteMember-div" class="deleteMember-class">
 		<div class=deleteMember>
 			<span class="deletememberForm-close" >&times;</span>
@@ -240,9 +239,6 @@
 	</div>
 <script>
 /* alert('${msg}'); */
-=======
-<script>
->>>>>>> Stashed changes
 /* const deleteMember = () => {
     if (confirm('정말로 회원 탈퇴하시겠습니까?')) {
         document.getElementById('deleteMemberForm').submit();
@@ -250,9 +246,8 @@
         alert('회원 탈퇴를 실패했습니다.');
     }
 }; */
-<<<<<<< Updated upstream
 
-$(document).ready(function() {
+$(document).deleteMemberForm-button(function() {
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 	const deleteMember = document.getElementById("sendEmail");
@@ -285,7 +280,4 @@ $(document).ready(function() {
 });
 </script>
 
-=======
-</script>
->>>>>>> Stashed changes
 	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>
