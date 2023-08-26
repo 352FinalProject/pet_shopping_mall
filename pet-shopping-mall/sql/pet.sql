@@ -1,5 +1,5 @@
 --==============================
--- ê´€ë¦¬ì ê³„ì • - pet ê³„ì • ìƒì„±
+-- °ü¸®ÀÚ °èÁ¤ - pet °èÁ¤ »ı¼º
 --==============================
 alter session set "_oracle_script" = true;
 
@@ -14,11 +14,11 @@ alter user pet quota unlimited on users;
 grant create session,
 grant create table to pet;
 
--- ëª¨ë“  í…Œì´ë¸” ì¡°íšŒ
+-- ¸ğµç Å×ÀÌºí Á¶È¸
 SELECT *  FROM all_tables;
 
 --==============================
--- ì´ˆê¸°í™” ë¸”ëŸ­
+-- ÃÊ±âÈ­ ºí·°
 --==============================
 --
 --drop table review;
@@ -57,7 +57,7 @@ SELECT *  FROM all_tables;
 --drop table member_coupon;
 
 --
------- ì™¸ë˜í‚¤ ë¶™ì–´ìˆëŠ” í…Œì´ë¸”ì‚­ì œ
+------ ¿Ü·¡Å° ºÙ¾îÀÖ´Â Å×ÀÌºí»èÁ¦
 --drop table member cascade constraints;
 --drop table review cascade constraints;
 --drop table product cascade constraints;
@@ -101,10 +101,10 @@ SELECT *  FROM all_tables;
 
 
 --==============================
--- í…Œì´ë¸” ìƒì„±
+-- Å×ÀÌºí »ı¼º
 --==============================
 
--- ë©¤ë²„ í…Œì´ë¸”
+-- ¸â¹ö Å×ÀÌºí
 create table member (
     member_id varchar2(20),
     password varchar2(300) not null,
@@ -118,7 +118,7 @@ create table member (
     constraints pk_member_id primary key(member_id)
 );
 
--- ê¶Œí•œ í…Œì´ë¸”
+-- ±ÇÇÑ Å×ÀÌºí
 create table authority(
     member_id varchar2(20),
     auth varchar2(50) default 'ROLE_USER',
@@ -128,15 +128,15 @@ create table authority(
                 on delete cascade
 );
 
--- ëŒ€ì¶© ì‹œíë¦¬í‹° í…Œì´ë¸” ì—†ìœ¼ë©´ ì˜¤ë¥˜ë‚¨
+-- ´ëÃæ ½ÃÅ¥¸®Æ¼ Å×ÀÌºí ¾øÀ¸¸é ¿À·ù³²
 create table persistent_logins (
     username varchar(64) not null,
     series varchar(64) primary key, -- pk
-    token varchar(64) not null, -- username, password, expiry timeì„ hasingí•œ ê°’
+    token varchar(64) not null, -- username, password, expiry timeÀ» hasingÇÑ °ª
     last_used timestamp not null
 );
 
--- í« í…Œì´ë¸”
+-- Æê Å×ÀÌºí
 CREATE TABLE pet (
     pet_id number,
     member_id varchar2(20),
@@ -155,7 +155,7 @@ CREATE TABLE pet (
 );
 
 
--- í’ˆì¢… í…Œì´ë¸”
+-- Ç°Á¾ Å×ÀÌºí
 CREATE TABLE breed (
     breed_id number,
     pet_kind VARCHAR2(50),
@@ -163,7 +163,7 @@ CREATE TABLE breed (
     CONSTRAINT chk_pet_breed CHECK (pet_breed IN ('C', 'D', 'E'))
 );
 
--- qna ì§ˆë¬¸ í…Œì´ë¸”
+-- qna Áú¹® Å×ÀÌºí
 create table question(
     question_id number,
     question_member_id varchar2(20) not null,
@@ -176,10 +176,10 @@ create table question(
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
 
--- qna ë‹µë³€ í…Œì´ë¸”
+-- qna ´äº¯ Å×ÀÌºí
 create table answer(
    answer_id number,
-   answer_admin_name varchar2(20) default 'ê´€ë¦¬ì',
+   answer_admin_name varchar2(20) default '°ü¸®ÀÚ',
    answer_question_id number not null,
    answer_content varchar2(4000) not null,
    answer_created_at timestamp default systimestamp,
@@ -187,7 +187,7 @@ create table answer(
    constraints fk_answer_question_id foreign key (answer_question_id) references question(question_id) on delete cascade
 );
 
--- ì´ë¯¸ì§€ íŒŒì¼ í…Œì´ë¸”
+-- ÀÌ¹ÌÁö ÆÄÀÏ Å×ÀÌºí
 create table image_attachment (
     image_id number,
     image_type number not null,
@@ -198,7 +198,7 @@ create table image_attachment (
     constraint pk_image_attachment_id primary key(image_id)
 );
 
--- ì´ë¯¸ì§€ íŒŒì¼ ë§¤í•‘ í…Œì´ë¸”
+-- ÀÌ¹ÌÁö ÆÄÀÏ ¸ÅÇÎ Å×ÀÌºí
 create table image_attachment_mapping (
     mapping_id number,
     ref_table varchar2(50) not null,
@@ -208,41 +208,41 @@ create table image_attachment_mapping (
     constraint fk_image_id foreign key(image_id) references image_attachment(image_id) on delete cascade
 );
 
--- ìƒí’ˆ ì¹´í…Œê³ ë¦¬ í…Œì´ë¸”
+-- »óÇ° Ä«Å×°í¸® Å×ÀÌºí
 create table product_category (
     category_id number,
     category_name varchar2(100) not null,
     constraints pk_category_id primary key(category_id)
 );
 
--- ìƒí’ˆ í…Œì´ë¸”
+-- »óÇ° Å×ÀÌºí
 create table product (
     product_id number, -- pk
     category_id number, -- fk
     product_name varchar2(200) not null,
     product_price number not null,
-    image_id number, -- ì œí’ˆìƒì„¸ ì´ë¯¸ì§€(fk)
-    create_date timestamp default systimestamp, -- ë“±ë¡ì¼
-    expire_date timestamp default null, -- ìœ í†µê¸°í•œ
-    like_cnt number default 0, -- ì¢‹ì•„ìš”ìˆ˜
-    view_cnt number default 0, -- ì¡°íšŒìˆ˜
+    image_id number, -- Á¦Ç°»ó¼¼ ÀÌ¹ÌÁö(fk)
+    create_date timestamp default systimestamp, -- µî·ÏÀÏ
+    expire_date timestamp default null, -- À¯Åë±âÇÑ
+    like_cnt number default 0, -- ÁÁ¾Æ¿ä¼ö
+    view_cnt number default 0, -- Á¶È¸¼ö
     constraints pk_product_id primary key(product_id),
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
- -- ìƒí’ˆ ë””í…Œì¼ í…Œì´ë¸”
+ -- »óÇ° µğÅ×ÀÏ Å×ÀÌºí
 create table product_detail (
     product_detail_id number, -- pk
     product_id number, -- fk
-    option_name varchar2(100), -- ì˜µì…˜ëª…(optionì€ ì˜ˆì•½ì–´ë¼ ì‚¬ìš©ë¶ˆê°€)
-    option_value varchar2(200), -- ì˜µì…˜ì†ì„±
-    additional_price number default 0, -- ì˜µì…˜ì— ë”°ë¥¸ ì¶”ê°€ê¸ˆ
-    sale_state number default 0, -- 0: íŒë§¤ëŒ€ê¸°, 1: íŒë§¤ì¤‘, 2: í’ˆì ˆ, 3: ê¸°íƒ€ 
+    option_name varchar2(100), -- ¿É¼Ç¸í(optionÀº ¿¹¾à¾î¶ó »ç¿ëºÒ°¡)
+    option_value varchar2(200), -- ¿É¼Ç¼Ó¼º
+    additional_price number default 0, -- ¿É¼Ç¿¡ µû¸¥ Ãß°¡±İ
+    sale_state number default 0, -- 0: ÆÇ¸Å´ë±â, 1: ÆÇ¸ÅÁß, 2: Ç°Àı, 3: ±âÅ¸ 
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
 );
 
--- í¬ì¸íŠ¸ í…Œì´ë¸”
+-- Æ÷ÀÎÆ® Å×ÀÌºí
 create table point (
     point_id number,
     point_member_id varchar2(20) not null,
@@ -255,9 +255,9 @@ create table point (
     constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
 
--- ì£¼ë¬¸í…Œì´ë¸”
--- order ê°€ ì˜¤ë¼í´ ì˜ˆì•½ì–´ì—¬ì„œ í…Œì´ë¸”ëª… ì´ë ‡ê²Œ í–ˆìŠµë‹ˆë‹¤.
--- order_no : 230814(ë‚ ì§œ)-001 ì´ëŸ°ì‹ìœ¼ë¡œ ë§Œë“¤ê±°ì—¬ì„œ varchar2
+-- ÁÖ¹®Å×ÀÌºí
+-- order °¡ ¿À¶óÅ¬ ¿¹¾à¾î¿©¼­ Å×ÀÌºí¸í ÀÌ·¸°Ô Çß½À´Ï´Ù.
+-- order_no : 230814(³¯Â¥)-001 ÀÌ·±½ÄÀ¸·Î ¸¸µé°Å¿©¼­ varchar2
 create table orderTbl (
     order_id number,
     order_no varchar2(20) not null,
@@ -270,13 +270,13 @@ create table orderTbl (
     discount number default 0,
     discount_detail varchar2(50),
     amount number not null,
-    member_coupon_id number, -- null ì‚¬ìš©í•˜ë©´ ê³ ìœ  ë²ˆí˜¸ ë“¤ì–´ê°€ê²Œ  
+    member_coupon_id number, -- null »ç¿ëÇÏ¸é °íÀ¯ ¹øÈ£ µé¾î°¡°Ô  
     constraint pk_order_id primary key(order_id),
     constraint fk_orderTbl_member_id foreign key(member_id) references member(member_id) on delete cascade,
     constraint fk_orderTbl_member_coupon_id foreign key(member_coupon_id) references member_coupon(member_coupon_id) on delete cascade
 );
 
--- ì£¼ë¬¸ìƒì„¸ í…Œì´ë¸”
+-- ÁÖ¹®»ó¼¼ Å×ÀÌºí
 create table order_detail (
     order_id number,
     product_detail_id number,
@@ -286,7 +286,7 @@ create table order_detail (
     constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
 );
 
- -- ì·¨ì†Œ í…Œì´ë¸”
+ -- Ãë¼Ò Å×ÀÌºí
 create table cancel_order (
     cancel_id number,
     request_date timestamp default systimestamp not null,
@@ -297,7 +297,7 @@ create table cancel_order (
     constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
--- ì°œí•œ ëª©ë¡ í…Œì´ë¸”
+-- ÂòÇÑ ¸ñ·Ï Å×ÀÌºí
 create table wishlist(
     wishlist_id number,
     wishlist_member_id varchar2(20),
@@ -308,7 +308,7 @@ create table wishlist(
     constraints fk_wishlist_product_id foreign key(wishlist_product_id) references product(product_id) on delete cascade
 );
 
--- ë¦¬ë·°í…Œì´ë¸”
+-- ¸®ºäÅ×ÀÌºí
 create table review (
     review_id number,
     pet_id number,
@@ -335,7 +335,7 @@ create table community (
     constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
 );
 
- -- ê²°ì œ í…Œì´ë¸”
+ -- °áÁ¦ Å×ÀÌºí
 create table payment (
     payment_id number,
     payment_method number not null,
@@ -346,7 +346,7 @@ create table payment (
     constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
- -- ì¥ë°”êµ¬ë‹ˆ í…Œì´ë¸”
+ -- Àå¹Ù±¸´Ï Å×ÀÌºí
 create table cart (
     cart_id number,
     member_id varchar2(50),
@@ -354,7 +354,7 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
- -- ì¥ë°”êµ¬ë‹ˆ ì•„ì´í…œ í…Œì´ë¸”
+ -- Àå¹Ù±¸´Ï ¾ÆÀÌÅÛ Å×ÀÌºí
 create table cartitem (
     cartitem_id number,
     cart_id number,
@@ -364,7 +364,7 @@ create table cartitem (
     constraint fk_cartitem_cart_id foreign key(cart_id) references cart (cart_id)
 );
 
- -- ì•½ê´€ í…Œì´ë¸”
+ -- ¾à°ü Å×ÀÌºí
 create table terms (
  history_id number,
  terms_id number,
@@ -375,7 +375,7 @@ create table terms (
  constraint fk_terms_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
--- ì•½ê´€ë™ì˜ ì´ë ¥ í…Œì´ë¸”
+-- ¾à°üµ¿ÀÇ ÀÌ·Â Å×ÀÌºí
 create table terms_history (
  terms_id number,
  title varchar2(100),
@@ -384,7 +384,7 @@ create table terms_history (
  constraint pk_terms_id primary key(terms_id)
 );
 
--- ì±„íŒ…ë°© í…Œì´ë¸”
+-- Ã¤ÆÃ¹æ Å×ÀÌºí
 create table chat_room (
  chat_room_id varchar2(20) not null,
  chat_room_member_id varchar2(50) not null,
@@ -394,7 +394,7 @@ create table chat_room (
  constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
 );
 
--- ì±„íŒ… ë¡œê·¸ í…Œì´ë¸”
+-- Ã¤ÆÃ ·Î±× Å×ÀÌºí
 create table chat (
  chat_id number,
  chat_room_id varchar2(20) not null,
@@ -406,24 +406,24 @@ create table chat (
  constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
 );
 
--- ì¿ í° í…Œì´ë¸”
+-- ÄíÆù Å×ÀÌºí
 create table coupon (
  coupon_id number,
- coupon_name varchar(100) not null, -- ì¿ í° ì´ë¦„ (ex. ë°°ì†¡ë¹„ ë¬´ë£Œ ì¿ í° / ìƒì¼ì¶•í•˜ ì¿ í°)
- discount_amount number, -- í• ì¸ ê¸ˆì•¡ (ex. 3,000ì› - ë°°ì†¡ë¹„ ë¬´ë£Œ ì¿ í°)
- discount_percentage number(5, 2), -- í• ì¸ ë¹„ìœ¨ (ex. 10% - ìƒì¼ ì¿ í°)
+ coupon_name varchar(100) not null, -- ÄíÆù ÀÌ¸§ (ex. ¹è¼Ûºñ ¹«·á ÄíÆù / »ıÀÏÃàÇÏ ÄíÆù)
+ discount_amount number, -- ÇÒÀÎ ±İ¾× (ex. 3,000¿ø - ¹è¼Ûºñ ¹«·á ÄíÆù)
+ discount_percentage number(5, 2), -- ÇÒÀÎ ºñÀ² (ex. 10% - »ıÀÏ ÄíÆù)
  constraint pk_coupon_id primary key(coupon_id)
 );
 
--- ë©¤ë²„ ì¿ í° í…Œì´ë¸”
+-- ¸â¹ö ÄíÆù Å×ÀÌºí
 create table member_coupon (
  member_coupon_id number,
  coupon_id number,
  member_id varchar2(50),
- create_date timestamp default systimestamp not null, -- ë°œê¸‰ ë‚ ì§œ
- end_date timestamp not null, -- ìœ íš¨ê¸°ê°„ (ì–¸ì œê¹Œì§€)
- use_status number(1) default 0, -- ì‚¬ìš© ì—¬ë¶€ (ì‚¬ìš© ì•ˆ í•˜ë©´ 0, ì‚¬ìš©í•˜ë©´ 1)
- use_date timestamp, -- ì‚¬ìš© ë‚ ì§œ
+ create_date timestamp default systimestamp not null, -- ¹ß±Ş ³¯Â¥
+ end_date timestamp not null, -- À¯È¿±â°£ (¾ğÁ¦±îÁö)
+ use_status number(1) default 0, -- »ç¿ë ¿©ºÎ (»ç¿ë ¾È ÇÏ¸é 0, »ç¿ëÇÏ¸é 1)
+ use_date timestamp, -- »ç¿ë ³¯Â¥
  constraint pk_member_coupon_id primary key(member_coupon_id),
  constraint fk_member_coupon_member_id foreign key(member_id) references member(member_id) on delete cascade,
  constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
@@ -456,7 +456,7 @@ create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
 
--- íšŒì›ê°€ì…ì‹œ ìë™ìœ¼ë¡œ ì¥ë°”êµ¬ë‹ˆê°€ ìƒì„±ë˜ëŠ” íŠ¸ë¦¬ê±°
+-- È¸¿ø°¡ÀÔ½Ã ÀÚµ¿À¸·Î Àå¹Ù±¸´Ï°¡ »ı¼ºµÇ´Â Æ®¸®°Å
 create or replace trigger cart_create_trriger
 after insert on member
 for each row
@@ -465,7 +465,7 @@ begin
 end;
 /
 
--- íšŒì›ê°€ì…ì‹œ ìë™ìœ¼ë¡œ ë©¤ë²„ ë¡¤ì´ ë“¤ì–´ê°€ëŠ” íŠ¸ë¦¬ê±°
+-- È¸¿ø°¡ÀÔ½Ã ÀÚµ¿À¸·Î ¸â¹ö ·ÑÀÌ µé¾î°¡´Â Æ®¸®°Å
 create or replace trigger user_role_create_trriger
 after insert on member
 for each row
@@ -476,32 +476,32 @@ end;
 
 
 -----------------------------------------
--- ì´ìš©ì•½ê´€ ì¿¼ë¦¬
+-- ÀÌ¿ë¾à°ü Äõ¸®
 -----------------------------------------
-insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, 'ì´ìš©ì•½ê´€ ë™ì˜ (í•„ìˆ˜)', 'ì—¬ëŸ¬ë¶„ì„ í™˜ì˜í•©ë‹ˆë‹¤.ìš°ë¦¬ì§‘ë™ë¬¼ì¹œêµ¬ ë° ì œí’ˆ(ì´í•˜ â€˜ì„œë¹„ìŠ¤â€™)ì„ ì´ìš©í•´ ì£¼ì…”ì„œ ê°ì‚¬í•©ë‹ˆë‹¤. ë³¸ ì•½ê´€ì€ ë‹¤ì–‘í•œ ìš°ë¦¬ì§‘ë™ë¬¼ì¹œêµ¬ ì„œë¹„ìŠ¤ì˜ ì´ìš©ê³¼ ê´€ë ¨í•˜ì—¬ ë°˜ë ¤ë™ë¬¼ ì‡¼í•‘ëª° ì„œë¹„ìŠ¤ë¥¼ ì œê³µí•˜ëŠ” ìš°ë¦¬ì§‘ë™ë¬¼ì¹œêµ¬(ì´í•˜ â€˜ìš°ë™ì¹œâ€™)ì™€ ì´ë¥¼ ì´ìš©í•˜ëŠ” ìš°ë¦¬ì§‘ë™ë¬¼ì¹œêµ¬ ì„œë¹„ìŠ¤ íšŒì›(ì´í•˜ â€˜íšŒì›â€™) ë˜ëŠ” ë¹„íšŒì›ê³¼ì˜ ê´€ê³„ë¥¼ ì„¤ëª…í•˜ë©°, ì•„ìš¸ëŸ¬ ì—¬ëŸ¬ë¶„ì˜ ìš°ë¦¬ì§‘ë™ë¬¼ì¹œêµ¬ ì„œë¹„ìŠ¤ ì´ìš©ì— ë„ì›€ì´ ë  ìˆ˜ ìˆëŠ” ìœ ìµí•œ ì •ë³´ë¥¼ í¬í•¨í•˜ê³  ìˆìŠµë‹ˆë‹¤.', 'Y');
-insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, 'ê°œì¸ì •ë³´ ìˆ˜ì§‘ ë° ì´ìš©ì— ëŒ€í•œ ì•ˆë‚´ (í•„ìˆ˜)', 'ê°œì¸ì •ë³´ë³´í˜¸ë²•ì— ë”°ë¼ ìš°ë™ì¹œì— íšŒì›ê°€ì… ì‹ ì²­í•˜ì‹œëŠ” ë¶„ê»˜ ìˆ˜ì§‘í•˜ëŠ” ê°œì¸ì •ë³´ì˜ í•­ëª©, ê°œì¸ì •ë³´ì˜ ìˆ˜ì§‘ ë° ì´ìš©ëª©ì , ê°œì¸ì •ë³´ì˜ ë³´ìœ  ë° ì´ìš©ê¸°ê°„, ë™ì˜ ê±°ë¶€ê¶Œ ë° ë™ì˜ ê±°ë¶€ ì‹œ ë¶ˆì´ìµì— ê´€í•œ ì‚¬í•­ì„ ì•ˆë‚´ ë“œë¦¬ì˜¤ë‹ˆ ìì„¸íˆ ì½ì€ í›„ ë™ì˜í•˜ì—¬ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤. 1. ìˆ˜ì§‘í•˜ëŠ” ê°œì¸ì •ë³´ ì´ìš©ìëŠ” íšŒì›ê°€ì…ì„ í•˜ì§€ ì•Šì•„ë„ ì •ë³´ ê²€ìƒ‰, ë‰´ìŠ¤ ë³´ê¸° ë“± ëŒ€ë¶€ë¶„ì˜ ìš°ë™ì¹œ ì„œë¹„ìŠ¤ë¥¼ íšŒì›ê³¼ ë™ì¼í•˜ê²Œ ì´ìš©í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì´ìš©ìê°€ ë©”ì¼, ìº˜ë¦°ë”, ì¹´í˜, ë¸”ë¡œê·¸ ë“±ê³¼ ê°™ì´ ê°œì¸í™” í˜¹ì€ íšŒì›ì œ ì„œë¹„ìŠ¤ë¥¼ ì´ìš©í•˜ê¸° ìœ„í•´ íšŒì›ê°€ì…ì„ í•  ê²½ìš°, ìš°ë™ì¹œëŠ” ì„œë¹„ìŠ¤ ì´ìš©ì„ ìœ„í•´ í•„ìš”í•œ ìµœì†Œí•œì˜ ê°œì¸ì •ë³´ë¥¼ ìˆ˜ì§‘í•©ë‹ˆë‹¤.', 'Y');
-insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, 'ì´ë²¤íŠ¸ ë“± í”„ë¡œëª¨ì…˜ ì•Œë¦¼ ë©”ì¼ ìˆ˜ì‹  (ì„ íƒ)', 'ìš°ë™ì¹œ ì„œë¹„ìŠ¤ ë° ì œíœ´ ì´ë²¤íŠ¸ãƒ»í˜œíƒ ë“±ì˜ ì •ë³´ë¥¼ íœ´ëŒ€ì „í™”(ìš°ë™ì¹œì•± ì•Œë¦¼ ë˜ëŠ” ë¬¸ì), ì´ë©”ì¼ë¡œ ë°›ì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì¼ë¶€ ì„œë¹„ìŠ¤(ë³„ê°œì˜ íšŒì› ì²´ê³„ ìš´ì˜, ìš°ë™ì¹œ ê°€ì… í›„ ì¶”ê°€ ê°€ì…í•˜ëŠ” ì„œë¹„ìŠ¤ ë“±)ì˜ ê²½ìš°, ìˆ˜ì‹ ì— ëŒ€í•´ ë³„ë„ë¡œ ì•ˆë‚´ë“œë¦¬ë©° ë™ì˜ë¥¼ êµ¬í•©ë‹ˆë‹¤.', 'N');
+insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, 'ÀÌ¿ë¾à°ü µ¿ÀÇ (ÇÊ¼ö)', '¿©·¯ºĞÀ» È¯¿µÇÕ´Ï´Ù.¿ì¸®Áıµ¿¹°Ä£±¸ ¹× Á¦Ç°(ÀÌÇÏ ¡®¼­ºñ½º¡¯)À» ÀÌ¿ëÇØ ÁÖ¼Å¼­ °¨»çÇÕ´Ï´Ù. º» ¾à°üÀº ´Ù¾çÇÑ ¿ì¸®Áıµ¿¹°Ä£±¸ ¼­ºñ½ºÀÇ ÀÌ¿ë°ú °ü·ÃÇÏ¿© ¹İ·Áµ¿¹° ¼îÇÎ¸ô ¼­ºñ½º¸¦ Á¦°øÇÏ´Â ¿ì¸®Áıµ¿¹°Ä£±¸(ÀÌÇÏ ¡®¿ìµ¿Ä£¡¯)¿Í ÀÌ¸¦ ÀÌ¿ëÇÏ´Â ¿ì¸®Áıµ¿¹°Ä£±¸ ¼­ºñ½º È¸¿ø(ÀÌÇÏ ¡®È¸¿ø¡¯) ¶Ç´Â ºñÈ¸¿ø°úÀÇ °ü°è¸¦ ¼³¸íÇÏ¸ç, ¾Æ¿ï·¯ ¿©·¯ºĞÀÇ ¿ì¸®Áıµ¿¹°Ä£±¸ ¼­ºñ½º ÀÌ¿ë¿¡ µµ¿òÀÌ µÉ ¼ö ÀÖ´Â À¯ÀÍÇÑ Á¤º¸¸¦ Æ÷ÇÔÇÏ°í ÀÖ½À´Ï´Ù.', 'Y');
+insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, '°³ÀÎÁ¤º¸ ¼öÁı ¹× ÀÌ¿ë¿¡ ´ëÇÑ ¾È³» (ÇÊ¼ö)', '°³ÀÎÁ¤º¸º¸È£¹ı¿¡ µû¶ó ¿ìµ¿Ä£¿¡ È¸¿ø°¡ÀÔ ½ÅÃ»ÇÏ½Ã´Â ºĞ²² ¼öÁıÇÏ´Â °³ÀÎÁ¤º¸ÀÇ Ç×¸ñ, °³ÀÎÁ¤º¸ÀÇ ¼öÁı ¹× ÀÌ¿ë¸ñÀû, °³ÀÎÁ¤º¸ÀÇ º¸À¯ ¹× ÀÌ¿ë±â°£, µ¿ÀÇ °ÅºÎ±Ç ¹× µ¿ÀÇ °ÅºÎ ½Ã ºÒÀÌÀÍ¿¡ °üÇÑ »çÇ×À» ¾È³» µå¸®¿À´Ï ÀÚ¼¼È÷ ÀĞÀº ÈÄ µ¿ÀÇÇÏ¿© ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù. 1. ¼öÁıÇÏ´Â °³ÀÎÁ¤º¸ ÀÌ¿ëÀÚ´Â È¸¿ø°¡ÀÔÀ» ÇÏÁö ¾Ê¾Æµµ Á¤º¸ °Ë»ö, ´º½º º¸±â µî ´ëºÎºĞÀÇ ¿ìµ¿Ä£ ¼­ºñ½º¸¦ È¸¿ø°ú µ¿ÀÏÇÏ°Ô ÀÌ¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù. ÀÌ¿ëÀÚ°¡ ¸ŞÀÏ, Ä¶¸°´õ, Ä«Æä, ºí·Î±× µî°ú °°ÀÌ °³ÀÎÈ­ È¤Àº È¸¿øÁ¦ ¼­ºñ½º¸¦ ÀÌ¿ëÇÏ±â À§ÇØ È¸¿ø°¡ÀÔÀ» ÇÒ °æ¿ì, ¿ìµ¿Ä£´Â ¼­ºñ½º ÀÌ¿ëÀ» À§ÇØ ÇÊ¿äÇÑ ÃÖ¼ÒÇÑÀÇ °³ÀÎÁ¤º¸¸¦ ¼öÁıÇÕ´Ï´Ù.', 'Y');
+insert into terms_history (terms_id, title, content, required) values (seq_terms_id.nextval, 'ÀÌº¥Æ® µî ÇÁ·Î¸ğ¼Ç ¾Ë¸² ¸ŞÀÏ ¼ö½Å (¼±ÅÃ)', '¿ìµ¿Ä£ ¼­ºñ½º ¹× Á¦ÈŞ ÀÌº¥Æ®?ÇıÅÃ µîÀÇ Á¤º¸¸¦ ÈŞ´ëÀüÈ­(¿ìµ¿Ä£¾Û ¾Ë¸² ¶Ç´Â ¹®ÀÚ), ÀÌ¸ŞÀÏ·Î ¹ŞÀ» ¼ö ÀÖ½À´Ï´Ù. ÀÏºÎ ¼­ºñ½º(º°°³ÀÇ È¸¿ø Ã¼°è ¿î¿µ, ¿ìµ¿Ä£ °¡ÀÔ ÈÄ Ãß°¡ °¡ÀÔÇÏ´Â ¼­ºñ½º µî)ÀÇ °æ¿ì, ¼ö½Å¿¡ ´ëÇØ º°µµ·Î ¾È³»µå¸®¸ç µ¿ÀÇ¸¦ ±¸ÇÕ´Ï´Ù.', 'N');
 
 -----------------------------------------
--- ì¿ í° ë°ì´í„°
+-- ÄíÆù µ¥ÀÌÅÍ
 -----------------------------------------
--- íšŒì›ê°€ì…ì‹œ ë°°ì†¡ë¹„ ì¿ í° (3000ì›)
+-- È¸¿ø°¡ÀÔ½Ã ¹è¼Ûºñ ÄíÆù (3000¿ø)
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
-values (1, 'íšŒì›ê°€ì… ë°°ì†¡ë¹„ ë¬´ë£Œ ì¿ í°', 3000, null);
+values (1, 'È¸¿ø°¡ÀÔ ¹è¼Ûºñ ¹«·á ÄíÆù', 3000, null);
 
--- ìƒì¼ ì¶•í•˜ 10% ì¿ í°
+-- »ıÀÏ ÃàÇÏ 10% ÄíÆù
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
-values (2, 'ìƒì¼ì¶•í•˜ 10% í• ì¸ ì¿ í°', null, 10);
+values (2, '»ıÀÏÃàÇÏ 10% ÇÒÀÎ ÄíÆù', null, 10);
 
 
 ----------------------------------------------
--- ì¹´í…Œê³ ë¦¬
+-- Ä«Å×°í¸®
 ----------------------------------------------
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ì‚¬ë£Œ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ê°„ì‹');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'íŒ¨ì…˜ìš©í’ˆ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ì‚°ì±…ìš©í’ˆ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ìœ„ìƒìš©í’ˆ');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ê³ ì–‘ì´');
-insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ê¸°íƒ€ìš©í’ˆ');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '»ç·á');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '°£½Ä');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'ÆĞ¼Ç¿ëÇ°');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '»êÃ¥¿ëÇ°');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, 'À§»ı¿ëÇ°');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '°í¾çÀÌ');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '±âÅ¸¿ëÇ°');
 
