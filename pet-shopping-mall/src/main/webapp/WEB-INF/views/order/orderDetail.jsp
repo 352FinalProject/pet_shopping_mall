@@ -34,22 +34,24 @@
     background-color: #f5f5f5;
 }
 </style>
-<section class="common-section" id="#">
+<section class="common-section" id="common-section-List">
 	<div class="common-title">주문 상세 내역</div>
-	<div class="common-container">
+	<div class="common-container-side">
 		<div class="common-div">
 				<div class="order">
-					<table id="order-table">
-						<thead>
-							<tr>
-								<th>날짜</th>
-								<th>주문번호</th>
-								<th>상품</th>
-								<th>주문금액</th>
-								<th>상태</th>
-							</tr>
-						</thead>
-						<tbody>
+						<div class="service-util-div-sidebar-cancel">
+							<table class="service-product-utility-sidebar" id="order-table">
+								<thead>
+									<tr>
+										<th>날짜</th>
+										<th>주문번호</th>
+										<th>상품</th>
+										<th>주문금액</th>
+										<th>상태</th>
+									</tr>
+								</thead>
+							<tbody>
+						</div>
 						<c:if test="${not empty orderDetail}">
 							<sec:authentication property="principal" var="loginMember" />
 							<c:forEach var="orderMap" items="${orderDetail}">
@@ -117,6 +119,7 @@
 			<c:if test="${empty orderDetail}">
 				<div class="empty-message">조회된 주문 내역이 없습니다.</div>
 			</c:if>
+			</div>
 			</div>
 		</div>
 	</div>

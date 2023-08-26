@@ -248,9 +248,59 @@ body {
 
 .sidebar2-mysp a, .sidebar2-mybe a, .sidebar2-pro a {
 	color: #828282;
+	width: 100px;
 }
 
 .sidebar2-mysp, .sidebar2-mybe, .sidebar2-pro {
 	margin-top: 25px;
 }
 
+
+.common-container-side {
+	width: 904px;
+	margin-top: -2px;
+}
+
+
+.service-util-div-sidebar {
+	width: 930px;
+	height: 50px;
+	font-size: 15px;
+	padding: 13px;
+	margin-left: 170px;
+}
+
+.service-product-utility-sidebar {
+	width: 904px;
+	margin-bottom: 200px;
+	margin-top: -2px;
+}
+
+.service-product-utility-sidebar th, .service-product-utility-sidebar td {
+	padding: 12px;
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.service-product-utility-sidebar th {
+	border-bottom: 2px solid #e7e7e7;
+}
+
+.service-product-utility-sidebar td {
+	cursor: pointer;
+	text-align: center;
+}
+
+.common-title-sidebar {
+    font-size: 24px;
+    margin-left: 120px;
+}
+
+
+.service-util-div-sidebar-cancel {
+	width: 930px;
+	height: 50px;
+	font-size: 15px;
+	padding: 13px;
+	margin-left: 77px;
+}

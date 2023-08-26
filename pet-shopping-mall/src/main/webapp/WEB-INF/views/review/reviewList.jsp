@@ -12,10 +12,10 @@
 <%-- 내 리뷰 조회 (혜령) --%>
 <section class="common-section" id="common-section-List" style="padding-bottom: 350px;" >
     <div class="common-title">내가 쓴 리뷰</div>
-    <div class="common-container">
+    <div class="common-container-side">
         <div class="common-div">
-            <div class="review-util-div">
-                <table class="service-product-utility">
+            <div class="service-util-div-sidebar">
+                <table class="service-product-utility-sidebar">
                <thead>
                   <tr>
                      <th>번호</th>

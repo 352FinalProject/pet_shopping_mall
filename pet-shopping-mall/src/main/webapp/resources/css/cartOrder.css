@@ -296,6 +296,7 @@ div.modal-div {
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 10px;
+	margin-left: 90px;
 }
 
 #order-table {
@@ -307,11 +308,6 @@ div.modal-div {
 	padding: 10px;
 	text-align: center;
 	vertical-align: middle;
-}
-
-#order-table th {
-	background-color: #f2f2f2;
-	font-weight: bold;
 }
 
 #order-table td {
