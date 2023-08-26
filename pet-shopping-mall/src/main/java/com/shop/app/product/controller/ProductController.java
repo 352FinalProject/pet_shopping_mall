@@ -67,31 +67,19 @@ public class ProductController {
 
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int productId,
-			@RequestParam(required = false) Integer reviewId,
-            @RequestParam(defaultValue = "1") int page,
-            @AuthenticationPrincipal MemberDetails member,
-            Model model) {
-		
-		// 상품상세 - 리뷰 - 페이징바
-		int limit = 3;
-		Map<String, Object> params = Map.of("page", page, "limit", limit);
-		
+	                          @RequestParam(defaultValue = "1") int page,
+	                          Model model) {
 
-		int totalCount = reviewService.findProductTotalReviewCount();
-		int totalPages = (int) Math.ceil((double) totalCount / limit);
-		model.addAttribute("totalPages", totalPages);
+	    int limit = 3;
+	    Map<String, Object> params = Map.of("page", page, "limit", limit);
 
-		List<Review> reviews = reviewService.findProductReviewAll(params);
-		model.addAttribute("reviews", reviews);
+	    int totalCount = reviewService.findProductTotalReviewCount();
+	    int totalPages = (int) Math.ceil((double) totalCount / limit);
+	    model.addAttribute("totalPages", totalPages);
 
-		// 상품 상세 페이지 - 리뷰 펫 정보 뿌려주기
-		Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
+	    List<Review> reviews = reviewService.findProductReviewAll(params);
+	    model.addAttribute("reviews", reviews);
 
-		for (Review review : reviews) {
-			List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
-			reviewPetsMap.put(review.getReviewId(), pets);
-		}
-		
 	    // 상품 아이디로 정보 가져오기
 	    Product product = productService.findProductById(productId);
 	    List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
@@ -103,30 +91,42 @@ public class ProductController {
 	    model.addAttribute("product", product); // 상품정보
 	    model.addAttribute("productImages", productImages); // 상품이미지
 	    model.addAttribute("productDetails", productDetails); // 상품옵션
+	    
+	    
+	    // 상품 상세 페이지에 펫 정보 뿌려주기
+	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 
-		// 상품 상세 페이지에 이미지 파일 뿌려주기
-		Map<Integer, String> reviewImageMap = new HashMap<>();
-		for (Review review : reviews) {
-			int reviewId2 = review.getReviewId();
-			ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
-
-			log.debug("reviewDetails = {}", reviewDetails);
-
-			if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-				String imageFilename = reviewDetails.getAttachments().get(0).getImageRenamedFilename();
-				log.debug("imageFilename = {}", imageFilename);
-				reviewImageMap.put(reviewId2, imageFilename);
-			}
-		}
-
-		log.debug("reviewImageMap = {}", reviewImageMap);
-
-		model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
-		model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
-		/* 찜 등록 여부 가져오기 (선모) */
-		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId())); // 찜 여부 가져오기
+	    for (Review review : reviews) {
+	        List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
+	        reviewPetsMap.put(review.getReviewId(), pets);
+	    }
+	    
+	    // 상품 상세 페이지에 이미지 파일 뿌려주기
+	    Map<Integer, String> reviewImageMap = new HashMap<>();
+	    for (Review review : reviews) {
+	        int reviewId2 = review.getReviewId();
+	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
+	        
+	        log.debug("reviewDetails = {}", reviewDetails);
+	        
+	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+	            String imageFilename = reviewDetails.getAttachments().get(0).getImageRenamedFilename();
+	            log.debug("imageFilename = {}", imageFilename);
+	            reviewImageMap.put(reviewId2, imageFilename);
+	        }
+	    }
+	    
+	    log.debug("reviewImageMap = {}", reviewImageMap);
+	    
+	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
+	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	}
 
+
+	/**
+	 * @author 전수경
+	 * - 상품게시판 연결
+	 */
 	@GetMapping("/productList.do")
 	public void productList(
 			@RequestParam int id,
@@ -140,22 +140,24 @@ public class ProductController {
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		
 		// 해당 카테고리의 상품 가져오기
-//		List<Product> products = productService.findProductsByCategoryId(id);
+		List<Product> products = productService.findProductsByCategoryId(id);
 		
-//		for(Product product : products) {
-//			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
-//			
-//			productInfos.add(ProductInfoDto.builder()
-//					.product(product)
-//					.attachments(productImages.getAttachments())
-//					.attachmentMapping(productImages.getAttachmentMapping())
-//					.build());
-//		}
-//		
-//		model.addAttribute("productCategory", productCategory);
-//		model.addAttribute("productInfos", productInfos);
-
+		for(Product product : products) {
+			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+			
+			productInfos.add(ProductInfoDto.builder()
+					.product(product)
+					.attachments(productImages.getAttachments())
+					.attachmentMapping(productImages.getAttachmentMapping())
+					.build());
+		}
+		
+		log.debug("productInfos = {}", productInfos);
+		
+		model.addAttribute("productCategory", productCategory);
+		model.addAttribute("productInfos", productInfos);
 	}
+	
 	
 	/* 하트 클릭 (선모) */
 	@ResponseBody
@@ -195,28 +197,6 @@ public class ProductController {
 		
 		return resultMap;
 	}
-	
 
-	@GetMapping("/addProduct.do")
-	public void addProduct() {
-
-	}
-
-	@PostMapping("/addProduct.do")
-	public String addProduct(@Valid ProductCreateDto _product, BindingResult bindingResult,
-			@AuthenticationPrincipal MemberDetails member, Model model) {
-		log.debug("ProductCreateDto = {}", _product);
-		//
-		// Product product = _product.toProduct();
-		// log.debug("product = {}", product); // product = Product(productId=0,
-		// categoryId=1, productName=멍멍사료, productPrice=2000, thumbnailImg=0,
-		// productImg=0, createDate=null, expireDate=null, likeCnt=0, viewCnt=0)
-		//
-		// int result = productService.insertProduct(product);
-		// // There is no getter for property named 'category_id' in 'class
-		// com.shop.app.product.entity.Product'
-		//
-		return "redirect:/admin/adminProductList.do";
-	}
 
 }

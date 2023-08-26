@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<title>Image Slider Example</title>
+<title>우리집동물친구[상품]</title>
 <!-- Bootstrap CSS 포함 -->
 <link
   rel="stylesheet"
@@ -81,12 +81,50 @@ pageEncoding="UTF-8"%>
         </div>
         <hr class="hr-line" />
         <!-- 선택 옵션 -->
-        <div>
-          <select name="product-option">
-            <option value="">[필수]옵션선택</option>
-            <option value="">귀여워요</option>
-          </select>
-        </div>
+        <!-- 옵션 없을 때 -->
+        <c:if test="${empty productDetails}">
+        	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
+        	</div>
+        	
+        </c:if>
+        <!-- 옵션 있을 때 -->
+        <c:if test="${not empty productDetails}">
+	        <div>
+	          <select name="product-option">
+	            <option value="">[필수]옵션선택</option>
+	            <!-- 옵션나열 -->
+	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+	        		<c:if test="${empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	        		</c:if>
+	        		<c:if test="${not empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		</c:if>
+	        	</c:forEach>
+	          </select>
+	        </div>
+	        
+            	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
+        	</div>
+	        
+        </c:if>
+        
+        
+        
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -279,6 +317,57 @@ pageEncoding="UTF-8"%>
   </div>
 </section>
 <script>
+/* 상품수량에 따라 가격 바꾸기(수경) */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const optionSelect = document.querySelector("select[name='product-option']");
+  const quantityInput = document.querySelector(".quantity-input");
+  const optionMinusButton = document.querySelector(".minus");
+  const optionPlusButton = document.querySelector(".plus");
+  const addToCartButton = document.querySelector(".btn1"); // 장바구니 버튼 선택
+
+  let currentQuantity = 1;
+
+  optionMinusButton.addEventListener("click", () => {
+    if (currentQuantity > 1) {
+      currentQuantity--;
+      quantityInput.value = currentQuantity;
+    }
+  });
+
+  optionPlusButton.addEventListener("click", () => {
+    currentQuantity++;
+    quantityInput.value = currentQuantity;
+  });
+
+  addToCartButton.addEventListener("click", () => {
+    const selectedOptionId = optionSelect.value;
+    
+    // URL에서 파라미터 값을 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("productId"); // 상품 id 가져오기
+    const quantity = currentQuantity;
+
+    // 장바구니에 상품 추가
+    $.ajax({
+      type: "POST",
+      url: "${pageContext.request.contextPath}/cart/shoppingCart.do",
+      data: {
+    	productDetailId: productId,
+        optionId: selectedOptionId,
+        quantity: quantity,
+      },
+      success: function (response) {
+    	alert("상품이 추가되었습니다.");
+      },
+      error: function (error) {
+        console.error(error);
+      },
+    });
+  });
+});
+
+
   // 리뷰 페이지 아코디언 효과
   /* const ques = document.querySelectorAll(".que");
 const anws = document.querySelectorAll(".anw");

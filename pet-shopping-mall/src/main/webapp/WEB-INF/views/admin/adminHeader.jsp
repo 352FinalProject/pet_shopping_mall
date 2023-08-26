@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <title>관리자 페이지</title>
 
 <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />

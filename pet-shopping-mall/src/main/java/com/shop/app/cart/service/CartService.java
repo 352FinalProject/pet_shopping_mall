@@ -18,5 +18,8 @@ public interface CartService {
 
 	int updateCart(CartItem cartitem);
 
+	// 상품 페이지에서 장바구니 버튼 눌러서 장바구니에 담기 (예라)
+	int insertCart(int cartId, int productDetailId, int quantity);
+
 	
 }

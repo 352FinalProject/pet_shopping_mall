@@ -21,16 +21,15 @@ public class CouponController {
 
 	@Autowired
 	private CouponService couponService;
-	
+
 	@GetMapping("/couponList.do")
 	public void couponList(Model model, Principal principal) {
-		
+
 		String memberId = principal.getName(); // 로그인한 사용자의 ID
-		
 		List<MemberCouponDto> memberCoupons = couponService.findCouponsByMemberId(memberId);
 		model.addAttribute("memberCoupons", memberCoupons);
-		
+
 		log.debug("memberCoupons = {}", memberCoupons);
 	}
-	
+
 }

@@ -20,6 +20,10 @@ select * from product_detail;
 select * from product;
 select * from member_coupon;
 select * from notification;
+select * from question;
+select * from answer;
+select * from cartitem;
+select * from cart;
 
 select count(*) from member_coupon where member_id = 'member4';
 
@@ -169,7 +173,7 @@ select * from product;
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
     values (seq_product_detail_id.nextval, 1, null, null, default, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
-    values (seq_product_detail_id.nextval, 9, '색', '빨강', default, 1);
+    values (seq_product_detail_id.nextval, 1, '색', '빨강', default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
     values (seq_product_detail_id.nextval, 4, '색', '민트', default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
@@ -312,16 +316,16 @@ select * from cartitem;
 select * from payment;
 
 select * from product_detail;
-
+select * from member_coupon;
 insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '금칠 추가', 190000, 2);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가1', '파란망토', 1900, 9);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9);
 
-insert into cart values(1, 'honggd');
+insert into cart values(1, 'member3');
 
 select * from cart;
-insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
-insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
+insert into cartitem values(seq_cartitem_id.nextval, 1, 3, 1);
+insert into cartitem values(seq_cartitem_id.nextval, 2, 3, 1);
 select * from cartitem;
 select * from member;
 delete from cartitem where cart_id = 5;
@@ -580,10 +584,10 @@ insert into payment (payment_id, payment_method, payment_date, amount, order_id)
 ------------------------
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 2, '말랑 개껌', 10000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, null, null, default, null, 31, 156);
+insert into product (product_id, category_id, product_name, product_price, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 2, '말랑 개껌', 10000, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
+insert into product (product_id, category_id, product_name, product_price, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, default, null, 31, 156);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 4, '말랑 하네스', 15000, null, null, default, null, default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
@@ -865,12 +869,12 @@ from
 where 
     p.product_id = 1;
 
+
 --------------------------------------------알림
 insert into (id, noti_category, noti_content, noti_created_at, member_id) 
     values (seq_notification_id.nextval, ?, ?, default, ?);
 
 
-
-
-
-
+UPDATE orderTbl
+SET order_status = 4
+WHERE order_id = 1;
