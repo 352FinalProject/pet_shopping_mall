@@ -21,40 +21,40 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 --
-drop table review;
-drop table image_attachment;
-drop table image_attachment_mapping;
-drop table answer;
-drop table question;
-drop table point;
-drop table discount_rule;
-drop table product_category;
-drop table product;
-drop table product_detail;
-drop table cart;
-drop table payment;
-drop table cartitem;
-drop table orderTbl;
-drop table order_detail;
-drop table refund;
-drop table cancel_order;
-drop table authority;
-drop table product_category;
-drop table community;
-drop table wishlist;
-drop table pet;
-drop table persistent_logins;
-drop table image_attachment_mapping;
-drop table member;
-drop table ordertbl;
-drop table return;
-drop table terms;
-drop table terms_history;
-drop table chat;
-drop table chat_room;
-drop table breed;
-drop table coupon;
-drop table member_coupon;
+--drop table review;
+--drop table image_attachment;
+--drop table image_attachment_mapping;
+--drop table answer;
+--drop table question;
+--drop table point;
+--drop table discount_rule;
+--drop table product_category;
+--drop table product;
+--drop table product_detail;
+--drop table cart;
+--drop table payment;
+--drop table cartitem;
+--drop table orderTbl;
+--drop table order_detail;
+--drop table refund;
+--drop table cancel_order;
+--drop table authority;
+--drop table product_category;
+--drop table community;
+--drop table wishlist;
+--drop table pet;
+--drop table persistent_logins;
+--drop table image_attachment_mapping;
+--drop table member;
+--drop table ordertbl;
+--drop table return;
+--drop table terms;
+--drop table terms_history;
+--drop table chat;
+--drop table chat_room;
+--drop table breed;
+--drop table coupon;
+--drop table member_coupon;
 
 --
 ------ 외래키 붙어있는 테이블삭제
@@ -128,6 +128,14 @@ create table authority(
                 on delete cascade
 );
 
+-- 대충 시큐리티 테이블 없으면 오류남
+create table persistent_logins (
+    username varchar(64) not null,
+    series varchar(64) primary key, -- pk
+    token varchar(64) not null, -- username, password, expiry time을 hasing한 값
+    last_used timestamp not null
+);
+
 -- 펫 테이블
 CREATE TABLE pet (
     pet_id number,
@@ -168,9 +176,6 @@ create table question(
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
 
-drop table question;
-drop table answer;
-
 -- qna 답변 테이블
 create table answer(
    answer_id number,
@@ -210,7 +215,6 @@ create table product_category (
     constraints pk_category_id primary key(category_id)
 );
 
-
 -- 상품 테이블
 create table product (
     product_id number, -- pk
@@ -226,6 +230,7 @@ create table product (
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
 
+ -- 상품 디테일 테이블
 create table product_detail (
     product_detail_id number, -- pk
     product_id number, -- fk
@@ -235,6 +240,19 @@ create table product_detail (
     sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
+);
+
+-- 포인트 테이블
+create table point (
+    point_id number,
+    point_member_id varchar2(20) not null,
+    point_current number not null,
+    point_type varchar2(100) not null,
+    point_amount number not null,
+    point_date timestamp default systimestamp,
+    review_id number,
+    constraint pk_point_id primary key (point_id),
+    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
 );
 
 -- 주문테이블
@@ -258,39 +276,6 @@ create table orderTbl (
     constraint fk_orderTbl_member_coupon_id foreign key(member_coupon_id) references member_coupon(member_coupon_id) on delete cascade
 );
 
-
--- 포인트 테이블
-create table point (
-    point_id number,
-    point_member_id varchar2(20) not null,
-    point_current number not null,
-    point_type varchar2(100) not null,
-    point_amount number not null,
-    point_date timestamp default systimestamp,
-    review_id number,
-    constraint pk_point_id primary key (point_id),
-    constraint fk_point_member_id foreign key (point_member_id) references member(member_id) on delete cascade
-);
-
-
-create table cancel_order (
-    cancel_id number,
-    request_date timestamp default systimestamp not null,
-    receipt_date timestamp,
-    cancel_status number default 0 not null,
-    order_id number,
-    constraint pk_cancel_id primary key(cancel_id),
-    constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
-);
-
--- 대충 시큐리티 테이블 없으면 오류남
-create table persistent_logins (
-    username varchar(64) not null,
-    series varchar(64) primary key, -- pk
-    token varchar(64) not null, -- username, password, expiry time을 hasing한 값
-    last_used timestamp not null
-);
-
 -- 주문상세 테이블
 create table order_detail (
     order_id number,
@@ -299,6 +284,17 @@ create table order_detail (
     constraint pk_order_detail primary key (order_id, product_detail_id),
     constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
     constraint fk_product_detail_id foreign key (product_detail_id) references product_detail(product_detail_id) on delete cascade
+);
+
+ -- 취소 테이블
+create table cancel_order (
+    cancel_id number,
+    request_date timestamp default systimestamp not null,
+    receipt_date timestamp,
+    cancel_status number default 0 not null,
+    order_id number,
+    constraint pk_cancel_id primary key(cancel_id),
+    constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
 -- 찜한 목록 테이블
@@ -339,6 +335,7 @@ create table community (
     constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
 );
 
+ -- 결제 테이블
 create table payment (
     payment_id number,
     payment_method number not null,
@@ -349,7 +346,7 @@ create table payment (
     constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
-
+ -- 장바구니 테이블
 create table cart (
     cart_id number,
     member_id varchar2(50),
@@ -357,6 +354,7 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+ -- 장바구니 아이템 테이블
 create table cartitem (
     cartitem_id number,
     cart_id number,
@@ -507,6 +505,3 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
 
-select * from member;
-delete from member where email= 'hulk1512@naver.com';
-commit;

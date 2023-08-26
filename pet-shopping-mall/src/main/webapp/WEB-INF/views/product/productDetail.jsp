@@ -319,27 +319,54 @@ pageEncoding="UTF-8"%>
 <script>
 /* 상품수량에 따라 가격 바꾸기(수경) */
 
+document.addEventListener("DOMContentLoaded", function () {
+  const optionSelect = document.querySelector("select[name='product-option']");
+  const quantityInput = document.querySelector(".quantity-input");
+  const optionMinusButton = document.querySelector(".minus");
+  const optionPlusButton = document.querySelector(".plus");
+  const addToCartButton = document.querySelector(".btn1"); // 장바구니 버튼 선택
 
-/* 옵션을 선택하면  */
+  let currentQuantity = 1;
 
-/* 수량버튼 */
-const quantityInput = document.querySelector('.quantity-input');
-const optionMinusButton = document.querySelector('.minus');
-const optionPlusButton = document.querySelector('.plus');
-
-optionMinusButton.addEventListener('click', () => {
-    let currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
-        currentValue--;
-        quantityInput.value = currentValue;
+  optionMinusButton.addEventListener("click", () => {
+    if (currentQuantity > 1) {
+      currentQuantity--;
+      quantityInput.value = currentQuantity;
     }
+  });
+
+  optionPlusButton.addEventListener("click", () => {
+    currentQuantity++;
+    quantityInput.value = currentQuantity;
+  });
+
+  addToCartButton.addEventListener("click", () => {
+    const selectedOptionId = optionSelect.value;
+    
+    // URL에서 파라미터 값을 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("productId"); // 상품 id 가져오기
+    const quantity = currentQuantity;
+
+    // 장바구니에 상품 추가
+    $.ajax({
+      type: "POST",
+      url: "${pageContext.request.contextPath}/cart/shoppingCart.do",
+      data: {
+    	productDetailId: productId,
+        optionId: selectedOptionId,
+        quantity: quantity,
+      },
+      success: function (response) {
+    	alert("상품이 추가되었습니다.");
+      },
+      error: function (error) {
+        console.error(error);
+      },
+    });
+  });
 });
 
-optionPlusButton.addEventListener('click', () => {
-    let currentValue = parseInt(quantityInput.value);
-    currentValue++;
-    quantityInput.value = currentValue;
-});
 
   // 리뷰 페이지 아코디언 효과
   /* const ques = document.querySelectorAll(".que");
