@@ -168,8 +168,8 @@ create table question(
     constraints fk_question_member_id foreign key(question_member_id) references member(member_id) on delete cascade
 );
 
-drop table question;
-drop table answer;
+--drop table question;
+--drop table answer;
 
 -- qna 답변 테이블
 create table answer(
@@ -505,4 +505,8 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
+<<<<<<< Updated upstream
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
+=======
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
+>>>>>>> Stashed changes
