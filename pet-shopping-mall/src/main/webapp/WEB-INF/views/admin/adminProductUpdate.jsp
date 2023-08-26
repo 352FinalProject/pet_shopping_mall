@@ -45,7 +45,7 @@
 					        <div class="row mb-3">
 					          <div class="col-md-3">
 					            <label for="ProductName" class="form-label">상품명</label>
-					            <input type="text" name="ProductName" id="ProductName" value="${product.productName}" class="form-control" required>
+					            <input type="text" name="productName" id="productName" value="${product.productName}" class="form-control" required>
 					          </div>
 					          <div class="col-md-3">
 					            <label for="productPrice" class="form-label">상품금액</label>
@@ -73,6 +73,11 @@
 							      	</c:if>
 					          </div>
 					           -->
+							<div class="col-md-6">
+					            <button type="button" class="btn btn-secondary" onclick='updateProduct();'>상품 수정</button>
+					            <button type="button" class="btn btn-danger" onclick="deleteProduct();">상품 삭제</button>
+					        </div>
+					          
 					          
 					        </div>
 					        
@@ -147,12 +152,17 @@ $(function() {
 
 //상품 업데이트(수경)
 const updateProduct = () => {
+    const productId = '${product.productId}'; // 상품 ID
+    const productName = document.getElementById('productName').value; // 상품명 입력란의 값
+    const productPrice = document.getElementById('productPrice').value; // 상품금액 입력란의 값
+    const categoryId = document.getElementById('categoryId').value; // 카테고리 선택값
+    
     const requestData = {
-        productId: '${product.productId}',
-        categoryId: '${product.categoryId}',
-        productName: '${product.productName}',
-        productPrice: '${product.productPrice}',
-        categoryId: '${product.categoryId}',
+	    productId: productId,
+	    categoryId: categoryId,
+	    productName: productName,
+	    productPrice: productPrice,
+	    categoryId: categoryId,
         imageId : '${product.imageId}'
     };
 	console.log(requestData);
@@ -164,7 +174,8 @@ const updateProduct = () => {
         contentType: 'application/json',
         data: JSON.stringify(requestData),
         success: function(response) {
-          alert('상품이 성공적으로 업데이트되었습니다.');
+        	console.log(response);
+          	alert('상품이 성공적으로 업데이트되었습니다.');
         }
     });
 };
@@ -184,6 +195,7 @@ const deleteProduct = () => {
             data: JSON.stringify(requestData),
             contentType: 'application/json',
             success: function(response) {
+            	console.log(response);
                 alert('삭제 성공했습니다');
                 window.location.href = '${pageContext.request.contextPath}/admin/adminProductList.do';
             },

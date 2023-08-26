@@ -551,7 +551,7 @@ public class AdminController {
 		
 		int result = productService.deleteProduct(_product.getProductId());
 		
-		return ResponseEntity.ok("상품을 삭제했습니다.");
+		return ResponseEntity.ok(result);
 	}
 
 
