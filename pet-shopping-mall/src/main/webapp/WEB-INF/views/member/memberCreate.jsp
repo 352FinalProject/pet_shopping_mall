@@ -448,7 +448,7 @@ document.querySelector("#memberCreateFrm").addEventListener("submit", function()
     const detailAddress = document.querySelector("detailAddress").value;
 
     const address = document.memberCreateFrm.address;
-    address.value = roadAddress + ' ' + jibunAddress + ' ' + detailAddress;
+    address.value = roadAddress + ' ' + jibunAddress;  
 });
 
 </script>

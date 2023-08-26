@@ -6,6 +6,46 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
+<style>
+/* 팝업 스타일 */
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px; /* 팝업 창 최대 너비 설정 */
+    width: 90%; /* 팝업 창 너비 설정 */
+    text-align: center;
+    font-size: 18px;
+}
+
+#closePopupBtn {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 호버 효과 */
+.benefits-link:hover,
+#closePopupBtn:hover {
+    background-color: #e0e0e0;
+}
+</style>
     <section class="common-section" id="#">
         <div class="common-title">마이페이지</div>
         <br>
@@ -29,9 +69,19 @@
 										groupingUsed="true" /></span>점</p>
                             </div>
                             <div>
-                                <a class="benefits-link" href="#">🔎 멤버쉽 혜택보기</a>
+                                <a class="benefits-link" id="benefits-popup" href="#">🔎 멤버쉽 혜택보기</a>
                                 <a class="benefits-link" href="#" onclick="subscribe();">📌 구독하기</a>
                             </div>
+                            <!-- 팝업 컨테이너 -->
+						    <div class="popup-container" id="popupContainer">
+						        <div class="popup-content">
+						            <h2>🎁 <span style="color: #01A9DB;">우동친</span>만의 특별한 멤버쉽 혜택 🎁</h2>
+						            <img src="${pageContext.request.contextPath}/resources/images/상품/gift.png" />
+						            <div>1. 배송비 무료</div>
+						            <div>2. 포인트 3% 추가 적립</div>
+						            <button id="closePopupBtn">닫기</button>
+						        </div>
+						    </div>
                         </div>
                     </div>
                     <div class="options">
@@ -77,6 +127,19 @@
 		if(confirm("정말 구독하시겠습니까?")) {
 			// 정기결제 코드
 		}
-	}
+	};
+	
+	const benefitsPopupLink = document.getElementById("benefits-popup");
+	const closePopupBtn = document.getElementById("closePopupBtn");
+	const popupContainer = document.getElementById("popupContainer");
+
+	benefitsPopupLink.addEventListener("click", (e) => {
+	    e.preventDefault(); // 기본 링크 동작 취소
+	    popupContainer.style.display = "flex";
+	});
+
+	closePopupBtn.addEventListener("click", () => {
+	    popupContainer.style.display = "none";
+	});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -64,11 +64,11 @@ public class MemberSecurityController {
    @Autowired
    private PointService pointService; // 회원가입시 포인트 3000원 적립
 
-	@Autowired
-	private TermsService termsService; // 회원가입시 약관동의
-	
-	@Autowired
-	private CouponService couponService; // 회원가입시 쿠폰 발급
+   @Autowired
+   private TermsService termsService; // 회원가입시 약관동의
+   
+   @Autowired
+   private CouponService couponService; // 회원가입시 쿠폰 발급
 
    @GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
    public void memberCreate() {
@@ -82,9 +82,6 @@ public class MemberSecurityController {
    public String memberCreate(@Valid MemberCreateDto member, BindingResult bindingResult,
          RedirectAttributes redirectAttr, HttpSession session) {
 
-	   
-	   log.debug("member = {}", member);
-	   
       // 이메일 인증 확인 (예라)
       Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
       if (isVerified == null || !isVerified) {
@@ -109,38 +106,38 @@ public class MemberSecurityController {
       // 회원 정보 DB에 저장
       int result = memberService.insertMember(member);
 
-		Point point = new Point();
-		point.setPointMemberId(member.getMemberId());
-		point.setPointCurrent(3000);
-		point.setPointType("회원가입");
-		point.setPointAmount(3000);
-		
-		int resultPoint = pointService.insertPoint(point);
-		
-		 // 회원가입시 무료배송 쿠폰 발급 (예라)
-	    List<Coupon> resultCoupon = couponService.findCoupon();
-	    for (Coupon coupon : resultCoupon) {
-	        MemberCoupon memberCoupon = new MemberCoupon();
-	        memberCoupon.setCouponId(coupon.getCouponId());
-	        memberCoupon.setMemberId(member.getMemberId());
+      Point point = new Point();
+      point.setPointMemberId(member.getMemberId());
+      point.setPointCurrent(3000);
+      point.setPointType("회원가입");
+      point.setPointAmount(3000);
+      
+      int resultPoint = pointService.insertPoint(point);
+      
+       // 회원가입시 무료배송 쿠폰 발급 (예라)
+       List<Coupon> resultCoupon = couponService.findCoupon();
+       for (Coupon coupon : resultCoupon) {
+           MemberCoupon memberCoupon = new MemberCoupon();
+           memberCoupon.setCouponId(coupon.getCouponId());
+           memberCoupon.setMemberId(member.getMemberId());
 
-	        // 발급받은 날짜로부터 한달 뒤의 날짜 계산
-	        LocalDateTime issuanceDate = LocalDateTime.now();
-	        LocalDateTime endDate = issuanceDate.plusMonths(1);
-	        
-	        memberCoupon.setCreateDate(issuanceDate); 
-	        memberCoupon.setEndDate(endDate); 
-	        memberCoupon.setUseStatus(0);
+           // 발급받은 날짜로부터 한달 뒤의 날짜 계산
+           LocalDateTime issuanceDate = LocalDateTime.now();
+           LocalDateTime endDate = issuanceDate.plusMonths(1);
+           
+           memberCoupon.setCreateDate(issuanceDate); 
+           memberCoupon.setEndDate(endDate); 
+           memberCoupon.setUseStatus(0);
 
-	        // memberCoupon db 추가
-	        int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
-	    }
-		
-	    // 약관 동의 정보 가져오기
-	    Object obj = session.getAttribute("userAgreements");
-	    log.debug("obj = {}", obj);
-	    // Terms 객체 생성
-	    Terms terms = new Terms();
+           // memberCoupon db 추가
+           int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
+       }
+      
+       // 약관 동의 정보 가져오기
+       Object obj = session.getAttribute("userAgreements");
+       log.debug("obj = {}", obj);
+       // Terms 객체 생성
+       Terms terms = new Terms();
 
       if (obj instanceof HashMap) {
          HashMap<Integer, Accept> userAgreements = (HashMap<Integer, Accept>) obj;
@@ -215,12 +212,12 @@ public class MemberSecurityController {
       log.debug("member = {}", member);
    }
 
-	@GetMapping("/myPage.do")
-	public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
-		String memberId = member.getMemberId();
-		MypageDto myPage = memberService.getMyPage(memberId);
-		log.debug("myPage = {}", myPage);
-		model.addAttribute("myPage", myPage);
+   @GetMapping("/myPage.do")
+   public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
+      String memberId = member.getMemberId();
+      MypageDto myPage = memberService.getMyPage(memberId);
+      log.debug("myPage = {}", myPage);
+      model.addAttribute("myPage", myPage);
       model.addAttribute("member", member);
    }
 
@@ -298,11 +295,10 @@ public class MemberSecurityController {
    @GetMapping("/myReview.do")
    public void myReview() {
    }
-   
+
    @GetMapping("/myWishlist.do")
    public void myWishlist() {
    }
-
 
    @GetMapping("/petUpdate.do")
    public void petUpdate() {

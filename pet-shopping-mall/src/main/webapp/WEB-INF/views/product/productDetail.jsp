@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<title>Image Slider Example</title>
+<title>우리집동물친구[상품]</title>
 <!-- Bootstrap CSS 포함 -->
 <link
   rel="stylesheet"
@@ -85,9 +85,12 @@ pageEncoding="UTF-8"%>
         <c:if test="${empty productDetails}">
         	<!-- 상품구입 개수 입력 -->
         	<div class="purchase-cnt">
-        		<button class="quantity-down">-</button>
-        			<span>1</span>
-        		<button class="quantity-up">+</button>
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
         	</div>
         	
         </c:if>
@@ -98,11 +101,30 @@ pageEncoding="UTF-8"%>
 	            <option value="">[필수]옵션선택</option>
 	            <!-- 옵션나열 -->
 	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-	            	<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		<c:if test="${empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	        		</c:if>
+	        		<c:if test="${not empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		</c:if>
 	        	</c:forEach>
 	          </select>
 	        </div>
+	        
+            	<!-- 상품구입 개수 입력 -->
+        	<div class="purchase-cnt">
+		    	<div class="quantity-container">
+		    		<spna>수량  </spna>
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</div>
+        	</div>
+	        
         </c:if>
+        
+        
+        
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -295,6 +317,30 @@ pageEncoding="UTF-8"%>
   </div>
 </section>
 <script>
+/* 상품수량에 따라 가격 바꾸기(수경) */
+
+
+/* 옵션을 선택하면  */
+
+/* 수량버튼 */
+const quantityInput = document.querySelector('.quantity-input');
+const optionMinusButton = document.querySelector('.minus');
+const optionPlusButton = document.querySelector('.plus');
+
+optionMinusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+        currentValue--;
+        quantityInput.value = currentValue;
+    }
+});
+
+optionPlusButton.addEventListener('click', () => {
+    let currentValue = parseInt(quantityInput.value);
+    currentValue++;
+    quantityInput.value = currentValue;
+});
+
   // 리뷰 페이지 아코디언 효과
   /* const ques = document.querySelectorAll(".que");
 const anws = document.querySelectorAll(".anw");
