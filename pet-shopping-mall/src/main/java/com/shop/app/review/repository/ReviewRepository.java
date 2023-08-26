@@ -69,8 +69,8 @@ public interface ReviewRepository {
 	int findProductTotalReviewCount();
 	
 	// 상품 상세페이지 전체 리뷰
-	@Select("select * from review ORDER BY review_id DESC")
-	List<Review> findProductReviewAll(RowBounds rowBounds);
+	@Select("select * from review where product_id = #{productId}")
+	List<Review> findProductReviewAll(RowBounds rowBounds, int productId);
 
 	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
 	ReviewDetails findProductImageAttachmentsByReviewId(int reviewId);

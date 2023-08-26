@@ -78,7 +78,7 @@ public class ProductController {
 	    int totalPages = (int) Math.ceil((double) totalCount / limit);
 	    model.addAttribute("totalPages", totalPages);
 
-	    List<Review> reviews = reviewService.findProductReviewAll(params);
+	    List<Review> reviews = reviewService.findProductReviewAll(params, productId);
 	    model.addAttribute("reviews", reviews);
 
 	    // 상품 아이디로 정보 가져오기
@@ -126,16 +126,20 @@ public class ProductController {
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
 	    
+	    
 //	    log.debug("reveiwTotalCount = {}", reveiwTotalCount);
 	    
 	    // 리뷰 평점
-	    List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(); 
-	    model.addAttribute("reviews2", reviews2);
-	    
-	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-	    model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-	    
-	    log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+		/*
+		 * List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll();
+		 * model.addAttribute("reviews2", reviews2);
+		 * 
+		 * ProductReviewAvgDto productReviewStarAvg =
+		 * reviewService.productReviewStarAvg(productId);
+		 * model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+		 * 
+		 * log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+		 */
 	    
 	    
 	}

@@ -23,14 +23,33 @@ select * from question;
 select * from answer;
 select * from cartitem;
 select * from cart;
+select * from wishlist;
 
+delete from wishlist where wishlist_id = 10; 
+
+select 
+    *
+from 
+    product p
+    left join 
+        review r on p.product_id = pd.product_id
+where 
+    p.product_id = 1;
+    
+select * from review
+where product_id = 1;
+    
+    select * from review
+where product_id = #{productId};
+    
 insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
 insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
 
 delete from product where product_id = 1;
 
-delete from cartitem where cartitem_id = '5';
-update orderTbl set order_status = 4 where order_id = 2;
+delete from cartitem where cartitem_id = '52';
+delete from orderTbl where order_id = '2';
+update orderTbl set order_status = 4 where order_id = 22;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;

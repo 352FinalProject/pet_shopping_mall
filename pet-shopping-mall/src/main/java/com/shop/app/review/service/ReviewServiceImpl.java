@@ -143,12 +143,12 @@ public class ReviewServiceImpl implements ReviewService {
 
 	// 상품 상세페이지 전체 리뷰 
 	@Override
-	public List<Review> findProductReviewAll(Map<String, Object> params) {
+	public List<Review> findProductReviewAll(Map<String, Object> params, int productId) {
 		int limit = (int) params.get("limit");
 		int page = (int) params.get("page");
 		int offset = (page - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return reviewRepository.findProductReviewAll(rowBounds);
+		return reviewRepository.findProductReviewAll(rowBounds, productId);
 	}
 
 	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
