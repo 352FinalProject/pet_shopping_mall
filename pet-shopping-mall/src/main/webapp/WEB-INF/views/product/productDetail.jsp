@@ -292,8 +292,10 @@ pageEncoding="UTF-8"%>
   <div class="product-bottom">
     <div class="product-bottom2">
       <div>
-        <span id="product-bottom-title">${product.productName}</span> <br />
-        <span>11,000원</span>
+        <span id="product-bottom-title" style="font-size: 24px;">${product.productName}</span> <br />
+        <span style="font-size: 18px; font-weight: 600;">
+        	<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /> 원
+        </span>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">

@@ -80,7 +80,7 @@
             		<div class="box">
 	                    <img src="${pageContext.request.contextPath}${list.IMAGE_RENAMED_FILENAME}" alt="">
 	                    <p>${list.PRODUCT_NAME}</p>
-	                    <h5>11,000원</h5>
+	                    <h5><fmt:formatNumber value="${product.productPrice}"/> 원</h5>
 	                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
 	                        153건</span>
 	                </div>
