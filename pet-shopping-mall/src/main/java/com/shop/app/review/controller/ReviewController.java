@@ -34,11 +34,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.order.dto.OrderHistoryDto;
-
+import com.shop.app.order.entity.Order;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
-
+import com.shop.app.payment.entity.Payment;
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
@@ -87,8 +87,8 @@ public class ReviewController {
 	public void reviewList(
 			@RequestParam(defaultValue = "1") int page,
 			@AuthenticationPrincipal MemberDetails member,
-			@RequestParam(name = "period", required = false) Integer period,
 			Model model
+//			@RequestParam String orderNo
 			) {
 
 		int limit = 5;
@@ -112,27 +112,24 @@ public class ReviewController {
 		
 		// 구매한 상품과 연결
 		String memberId = member.getMemberId();
-		List<OrderHistoryDto> orderHistories;
+		List<Order> orderList;
+		orderList = orderService.getOrderList(memberId);
+		model.addAttribute("orderHistories", orderList);
 		
-//		if (period != null) {
-//			orderHistories = orderService.getOrderListByPeriod(memberId, period);
-//		} else {
-//			orderHistories = orderService.getOrderList(memberId);
-//		}
-//			
-//		log.debug("orderHistories = {}", orderHistories);
-//		model.addAttribute("orderHistories", orderHistories);
+		log.debug("orderList = {} ", orderList);
+		
+		// 구매한 상품 - 주문상세내역
+		List<Map<OrderHistoryDto, Payment>> orderDetailMap = new ArrayList<>(); // 초기화
 
-//		
-//		
-//		
-		/*
-		 * orderHistories = orderService.getOrderList(memberId);
-		 * 
-		 * log.debug("orderHistories = {}", orderHistories);
-		 * model.addAttribute("orderHistories", orderHistories);
-		 */
+		for (Order order : orderList) {
+		    String orderNo = order.getOrderNo(); // 각 주문의 orderNo 가져오기
+		    List<Map<OrderHistoryDto, Payment>> orderDetail = orderService.getOrderDetail(orderNo);
+		    orderDetailMap.addAll(orderDetail); // 주문상세내역을 orderDetailMap에 추가
+		}
 
+		model.addAttribute("orderDetailMap", orderDetailMap);
+
+		log.debug("주문 상세내역 orderDetailMap = {}", orderDetailMap);
 	
 	}
 

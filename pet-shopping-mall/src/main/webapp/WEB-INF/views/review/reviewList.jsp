@@ -37,17 +37,37 @@
                         		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">${review.reviewId}</a>
                         	</td>
                             <td>
-                                <div style="display: flex; align-items: center;">
-                                    <img style="width: 100px; height: 100px; margin-right: 10px; cursor: pointer;" alt="상품이미지" 
-                                        class="product-img"
-                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"
-                                        onclick="toggleAccordion(this);">
-                                    <div style="text-align: center;"> 상품이름
-                                        <%-- ${review.productName} --%>
-                                    </div>
-                                </div>
+                                <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
+	                                <c:if test="${not empty orderDetail}">
+			                            <c:forEach var="orderMap" items="${orderDetail}">
+										<c:forEach var="entry" items="${orderMap}">
+										<c:set var="index" value="${entry.key.orderStatus}"/>
+										<c:set var="option" value="${entry.key.optionName}" />
+										<c:set var="amount" value="${entry.key.amount}" />
+							            <%-- <div>
+							                <p>index: ${index}, option: ${option}, amount: ${amount}</p>
+							            </div> --%>
+		                                <div style="display: flex; align-items: center;">
+	                                        <img style="width: 100px; height: 100px; margin-right: 10px; cursor: pointer;"
+		                                        	src="${pageContext.request.contextPath}/resources/upload/product/${entry.key.imageRenamedFileName}">
+												<div>
+													<p>${entry.key.productName}</p>
+													<br />
+													<c:if test="${option eq null}">
+														<p>선택된 옵션이 없습니다.</p>
+													</c:if>
+													<c:if test="${option ne null}">
+														<p>${entry.key.optionName} : ${entry.key.optionValue}</p>
+													</c:if>
+														<p>수량: ${entry.key.quantity}개</p>
+		                                		</div>
+		                                </c:forEach>
+		                                </c:forEach>
+	                                </c:if>
+                                </a>
                             </td>
                             <td>
+                            	<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
                                 <c:choose>
 							        <c:when test="${review.reviewStarRate == 1}">
 							            <span class="star-rating">★</span> (1)
@@ -65,10 +85,13 @@
 							            <span class="star-rating">★★★★★</span> (5)
 							        </c:when>
     							</c:choose>
+    							</a>
                             </td>
                             <td>
+                            	<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
 								<fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 								<fmt:formatDate value="${createdAt}" pattern="yy/MM/dd HH:mm"/>
+								</a>
                             </td>
                         </tr>
                         </c:forEach>

@@ -39,6 +39,7 @@ import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
+import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
@@ -120,6 +121,23 @@ public class ProductController {
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
+	    
+	    // 리뷰 전체개수 확인
+	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
+	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
+	    
+//	    log.debug("reveiwTotalCount = {}", reveiwTotalCount);
+	    
+	    // 리뷰 평점
+	    List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(); 
+	    model.addAttribute("reviews2", reviews2);
+	    
+	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+	    model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+	    
+	    log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+	    
+	    
 	}
 
 
@@ -192,9 +210,10 @@ public class ProductController {
 				}
 			}
 		}
-		
 		return resultMap;
 	}
 
-
+	
+	
+	
 }
