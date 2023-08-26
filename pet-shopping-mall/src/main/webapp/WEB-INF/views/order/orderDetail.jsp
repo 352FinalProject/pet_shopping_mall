@@ -13,6 +13,26 @@
 #info-message {
 	font-size: 20px;
 }
+/* 아코디언 스타일 */
+.detail-row {
+    display: none;
+    transition: max-height 0.3s ease; /* 펼치기/접기 애니메이션 효과 추가 */
+}
+
+.detail-row.show {
+    display: table-row;
+}
+
+.detail-content {
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+/* 호버 효과 */
+.order-row:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
 </style>
 <section class="common-section" id="#">
 	<div class="common-title">주문 상세 내역</div>
@@ -38,7 +58,7 @@
 								<c:set var="option" value="${entry.key.optionName}" />
 								<c:set var="amount" value="${entry.key.amount}" />
 								<fmt:formatDate value="${entry.key.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
-								<tr>
+								<tr class="order-row" data-payment='${entry.value}'>
 									<td>${formattedDate}</td>
 									<td>
 										<p>${entry.key.orderNo}</p>
@@ -63,28 +83,29 @@
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
 										<p>${status[index]}</p>
-										<c:if test="${status[index] == '배송완료'}">
-										  <c:forEach var="order" items="${orderMap}">
-											<form:form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
-											    <input type="hidden" name="productId" value="${order.key.productId}">
-										  	</c:forEach>
-											    <button class="review-btn" type="submit">리뷰쓰기</button>
-											</form:form>
-										</c:if>
+                              			<c:if test="${status[index] == '배송완료'}">
+                                			<c:forEach var="order" items="${orderMap}">
+                                 			<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+                                     		<input type="hidden" name="productId" value="${order.key.productId}">
+                                   			</c:forEach>
+                                     		<button class="review-btn" type="submit">리뷰쓰기</button>
+                                			</form>
+                              			</c:if>
 									</td>
 								</tr>
-								<c:if test="${payment ne null}">
+								<c:if test="${payment eq null}">
 								<tr class="detail-row">
-								    <td colspan="5">
-								        <div class="detail-content">
-								            <!-- 이곳에 주문에 대한 디테일 정보를 넣으세요 -->
-								            <!-- 예시: -->
-								            <p>추가 정보 1</p>
-								            <p>추가 정보 2</p>
-								        </div>
-								    </td>
-								</tr>
-								</c:if>
+							        <td colspan="5">
+							            <div class="detail-content">
+							            	<c:set var="paymentMethod" value="${entry.value.paymentMethod eq 1 ? '카드' : '카카오페이'}" />
+							                <p>결제 방법 : ${paymentMethod}</p>
+							                <p>결제 날짜 : ${entry.value.paymentDate}</p>
+							                <p>결제 금액 : <span><fmt:formatNumber value="${entry.value.amount}"
+										groupingUsed="true" /></span>원</p>
+							            </div>
+							        </td>
+							    </tr>
+							    </c:if>
 								</c:forEach>
 							</c:forEach>
 						</c:if>
@@ -94,112 +115,21 @@
 				<div class="empty-message">조회된 주문 내역이 없습니다.</div>
 			</c:if>
 			</div>
-			<div class="payment-div">
-				<c:if test="${not empty payment}" >
-				<div class="payment-left">
-					<sec:authentication property="principal" var="loginMember" />
-					<c:set var="amount" value="0" />
-					<div class="order-info">
-						<div>
-							<p class="order-info-title">주문자</p>
-						</div>
-						<p>${loginMember.name}</p>
-						<p>${loginMember.phone}</p>
-					</div>
-					<div>
-						<div class="flex-box">
-							<p class="order-info-title">배송지</p>
-							<button class="cart-btn-update">수정</button>
-						</div>
-						<p id="">${loginMember.name}</p>
-						<p id="phone">${loginMember.phone}</p>
-						<p>
-							[<span id="zip-code">818181</span>]<span id="address">${loginMember.address}</span>
-						</p>
-					</div>
-					<div>
-						<p class="order-info-title">주문결제정보</p>
-						<div class="payment-info2">
-							<div class="product-price">
-								<span class="price"><strong>주문번호</strong></span>
-								<p>
-									<span>${orderDetail.orderNo}</span>
-								</p>
-							</div>
-							<div class="product-price">
-								<span>주문날짜</span>
-								<p>
-									<span>${orderDetail.orderDate}</span>
-								</p>
-							</div>
-							<div class="product-price">
-								<span>결제일시</span>
-								<p>
-									<span>${cancelInfo.paymentDate}</span>
-								</p>
-							</div>
-							<div class="product-price">
-								<span>결제수단</span>
-								<p>
-									<c:set var="method" value="${cancelInfo.paymentMethod eq 1 ? '카드' : '현금'}" />
-									<span>${method}</span>
-								</p>
-							</div>
-							<div class="product-price">
-								<span>결제금액</span>
-								<p>
-									<span id="total-price"><fmt:formatNumber
-											value="${orderDetail.amount}" groupingUsed="true" /></span>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="payment-right">
-					<p class="order-info-title">결제금액</p>
-					<div class="payment-info">
-						<div>
-							<div class="product-price">
-								<span class="price"><strong>상품금액</strong></span>
-								<p>
-									<span id="total-price"><fmt:formatNumber
-											value="${cancelInfo.totalPrice}" groupingUsed="true" /></span>원
-								</p>
-							</div>
-							<div class="product-price">
-								<span>배송비</span>
-								<p>
-									<span style="color: red;">(+)</span><span id="delivery-fee">3,000</span>원
-								</p>
-							</div>
-							<div class="product-price">
-								<span>할인금액</span>
-								<p>
-									<span style="color: red;">(-) <span id="discount"><fmt:formatNumber
-											value="${cancelInfo.discount}" groupingUsed="true" /></span>원</span>
-								</p>
-							</div>
-							<div class="product-price">
-								<span>쿠폰</span>
-								<p>
-									<span style="color: red;">(-) <span id="discount">원</span></span>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="payment-info2">
-						<div class="product-price">
-							<strong class="price-title">최종 결제 금액</strong>
-							<p class="price">
-								<span id="amount"><fmt:formatNumber value="${cancelInfo.amount}"
-										groupingUsed="true" /></span>원
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			</c:if>
 		</div>
 	</div>
 </section>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const orderRows = document.querySelectorAll(".order-row");
+
+    orderRows.forEach(row => {
+        row.addEventListener("click", function() {
+            const detailRow = row.nextElementSibling;
+            if (detailRow.classList.contains("detail-row")) {
+                detailRow.classList.toggle("show");
+            }
+        });
+    });
+});
+</script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

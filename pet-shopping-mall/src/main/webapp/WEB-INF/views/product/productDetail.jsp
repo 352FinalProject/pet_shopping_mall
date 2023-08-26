@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<title>Image Slider Example</title>
+<title>우리집동물친구[상품]</title>
 <!-- Bootstrap CSS 포함 -->
 <link
   rel="stylesheet"
@@ -101,7 +101,12 @@ pageEncoding="UTF-8"%>
 	            <option value="">[필수]옵션선택</option>
 	            <!-- 옵션나열 -->
 	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-	            	<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		<c:if test="${empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	        		</c:if>
+	        		<c:if test="${not empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		</c:if>
 	        	</c:forEach>
 	          </select>
 	        </div>
@@ -117,6 +122,9 @@ pageEncoding="UTF-8"%>
         	</div>
 	        
         </c:if>
+        
+        
+        
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -311,24 +319,54 @@ pageEncoding="UTF-8"%>
 <script>
 /* 상품수량에 따라 가격 바꾸기(수경) */
 
-/* 수량버튼 */
-const quantityInput = document.querySelector('.quantity-input');
-const minusButton = document.querySelector('.minus');
-const plusButton = document.querySelector('.plus');
+document.addEventListener("DOMContentLoaded", function () {
+  const optionSelect = document.querySelector("select[name='product-option']");
+  const quantityInput = document.querySelector(".quantity-input");
+  const optionMinusButton = document.querySelector(".minus");
+  const optionPlusButton = document.querySelector(".plus");
+  const addToCartButton = document.querySelector(".btn1"); // 장바구니 버튼 선택
 
-minusButton.addEventListener('click', () => {
-    let currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
-        currentValue--;
-        quantityInput.value = currentValue;
+  let currentQuantity = 1;
+
+  optionMinusButton.addEventListener("click", () => {
+    if (currentQuantity > 1) {
+      currentQuantity--;
+      quantityInput.value = currentQuantity;
     }
+  });
+
+  optionPlusButton.addEventListener("click", () => {
+    currentQuantity++;
+    quantityInput.value = currentQuantity;
+  });
+
+  addToCartButton.addEventListener("click", () => {
+    const selectedOptionId = optionSelect.value;
+    
+    // URL에서 파라미터 값을 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("productId"); // 상품 id 가져오기
+    const quantity = currentQuantity;
+
+    // 장바구니에 상품 추가
+    $.ajax({
+      type: "POST",
+      url: "${pageContext.request.contextPath}/cart/shoppingCart.do",
+      data: {
+    	productDetailId: productId,
+        optionId: selectedOptionId,
+        quantity: quantity,
+      },
+      success: function (response) {
+    	alert("상품이 추가되었습니다.");
+      },
+      error: function (error) {
+        console.error(error);
+      },
+    });
+  });
 });
 
-plusButton.addEventListener('click', () => {
-    let currentValue = parseInt(quantityInput.value);
-    currentValue++;
-    quantityInput.value = currentValue;
-});
 
   // 리뷰 페이지 아코디언 효과
   /* const ques = document.querySelectorAll(".que");
