@@ -108,16 +108,13 @@ public class ReviewController {
 
 		List<Review> reviews = reviewService.findReviewAll(params);
 		model.addAttribute("reviews", reviews);
-		log.debug("reviews = {}", reviews);
 		
 		// 구매한 상품과 연결
 		String memberId = member.getMemberId();
 		List<Order> orderList;
 		orderList = orderService.getOrderList(memberId);
 		model.addAttribute("orderHistories", orderList);
-		
-		log.debug("orderList = {} ", orderList);
-		
+
 		// 구매한 상품 - 주문상세내역
 		List<Map<OrderHistoryDto, Payment>> orderDetailMap = new ArrayList<>(); // 초기화
 
@@ -128,22 +125,22 @@ public class ReviewController {
 		}
 
 		model.addAttribute("orderDetailMap", orderDetailMap);
-
-		log.debug("주문 상세내역 orderDetailMap = {}", orderDetailMap);
 	
 	}
 
 
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
-	public void reviewCreate(@RequestParam("productId") int productId, Model model) {
+	public void reviewCreate(@RequestParam("productId") int productId, @RequestParam("orderId") int orderId, Model model) {
 		model.addAttribute("productId", productId);
+		model.addAttribute("orderId", orderId);
 	   
 	}
 
 	// 리뷰 작성
 	@PostMapping("/reviewCreate.do")
-	public String reviewCreate(@ModelAttribute
+	public String reviewCreate(
+			@ModelAttribute
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
@@ -188,6 +185,7 @@ public class ReviewController {
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
 				.petId(pet.getPetId())
+				.orderId(_review.getOrderId())
 				.productId(_review.getProductId()) // 리뷰작성할 때 productId 넘기기 (예라)
 				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())

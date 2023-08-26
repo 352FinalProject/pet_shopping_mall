@@ -24,6 +24,18 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 
+insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
+insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
+
+delete from product where product_id = 1;
+
+delete from cartitem where cartitem_id = '5';
+update orderTbl set order_status = 4 where order_id = 2;
+
+update product set product_id = 1 where product_id = 21;
+update product_detail set product_id = 1 where product_id = 22;
+
+select count(*) from review where review_member_id = 'member1' and order_id = 2;
 select count(*) from member_coupon where member_id = 'member4';
 
 --==============================
@@ -285,6 +297,8 @@ update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
 
+
+
 select * from orderTbl;
 select * from member;
 select * from point where point_member_id = 'member1';
@@ -302,7 +316,6 @@ update cartitem set product_detail_id = 1 where cart_id = (select cart_id from c
 select* from product;
 select * from product_detail;
 select * from orderTbl;
-
 
 update cartitem set product_detail_id=2 where product_detail_id=1;
 

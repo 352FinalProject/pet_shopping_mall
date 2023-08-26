@@ -21,7 +21,7 @@ import com.shop.app.review.entity.ReviewDetails;
 public interface ReviewRepository {
 
 	// 리뷰작성
-	@Insert("insert into review (review_id, pet_id, product_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId}, #{productId}, #{reviewMemberId, jdbcType=VARCHAR}, #{reviewStarRate}, #{reviewTitle, jdbcType=VARCHAR}, #{reviewContent, jdbcType=VARCHAR}, default)")
+	@Insert("insert into review (review_id, pet_id, order_id, product_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId}, #{orderId}, #{productId}, #{reviewMemberId, jdbcType=VARCHAR}, #{reviewStarRate}, #{reviewTitle, jdbcType=VARCHAR}, #{reviewContent, jdbcType=VARCHAR}, default)")
 	@SelectKey(
 			before = false, 
 			keyProperty = "reviewId", 

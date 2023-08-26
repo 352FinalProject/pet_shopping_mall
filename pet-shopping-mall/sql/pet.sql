@@ -312,6 +312,7 @@ create table wishlist(
 create table review (
     review_id number,
     pet_id number,
+    order_id number,
     product_id number,
     review_member_id varchar(20) not null,
     product_detail_id number,
@@ -322,6 +323,7 @@ create table review (
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
     constraint fk_product_product_id foreign key (product_id) references product(product_id) on delete cascade,
+    constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
@@ -354,6 +356,7 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+
  -- 장바구니 아이템 테이블
 create table cartitem (
     cartitem_id number,
@@ -361,9 +364,8 @@ create table cartitem (
     product_detail_id number not null,
     quantity number default 1 not null,
     constraint pk_cartitem_id primary key(cartitem_id),
-    constraint fk_cartitem_cart_id foreign key(cart_id) references cart (cart_id)
+    constraint fk_cart_id foreign key(cart_id) references cart (cart_id)
 );
-
  -- 약관 테이블
 create table terms (
  history_id number,

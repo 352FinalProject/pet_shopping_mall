@@ -87,8 +87,11 @@
                                 			<c:forEach var="order" items="${orderMap}">
                                  			<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
                                      		<input type="hidden" name="productId" value="${order.key.productId}">
+                                     		<input type="hidden" name="orderId" value="${order.key.orderId}">
                                    			</c:forEach>
-                                     		<button class="review-btn" type="submit">리뷰쓰기</button>
+                                   			<c:if test="${not reviewWrite}">
+                                     			<button class="review-btn" type="submit">리뷰쓰기</button>
+                                     		</c:if>
                                 			</form>
                               			</c:if>
 									</td>
@@ -131,5 +134,27 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+//페이지가 로드될 때 리뷰 작성 상태 확인
+$(document).ready(function() {
+    checkReviewStatus();
+});
+
+// 리뷰 작성 상태를 서버에서 확인
+function checkReviewStatus() {
+    $.ajax({
+        url: '${pageContext.request.contextPath}/order/orderDetail',
+        type: 'GET',
+        success: function(response) {
+            if (response.reviewWrite) {
+                $(".review-btn").hide(); // 리뷰를 이미 작성했다면 버튼 숨기기
+            } else {
+                $(".review-btn").show(); // 리뷰를 작성하지 않았다면 버튼 표시
+            }
+        }
+    });
+}
+
+
 </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

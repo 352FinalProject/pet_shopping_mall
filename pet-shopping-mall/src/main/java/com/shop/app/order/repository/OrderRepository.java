@@ -95,6 +95,9 @@ public interface OrderRepository {
 
 	List<OrderHistoryDto> getOrderDetail(String orderNo);
 
+	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
+	@Select("select count(*) from review where review_member_id = #{memberId} and order_id = #{orderId}")
+	boolean reviewWrite(String memberId, int orderId);
 
 	
 }
