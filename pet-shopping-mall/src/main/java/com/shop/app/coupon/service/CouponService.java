@@ -20,4 +20,13 @@ public interface CouponService {
 	// 멤버 쿠폰 아이디 조회 (예라)
 	int findCouponById();
 
+	// 쿠폰 조회(예라)
+	MemberCoupon findCouponCurrendById(MemberCoupon coupon);
+
+	// 유효기간이 있는 쿠폰인지 확인 (예라)
+	MemberCoupon validateCoupon(int couponId, String memberId);
+
+	// 쿠폰 사용 (예라)
+	int updateCouponStatus(MemberCoupon validCoupon);
+
 }

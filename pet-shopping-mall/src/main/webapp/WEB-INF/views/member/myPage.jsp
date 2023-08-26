@@ -87,7 +87,7 @@
                     <div class="options">
                         <div class="option"><a href="${pageContext.request.contextPath}/point/pointList.do">포인트내역</a></div>
                         <div class="option"><a href="${pageContext.request.contextPath}/wishlist/myWishlist.do">찜한 상품</a></div>
-                        <div class="option"><a href="${pageContext.request.contextPath}/coupon/couponList.do?couponId=${coupon.couponId}">쿠폰 ${myPage.memberCount}장</a></div>
+                        <div class="option"><a href="${pageContext.request.contextPath}/coupon/couponList.do?couponId=${coupon.couponId}">쿠폰 ${couponCount}장</a></div>
                     </div>
                     <div class="recent-orders">
                         <div class="common-title">최근 1개월 주문내역</div>

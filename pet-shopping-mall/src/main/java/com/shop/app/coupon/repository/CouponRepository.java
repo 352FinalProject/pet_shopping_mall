@@ -27,6 +27,17 @@ public interface CouponRepository {
 
 	// 멤버 쿠폰 아이디 조회 (예라)
 	@Select("select * from member_coupon where coupon_id = #{couponId}")
-	int findCouponById(); 
+	int findCouponById();
+
+	// 멤버 쿠폰 조회 (예라)
+	@Select("select * from member_coupon where coupon_id = #{couponId}")
+	MemberCoupon findCouponCurrendById(MemberCoupon coupon);
+
+	// 유효기간이 있는 쿠폰인지 확인 (예라)
+	@Select("select * from member_coupon where coupon_id = #{couponId} and member_id = #{memberId} and end_date >= current_timestamp and use_status = 0")
+	MemberCoupon validateCoupon(int couponId, String memberId);
+
+	// 쿠폰 사용 (예라)
+	int updateCouponStatus(MemberCoupon validCoupon); 
 
 }

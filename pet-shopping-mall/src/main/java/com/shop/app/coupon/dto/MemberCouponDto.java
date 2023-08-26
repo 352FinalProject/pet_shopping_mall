@@ -2,6 +2,8 @@ package com.shop.app.coupon.dto;
 
 import java.time.LocalDateTime;
 
+import com.shop.app.coupon.entity.Coupon;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +22,6 @@ public class MemberCouponDto {
     private int useStatus;
     private LocalDateTime useDate;
     private String couponName;
+    
+    private Coupon coupon;
 }

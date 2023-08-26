@@ -77,6 +77,14 @@
 	border: 1px #ccc solid;
 }
 
+#couponSelect {
+	margin-top: 10px; 
+	margin-left: 24px; 
+	margin-right: 5px; 
+	height: 30px; 
+	border: 1px #ccc solid;
+}
+
 .payment-info {
 	width: 400px;
 	border: 1px solid #e7e7e7;

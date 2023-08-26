@@ -37,7 +37,6 @@ public interface OrderRepository {
 	
 	List<OrderAdminListDto> adminOrderList();
 
-	
 	// 2. db에서 주문 정보 가져오기 (예라)
 	@Select("select * from (select * from orderTbl where member_id = #{memberId} order by order_id desc) where rownum <= 1")
 	Order findByOrder(Order order);

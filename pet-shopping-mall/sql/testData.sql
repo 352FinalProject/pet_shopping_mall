@@ -27,6 +27,41 @@ select * from wishlist;
 
 delete from wishlist where wishlist_id = 10; 
 
+select
+    m.member_id,
+    m.name,
+    m.subscribe,
+    recent_point.point_current,
+    (
+        select count(*)
+        from member_coupon
+        where member_id = m.member_id and use_status = 0
+    ) as coupon_count
+from
+    member m
+left join (
+    select
+        point_member_id,
+        point_current
+    from (
+        select
+            p.point_member_id,
+            p.point_current,
+            row_number() over (partition by p.point_member_id order by p.point_date desc) as rn
+        from
+            point p
+    ) temp
+    where temp.rn = 1
+) recent_point on m.member_id = recent_point.point_member_id
+where
+    m.member_id = 'member1';
+
+
+
+
+
+
+
 select 
     *
 from 
@@ -42,6 +77,9 @@ where product_id = 1;
     select * from review
 where product_id = #{productId};
     
+    
+select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
+
 insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
 insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
 
