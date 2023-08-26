@@ -349,6 +349,14 @@ create table payment (
     constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
+-- 구독자 결제 저장용 테이블
+create table sub_payment (
+    sub_payment_id number,
+    member_id varchar2(50),
+    payment_date timestamp default systimestamp not null,
+    constraint pk_sub_payment_id primary key(sub_payment_id),
+    constraint fk_sub_payment_member_id foreign key(member_id) references member(member_id) on delete cascade
+);
 
 create table cart (
     cart_id number,
@@ -457,6 +465,7 @@ create sequence seq_member_coupon_id;
 create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
+create sequence seq_payment_id;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger

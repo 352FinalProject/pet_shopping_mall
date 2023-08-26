@@ -37,6 +37,13 @@ public interface MemberRepository {
 	List<Member> findThisMonthBirthdayMembers(int currentMonth);
 
 	MypageDto getMyPage(String memberId);
+
+	
+	@Update("update member set subscribe = 'Y' where member_id = #{memberId}")
+	int memberSubscribe(String memberId);
+
+	@Update("update member set subscribe = 'N' where member_id = #{memberId}")
+	int subscribeCancel(String memberId);
 	
 
 	

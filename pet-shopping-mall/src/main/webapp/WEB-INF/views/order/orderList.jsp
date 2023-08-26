@@ -102,7 +102,7 @@
 			alert("주문이 정상적으로 취소되었습니다.");
 		} else {
 			cancelFrm.isRefund.value = "Y"
-			cancelFrm.action = "${pageContext.request.contextPath}/payment/refundOrder.do";
+			cancelFrm.action = "${pageContext.request.contextPath}/import/refundOrder.do";
 			cancelFrm.submit();
 		}
 	};

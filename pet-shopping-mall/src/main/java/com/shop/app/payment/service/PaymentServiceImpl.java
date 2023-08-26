@@ -45,4 +45,19 @@ public class PaymentServiceImpl implements PaymentService {
 		
 	}
 
+	@Override
+	public int insertPayment(Payment payment) {
+		return paymentRepository.insertPayment(payment);
+	}
+
+	@Override
+	public Payment getPaymentInfo(int orderId) {
+		return paymentRepository.getPaymentInfo(orderId);
+	}
+	
+	@Override
+	public int insertSubPayment(String customerUid) {
+		return paymentRepository.insertSubPayment(customerUid);
+	}
+
 }
