@@ -14,6 +14,7 @@ import com.shop.app.pet.repository.PetRepository;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
@@ -142,12 +143,12 @@ public class ReviewServiceImpl implements ReviewService {
 
 	// 상품 상세페이지 전체 리뷰 
 	@Override
-	public List<Review> findProductReviewAll(Map<String, Object> params) {
+	public List<Review> findProductReviewAll(Map<String, Object> params, int productId) {
 		int limit = (int) params.get("limit");
 		int page = (int) params.get("page");
 		int offset = (page - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return reviewRepository.findProductReviewAll(rowBounds);
+		return reviewRepository.findProductReviewAll(rowBounds, productId);
 	}
 
 	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
@@ -170,6 +171,23 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public Review findPoductListReviewId(int reviewId) {
 		return reviewRepository.findPoductListReviewId(reviewId);
+	}
+
+	// 상품 - 리뷰 전체개수 확인
+	@Override
+	public int findReviewTotalCount(int productId) {
+		return reviewRepository.findReviewTotalCount(productId);
+	}
+
+	// 상품 - 리뷰 평점
+	@Override
+	public ProductReviewAvgDto productReviewStarAvg(int productId) {
+		return reviewRepository.productReviewStarAvg(productId);
+	}
+
+	@Override
+	public List<ProductReviewAvgDto> findProductReviewAvgAll() {
+		return reviewRepository.findProductReviewAvgAll();
 	}
 }
 

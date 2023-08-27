@@ -26,4 +26,8 @@ public interface MemberService extends UserDetailsService {
 
 	MypageDto getMyPage(String memberId);
 
+	int memberSubscribe(String memberId);
+
+	int subscribeCancel(String memberId);
+
 }

@@ -164,4 +164,10 @@ public class OrderServiceImpl implements OrderService {
 	public Order findOrderByOrderNo(String orderNo) {
 		return orderRepository.findOrderByOrderNo(orderNo);
 	}
+
+	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
+	@Override
+	public boolean reviewWrite(String memberId, int orderId) {
+		return orderRepository.reviewWrite(memberId, orderId);
+	}
 }

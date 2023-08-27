@@ -19,12 +19,13 @@ pageEncoding="UTF-8"%>
 
 <style>
 	.heart-button {
+		border: none;
         display: inline-block;
         font-size: 24px;
-        color: black; /* 검은색 하트의 기본 색상 */
         cursor: pointer;
+        background-color: white;
+        
     }
-    
     .pink {
         color: pink; /* 핑크색 하트 */
     }
@@ -299,8 +300,9 @@ pageEncoding="UTF-8"%>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
+        	${likeState}
         	<c:choose>
-        		<c:when test="${likeState == 0}">
+        		<c:when test="${product.likeCnt == 0}">
 					<span class="heart-button" id="clickHeart">♡</span>
 				</c:when>
 				<c:otherwise>
@@ -400,46 +402,68 @@ ques.forEach(que => {
   });
 }); */
 
-	// 하트 클릭 이벤트 (선모)
-	let token = $("meta[name='_csrf']").attr("content");
-	let header = $("meta[name='_csrf_header']").attr("content");
-	
-	$(function() {
-	    $(document).ajaxSend(function(e, xhr, options) {
-	        xhr.setRequestHeader(header, token);
-	    });
-	});
-	
-	$("#clickHeart").on("click", function() {
-		var state = $(this).hasClass("pink") ? "delete" : "insert";
-		
-		$.ajax({
-			type: "POST",
-			url: "${pageContext.request.contextPath}/product/insertPick.do",
-			dataType: "JSON",
-			async: true,
-			contentType:'application/json',
-			data: JSON.stringify({
-				"productId": ${product.productId},
-				"state": state
-			}),
-			success: function(result) {
-				if(result.rs == "insertS") {
-					$("#clickHeart").addClass("pink");
-					$("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-				} else if(result.rs == "deleteS") {
-					$("#clickHeart").removeClass("pink");
-					$("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-				}
-				
-				alert(result.msg);
-			},
-			error: function(req, status, error) {
-				alert("에러가 발생하였습니다.");
-				console.log(req.responseText);
-			}
-		});	
-	});
+// 하트 클릭 이벤트 (선모)
+let token = $("meta[name='_csrf']").attr("content");
+let header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
+//중복 클릭 방지 플래그
+let isProcessing = false;
+let isPink = $("#clickHeart").hasClass("pink"); // 이전 상태 저장
+
+$("#clickHeart").on("click", function() {
+    if (isProcessing) {
+        return;
+    }
+
+    isProcessing = true;
+
+    console.log(isPink); // 이전 상태 출력
+    var state = isPink ? "insert" : "delete"; // 이전 상태에 따라 반대로 설정
+
+    $.ajax({
+        type: "POST",
+        url: "${pageContext.request.contextPath}/product/insertPick.do",
+        dataType: "JSON",
+        async: true,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "productId": ${product.productId},
+            "state": state
+        }),
+        success: function(result) {
+            if (result.rs == "insertS") {
+                if (isPink) { // 이전 상태에 따라 조건 분기
+                    $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
+                }
+                $("#clickHeart").addClass("pink");
+            } else if (result.rs == "deleteS") {
+                if (!isPink) { // 이전 상태에 따라 조건 분기
+                    $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
+                }
+                $("#clickHeart").removeClass("pink");
+            }
+
+            alert(result.msg);
+        },
+        error: function(req, status, error) {
+            alert("에러가 발생하였습니다.");
+            console.log(req.responseText);
+        },
+        complete: function() {
+            isProcessing = false;
+            isPink = !isPink; // 이전 상태 업데이트
+        }
+    });
+});
+
+
+
 </script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

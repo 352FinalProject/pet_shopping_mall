@@ -144,8 +144,8 @@
 		</div>
 	</div>
 <form:form id="cancelFrm" action="" method="POST">
-	<input type="hidden" name="orderNo" value="${order.orderNo}" />
-	<input type="hidden" name="amount" value="${order.amount}" />
+	<input type="hidden" name="orderNo" value="${cancelInfo.orderNo}" />
+	<input type="hidden" name="amount" value="${cancelInfo.amount}" />
 	<input type="hidden" name="isRefund" value="" />
 </form:form>
 </section>
@@ -159,7 +159,7 @@ const cancelOrder = (text) => {
 		alert("주문이 정상적으로 취소되었습니다.");
 	} else {
 		cancelFrm.isRefund.value = "Y"
-		cancelFrm.action = "${pageContext.request.contextPath}/payment/refundOrder.do";
+		cancelFrm.action = "${pageContext.request.contextPath}/import/refundOrder.do";
 		cancelFrm.submit();
 	}
 };

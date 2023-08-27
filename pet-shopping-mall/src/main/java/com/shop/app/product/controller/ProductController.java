@@ -39,6 +39,7 @@ import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
+import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 import com.shop.app.review.entity.Review;
@@ -68,7 +69,6 @@ public class ProductController {
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int productId,
 	                          @RequestParam(defaultValue = "1") int page,
-	                          @AuthenticationPrincipal MemberDetails member,
 	                          Model model) {
 
 	    int limit = 3;
@@ -78,7 +78,7 @@ public class ProductController {
 	    int totalPages = (int) Math.ceil((double) totalCount / limit);
 	    model.addAttribute("totalPages", totalPages);
 
-	    List<Review> reviews = reviewService.findProductReviewAll(params);
+	    List<Review> reviews = reviewService.findProductReviewAll(params, productId);
 	    model.addAttribute("reviews", reviews);
 
 	    // 상품 아이디로 정보 가져오기
@@ -92,7 +92,7 @@ public class ProductController {
 	    model.addAttribute("product", product); // 상품정보
 	    model.addAttribute("productImages", productImages); // 상품이미지
 	    model.addAttribute("productDetails", productDetails); // 상품옵션
-	
+	    
 	    
 	    // 상품 상세 페이지에 펫 정보 뿌려주기
 	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
@@ -126,20 +126,24 @@ public class ProductController {
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
 	    
+	    
 //	    log.debug("reveiwTotalCount = {}", reveiwTotalCount);
 	    
 	    // 리뷰 평점
-	    List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(); 
-	    model.addAttribute("reviews2", reviews2);
+		/*
+		 * List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll();
+		 * model.addAttribute("reviews2", reviews2);
+		 * 
+		 * ProductReviewAvgDto productReviewStarAvg =
+		 * reviewService.productReviewStarAvg(productId);
+		 * model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+		 * 
+		 * log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+		 */
 	    
-	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-	    model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 	    
-	    log.debug("productReviewStarAvg = {}", productReviewStarAvg);
-	    
-	    /* 찜 등록 여부 가져오기 (선모) */
-		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId())); // 찜 여부 가져오기
 	}
+
 
 	/**
 	 * @author 전수경
@@ -212,9 +216,10 @@ public class ProductController {
 				}
 			}
 		}
-		
 		return resultMap;
 	}
 
-
-	}
+	
+	
+	
+}

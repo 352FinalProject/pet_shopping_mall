@@ -1,40 +1,6 @@
 @charset "UTF-8";
 
 
-.service-util-div-point {
-	width: 930px;
-	height: 50px;
-	margin-top: 72px;
-	font-size: 15px;
-	padding: 13px;
-	margin-left: 170px;
-}
-
-.service-product-utility-point {
-	width: 100%;
-	margin-bottom: 200px;
-
-}
-
-.service-product-utility-point th, .service-product-utility-point td {
-	padding: 12px;
-	border-top: 1px solid #e7e7e7;
-	border-bottom: 1px solid #e7e7e7;
-}
-
-.service-product-utility-point th {
-	border-bottom: 2px solid #e7e7e7;
-}
-
-.service-product-utility-point td {
-	cursor: pointer;
-	text-align: center;
-}
-
-.common-title-point {
-    font-size: 24px;
-    margin-left: 120px;
-}
 
 /* 포인트 사용, 적립에 따른 색 변화 */
 .plus {
