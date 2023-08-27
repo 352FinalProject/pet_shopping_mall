@@ -19,7 +19,80 @@ select * from order_detail;
 select * from product_detail;
 select * from product;
 select * from member_coupon;
+select * from question;
+select * from answer;
+select * from cartitem;
+select * from cart;
+select * from wishlist;
 
+delete from wishlist where wishlist_id = 10; 
+
+select
+    m.member_id,
+    m.name,
+    m.subscribe,
+    recent_point.point_current,
+    (
+        select count(*)
+        from member_coupon
+        where member_id = m.member_id and use_status = 0
+    ) as coupon_count
+from
+    member m
+left join (
+    select
+        point_member_id,
+        point_current
+    from (
+        select
+            p.point_member_id,
+            p.point_current,
+            row_number() over (partition by p.point_member_id order by p.point_date desc) as rn
+        from
+            point p
+    ) temp
+    where temp.rn = 1
+) recent_point on m.member_id = recent_point.point_member_id
+where
+    m.member_id = 'member1';
+
+
+
+
+
+
+
+select 
+    *
+from 
+    product p
+    left join 
+        review r on p.product_id = pd.product_id
+where 
+    p.product_id = 1;
+    
+select * from review
+where product_id = 1;
+    
+    select * from review
+where product_id = #{productId};
+    
+    
+select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
+
+insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
+insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
+
+delete from product where product_id = 1;
+
+delete from cartitem where cartitem_id = '52';
+delete from orderTbl where order_id = '2';
+update orderTbl set order_status = 4 where order_id = 22;
+
+update product set product_id = 1 where product_id = 21;
+update product_detail set product_id = 1 where product_id = 22;
+
+select count(*) from review where review_member_id = 'member1' and order_id = 2;
 select count(*) from member_coupon where member_id = 'member4';
 
 --==============================
@@ -168,7 +241,7 @@ select * from product;
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
     values (seq_product_detail_id.nextval, 1, null, null, default, default);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
-    values (seq_product_detail_id.nextval, 9, '색', '빨강', default, 1);
+    values (seq_product_detail_id.nextval, 1, '색', '빨강', default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
     values (seq_product_detail_id.nextval, 4, '색', '민트', default, 1);
 insert into product_detail (product_detail_id, product_id, option_name, option_value, additional_price,sale_state)
@@ -281,6 +354,8 @@ update member
 set member_role = 'ROLE_ADMIN'
 where id = 77;
 
+
+
 select * from orderTbl;
 select * from member;
 select * from point where point_member_id = 'member1';
@@ -299,7 +374,6 @@ select* from product;
 select * from product_detail;
 select * from orderTbl;
 
-
 update cartitem set product_detail_id=2 where product_detail_id=1;
 
 delete from cartitem where cartitem_id = 2;
@@ -316,11 +390,11 @@ insert into product_detail values(seq_product_detail_id.nextval, 1, '추가1', '
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가1', '파란망토', 1900, 9);
 insert into product_detail values(seq_product_detail_id.nextval, 2, '추가2', '빨간망토', 1900, 9);
 
-insert into cart values(1, 'honggd');
+insert into cart values(1, 'member3');
 
 select * from cart;
-insert into cartitem values(seq_cartitem_id.nextval, 1, 2, 1);
-insert into cartitem values(seq_cartitem_id.nextval, 1, 1, 1);
+insert into cartitem values(seq_cartitem_id.nextval, 1, 3, 1);
+insert into cartitem values(seq_cartitem_id.nextval, 2, 3, 1);
 select * from cartitem;
 select * from member;
 delete from cartitem where cart_id = 5;
@@ -579,10 +653,10 @@ insert into payment (payment_id, payment_method, payment_date, amount, order_id)
 ------------------------
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 1, '오리젠 퍼피', 32000, null, null, default, to_date('2023-12-31', 'yyyy-mm-DD'), default, default);
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 2, '말랑 개껌', 10000, null, null, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
-insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
-    values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, null, null, default, null, 31, 156);
+insert into product (product_id, category_id, product_name, product_price, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 2, '말랑 개껌', 10000, default, to_date('2023-11-21', 'yyyy-mm-DD'), default, default);
+insert into product (product_id, category_id, product_name, product_price, create_date, expire_date, like_cnt, view_cnt)
+    values (seq_product_id.nextval, 3, '프릴프릴 원피스 소형견', 20000, default, null, 31, 156);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
     values (seq_product_id.nextval, 4, '말랑 하네스', 15000, null, null, default, null, default, default);
 insert into product (product_id, category_id, product_name, product_price, thumbnail_img, product_img, create_date, expire_date, like_cnt, view_cnt)
@@ -864,3 +938,8 @@ from
 where 
     p.product_id = 1;
 
+
+
+UPDATE orderTbl
+SET order_status = 4
+WHERE order_id = 1;

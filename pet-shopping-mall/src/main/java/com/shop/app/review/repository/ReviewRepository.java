@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.common.entity.ImageAttachment;
-
+import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.dto.ReviewDetailDto;
 
 import com.shop.app.review.entity.Review;
@@ -21,7 +21,7 @@ import com.shop.app.review.entity.ReviewDetails;
 public interface ReviewRepository {
 
 	// 리뷰작성
-	@Insert("insert into review (review_id, pet_id, product_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId}, #{productId}, #{reviewMemberId, jdbcType=VARCHAR}, #{reviewStarRate}, #{reviewTitle, jdbcType=VARCHAR}, #{reviewContent, jdbcType=VARCHAR}, default)")
+	@Insert("insert into review (review_id, pet_id, order_id, product_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId}, #{orderId}, #{productId}, #{reviewMemberId, jdbcType=VARCHAR}, #{reviewStarRate}, #{reviewTitle, jdbcType=VARCHAR}, #{reviewContent, jdbcType=VARCHAR}, default)")
 	@SelectKey(
 			before = false, 
 			keyProperty = "reviewId", 
@@ -69,8 +69,8 @@ public interface ReviewRepository {
 	int findProductTotalReviewCount();
 	
 	// 상품 상세페이지 전체 리뷰
-	@Select("select * from review ORDER BY review_id DESC")
-	List<Review> findProductReviewAll(RowBounds rowBounds);
+	@Select("select * from review where product_id = #{productId}")
+	List<Review> findProductReviewAll(RowBounds rowBounds, int productId);
 
 	// 상품 상세페이지 - 리뷰 상세조회 - 이미지 조회
 	ReviewDetails findProductImageAttachmentsByReviewId(int reviewId);
@@ -82,6 +82,18 @@ public interface ReviewRepository {
 	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
 	@Select("select * from review where review_id = #{reviewId}")
 	Review findPoductListReviewId(int reviewId);
+
+	// 상품 - 리뷰 전체개수 확인
+	@Select("select count (*) from review where product_id = #{productId}")
+	int findReviewTotalCount(int productId);
+
+	// 상품 - 리뷰 평점
+	ProductReviewAvgDto productReviewStarAvg(int productId);
+
+	@Select("select * from review")
+	List<ProductReviewAvgDto> findProductReviewAvgAll();
+	
+	
 
 
 

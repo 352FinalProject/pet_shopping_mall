@@ -18,5 +18,8 @@ public interface PaymentRepository {
 
 	@Select("select * from payment where order_id = ${orderId}")
 	Payment getPaymentInfo(int orderId);
+
+	@Insert("insert into sub_payment (sub_payment_id, member_id, payment_date) values (seq_sub_payment_id.nextVal, #{customerUid}, default)")
+	int insertSubPayment(String customerUid);
 	
 }

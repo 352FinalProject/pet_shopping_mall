@@ -41,6 +41,7 @@ import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.entity.TermsHistory;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.payment.dto.SubScheduleDto;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.terms.entity.Accept;
@@ -70,6 +71,8 @@ public class MemberSecurityController {
    @Autowired
    private CouponService couponService; // 회원가입시 쿠폰 발급
 
+   
+   
    @GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
    public void memberCreate() {
    }
@@ -216,9 +219,12 @@ public class MemberSecurityController {
    public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
       String memberId = member.getMemberId();
       MypageDto myPage = memberService.getMyPage(memberId);
-      log.debug("myPage = {}", myPage);
+      
+      int couponCount = myPage.getMemberCoupon();
+  
       model.addAttribute("myPage", myPage);
       model.addAttribute("member", member);
+      model.addAttribute("couponCount", couponCount);
    }
 
    // 멤버 정보 업데이트
@@ -303,4 +309,21 @@ public class MemberSecurityController {
    @GetMapping("/petUpdate.do")
    public void petUpdate() {
    }
+   
+   
+   
+   
+   
+   /**
+    * 멤버 구독자 업데이트 메소드
+    */
+   @PostMapping("/subscribe.do")
+   public String memberSubscribe(@AuthenticationPrincipal MemberDetails member, RedirectAttributes redirectAttr) {
+	   String memberId = member.getMemberId();
+	   int result = memberService.memberSubscribe(memberId);
+	   if (result > 0)
+		   redirectAttr.addFlashAttribute("msg", "🎉멤버쉽 가입이 완료되었습니다. 이제 우동친만의 멤버쉽 혜택을 누려보세요.");
+	   return "redirect:/member/myPage.do";
+   }
+   
 }

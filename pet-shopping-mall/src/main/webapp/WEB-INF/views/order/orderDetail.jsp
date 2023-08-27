@@ -16,7 +16,7 @@
 /* 아코디언 스타일 */
 .detail-row {
     display: none;
-    transition: display 0.3s ease; /* 펼치기/접기 애니메이션 효과 추가 */
+    transition: max-height 0.3s ease; /* 펼치기/접기 애니메이션 효과 추가 */
 }
 
 .detail-row.show {
@@ -34,22 +34,24 @@
     background-color: #f5f5f5;
 }
 </style>
-<section class="common-section" id="#">
+<section class="common-section" id="common-section-List">
 	<div class="common-title">주문 상세 내역</div>
-	<div class="common-container">
+	<div class="common-container-side">
 		<div class="common-div">
 				<div class="order">
-					<table id="order-table">
-						<thead>
-							<tr>
-								<th>날짜</th>
-								<th>주문번호</th>
-								<th>상품</th>
-								<th>주문금액</th>
-								<th>상태</th>
-							</tr>
-						</thead>
-						<tbody>
+						<div class="service-util-div-sidebar-cancel">
+							<table class="service-product-utility-sidebar" id="order-table">
+								<thead>
+									<tr>
+										<th>날짜</th>
+										<th>주문번호</th>
+										<th>상품</th>
+										<th>주문금액</th>
+										<th>상태</th>
+									</tr>
+								</thead>
+							<tbody>
+						</div>
 						<c:if test="${not empty orderDetail}">
 							<sec:authentication property="principal" var="loginMember" />
 							<c:forEach var="orderMap" items="${orderDetail}">
@@ -87,8 +89,11 @@
                                 			<c:forEach var="order" items="${orderMap}">
                                  			<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
                                      		<input type="hidden" name="productId" value="${order.key.productId}">
+                                     		<input type="hidden" name="orderId" value="${order.key.orderId}">
                                    			</c:forEach>
-                                     		<button class="review-btn" type="submit">리뷰쓰기</button>
+                                   			<c:if test="${not reviewWrite}">
+                                     			<button class="review-btn" type="submit">리뷰쓰기</button>
+                                     		</c:if>
                                 			</form>
                               			</c:if>
 									</td>
@@ -115,6 +120,7 @@
 				<div class="empty-message">조회된 주문 내역이 없습니다.</div>
 			</c:if>
 			</div>
+			</div>
 		</div>
 	</div>
 </section>
@@ -131,5 +137,27 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+//페이지가 로드될 때 리뷰 작성 상태 확인
+$(document).ready(function() {
+    checkReviewStatus();
+});
+
+// 리뷰 작성 상태를 서버에서 확인
+function checkReviewStatus() {
+    $.ajax({
+        url: '${pageContext.request.contextPath}/order/orderDetail',
+        type: 'GET',
+        success: function(response) {
+            if (response.reviewWrite) {
+                $(".review-btn").hide(); // 리뷰를 이미 작성했다면 버튼 숨기기
+            } else {
+                $(".review-btn").show(); // 리뷰를 작성하지 않았다면 버튼 표시
+            }
+        }
+    });
+}
+
+
 </script>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

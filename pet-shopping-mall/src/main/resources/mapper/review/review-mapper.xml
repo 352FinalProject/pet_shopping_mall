@@ -81,4 +81,27 @@
 	        <result property="imageCreatedAt" column="image_created_at"/>
 	    </collection>
 	</resultMap>
+	
+	<select id="productReviewStarAvg" resultMap="ProductReviewAvgDto">
+	SELECT
+	    p.product_id,
+	    ROUND(AVG(r.review_star_rate), 1) as AVG,
+	    p.product_name
+	FROM
+	    product p join review r 
+	        ON p.product_id = r.product_id
+	WHERE
+	    p.product_id = r.product_id
+	GROUP BY
+	    p.product_id, p.product_name
+	</select>
+	
+	<resultMap type="ProductReviewAvgDto" id="ProductReviewAvgDto">
+		<result column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="review_star_rate" property="reviewStarRate" />
+	</resultMap>
+	
+	
+	
 </mapper>

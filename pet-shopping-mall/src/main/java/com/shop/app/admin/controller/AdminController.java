@@ -391,7 +391,6 @@ public class AdminController {
 			productInfos.add(productInfo);
 		}
 		
-		log.debug("productInfos = {}", productInfos);
 		model.addAttribute("productInfos", productInfos);
 	}
 
@@ -482,7 +481,7 @@ public class AdminController {
 	 * 상품수정 폼으로 연결
 	 */
 	@GetMapping("/adminProductUpdate.do")
-	public void adminProductDetailUpdate(
+	public void adminProductUpdate(
 			@RequestParam int productId,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model
@@ -510,50 +509,32 @@ public class AdminController {
 	 * 상품 수정
 	 */
 	@PostMapping("/adminProductUpdate.do")
-	public String adminProductDetailUpdate(
+	public ResponseEntity<?> adminProductUpdate(
 			@Valid @RequestBody ProductUpdateDto _product,
 			@AuthenticationPrincipal MemberDetails member 
 			) {
 		
 		log.debug("ProductUpdateDto = {}", _product);
 		Product product = _product.toProduct();
-		
 		// 상품정보 수정하기
 		int result = productService.updateProduct(product);
 		
-		return "redirect:/admin/adminProductList.do";
+		return ResponseEntity.ok(result);
 	}
 	
 	// 상품옵션 수정
 	@PostMapping("/adminProductDetailUpdate.do")
-	public String adminProductDetailUpdate(
+	public ResponseEntity<?> adminProductDetailUpdate(
 			@Valid @RequestBody ProductDetailUpdateDto _product,
-	        BindingResult bindingResult,
-	        RedirectAttributes redirectAttr
+			@AuthenticationPrincipal MemberDetails member 
 			) {
 		log.debug("ProductDetailUpdateDto = {}", _product);
 		ProductDetail productDetail = _product.toProductDetail();
-		
-		if(bindingResult.hasErrors()) {
-			List<ObjectError> errors = bindingResult.getAllErrors();
-			String message = null;
-			for(ObjectError err : errors) {
-				log.error("message = {} {}", err.getCodes()[1], err.getDefaultMessage());
-				message = err.getDefaultMessage();
-			}
-			redirectAttr.addFlashAttribute("msg", message);
-			return "redirect:/admin/adminProductList.do";
-		}
     	
         // 상품 옵션 업데이트 로직 수행
         int result = productService.updateProductDetail(productDetail);
-        if (result > 0) {
-            redirectAttr.addFlashAttribute("successMsg", "Product updated successfully!");
-        } else {
-            redirectAttr.addFlashAttribute("errorMsg", "Failed to update the product.");
-        }
 
-        return "redirect:/admin/adminProductDetailUpdate.do";
+        return ResponseEntity.ok(result);
 	}
 	
 	
@@ -562,7 +543,7 @@ public class AdminController {
 	 * 상품 삭제
 	 */
 	@PostMapping("/adminProductDelete.do")
-	public String adminDeleteProduct(
+	public ResponseEntity<?> adminDeleteProduct(
 			@Valid @RequestBody ProductDeleteDto _product,
 			@AuthenticationPrincipal MemberDetails member
 			){
@@ -570,7 +551,7 @@ public class AdminController {
 		
 		int result = productService.deleteProduct(_product.getProductId());
 		
-		return "redirect:/admin/adminProductList.do";
+		return ResponseEntity.ok(result);
 	}
 
 

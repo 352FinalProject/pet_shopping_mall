@@ -26,6 +26,7 @@ public class OrderCreateDto {
 	private List<OrderDetail> forms;
 	
 	private int pointsUsed; // 사용하려는 포인트 (예라)
+	private int couponId; // 사용하려는 쿠폰 (예라)
 	
 	public Order toOder() {
 		

@@ -20,7 +20,7 @@
 				</div>
 				<div class="card-body">
 					  <div class="container-fluid px-4">
-					    <form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" enctype="multipart/form-data" method="post" class="mt-4">
+					    <%-- <form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" enctype="multipart/form-data" method="post" class="mt-4"> --%>
 					
 					      <div class="mb-3">
 					        
@@ -45,19 +45,20 @@
 					        <div class="row mb-3">
 					          <div class="col-md-3">
 					            <label for="ProductName" class="form-label">상품명</label>
-					            <input type="text" name="ProductName" id="ProductName" value="${product.productName}" class="form-control" required>
+					            <input type="text" name="productName" id="productName" value="${product.productName}" class="form-control" required>
 					          </div>
 					          <div class="col-md-3">
 					            <label for="productPrice" class="form-label">상품금액</label>
 					            <input type="number" name="productPrice" id="productPrice" value="${product.productPrice}" class="form-control" required>
 					          </div>
 					        </div>
+					        
+							<!-- 					        
 					        <div class="row mb-5">
 					          <div class="col-md-3">
 					            <label for="file" class="form-label">제품 사진</label>
 					          </div>
 					          <div class="col-md-3">
-					          
 							      	<c:if test="${not empty productInfo.attachments}">
 								      	<c:forEach items="${productInfo.attachments}" var="attach" varStatus="vs">
 								      		${vs }<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
@@ -70,8 +71,14 @@
 								            <input type="file" name="upFile" id="file" class="form-control">
 								      	</div>
 							      	</c:if>
-					          
 					          </div>
+					           -->
+							<div class="col-md-6">
+					            <button type="button" class="btn btn-secondary" onclick='updateProduct();'>상품 수정</button>
+					            <button type="button" class="btn btn-danger" onclick="deleteProduct();">상품 삭제</button>
+					        </div>
+					          
+					          
 					        </div>
 					        
 					        
@@ -81,7 +88,7 @@
 	    <div class="productDetail-container-${productDetail.productDetailId}">
 	        <div class="row mb-3">
 	            <div class="col">
-	                <label for="optionName_${productDetail.productDetailId}" class="form-label">옵션명</label>
+	                <label for="optionName_${productDetail.productDetailId}" class="form-label">옵션명 ${vs.count}</label>
 	            </div>
 	            <div class="col">
 	                <input type="text" name="optionName" id="optionName_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionName}">
@@ -117,24 +124,22 @@
 	            </div>
 	        </div>
 	        <div class="col-md-6">
-	            <button type="button" class="btn btn-secondary" onclick='updateProductOption("${productDetail.productDetailId}");'>옵션수정</button>
-	            <button type="button" class="btn btn-danger" onclick="deleteProductOption(${productDetail.productDetailId});">삭제</button>
+	            <button type="button" class="btn btn-secondary" onclick='updateProductOption(${productDetail.productDetailId});'>옵션${vs.count} 수정</button>
+	            <button type="button" class="btn btn-danger" onclick="deleteProductOption(${productDetail.productDetailId});">옵션${vs.count} 삭제</button>
 	        </div>
 	    </div>
 	</c:forEach> 
 					      
-					      
-					    </form:form>
+					    <%-- </form:form> --%>
 					  </div>
 				</div>
 			</div>
 
-
-
 			
 		</div>
 	</main>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>	
 <script>
 //ajax 요청시 사용할 csrf 글로벌 변수설정
 var token = $("meta[name='_csrf']").attr("content");
@@ -145,21 +150,20 @@ $(function() {
     });
 });
 
-//상품 업데이트 함수
+//상품 업데이트(수경)
 const updateProduct = () => {
     const productId = '${product.productId}'; // 상품 ID
     const productName = document.getElementById('productName').value; // 상품명 입력란의 값
     const productPrice = document.getElementById('productPrice').value; // 상품금액 입력란의 값
     const categoryId = document.getElementById('categoryId').value; // 카테고리 선택값
-
+    
     const requestData = {
-        productId: productId,
-        categoryId: '${product.categoryId}',
-        productName: productName,
-        productPrice: productPrice,
-        categoryId: categoryId,
-        imgageId : '${product.imageId}'
-        // 여기에 다른 필드들도 추가하면 됩니다.
+	    productId: productId,
+	    categoryId: categoryId,
+	    productName: productName,
+	    productPrice: productPrice,
+	    categoryId: categoryId,
+        imageId : '${product.imageId}'
     };
 	console.log(requestData);
     // Ajax 요청
@@ -170,18 +174,20 @@ const updateProduct = () => {
         contentType: 'application/json',
         data: JSON.stringify(requestData),
         success: function(response) {
-          alert('상품이 성공적으로 업데이트되었습니다.');
+        	console.log(response);
+          	alert('상품이 성공적으로 업데이트되었습니다.');
         }
     });
 };
 
-// 상품 삭제 
-const deleteProduct = (productId) => {
-    if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
-        const requestData = {
-            productId: productId // Remove unnecessary backticks and curly braces
+// 상품 삭제(수경)
+const deleteProduct = () => {
+    const requestData = {
+            productId: '${product.productId}'
         };
-		console.log(requestData);
+    console.log(requestData);
+    
+	if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
         $.ajax({
             url: '${pageContext.request.contextPath}/admin/adminProductDelete.do',
             type: 'POST',
@@ -189,29 +195,27 @@ const deleteProduct = (productId) => {
             data: JSON.stringify(requestData),
             contentType: 'application/json',
             success: function(response) {
+            	console.log(response);
                 alert('삭제 성공했습니다');
                 window.location.href = '${pageContext.request.contextPath}/admin/adminProductList.do';
             },
             error: function(xhr, textStatus, errorThrown) {
-                // Handle error if needed
-                alert('삭제 실패했습니다');
+                alert('${product.productName}상품 삭제 실패했습니다');
             }
         });
     }
 };
 
 
-
 //상품 옵션 업데이트 함수
 const updateProductOption = (productDetailId) => {
-	console.log(productDetailId);
     const optionName = document.getElementById(`optionName_\${productDetailId}`).value;
     const optionValue = document.getElementById(`optionValue_\${productDetailId}`).value;
     const additionalPrice = document.getElementById(`additionalPrice_\${productDetailId}`).value;
     const saleState = document.getElementById(`saleState_\${productDetailId}`).value;
 
     const requestData = {
-        productDetailId: productDetailId,
+        productDetailId: `\${productDetailId}`,
         optionName: optionName,
         optionValue: optionValue,
         additionalPrice: additionalPrice,
@@ -227,7 +231,8 @@ const updateProductOption = (productDetailId) => {
         contentType: 'application/json',
         data: JSON.stringify(requestData),
         success: function(response) {
-            if (response.code === 200) {
+        	console.log(response);
+            if (response == 1) {
                 alert('상품 옵션이 성공적으로 업데이트되었습니다.');
             } else {
                 alert('상품 옵션 업데이트 실패! 관리자에게 문의하세요.');
@@ -241,8 +246,8 @@ const updateProductOption = (productDetailId) => {
 // 상품옵션 삭제 요청
 const deleteProductOption = (productDetailId) => {
     const requestData = {
-            productDetailId: `\${productDetailId}`
-        };
+    	productDetailId: `\${productDetailId}`	
+    };
 	console.log(requestData);
 	if (confirm('정말로 이 옵션을 삭제하시겠습니까?')) {
         $.ajax({
@@ -252,7 +257,10 @@ const deleteProductOption = (productDetailId) => {
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success: function(response) {
-                if (response.code === 200) {
+                if (response === 1) {
+                	const optionDiv = document.querySelector('.productDetail-container-${productDetail.productDetailId}');
+                	console.log(response);
+                	optionDiv.remove();
                     alert('옵션이 성공적으로 삭제되었습니다.');
                 } else {
                     alert('옵션 삭제 실패! 관리자에게 문의하세요.');
@@ -295,7 +303,6 @@ document.querySelectorAll("[name=upFile]").forEach((input) => {
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 	<script	src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/datatables-simple-demo.js"></script>
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	
 </body>
 </html>

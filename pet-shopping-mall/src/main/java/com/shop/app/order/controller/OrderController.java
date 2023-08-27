@@ -1,9 +1,11 @@
 package com.shop.app.order.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.entity.MemberDetails;
@@ -103,12 +106,26 @@ public class OrderController {
 	
 	
 	@GetMapping("/orderDetail.do")
-	public void getOrderDetail(Model model, @RequestParam String orderNo) {
-		List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
-		log.debug("orderDetailMap = {}", orderDetailMap);
-		model.addAttribute("status", status);
-		model.addAttribute("orderDetail", orderDetailMap);
+	public void getOrderDetail(Model model, @RequestParam String orderNo, @AuthenticationPrincipal MemberDetails member) {
+	    
+	    List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
+
+	    // 리뷰 작성하면 리뷰버튼 없애기 (예라)
+	    if(!orderDetailMap.isEmpty()) {
+	        OrderHistoryDto orderHistory = orderDetailMap.get(0).keySet().iterator().next();
+	        int orderId = orderHistory.getOrderId();
+	        String memberId = member.getMemberId();
+	        boolean reviewWrite = orderService.reviewWrite(memberId, orderId);
+
+	        model.addAttribute("reviewWrite", reviewWrite);
+	        
+	    }
+
+	    model.addAttribute("status", status);
+	    model.addAttribute("orderDetail", orderDetailMap);
 	}
+
+
 	
 	@GetMapping("/orderHistory.do")
 	public void getOrderHistory() {}

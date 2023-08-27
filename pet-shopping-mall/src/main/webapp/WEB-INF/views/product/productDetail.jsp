@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<title>Image Slider Example</title>
+<title>우리집동물친구[상품]</title>
 <!-- Bootstrap CSS 포함 -->
 <link
   rel="stylesheet"
@@ -19,12 +19,13 @@ pageEncoding="UTF-8"%>
 
 <style>
 	.heart-button {
+		border: none;
         display: inline-block;
         font-size: 24px;
-        color: black; /* 검은색 하트의 기본 색상 */
         cursor: pointer;
+        background-color: white;
+        
     }
-    
     .pink {
         color: pink; /* 핑크색 하트 */
     }
@@ -101,7 +102,12 @@ pageEncoding="UTF-8"%>
 	            <option value="">[필수]옵션선택</option>
 	            <!-- 옵션나열 -->
 	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-	            	<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		<c:if test="${empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	        		</c:if>
+	        		<c:if test="${not empty productDetail.optionName}">
+	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	        		</c:if>
 	        	</c:forEach>
 	          </select>
 	        </div>
@@ -117,6 +123,9 @@ pageEncoding="UTF-8"%>
         	</div>
 	        
         </c:if>
+        
+        
+        
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -289,8 +298,9 @@ pageEncoding="UTF-8"%>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
+        	${likeState}
         	<c:choose>
-        		<c:when test="${likeState == 0}">
+        		<c:when test="${product.likeCnt == 0}">
 					<span class="heart-button" id="clickHeart">♡</span>
 				</c:when>
 				<c:otherwise>
@@ -311,24 +321,54 @@ pageEncoding="UTF-8"%>
 <script>
 /* 상품수량에 따라 가격 바꾸기(수경) */
 
-/* 수량버튼 */
-const quantityInput = document.querySelector('.quantity-input');
-const minusButton = document.querySelector('.minus');
-const plusButton = document.querySelector('.plus');
+document.addEventListener("DOMContentLoaded", function () {
+  const optionSelect = document.querySelector("select[name='product-option']");
+  const quantityInput = document.querySelector(".quantity-input");
+  const optionMinusButton = document.querySelector(".minus");
+  const optionPlusButton = document.querySelector(".plus");
+  const addToCartButton = document.querySelector(".btn1"); // 장바구니 버튼 선택
 
-minusButton.addEventListener('click', () => {
-    let currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
-        currentValue--;
-        quantityInput.value = currentValue;
+  let currentQuantity = 1;
+
+  optionMinusButton.addEventListener("click", () => {
+    if (currentQuantity > 1) {
+      currentQuantity--;
+      quantityInput.value = currentQuantity;
     }
+  });
+
+  optionPlusButton.addEventListener("click", () => {
+    currentQuantity++;
+    quantityInput.value = currentQuantity;
+  });
+
+  addToCartButton.addEventListener("click", () => {
+    const selectedOptionId = optionSelect.value;
+    
+    // URL에서 파라미터 값을 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("productId"); // 상품 id 가져오기
+    const quantity = currentQuantity;
+
+    // 장바구니에 상품 추가
+    $.ajax({
+      type: "POST",
+      url: "${pageContext.request.contextPath}/cart/shoppingCart.do",
+      data: {
+    	productDetailId: productId,
+        optionId: selectedOptionId,
+        quantity: quantity,
+      },
+      success: function (response) {
+    	alert("상품이 추가되었습니다.");
+      },
+      error: function (error) {
+        console.error(error);
+      },
+    });
+  });
 });
 
-plusButton.addEventListener('click', () => {
-    let currentValue = parseInt(quantityInput.value);
-    currentValue++;
-    quantityInput.value = currentValue;
-});
 
   // 리뷰 페이지 아코디언 효과
   /* const ques = document.querySelectorAll(".que");
@@ -360,46 +400,68 @@ ques.forEach(que => {
   });
 }); */
 
-	// 하트 클릭 이벤트 (선모)
-	let token = $("meta[name='_csrf']").attr("content");
-	let header = $("meta[name='_csrf_header']").attr("content");
-	
-	$(function() {
-	    $(document).ajaxSend(function(e, xhr, options) {
-	        xhr.setRequestHeader(header, token);
-	    });
-	});
-	
-	$("#clickHeart").on("click", function() {
-		var state = $(this).hasClass("pink") ? "delete" : "insert";
-		
-		$.ajax({
-			type: "POST",
-			url: "${pageContext.request.contextPath}/product/insertPick.do",
-			dataType: "JSON",
-			async: true,
-			contentType:'application/json',
-			data: JSON.stringify({
-				"productId": ${product.productId},
-				"state": state
-			}),
-			success: function(result) {
-				if(result.rs == "insertS") {
-					$("#clickHeart").addClass("pink");
-					$("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-				} else if(result.rs == "deleteS") {
-					$("#clickHeart").removeClass("pink");
-					$("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-				}
-				
-				alert(result.msg);
-			},
-			error: function(req, status, error) {
-				alert("에러가 발생하였습니다.");
-				console.log(req.responseText);
-			}
-		});	
-	});
+// 하트 클릭 이벤트 (선모)
+let token = $("meta[name='_csrf']").attr("content");
+let header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
+//중복 클릭 방지 플래그
+let isProcessing = false;
+let isPink = $("#clickHeart").hasClass("pink"); // 이전 상태 저장
+
+$("#clickHeart").on("click", function() {
+    if (isProcessing) {
+        return;
+    }
+
+    isProcessing = true;
+
+    console.log(isPink); // 이전 상태 출력
+    var state = isPink ? "insert" : "delete"; // 이전 상태에 따라 반대로 설정
+
+    $.ajax({
+        type: "POST",
+        url: "${pageContext.request.contextPath}/product/insertPick.do",
+        dataType: "JSON",
+        async: true,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "productId": ${product.productId},
+            "state": state
+        }),
+        success: function(result) {
+            if (result.rs == "insertS") {
+                if (isPink) { // 이전 상태에 따라 조건 분기
+                    $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
+                }
+                $("#clickHeart").addClass("pink");
+            } else if (result.rs == "deleteS") {
+                if (!isPink) { // 이전 상태에 따라 조건 분기
+                    $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
+                }
+                $("#clickHeart").removeClass("pink");
+            }
+
+            alert(result.msg);
+        },
+        error: function(req, status, error) {
+            alert("에러가 발생하였습니다.");
+            console.log(req.responseText);
+        },
+        complete: function() {
+            isProcessing = false;
+            isPink = !isPink; // 이전 상태 업데이트
+        }
+    });
+});
+
+
+
 </script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

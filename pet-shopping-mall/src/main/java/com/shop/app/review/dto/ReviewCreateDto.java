@@ -19,6 +19,7 @@ public class ReviewCreateDto {
 	private int reviewId;
 	private String reviewMemberId; // 작성자
 	private int petId;
+	private int orderId;
 	private int productId;
 	
 	private int reviewStarRate; // 별점
@@ -34,6 +35,7 @@ public class ReviewCreateDto {
 				.reviewId(reviewId)
 				.reviewMemberId(reviewMemberId)
 				.petId(petId)
+				.orderId(orderId)
 				.productId(productId)
 				.reviewStarRate(reviewStarRate)
 				.reviewTitle(reviewTitle)

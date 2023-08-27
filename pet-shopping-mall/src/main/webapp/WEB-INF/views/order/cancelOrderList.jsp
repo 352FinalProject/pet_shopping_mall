@@ -11,19 +11,19 @@
 	color: #5886d3;
 	}
 	</style>
-	<section class="common-section" id="#">
+	<section class="common-section" id="common-section-List">
 		<div class="common-title">취소내역</div>
-		<div class="common-container">
-			<div class="order">
-				<div class="order-top">
+		<div class="common-container-side">
+			<div class="order-top">
 					<select name="selectPeriod" id="selectPeriod">
 						<option>전체</option>
 						<option value="3">최근 3개월</option>
 						<option value="6">최근 6개월</option>
 						<option value="12">최근 12개월</option>
 					</select>
-				</div>
-				<table id="order-table">
+			</div>
+			<div class="service-util-div-sidebar-cancel">
+				<table class="service-product-utility-sidebar">
 					<thead>
 						<tr>
 							<th>날짜</th>
@@ -55,12 +55,13 @@
 					</c:if>
 					</tbody>
 				</table>
-			<c:if test="${empty cancelInfoList}">
-				<div class="empty-message">조회된 주문 내역이 없습니다.</div>
-			</c:if>
+				<c:if test="${empty cancelInfoList}">
+					<div class="empty-message">조회된 주문 내역이 없습니다.</div>
+				</c:if>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 <script>
 const periodSelect = document.querySelector("#selectPeriod");
 const table = document.querySelector("#order-table tbody")

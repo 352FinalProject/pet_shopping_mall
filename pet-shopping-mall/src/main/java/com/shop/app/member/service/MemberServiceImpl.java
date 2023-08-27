@@ -70,6 +70,15 @@ public class MemberServiceImpl implements MemberService {
 		return myPage;
 	}
 
+	@Override
+	public int memberSubscribe(String memberId) {
+		return memberRepository.memberSubscribe(memberId);
+	}
+	
+	@Override
+	public int subscribeCancel(String memberId) {
+		return memberRepository.subscribeCancel(memberId);
+	}
 
 
 }
