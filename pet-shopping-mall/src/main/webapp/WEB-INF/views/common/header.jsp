@@ -232,7 +232,7 @@
 				<label for="deleteMember-password">비밀번호입력:</label> <input
 					class="deleteMemberForm-input-password" type="password" id="password"
 					name="password" required>
-				<button class="deleteMemberForm-button" type="submit">회원탈퇴</button>
+				<button class="deleteMemberForm-button" type="submit" >회원탈퇴</button>
 					<button type="button" id="deleteMemberForm-closeModalBtn" onclick="closDeleteMemberModal();">닫기</button>
 			</form:form>
 		</div>

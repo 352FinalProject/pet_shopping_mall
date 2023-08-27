@@ -2,11 +2,11 @@
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 select * from member;
-select * from point;
+select * from point order by point_date desc;
 select * from pet;
 select * from review;
 select * from coupon;
-select * from member_coupon;
+select * from member_coupon order by member_coupon_id desc;
 select * from terms;
 select * from terms_history;
 select * from product;
@@ -14,69 +14,26 @@ select * from terms_history;
 select * from image_attachment;
 select * from image_attachment_mapping;
 select * from product;
-select * from orderTbl;
+select * from orderTbl order by order_id desc;
 select * from order_detail;
 select * from product_detail;
 select * from product;
-select * from member_coupon;
 select * from question;
 select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
+    
+    
+    
+-- 멤버 쿠폰 입력
+insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
+values ( seq_member_coupon_id.nextval, '1', 'member1', sysdate, add_months(sysdate, 1), 0, null);
+
+
+select * from member_coupon where coupon_id = 1 and member_id = 'member3' and end_date >= current_timestamp and use_status = 0;
 
 delete from wishlist where wishlist_id = 10; 
-
-select
-    m.member_id,
-    m.name,
-    m.subscribe,
-    recent_point.point_current,
-    (
-        select count(*)
-        from member_coupon
-        where member_id = m.member_id and use_status = 0
-    ) as coupon_count
-from
-    member m
-left join (
-    select
-        point_member_id,
-        point_current
-    from (
-        select
-            p.point_member_id,
-            p.point_current,
-            row_number() over (partition by p.point_member_id order by p.point_date desc) as rn
-        from
-            point p
-    ) temp
-    where temp.rn = 1
-) recent_point on m.member_id = recent_point.point_member_id
-where
-    m.member_id = 'member1';
-
-
-
-
-
-
-
-select 
-    *
-from 
-    product p
-    left join 
-        review r on p.product_id = pd.product_id
-where 
-    p.product_id = 1;
-    
-select * from review
-where product_id = 1;
-    
-    select * from review
-where product_id = #{productId};
-    
     
 select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
 
@@ -85,7 +42,7 @@ insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values 
 
 delete from product where product_id = 1;
 
-delete from cartitem where cartitem_id = '52';
+delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
 update orderTbl set order_status = 4 where order_id = 22;
 
@@ -938,6 +895,20 @@ from
 where 
     p.product_id = 1;
 
+
+-- 멤버 쿠폰 테이블
+create table member_coupon (
+ member_coupon_id number,
+ coupon_id number,
+ member_id varchar2(50),
+ create_date timestamp default systimestamp not null, -- 발급 날짜
+ end_date timestamp not null, -- 유효기간 (언제까지)
+ use_status number(1) default 0, -- 사용 여부 (사용 안 하면 0, 사용하면 1)
+ use_date timestamp, -- 사용 날짜
+ constraint pk_member_coupon_id primary key(member_coupon_id),
+ constraint fk_member_coupon_member_id foreign key(member_id) references member(member_id) on delete cascade,
+ constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
+);
 
 
 UPDATE orderTbl

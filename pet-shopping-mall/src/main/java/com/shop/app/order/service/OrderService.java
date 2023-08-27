@@ -3,12 +3,15 @@ package com.shop.app.order.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
+import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
@@ -17,6 +20,8 @@ import com.shop.app.payment.entity.Payment;
 
 public interface OrderService {
 
+	int paymentProceed(@Valid OrderCreateDto _order);
+	
 	int insertOrder(Order order, List<OrderDetail> orderDetails);
 
 	// 관리자페이지 주문조회(대원)

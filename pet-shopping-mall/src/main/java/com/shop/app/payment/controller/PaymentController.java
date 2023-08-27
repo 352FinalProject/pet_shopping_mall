@@ -135,14 +135,17 @@ public class PaymentController {
 	@PostMapping("/proceed.do")
 	public Map<String, Object> paymentProceed(@Valid @RequestBody OrderCreateDto _order) {
 		Map<String, Object> resultMap = new HashMap<>();
-
+		
+		// 쿠폰 사용 여부 (예라)
+		Boolean useCoupon = _order.getUseCoupon();
+		log.debug("useCoupon = {}", _order.getUseCoupon());
+		
 		Order order = _order.toOder();
 
 		List<OrderDetail> orderDetails = _order.getForms();
 
 		// 0. 사용된 포인트 가져오기 (예라)
 		int pointsUsed = _order.getPointsUsed();
-		log.debug("사용 포인트 pointsUsed = {}", pointsUsed);
 
 		// 1. (사용) 현재 포인트를 가져오기
 		Point points = new Point();
@@ -161,40 +164,47 @@ public class PaymentController {
 
 		// 4. db에 포인트 사용 정보 저장
 		int usedPointResult = pointService.insertUsedPoint(usedPoint);
-
-		// 1. 쿠폰 가져오기 (예라)
-		MemberCoupon coupon = new MemberCoupon();
-		coupon.setMemberId(_order.getMemberId());
-		MemberCoupon currentCoupons = couponService.findCouponCurrendById(coupon);
 		
-		// 2. 쿠폰 사용
-		  
-		  // 2-1. 쿠폰 유효성 검사 
-		  MemberCoupon validCoupon = couponService.validateCoupon(_order.getCouponId(), _order.getMemberId());
-		  
-		  if(validCoupon != null) { // 유효한 쿠폰인 경우
-		    
-		  // 2-2. 쿠폰을 적용하여 주문 금액을 할인
-		  int discountAmount = 0; // 할인 금액 초기화
-		  
-		  switch (validCoupon.getCouponId()) {
-		    case 1:
-		        discountAmount = 3000; // 배송비 적립 쿠폰, 3000원 할인
-		        break;
-		    case 2:
-		        discountAmount = (int)(order.getAmount() * 0.1); // 생일축하 쿠폰, 주문 금액의 10%
-		        break;
-		  }
-
-			order.setAmount(order.getAmount() - discountAmount); // 할인 금액을 주문 금액에서 빼준다.
-		    
-		    // 2-3. 쿠폰 상태 업데이트 (사용됨)
-		    validCoupon.setUseStatus(1);
-		    int usedCouponResult = couponService.updateCouponStatus(validCoupon);
-		    log.debug("usedCouponResult = {}", usedCouponResult);
-		  }
-		  
-		
+		if (useCoupon) {
+			// 1. 쿠폰 가져오기 (예라)
+			MemberCoupon coupon = new MemberCoupon();
+			coupon.setMemberId(_order.getMemberId());
+			coupon.setCouponId(_order.getCouponId());
+			coupon.setMemberCouponId(_order.getMemberCouponId());
+			List<MemberCoupon> currentCoupons = couponService.findCouponCurrendById(coupon);
+			
+			// 2. 쿠폰 사용
+			  
+			// 2-1. 쿠폰 유효성 검사 
+			List<MemberCoupon> validCoupons = couponService.validateCoupon(_order.getCouponId(), _order.getMemberId(), _order.getMemberCouponId());
+	
+			if (validCoupons != null && !validCoupons.isEmpty()) { // 유효한 쿠폰인 경우
+			    MemberCoupon validCoupon = validCoupons.get(0); // 첫 번째 유효한 쿠폰을 선택
+	
+			    // 2-2. 쿠폰을 적용하여 주문 금액을 할인
+			    int discountAmount = 0; // 할인 금액 초기화
+			    
+			    switch (validCoupon.getCouponId()) {
+			        case 1:
+			            discountAmount = 3000; // 배송비 적립 쿠폰, 3000원 할인
+			            break;
+			        case 2:
+			            discountAmount = (int)(order.getAmount() * 0.1); // 생일축하 쿠폰, 주문 금액의 10%
+			            break;
+			    }
+	
+			    order.setAmount(order.getAmount() - discountAmount); // 할인 금액을 주문 금액에서 빼준다.
+			    
+			    // 2-3. 쿠폰 상태 업데이트 (사용됨)
+			    validCoupon.setUseStatus(1);
+			    int usedCouponResult = couponService.updateCouponStatus(validCoupon);
+			    
+			    order.setMemberCouponId(validCoupon.getMemberCouponId());
+			} else {
+				// 쿠폰을 사용하지 않을 경우 member_coupon_id 값을 null로 설정
+				order.setMemberCouponId(null);
+			}
+		}
 		  
 		int result = orderService.insertOrder(order, orderDetails);
 
@@ -228,14 +238,13 @@ public class PaymentController {
 				// 6. 적립된 포인트를 db에 저장
 				int pointResult = pointService.insertPoint(point);
 			}
-
+			
 		} else {
 			msg = "주문에 실패하셨습니다. 관리자에게 문의하세요.";
 		}
 
 		resultMap.put("result", result);
 		resultMap.put("msg", msg);
-
 		return resultMap;
 	}
 

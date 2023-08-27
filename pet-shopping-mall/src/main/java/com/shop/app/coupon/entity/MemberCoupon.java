@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class MemberCoupon {
 	
-	private int memberCouponId;
+	private Integer memberCouponId;
 	private int couponId; // coupon 테이블 coupon_id 참조
 	private String memberId; // 쿠폰 사용한 멤버 아이디
 	private LocalDateTime createDate; // 발급 날짜

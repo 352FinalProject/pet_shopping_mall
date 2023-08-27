@@ -25,7 +25,7 @@ import com.shop.app.payment.entity.Payment;
 @Mapper
 public interface OrderRepository {
 
-	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{amount})")
+	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, discount_detail, amount, member_coupon_id) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{discountDetail}, #{amount}, #{memberCouponId, jdbcType=INTEGER})")
 	@SelectKey(
 			before = false,
 			keyProperty = "orderId",

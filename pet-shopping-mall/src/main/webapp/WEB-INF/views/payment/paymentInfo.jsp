@@ -213,6 +213,18 @@ const updateButtonColor = () => {
     checkAll.checked ? orderButton.classList.add("active") : orderButton.classList.remove("active")
 };
 
+let useCoupon = false;  // 쿠폰 사용 여부, 기본값은 false
+
+// 쿠폰 선택 또는 다른 조건에 따라 useCoupon 값을 true로 설정
+document.getElementById('couponSelect').addEventListener('change', function() {
+
+  if (this.value !== "") {  // 쿠폰이 선택되면
+    useCoupon = true;
+  } else { // 쿠폰이 선택되지 않으면
+    useCoupon = false;
+  }
+  console.log("After change, useCoupon value: ", useCoupon);
+});
 
 /* 결제 관련 js */
 /* 결제 전 주문 페이지에 주문 정보를 담는다 */
@@ -233,7 +245,7 @@ const proceedPay = () => {
     let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
 	
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
-	
+    console.log("Before sending, useCoupon value: ", useCoupon);
 	const data = {
 		orderNo: new Date().getTime(),
 		memberId: '${loginMember.memberId}',
@@ -245,9 +257,11 @@ const proceedPay = () => {
 		postcode: 1,
 		totalPrice: '${productTotal}',
 		deliveryFee: 3000,
-		discount: '${pointCurrent}',
+		discount: pointValue,
+		couponId: $("#couponSelect").val(),
 		amount: '${amount}',
 		pointsUsed: pointValue,
+		useCoupon: useCoupon,
 		pg: checkedButton.value,
 		
 	};
@@ -370,12 +384,18 @@ const successPay = (imp_uid, merchant_uid) => {
 document.querySelector('.discount-point-btn').addEventListener('click', function() {
     // 포인트 입력 값 가져오기
     let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
-
+    
     // 총 결제 금액에서 포인트 차감
     let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
-
-    // 포인트 차감 금액 업데이트
-    document.getElementById('discount').innerText = pointValue.toLocaleString(); // 숫자를 쉼표 포함 문자열로 변환
+    
+    amount -= pointValue;
+    
+   	// 포인트 차감 금액 업데이트 (0원 이상일 때만 업데이트)
+    if (pointValue > 0) {
+        document.getElementById('discount').innerText = pointValue.toLocaleString() + '원'; // 숫자를 쉼표 포함 문자열로 변환
+    } else {
+        document.getElementById('discount').innerText = '원';
+    }
 
     // 총 결제 금액 업데이트
     document.getElementById('amount').innerText = amount.toLocaleString();
@@ -421,25 +441,23 @@ pointInput.addEventListener('input', function() {
     this.value = value.replace(/\D/g,'');
 });
 
-// 포인트 사용 버튼에 대한 이벤트 리스너
-document.querySelector('.discount-point-btn').addEventListener('click', function() {
+// 포인트 입력 값이 변경될 때마다 검사
+pointInput.addEventListener('input', function() {
+	
+    // 입력된 값에서 쉼표를 제거
+    let value = this.value.replace(/,/g, '');  
+    
+    // 숫자 이외의 문자가 입력되면 제거
+    this.value = value.replace(/\D/g,'');
+
     // 현재 사용자의 포인트 가져오기
     let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
-
-    // 입력된 포인트 값 가져오기
-    let pointValue = parseInt(document.querySelector('#pointInput').value) || 0;
-
-    // 0원 입력하면 반영 안 되게 하기
-    if(pointValue > 0) {
-        document.querySelector('#discount').innerText = `${pointValue}원`;  
-    } else {
-        document.querySelector('#discount').innerText = '원';  
-    }
-
+    let pointValue = parseInt(this.value) || 0;
+    
     // 입력된 포인트가 사용 가능한 포인트보다 큰지 검사
-    if (pointValue > pointCurrent) {
+    if(pointValue > pointCurrent) {
         alert('사용 가능한 포인트보다 많이 입력하셨습니다.');
-        document.querySelector('#pointInput').value = '0';
+        this.value = '0';
         return;
     }
 });
@@ -465,25 +483,37 @@ $.ajax({
     }
 });
 
-//쿠폰 선택 시 할인 적용
-$('#couponSelect').change(function() {
-    let selectedCouponType = $(this).find(':selected').data('type');
+function updateFinalAmount() {
+    let selectedCouponType = $('#couponSelect').find(':selected').data('type');
+    let selectedCouponValue = $('#couponSelect').val();
+    let enteredPoints = parseInt($('#points').val()) || 0;  // 포인트 입력 필드의 값
     let totalPrice = parseInt($('#total-price').text().replace(/,/g, ''));
     let deliveryFee = 3000;
     let couponDiscount = 0;
-    
-    if (selectedCouponType === '회원가입 배송비 무료 쿠폰') {
-    	couponDiscount += deliveryFee;
-        $('#delivery-fee').text('0');
-    } else if (selectedCouponType === '생일축하 10% 할인 쿠폰') {
-    	couponDiscount += Math.floor(totalPrice * 0.1);  // 소수점 이하 버림
+    let pointsDiscount = 0;
+
+    if (selectedCouponValue !== "") {
+        if (selectedCouponType === '회원가입 배송비 무료 쿠폰') {
+            couponDiscount += deliveryFee;
+            $('#delivery-fee').text('0');
+        } else if (selectedCouponType === '생일축하 10% 할인 쿠폰') {
+            couponDiscount += Math.floor(totalPrice * 0.1);
+        }
     }
-    
-    // 쿠폰 금액에 원 붙이기
+
+    if (enteredPoints > 0) {
+        pointsDiscount = enteredPoints;
+    }
+
+    let finalAmount = totalPrice + deliveryFee - couponDiscount - pointsDiscount;
     $('#couponDiscount').text(couponDiscount.toLocaleString() + '원');
-    let finalAmount = totalPrice + deliveryFee - couponDiscount;  // 배송비 업데이트
-    
-    $('#amount').text(finalAmount.toLocaleString())
+    $('#pointsDiscount').text(pointsDiscount.toLocaleString() + '원');  // 포인트 할인을 표시하는 element
+    $('#amount').text(finalAmount.toLocaleString());
+}
+
+// 포인트 입력 변경 시
+$('#points').change(function() {
+    updateFinalAmount();
 });
 
 </script>
