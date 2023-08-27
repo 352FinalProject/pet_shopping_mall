@@ -8,21 +8,21 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
-@EnableWebSocketMessageBroker
+@EnableWebSocketMessageBroker // Socket과 STOMP관련 설정을 해주어야 한다.
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 	
-	@Override
+	@Override // 소켓 연결과 관련된 설정
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/stomp")
+		registry.addEndpoint("/stomp") // 소켓 연결 uri
 				.withSockJS(); // 웹소켓 미지원 브라우져를 위한 설정
 	}
 
-	@Override
+	@Override // Stomp 사용을 위한 Message Broker 설정을 해주는 메소드
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		// 1. simpleBroker로 처리하는 url 등록
+		// 1. simpleBroker로 처리하는 url 등록. 메세지를 받을 때, 경로를 설정
 		registry.enableSimpleBroker("/app");
 		
-		// 2. MessageHandler로 처리하는 url 등록
+		// 2. MessageHandler로 처리하는 url 등록. 메세지를 보낼 때, 경로를 설정
 		registry.setApplicationDestinationPrefixes("/app");
 		
 		
