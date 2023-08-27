@@ -37,7 +37,6 @@ public interface OrderRepository {
 	
 	List<OrderAdminListDto> adminOrderList();
 
-	
 	// 2. db에서 주문 정보 가져오기 (예라)
 	@Select("select * from (select * from orderTbl where member_id = #{memberId} order by order_id desc) where rownum <= 1")
 	Order findByOrder(Order order);
@@ -95,6 +94,9 @@ public interface OrderRepository {
 
 	List<OrderHistoryDto> getOrderDetail(String orderNo);
 
+	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
+	@Select("select count(*) from review where review_member_id = #{memberId} and order_id = #{orderId}")
+	boolean reviewWrite(String memberId, int orderId);
 
 	
 }

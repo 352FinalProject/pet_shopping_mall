@@ -50,10 +50,11 @@
 								</div>
 							</div>
 						</div>
-					<form:form name="orderDetailFrm">
-						<input type="hidden" value="${product.productDetailId}" class="productDetailId" />
-						<input type="hidden" value="${product.quantity}" class="quantity" />
-					</form:form>
+						<form:form name="orderDetailFrm">
+							<input type="hidden" value="${product.productDetailId}"
+								class="productDetailId" />
+							<input type="hidden" value="${product.quantity}" class="quantity" />
+						</form:form>
 					</c:forEach>
 					<div class="order-info">
 						<div>
@@ -97,10 +98,18 @@
 										style="width: 64px; text-align: right; margin-left: 10px;">원
 									<button type="button" class="discount-point-btn">사용</button>
 									<button type="button" class="discount-point-btn">모두사용</button>
-									<span class="have-point"> (보유 <span
-										class="have-point-bold" style="font-weight: 600"><fmt:formatNumber
+									<span class="have-point" style="margin-left: 5px;"> (보유
+										<span class="have-point-bold" style="font-weight: 600"><fmt:formatNumber
 												value="${pointCurrent}" groupingUsed="true" /></span>원 )
 									</span>
+									<div class="discount-coupon-info">
+										<span class="discount-coupon">쿠폰</span> <select
+											id="couponSelect">
+											<option value="">쿠폰을 선택하세요</option>
+										</select> <span class="have-point"> (보유 <span
+											class="have-point-bold" style="font-weight: 600;">${couponCount}</span>장)
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -118,7 +127,7 @@
 							<div class="product-price">
 								<span>배송비</span>
 								<p>
-									<span>(+)</span><span id="delivery-fee">3,000</span>원
+									<span>(+)</span><span id="deliveryFee">3,000</span>원
 								</p>
 							</div>
 							<div class="product-price">
@@ -130,7 +139,7 @@
 							<div class="product-price">
 								<span>쿠폰</span>
 								<p>
-									<span style="color: red;">(-) <span id="discount">원</span></span>
+									<span style="color: red;">(-) <span id="couponDiscount">원</span></span>
 								</p>
 							</div>
 						</div>
@@ -266,6 +275,7 @@ const proceedPay = () => {
 		contentType:'application/json',
 		data : JSON.stringify(data),
 		success(response) {
+			
 			console.log(response);
 			if(response.result > 0){
 				alert('주문하시겠습니까?')
@@ -275,7 +285,6 @@ const proceedPay = () => {
 			}
 		}
 	});
-
 };
 
 const requestPaymentByCard = (data) => {
@@ -364,7 +373,6 @@ document.querySelector('.discount-point-btn').addEventListener('click', function
 
     // 총 결제 금액에서 포인트 차감
     let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
-    amount -= pointValue;
 
     // 포인트 차감 금액 업데이트
     document.getElementById('discount').innerText = pointValue.toLocaleString(); // 숫자를 쉼표 포함 문자열로 변환
@@ -424,7 +432,45 @@ pointInput.addEventListener('input', function() {
     }
 });
 
+//쿠폰 데이터를 드롭다운에 채워 넣기
+$.ajax({
+    url: '${pageContext.request.contextPath}/payment/findCoupon.do',
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+        let $select = $('#couponSelect');
+        $.each(response, function(index, coupon) {
+            $select.append($('<option/>', { 
+                value: coupon.couponId,
+                text : coupon.couponName,
+                'data-type': coupon.couponName // 이렇게 설정
+            }));
+        });
+    },
+    error: function(error) {
+        console.log("쿠폰 정보를 불러오는 데 실패했습니다.", error);
+    }
+});
 
+//쿠폰 선택 시 할인 적용
+$('#couponSelect').change(function() {
+    let selectedCouponType = $(this).find(':selected').data('type');
+    let totalPrice = parseInt($('#total-price').text().replace(/,/g, ''));
+    let deliveryFee = 3000;
+    let couponDiscount = 0;
+    
+    if (selectedCouponType === '회원가입 배송비 무료 쿠폰') {
+    	couponDiscount += deliveryFee;
+        $('#delivery-fee').text('0');
+    } else if (selectedCouponType === '생일축하 10% 할인 쿠폰') {
+    	couponDiscount += Math.floor(totalPrice * 0.1);  // 소수점 이하 버림
+    }
+    
+    $('#couponDiscount').text(couponDiscount.toLocaleString());
+    let finalAmount = totalPrice + deliveryFee - couponDiscount;  // 배송비 업데이트
+    
+    $('#amount').text(finalAmount.toLocaleString())
+});
 
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />

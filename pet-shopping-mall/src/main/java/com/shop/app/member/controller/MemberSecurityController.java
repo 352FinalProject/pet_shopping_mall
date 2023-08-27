@@ -219,9 +219,12 @@ public class MemberSecurityController {
    public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
       String memberId = member.getMemberId();
       MypageDto myPage = memberService.getMyPage(memberId);
-      log.debug("myPage = {}", myPage);
+      
+      int couponCount = myPage.getMemberCoupon();
+  
       model.addAttribute("myPage", myPage);
       model.addAttribute("member", member);
+      model.addAttribute("couponCount", couponCount);
    }
 
    // 멤버 정보 업데이트

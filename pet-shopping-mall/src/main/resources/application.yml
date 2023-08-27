@@ -22,7 +22,6 @@ spring:
    multipart:
      max-file-size: 10MB
      max-request-size: 50MB
-     location: C:\Workspaces\final_project\documents\pet-shopping-mall\src\main\webapp\resources\upload
   security:
     oauth2:
       client: 
