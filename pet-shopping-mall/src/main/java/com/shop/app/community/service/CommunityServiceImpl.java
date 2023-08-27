@@ -17,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommunityServiceImpl implements CommunityService {
 
-	@Autowired
-	private CommunityRepository communityRepository;
+//	@Autowired
+//	private CommunityRepository communityRepository;
 	
 
 //	@Override
