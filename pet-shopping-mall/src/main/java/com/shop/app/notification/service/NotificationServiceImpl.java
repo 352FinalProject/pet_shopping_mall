@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.shop.app.notification.entity.Notification;
 import com.shop.app.notification.repository.NotificationRepository;
 import com.shop.app.order.dto.OrderCompleteNotificationDto;
-import com.shop.app.ws.dto.Payload;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
