@@ -140,7 +140,7 @@ function subscribes() {
     if (confirm("구독을 진행하시겠습니까?")) {
         IMP.init('imp60204862');
         IMP.request_pay({
-            pg: "kakaopay",
+            pg: "html5_inicis",
             pay_method: "card",
             amount: 1000,
             name : "정기결제",

@@ -333,7 +333,7 @@ where
     c.member_id='honggd';
     
 select * from product_detail;
-
+select * from member;
 
 SELECT 
     pd.*, 
@@ -864,3 +864,7 @@ from
 where 
     p.product_id = 1;
 
+
+select * from sub_payment;
+select * from member;
+update member set subscribe = 'N' where member_id = 'honggd';

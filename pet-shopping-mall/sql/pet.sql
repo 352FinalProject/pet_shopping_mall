@@ -465,7 +465,7 @@ create sequence seq_member_coupon_id;
 create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
-create sequence seq_payment_id;
+create sequence seq_sub_payment_id;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
@@ -519,3 +519,5 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 select * from member;
 delete from member where email= 'hulk1512@naver.com';
 commit;
+
+select * from sub_payment;

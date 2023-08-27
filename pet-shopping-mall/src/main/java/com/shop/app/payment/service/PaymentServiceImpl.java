@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shop.app.cart.repository.CartRepository;
+import com.shop.app.member.repository.MemberRepository;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.repository.OrderRepository;
 import com.shop.app.payment.entity.Payment;
@@ -22,6 +23,9 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	OrderRepository orderRepository;
+	
+	@Autowired
+	MemberRepository memberRepository;
 	
 	@Override
 	public int updatePayStatus(String orderNo) {
@@ -57,7 +61,9 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Override
 	public int insertSubPayment(String customerUid) {
-		return paymentRepository.insertSubPayment(customerUid);
+		int result = memberRepository.subscribeCancel(customerUid);
+		result =  paymentRepository.insertSubPayment(customerUid);
+		return result;
 	}
 
 }

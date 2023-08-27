@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 정기 결제 (구독자)를 위한 스케쥴러
+ * 
+ * 안써요!!!!!!!!!!!!
  */
 @Component
 @Slf4j

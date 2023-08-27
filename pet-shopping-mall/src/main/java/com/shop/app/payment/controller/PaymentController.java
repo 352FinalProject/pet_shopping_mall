@@ -277,14 +277,13 @@ public class PaymentController {
 	@PostMapping("/startScheduler.do")
 	public ResponseEntity<?> startMembership(@RequestBody SubScheduleDto subScheduleDto, RedirectAttributes redirectAttr) {
 		
-		log.debug("subScheduleDto = {}", subScheduleDto);
-		
 		String merchantUid = subScheduleDto.getMerchantUid();
 		String customerUid = subScheduleDto.getCustomerUid();
 		int amount = subScheduleDto.getAmount();
 		
-//		paymentScheduler.startScheduler(merchantUid, customerUid, amount);
-
+		// 회원 구독자 업데이트
+		int result = paymentService.insertSubPayment(customerUid);
+		
 		schedulePay.schedulePay(merchantUid, customerUid, amount);
 		
 		return ResponseEntity.ok("성공");
