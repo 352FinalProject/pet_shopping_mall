@@ -103,10 +103,10 @@ pageEncoding="UTF-8"%>
 	            <!-- 옵션나열 -->
 	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
 	        		<c:if test="${empty productDetail.optionName}">
-	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	            		<option class="options" value="${productDetail.productDetailId}">[옵션없음]</option>
 	        		</c:if>
 	        		<c:if test="${not empty productDetail.optionName}">
-	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	            		<option class="options" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
 	        		</c:if>
 	        	</c:forEach>
 	          </select>
@@ -312,62 +312,86 @@ pageEncoding="UTF-8"%>
         <span id="likeCnt">${product.likeCnt}</span>
       </div>
       <div>
-        <button class="btn btn1">장바구니</button>
+        <button class="btn btn1" onclick="addCart();">장바구니</button>
         <button class="btn btn2">구매하기</button>
       </div>
     </div>
   </div>
+  <form:form id="addCartFrm">
+  	<input type="hidden" value="" id="_quantity" name="quantity">
+  	<input type="hidden" value="" id="_productDetailId" name="productDetailId">
+  </form:form>
 </section>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 /* 상품수량에 따라 가격 바꾸기(수경) */
 
 document.addEventListener("DOMContentLoaded", function () {
-  const optionSelect = document.querySelector("select[name='product-option']");
-  const quantityInput = document.querySelector(".quantity-input");
-  const optionMinusButton = document.querySelector(".minus");
-  const optionPlusButton = document.querySelector(".plus");
-  const addToCartButton = document.querySelector(".btn1"); // 장바구니 버튼 선택
+	  const optionSelect = document.querySelector("[name='product-option']");
+	  const quantityInput = document.querySelector(".quantity-input");
+	  const optionMinusButton = document.querySelector(".minus");
+	  const optionPlusButton = document.querySelector(".plus");
+	  const frm = document.querySelector("#addCartFrm");
 
-  let currentQuantity = 1;
+	  let currentQuantity = 1;
 
-  optionMinusButton.addEventListener("click", () => {
-    if (currentQuantity > 1) {
-      currentQuantity--;
-      quantityInput.value = currentQuantity;
-    }
-  });
+	  optionMinusButton.addEventListener("click", () => {
+	    if (currentQuantity > 1) {
+	      currentQuantity--;
+	      quantityInput.value = currentQuantity;
+	      frm.quantity.value = currentQuantity;
+	    }
+	  });
 
-  optionPlusButton.addEventListener("click", () => {
-    currentQuantity++;
-    quantityInput.value = currentQuantity;
-  });
+	  optionPlusButton.addEventListener("click", () => {
+	    currentQuantity++;
+	    quantityInput.value = currentQuantity;
+	    frm.quantity.value = currentQuantity;
+	  });
+	  
+	  console.log(optionSelect);
+	  
+	  optionSelect.addEventListener("change", function() {
+	    const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+	    const selectedValue = selectedOption.value;
+	    const updateQuantity = quantityInput.value;
+	    
+	    frm.productDetailId.value = selectedValue;
+	    frm.quantity.value = updateQuantity;
+	  });
+	  
+	  let token = $("meta[name='_csrf']").attr("content");
+	  let header = $("meta[name='_csrf_header']").attr("content");
 
-  addToCartButton.addEventListener("click", () => {
-    const selectedOptionId = optionSelect.value;
-    
-    // URL에서 파라미터 값을 가져오기
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("productId"); // 상품 id 가져오기
-    const quantity = currentQuantity;
+	  $(function() {
+	      $(document).ajaxSend(function(e, xhr, options) {
+	          xhr.setRequestHeader(header, token);
+	      });
+	  });
 
-    // 장바구니에 상품 추가
-    $.ajax({
-      type: "POST",
-      url: "${pageContext.request.contextPath}/cart/shoppingCart.do",
-      data: {
-    	productDetailId: productId,
-        optionId: selectedOptionId,
-        quantity: quantity,
-      },
-      success: function (response) {
-    	alert("상품이 추가되었습니다.");
-      },
-      error: function (error) {
-        console.error(error);
-      },
-    });
-  });
 });
+
+function addCart() {
+	const frm = document.querySelector("#addCartFrm");
+	
+	const quantityValue = frm.querySelector("#_quantity").value;
+	const productDetailIdValue = frm.querySelector("#_productDetailId").value;
+	  
+    $.ajax({
+        type: "POST",
+        url: "${pageContext.request.contextPath}/cart/insertCart.do",
+        data: {
+            quantity: quantityValue,
+            productDetailId: productDetailIdValue
+        },
+        success(response) {
+      		alert("상품이 추가되었습니다.");
+        },
+        error: function (error) {
+          console.error(error);
+        },
+      }); 
+};
 
 
   // 리뷰 페이지 아코디언 효과

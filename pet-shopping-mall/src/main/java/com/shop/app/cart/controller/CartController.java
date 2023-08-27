@@ -45,11 +45,11 @@ public class CartController {
 	private PointService pointService;
 	
 	@GetMapping("/shoppingCart.do")
-	public void getCartList(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
-		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
+	public void getCartList(Model model, @AuthenticationPrincipal MemberDetails member) {
+		String memberId = member.getMemberId();
+		List<CartInfoDto> cartList = cartService.getCartInfoList(memberId);
 		
-		Point point = pointService.findCurrentPointById(principal.getMemberId());
+		Point point = pointService.findCurrentPointById(memberId);
 
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
@@ -95,14 +95,28 @@ public class CartController {
 	}
 	
 	// 상품 페이지에서 장바구니 버튼 눌러서 장바구니에 담기 (예라)
-	@PostMapping("/shoppingCart.do")
-	public ResponseEntity<?> insertCart(@RequestParam int productDetailId, @RequestParam int optionId, @RequestParam int quantity, Authentication authentication) {
-		String member = authentication.getName();
+//	@PostMapping("/shoppingCart.do")
+//	public ResponseEntity<?> insertCart(@RequestParam int productDetailId, @RequestParam int optionId, @RequestParam int quantity, Authentication authentication) {
+//		String member = authentication.getName();
+//		
+//		int cartId = cartService.findCartById(member);
+//		int result = cartService.insertCart(cartId, productDetailId, optionId, quantity);
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(Map.of("result", 1));
+//	}
+	
+	@PostMapping("/insertCart.do")
+	public void insertCart(@RequestParam("quantity") String _quantity, @RequestParam("productDetailId") String _productDetailId, @AuthenticationPrincipal MemberDetails member) {
+		String memberId = member.getMemberId();
 		
-		int cartId = cartService.findCartById(member);
-		int result = cartService.insertCart(cartId, productDetailId, optionId, quantity);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(Map.of("result", 1));
+		int quantity = Integer.parseInt(_quantity);
+		int productDetailId = Integer.parseInt(_productDetailId);
+		
+		log.debug("quantity = {}", quantity);
+		log.debug("productDetailId = {}", productDetailId);
+		
+		int result = cartService.insertCart(memberId, productDetailId, quantity);
+		
 	}
 }
