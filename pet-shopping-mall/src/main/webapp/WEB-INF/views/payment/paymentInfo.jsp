@@ -148,7 +148,7 @@
 						<div class="product-price">
 							<strong class="price-title">최종 결제 금액</strong>
 							<p class="price">
-								<span id="amount"><fmt:formatNumber value="${amount}"
+								<span id="amount"><fmt:formatNumber value="${amount + 3000}"
 										groupingUsed="true" /></span>원
 							</p>
 						</div>
@@ -244,6 +244,11 @@ const proceedPay = () => {
 	// 포인트 입력 값 가져오기 (예라)
     let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
 	
+	// 배송비 3000원 추가 (예라)
+    let amountNumber = parseInt('${amount}'.replace(/,/g, ''));
+    amountNumber += 3000;
+
+    
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
     console.log("Before sending, useCoupon value: ", useCoupon);
 	const data = {
@@ -259,7 +264,7 @@ const proceedPay = () => {
 		deliveryFee: 3000,
 		discount: pointValue,
 		couponId: $("#couponSelect").val(),
-		amount: '${amount}',
+		amount: amountNumber,
 		pointsUsed: pointValue,
 		useCoupon: useCoupon,
 		pg: checkedButton.value,
@@ -379,91 +384,68 @@ const successPay = (imp_uid, merchant_uid) => {
 	});
 };
 
-
-/* 포인트 사용하면 포인트에 금액 기재되고 최종 결제 금액에서 차감 (예라)*/
+//포인트 사용 버튼 클릭 시
 document.querySelector('.discount-point-btn').addEventListener('click', function() {
-    // 포인트 입력 값 가져오기
     let pointValue = parseInt(document.getElementById('pointInput').value.replace(/,/g, '')) || 0;
-    
-    // 총 결제 금액에서 포인트 차감
     let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
     
     amount -= pointValue;
     
-   	// 포인트 차감 금액 업데이트 (0원 이상일 때만 업데이트)
     if (pointValue > 0) {
-        document.getElementById('discount').innerText = pointValue.toLocaleString() + '원'; // 숫자를 쉼표 포함 문자열로 변환
+        document.getElementById('discount').innerText = pointValue.toLocaleString() + '원';
     } else {
         document.getElementById('discount').innerText = '원';
     }
 
-    // 총 결제 금액 업데이트
     document.getElementById('amount').innerText = amount.toLocaleString();
+    
+    updateFinalAmount();
 });
 
-/* 모두사용 버튼 누르면 현재 있는 모든 포인트 사용 (예라)*/
+// 모두 사용 버튼 클릭 시
 document.querySelectorAll('.discount-point-btn')[1].addEventListener('click', function() {
-    // 현재 사용자의 포인트 가져오기
     let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
 
-    // 포인트 입력 필드 값을 현재 포인트로 설정
-    document.getElementById('pointInput').value = pointCurrent.toLocaleString(); // 여기서 toLocaleString()를 추가했습니다.
+    document.getElementById('pointInput').value = pointCurrent.toLocaleString();
 
-    // 총 결제 금액에서 포인트 차감
     let amount = parseInt(document.getElementById('amount').innerText.replace(/,/g, '')) || 0;
     amount -= pointCurrent;
 
-    // 포인트 차감 금액 업데이트
-    document.getElementById('discount').innerText = pointCurrent.toLocaleString() + '원'; // 숫자를 쉼표 포함 문자열로 변환
-
-    // 총 결제 금액 업데이트
+    document.getElementById('discount').innerText = pointCurrent.toLocaleString() + '원';
     document.getElementById('amount').innerText = amount.toLocaleString();
+    
+    updateFinalAmount();
 });
 
-
-/* 가지고 있는 포인트보다 많이 쓰려고 할 때, 음수 입력할 때 팝업창 + 0으로 초기화 (예라)*/
-// 포인트 입력 필드 가져오기
+// 포인트 입력 필드 설정
 const pointInput = document.getElementById('pointInput');
 
-//사용자가 입력 필드에서 포커스를 잃었을 때 쉼표를 추가
 pointInput.addEventListener('focusout', function() {
-    let value = this.value.replace(/,/g, '');  // 쉼표 제거
+    let value = this.value.replace(/,/g, '');
     let pointValue = parseInt(value) || 0;
-    this.value = pointValue.toLocaleString();  // 쉼표 추가
+    this.value = pointValue.toLocaleString();
 });
 
-//포인트 입력 값이 변경될 때마다 검사
 pointInput.addEventListener('input', function() {
-    // 입력된 값에서 쉼표를 제거
-    let value = this.value.replace(/,/g, '');  
-    
-    // 숫자 이외의 문자가 입력되면 제거
+    let value = this.value.replace(/,/g, '');
     this.value = value.replace(/\D/g,'');
 });
 
-// 포인트 입력 값이 변경될 때마다 검사
 pointInput.addEventListener('input', function() {
-	
-    // 입력된 값에서 쉼표를 제거
-    let value = this.value.replace(/,/g, '');  
-    
-    // 숫자 이외의 문자가 입력되면 제거
+    let value = this.value.replace(/,/g, '');
     this.value = value.replace(/\D/g,'');
-
-    // 현재 사용자의 포인트 가져오기
+    
     let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
     let pointValue = parseInt(this.value) || 0;
     
-    // 입력된 포인트가 사용 가능한 포인트보다 큰지 검사
-    if(pointValue > pointCurrent) {
+    if (pointValue > pointCurrent) {
         alert('사용 가능한 포인트보다 많이 입력하셨습니다.');
         this.value = '0';
         return;
     }
 });
 
-
-//쿠폰 데이터를 드롭다운에 채워 넣기
+// 쿠폰 데이터 드롭다운에 채우기
 $.ajax({
     url: '${pageContext.request.contextPath}/payment/findCoupon.do',
     type: 'GET',
@@ -483,38 +465,41 @@ $.ajax({
     }
 });
 
+// 최종 결제 금액 업데이트 함수
 function updateFinalAmount() {
+	
+	let enteredPoints = parseInt(document.getElementById('discount').innerText.replace(/,/g, '').replace('원', '')) || 0;
     let selectedCouponType = $('#couponSelect').find(':selected').data('type');
     let selectedCouponValue = $('#couponSelect').val();
-    let enteredPoints = parseInt($('#points').val()) || 0;  // 포인트 입력 필드의 값
     let totalPrice = parseInt($('#total-price').text().replace(/,/g, ''));
     let deliveryFee = 3000;
     let couponDiscount = 0;
-    let pointsDiscount = 0;
+    let pointsDiscount = enteredPoints;
 
     if (selectedCouponValue !== "") {
         if (selectedCouponType === '회원가입 배송비 무료 쿠폰') {
-            couponDiscount += deliveryFee;
-            $('#delivery-fee').text('0');
+            couponDiscount = deliveryFee;
         } else if (selectedCouponType === '생일축하 10% 할인 쿠폰') {
-            couponDiscount += Math.floor(totalPrice * 0.1);
+            couponDiscount = Math.floor((totalPrice - pointsDiscount) * 0.1);
         }
-    }
-
-    if (enteredPoints > 0) {
-        pointsDiscount = enteredPoints;
     }
 
     let finalAmount = totalPrice + deliveryFee - couponDiscount - pointsDiscount;
     $('#couponDiscount').text(couponDiscount.toLocaleString() + '원');
-    $('#pointsDiscount').text(pointsDiscount.toLocaleString() + '원');  // 포인트 할인을 표시하는 element
+    $('#pointsDiscount').text(pointsDiscount.toLocaleString() + '원');
     $('#amount').text(finalAmount.toLocaleString());
 }
+
+// 쿠폰 선택 변경 시
+$('#couponSelect').change(function() {
+    updateFinalAmount();
+});
 
 // 포인트 입력 변경 시
 $('#points').change(function() {
     updateFinalAmount();
 });
+
 
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />

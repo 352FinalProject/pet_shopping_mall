@@ -20,8 +20,6 @@ import com.shop.app.payment.entity.Payment;
 
 public interface OrderService {
 
-	int paymentProceed(@Valid OrderCreateDto _order);
-	
 	int insertOrder(Order order, List<OrderDetail> orderDetails);
 
 	// 관리자페이지 주문조회(대원)

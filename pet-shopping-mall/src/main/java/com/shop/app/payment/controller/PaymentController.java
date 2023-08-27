@@ -121,8 +121,8 @@ public class PaymentController {
 
         MypageDto myPage = memberService.getMyPage(principal.getMemberId());
         int couponCount = myPage.getMemberCoupon();
+        
         model.addAttribute("couponCount", couponCount);
-      
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
 
@@ -193,7 +193,7 @@ public class PaymentController {
 			            break;
 			    }
 	
-			    order.setAmount(order.getAmount() - discountAmount); // 할인 금액을 주문 금액에서 빼준다.
+			    order.setAmount(order.getAmount() - discountAmount); // 할인 금액을 주문 금액에서 빼준다
 			    
 			    // 2-3. 쿠폰 상태 업데이트 (사용됨)
 			    validCoupon.setUseStatus(1);

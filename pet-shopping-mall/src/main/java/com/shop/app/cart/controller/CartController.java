@@ -50,9 +50,10 @@ public class CartController {
 		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
 		
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
-
+	    
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
+
 	}
 	
 	@PostMapping("/deleteCartOne.do")
