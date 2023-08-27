@@ -97,35 +97,27 @@ pageEncoding="UTF-8"%>
         </c:if>
         <!-- 옵션 있을 때 -->
         <c:if test="${not empty productDetails}">
-	        <div>
-	          <select name="product-option">
+	        <div class="select-product-options">
+	          <select name="product-option" id="product-option">
 	            <option value="">[필수]옵션선택</option>
 	            <!-- 옵션나열 -->
 	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
 	        		<c:if test="${empty productDetail.optionName}">
-	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	            		<option name="productOptions[${productDetail.productDetailId}]" id="productOptions[${productDetail.productDetailId}]" value="${productDetail.productDetailId}">[옵션없음]</option>
 	        		</c:if>
 	        		<c:if test="${not empty productDetail.optionName}">
-	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	            		<option name="productOptions[${productDetail.productDetailId}]" id="productOptions[${productDetail.productDetailId}]" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
 	        		</c:if>
 	        	</c:forEach>
 	          </select>
 	        </div>
-	        
-            	<!-- 상품구입 개수 입력 -->
-        	<div class="purchase-cnt">
-		    	<div class="quantity-container">
-		    		<spna>수량  </spna>
-				    <button class="quantity-btn minus">-</button>
-				    <input type="text" id="quantity" class="quantity-input" value="1">
-				    <button class="quantity-btn plus">+</button>
-				</div>
-        	</div>
-	        
         </c:if>
         
-        
-        
+        <!-- 상품구입 수량 입력 -->
+	    <div class="purchase-list">
+	    	
+	    </div>    
+	        
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -320,6 +312,31 @@ pageEncoding="UTF-8"%>
 </section>
 <script>
 /* 상품수량에 따라 가격 바꾸기(수경) */
+
+const productOption = document.querySelector("select[name='product-option']");
+console.log(productOption);
+productOption.addEventListener("change", () => {
+	const productDetailId = productOption.value;
+	addToPurchaseList(productDetailId);
+});
+
+const addToPurchaseList = (productDetailId) => {
+	const purchaseList = document.querySelector(".purchase-list");
+	console.log(purchaseList);
+	const addToList = `
+		<div class="product-choice[\${productDetailId}]">
+			<span class="choiced-productName[\${productDetailId}]">${product.productName}</span>
+			<span class="choiced-productOption[\${productDetailId}]">[\${productDetailId}]</span>
+			<span class="choiced-quantity[\${productDetailId}]">
+			    <button class="quantity-btn minus">-</button>
+			    <input type="text" id="quantity quantity[\${productDetailId}]" class="quantity-input" value="1">
+			    <button class="quantity-btn plus">+</button>
+			</span>
+		</div>
+	`;
+	purchaseList.innerHTML += addToList;
+	
+};
 
 document.addEventListener("DOMContentLoaded", function () {
   const optionSelect = document.querySelector("select[name='product-option']");
