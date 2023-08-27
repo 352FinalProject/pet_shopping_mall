@@ -1,5 +1,6 @@
 package com.shop.app.cart.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,20 +95,10 @@ public class CartController {
 		return result;
 	}
 	
-	// 상품 페이지에서 장바구니 버튼 눌러서 장바구니에 담기 (예라)
-//	@PostMapping("/shoppingCart.do")
-//	public ResponseEntity<?> insertCart(@RequestParam int productDetailId, @RequestParam int optionId, @RequestParam int quantity, Authentication authentication) {
-//		String member = authentication.getName();
-//		
-//		int cartId = cartService.findCartById(member);
-//		int result = cartService.insertCart(cartId, productDetailId, optionId, quantity);
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(Map.of("result", 1));
-//	}
 	
+	@ResponseBody
 	@PostMapping("/insertCart.do")
-	public void insertCart(@RequestParam("quantity") String _quantity, @RequestParam("productDetailId") String _productDetailId, @AuthenticationPrincipal MemberDetails member) {
+	public Map<String, Object> insertCart(@RequestParam("quantity") String _quantity, @RequestParam("productDetailId") String _productDetailId, @AuthenticationPrincipal MemberDetails member) {
 		String memberId = member.getMemberId();
 		
 		int quantity = Integer.parseInt(_quantity);
@@ -118,5 +109,10 @@ public class CartController {
 		
 		int result = cartService.insertCart(memberId, productDetailId, quantity);
 		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("msg", "상품 추가 완료");
+		
+		return map;
 	}
 }

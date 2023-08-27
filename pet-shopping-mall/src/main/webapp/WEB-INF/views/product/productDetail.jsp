@@ -385,7 +385,7 @@ function addCart() {
             productDetailId: productDetailIdValue
         },
         success(response) {
-      		alert("상품이 추가되었습니다.");
+      		alert(response.msg);
         },
         error: function (error) {
           console.error(error);

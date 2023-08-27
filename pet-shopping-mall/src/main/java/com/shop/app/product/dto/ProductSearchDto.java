@@ -1,0 +1,14 @@
+package com.shop.app.product.dto;
+
+import lombok.Data;
+
+@Data
+public class ProductSearchDto {
+	private int productId;
+	private String productName;
+	private int productPrice;
+	private String imageRenamedFileName;
+	
+	// 별점
+	// 리뷰 추가
+}

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -133,5 +135,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int updateLikeCnt(Map<String, Object> param) {
 		return productRepository.updateLikeCnt(param);
+	}
+	
+	
+	// index 검색 (담희)
+	@Override
+	public List<ProductSearchDto> searchProducts(String searchQuery) {
+		return productRepository.searchProducts(searchQuery);
 	}
 }

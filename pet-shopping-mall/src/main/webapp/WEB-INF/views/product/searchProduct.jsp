@@ -120,6 +120,11 @@ ul.nav {
     font-weight: 400;
 }
 
+#not-found {
+	font-size: 24px;
+	text-align: center;
+	margin-top: 30px;
+}
 </style>
 <div class="common-section">
 
@@ -129,51 +134,35 @@ ul.nav {
 			<!-- 게시판 이름 -->
 	        <div class="board-title">
 		        <span>
-		        ${productCategory.categoryName} 
+		        상품 조회 결과
 		        </span>
 	        </div>
 		</section>
 		
-		<!-- 정렬 선택란 -->
-		<div class="product-sort">
-			<ul class="nav">
-				<li>
-					<a href="#" class="font">신상품</a>
-				</li>
-				<li>
-					<a href="#" class="font">낮은가격</a>
-				</li>
-				<li>
-					<a href="#" class="font">높은가격</a>
-				</li>
-				<li>
-					<a href="#" class="font">리뷰많은순</a>
-				</li>
-				<li>
-					<a href="#" class="font">판매량순</a>
-				</li>
-			</ul>
-		</div>
-		
 		<!-- 상품사진 갤러리 -->
 		<div class="product-gallery">
+			<c:if test="${empty productInfos}">
+				<div id="not-found">조회된 검색 결과가 없습니다.</div>
+			</c:if>
 			<ul class="gallery">
-			<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
-				<div class="product-card">
-                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}&reviewId=${reviewId.reviewId}">
-					<figure class="product-thumbnail">
-						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
-					</figure>
-					<div class="product-desc">
-						<p class="product-name">${productInfo.product.productName}</p>
-						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> 원</p>
-						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
-						<span> &nbsp;|&nbsp; </span>
-						<span class="review-cnt">후기 113건</span>
+			<c:if test="${not empty productInfos}">
+				<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
+					<div class="product-card">
+	                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
+						<figure class="product-thumbnail">
+							<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.imageRenamedFileName}">
+						</figure>
+						<div class="product-desc">
+							<p class="product-name">${productInfo.productName}</p>
+							<p class="product-price"><fmt:formatNumber value="${productInfo.productPrice}" pattern="#,###" /> 원</p>
+							<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+							<span> &nbsp;|&nbsp; </span>
+							<span class="review-cnt">후기 113건</span>
+						</div>
+						</a>
 					</div>
-					</a>
-				</div>
-			</c:forEach>
+				</c:forEach>
+			</c:if>
 			</ul>
 		</div>
 	</div>
