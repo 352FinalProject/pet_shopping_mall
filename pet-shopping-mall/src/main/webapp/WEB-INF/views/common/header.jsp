@@ -57,7 +57,6 @@
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-	
 }
 
 .deleteMemberForm-button {
@@ -266,46 +265,39 @@
 			deleteMemberModal.style.display = "none";
 		});
 
-		$(document).deleteMemberForm
-				- button(function() {
-					const csrfToken = document.querySelector(
-							'meta[name="_csrf"]').getAttribute('content');
-					const csrfHeader = document.querySelector(
-							'meta[name="_csrf_header"]')
-							.getAttribute('content');
-					const deleteMember = document.getElementById("sendEmail");
-					$("#deleteMemberForm-closeModalBtn")
-							.click(
-									function() {
-										const deleteMember = $(
-												"#deleteMember-password").val();
-										$
-												.ajax({
-													type : 'POST',
-													url : '${pageContext.request.contextPath}/member/deleteMember.do',
-													data : {
-														'password' : password
-													},
-													dataType : "text",
-													beforeSend : function(xhr) {
-														xhr.setRequestHeader(
-																csrfHeader,
-																csrfToken); // 헤더에 CSRF 토큰 추가
-													},
-													success : function(result) {
-														console.log(result);
-														if (result === "no") {
-															alert('비밀번호가 틀렸습니다.');
-															userEmail.submit();
-														} else {
-															alert('회원 탈퇴완료ㅠㅠ.');
-														}
-													},
-													error : function() {
-														console.log('에러 체크!!');
-													}
-												});
-									});
-				});
+		$(document).ready(function() {
+		    $("#deleteMemberForm-button").click(function() {
+		        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+		        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+		        const deleteMemberPassword = $("#deleteMember-password").val();
+		        
+		        $("#deleteMemberForm-closeModalBtn").click(function() {
+		            $.ajax({
+		                type: 'POST',
+		                url: '${pageContext.request.contextPath}/member/deleteMember.do',
+		                data: {
+		                    'password': deleteMemberPassword
+		                },
+		                dataType: "text",
+		                beforeSend: function(xhr) {
+		                    xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
+		                },
+		                success: function(result) {
+		                    console.log(result);
+		                    if (result === "no") {
+		                        alert('비밀번호가 틀렸습니다.');
+		                        userEmail.submit();
+		                    } else {
+		                        alert('회원 탈퇴 완료했습니다. 😢');
+		                    }
+		                },
+		                error: function() {
+		                    console.log('에러 체크!!');
+		                }
+		            });
+		        });
+		    });
+		});
+
 	</script>
 	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>
