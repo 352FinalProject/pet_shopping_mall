@@ -95,7 +95,7 @@
 								<div class="discount-point-info">
 									<span class="discount-point">포인트</span> <input type="text"
 										name="point-view" id="pointInput" class="point-view" value="0"
-										style="width: 64px; text-align: right; margin-left: 10px;">원
+										style="width: 64px; text-align: right; margin-left: 10px;"> 원 
 									<button type="button" class="discount-point-btn">사용</button>
 									<button type="button" class="discount-point-btn">모두사용</button>
 									<span class="have-point" style="margin-left: 5px;"> (보유
@@ -412,25 +412,38 @@ pointInput.addEventListener('focusout', function() {
     this.value = pointValue.toLocaleString();  // 쉼표 추가
 });
 
-// 포인트 입력 값이 변경될 때마다 검사
+//포인트 입력 값이 변경될 때마다 검사
 pointInput.addEventListener('input', function() {
     // 입력된 값에서 쉼표를 제거
     let value = this.value.replace(/,/g, '');  
     
     // 숫자 이외의 문자가 입력되면 제거
     this.value = value.replace(/\D/g,'');
+});
 
+// 포인트 사용 버튼에 대한 이벤트 리스너
+document.querySelector('.discount-point-btn').addEventListener('click', function() {
     // 현재 사용자의 포인트 가져오기
     let pointCurrent = parseInt(document.querySelector('.have-point-bold').innerText.replace(/,/g, '')) || 0;
-    let pointValue = parseInt(this.value) || 0;
-    
+
+    // 입력된 포인트 값 가져오기
+    let pointValue = parseInt(document.querySelector('#pointInput').value) || 0;
+
+    // 0원 입력하면 반영 안 되게 하기
+    if(pointValue > 0) {
+        document.querySelector('#discount').innerText = `${pointValue}원`;  
+    } else {
+        document.querySelector('#discount').innerText = '원';  
+    }
+
     // 입력된 포인트가 사용 가능한 포인트보다 큰지 검사
-    if(pointValue > pointCurrent) {
+    if (pointValue > pointCurrent) {
         alert('사용 가능한 포인트보다 많이 입력하셨습니다.');
-        this.value = '0';
+        document.querySelector('#pointInput').value = '0';
         return;
     }
 });
+
 
 //쿠폰 데이터를 드롭다운에 채워 넣기
 $.ajax({
@@ -443,7 +456,7 @@ $.ajax({
             $select.append($('<option/>', { 
                 value: coupon.couponId,
                 text : coupon.couponName,
-                'data-type': coupon.couponName // 이렇게 설정
+                'data-type': coupon.couponName
             }));
         });
     },
@@ -466,7 +479,8 @@ $('#couponSelect').change(function() {
     	couponDiscount += Math.floor(totalPrice * 0.1);  // 소수점 이하 버림
     }
     
-    $('#couponDiscount').text(couponDiscount.toLocaleString());
+    // 쿠폰 금액에 원 붙이기
+    $('#couponDiscount').text(couponDiscount.toLocaleString() + '원');
     let finalAmount = totalPrice + deliveryFee - couponDiscount;  // 배송비 업데이트
     
     $('#amount').text(finalAmount.toLocaleString())
