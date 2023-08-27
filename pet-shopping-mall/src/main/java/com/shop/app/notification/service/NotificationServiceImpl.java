@@ -23,7 +23,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * 2. notification db 저장
 	 */
 	@Override
-	public int notifyOrderComplete(OrderCompleteNotificationDto orderCompleteNotificationDto ) {
+	public int notifyOrderCreate(OrderCompleteNotificationDto orderCompleteNotificationDto) {
 		// board 작성자의 구독자에게 실시간 알림을 보낸다.
 		// 1. 작성자의 구독자 조회
 		// 2. 각 사용자에게 알림메세지 발송(stomp)
@@ -40,6 +40,8 @@ public class NotificationServiceImpl implements NotificationService {
 		simpMessagingTemplate.convertAndSend("/app/notice/" + to, notification);
 		
 		// 3. db 알림행 등록
-		return notificationRepository.notifyOrderComplete(notification);
+		return notificationRepository.insertNotification(notification);
 	}
+	
+
 }

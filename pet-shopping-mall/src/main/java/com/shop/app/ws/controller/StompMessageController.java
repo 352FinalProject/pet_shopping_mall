@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.shop.app.member.service.MemberService;
 import com.shop.app.notification.entity.Notification;
+import com.shop.app.notification.service.NotificationService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,21 +28,20 @@ public class StompMessageController {
    
    @Autowired
    private MemberService memberService; // 빈 생성 가능
-                              // 디비에서 조회해서 메세지로 출력도 가능하다는 의미
+			   // 디비에서 조회해서 메세지로 출력도 가능하다는 의미
    
-//   @Autowired
-//   private NotificationService notificationService;
+   @Autowired
+   private NotificationService notificationService;
    
    /**
     * prefix를 제외한 url만 작성해야 함
     * 
     * 전체 공지
     */
-   @MessageMapping("/notice")
-   @SendTo("/app/notice")
+   @MessageMapping("/notice") // 전송된 WebSocket 메시지를 수신
+   @SendTo("/app/notice") // 반환된 메시지가 /app/notice 대상으로 전송되도록 지정
    public Notification notice(@RequestBody Notification message) {
       log.debug("message = {}", message);
-      // notificationService.insertNotification(message);
       return message;
    }
    
@@ -53,7 +53,7 @@ public class StompMessageController {
    @SendTo("/app/notice/{memberId}")
    public Notification noticeEach(@DestinationVariable String memberId, Notification message) {
                         // 경로변수
-      
+	  notificationService.insertNotification(message); // 서비스만들고. 서비스 임플 오류 왜?
       log.debug("memberId = {}", memberId);
       log.debug("message = {}", message);
       return message;

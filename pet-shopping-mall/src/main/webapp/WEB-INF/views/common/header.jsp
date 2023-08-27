@@ -105,6 +105,7 @@
 	href="${pageContext.request.contextPath}/resources/css/point.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <body>
@@ -113,7 +114,29 @@
 			action="${pageContext.request.contextPath}/member/memberLogout.do"
 			method="POST">
 		</form:form>
+		
+	<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="noticeModalLabel"></h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body"></div>
+		  <div class="modal-footer flex-column">
+			<div class="d-flex justify-content-between w-100">
+				<div>보낸사람 : <span class='badge badge-primary from'></span></div>
+				<div>작성일 : <span class='when'></span></div>
+			</div>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 	</sec:authorize>
+	
 	<header>
 		<div class="header">
 			<span id="notification"></span>
@@ -152,6 +175,16 @@
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
 				</li>
+				<%-- <sec:authorize access="isAuthenticated()">
+					<li class="community_li">
+						<c:if test="${empty nofification}">
+							<i class="bi bi-bell"></i>
+						</c:if>	
+						<c:if test="${not empty nofification}">
+							<i class="bi bi-bell-fill"></i>
+						</c:if>
+					</li>
+				</sec:authorize> --%>
 			</ul>
 			<div class="logo_top_wrap">
 				<div class="logo_wrap">
