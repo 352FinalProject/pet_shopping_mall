@@ -35,27 +35,34 @@
   </resultMap>
 
   <select id="getMyPage" resultMap="myPageDto">
-	select 
-	    member_id, name, subscribe, point_current, 
+	select
+	    m.member_id,
+	    m.name,
+	    m.subscribe,
+	    recent_point.point_current,
 	    (
-	        select count(*) 
-	        from member 
-	        where member_id = #{memberId}
-	    ) as member_count
-	from (
+	        select count(*)
+	        from member_coupon
+	        where member_id = m.member_id and use_status = 0
+	    ) as coupon_count
+	from
+	    member m
+	left join (
 	    select
-	        m.member_id,
-	        m.name,
-	        m.subscribe,
-	        p.point_current,
-	        row_number() over(partition by m.member_id order by p.point_date desc) as rn
-	    from
-	        member m
-	    left join
-	        point p on m.member_id = p.point_member_id
-	) subquery
+	        point_member_id,
+	        point_current
+	    from (
+	        select
+	            p.point_member_id,
+	            p.point_current,
+	            row_number() over (partition by p.point_member_id order by p.point_date desc) as rn
+	        from
+	            point p
+	    ) temp
+	    where temp.rn = 1
+	) recent_point on m.member_id = recent_point.point_member_id
 	where
-	    rn = 1 and member_id = #{memberId}
+	    m.member_id = #{memberId}
   </select>
   
   <resultMap type="MyPageDto" id="myPageDto">
@@ -63,6 +70,6 @@
   	<result column="name" property="name" />
   	<result column="subscribe" property="subscribe" />
   	<result column="point_current" property="pointCurrent" />
-  	<result column="member_count" property="memberCount" />
+  	<result column="coupon_count" property="memberCoupon" />
   </resultMap>
 </mapper>

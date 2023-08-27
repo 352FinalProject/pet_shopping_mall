@@ -34,11 +34,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.order.dto.OrderHistoryDto;
-
+import com.shop.app.order.entity.Order;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
-
+import com.shop.app.payment.entity.Payment;
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
@@ -87,8 +87,8 @@ public class ReviewController {
 	public void reviewList(
 			@RequestParam(defaultValue = "1") int page,
 			@AuthenticationPrincipal MemberDetails member,
-			@RequestParam(name = "period", required = false) Integer period,
 			Model model
+//			@RequestParam String orderNo
 			) {
 
 		int limit = 5;
@@ -108,45 +108,39 @@ public class ReviewController {
 
 		List<Review> reviews = reviewService.findReviewAll(params);
 		model.addAttribute("reviews", reviews);
-		log.debug("reviews = {}", reviews);
 		
 		// 구매한 상품과 연결
 		String memberId = member.getMemberId();
-		List<OrderHistoryDto> orderHistories;
-		
-//		if (period != null) {
-//			orderHistories = orderService.getOrderListByPeriod(memberId, period);
-//		} else {
-//			orderHistories = orderService.getOrderList(memberId);
-//		}
-//			
-//		log.debug("orderHistories = {}", orderHistories);
-//		model.addAttribute("orderHistories", orderHistories);
+		List<Order> orderList;
+		orderList = orderService.getOrderList(memberId);
+		model.addAttribute("orderHistories", orderList);
 
-//		
-//		
-//		
-		/*
-		 * orderHistories = orderService.getOrderList(memberId);
-		 * 
-		 * log.debug("orderHistories = {}", orderHistories);
-		 * model.addAttribute("orderHistories", orderHistories);
-		 */
+		// 구매한 상품 - 주문상세내역
+		List<Map<OrderHistoryDto, Payment>> orderDetailMap = new ArrayList<>(); // 초기화
 
+		for (Order order : orderList) {
+		    String orderNo = order.getOrderNo(); // 각 주문의 orderNo 가져오기
+		    List<Map<OrderHistoryDto, Payment>> orderDetail = orderService.getOrderDetail(orderNo);
+		    orderDetailMap.addAll(orderDetail); // 주문상세내역을 orderDetailMap에 추가
+		}
+
+		model.addAttribute("orderDetailMap", orderDetailMap);
 	
 	}
 
 
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
-	public void reviewCreate(@RequestParam("productId") int productId, Model model) {
+	public void reviewCreate(@RequestParam("productId") int productId, @RequestParam("orderId") int orderId, Model model) {
 		model.addAttribute("productId", productId);
+		model.addAttribute("orderId", orderId);
 	   
 	}
 
 	// 리뷰 작성
 	@PostMapping("/reviewCreate.do")
-	public String reviewCreate(@ModelAttribute
+	public String reviewCreate(
+			@ModelAttribute
 			@Valid ReviewCreateDto _review, 
 			BindingResult bindingResult, 
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles, 
@@ -191,6 +185,7 @@ public class ReviewController {
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
 				.petId(pet.getPetId())
+				.orderId(_review.getOrderId())
 				.productId(_review.getProductId()) // 리뷰작성할 때 productId 넘기기 (예라)
 				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())

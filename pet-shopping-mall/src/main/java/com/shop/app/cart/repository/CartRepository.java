@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.entity.Cart;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.product.entity.ProductDetail;
 
@@ -38,6 +39,9 @@ public interface CartRepository {
 
 	// 상품 페이지에서 장바구니 버튼 눌러서 장바구니에 담기 (예라)
 	@Insert("insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (seq_cartitem_id.nextval, #{cartId}, #{productDetailId}, #{quantity})")
-	int insertCart(int cartId, int productDetailId, int quantity);
+	int insertCart(int cartId, int optionId, int productDetailId, int quantity);
 
+	// 장바구니 찾기 (예라)
+	@Select("select c.cart_id from cart c join member m ON c.member_id = m.member_id where m.member_id = #{memberId}")
+	int findCartById(String member);
 }

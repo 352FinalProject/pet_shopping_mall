@@ -10,13 +10,12 @@
 <%-- 쿠폰 내역 (예라) --%>
 <section class="common-section" id="common-section-List">
 	<div class="common-title">쿠폰 내역</div>
-	<div class="common-container">
+	<div class="common-container-side">
 		<div class="common-div">
-			<div class="service-util-div-point">
-				<table class="service-product-utility-point">
+			<div class="service-util-div-sidebar">
+				<table class="service-product-utility-sidebar">
 					<thead>
 						<tr>
-							<th>번호</th>
 							<th>내역</th>
 							<th>발급일</th>
 							<th>유효기간</th>

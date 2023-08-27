@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 <style>
@@ -53,12 +54,13 @@
             <div class="common-div">
                 <div class="profile-div">
                     <div class="user-profile">
+                    <sec:authentication property="principal" var="loginMember"/>
                         <div>
                             <img class="user-profile-img" src="${pageContext.request.contextPath}/resources/images/chat/chat.png" alt="User Profile">
                         </div>
                         <div class="user-info">
                             <div>
-                                <p id="member-id">${myPage.name}</p>
+                                <p id="member-id">${myPage.memberId}</p>
                                 <c:if test="${(myPage.subscribe) eq 'Y'}">
 	                            <p>${myPage.name}님은 <span class="grade">우동친</span> 등급입니다</p>
                                 </c:if>
@@ -70,7 +72,7 @@
                             </div>
                             <div>
                                 <a class="benefits-link" id="benefits-popup" href="#">🔎 멤버쉽 혜택보기</a>
-                                <a class="benefits-link" href="#" onclick="subscribe();">📌 구독하기</a>
+                                <a class="benefits-link" href="#" onclick="subscribes();">📌 구독하기</a>
                             </div>
                             <!-- 팝업 컨테이너 -->
 						    <div class="popup-container" id="popupContainer">
@@ -87,7 +89,7 @@
                     <div class="options">
                         <div class="option"><a href="${pageContext.request.contextPath}/point/pointList.do">포인트내역</a></div>
                         <div class="option"><a href="${pageContext.request.contextPath}/wishlist/myWishlist.do">찜한 상품</a></div>
-                        <div class="option"><a href="${pageContext.request.contextPath}/coupon/couponList.do?couponId=${coupon.couponId}">쿠폰 ${myPage.memberCount}장</a></div>
+                        <div class="option"><a href="${pageContext.request.contextPath}/coupon/couponList.do?couponId=${coupon.couponId}">쿠폰 ${couponCount}장</a></div>
                     </div>
                     <div class="recent-orders">
                         <div class="common-title">최근 1개월 주문내역</div>
@@ -122,12 +124,50 @@
             </div>
         </div>
     </section>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-	const subscribe = () => {
-		if(confirm("정말 구독하시겠습니까?")) {
-			// 정기결제 코드
-		}
-	};
+
+let token = $("meta[name='_csrf']").attr("content");
+let header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
+function subscribes() {
+    if (confirm("구독을 진행하시겠습니까?")) {
+        IMP.init('imp60204862');
+        IMP.request_pay({
+            pg: "html5_inicis",
+            pay_method: "card",
+            amount: 1000,
+            name : "정기결제",
+            merchant_uid: new Date().getTime(), 
+            customer_uid: '${myPage.memberId}', 
+        }, function (response) {
+            console.log(response);
+            if (response.success) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/payment/startScheduler.do',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        "customerUid": '${myPage.memberId}',
+                        "amount": 1000,
+                        "merchantUid": "bill"+new Date().getTime()
+                    }),
+                    success(response) {
+                        alert('다음 결제일이 등록되었습니다.');
+                    }
+                });
+            } else {
+                alert('빌링키 발급 실패! 관리자에게 문의하세요.');
+            }
+        });
+    }
+}
 	
 	const benefitsPopupLink = document.getElementById("benefits-popup");
 	const closePopupBtn = document.getElementById("closePopupBtn");

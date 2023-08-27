@@ -313,6 +313,7 @@ create table wishlist(
 create table review (
     review_id number,
     pet_id number,
+    order_id number,
     product_id number,
     review_member_id varchar(20) not null,
     product_detail_id number,
@@ -323,6 +324,7 @@ create table review (
     constraint pk_review_id primary key(review_id),
     constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
     constraint fk_product_product_id foreign key (product_id) references product(product_id) on delete cascade,
+    constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
@@ -347,6 +349,16 @@ create table payment (
     constraint fk_payment_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
 
+-- 구독자 결제 저장용 테이블
+create table sub_payment (
+    sub_payment_id number,
+    member_id varchar2(50),
+    payment_date timestamp default systimestamp not null,
+    constraint pk_sub_payment_id primary key(sub_payment_id),
+    constraint fk_sub_payment_member_id foreign key(member_id) references member(member_id) on delete cascade
+);
+
+
  -- 장바구니 테이블
 create table cart (
     cart_id number,
@@ -355,6 +367,7 @@ create table cart (
     constraint fk_cart_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+
  -- 장바구니 아이템 테이블
 create table cartitem (
     cartitem_id number,
@@ -362,9 +375,8 @@ create table cartitem (
     product_detail_id number not null,
     quantity number default 1 not null,
     constraint pk_cartitem_id primary key(cartitem_id),
-    constraint fk_cartitem_cart_id foreign key(cart_id) references cart (cart_id)
+    constraint fk_cart_id foreign key(cart_id) references cart (cart_id)
 );
-
  -- 약관 테이블
 create table terms (
  history_id number,
@@ -468,6 +480,8 @@ create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
 create sequence seq_notification_id;
+create sequence seq_sub_payment_id;
+
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
@@ -517,4 +531,6 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
+
+commit;
 

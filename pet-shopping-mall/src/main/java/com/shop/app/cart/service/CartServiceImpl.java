@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.entity.Cart;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.repository.CartRepository;
 import com.shop.app.product.entity.ProductDetail;
@@ -69,8 +70,15 @@ public class CartServiceImpl implements CartService {
 
 	// 상품 페이지에서 장바구니 버튼 눌러서 장바구니에 담기 (예라)
 	@Override
-	public int insertCart(int cartId, int productDetailId, int quantity) {
-		return cartRepository.insertCart(cartId, productDetailId, quantity);
+	public int insertCart(int cartId, int optionId, int productDetailId, int quantity) {
+		return cartRepository.insertCart(cartId, optionId, productDetailId, quantity);
+	}
+
+
+	// 장바구니 찾기 (예라)
+	@Override
+	public int findCartById(String member) {
+		return cartRepository.findCartById(member);
 	}
 
 }
