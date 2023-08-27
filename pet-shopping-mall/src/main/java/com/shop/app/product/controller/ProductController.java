@@ -92,7 +92,7 @@ public class ProductController {
 	    model.addAttribute("product", product); // 상품정보
 	    model.addAttribute("productImages", productImages); // 상품이미지
 	    model.addAttribute("productDetails", productDetails); // 상품옵션
-	    
+	
 	    
 	    // 상품 상세 페이지에 펫 정보 뿌려주기
 	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
@@ -121,8 +121,6 @@ public class ProductController {
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
-<<<<<<< Updated upstream
-=======
 	    
 	    // 리뷰 전체개수 확인
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
@@ -141,9 +139,7 @@ public class ProductController {
 	    
 	    /* 찜 등록 여부 가져오기 (선모) */
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId())); // 찜 여부 가져오기
->>>>>>> Stashed changes
 	}
-
 
 	/**
 	 * @author 전수경
@@ -221,4 +217,4 @@ public class ProductController {
 	}
 
 
-}
+	}
