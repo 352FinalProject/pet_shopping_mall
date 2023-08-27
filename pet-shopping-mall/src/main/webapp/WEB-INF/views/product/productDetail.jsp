@@ -115,7 +115,17 @@ pageEncoding="UTF-8"%>
         
         <!-- 상품구입 수량 입력 -->
 	    <div class="purchase-list">
-	    	
+	    <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+			<div class="product-choice choice${productDetail.productDetailId}" style="display : none">
+				<span class="choiced-productName[${vs.count}]">${product.productName}</span>
+				<span class="choiced-productOption[${vs.count}]"> [${productDetail.optionName}]${productDetail.optionValue}</span>
+				<span class="choiced-quantity[${vs.count}]">
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity[${vs.count}]" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</span>
+			</div>
+	    </c:forEach>	
 	    </div>    
 	        
         <div class="product-price">
@@ -311,53 +321,68 @@ pageEncoding="UTF-8"%>
   </div>
 </section>
 <script>
-/* 상품수량에 따라 가격 바꾸기(수경) */
-
+/* 상품수량에 입력란 만들기(수경) */
 const productOption = document.querySelector("select[name='product-option']");
-console.log(productOption);
 productOption.addEventListener("change", () => {
 	const productDetailId = productOption.value;
 	addToPurchaseList(productDetailId);
+	
 });
 
 const addToPurchaseList = (productDetailId) => {
 	const purchaseList = document.querySelector(".purchase-list");
+	const choiceProduct = document.querySelector(`.choice\${productDetailId}`);
 	console.log(purchaseList);
-	const addToList = `
-		<div class="product-choice[\${productDetailId}]">
-			<span class="choiced-productName[\${productDetailId}]">${product.productName}</span>
-			<span class="choiced-productOption[\${productDetailId}]">[\${productDetailId}]</span>
-			<span class="choiced-quantity[\${productDetailId}]">
-			    <button class="quantity-btn minus">-</button>
-			    <input type="text" id="quantity quantity[\${productDetailId}]" class="quantity-input" value="1">
-			    <button class="quantity-btn plus">+</button>
-			</span>
-		</div>
-	`;
-	purchaseList.innerHTML += addToList;
+	if(purchaseList.classList.contains(`choice\${productDetailId}`)){
+		alert('이미 선택한 상품입니다.');
+	}else {
+		purchaseList.classList.add(`choice\${productDetailId}`);
+		choiceProduct.style.display = "flex";
+	}
 	
 };
 
+/* 상품수량에 따라 가격 바꾸기(수경) */
+
+
+
+/* 상품수량 바꾸기 버튼 */
+
+(()=>{
+	const quantityInput = document.querySelector(".quantity-input");
+	const optionMinusButton = document.querySelectorAll(".minus");
+	const optionPlusButton = document.querySelectorAll(".plus");
+	console.log(optionMinusButton);
+	
+	if(optionMinusButton){
+	 optionMinusButton.forEach((button) => {
+		 console.log(button);
+		 const currentQuantity = document.querySelectorAll(".plus")
+		 button.addEventListener("click", () => {
+		   if (currentQuantity > 1) {
+		     currentQuantity--;
+		     quantityInput.value = currentQuantity;
+		   }
+		 });	 
+	 })
+	};
+	
+	if(optionPlusButton){
+		console.log(optionPlusButton);
+		optionPlusButton.forEach((button) => {
+		 button.addEventListener("click", () => {
+		   currentQuantity++;
+		   quantityInput.value = currentQuantity;
+		 });	 
+	 })
+	};
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
   const optionSelect = document.querySelector("select[name='product-option']");
-  const quantityInput = document.querySelector(".quantity-input");
-  const optionMinusButton = document.querySelector(".minus");
-  const optionPlusButton = document.querySelector(".plus");
   const addToCartButton = document.querySelector(".btn1"); // 장바구니 버튼 선택
 
-  let currentQuantity = 1;
-
-  optionMinusButton.addEventListener("click", () => {
-    if (currentQuantity > 1) {
-      currentQuantity--;
-      quantityInput.value = currentQuantity;
-    }
-  });
-
-  optionPlusButton.addEventListener("click", () => {
-    currentQuantity++;
-    quantityInput.value = currentQuantity;
-  });
+  let currentQuantity = 1;	
 
   addToCartButton.addEventListener("click", () => {
     const selectedOptionId = optionSelect.value;
