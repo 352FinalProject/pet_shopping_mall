@@ -125,6 +125,16 @@ ul.nav {
 	text-align: center;
 	margin-top: 30px;
 }
+
+.product-category {
+	display: flex;
+}
+.category-id {
+	font-size:28px;
+	font-weight: 700;
+	margin: 20px;
+	
+}
 </style>
 <div class="common-section">
 
@@ -134,38 +144,59 @@ ul.nav {
 			<!-- 게시판 이름 -->
 	        <div class="board-title">
 		        <span>
-		        상품 조회 결과
+		        상품 조회 결과 (${fn:length(productInfos)}건 조회)
 		        </span>
 	        </div>
 		</section>
 		
 		<!-- 상품사진 갤러리 -->
-		<div class="product-gallery">
-			<c:if test="${empty productInfos}">
-				<div id="not-found">조회된 검색 결과가 없습니다.</div>
-			</c:if>
-			<ul class="gallery">
-			<c:if test="${not empty productInfos}">
-				<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
-					<div class="product-card">
-	                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
-						<figure class="product-thumbnail">
-							<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.imageRenamedFileName}">
-						</figure>
-						<div class="product-desc">
-							<p class="product-name">${productInfo.productName}</p>
-							<p class="product-price"><fmt:formatNumber value="${productInfo.productPrice}" pattern="#,###" /> 원</p>
-							<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
-							<span> &nbsp;|&nbsp; </span>
-							<span class="review-cnt">후기 113건</span>
-						</div>
-						</a>
-					</div>
-				</c:forEach>
-			</c:if>
-			</ul>
-		</div>
+        <div class="product-gallery">
+            <c:if test="${empty productInfos}">
+                <div id="not-found">조회된 결과가 없습니다.</div>
+            </c:if>
+            <c:if test="${not empty productInfos}">
+                <c:set var="categories" value="사료&간식,패션&산책,위생&기타,고양이" />
+                <c:forEach items="${fn:split(categories, ',')}" var="category">
+                    <div class="category-id">${category}</div>
+                    <div class="product-category">
+                        <c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
+                            <c:choose>
+                                <c:when test="${productInfo.categoryId == 1 || productInfo.categoryId == 2}">
+                                    <c:set var="categoryName" value="사료&간식" />
+                                </c:when>
+                                <c:when test="${productInfo.categoryId == 3 || productInfo.categoryId == 4}">
+                                    <c:set var="categoryName" value="패션&산책" />
+                                </c:when>
+                                <c:when test="${productInfo.categoryId == 5 || productInfo.categoryId == 7}">
+                                    <c:set var="categoryName" value="위생&기타" />
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="categoryName" value="고양이" />
+                                </c:otherwise>
+                            </c:choose>
+                            <c:if test="${categoryName eq category}">
+                                <div class="product-card">
+                                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
+                                        <!-- Your product card content here -->
+                                        <figure class="product-thumbnail">
+											<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.imageRenamedFileName}">
+										</figure>
+										<div class="product-desc">
+											<p class="product-name">${productInfo.productName}</p>
+											<p class="product-price"><fmt:formatNumber value="${productInfo.productPrice}" pattern="#,###" /> 원</p>
+											<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+											<span> &nbsp;|&nbsp; </span>
+											<span class="review-cnt">후기 113건</span>
+										</div>
+                                    </a>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </c:forEach>
+            </c:if>
+        </div>
+		
 	</div>
-
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

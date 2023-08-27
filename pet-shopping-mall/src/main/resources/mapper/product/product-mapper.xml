@@ -28,6 +28,7 @@
 	<select id="searchProducts" resultMap="productSearchDto">
 	select
 	    p.product_id,
+	    p.category_id,
 	    p.product_name,
 	    p.product_price,
 	    ia.image_renamed_filename
@@ -42,6 +43,7 @@
 	</select>
 	<resultMap type="ProductSearchDto" id="productSearchDto">
         <result property="productId" column="product_id"/>
+        <result property="categoryId" column="category_id"/>
         <result property="productName" column="product_name"/>
         <result property="productPrice" column="product_price"/>
         <result property="imageRenamedFileName" column="image_renamed_filename"/>
