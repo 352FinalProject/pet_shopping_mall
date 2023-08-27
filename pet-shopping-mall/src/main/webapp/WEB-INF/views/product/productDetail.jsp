@@ -49,8 +49,8 @@ pageEncoding="UTF-8"%>
             <img
               src="${pageContext.request.contextPath}/resources/images/상품/star.png"
               alt="별점"
-            /><span>5.0</span> <span>&nbsp;|&nbsp;</span>
-            <span><a href="#">후기 102건</a></span>
+            /><span><fmt:formatNumber value="${productReviewStarAvg.AVG}" pattern="#.#"/></span> <span>&nbsp;|&nbsp;</span>
+            <span><a href="#">${reviewTotalCount}건</a></span>
           </div>
         </div>
         <hr class="hr-line" />
