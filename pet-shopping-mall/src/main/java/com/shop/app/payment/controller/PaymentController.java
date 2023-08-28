@@ -50,6 +50,7 @@ import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.entity.SubMember;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.entity.Order;
@@ -322,6 +323,7 @@ public class PaymentController {
 		int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
 	}
 	
+	
 	@ResponseBody
 	@PostMapping("/startScheduler.do")
 	public ResponseEntity<?> startMembership(@RequestBody SubScheduleDto subScheduleDto, RedirectAttributes redirectAttr) {
@@ -331,11 +333,10 @@ public class PaymentController {
 		int amount = subScheduleDto.getAmount();
 		
 		// 회원 구독자 업데이트
-		int result = paymentService.insertSubPayment(customerUid);
+		int memberUpdateResult = paymentService.insertSubPayment(customerUid);
+		String result = schedulePay.schedulePay(merchantUid, customerUid, amount);
 		
-		schedulePay.schedulePay(merchantUid, customerUid, amount);
-		
-		return ResponseEntity.ok("성공");
+		return ResponseEntity.ok(result);
 	}
 	
 	

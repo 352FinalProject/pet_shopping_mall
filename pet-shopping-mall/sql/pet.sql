@@ -55,7 +55,7 @@ SELECT *  FROM all_tables;
 --drop table breed;
 --drop table coupon;
 --drop table member_coupon;
-
+--
 --
 ------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
@@ -328,6 +328,7 @@ create table review (
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
+
 create table community (
     community_id number,
     community_member_id varchar2(50),
@@ -358,6 +359,17 @@ create table sub_payment (
     constraint fk_sub_payment_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+-- 구독자 정리하는 테이블
+create table sub_member (
+    subscribe_id number,
+    member_id varchar2(50),
+    merchant_uid varchar2(30) not null,
+    schedule_at timestamp,
+    schedule_status varchar2(20),
+    amount number,
+    constraint pk_subscribe_id primary key(subscribe_id),
+    constraint fk_sub_member_id foreign key(member_id) references member(member_id) on delete cascade
+);
 
  -- 장바구니 테이블
 create table cart (
@@ -469,6 +481,11 @@ create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
 create sequence seq_sub_payment_id;
+create sequence seq_susubscribe_id;
+
+
+select *from member;
+select * from sub_payment;
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
