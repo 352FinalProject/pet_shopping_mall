@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.SubMember;
 import com.shop.app.member.repository.MemberRepository;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.Order;
@@ -66,6 +67,14 @@ public class MemberServiceImpl implements MemberService {
 	public MypageDto getMyPage(String memberId) {
 		MypageDto myPage = memberRepository.getMyPage(memberId);
 		List<Order> histories = orderRepository.getOrderListByPeriod(memberId, 1);
+		
+		SubMember subMember = null;
+		
+		if((myPage.getSubscribe()).equals("Y")) {
+			subMember = memberRepository.findSubMemberByMemberId(memberId);
+		}
+		
+		myPage.setSubMember(subMember);
 		myPage.setOrderHistory(histories);
 		return myPage;
 	}

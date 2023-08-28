@@ -78,10 +78,9 @@
 						<p class="order-info-title">결제수단</p>
 						<div>
 							<label class="paybtn"> <input type="radio"
-								name="paymethod" value="trans"> <span>무통장입금</span>
-							</label> <label class="paybtn"> <input type="radio"
 								name="paymethod" value="html5_inicis"> <span>카드결제</span>
-							</label> <label class="paybtn"> <input type="radio"
+							</label> 
+							<label class="paybtn"> <input type="radio"
 								name="paymethod" value="kakaopay"> <span>카카오페이</span>
 							</label>
 						</div>
