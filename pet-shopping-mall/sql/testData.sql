@@ -25,8 +25,7 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
-    
-    
+select * from notification;    
     
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
