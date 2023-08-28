@@ -61,7 +61,7 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Override
 	public int insertSubPayment(String customerUid) {
-		int result = memberRepository.subscribeCancel(customerUid);
+		int result = memberRepository.memberSubscribe(customerUid);
 		result =  paymentRepository.insertSubPayment(customerUid);
 		return result;
 	}

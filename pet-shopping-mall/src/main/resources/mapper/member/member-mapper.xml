@@ -72,4 +72,16 @@
   	<result column="point_current" property="pointCurrent" />
   	<result column="coupon_count" property="memberCoupon" />
   </resultMap>
+  
+  
+    <resultMap type="SubMember" id="subMember">
+  	<result column="subscribe_id" property="subscribeId" />
+  	<result column="member_id" property="memberId" />
+  	<result column="merchant_uid" property="merchantUid" />
+  	<result column="schedule_at" property="scheduleAt" />
+  	<result column="schedule_status" property="scheduleStatus" />
+  	<result column="amount" property="amount" />
+  </resultMap>
+  
+  
 </mapper>

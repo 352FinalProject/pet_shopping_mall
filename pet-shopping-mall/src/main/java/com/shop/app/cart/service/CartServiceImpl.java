@@ -63,8 +63,30 @@ public class CartServiceImpl implements CartService {
 
 
 	@Override
-	public int updateCart(CartItem cartitem) {
-		return cartRepository.updateCart(cartitem);
+	public int updateCart(CartItem cartitem, String memberId) {
+	    log.debug("cartitem = {}", cartitem);
+	    int detailId = cartitem.getProductDetailId();
+	    List<CartItem> cartList = cartRepository.getCartList(memberId);
+	    int result = 0;
+
+	    for (CartItem c : cartList) {
+	        int _detailId = c.getProductDetailId();
+	        if (detailId == _detailId) {
+	            CartItem updateCartItem = CartItem.builder()
+	                    .cartitemId(c.getCartitemId())
+	                    .quantity(cartitem.getQuantity())
+	                    .productDetailId(c.getProductDetailId())
+	                    .build();
+	            result = cartRepository.updateCart(updateCartItem);
+	            break;
+	        }
+	    }
+	    
+	    if (result == 0) {
+	        cartRepository.updateCart(cartitem);
+	    }
+
+	    return result;
 	}
 
 

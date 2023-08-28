@@ -938,8 +938,11 @@ from
 where 
     p.product_id = 1;
 
-
-
+select * from cart;
+select * from cartitem;
+delete from cartitem where cartitem_id = 4;
+select * from orderTbl;
+select * from member;
 UPDATE orderTbl
 SET order_status = 4
 WHERE order_id = 1;

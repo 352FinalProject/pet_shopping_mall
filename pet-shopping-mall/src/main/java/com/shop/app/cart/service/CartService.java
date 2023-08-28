@@ -17,7 +17,7 @@ public interface CartService {
 
 	List<CartInfoDto> findProductOptionById(int id);
 
-	int updateCart(CartItem cartitem);
+	int updateCart(CartItem cartitem, String memberId);
 
 	// 상품 페이지에서 장바구니 버튼 눌러서 장바구니에 담기 (예라)
 	int insertCart(int cartId, int productDetailId, int optionId, int quantity);
