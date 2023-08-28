@@ -247,6 +247,7 @@ const proceedPay = () => {
 	// 배송비 3000원 추가 (예라)
     let amountNumber = parseInt('${amount}'.replace(/,/g, ''));
     amountNumber += 3000;
+    console.log(amountNumber);
 
     
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
