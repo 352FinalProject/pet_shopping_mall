@@ -74,6 +74,7 @@ public class ProductController {
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int productId,
 	                          @RequestParam(defaultValue = "1") int page,
+	                          @AuthenticationPrincipal MemberDetails member,
 	                          Model model) {
 
 	    int limit = 3;
@@ -143,8 +144,12 @@ public class ProductController {
 	
 		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
 		  
-	}
-
+		 
+	    
+	    
+	    /* 찜 등록 여부 가져오기 (선모) */
+			model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId())); // 찜 여부 가져오기
+		}
 
 	/**
 	 * @author 전수경
