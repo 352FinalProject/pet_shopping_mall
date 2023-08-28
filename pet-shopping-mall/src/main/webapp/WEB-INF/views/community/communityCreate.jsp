@@ -13,7 +13,10 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 <!-- include summernote-ko-KR -->
+<!--  
 <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+
+-->
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -28,62 +31,8 @@
 		        lang : 'ko-KR'
 		  });
 		});
-	
-	function goWrite(frm) {
-		var title = frm.title.value;
-		var writer = frm.writer.value;
-		var content = frm.content.value;
-		
-		if (title.trim() == ''){
-			alert("제목을 입력해주세요");
-			return false;
-		}
-		if (writer.trim() == ''){
-			alert("작성자를 입력해주세요");
-			return false;
-		}
-		if (content.trim() == ''){
-			alert("내용을 입력해주세요");
-			return false;
-		}
-		frm.submit();
-	}
-	
-    $('#summernote').summernote({
-        // 에디터 높이
-        height: 150,
-        // 에디터 한글 설정
-        lang: "ko-KR",
-        // 에디터에 커서 이동 (input창의 autofocus라고 생각)
-        focus : true,
-        toolbar: [
-            // 글꼴 설정
-            ['fontname', ['fontname']],
-            // 글자 크기 설정
-            ['fontsize', ['fontsize']],
-            // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-            ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-            // 글자색
-            ['color', ['forecolor','color']],
-            // 표만들기
-            ['table', ['table']],
-            // 글머리 기호, 번호매기기, 문단정렬
-            ['para', ['ul', 'ol', 'paragraph']],
-            // 줄간격
-            ['height', ['height']],
-            // 코드보기, 확대해서보기, 도움말
-            ['view', ['codeview','fullscreen', 'help']]
-        ],
-        // 추가한 글꼴
-        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-        // 추가한 폰트사이즈
-        fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-
-    });
 </script>
 <title>글쓰기</title>
-
-
 		<div class="header">
 			<span id="notification"></span>
 			<ul class="utility">
@@ -165,22 +114,20 @@
 					</div>
 				</div>
 			</div>
-
 </head>
 <body>
 <h2 style="text-align: center;">글 작성</h2><br><br><br>
 
 <div style="width: 60%; margin: auto;">
-	<form method="post" action="/write">
-		<input type="text" name="title" style="width: 40%;" placeholder="제목"/>
+	<form:from action="${pageContext.request.contextPath}/community/communityCreate.do"
+         method="post">
+		<input type="text" name="communityTitle" style="width: 40%;" placeholder="제목"/>
 		<br><br> 
-		<textarea id="summernote" name="content"></textarea>
+		<textarea id="summernote" name="communityContent"></textarea>
 		<br>
-		<input id="subBtn" type="button" value="글 작성" style="float: right;" onclick="goWrite(this.form)"/>
-	</form>
+		<button class="community-btn-submit" type="submit" >작성하기</button>	
+	</form:from>
 </div>
-
 </body>
-
 </html>
 

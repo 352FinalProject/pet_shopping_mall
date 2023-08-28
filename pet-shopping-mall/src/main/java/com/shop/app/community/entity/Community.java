@@ -20,7 +20,7 @@ public class Community {
 	private String communityMemberId;
 	private String communityTitle;
 	private String communityContent;
-	private Date communityCreatedAt;
+	private LocalDateTime communityCreatedAt;
 	
 	private int imageId;
 	

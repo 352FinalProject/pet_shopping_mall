@@ -127,7 +127,7 @@ ul.nav {
 	<div class="common-container">
 		<section class="product-board">
 			<!-- 게시판 이름 -->
-	        <div class="board-title"">
+	        <div class="board-title">
 		        <span>
 		        ${productCategory.categoryName} 
 		        </span>
@@ -169,7 +169,7 @@ ul.nav {
 						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> 원</p>
 						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
 						<span> &nbsp;|&nbsp; </span>
-						<span class="review-cnt">후기 113건</span>
+						<span class="review-cnt">후기 ${reviewTotalCount}건</span>
 					</div>
 					</a>
 				</div>
