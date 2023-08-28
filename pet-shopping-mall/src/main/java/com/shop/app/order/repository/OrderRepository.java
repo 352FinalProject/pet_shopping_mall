@@ -98,5 +98,9 @@ public interface OrderRepository {
 	@Select("select count(*) from review where review_member_id = #{memberId} and order_id = #{orderId}")
 	boolean reviewWrite(String memberId, int orderId);
 
+	// 상품별 주문확정 주문 수 조회 (수경)
+	@Select("select count(*) from order_detail where product_detail_id = #{productDetailId}")
+	int findOrderCntByProductId(int productDetailId);
+
 	
 }

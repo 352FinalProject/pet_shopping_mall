@@ -143,4 +143,23 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductSearchDto> searchProducts(String searchQuery) {
 		return productRepository.searchProducts(searchQuery);
 	}
+	
+	// 모든상품 조회(수경)
+	@Override
+	public List<Product> findAllProducts() {
+		return productRepository.findAllProducts();
+	}
+	
+	// 상품아이디에 해당하는 모든 상품디테일 조회(수경)
+	@Override
+	public List<ProductDetail> findProductDetailsByProductId(int productId) {
+		return productRepository.findProductDetailsByProductId(productId);
+	}
+	
+	// 상품검색 (수경)
+	@Override
+	public List<Product> searchProducts(String searchKeyword, String searchCategory) {
+		return productRepository.searchProducts(searchKeyword, searchCategory);
+	}
+	
 }

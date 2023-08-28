@@ -18,6 +18,8 @@ select * from orderTbl order by order_id desc;
 select * from order_detail;
 select * from product_detail;
 select * from product;
+select * from member_coupon;
+select * from notification;
 select * from question;
 select * from answer;
 select * from cartitem;
@@ -36,6 +38,53 @@ select * from member_coupon where coupon_id = 1 and member_id = 'member3' and en
 
 delete from member where name = '예라'; 
 delete from wishlist where wishlist_id = 10; 
+
+
+select
+    m.member_id,
+    m.name,
+    m.subscribe,
+    recent_point.point_current,
+    (
+        select count(*)
+        from member_coupon
+        where member_id = m.member_id and use_status = 0
+    ) as coupon_count
+from
+    member m
+left join (
+    select
+        point_member_id,
+        point_current
+    from (
+        select
+            p.point_member_id,
+            p.point_current,
+            row_number() over (partition by p.point_member_id order by p.point_date desc) as rn
+        from
+            point p
+    ) temp
+    where temp.rn = 1
+) recent_point on m.member_id = recent_point.point_member_id
+where
+    m.member_id = 'member1';
+
+
+select 
+    *
+from 
+    product p
+    left join 
+        review r on p.product_id = pd.product_id
+where 
+    p.product_id = 1;
+    
+select * from review
+where product_id = 1;
+    
+    select * from review
+where product_id = #{productId};
+
     
 select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
 
@@ -159,6 +208,7 @@ VALUES (2, '사용자2', 50, '사용', -500);
 -- 카테고리 생성
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '간식');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '장난감');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
@@ -249,8 +299,6 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
-    
-    
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
     values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-06-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
@@ -897,7 +945,6 @@ from
 where 
     p.product_id = 1;
 
-
 -- 멤버 쿠폰 테이블
 create table member_coupon (
  member_coupon_id number,
@@ -911,8 +958,19 @@ create table member_coupon (
  constraint fk_member_coupon_member_id foreign key(member_id) references member(member_id) on delete cascade,
  constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
 );
+--------------------------------------------알림
+insert into (id, noti_category, noti_content, noti_created_at, member_id) 
+    values (seq_notification_id.nextval, ?, ?, default, ?);
+
+select * from orderTbl where order_no = 1;
+
+SELECT ot.order_no, ot.order_id, p.product_name, ot.order_status, ot.member_id
+FROM orderTbl ot
+JOIN order_detail od ON ot.order_id = od.order_id
+JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
+JOIN product p ON pd.product_id = p.product_id
+where order_no = '230811-001';
 
 
-UPDATE orderTbl
-SET order_status = 4
-WHERE order_id = 1;
+
+

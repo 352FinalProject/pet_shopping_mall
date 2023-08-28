@@ -25,7 +25,6 @@ public interface CartRepository {
 	@Select("select * from cart where member_id = #{memberId}")
 	int getMemberCart(String memberId);
 
-
 	@Delete("delete from cartitem ci where cartitem_id = #{cartitemId} and ci.cart_id = (select cart_id from cart where member_id =#{memberId})")
 	int deleteCartOne(int cartitemId, String memberId);
 
@@ -43,4 +42,7 @@ public interface CartRepository {
 
 	@Insert("insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (seq_cartitem_id.nextVal, #{cartId}, #{productDetailId}, #{quantity})")
 	int insertCart(CartItem cartitem);
+
+	@Select("select * from cartitem i left join cart c on i.cart_id = c.cart_id where i.cart_id= #{cartId}")
+	List<CartItem> getCartListByCartId(int cartId);
 }

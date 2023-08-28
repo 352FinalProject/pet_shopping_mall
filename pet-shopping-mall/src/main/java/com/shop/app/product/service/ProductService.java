@@ -61,5 +61,14 @@ public interface ProductService {
 	// index페이지 상품 검색 담희
 	List<ProductSearchDto> searchProducts(String searchQuery);
 
+	// 모든 상품 조회(수경)
+	List<Product> findAllProducts();
+	
+	// 상품아이디로 모든 상품디테일 조회(수경)
+	List<ProductDetail> findProductDetailsByProductId(int productId);
+	
+	// 상품검색 (수경)
+	List<Product> searchProducts(String searchKeyword, String searchCategory);
+
 
 }

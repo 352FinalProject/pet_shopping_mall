@@ -51,11 +51,14 @@ import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.entity.SubMember;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.notification.service.NotificationService;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.order.service.OrderService;
+import com.shop.app.payment.dto.PaymentCompleteNotificationDto;
 import com.shop.app.payment.dto.SubScheduleDto;
 import com.shop.app.payment.service.PaymentService;
 import com.shop.app.payment.service.SchedulePay;
@@ -96,7 +99,10 @@ public class PaymentController {
 	
 	@Autowired
 	MemberService memberService;
-
+	
+	@Autowired
+	NotificationService notificationService;
+	
 	private IamportClient iamportClient;
 	private IamportApi iamportApi;
 	
@@ -270,7 +276,23 @@ public class PaymentController {
 		Order order = orderService.findOrderByOrderNo(orderNo);
 		model.addAttribute("order", order);
 	}
+	
+	@PostMapping("/paymentCompleted.do")
+	public void paymentCompleteNotification(@RequestParam String orderNo) {
+		
+		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
+	    
+		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
+	            .orderId(paymentCompleteNotificationDto.getOrderId())
+	            .orderNo(paymentCompleteNotificationDto.getOrderNo())
+	            .productName(paymentCompleteNotificationDto.getProductName())
+	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
+	            .memberId(paymentCompleteNotificationDto.getMemberId())
+	            .build();
 
+	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
+	}
+	
 	/*
 	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)
 	 */
@@ -342,8 +364,6 @@ public class PaymentController {
 	        int updateCoupon = couponService.updateCoupon(coupon); 
 	    }
 	}
-
-	
 	
 	@ResponseBody
 	@PostMapping("/startScheduler.do")
@@ -354,11 +374,10 @@ public class PaymentController {
 		int amount = subScheduleDto.getAmount();
 		
 		// 회원 구독자 업데이트
-		int result = paymentService.insertSubPayment(customerUid);
+		int memberUpdateResult = paymentService.insertSubPayment(customerUid);
+		String result = schedulePay.schedulePay(merchantUid, customerUid, amount);
 		
-		schedulePay.schedulePay(merchantUid, customerUid, amount);
-		
-		return ResponseEntity.ok("성공");
+		return ResponseEntity.ok(result);
 	}
 	
 	
