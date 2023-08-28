@@ -100,12 +100,7 @@ public class PetController {
 	public String petDelete(@Valid int petId, RedirectAttributes redirectAttributes) {		
 		int cnt = petService.petDelete(petId);
 		
-		if(cnt > 0) {
-			redirectAttributes.addFlashAttribute("msg", cnt + "정상적으로 삭제되었습니다.");
-		} else {
-			redirectAttributes.addFlashAttribute("msg", "삭제 중 오류가 발생하였습니다.");
-		}
-		
+
 	    return "redirect:/pet/petList.do";
     }
 	
@@ -113,9 +108,6 @@ public class PetController {
 	public String petUpdate(@Valid PetUpdateDto pet, RedirectAttributes redirectAttributes) {
 		int result = petService.petUpdate(pet); // PetService에서 업데이트 로직 수행
 
-		if (result > 0) { // 업데이트 성공 여부 확인
-			redirectAttributes.addFlashAttribute("successMessage", "수정완료!");
-	    }
 	
 	    return "redirect:/pet/petList.do"; // 목록 페이지로 리다이렉트
 	    

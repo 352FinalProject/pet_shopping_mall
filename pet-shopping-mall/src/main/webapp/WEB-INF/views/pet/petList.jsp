@@ -8,27 +8,13 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 
-
-<style>
-    /* 수정 및 삭제 버튼 스타일 */
-    .btn-modify,
-    .btn-delete {
-       position: absolute;
-        margin-left: -20px;
-        margin-top: -20px;
-        background: #fff;
-        border: 1px solid lightgray;
-        padding: 8px;
-        cursor: pointer;
-        color: #333; /* 텍스트 색상 추가 */
-</style>
-
 <!-- 펫 등록 리스트 -->
 <section class="common-section" id="common-section-List">
     <div class="common-title">펫 등록 리스트</div>
     <div class="common-container">
         <div class="common-div">
-   
+    
+
 
             <!-- 펫 등록 버튼 -->
             <form action="${pageContext.request.contextPath}/pet/petProfile.do"
@@ -62,8 +48,8 @@
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petWeight}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petAge}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
- 								<td><button class="btn-modify" onclick="location.href='${pageContext.request.contextPath}/pet/petGoDetail.do?petId=${pet.petId}'">수정</button></td>
-            				   <td><button class="btn-delete" onclick="fnDelete('${pet.petId}')">삭제</button></td>
+                                <td><a href="${pageContext.request.contextPath}/pet/petGoDetail.do?petId=${pet.petId}"> 수정 </a></td>
+                                <td><a href="javascript:void(0)" onclick="fnDelete('${pet.petId}');"> 삭제 </a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
