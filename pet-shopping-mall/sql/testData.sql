@@ -200,6 +200,7 @@ VALUES (2, '사용자2', 50, '사용', -500);
 -- 카테고리 생성
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '간식');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '장난감');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
