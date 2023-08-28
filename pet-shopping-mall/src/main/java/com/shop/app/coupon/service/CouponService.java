@@ -29,4 +29,11 @@ public interface CouponService {
 	// 쿠폰 사용 (예라)
 	int updateCouponStatus(MemberCoupon validCoupon);
 
+	// 결제 안 하고 취소할 때 쿠폰 돌려주기 (예라)
+	int updateCoupon(MemberCoupon coupon);
+
+	// 결제 안 하고 취소할 때 쿠폰 돌려주기 (예라)
+	List<MemberCoupon> findUsedCouponsByMemberId(String memberId);
+
+
 }

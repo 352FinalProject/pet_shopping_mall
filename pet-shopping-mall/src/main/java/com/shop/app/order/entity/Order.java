@@ -30,7 +30,5 @@ public class Order {
 	private int amount; // 실 결제 금액
 	
 	private Integer memberCouponId; // 멤버 쿠폰 아이디
-	private int productId;
-
 	
 }

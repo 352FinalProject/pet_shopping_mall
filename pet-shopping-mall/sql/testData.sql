@@ -28,11 +28,13 @@ select * from wishlist;
     
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
-values ( seq_member_coupon_id.nextval, '1', 'member1', sysdate, add_months(sysdate, 1), 0, null);
+values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
 
+delete from member_coupon where member_id = '2971776209@kakao'; 
 
 select * from member_coupon where coupon_id = 1 and member_id = 'member3' and end_date >= current_timestamp and use_status = 0;
 
+delete from member where name = '예라'; 
 delete from wishlist where wishlist_id = 10; 
     
 select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
@@ -44,7 +46,7 @@ delete from product where product_id = 1;
 
 delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 4 where order_id = 22;
+update orderTbl set order_status = 4 where order_id = 4;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
@@ -261,7 +263,7 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
-values (seq_point_id.nextval, 'member1', 3000, '회원가입', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_id.nextval, '2971776209@kakao', 3000, '회원가입', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
 values (seq_point_id.nextval, 'member1', 3000, '구매적립', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));

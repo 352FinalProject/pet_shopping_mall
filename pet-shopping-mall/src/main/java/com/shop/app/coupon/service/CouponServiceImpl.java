@@ -91,5 +91,16 @@ public class CouponServiceImpl implements CouponService {
 		return couponRepository.updateCouponStatus(validCoupon);
 	}
 
+	// 결제 안 하고 취소할 때 쿠폰 돌려주기 (예라)
+	@Override
+	public int updateCoupon(MemberCoupon coupon) {
+		return couponRepository.updateCoupon(coupon);
+	}
+
+	@Override
+	public List<MemberCoupon> findUsedCouponsByMemberId(String memberId) {
+		return couponRepository.findUsedCouponsByMemberId(memberId);
+	}
+
 
 }

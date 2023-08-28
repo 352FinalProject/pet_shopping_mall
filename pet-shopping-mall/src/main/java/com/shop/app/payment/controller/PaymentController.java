@@ -46,6 +46,7 @@ import com.google.gson.JsonObject;
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.coupon.dto.MemberCouponDto;
+import com.shop.app.coupon.entity.Coupon;
 import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MypageDto;
@@ -151,22 +152,30 @@ public class PaymentController {
 		Point points = new Point();
 		points.setPointMemberId(_order.getMemberId());
 		Point currentPoints = pointService.findPointCurrentById(points);
-
+		
+		if(pointsUsed != 0) {
 		// 2. 포인트 사용 정보 저장
 		Point usedPoint = new Point();
 		usedPoint.setPointMemberId(_order.getMemberId());
 		usedPoint.setPointType("구매사용");
-		usedPoint.setPointAmount(-_order.getPointsUsed()); // 사용된 포인트 금액
+		usedPoint.setPointAmount(-pointsUsed); // 사용된 포인트 금액
 
-		// 3. 사용된 포인트 업데이트
-		int currentPoint = currentPoints.getPointCurrent();
-		usedPoint.setPointCurrent(currentPoint - _order.getPointsUsed());
+	    // 3. 사용된 포인트 업데이트
+	    int currentPoint = currentPoints.getPointCurrent();
+	    usedPoint.setPointCurrent(currentPoint - pointsUsed);
 
 		// 4. db에 포인트 사용 정보 저장
 		int usedPointResult = pointService.insertUsedPoint(usedPoint);
 		
+		}
+		
 		if (useCoupon) {
 			// 1. 쿠폰 가져오기 (예라)
+			
+			int couponDiscount = _order.getCouponDiscount();
+			
+			log.debug("couponDiscount = {}", couponDiscount);
+	
 			MemberCoupon coupon = new MemberCoupon();
 			coupon.setMemberId(_order.getMemberId());
 			coupon.setCouponId(_order.getCouponId());
@@ -180,22 +189,8 @@ public class PaymentController {
 	
 			if (validCoupons != null && !validCoupons.isEmpty()) { // 유효한 쿠폰인 경우
 			    MemberCoupon validCoupon = validCoupons.get(0); // 첫 번째 유효한 쿠폰을 선택
-	
-			    // 2-2. 쿠폰을 적용하여 주문 금액을 할인
-			    int discountAmount = 0; // 할인 금액 초기화
 			    
-			    switch (validCoupon.getCouponId()) {
-			        case 1:
-			            discountAmount = 3000; // 배송비 적립 쿠폰, 3000원 할인
-			            break;
-			        case 2:
-			            discountAmount = (int)(order.getAmount() * 0.1); // 생일축하 쿠폰, 주문 금액의 10%
-			            break;
-			    }
-	
-			    order.setAmount(order.getAmount() - discountAmount); // 할인 금액을 주문 금액에서 빼준다
-			    
-			    // 2-3. 쿠폰 상태 업데이트 (사용됨)
+			    // 2-2. 쿠폰 상태 업데이트 (사용됨)
 			    validCoupon.setUseStatus(1);
 			    int usedCouponResult = couponService.updateCouponStatus(validCoupon);
 			    
@@ -281,7 +276,7 @@ public class PaymentController {
 	 */
 	@PostMapping("/verifyAndHandleCancelledPayment/{imp_uid}")
 	@ResponseBody
-	public ResponseEntity<?> verifyAndHandleCancelledPayment(@Valid @RequestBody OrderCreateDto _order,
+	public ResponseEntity<?> verifyAndHandleCancelledPayment(@Valid @RequestBody OrderCreateDto _order, 
 			@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
 
 		// 1. 결제 정보 가져오기
@@ -302,11 +297,15 @@ public class PaymentController {
 		String memberId = _order.getMemberId();
 		int pointsUsed = findOrder.getDiscount();
 
-		// 3. 결제 상태가 'failed'인지 확인
 		if ("failed".equalsIgnoreCase(payment.getStatus())) {
-			// 4. 'failed' 상태라면 사용자의 포인트를 다시 반환
-			handleCancelledPayment(memberId, pointsUsed);
-			return ResponseEntity.ok("결제가 취소되었으며 포인트가 환불되었습니다.");
+		    // 4. 'failed' 상태라면 사용자의 포인트를 다시 반환
+		    handleCancelledPayment(memberId, pointsUsed);
+
+		    // 5. 쿠폰 환불 처리 추가
+		    List<MemberCoupon> usedCoupons = couponService.findUsedCouponsByMemberId(memberId);
+		    handleCancelledCouponRefund(usedCoupons);
+
+		    return ResponseEntity.ok("결제가 취소되었으며 포인트가 환불되었습니다.");
 		}
 
 		return ResponseEntity.ok(paymentResponse);
@@ -320,16 +319,31 @@ public class PaymentController {
 		rollbackPoint.setPointAmount(usedPoints);
 
 		// 2. 현재 포인트 값을 가져온다
-		Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
+		List<Point> currentPoints = pointService.findRollbackPointCurrentById(rollbackPoint);
 		log.debug("currentPoints = {}", currentPoints);
 
 		// 3. 현재 포인트에 반환될 포인트를 더한다
-		int updatedPoint = currentPoints.getPointCurrent() + usedPoints;
+		int updatedPoint = currentPoints.get(0).getPointCurrent() + usedPoints;
 		rollbackPoint.setPointCurrent(updatedPoint);
 
 		// 4. 취소된 포인트를 db에 저장
 		int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
 	}
+	
+	// 쿠폰 환불 처리 메소드
+	private void handleCancelledCouponRefund(List<MemberCoupon> usedCoupons) {
+	    for (MemberCoupon coupon : usedCoupons) {
+	        
+	        // 1. 쿠폰 사용 상태를 원래대로 변경 (use_status를 0으로, use_date를 null로)
+	        coupon.setUseStatus(0); // 사용 안 함으로 변경
+	        coupon.setUseDate(null); // 사용 날짜를 null로 설정
+	        
+	        // 2. 쿠폰 업데이트
+	        int updateCoupon = couponService.updateCoupon(coupon); 
+	    }
+	}
+
+	
 	
 	@ResponseBody
 	@PostMapping("/startScheduler.do")

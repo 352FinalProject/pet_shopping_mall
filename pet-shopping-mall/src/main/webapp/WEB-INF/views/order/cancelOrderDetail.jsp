@@ -108,12 +108,6 @@
 											value="${cancelInfo.discount}" groupingUsed="true" /></span>원</span>
 								</p>
 							</div>
-							<div class="product-price">
-								<span>쿠폰</span>
-								<p>
-									<span style="color: red;">(-) <span id="discount">원</span></span>
-								</p>
-							</div>
 						</div>
 					</div>
 					<div class="payment-info2">
@@ -152,7 +146,7 @@
 <script>
 
 const cancelOrder = (text) => {
-	if(confirm("정말 주문을 취소하시겠습니까?") && text === 'cancel') {
+	if(confirm("정말 주문을 취소하시겠습니까?\n사용하신 포인트와 쿠폰은 반환되지 않습니다.") && text === 'cancel') {
 		cancelFrm.isRefund.value = "N"
 		cancelFrm.action = "${pageContext.request.contextPath}/order/cancelOrder.do";
 		cancelFrm.submit();

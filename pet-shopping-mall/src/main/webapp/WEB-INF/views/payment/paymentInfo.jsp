@@ -248,8 +248,24 @@ const proceedPay = () => {
     let amountNumber = parseInt('${amount}'.replace(/,/g, ''));
     amountNumber += 3000;
     console.log(amountNumber);
-
     
+    // 쿠폰 할인값 계산
+    let enteredPoints = parseInt(document.getElementById('discount').innerText.replace(/,/g, '').replace('원', '')) || 0;
+    let selectedCouponType = $('#couponSelect').find(':selected').data('type');
+    let selectedCouponValue = $('#couponSelect').val();
+    let totalPrice = parseInt($('#total-price').text().replace(/,/g, ''));
+    let deliveryFee = 3000;
+    let couponDiscount = 0;
+    let pointsDiscount = enteredPoints;
+
+    if (selectedCouponValue !== "") {
+        if (selectedCouponType === '회원가입 배송비 무료 쿠폰') {
+            couponDiscount = deliveryFee;
+        } else if (selectedCouponType === '생일축하 10% 할인 쿠폰') {
+            couponDiscount = Math.floor((totalPrice - pointsDiscount) * 0.1);
+        }
+    }
+
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
     console.log("Before sending, useCoupon value: ", useCoupon);
 	const data = {
@@ -263,11 +279,12 @@ const proceedPay = () => {
 		postcode: 1,
 		totalPrice: '${productTotal}',
 		deliveryFee: 3000,
-		discount: pointValue,
+		discount: pointValue + couponDiscount,
 		couponId: $("#couponSelect").val(),
-		amount: amountNumber,
+		amount: amountNumber - pointValue - couponDiscount,
 		pointsUsed: pointValue,
 		useCoupon: useCoupon,
+		couponDiscount: couponDiscount,
 		pg: checkedButton.value,
 		
 	};
@@ -468,8 +485,9 @@ $.ajax({
 
 // 최종 결제 금액 업데이트 함수
 function updateFinalAmount() {
-	
-	let enteredPoints = parseInt(document.getElementById('discount').innerText.replace(/,/g, '').replace('원', '')) || 0;
+    
+    // 쿠폰 할인값 계산
+    let enteredPoints = parseInt(document.getElementById('discount').innerText.replace(/,/g, '').replace('원', '')) || 0;
     let selectedCouponType = $('#couponSelect').find(':selected').data('type');
     let selectedCouponValue = $('#couponSelect').val();
     let totalPrice = parseInt($('#total-price').text().replace(/,/g, ''));

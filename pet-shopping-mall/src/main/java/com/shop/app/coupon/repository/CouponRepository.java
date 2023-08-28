@@ -43,5 +43,11 @@ public interface CouponRepository {
 	@Update("update member_coupon set use_status = #{useStatus}, use_date = current_timestamp where coupon_id = #{couponId} and member_id = #{memberId}")
 	int updateCouponStatus(MemberCoupon validCoupon);
 
+	// 결제 안 하고 취소할 때 쿠폰 돌려주기 (예라)
+    @Update("update member_coupon set use_status = 0, use_date = null where coupon_id = #{couponId}")
+    int updateCoupon(MemberCoupon coupon);
 
+	// 결제 안 하고 취소할 때 쿠폰 돌려주기 (예라)
+    @Select("select * from member_coupon where member_id = #{memberId} and use_status = 1")
+	List<MemberCoupon> findUsedCouponsByMemberId(String memberId);
 }
