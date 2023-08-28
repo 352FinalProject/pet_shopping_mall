@@ -1,19 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-
-<body>
     <style>
         .container {
             margin: 0 auto;
@@ -72,20 +70,29 @@
         .box:nth-child(4n) {
             margin-right: 0;
         }
+
+        /* 이미지 크기 조정 관련 CSS */
+        .box img {
+            height: auto; /* Reset the height to maintain aspect ratio */
+            max-height: 275px; /* Set a maximum height to prevent stretching */
+        }
     </style>
-    <div class="container">
-        <div class="sub_title">찜 목록</div>
+</head>
+
+<body>
+    <div class="common-section">
+        <div class="common-title">찜 목록</div>
+        
         <div class="list">
             <c:forEach items="${myWishList}" var="list">
                 <div class="box">
                     <a href="<c:url value='/product/productDetail.do'/>?productId=${list.PRODUCT_ID}">
-                        <!-- Wrap the image with an anchor tag and add the link URL -->
-                        <img src="${pageContext.request.contextPath}${list.IMAGE_RENAMED_FILENAME}" alt="">
-                    <p>${list.PRODUCT_NAME}</p>
-                    <h5><fmt:formatNumber value="${product.productPrice}"/> 원</h5>
-                    <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
-                        153건</span>
-                      </a>
+                        <img src="${pageContext.request.contextPath}/resources/upload/product/${list.IMAGE_RENAMED_FILENAME}" alt="">
+                        <p>${list.PRODUCT_NAME}</p>
+                        <h5><fmt:formatNumber value="${list.PRODUCT_PRICE}" pattern="#,###"/> 원</h5>
+                        <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
+                            153건</span>
+                    </a>
                 </div>
             </c:forEach>
         </div>
@@ -93,4 +100,3 @@
 </body>
 
 </html>
-<jsp:include page="/WEB-INF/views/common/footer.jsp" />
