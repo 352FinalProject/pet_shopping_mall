@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.order.repository.PaymentRepository">
 
-   <select id="notificationFindOrderByOrderNo" resultMap="paymentCompleteNotificationDto ">
+   <select id="notificationFindOrderByOrderNo" resultMap="paymentCompleteNotificationDto">
 	SELECT 
 		ot.order_no, 
 		ot.order_id, 
@@ -19,7 +19,7 @@
 	WHERE
 		order_no = #{orderNo};
    </select>
-   <resultMap type="PaymentCompleteNotificationDto" id="paymentCompleteNotificationDto ">
+   <resultMap type="PaymentCompleteNotificationDto" id="paymentCompleteNotificationDto">
       <id column="order_id" property="orderId" />
       <result column="order_no" property="orderNo" />
       <result column="product_name" property="productName" />
