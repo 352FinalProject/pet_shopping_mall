@@ -63,7 +63,8 @@
 							<c:if test="${not empty productInfos}">
 								<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
 									<tr>
-										<td>${productInfo.product.productId}</td>
+										<%-- <c:if test="${not empty productInfo.productDetails}"></c:if> --%>
+										<td>${productInfo.productId}</td>
 										<td>
 											<c:if test="${empty productInfo.attachments}">
 												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
@@ -82,19 +83,29 @@
 										<td>${productInfo.productCategory.categoryName}</td>
 										<td>${productInfo.product.productPrice}</td>
 										<td>
-											<c:if test="${empty productInfo.optionName || ''}">
-												옵션없음
-											</c:if>
-											<c:if test="${not empty productInfo.optionName}">
-												${productInfo.optionName} - ${productInfo.optionValue}
-											</c:if>
+											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
+												<c:if test="${empty productDetail.optionName || ''}">
+													<p>옵션없음</p>
+												</c:if>
+												<c:if test="${not empty productDetail.optionName}">
+													<p>${productDetail.optionName} - ${productDetail.optionValue}</p>
+												</c:if>
+											</c:forEach>
 										</td>
-										<td>${productInfo.additionalPrice}</td>
 										<td>
-											<c:if test="${productInfo.saleState eq 0}">판매대기</c:if>
-											<c:if test="${productInfo.saleState eq 1}">판매중</c:if>
-											<c:if test="${productInfo.saleState eq 2}">품절</c:if>
-											<c:if test="${productInfo.saleState eq 3}">기타</c:if>										
+											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
+												<p>${productDetail.additionalPrice}</p>
+											</c:forEach>
+										</td>
+										<td>
+											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
+												<p>
+													<c:if test="${productDetail.saleState eq 0}">판매대기</c:if>
+													<c:if test="${productDetail.saleState eq 1}">판매중</c:if>
+													<c:if test="${productDetail.saleState eq 2}">품절</c:if>
+													<c:if test="${productDetail.saleState eq 3}">기타</c:if>										
+												</p>
+											</c:forEach>
 										</td>
 									</tr>
 								</c:forEach>

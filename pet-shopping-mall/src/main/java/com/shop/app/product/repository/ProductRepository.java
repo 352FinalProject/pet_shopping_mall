@@ -106,4 +106,10 @@ public interface ProductRepository {
 
 	
 	List<ProductSearchDto> searchProducts(String searchQuery);
+
+	@Select("select * from product order by 1")
+	List<Product> findAllProducts();
+
+	@Select("select * from product_detail where product_id = #{productId} order by 1")
+	List<ProductDetail> findProductDetailsByProductId(int productId);
 }
