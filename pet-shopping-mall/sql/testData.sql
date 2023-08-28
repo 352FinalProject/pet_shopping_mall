@@ -19,6 +19,7 @@ select * from order_detail;
 select * from product_detail;
 select * from product;
 select * from member_coupon;
+select * from notification;
 select * from question;
 select * from answer;
 select * from cartitem;
@@ -55,11 +56,6 @@ left join (
 ) recent_point on m.member_id = recent_point.point_member_id
 where
     m.member_id = 'member1';
-
-
-
-
-
 
 
 select 
@@ -291,8 +287,6 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
-    
-    
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
     values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-06-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
@@ -940,7 +934,23 @@ where
     p.product_id = 1;
 
 
+--------------------------------------------알림
+insert into (id, noti_category, noti_content, noti_created_at, member_id) 
+    values (seq_notification_id.nextval, ?, ?, default, ?);
 
-UPDATE orderTbl
-SET order_status = 4
-WHERE order_id = 1;
+select * from orderTbl where order_no = 1;
+
+SELECT ot.order_no, ot.order_id, p.product_name, ot.order_status, ot.member_id
+FROM orderTbl ot
+JOIN order_detail od ON ot.order_id = od.order_id
+JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
+JOIN product p ON pd.product_id = p.product_id
+where order_no = '230811-001';
+
+
+
+
+
+
+
+

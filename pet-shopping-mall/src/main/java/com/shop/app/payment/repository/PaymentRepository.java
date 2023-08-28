@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.shop.app.order.entity.Order;
+import com.shop.app.payment.dto.PaymentCompleteNotificationDto;
 import com.shop.app.payment.entity.Payment;
 
 @Mapper
@@ -22,4 +24,9 @@ public interface PaymentRepository {
 	@Insert("insert into sub_payment (sub_payment_id, member_id, payment_date) values (seq_sub_payment_id.nextVal, #{customerUid}, default)")
 	int insertSubPayment(String customerUid);
 	
+	// 알림 (productName가져오기위한 메서드 - 대원)
+	PaymentCompleteNotificationDto notificationFindOrderByOrderNo(String orderNo);
+	
+	
+
 }

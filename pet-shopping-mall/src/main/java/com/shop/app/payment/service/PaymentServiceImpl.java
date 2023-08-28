@@ -9,6 +9,7 @@ import com.shop.app.cart.repository.CartRepository;
 import com.shop.app.member.repository.MemberRepository;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.repository.OrderRepository;
+import com.shop.app.payment.dto.PaymentCompleteNotificationDto;
 import com.shop.app.payment.entity.Payment;
 import com.shop.app.payment.repository.PaymentRepository;
 
@@ -65,5 +66,11 @@ public class PaymentServiceImpl implements PaymentService {
 		result =  paymentRepository.insertSubPayment(customerUid);
 		return result;
 	}
+	
+	// 알림 (productName가져오기위한 메서드 - 대원)
 
+	@Override
+	public PaymentCompleteNotificationDto notificationFindOrderByOrderNo(String orderNo) {
+		return paymentRepository.notificationFindOrderByOrderNo(orderNo);
+	}
 }

@@ -176,5 +176,4 @@ public class OrderServiceImpl implements OrderService {
 	public int findOrderCntByProductId(int productDetailId) {
 		return orderRepository.findOrderCntByProductId(productDetailId);
 	}
-	
 }
