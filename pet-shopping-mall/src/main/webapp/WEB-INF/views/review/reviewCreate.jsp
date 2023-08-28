@@ -66,8 +66,6 @@
             </table>
             <div class="review-create-btn">
                 <button class="review-btn-rset" type="reset">초기화</button>
-                 ${productId},
-				${orderId}
 				    <input type="hidden" name="productId" value="${productId}" />
 				    <input type="hidden" name="orderId" value="${orderId}" />
 				<button class="review-btn-submit" type="submit" >작성하기</button>

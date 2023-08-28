@@ -37,14 +37,16 @@
 								readonly></td>
 						</tr>
 						<tr>
-						    <th>사진첨부</th>
-						    <td>
-						        <div class="detail-upload">
-						        	<input type="text" name="imageOriginalFilename" 
-						            value="${questionDetails.attachments[0].imageOriginalFilename}" required
-								readonly">
-						        </div>
-						    </td>
+							<th>사진첨부</th>
+							<td>
+								<div class="detail-upload" style="position: relative;">
+								    <input type="text" name="imageOriginalFilename" 
+								           value="${questionDetails.attachments[0].imageOriginalFilename}" 
+								           required readonly style="cursor: pointer;">
+								    <a href="${pageContext.request.contextPath}/servicecenter/fileDownload.do?questionId=${questions.questionId}" id="downloadLink" 
+								       style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; cursor: pointer;"></a>
+								</div>
+							</td>
 						</tr>
 						<tr>
 							<th>제목</th>
@@ -175,6 +177,8 @@ function showEditBox() {
     document.querySelector('.hidden-textbox').style.display = 'block';
     document.getElementById('editComment').focus();
 }
+
+// 이미지 다운로드
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

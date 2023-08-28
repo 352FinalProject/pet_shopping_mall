@@ -50,8 +50,10 @@ import com.shop.app.coupon.entity.Coupon;
 import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MypageDto;
+import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.entity.SubMember;
+import com.shop.app.member.entity.Subscribe;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.notification.service.NotificationService;
 import com.shop.app.order.dto.OrderCreateDto;
@@ -202,7 +204,7 @@ public class PaymentController {
 			    
 			    order.setMemberCouponId(validCoupon.getMemberCouponId());
 			} else {
-				// 쿠폰을 사용하지 않을 경우 member_coupon_id 값을 null로 설정
+				// 2-3. 쿠폰을 사용하지 않을 경우 member_coupon_id 값을 null로 설정
 				order.setMemberCouponId(null);
 			}
 		}
@@ -214,29 +216,36 @@ public class PaymentController {
 		if (result > 0) {
 			msg = "주문에 성공하셨습니다.";
 
-			// 0. 사용한 포인트가 0이면 적립하기 -> 포인트 사용하면 적립 안 되게 (예라)
+			// 1. 사용한 포인트가 0이면 적립하기 -> 포인트 사용하면 적립 안 되게 (예라)
 			if (pointsUsed <= 0) {
 
-				// 1. (적립) 결제 성공하면 구매한 금액의 1% 포인트 적립
+			    // 2. 구독자 여부 확인
+			    Member subscribeMember = memberService.findMemberById(order.getMemberId());
+			    log.debug("subscribeMember = {}", subscribeMember);
+			    boolean subscriber = (subscribeMember.getSubscribe() == Subscribe.Y);
+			    log.debug("subscriber = {}", subscriber);
+			    
+				// 3. 결제 성공하면 구매한 금액의 1% 포인트 적립 (일반 회원)
 				int amount = order.getAmount(); // 실제 주문 금액
-				int pointAmount = (int) (amount * 0.01); // 주문 금액의 1% 적립
+				double pointRate  = subscriber ? 0.03 : 0.01; // 주문 금액의 1% 적립
+				int pointAmount = (int) (amount * pointRate); // 주문 금액의 적립 비율 적용
 
-				// 2. 적립할 포인트 정보 저장
+				// 3. 적립할 포인트 정보 저장
 				Point point = new Point();
 				point.setPointMemberId(order.getMemberId());
 				point.setPointType("구매적립"); // 포인트 유형
 				point.setPointAmount(pointAmount); // 적립된 포인트
 
-				// 3. memberId값으로 현재 사용자의 포인트 가져오기
+				// 4. memberId값으로 현재 사용자의 포인트 가져오기
 				Point currentPoints2 = pointService.findReviewPointCurrentById(point);
 
-				// 4. 현재 포인트를 가져온 후 포인트 적립 계산
+				// 5. 현재 포인트를 가져온 후 포인트 적립 계산
 				int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
 
-				// 5. 업데이트된 포인트 값 설정
+				// 6. 업데이트된 포인트 값 설정
 				point.setPointCurrent(updatedPointAmount);
 
-				// 6. 적립된 포인트를 db에 저장
+				// 7. 적립된 포인트를 db에 저장
 				int pointResult = pointService.insertPoint(point);
 			}
 			
@@ -317,6 +326,7 @@ public class PaymentController {
 		Order findOrder = orderService.findByOrder(order);
 
 		String memberId = _order.getMemberId();
+		log.debug("memberId = {}", memberId);
 		int pointsUsed = findOrder.getDiscount();
 
 		if ("failed".equalsIgnoreCase(payment.getStatus())) {
@@ -334,22 +344,27 @@ public class PaymentController {
 	}
 
 	private void handleCancelledPayment(String memberId, int usedPoints) {
-		// 1. 포인트 반환 로직
-		Point rollbackPoint = new Point();
-		rollbackPoint.setPointMemberId(memberId);
-		rollbackPoint.setPointType("구매취소");
-		rollbackPoint.setPointAmount(usedPoints);
+	    // 1. 포인트 반환 로직
+	    Point rollbackPoint = new Point();
+	    rollbackPoint.setPointMemberId(memberId);
+	    rollbackPoint.setPointType("구매취소");
+	    rollbackPoint.setPointAmount(usedPoints);
 
-		// 2. 현재 포인트 값을 가져온다
-		List<Point> currentPoints = pointService.findRollbackPointCurrentById(rollbackPoint);
-		log.debug("currentPoints = {}", currentPoints);
+	    // 2. 현재 포인트 값을 가져온다
+	    Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
+	    log.debug("currentPoints = {}", currentPoints);
 
-		// 3. 현재 포인트에 반환될 포인트를 더한다
-		int updatedPoint = currentPoints.get(0).getPointCurrent() + usedPoints;
-		rollbackPoint.setPointCurrent(updatedPoint);
+	    int currentPoint = currentPoints.getPointCurrent(); // 현재 포인트
+	    int earnedPoint = currentPoints.getPointAmount(); // 적립된 금액
+	    int netPoint = currentPoint - earnedPoint; // 적립된 금액을 제외한 실제 포인트
+	    int updatedPoint = netPoint - usedPoints;
+	    
+	    // 3. 계산된 updatedPoint를 rollbackPoint 객체에 설정
+	    rollbackPoint.setPointCurrent(updatedPoint);
 
-		// 4. 취소된 포인트를 db에 저장
-		int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
+	    // 4. 취소된 포인트를 db에 저장
+	    int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
+
 	}
 	
 	// 쿠폰 환불 처리 메소드

@@ -11,7 +11,7 @@ import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 public interface QuestionService {
 
 	// 1:1 목록 조회 질문 (예라)
-	List<Question> findQuestionAll(Map<String, Object> params);
+	List<QuestionDetails> findQuestionAll(Map<String, Object> params);
 
 	// 1:1 목록 상세 조회 (예라)
 	Question findQuestionById(Question question);
@@ -48,5 +48,7 @@ public interface QuestionService {
 
 	// 각 질문의 답변 수 계산하여 추가 (예라)
 	int calculateAnswerCount(int questionId);
-	
+
+	// 파일 다운로드 (예라)
+	ImageAttachment findAttachmentById(int questionId);
 }

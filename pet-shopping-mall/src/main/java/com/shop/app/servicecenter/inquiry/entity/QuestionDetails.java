@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.common.entity.ImageAttachmentMapping;
+import com.shop.app.member.entity.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder 
 public class QuestionDetails extends Question{
-
+	
+	private Member member;
 	private List<ImageAttachment> attachments;
 	private List<ImageAttachmentMapping> attachmentMapping;
 	
