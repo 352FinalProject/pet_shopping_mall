@@ -68,8 +68,10 @@
 								<fmt:formatNumber value='${totalPrice}' pattern="0,000" var="formattedTotal" />
 								<strong class="price">결제 금액</strong>
 								<p class="price" id="amount"></p>
-								<div>배송비와 쿠폰, 적립금이 미적용된 금액입니다.</div>
 							</div>
+						</div>
+						<div class="payment-info">
+							<div>배송비와 쿠폰, 적립금이 미적용된 금액입니다.</div>
 						</div>
 						<div>
 							<button class="btn btn1" id="order-btn" onclick="payment();">주문하기</button>
