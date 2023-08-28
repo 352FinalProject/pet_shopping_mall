@@ -135,7 +135,7 @@
 	});
 	
 	
-	adminProductSearch.onsubmit = (e) => {
+	/* adminProductSearch.onsubmit = (e) => {
 		const {searchKeyword, searchCategory, saleState} = e.target;
 		console.log(searchKeyword.value);
 		console.log(searchCategory.value);
@@ -160,7 +160,7 @@
 		      });
 		}
 		e.preventDefault();
-	}
+	} */
 	
 	
 	const selectAllStatus = () => {
