@@ -124,7 +124,7 @@ public class ReviewController {
 		    orderDetailMap.addAll(orderDetail); // 주문상세내역을 orderDetailMap에 추가
 		}
 
-		model.addAttribute("orderDetailMap", orderDetailMap);
+		model.addAttribute("orderDetail", orderDetailMap);
 	
 	}
 
