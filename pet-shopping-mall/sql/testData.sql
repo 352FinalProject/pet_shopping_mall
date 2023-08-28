@@ -354,7 +354,6 @@ where id = 77;
 select * from orderTbl;
 select * from member;
 select * from point where point_member_id = 'member1';
-delete from point where point_id = 2;
 
 -- 장바구니 테스트 데이터
 select * from product_category;
