@@ -36,7 +36,7 @@ public class CouponServiceImpl implements CouponService {
 		return couponRepository.insertDeliveryCoupon(memberCoupon);
 	}
 	
-	@Scheduled(cron = "0 31 22 * * ?")  // 매월 1일 자정에 실행
+	@Scheduled(cron = "0 47 18 * * ?")  // 매월 1일 자정에 실행
 	public void issueBirthdayCoupons() {
 	    
 	    // 오늘 날짜 (매월 1일)
@@ -62,7 +62,7 @@ public class CouponServiceImpl implements CouponService {
 	    }
 	}
 
-	// 멤버 쿠폰 전체 조회 (예라)
+	// 결제할 때 쿠폰 목록 보여주기 (예라)
 	public List<MemberCouponDto> findCouponsByMemberId(String memberId) {
 		return couponRepository.findCouponsByMemberId(memberId);
 	}
@@ -75,20 +75,31 @@ public class CouponServiceImpl implements CouponService {
 
 	// 쿠폰 조회 (예라)
 	@Override
-	public MemberCoupon findCouponCurrendById(MemberCoupon coupon) {
+	public List<MemberCoupon> findCouponCurrendById(MemberCoupon coupon) {
 		return couponRepository.findCouponCurrendById(coupon);
 	}
 
 	// 유효기간이 있는 쿠폰인지 확인 (예라)
 	@Override
-	public MemberCoupon validateCoupon(int couponId, String memberId) {
-		return couponRepository.validateCoupon(couponId, memberId);
+	public List<MemberCoupon> validateCoupon(int couponId, String memberId, Integer memberCouponId) {
+		return couponRepository.validateCoupon(couponId, memberId, memberCouponId);
 	}
 
 	// 쿠폰 사용 (예라)
 	@Override
 	public int updateCouponStatus(MemberCoupon validCoupon) {
 		return couponRepository.updateCouponStatus(validCoupon);
+	}
+
+	// 결제 안 하고 취소할 때 쿠폰 돌려주기 (예라)
+	@Override
+	public int updateCoupon(MemberCoupon coupon) {
+		return couponRepository.updateCoupon(coupon);
+	}
+
+	@Override
+	public List<MemberCoupon> findUsedCouponsByMemberId(String memberId) {
+		return couponRepository.findUsedCouponsByMemberId(memberId);
 	}
 
 

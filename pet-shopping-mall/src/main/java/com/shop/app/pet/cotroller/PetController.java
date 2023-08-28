@@ -100,12 +100,6 @@ public class PetController {
 	public String petDelete(@Valid int petId, RedirectAttributes redirectAttributes) {		
 		int cnt = petService.petDelete(petId);
 		
-		if(cnt > 0) {
-			redirectAttributes.addFlashAttribute("msg", cnt + "정상적으로 삭제되었습니다.");
-		} else {
-			redirectAttributes.addFlashAttribute("msg", "삭제 중 오류가 발생하였습니다.");
-		}
-		
 	    return "redirect:/pet/petList.do";
     }
 	

@@ -53,6 +53,10 @@ public interface PointRepository {
 	@Select("select * from point where review_id = #{reviewId}")
 	Point getPointByReviewId(int reviewId);
 
+	// 포인트 롤백
+	@Select("select * from point")
+	List<Point> findRollbackPointCurrentById(Point rollbackPoint);
+
 
 
 }
