@@ -180,7 +180,6 @@ insert into member (member_id, password, name, phone, email, address, birthday, 
 values ('h123qd', '1234', '홍당무', '01015312328', 'h123qd@naver.com', '서울시 송파구 나동', to_date('1991-07-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
-insert into authority values ('abcde', 'ROLE_USER');
 insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
@@ -366,7 +365,6 @@ where id = 77;
 select * from orderTbl;
 select * from member;
 select * from point where point_member_id = 'member1';
-delete from point where point_id = 2;
 
 -- 장바구니 테스트 데이터
 select * from product_category;
