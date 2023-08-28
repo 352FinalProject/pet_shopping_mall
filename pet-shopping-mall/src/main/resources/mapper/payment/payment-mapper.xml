@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.app.order.repository.PaymentRepository">
+
+   <select id="notificationFindOrderByOrderNo" resultMap="paymentCompleteNotificationDto ">
+	SELECT 
+		ot.order_no, 
+		ot.order_id, 
+		p.product_name, 
+		ot.order_status, 
+		ot.member_id
+	FROM 
+		orderTbl ot
+		JOIN order_detail od ON ot.order_id = od.order_id
+		JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
+		JOIN product p ON pd.product_id = p.product_id
+	WHERE
+		order_no = #{orderNo};
+   </select>
+   <resultMap type="PaymentCompleteNotificationDto " id="paymentCompleteNotificationDto ">
+      <id column="order_id" property="orderId" />
+      <result column="order_no" property="orderNo" />
+      <result column="product_name" property="productName" />
+      <result column="order_status" property="orderStatus" />
+      <result column="member_id" property="memberId" />
+   </resultMap>
+   
+</mapper>

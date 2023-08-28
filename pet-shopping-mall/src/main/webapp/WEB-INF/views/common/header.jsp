@@ -4,8 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,26 +114,26 @@
 			method="POST">
 		</form:form>
 		
-	<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="noticeModalLabel"></h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body"></div>
-		  <div class="modal-footer flex-column">
-			<div class="d-flex justify-content-between w-100">
-				<div>보낸사람 : <span class='badge badge-primary from'></span></div>
-				<div>작성일 : <span class='when'></span></div>
+		<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="noticeModalLabel"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			  <div class="modal-body"></div>
+			  <div class="modal-footer flex-column">
+				<div class="d-flex justify-content-between w-100">
+					<div>보낸사람 : <span class='badge badge-primary from'></span></div>
+					<div>작성일 : <span class='when'></span></div>
+				</div>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+			  </div>
 			</div>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
 		  </div>
 		</div>
-	  </div>
-	</div>
 	</sec:authorize>
 	
 	<header>

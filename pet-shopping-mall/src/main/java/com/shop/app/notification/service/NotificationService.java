@@ -1,11 +1,11 @@
 package com.shop.app.notification.service;
 
 import com.shop.app.notification.entity.Notification;
-import com.shop.app.order.dto.OrderCompleteNotificationDto;
+import com.shop.app.payment.dto.PaymentCompleteNotificationDto;
 
 public interface NotificationService {
 
-	int notifyOrderCreate(OrderCompleteNotificationDto orderCompleteNotificationDto); 
+	int paymentCompleteNotification(PaymentCompleteNotificationDto paymentCompleteNotificationDto);
 
 
 

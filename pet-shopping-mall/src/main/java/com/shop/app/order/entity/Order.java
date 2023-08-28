@@ -29,7 +29,6 @@ public class Order {
 	private int amount; // 실 결제 금액
 	
 	private int memberCouponId; // 쿠폰 기능 할 수도 있으니까 만들어놓은 컬럼, null 처리해도 됨
-	
 	private int productId;
 	
 }

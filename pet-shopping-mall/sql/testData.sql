@@ -937,7 +937,19 @@ where
 insert into (id, noti_category, noti_content, noti_created_at, member_id) 
     values (seq_notification_id.nextval, ?, ?, default, ?);
 
+select * from orderTbl where order_no = 1;
 
-UPDATE orderTbl
-SET order_status = 4
-WHERE order_id = 1;
+SELECT ot.order_no, ot.order_id, p.product_name, ot.order_status, ot.member_id
+FROM orderTbl ot
+JOIN order_detail od ON ot.order_id = od.order_id
+JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
+JOIN product p ON pd.product_id = p.product_id
+where order_no = '230811-001';
+
+
+
+
+
+
+
+

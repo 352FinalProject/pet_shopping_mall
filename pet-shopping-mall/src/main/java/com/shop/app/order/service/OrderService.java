@@ -64,6 +64,8 @@ public interface OrderService {
 
 	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
 	boolean reviewWrite(String memberId, int orderId);
+	
+	
 
 	
 }

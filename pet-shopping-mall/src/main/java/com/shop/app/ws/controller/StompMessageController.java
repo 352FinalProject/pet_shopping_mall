@@ -34,26 +34,12 @@ public class StompMessageController {
    private NotificationService notificationService;
    
    /**
-    * prefix를 제외한 url만 작성해야 함
-    * 
-    * 전체 공지
-    */
-   @MessageMapping("/notice") // 전송된 WebSocket 메시지를 수신
-   @SendTo("/app/notice") // 반환된 메시지가 /app/notice 대상으로 전송되도록 지정
-   public Notification notice(@RequestBody Notification message) {
-      log.debug("message = {}", message);
-      return message;
-   }
-   
-   
-   /**
     * 개개인에게
     */
    @MessageMapping("/notice/{memberId}")
    @SendTo("/app/notice/{memberId}")
    public Notification noticeEach(@DestinationVariable String memberId, Notification message) {
                         // 경로변수
-	  notificationService.insertNotification(message); // 서비스만들고. 서비스 임플 오류 왜?
       log.debug("memberId = {}", memberId);
       log.debug("message = {}", message);
       return message;

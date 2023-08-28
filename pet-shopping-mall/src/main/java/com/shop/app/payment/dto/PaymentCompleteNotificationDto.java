@@ -1,4 +1,4 @@
-package com.shop.app.order.dto;
+package com.shop.app.payment.dto;
 
 import java.sql.Timestamp;
 
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderCompleteNotificationDto {
+public class PaymentCompleteNotificationDto {
 	private int orderId;
 	private String orderNo; // orderTbl
 	private String productName; // product
