@@ -14,34 +14,40 @@
 			</ol>
 			<div class="card mb-4">
 				<div class="admin-product-search-container">
-					<form method="GET" class="admin-product-search">
-						<label for="searchKeyword">검색어:</label> <select
-							name="searchCategory">
-							<option value="productName">상품명</option>
-							<option value="productCode">상품코드</option>
-						</select> <input type="text" id="searchKeyword" name="searchKeyword"
-							placeholder="상품명 또는 상품코드"><br> <label for="minStock">재고검색:</label>
-						<input type="number" id="minStock" name="minStock"> ~ <label
-							for="maxStock"></label> <input type="number" id="maxStock"
-							name="maxStock"><br> <label>판매 여부:</label> <input
-							type="radio" id="saleStatusAll" name="saleStatus" value="all">
-						<label for="saleStatusAll">전체</label> <input type="radio"
-							id="saleStatusSoldOut" name="saleStatus" value="soldOut">
-						<label for="saleStatusSoldOut">품절</label> <input type="radio"
-							id="saleStatusDiscontinued" name="saleStatus" value="discontinued">
-						<label for="saleStatusDiscontinued">단종</label> <input type="radio"
-							id="saleStatusPaused" name="saleStatus" value="paused"> <label
-							for="saleStatusPaused">중지</label><br>
-						<button type="submit">검색</button>
-					</form>
-				</div>
+				<form:form 
+			    	method="GET" 
+			    	name="adminProductSearch"
+			    	action="${pageContext.request.contextPath}/admin/adminProductSearch.do">
+			        
+		        	<label for="searchKeyword">검색어:</label> 
+					<select name="searchCategory">
+						<option value="product_name">상품명</option>
+						<!-- <option value="product_category">카테고리</option> -->
+					</select> <input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명"><br> 
+					
+					<label>판매 여부:</label> 
+					<input type="checkbox" id="saleStatusAll" onclick="selectAllStatus();">
+					<label for="saleStatusAll">전체</label> 
+					<input type="checkbox" id="saleStatusDiscontinued" name="saleState" value="0">
+					<label for="saleStatusDiscontinued">판매대기</label> 
+					<input type="checkbox" id="saleStatusOnSale" name="saleState" value="1">
+					<label for="saleStatusOnSale">판매중</label> 
+					<input type="checkbox" id="saleStatusSoldOut" name="saleState" value="2"> 
+					<label for="saleStatusSoldOut">품절</label>
+					<input type="checkbox" id="saleStatusOther" name="saleState" value="3"> 
+					<label for="saleStatusOther">기타</label><br>
+			        
+			        <button type="submit">검색</button>
+			    </form:form>
+
+				</div><!-- admin-product-search-container -->
 			</div>
 
 
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 기본상품목록
-					<input type="button" value="글쓰기" id="btn-add"/>
+					<input type="button" value="상품등록" id="btn-add"/>
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple">
@@ -118,10 +124,21 @@
 		</div>
 	</main>
 	<script>
-	const deleteProduct = () => {
-		
-	};
-	
+	const selectAllStatus = () => {
+		const checkAll = document.getElementById('saleStatusAll');
+        const productStatusCheckboxes = document.getElementsByName('saleState');
+		console.log(checkAll);
+		if(checkAll.checked == true){
+	        productStatusCheckboxes.forEach((checkbox) => {
+	        	checkbox.checked = true;
+	        });			
+		} else {
+	        productStatusCheckboxes.forEach((checkbox) => {
+	        	checkbox.checked = false;
+	        });						
+		}
+    };
+    
 	document.querySelector("#btn-add").onclick = () => {
 		location.href = '${pageContext.request.contextPath}/admin/adminProductCreate.do';
 	};
