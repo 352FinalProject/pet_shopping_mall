@@ -16,7 +16,6 @@
 				<table class="service-product-utility-sidebar">
 					<thead>
 						<tr>
-							<th>번호</th>
 							<th>내역</th>
 							<th>발급일</th>
 							<th>유효기간</th>

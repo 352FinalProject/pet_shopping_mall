@@ -45,7 +45,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.service.CartService;
+import com.shop.app.coupon.dto.MemberCouponDto;
+import com.shop.app.coupon.entity.MemberCoupon;
+import com.shop.app.coupon.service.CouponService;
+import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.service.MemberService;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
@@ -84,6 +89,12 @@ public class PaymentController {
 	
 	@Autowired
 	SchedulePay schedulePay;
+	
+	@Autowired
+	CouponService couponService;
+	
+	@Autowired
+	MemberService memberService;
 
 	private IamportClient iamportClient;
 	private IamportApi iamportApi;
@@ -108,6 +119,10 @@ public class PaymentController {
 		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
 
+        MypageDto myPage = memberService.getMyPage(principal.getMemberId());
+        int couponCount = myPage.getMemberCoupon();
+        model.addAttribute("couponCount", couponCount);
+      
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
 
@@ -147,6 +162,40 @@ public class PaymentController {
 		// 4. db에 포인트 사용 정보 저장
 		int usedPointResult = pointService.insertUsedPoint(usedPoint);
 
+		// 1. 쿠폰 가져오기 (예라)
+		MemberCoupon coupon = new MemberCoupon();
+		coupon.setMemberId(_order.getMemberId());
+		MemberCoupon currentCoupons = couponService.findCouponCurrendById(coupon);
+		
+		// 2. 쿠폰 사용
+		  
+		  // 2-1. 쿠폰 유효성 검사 
+		  MemberCoupon validCoupon = couponService.validateCoupon(_order.getCouponId(), _order.getMemberId());
+		  
+		  if(validCoupon != null) { // 유효한 쿠폰인 경우
+		    
+		  // 2-2. 쿠폰을 적용하여 주문 금액을 할인
+		  int discountAmount = 0; // 할인 금액 초기화
+		  
+		  switch (validCoupon.getCouponId()) {
+		    case 1:
+		        discountAmount = 3000; // 배송비 적립 쿠폰, 3000원 할인
+		        break;
+		    case 2:
+		        discountAmount = (int)(order.getAmount() * 0.1); // 생일축하 쿠폰, 주문 금액의 10%
+		        break;
+		  }
+
+			order.setAmount(order.getAmount() - discountAmount); // 할인 금액을 주문 금액에서 빼준다.
+		    
+		    // 2-3. 쿠폰 상태 업데이트 (사용됨)
+		    validCoupon.setUseStatus(1);
+		    int usedCouponResult = couponService.updateCouponStatus(validCoupon);
+		    log.debug("usedCouponResult = {}", usedCouponResult);
+		  }
+		  
+		
+		  
 		int result = orderService.insertOrder(order, orderDetails);
 
 		String msg = "";
@@ -288,4 +337,25 @@ public class PaymentController {
 		
 		return ResponseEntity.ok("성공");
 	}
+	
+	
+	// 결제할 때 쿠폰 목록 보여주기 (예라)
+	@GetMapping("/findCoupon.do")
+    public ResponseEntity<?> getCoupons(Authentication authentication) {
+        String memberId = authentication.getName();
+        
+        try {
+            List<MemberCouponDto> coupons = couponService.findCouponsByMemberId(memberId);
+            log.debug("coupons = {}", coupons);
+            if (coupons.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                
+            }
+            return new ResponseEntity<>(coupons, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
+        
+    }
 }
