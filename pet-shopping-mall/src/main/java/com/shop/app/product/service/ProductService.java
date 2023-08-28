@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -56,6 +57,9 @@ public interface ProductService {
 	
 	// 찜 수 증감 (선모)
 	int updateLikeCnt(Map<String, Object> param);
+	
+	// index페이지 상품 검색 담희
+	List<ProductSearchDto> searchProducts(String searchQuery);
 
 
 }
