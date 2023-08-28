@@ -49,8 +49,8 @@ pageEncoding="UTF-8"%>
             <img
               src="${pageContext.request.contextPath}/resources/images/상품/star.png"
               alt="별점"
-            /><span>5.0</span> <span>&nbsp;|&nbsp;</span>
-            <span><a href="#">후기 102건</a></span>
+            /><span><fmt:formatNumber value="${productReviewStarAvg.AVG}" pattern="#.#"/></span> <span>&nbsp;|&nbsp;</span>
+            <span><a href="#">${reviewTotalCount}건</a></span>
           </div>
         </div>
         <hr class="hr-line" />
@@ -97,35 +97,37 @@ pageEncoding="UTF-8"%>
         </c:if>
         <!-- 옵션 있을 때 -->
         <c:if test="${not empty productDetails}">
-	        <div>
-	          <select name="product-option">
+	        <div class="select-product-options">
+	          <select name="product-option" id="product-option">
 	            <option value="">[필수]옵션선택</option>
 	            <!-- 옵션나열 -->
 	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
 	        		<c:if test="${empty productDetail.optionName}">
-	            		<option value="${productDetail.productDetailId}">[옵션없음]</option>
+	            		<option name="productOptions[${productDetail.productDetailId}]" id="productOptions[${productDetail.productDetailId}]" value="${productDetail.productDetailId}">[옵션없음]</option>
 	        		</c:if>
 	        		<c:if test="${not empty productDetail.optionName}">
-	            		<option value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+	            		<option name="productOptions[${productDetail.productDetailId}]" id="productOptions[${productDetail.productDetailId}]" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
 	        		</c:if>
 	        	</c:forEach>
 	          </select>
 	        </div>
-	        
-            	<!-- 상품구입 개수 입력 -->
-        	<div class="purchase-cnt">
-		    	<div class="quantity-container">
-		    		<spna>수량  </spna>
-				    <button class="quantity-btn minus">-</button>
-				    <input type="text" id="quantity" class="quantity-input" value="1">
-				    <button class="quantity-btn plus">+</button>
-				</div>
-        	</div>
-	        
         </c:if>
         
-        
-        
+        <!-- 상품구입 수량 입력 -->
+	    <div class="purchase-list">
+	    <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+			<div class="product-choice choice${productDetail.productDetailId}" style="display : none">
+				<span class="choiced-productName[${vs.count}]">${product.productName}</span>
+				<span class="choiced-productOption[${vs.count}]"> [${productDetail.optionName}]${productDetail.optionValue}</span>
+				<span class="choiced-quantity[${vs.count}]">
+				    <button class="quantity-btn minus">-</button>
+				    <input type="text" id="quantity[${vs.count}]" class="quantity-input" value="1">
+				    <button class="quantity-btn plus">+</button>
+				</span>
+			</div>
+	    </c:forEach>	
+	    </div>    
+	        
         <div class="product-price">
           <div class="product-price-desc">
             총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
@@ -293,12 +295,13 @@ pageEncoding="UTF-8"%>
   <div class="product-bottom">
     <div class="product-bottom2">
       <div>
-        <span id="product-bottom-title">${product.productName}</span> <br />
-        <span>11,000원</span>
+        <span id="product-bottom-title" style="font-size: 24px;">${product.productName}</span> <br />
+        <span style="font-size: 18px; font-weight: 600;">
+        	<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /> 원
+        </span>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
-        	${likeState}
         	<c:choose>
         		<c:when test="${product.likeCnt == 0}">
 					<span class="heart-button" id="clickHeart">♡</span>
@@ -312,62 +315,141 @@ pageEncoding="UTF-8"%>
         <span id="likeCnt">${product.likeCnt}</span>
       </div>
       <div>
-        <button class="btn btn1">장바구니</button>
+        <button class="btn btn1" onclick="addCart();">장바구니</button>
         <button class="btn btn2">구매하기</button>
       </div>
     </div>
   </div>
+  <form:form id="addCartFrm">
+  	<input type="hidden" value="" id="_quantity" name="quantity">
+  	<input type="hidden" value="" id="_productDetailId" name="productDetailId">
+  </form:form>
 </section>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+/* 상품수량에 입력란 만들기(수경) */
+const productOption = document.querySelector("select[name='product-option']");
+productOption.addEventListener("change", () => {
+	const productDetailId = productOption.value;
+	addToPurchaseList(productDetailId);
+	
+});
+
+const addToPurchaseList = (productDetailId) => {
+	const purchaseList = document.querySelector(".purchase-list");
+	const choiceProduct = document.querySelector(`.choice\${productDetailId}`);
+	console.log(purchaseList);
+	if(purchaseList.classList.contains(`choice\${productDetailId}`)){
+		alert('이미 선택한 상품입니다.');
+	}else {
+		purchaseList.classList.add(`choice\${productDetailId}`);
+		choiceProduct.style.display = "flex";
+	}
+	
+};
+
 /* 상품수량에 따라 가격 바꾸기(수경) */
 
+
+
+/* 상품수량 바꾸기 버튼 */
+
+(()=>{
+	const quantityInput = document.querySelector(".quantity-input");
+	const optionMinusButton = document.querySelectorAll(".minus");
+	const optionPlusButton = document.querySelectorAll(".plus");
+	console.log(optionMinusButton);
+	
+	if(optionMinusButton){
+	 optionMinusButton.forEach((button) => {
+		 console.log(button);
+		 const currentQuantity = document.querySelectorAll(".plus")
+		 button.addEventListener("click", () => {
+		   if (currentQuantity > 1) {
+		     currentQuantity--;
+		     quantityInput.value = currentQuantity;
+		   }
+		 });	 
+	 })
+	};
+	
+	if(optionPlusButton){
+		console.log(optionPlusButton);
+		optionPlusButton.forEach((button) => {
+		 button.addEventListener("click", () => {
+		   currentQuantity++;
+		   quantityInput.value = currentQuantity;
+		 });	 
+	 })
+	};
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
-  const optionSelect = document.querySelector("select[name='product-option']");
-  const quantityInput = document.querySelector(".quantity-input");
-  const optionMinusButton = document.querySelector(".minus");
-  const optionPlusButton = document.querySelector(".plus");
-  const addToCartButton = document.querySelector(".btn1"); // 장바구니 버튼 선택
+	  const optionSelect = document.querySelector("[name='product-option']");
+	  const quantityInput = document.querySelector(".quantity-input");
+	  const optionMinusButton = document.querySelector(".minus");
+	  const optionPlusButton = document.querySelector(".plus");
+	  const frm = document.querySelector("#addCartFrm");
 
-  let currentQuantity = 1;
+	  let currentQuantity = 1;
 
-  optionMinusButton.addEventListener("click", () => {
-    if (currentQuantity > 1) {
-      currentQuantity--;
-      quantityInput.value = currentQuantity;
-    }
-  });
+	  optionMinusButton.addEventListener("click", () => {
+	    if (currentQuantity > 1) {
+	      currentQuantity--;
+	      quantityInput.value = currentQuantity;
+	      frm.quantity.value = currentQuantity;
+	    }
+	  });
 
-  optionPlusButton.addEventListener("click", () => {
-    currentQuantity++;
-    quantityInput.value = currentQuantity;
-  });
+	  optionPlusButton.addEventListener("click", () => {
+	    currentQuantity++;
+	    quantityInput.value = currentQuantity;
+	    frm.quantity.value = currentQuantity;
+	  });
+	  
+	  console.log(optionSelect);
+	  
+	  optionSelect.addEventListener("change", function() {
+	    const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+	    const selectedValue = selectedOption.value;
+	    const updateQuantity = quantityInput.value;
+	    
+	    frm.productDetailId.value = selectedValue;
+	    frm.quantity.value = updateQuantity;
+	  });
+	  
+	  let token = $("meta[name='_csrf']").attr("content");
+	  let header = $("meta[name='_csrf_header']").attr("content");
 
-  addToCartButton.addEventListener("click", () => {
-    const selectedOptionId = optionSelect.value;
-    
-    // URL에서 파라미터 값을 가져오기
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("productId"); // 상품 id 가져오기
-    const quantity = currentQuantity;
+	  $(function() {
+	      $(document).ajaxSend(function(e, xhr, options) {
+	          xhr.setRequestHeader(header, token);
+	      });
+	  });
 
-    // 장바구니에 상품 추가
-    $.ajax({
-      type: "POST",
-      url: "${pageContext.request.contextPath}/cart/shoppingCart.do",
-      data: {
-    	productDetailId: productId,
-        optionId: selectedOptionId,
-        quantity: quantity,
-      },
-      success: function (response) {
-    	alert("상품이 추가되었습니다.");
-      },
-      error: function (error) {
-        console.error(error);
-      },
-    });
-  });
 });
+
+function addCart() {
+	const frm = document.querySelector("#addCartFrm");
+	
+	const quantityValue = frm.querySelector("#_quantity").value;
+	const productDetailIdValue = frm.querySelector("#_productDetailId").value;
+	  
+    $.ajax({
+        type: "POST",
+        url: "${pageContext.request.contextPath}/cart/insertCart.do",
+        data: {
+            quantity: quantityValue,
+            productDetailId: productDetailIdValue
+        },
+        success(response) {
+      		alert(response.msg);
+        },
+        error: function (error) {
+          console.error(error);
+        },
+      }); 
+};
 
 
   // 리뷰 페이지 아코디언 효과
@@ -410,20 +492,9 @@ $(function() {
     });
 });
 
-//중복 클릭 방지 플래그
-let isProcessing = false;
-let isPink = $("#clickHeart").hasClass("pink"); // 이전 상태 저장
-
 $("#clickHeart").on("click", function() {
-    if (isProcessing) {
-        return;
-    }
-
-    isProcessing = true;
-
-    console.log(isPink); // 이전 상태 출력
-    var state = isPink ? "insert" : "delete"; // 이전 상태에 따라 반대로 설정
-
+    var state = $("#clickHeart").hasClass("pink") ? "delete" : "insert"; // 이전 상태에 따라 반대로 설정
+    
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/product/insertPick.do",
@@ -436,14 +507,10 @@ $("#clickHeart").on("click", function() {
         }),
         success: function(result) {
             if (result.rs == "insertS") {
-                if (isPink) { // 이전 상태에 따라 조건 분기
-                    $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-                }
+            	$("#likeCnt").text(Number($("#likeCnt").text()) + 1);
                 $("#clickHeart").addClass("pink");
             } else if (result.rs == "deleteS") {
-                if (!isPink) { // 이전 상태에 따라 조건 분기
-                    $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-                }
+            	$("#likeCnt").text(Number($("#likeCnt").text()) - 1);
                 $("#clickHeart").removeClass("pink");
             }
 
@@ -452,10 +519,6 @@ $("#clickHeart").on("click", function() {
         error: function(req, status, error) {
             alert("에러가 발생하였습니다.");
             console.log(req.responseText);
-        },
-        complete: function() {
-            isProcessing = false;
-            isPink = !isPink; // 이전 상태 업데이트
         }
     });
 });

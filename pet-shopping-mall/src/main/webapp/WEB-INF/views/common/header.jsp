@@ -199,10 +199,10 @@
 						<div class="search_top_btn">
 							<!-- 검색 창 -->
 							<div class="search_box">
-								<form name="searchBoxForm" id="searchBoxForm" action="">
+								<form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
 									<img
 										src="${pageContext.request.contextPath}/resources/images/home/search.png"
-										id="center-image" alt="검색" />
+										id="search-img" alt="검색" />
 								</form>
 							</div>
 						</div>
@@ -273,46 +273,60 @@
 		</div>
 	</div>
 <script>
-/* alert('${msg}'); */
-/* const deleteMember = () => {
-    if (confirm('정말로 회원 탈퇴하시겠습니까?')) {
-        document.getElementById('deleteMemberForm').submit();
-    } else {
-        alert('회원 탈퇴를 실패했습니다.');
-    }
-}; */
 
-$(document).deleteMemberForm-button(function() {
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-	const deleteMember = document.getElementById("sendEmail");
-    $("#deleteMemberForm-closeModalBtn").click(function() {
-        const deleteMember = $("#deleteMember-password").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/member/deleteMember.do',
-            data: {
-                'password': password
-            },
-            dataType: "text",
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
-            },
-            success: function(result) {
-            	console.log(result);
-                if (result === "no") {
-                    alert('비밀번호가 틀렸습니다.');
-                    userEmail.submit();
-                } else {
-                    alert('회원 탈퇴완료ㅠㅠ.');
-                }
-            },
-            error: function() {
-                console.log('에러 체크!!');
-            }
-        });
-    });
-});
+$(document).ready(function() {
+	  const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+	  const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+	  $("#deleteMemberForm-closeModalBtn").click(function() {
+	    const deleteMemberPassword = $("#deleteMember-password").val();
+	    $.ajax({
+	      type: 'POST',
+	      url: '${pageContext.request.contextPath}/member/deleteMember.do',
+	      data: {
+	        'password': deleteMemberPassword
+	      },
+	      dataType: "text",
+	      beforeSend: function(xhr) {
+	        xhr.setRequestHeader(csrfHeader, csrfToken); // Add CSRF token to header
+	      },
+	      success: function(result) {
+	        console.log(result);
+	        if (result === "no") {
+	          alert('비밀번호가 틀렸습니다.');
+	        } else {
+	          alert('회원 탈퇴완료ㅠㅠ.');
+	        }
+	      },
+	      error: function() {
+	        console.log('에러 체크!!');
+	      }
+	    });
+	  });
+
+	  const searchBoxForm = document.getElementById("searchBoxForm");
+	  const searchImg = document.getElementById("search-img");
+
+	  searchImg.addEventListener("click", function () {
+	    const inputElement = document.createElement("input");
+	    inputElement.type = "text";
+	    inputElement.name = "searchQuery";
+	    inputElement.placeholder = "Enter the product name you are looking for";
+
+	    searchBoxForm.appendChild(inputElement);
+
+	    inputElement.addEventListener("keyup", function(event) {
+	      if (event.key === "Enter") {
+	        event.preventDefault();
+	        searchBoxForm.submit();
+	      }
+	    });
+	  });
+
+	});
+	
+
+
 </script>
 
 	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>

@@ -12,6 +12,8 @@ import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -101,4 +103,16 @@ public interface ProductRepository {
 	/* 좋아요 개수 증감 (선모) */
 	@Update("UPDATE product SET LIKE_CNT = NVL(LIKE_CNT, 0) + #{cnt} WHERE PRODUCT_ID  = #{productId}")
 	int updateLikeCnt(Map<String, Object> param);
+
+	
+	List<ProductSearchDto> searchProducts(String searchQuery);
+
+	@Select("select * from product order by 1")
+	List<Product> findAllProducts();
+
+	@Select("select * from product_detail where product_id = #{productId} order by 1")
+	List<ProductDetail> findProductDetailsByProductId(int productId);
+
+	@Select("select * from product where product_name like '%' || #{searchKeyword} || '%'")
+	List<Product> searchProducts(String searchKeyword, String searchCategory);
 }

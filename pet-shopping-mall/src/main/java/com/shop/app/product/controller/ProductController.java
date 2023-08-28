@@ -30,10 +30,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.order.service.OrderService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -56,6 +58,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductController {
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private OrderService orderService;
 
 	@Autowired
 	private ReviewService reviewService;
@@ -69,6 +74,7 @@ public class ProductController {
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int productId,
 	                          @RequestParam(defaultValue = "1") int page,
+	                          @AuthenticationPrincipal MemberDetails member,
 	                          Model model) {
 
 	    int limit = 3;
@@ -93,7 +99,6 @@ public class ProductController {
 	    model.addAttribute("productImages", productImages); // 상품이미지
 	    model.addAttribute("productDetails", productDetails); // 상품옵션
 	    
-	    
 	    // 상품 상세 페이지에 펫 정보 뿌려주기
 	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 
@@ -108,16 +113,16 @@ public class ProductController {
 	        int reviewId2 = review.getReviewId();
 	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 	        
-	        log.debug("reviewDetails = {}", reviewDetails);
+	        //log.debug("reviewDetails = {}", reviewDetails);
 	        
 	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
 	            String imageFilename = reviewDetails.getAttachments().get(0).getImageRenamedFilename();
-	            log.debug("imageFilename = {}", imageFilename);
+	            //log.debug("imageFilename = {}", imageFilename);
 	            reviewImageMap.put(reviewId2, imageFilename);
 	        }
 	    }
 	    
-	    log.debug("reviewImageMap = {}", reviewImageMap);
+	    // log.debug("reviewImageMap = {}", reviewImageMap);
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
@@ -126,24 +131,25 @@ public class ProductController {
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
 	    
-	    
-//	    log.debug("reveiwTotalCount = {}", reveiwTotalCount);
+	    // log.debug("reveiwTotalCount = {}", reveiwTotalCount);
 	    
 	    // 리뷰 평점
-		/*
-		 * List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll();
-		 * model.addAttribute("reviews2", reviews2);
-		 * 
-		 * ProductReviewAvgDto productReviewStarAvg =
-		 * reviewService.productReviewStarAvg(productId);
-		 * model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-		 * 
-		 * log.debug("productReviewStarAvg = {}", productReviewStarAvg);
-		 */
+		List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(productId);
+		model.addAttribute("reviews2", reviews2);
+		  
+		log.debug("reviews2 = {} ", reviews2);
+		  
+		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+	
+		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+		  
+		 
 	    
 	    
-	}
-
+	    /* 찜 등록 여부 가져오기 (선모) */
+			model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId())); // 찜 여부 가져오기
+		}
 
 	/**
 	 * @author 전수경
@@ -157,27 +163,46 @@ public class ProductController {
 		log.debug("categoryId = {}", id);
 		// 카테고리 정보 가져오기
 		ProductCategory productCategory = productService.findProductCategoryById(id); 
-		log.debug("productCategory = {}", productCategory);
-		
-		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
-		
 		// 해당 카테고리의 상품 가져오기
 		List<Product> products = productService.findProductsByCategoryId(id);
 		
+		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(Product product : products) {
+			// 이미지 가져오기
 			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+			List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(product.getProductId());
+			// 상품 주문정보 가져오기
+			int orderCnt = 0;
+			for(ProductDetail productDetail : productDetails) {
+				orderCnt += orderService.findOrderCntByProductId(productDetail.getProductDetailId());
+			}
 			
 			productInfos.add(ProductInfoDto.builder()
 					.product(product)
+					.productDetails(productDetails)
+					.productId(product.getProductId()) // productId 받아오기 (혜령)
+					.orderCnt(orderCnt) // 주문수
 					.attachments(productImages.getAttachments())
 					.attachmentMapping(productImages.getAttachmentMapping())
 					.build());
 		}
-		
 		log.debug("productInfos = {}", productInfos);
 		
 		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productInfos", productInfos);
+		
+		// 리뷰 전체개수 출력 (혜령)
+		for (ProductInfoDto productInfo : productInfos) {
+		    int productId = productInfo.getProductId();
+		    
+		    log.debug("productI 가져오니 = {}", productId);
+
+		    int reviewTotalCount = reviewService.findReviewTotalCount(productId);
+		    model.addAttribute("reviewTotalCount", reviewTotalCount);
+		    
+		    log.debug("reviewTotalCount = {}", reviewTotalCount);
+		    
+		}
 	}
 	
 	
@@ -221,5 +246,16 @@ public class ProductController {
 
 	
 	
+	
+	
+	
+	
+	@GetMapping("/searchProduct.do")
+	public void searchProducts(Model model, @RequestParam String searchQuery) {
+		List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
+		
+		model.addAttribute("productInfos",productInfos);
+		
+	}
 	
 }

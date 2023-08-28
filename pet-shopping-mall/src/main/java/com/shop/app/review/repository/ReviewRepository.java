@@ -90,8 +90,8 @@ public interface ReviewRepository {
 	// 상품 - 리뷰 평점
 	ProductReviewAvgDto productReviewStarAvg(int productId);
 
-	@Select("select * from review")
-	List<ProductReviewAvgDto> findProductReviewAvgAll();
+	@Select("select * from review where product_id = #{productId}")
+	List<ProductReviewAvgDto> findProductReviewAvgAll(int productId);
 	
 	
 

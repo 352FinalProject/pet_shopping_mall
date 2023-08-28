@@ -186,8 +186,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<ProductReviewAvgDto> findProductReviewAvgAll() {
-		return reviewRepository.findProductReviewAvgAll();
+	public List<ProductReviewAvgDto> findProductReviewAvgAll(int productId) {
+		return reviewRepository.findProductReviewAvgAll(productId);
 	}
 }
 

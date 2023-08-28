@@ -67,5 +67,8 @@ public interface OrderService {
 	
 	
 
+	// 상품별 주문확정 주문 수 조회 (수경)
+	int findOrderCntByProductId(int productDetailId);
+
 	
 }

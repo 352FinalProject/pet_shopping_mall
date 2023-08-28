@@ -216,6 +216,7 @@ create table product_category (
     constraints pk_category_id primary key(category_id)
 );
 
+
 -- 상품 테이블
 create table product (
     product_id number, -- pk
@@ -322,9 +323,9 @@ create table review (
     review_star_rate number default 1 not null,
     review_created_at timestamp default systimestamp,
     constraint pk_review_id primary key(review_id),
-    constraint fk_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
-    constraint fk_product_product_id foreign key (product_id) references product(product_id) on delete cascade,
-    constraint fk_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
+    constraint fk_reivew_pet_id foreign key(pet_id) references pet(pet_id) on delete cascade,
+    constraint fk_reivew_product_product_id foreign key (product_id) references product(product_id) on delete cascade,
+    constraint fk_reivew_order_id foreign key (order_id) references orderTbl(order_id) on delete cascade,
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 

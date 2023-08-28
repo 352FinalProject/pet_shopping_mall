@@ -171,4 +171,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.reviewWrite(memberId, orderId);
 	}
 	
+	// 상품별 주문확정 주문 수 조회 (수경)
+	@Override
+	public int findOrderCntByProductId(int productDetailId) {
+		return orderRepository.findOrderCntByProductId(productDetailId);
+	}
 }
