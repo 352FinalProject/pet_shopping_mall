@@ -34,6 +34,7 @@ import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -234,5 +235,16 @@ public class ProductController {
 
 	
 	
+	
+	
+	
+	
+	@GetMapping("/searchProduct.do")
+	public void searchProducts(Model model, @RequestParam String searchQuery) {
+		List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
+		
+		model.addAttribute("productInfos",productInfos);
+		
+	}
 	
 }

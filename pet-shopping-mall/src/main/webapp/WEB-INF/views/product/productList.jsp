@@ -127,7 +127,7 @@ ul.nav {
 	<div class="common-container">
 		<section class="product-board">
 			<!-- 게시판 이름 -->
-	        <div class="board-title"">
+	        <div class="board-title">
 		        <span>
 		        ${productCategory.categoryName} 
 		        </span>
