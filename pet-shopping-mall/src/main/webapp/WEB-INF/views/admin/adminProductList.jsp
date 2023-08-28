@@ -123,7 +123,46 @@
 			
 		</div>
 	</main>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>	
 	<script>
+	//ajax 요청시 사용할 csrf 글로벌 변수설정
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(function() {
+	    $(document).ajaxSend(function(e, xhr, options) {
+	        xhr.setRequestHeader(header, token);
+	    });
+	});
+	
+	
+	adminProductSearch.onsubmit = (e) => {
+		const {searchKeyword, searchCategory, saleState} = e.target;
+		console.log(searchKeyword.value);
+		console.log(searchCategory.value);
+		console.log(saleState);
+	    const searchKeyword = searchKeyword.value; 
+	    const searchCategory = searchCategory.value; 
+	    
+	    const requestData = {
+	    	searchKeyword: searchKeyword,
+	    	searchCategory: searchCategory
+	    };
+		if (searchKeyword.length > 0){
+		    // Ajax 요청
+		    $.ajax({
+		        url: '${pageContext.request.contextPath}/admin/adminProductSearch.do',
+		        type: 'GET',
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(requestData)
+		    }).done(function(data) {
+		        updateQuestionList(data.productInfos);
+		      });
+		}
+		e.preventDefault();
+	}
+	
+	
 	const selectAllStatus = () => {
 		const checkAll = document.getElementById('saleStatusAll');
         const productStatusCheckboxes = document.getElementsByName('saleState');

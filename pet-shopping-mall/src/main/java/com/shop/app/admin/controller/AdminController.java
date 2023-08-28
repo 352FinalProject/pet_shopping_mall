@@ -392,17 +392,15 @@ public class AdminController {
 		model.addAttribute("productInfos", productInfos);
 	}
 
+	// 상품검색 (수경)
 	@GetMapping("adminProductSearch.do")
-	public void adminProductSearch(
+	public String adminProductSearch(
 			@Valid ProductSearchKeywordDto _searchContent,
 			@AuthenticationPrincipal MemberDetails member,
 			Model model) {
 		log.debug("_searchContent = {}", _searchContent); //(searchKeyword=고양, searchCategory=productName, saleState=[0, 1, 2, 3])
 		String searchKeyword = _searchContent.getSearchKeyword();
 		String searchCategory = _searchContent.getSearchCategory();
-		int[] _saleState = _searchContent.getSaleState();
-		String saleState = _saleState.toString();
-		log.debug("saleState = {}", saleState);
 		
 		// 키워드로 상품찾기
 		List<Product> products = productService.searchProducts(searchKeyword, searchCategory);
@@ -427,6 +425,7 @@ public class AdminController {
 			productInfos.add(productInfo);
 		}
 		model.addAttribute("productInfos", productInfos);
+		return "admin/adminProductList";
 	}
 	
 	/**
