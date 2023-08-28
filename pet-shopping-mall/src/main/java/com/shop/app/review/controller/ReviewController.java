@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,12 +103,28 @@ public class ReviewController {
 				"reviewMemberId", reviewMemberId
 				);
 
+		log.debug("첫번째 params = {}", params);
+		
 		int totalCount = reviewService.findTotalReviewCount(reviewMemberId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 
 		List<Review> reviews = reviewService.findReviewAll(params);
+		log.debug("두번째 params = {}", params);
+		
 		model.addAttribute("reviews", reviews);
+		
+//	    Map<Review, List<Order>> reviewToOrderMap = new HashMap<>();
+//
+//	    for (Review review : reviews) {
+//	        List<Order> orders = orderService.findOrdersByReviewId(review.getReviewId());
+//	        reviewToOrderMap.put(review, orders);
+//	    }
+//
+//	    model.addAttribute("reviewToOrderMap", reviewToOrderMap);
+//		
+//	    log.debug("reviewToOrderMap = {}", reviewToOrderMap);
+		
 		
 		// 구매한 상품과 연결
 		String memberId = member.getMemberId();
