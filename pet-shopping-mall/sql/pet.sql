@@ -20,7 +20,7 @@ SELECT *  FROM all_tables;
 --==============================
 -- 초기화 블럭
 --==============================
-
+--
 --drop table review;
 --drop table image_attachment;
 --drop table image_attachment_mapping;

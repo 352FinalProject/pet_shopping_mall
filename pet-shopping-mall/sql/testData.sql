@@ -168,7 +168,6 @@ insert into member (member_id, password, name, phone, email, address, birthday, 
 values ('h123qd', '1234', '홍당무', '01015312328', 'h123qd@naver.com', '서울시 송파구 나동', to_date('1991-07-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
-insert into authority values ('abcde', 'ROLE_USER');
 insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
