@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.order.service.OrderService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
 import com.shop.app.product.dto.ProductCreateDto;
@@ -57,6 +58,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductController {
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private OrderService orderService;
 
 	@Autowired
 	private ReviewService reviewService;
@@ -139,9 +143,6 @@ public class ProductController {
 	
 		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
 		  
-		 
-	    
-	    
 	}
 
 
@@ -157,24 +158,29 @@ public class ProductController {
 		log.debug("categoryId = {}", id);
 		// 카테고리 정보 가져오기
 		ProductCategory productCategory = productService.findProductCategoryById(id); 
-		log.debug("productCategory = {}", productCategory);
-		
-		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
-		
 		// 해당 카테고리의 상품 가져오기
 		List<Product> products = productService.findProductsByCategoryId(id);
 		
+		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(Product product : products) {
+			// 이미지 가져오기
 			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+			List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(product.getProductId());
+			// 상품 주문정보 가져오기
+			int orderCnt = 0;
+			for(ProductDetail productDetail : productDetails) {
+				orderCnt += orderService.findOrderCntByProductId(productDetail.getProductDetailId());
+			}
 			
 			productInfos.add(ProductInfoDto.builder()
 					.product(product)
+					.productDetails(productDetails)
 					.productId(product.getProductId()) // productId 받아오기 (혜령)
+					.orderCnt(orderCnt) // 주문수
 					.attachments(productImages.getAttachments())
 					.attachmentMapping(productImages.getAttachmentMapping())
 					.build());
 		}
-		
 		log.debug("productInfos = {}", productInfos);
 		
 		model.addAttribute("productCategory", productCategory);
