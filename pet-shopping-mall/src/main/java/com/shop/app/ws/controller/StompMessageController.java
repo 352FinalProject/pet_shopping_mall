@@ -8,7 +8,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import com.sh.app.ws.dto.Payload;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.notification.entity.Notification;
 import com.shop.app.notification.service.NotificationService;
