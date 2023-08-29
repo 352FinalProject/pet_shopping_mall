@@ -61,7 +61,7 @@ ul.nav {
 }
 .product-gallery {
 	max-width: 1200px;
-	margin: 0 auto;
+	margin-top: 50px;
 }
 .gallery {
 	display: flex;
@@ -86,12 +86,14 @@ ul.nav {
     /* border-bottom: 1px solid #051619; */
     border-radius: 0;
     overflow: hidden;
+    width: 280px;
+    height: 280px;
+    
 }
 .product-card .product-thumbnail img {
 	position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
     height: 100%;
     object-fit: cover;
 }

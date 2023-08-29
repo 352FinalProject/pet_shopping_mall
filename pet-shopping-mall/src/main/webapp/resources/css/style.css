@@ -184,6 +184,7 @@ body {
 	margin-top: 11px;
 	padding-bottom: 11px;
 	border-bottom: 1px solid #e7e7e7;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* 홈 슬라이드 */
