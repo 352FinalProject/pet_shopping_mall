@@ -168,6 +168,9 @@
 			</div>
 		</div>
 	</div>
+<form:form name="orderDeleteFrm" id="orderDeleteFrm" method="POST" action="${pageContext.request.contextPath}/order/deleteOrder.do">
+	<input type="hidden" name="orderNo" value=""/>
+</form:form>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
@@ -302,7 +305,6 @@ const proceedPay = () => {
 	
 	data.forms = formDatas;
 	
-	console.log(data);
 	
 	$.ajax({
 		url: '${pageContext.request.contextPath}/payment/proceed.do',
@@ -311,13 +313,16 @@ const proceedPay = () => {
 		contentType:'application/json',
 		data : JSON.stringify(data),
 		success(response) {
-			
 			console.log(response);
 			if(response.result > 0){
-				alert('주문하시겠습니까?')
-				requestPaymentByCard(data);
-			} else {
-				alert(response.msg);
+				if(confirm("주문하시겠습니까?")) {
+					requestPaymentByCard(data);
+				} else {
+					alert("주문이 취소되었습니다.");
+					const frm = document.querySelector("#orderDeleteFrm");
+					frm.orderNo.value = data.orderNo;
+					frm.submit();
+				}
 			}
 		}
 	});
