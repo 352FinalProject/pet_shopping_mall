@@ -45,7 +45,7 @@ public interface OrderRepository {
 	@Update("update orderTbl set order_status = #{i} where order_no = #{orderNo}")
 	int updateOrderStatus(String orderNo, int i);
 
-	@Select("select * from orderTbl where member_id = #{memberId}")
+	@Select("select * from orderTbl where member_id = #{memberId} order by order_date desc")
 	List<Order> getOrderList(String memberId);
 	
 	
@@ -62,7 +62,7 @@ public interface OrderRepository {
 	Order findOrderByOrderNo(String orderNo);
 
 	
-	@Select("select * from orderTbl where member_id = #{memberId} and order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})")
+	@Select("select * from orderTbl where member_id = #{memberId} and order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period}) order by order_date desc")
 	List<Order> getOrderListByPeriod(String memberId, int period);
 
 
