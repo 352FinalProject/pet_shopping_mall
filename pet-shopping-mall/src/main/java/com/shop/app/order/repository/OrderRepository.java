@@ -25,7 +25,7 @@ import com.shop.app.payment.entity.Payment;
 @Mapper
 public interface OrderRepository {
 
-	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{amount})")
+	@Insert("insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, discount_detail, amount, member_coupon_id) values(seq_orderTbl_id.nextVal, #{orderNo}, #{memberId}, default, default, default, #{totalPrice}, #{deliveryFee}, #{discount}, #{discountDetail}, #{amount}, #{memberCouponId, jdbcType=INTEGER})")
 	@SelectKey(
 			before = false,
 			keyProperty = "orderId",
@@ -97,6 +97,10 @@ public interface OrderRepository {
 	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
 	@Select("select count(*) from review where review_member_id = #{memberId} and order_id = #{orderId}")
 	boolean reviewWrite(String memberId, int orderId);
+
+	// 상품별 주문확정 주문 수 조회 (수경)
+	@Select("select count(*) from order_detail where product_detail_id = #{productDetailId}")
+	int findOrderCntByProductId(int productDetailId);
 
 	
 }

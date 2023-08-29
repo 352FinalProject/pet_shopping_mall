@@ -32,6 +32,9 @@ public interface PointService	 {
 	// 삭제된 리뷰에 대한 포인트 정보 가져오기 (예라)
 	Point getPointByReviewId(int reviewId);
 
+	// 포인트 롤백 (예라)
+	List<Point> findRollbackPointCurrentById(Point rollbackPoint);
+
 	
 }
 

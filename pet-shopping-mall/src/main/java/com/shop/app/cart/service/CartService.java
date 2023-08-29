@@ -17,7 +17,7 @@ public interface CartService {
 
 	List<CartInfoDto> findProductOptionById(int id);
 
-	int updateCart(CartItem cartitem);
+	int updateCart(CartItem cartitem, String memberId);
 
 	// 장바구니 찾기 (예라)
 	int findCartById(String member);

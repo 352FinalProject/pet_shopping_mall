@@ -72,7 +72,13 @@
                             </div>
                             <div>
                                 <a class="benefits-link" id="benefits-popup" href="#">🔎 멤버쉽 혜택보기</a>
+                                <c:if test="${myPage.subMember eq null}">
                                 <a class="benefits-link" href="#" onclick="subscribes();">📌 구독하기</a>
+                                </c:if>
+                                <c:if test="${myPage.subMember ne null}">
+                                <p>다음 달 멤버쉽 결제 날짜 : ${myPage.subMember.scheduleAt}</p>
+                                <p>결제 예정 금액 : ${myPage.subMember.amount}원</p>
+                                </c:if>
                             </div>
                             <!-- 팝업 컨테이너 -->
 						    <div class="popup-container" id="popupContainer">
@@ -159,6 +165,9 @@ function subscribes() {
                         "merchantUid": "bill"+new Date().getTime()
                     }),
                     success(response) {
+                    	console.log(response);
+                    	let responseObject = JSON.parse(response);
+                    	response.
                         alert('다음 결제일이 등록되었습니다.');
                     }
                 });
