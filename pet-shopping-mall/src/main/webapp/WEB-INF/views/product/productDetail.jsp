@@ -165,14 +165,14 @@ pageEncoding="UTF-8"%>
     <div class="review-div" > 
       <ul class="review-product-utility">
         <c:if test="${empty reviews}"> 
-           작성된 리뷰가 없습니다. 
+        	작성된 리뷰가 없습니다. 
         </c:if>
         <c:if test="${not empty reviews}">
           <c:forEach items="${reviews}" var="review" varStatus="vs">
             <li>
               <div class="review-box">
                 <div class="review-info-box">
-                  <em class="review-info-id">${review.reviewMemberId}</em> <!-- 리뷰 작성자 -->
+                  <em class="review-info-id">${review.reviewMemberId}&nbsp;</em> <!-- 리뷰 작성자 -->
                   <em class="review-info-date"> <!-- 작성일 -->
                     <fmt:parseDate
                       value="${review.reviewCreatedAt}"
@@ -186,56 +186,59 @@ pageEncoding="UTF-8"%>
                 <c:if test="${not empty pets}">
                   <div class="reivew-pet-box"> <!-- 펫정보 -->
                     <c:forEach items="${pets}" var="pet">
-                      <em class="review-pet-name">${pet.petName} |</em>
-                      <em class="review-pet-name">${pet.petGender} |</em>
-                      <em class="review-pet-name">${pet.petAge}살 |</em>
-                      <em class="review-pet-name">${pet.petWeight}kg |</em>
-                      <em class="review-pet-name">${pet.petBreed}</em>
+                      <em class="review-pet-name">${pet.petName} &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-gender">${pet.petGender} &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-age">${pet.petAge}살 &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-weight">${pet.petWeight}kg &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-breed">${pet.petBreed}</em>
                     </c:forEach>
                   </div>
                 </c:if>
-                <c:set var="myReviewId" value="${review.reviewId}" />
+                <c:set var="myReviewId" value="${review.reviewId}" /><span class="product-review-small-space"></span>
                 <div class="review-detail-box">
-                     <em class="review-info-id">${review.reviewTitle}</em> <!-- 리뷰제목 -->
-                     <div class="score_star"> <!-- 별점 -->
-                       <c:choose>
-                         <c:when test="${review.reviewStarRate == 1}">
-                           <span class="star-rating">★☆☆☆☆</span> (1)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 2}">
-                           <span class="star-rating">★★☆☆☆</span> (2)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 3}">
-                           <span class="star-rating">★★★☆☆</span> (3)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 4}">
-                           <span class="star-rating">★★★★☆</span> (4)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 5}">
-                           <span class="star-rating">★★★★★</span> (5)
-                         </c:when>
-                       </c:choose>
-                     </div>
-                     <em class="review-info-id">${review.reviewContent}</em> <!-- 리뷰내용 -->
-                  <!-- 리뷰 이미지 -->
-                  <c:if test="${not empty reviewImageMap[review.reviewId]}"> 
-                    <div class="review-warp">
-                      <div class="detail-upload">
-                        <img src="${pageContext.request.contextPath}/resources/upload/review/${reviewImageMap[review.reviewId]}" 
-                          alt="Review Image">
-                      </div>
-                    </div>
-                  </c:if>
-              </div>
+	                  <em class="review-info-title">${review.reviewTitle}</em> <!-- 리뷰제목 -->
+	                  <div class="score_star"> <!-- 별점 -->
+	                    <c:choose>
+	                      <c:when test="${review.reviewStarRate == 1}">
+	                        <span class="star-rating">★☆☆☆☆</span> (1.0)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 2}">
+	                        <span class="star-rating">★★☆☆☆</span> (2.0)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 3}">
+	                        <span class="star-rating">★★★☆☆</span> (3.0)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 4}">
+	                        <span class="star-rating">★★★★☆</span> (4.0)
+	                      </c:when>
+	                      <c:when test="${review.reviewStarRate == 5}">
+	                        <span class="star-rating">★★★★★</span> (5.0)
+	                      </c:when>
+	                    </c:choose>
+	                  </div>
+	                  <em class="review-info-content">${review.reviewContent}</em> <!-- 리뷰내용 -->
+	                  <span class="product-review-small-space"></span>
+						<!-- 리뷰 이미지 -->
+						<c:if test="${not empty reviewImageMap[review.reviewId]}"> 
+						  <div class="review-warp">
+						    <div class="detail-upload">
+		                  	<br>
+						      <img src="${pageContext.request.contextPath}/resources/upload/review/${reviewImageMap[review.reviewId]}" 
+						        alt="Review Image">
+						    </div>
+						  </div>
+						</c:if>
+				  </div>
                 </div>
+            <hr class="review-hr"/>
             </li>
-         </c:forEach>
+      	</c:forEach>
       </c:if>
    </ul>
 </div>
 <!-- 페이징 바 -->
 <nav aria-label="..." class="product-review-paging">
-  <ul class="pagination pagination-sm">
+  <ul class="review-pagination">
     <c:forEach begin="1" end="${totalPages}" var="pageNumber">
       <li class="page-item ${page == pageNumber ? 'active' : ''}">
         <a

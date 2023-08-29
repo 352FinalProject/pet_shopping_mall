@@ -91,7 +91,7 @@
                                      		<input type="hidden" name="productId" value="${order.key.productId}">
                                      		<input type="hidden" name="orderId" value="${order.key.orderId}">
                                    			</c:forEach>
-                                   			<c:if test="${not reviewWrite}">
+                                   			<c:if test="${reviewWrite == 1}">
                                      			<button class="review-btn" type="submit">리뷰쓰기</button>
                                      		</c:if>
                                 			</form>

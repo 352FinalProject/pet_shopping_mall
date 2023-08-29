@@ -166,8 +166,8 @@ public class OrderServiceImpl implements OrderService {
 
 	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
 	@Override
-	public boolean reviewWrite(String memberId, int orderId) {
-		return orderRepository.reviewWrite(memberId, orderId);
+	public int reviewWrite(String orderNo, int productDetailId) {
+		return orderRepository.reviewWrite(orderNo, productDetailId);
 	}
 	
 	// 상품별 주문확정 주문 수 조회 (수경)
