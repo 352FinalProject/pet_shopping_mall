@@ -35,19 +35,16 @@ a {
 		<br>
 		<%-- 리뷰제목 --%>
 		<div id="review-div"></div>
-			<span class="review-div-title">${reviews.reviewTitle}</span><span class="small-space"></span>
+<%-- 			<div class="review-detail-title input[type="text"]" style="display: inline-block;">
+				<input type="text" name="reviewTitle" id="reivewTitle" value="${reviews.reviewTitle}" readonly required>
+			</div> --%>
+			<span class="review-div-title">${reviews.reviewTitle}${reviews.petId}</span><span class="small-space"></span>
 		<br>
 		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
-		<div id="review-div"></div>
-		<c:if test="${reviews.petId == 0}">
-		    <div id="review-div">등록된 펫이 존재하지 않습니다.</div>
-		</c:if>
-		<c:if test="${reviews.petId != 0}">
-		    <div id="review-div">
-		        ${reviews.petName} | ${reviews.petAge}살 | ${reviews.petWeight}kg | ${reviews.petBreed}
-		    </div>
-		</c:if>
-		<span class="small-space"></span>
+ 		<div id="review-div"></div>
+			<div id="review-div">
+				    ${reviews.petName} | ${reviews.petAge}살 | ${reviews.petWeight}kg | ${reviews.petBreed}
+			</div><span class="small-space"></span>
 		<br><span class="small-space"></span>
 		<br>
 		<%-- 상품 옵션 --%>
@@ -62,7 +59,7 @@ a {
 				<!-- <div class="star-rating-detail" id="starContainer"></div></div> -->
 	            <c:choose>
 			        <c:when test="${reviews.reviewStarRate == 1}">
-			            <span class="star-rating-detail">★☆☆☆☆</span> (1.0)
+			            <span class="star-rating-detail">★★★★☆</span> (1.0)
 			        </c:when>
 			        <c:when test="${reviews.reviewStarRate == 2}">
 			            <span class="star-rating-detail">★★☆☆☆</span>  (2.0)
@@ -124,6 +121,8 @@ a {
 			class="form-inline">
 			<button class="review-btn-rset" type="submit">목록</button>
 		</form>
+		<button type="button" onclick="reviewDelete();"
+			class="review-btn-delete">삭제하기</button>
 		<c:if test="${!empty reviews.reviewContent}">
 			<form
 				action="${pageContext.request.contextPath}/review/reviewUpdate.do?reviewId=${reviews.reviewId}">
@@ -131,8 +130,6 @@ a {
 				<button class="review-btn-update" type="submit">수정하기</button>
 			</form>
 		</c:if>
-		<button type="button" onclick="reviewDelete();"
-			class="review-btn-delete">삭제하기</button>
 	</div>
 	<form:form name="reviewDeleteFrm"
 		action="${pageContext.request.contextPath}/review/reviewDelete.do"
