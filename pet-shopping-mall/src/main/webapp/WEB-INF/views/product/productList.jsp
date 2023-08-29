@@ -32,12 +32,12 @@ ul.nav {
     margin: 0 auto;
     display: flex;
     /* justify-content: center; */
-    gap: 8px;
+    gap: 15px;
     justify-content: flex-end;
-    margin: 0 10px;
 }
 .product-sort ul.nav .font{
 	color : #828282;
+	font-size: 14px;
 }
 .board-title {
     text-align: center;
@@ -61,7 +61,7 @@ ul.nav {
 }
 .product-gallery {
 	max-width: 1200px;
-	margin-top: 50px;
+	margin-top: 35px;
 }
 .gallery {
 	display: flex;
@@ -76,18 +76,18 @@ ul.nav {
     display: block;
     width: 25%;
     cursor: pointer;
-    padding: 5px;
+    padding: 10px;
+    margin-top: 20px;
 }
 .product-card .product-thumbnail {
 	box-sizing: border-box;
     position: relative;
-    margin: 0 5px;
     padding-bottom: 75%;
-    /* border-bottom: 1px solid #051619; */
     border-radius: 0;
     overflow: hidden;
     width: 280px;
     height: 280px;
+    margin-right: 20px;
     
 }
 .product-card .product-thumbnail img {
@@ -98,17 +98,20 @@ ul.nav {
     object-fit: cover;
 }
 .product-card .product-desc {
-    padding: 1.5rem 1.75rem;
-    color : #828282;
+/*     color : #828282; */
     box-sizing: border-box;
+}
+
+.product-desc {
+	margin-top: 17px;
 }
 .product-card .product-desc .product-name {
     margin: 0 0 0.5rem;
-    font-size: 1.25rem;
+    font-size: 16px;
 }
 .product-card .product-desc .product-price {
     margin: 0 0 0.5rem;
-    font-size: 1.25rem;
+    font-size: 19px;
     font-weight: 500;
 }
 .product-card .product-desc .review-star img {
@@ -120,6 +123,10 @@ ul.nav {
     margin: 0 0 0.5rem;
     font-size: 0.9rem;
     font-weight: 400;
+}
+
+.product-desc2 {
+	color: #828282;
 }
 
 </style>
@@ -168,10 +175,12 @@ ul.nav {
 					</figure>
 					<div class="product-desc">
 						<p class="product-name">${productInfo.product.productName}</p>
-						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> 원</p>
-						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
-						<span> &nbsp;|&nbsp; </span>
-						<span class="review-cnt">후기 ${reviewTotalCount}건</span>
+						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" />원</p>
+						<div class="product-desc2">
+							<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+							<span> &nbsp;|&nbsp; </span>
+							<span class="review-cnt">후기 ${reviewTotalCount}건</span>
+						</div>
 					</div>
 					</a>
 				</div>
