@@ -326,16 +326,16 @@ body {
 
 /* 카피라이터 */
 footer {
-	border-top: 1px solid #e7e7e7;
+	border-top: 1px solid #ccc;
 	padding: 10px;
 	height: 180px;
 	display: flex;
 	flex-direction: column;
-	margin-top: 150px;
+	margin-top: 100px;
 }
 
 footer img {
-	width: 800px;
+	width: 700px;
 	display: block;
 	margin: 0 auto;
 	color: #4d4d4d;
