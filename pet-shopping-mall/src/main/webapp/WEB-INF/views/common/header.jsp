@@ -113,27 +113,6 @@
 			action="${pageContext.request.contextPath}/member/memberLogout.do"
 			method="POST">
 		</form:form>
-		
-		<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5 class="modal-title" id="noticeModalLabel"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>
-			  <div class="modal-body"></div>
-			  <div class="modal-footer flex-column">
-				<div class="d-flex justify-content-between w-100">
-					<div>보낸사람 : <span class='badge badge-primary from'></span></div>
-					<div>작성일 : <span class='when'></span></div>
-				</div>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
-			  </div>
-			</div>
-		  </div>
-		</div>
 	</sec:authorize>
 	
 	<header>
@@ -174,16 +153,30 @@
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
 				</li>
-				<%-- <sec:authorize access="isAuthenticated()">
-					<li class="community_li">
+				<sec:authorize access="isAuthenticated()">
+					<%-- <li class="community_li">
 						<c:if test="${empty nofification}">
 							<i class="bi bi-bell"></i>
 						</c:if>	
 						<c:if test="${not empty nofification}">
 							<i class="bi bi-bell-fill"></i>
 						</c:if>
+					</li> --%>
+					<li class="community_li">
+					  <div class="notification-container">
+					    <button id="openPopupBtn">
+					      <i class="bi bi-bell"></i>
+					    </button>
+					    <div id="notificationPopup" class="popup">
+					      <div class="popup-content">
+					        <p class="notification-content">1번째 알림내용입니다 김대원김대원</p>
+					        <p class="notification-content">2번째 알림내용입니다 김대원김대원</p>
+					        <p class="notification-content">3번째 알림내용입니다 김대원김대원</p>
+					      </div>
+					    </div>
+					  </div>
 					</li>
-				</sec:authorize> --%>
+				</sec:authorize>
 			</ul>
 			<div class="logo_top_wrap">
 				<div class="logo_wrap">
@@ -325,6 +318,15 @@ $(document).ready(function() {
 
 	});
 	
+/* 팝업 */
+document.addEventListener("DOMContentLoaded", function() {
+    const openPopupBtn = document.getElementById("openPopupBtn");
+    const notificationPopup = document.getElementById("notificationPopup");
+
+    openPopupBtn.addEventListener("click", function() {
+        notificationPopup.classList.toggle("active");
+    });
+});
 
 
 </script>

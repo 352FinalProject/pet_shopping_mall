@@ -966,8 +966,8 @@ FROM orderTbl ot
 JOIN order_detail od ON ot.order_id = od.order_id
 JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
 JOIN product p ON pd.product_id = p.product_id
-where order_no = '230811-001';
+where member_id = 'king';
 
-
+select * from notification where member_id='king';
 
 

@@ -6,11 +6,6 @@ const stompClient = Stomp.over(ws);
 stompClient.connect({}, (frame) => {
 	console.log('open : ', frame);
 	
-	// 구독신청 
-	stompClient.subscribe('/app/notice', (message) => {
-		console.log('/app/notice : ', message);
-		renderMessage(message);
-	});
 	stompClient.subscribe(`/app/notice/${memberId}`, (message) => {
 		console.log(`/app/notice/${memberId} : `, message);
 		renderMessage(message);
