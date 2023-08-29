@@ -75,4 +75,9 @@ public class MemberDetails extends Member implements UserDetails, OAuth2User  { 
 	public boolean isEnabled() {
 		return true;
 	}
+
+
+	public void setPoint(int i) {
+		
+	}
 }

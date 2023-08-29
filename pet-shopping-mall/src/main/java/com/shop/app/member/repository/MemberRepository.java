@@ -13,6 +13,7 @@ import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.member.entity.SubMember;
 
 @Mapper
 public interface MemberRepository {
@@ -49,6 +50,12 @@ public interface MemberRepository {
 
 	@Update("update member set subscribe = 'N' where member_id = #{memberId}")
 	int subscribeCancel(String memberId);
+
+	@Insert("insert into sub_member (subscribe_id, member_id, merchant_uid, schedule_at, schedule_status, amount) values(seq_subscribe_id.nextVal, #{memberId}, #{merchantUid, jdbcType=VARCHAR}, #{scheduleAt, jdbcType=DATE}, #{scheduleStatus, jdbcType=VARCHAR}, #{amount, jdbcType=INTEGER})")
+	int insertSubMember(SubMember subMember);
+
+	@Select("select * from sub_member where member_id = #{memberId}")
+	SubMember findSubMemberByMemberId(String memberId);
 	
 
 	

@@ -55,8 +55,8 @@
 						<c:if test="${not empty orderDetail}">
 							<sec:authentication property="principal" var="loginMember" />
 							<c:forEach var="orderMap" items="${orderDetail}">
-								<c:forEach var="entry" items="${orderMap}">
 								<c:set var="index" value="${entry.key.orderStatus}"/>
+								<c:forEach var="entry" items="${orderMap}">
 								<c:set var="option" value="${entry.key.optionName}" />
 								<c:set var="amount" value="${entry.key.amount}" />
 								<fmt:formatDate value="${entry.key.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>

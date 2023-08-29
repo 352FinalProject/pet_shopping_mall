@@ -21,83 +21,84 @@ SELECT *  FROM all_tables;
 -- 초기화 블럭
 --==============================
 --
---drop table review;
---drop table image_attachment;
---drop table image_attachment_mapping;
---drop table answer;
---drop table question;
---drop table point;
---drop table discount_rule;
---drop table product_category;
---drop table product;
---drop table product_detail;
---drop table cart;
---drop table payment;
---drop table cartitem;
---drop table orderTbl;
---drop table order_detail;
---drop table refund;
---drop table cancel_order;
---drop table authority;
---drop table product_category;
---drop table community;
---drop table wishlist;
---drop table pet;
---drop table persistent_logins;
---drop table image_attachment_mapping;
---drop table member;
---drop table ordertbl;
---drop table return;
---drop table terms;
---drop table terms_history;
---drop table chat;
---drop table chat_room;
---drop table breed;
---drop table coupon;
---drop table member_coupon;
+drop table review;
+drop table image_attachment;
+drop table image_attachment_mapping;
+drop table answer;
+drop table question;
+drop table point;
+drop table discount_rule;
+drop table product_category;
+drop table product;
+drop table product_detail;
+drop table cart;
+drop table payment;
+drop table cartitem;
+drop table orderTbl;
+drop table order_detail;
+drop table refund;
+drop table cancel_order;
+drop table authority;
+drop table product_category;
+drop table community;
+drop table wishlist;
+drop table pet;
+drop table persistent_logins;
+drop table image_attachment_mapping;
+drop table member;
+drop table ordertbl;
+drop table return;
+drop table terms;
+drop table terms_history;
+drop table chat;
+drop table chat_room;
+drop table breed;
+drop table coupon;
+drop table member_coupon;
 
---
------- 외래키 붙어있는 테이블삭제
---drop table member cascade constraints;
---drop table review cascade constraints;
---drop table product cascade constraints;
---drop table product_detail cascade constraints;
---drop table pet cascade constraints;
---drop table breed cascade constraints;
---drop table order_detail cascade constraints;
---
---
---drop sequence seq_question_id;
---drop sequence seq_answer_id;
---drop sequence seq_image_attachment_id;
---drop sequence seq_image_attachment_mapping_id;
---drop sequence seq_point_id;
---drop sequence seq_product_category_id;
---drop sequence seq_product_id;
---drop sequence seq_product_detail_id;
---drop sequence seq_cart_id;
---drop sequence seq_payment_id;
---drop sequence seq_cartitem_id;
---drop sequence seq_ordertbl_id;
---drop sequence seq_refund_id;
---drop sequence seq_cancel_order_id;
---drop sequence seq_authority_id;
---drop sequence seq_community_id;
---drop sequence seq_wishlist_id;
---drop sequence seq_pet_id;
---drop sequence seq_persistent_logins_id;
---drop sequence seq_member_id;
---drop sequence seq_review_id;
---drop sequence seq_chat_id;
---drop sequence seq_chat_room_id;
---drop sequence seq_cancel_id;
---drop sequence seq_history_id;
---drop sequence seq_terms_id;
---drop sequence seq_product_option_id;
---drop sequence seq_member_coupon_id;
---drop sequence seq_coupon_id;
---drop sequence seq_category_id;
---drop sequence seq_terms_history_id;
+
+---- 외래키 붙어있는 테이블삭제
+drop table member cascade constraints;
+drop table review cascade constraints;
+drop table product cascade constraints;
+drop table product_detail cascade constraints;
+drop table pet cascade constraints;
+drop table breed cascade constraints;
+drop table order_detail cascade constraints;
+drop table notification cascade constraints;
+
+
+drop sequence seq_question_id;
+drop sequence seq_answer_id;
+drop sequence seq_image_attachment_id;
+drop sequence seq_image_attachment_mapping_id;
+drop sequence seq_point_id;
+drop sequence seq_product_category_id;
+drop sequence seq_product_id;
+drop sequence seq_product_detail_id;
+drop sequence seq_cart_id;
+drop sequence seq_payment_id;
+drop sequence seq_cartitem_id;
+drop sequence seq_ordertbl_id;
+drop sequence seq_refund_id;
+drop sequence seq_cancel_order_id;
+drop sequence seq_authority_id;
+drop sequence seq_community_id;
+drop sequence seq_wishlist_id;
+drop sequence seq_pet_id;
+drop sequence seq_persistent_logins_id;
+drop sequence seq_member_id;
+drop sequence seq_review_id;
+drop sequence seq_chat_id;
+drop sequence seq_chat_room_id;
+drop sequence seq_cancel_id;
+drop sequence seq_history_id;
+drop sequence seq_terms_id;
+drop sequence seq_product_option_id;
+drop sequence seq_member_coupon_id;
+drop sequence seq_coupon_id;
+drop sequence seq_category_id;
+drop sequence seq_terms_history_id;
 
 
 --==============================
@@ -328,6 +329,7 @@ create table review (
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
+
 create table community (
     community_id number,
     community_member_id varchar2(50),
@@ -358,6 +360,17 @@ create table sub_payment (
     constraint fk_sub_payment_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+-- 구독자 정리하는 테이블
+create table sub_member (
+    subscribe_id number,
+    member_id varchar2(50),
+    merchant_uid varchar2(30) not null,
+    schedule_at timestamp,
+    schedule_status varchar2(20),
+    amount number,
+    constraint pk_subscribe_id primary key(subscribe_id),
+    constraint fk_sub_member_id foreign key(member_id) references member(member_id) on delete cascade
+);
 
  -- 장바구니 테이블
 create table cart (
@@ -442,6 +455,17 @@ create table member_coupon (
  constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
 );
 
+-- 알림 테이블
+create table notification (
+    id number,
+    noti_category number, -- // 0.공지사항 1.주문알림 2.구독알림 3.기타알림
+    noti_content varchar2(2000),
+    noti_created_at timestamp default systimestamp not null,
+    member_id varchar2(50),
+    constraint pk_notification_id primary key(id),
+    constraint fk_notification_member_id foreign key(member_id) references member(member_id) on delete cascade    
+);
+
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -468,7 +492,14 @@ create sequence seq_member_coupon_id;
 create sequence seq_coupon_id;
 create sequence seq_history_id;
 create sequence seq_category_id;
+create sequence seq_notification_id;
 create sequence seq_sub_payment_id;
+create sequence seq_susubscribe_id;
+
+
+select *from member;
+select * from sub_payment;
+
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger

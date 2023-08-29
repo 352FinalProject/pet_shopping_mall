@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <section class="common-section" id="#">
         <div class="common-title">
@@ -17,6 +18,7 @@
 	                		<input type="checkbox" name="checkAll" id="checkAll" class="checkbox" value="0">
 	                		<label for="checkAll">전체 선택</label>
 	                	</div>
+	                	<sec:authentication property="principal" var="loginMember"/>
 	                	<c:if test="${not empty cartList}">
 		                	<c:forEach items="${cartList}" var="product" varStatus="vs">
 		                	<fmt:formatNumber value='${(product.productPrice + product.additionalPrice) * product.quantity}' pattern="0,000" var="formattedPrice" />
@@ -62,29 +64,32 @@
 	                <div class="cart-right">
 						<span>결제금액</span>
 						<div class="payment-info">
-							<div>
-								<div class="product-price">
-									<span class="price"><strong>상품금액</strong></span>
-									<p id="total-price"></p>
-								</div>
-								<div class="product-price">
-									<span>배송비</span>
-									<p><span>(+)</span>3,000원</p>
-								</div>
-								<div class="product-price">
-									<span>사용 가능 적립금</span>
-									<fmt:formatNumber value='${pointCurrent}' pattern="0,000" var="formattedPoint" />
-									<p id="point"><span>(-)</span>${formattedPoint}원</p>
-								</div>
-							</div>
-						</div>
-						<div class="payment-info">
 							<div class="product-price">
 								<fmt:formatNumber value='${totalPrice}' pattern="0,000" var="formattedTotal" />
-								<strong class="price">최종 결제 금액</strong>
+								<strong class="price">결제 금액</strong>
 								<p class="price" id="amount"></p>
 							</div>
 						</div>
+						<div class="payment-info">
+							<div>배송비와 쿠폰, 적립금이 미적용된 금액입니다.</div>
+						</div>
+						<c:choose>
+						    <c:when test="${empty cartList}">
+						        <script>
+						            const payment = () => {
+						                alert('장바구니에 담긴 상품이 없습니다.');
+						                return;
+						            };
+						        </script>
+						    </c:when>
+						    <c:otherwise>
+						        <script>
+						            const payment = () => {
+						                window.location.href = '${pageContext.request.contextPath}/payment/paymentInfo.do';
+						            };
+						        </script>
+						    </c:otherwise>
+						</c:choose>
 						<div>
 							<button class="btn btn1" id="order-btn" onclick="payment();">주문하기</button>
 						</div>          
@@ -176,6 +181,10 @@ function updatePrice () {
 }
 
 const payment = () => {
+	if("${empty cartList}") {
+		alert('장바구니에 담긴 상품이 없습니다.');
+		return;
+	}
 	window.location.href = '${pageContext.request.contextPath}/payment/paymentInfo.do';
 };
 
@@ -252,6 +261,7 @@ const updateProduct = (product) => {
         url: "${pageContext.request.contextPath}/cart/updateCart.do",
         method: "POST",
         data: {
+        	memberId : "${loginMember.memberId}",
         	cartitemId : cartitemIdInput.value,
         	productDetailId : selectedValue,
             quantity : updateQuantity

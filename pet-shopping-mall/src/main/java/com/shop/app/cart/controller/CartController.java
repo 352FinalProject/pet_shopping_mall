@@ -54,6 +54,7 @@ public class CartController {
 
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
+
 	}
 	
 	@PostMapping("/deleteCartOne.do")
@@ -88,9 +89,9 @@ public class CartController {
 	@ResponseBody
 	@PostMapping("/updateCart.do")
 	public int updateCart(CartUpdateDto _cartitem) {
-		log.debug("_cartitem = {}", _cartitem);
+		String memberId = _cartitem.getMemberId();
 		CartItem cartitem = _cartitem.toCartitem();
-		int result = cartService.updateCart(cartitem);
+		int result = cartService.updateCart(cartitem, memberId);
 		
 		return result;
 	}

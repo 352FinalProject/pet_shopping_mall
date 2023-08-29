@@ -2,11 +2,11 @@
 insert into member (member_id, password, name, phone, email, address, birthday, subscribe)
 values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울시 강남구 역삼동', to_date('1990-01-01', 'YYYY-MM-DD'), 'Y');
 select * from member;
-select * from point;
+select * from point order by point_date desc;
 select * from pet;
 select * from review;
 select * from coupon;
-select * from member_coupon;
+select * from member_coupon order by member_coupon_id desc;
 select * from terms;
 select * from terms_history;
 select * from product;
@@ -14,18 +14,41 @@ select * from terms_history;
 select * from image_attachment;
 select * from image_attachment_mapping;
 select * from product;
-select * from orderTbl;
+select * from orderTbl order by order_id desc;
 select * from order_detail;
 select * from product_detail;
 select * from product;
 select * from member_coupon;
+select * from notification;
 select * from question;
 select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
+    
+    
+SELECT q.*, ia.*
+FROM question q
+JOIN image_attachment_mapping iam ON q.question_id = iam.ref_id
+JOIN image_attachment ia ON iam.image_id = ia.image_id
+WHERE q.question_id = 1;
+    
+select * from (select * from point where point_member_id = #{pointMemberId} order by point_date desc) where rownum <= 1
 
+update member set subscribe = 'Y' where member_id = 'null@naver';
+
+select * from point where point_member_id = 'null@naver' order by point_date desc;
+-- 멤버 쿠폰 입력
+insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
+values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
+
+delete from member_coupon where member_id = '2971776209@kakao'; 
+
+select * from member_coupon where coupon_id = 1 and member_id = 'member3' and end_date >= current_timestamp and use_status = 0;
+
+delete from member where name = '예라'; 
 delete from wishlist where wishlist_id = 10; 
+
 
 select
     m.member_id,
@@ -57,11 +80,6 @@ where
     m.member_id = 'member1';
 
 
-
-
-
-
-
 select 
     *
 from 
@@ -76,7 +94,7 @@ where product_id = 1;
     
     select * from review
 where product_id = #{productId};
-    
+
     
 select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
 
@@ -85,9 +103,9 @@ insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values 
 
 delete from product where product_id = 1;
 
-delete from cartitem where cartitem_id = '52';
+delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 4 where order_id = 22;
+update orderTbl set order_status = 4 where order_id = 4;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
@@ -172,7 +190,6 @@ insert into member (member_id, password, name, phone, email, address, birthday, 
 values ('h123qd', '1234', '홍당무', '01015312328', 'h123qd@naver.com', '서울시 송파구 나동', to_date('1991-07-01', 'YYYY-MM-DD'), 'Y');
 
 ------------------ authority insert ---------------------------
-insert into authority values ('abcde', 'ROLE_USER');
 insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
@@ -194,12 +211,13 @@ values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드�
 
 ------------------ point insert ---------------------------
 INSERT INTO point (point_id, point_member_id, point_current, point_type, point_amount)
-VALUES (2, '사용자2', 50, '사용', -500);
+VALUES (45, 'null@naver', 10000, '구매적립', 10000);
 
 ------------------ product insert ---------------------------
 -- 카테고리 생성
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '사료');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '간식');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '장난감');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
@@ -290,8 +308,6 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, discount_code)
     values (seq_orderTbl_id.nextval, '230811-012', 'honggd', sysdate, 2, 1, 27000,3000, 0, 30000, null);
-    
-    
 
 insert into orderTbl (order_id, order_no, member_id, order_date, order_status, payment_status, total_price, delivery_fee, discount, amount, member_coupon_id)
     values (seq_orderTbl_id.nextval, '1692683868583', 'honggd', '2023-06-22 14:57:48.69', 2, 1, 27000,3000, 0, 30000, 0);
@@ -304,7 +320,7 @@ insert into orderTbl (order_id, order_no, member_id, order_date, order_status, p
 
 ------------------ point insert ---------------------------
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
-values (seq_point_id.nextval, 'member1', 3000, '회원가입', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
+values (seq_point_id.nextval, '2971776209@kakao', 3000, '회원가입', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
 
 insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date)
 values (seq_point_id.nextval, 'member1', 3000, '구매적립', 3000, to_date('2023-08-09', 'yyyy-mm-dd'));
@@ -359,7 +375,6 @@ where id = 77;
 select * from orderTbl;
 select * from member;
 select * from point where point_member_id = 'member1';
-delete from point where point_id = 2;
 
 -- 장바구니 테스트 데이터
 select * from product_category;
@@ -938,8 +953,32 @@ from
 where 
     p.product_id = 1;
 
+-- 멤버 쿠폰 테이블
+create table member_coupon (
+ member_coupon_id number,
+ coupon_id number,
+ member_id varchar2(50),
+ create_date timestamp default systimestamp not null, -- 발급 날짜
+ end_date timestamp not null, -- 유효기간 (언제까지)
+ use_status number(1) default 0, -- 사용 여부 (사용 안 하면 0, 사용하면 1)
+ use_date timestamp, -- 사용 날짜
+ constraint pk_member_coupon_id primary key(member_coupon_id),
+ constraint fk_member_coupon_member_id foreign key(member_id) references member(member_id) on delete cascade,
+ constraint fk_member_coupon_coupon_id foreign key(coupon_id) references coupon(coupon_id) on delete cascade
+);
+--------------------------------------------알림
+insert into (id, noti_category, noti_content, noti_created_at, member_id) 
+    values (seq_notification_id.nextval, ?, ?, default, ?);
+
+select * from orderTbl where order_no = 1;
+
+SELECT ot.order_no, ot.order_id, p.product_name, ot.order_status, ot.member_id
+FROM orderTbl ot
+JOIN order_detail od ON ot.order_id = od.order_id
+JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
+JOIN product p ON pd.product_id = p.product_id
+where order_no = '230811-001';
 
 
-UPDATE orderTbl
-SET order_status = 4
-WHERE order_id = 1;
+
+

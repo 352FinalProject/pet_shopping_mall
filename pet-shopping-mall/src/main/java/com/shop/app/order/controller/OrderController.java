@@ -24,6 +24,7 @@ import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.payment.entity.Payment;
 import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.entity.Review;
 
@@ -43,6 +44,9 @@ public class OrderController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	PointService pointService;
 	
 	
 	@GetMapping("/orderExchange.do")
@@ -78,6 +82,7 @@ public class OrderController {
 	@PostMapping("/cancelOrder.do")
 	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo, @RequestParam String isRefund) {
 		int result = orderService.insertCancelOrder(orderNo, isRefund);
+		
 		return "redirect:/order/orderList.do";
 	}
 	

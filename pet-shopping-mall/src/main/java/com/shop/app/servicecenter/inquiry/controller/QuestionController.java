@@ -1,14 +1,25 @@
 package com.shop.app.servicecenter.inquiry.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,9 +55,17 @@ public class QuestionController {
 	
 	// 고객센터 (선모)
 	@GetMapping("/service.do")
-	public void serviceCenter() {
-		
-	}
+	public void serviceCenter() {}
+	
+	@Autowired
+	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private ServletContext application;
+	
+	// application.yml 변수 가져오기
+	@Value("${spring.servlet.multipart.location}")
+	private String multipartLocation;
 	
 	// 1:1 목록 조회 + 페이징바 (예라)
 	@GetMapping("/inquiry/questionList.do")
@@ -62,7 +81,7 @@ public class QuestionController {
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 		
-		List<Question> questions = questionService.findQuestionAll(params);
+		List<QuestionDetails> questions = questionService.findQuestionAll(params);
 		model.addAttribute("questions", questions);
 	}
 	
@@ -109,11 +128,15 @@ public class QuestionController {
 		
 		// 1. 파일 저장
 		List<ImageAttachment> attachments = new ArrayList<>();
+		
+		// 이미지 상대경로 지정
+		String saveDirectory = application.getRealPath("/resources/upload/question");
+				
 		for(MultipartFile upFile : upFiles) {			
 		    if(!upFile.isEmpty()) {
 		        String imageOriginalFilename = upFile.getOriginalFilename();
 		        String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename); 
-		        File destFile = new File(imageRenamedFilename); 
+		        File destFile = new File(saveDirectory, imageRenamedFilename);
 		        upFile.transferTo(destFile);	
 
 		        int imageType = 1; 
@@ -201,6 +224,36 @@ public class QuestionController {
 	        
 	    }
 	    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+	}
+	
+	@GetMapping("/fileDownload.do")
+	public ResponseEntity<Resource> fileDownload(@RequestParam int questionId) 
+			throws UnsupportedEncodingException, FileNotFoundException {
+		// 1. db조회
+		ImageAttachment attach = questionService.findAttachmentById(questionId);
+		log.debug("attach = {}", attach);
+		log.debug("multipartLocation = {}", multipartLocation);
+		
+		// 2. Resource객체 생성
+		String saveDirectory = application.getRealPath("/resources/upload/question");
+	    File downFile = new File(saveDirectory, attach.getImageRenamedFilename());
+		
+		if(!downFile.exists())
+			throw new FileNotFoundException(attach.getImageRenamedFilename());
+		
+		String location = "file:" + downFile;
+		Resource resource = resourceLoader.getResource(location);
+		
+		// 3. 응답헤더 작성
+		String filename = URLEncoder.encode(attach.getImageOriginalFilename(), "utf-8");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+		
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.headers(headers)
+				.body(resource);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.shop.app.member.dto;
 
 import java.util.List;
 
+import com.shop.app.member.entity.SubMember;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.Order;
 
@@ -23,4 +24,6 @@ public class MypageDto {
 	private int memberCoupon; // 쿠폰 카운트
 	
 	private List<Order> orderHistory; // 최근주문내역
+	
+	SubMember subMember;
 }

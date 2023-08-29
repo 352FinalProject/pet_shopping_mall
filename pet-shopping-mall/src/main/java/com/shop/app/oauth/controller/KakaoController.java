@@ -21,6 +21,8 @@ import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.oauth.service.KakaoService;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +38,7 @@ public class KakaoController {
 
 	@Autowired
 	private MemberService memberService;
+
 	
 	@GetMapping("/login.do")
 	public RedirectView login() {
@@ -50,7 +53,7 @@ public class KakaoController {
 		// 사용자 세션에 액세스 토큰과 리프레시 토큰을 저장
 		model.addAttribute("access_token", tokens.get("access_token"));
 		model.addAttribute("refresh_token", tokens.get("refresh_token"));
-
+		
 		// 2. 액세스 토큰을 사용하여 카카오에 사용자 정보를 요청
 		Map<String, Object> attributes = kakaoService.getProfile((String) tokens.get("access_token"));
 		
@@ -75,10 +78,11 @@ public class KakaoController {
 						.email(email)
 						.build();
 			
-			int result = memberService.insertMember(memberCreateDto);
-			
+			  int result = memberService.insertMember(memberCreateDto);
+
 			// 회원가입 후, 다시 회원 정보를 조회
 			member = (MemberDetails) memberService.loadUserByUsername(memberId);
+			
 		}
 		
 		// 회원 정보를 기반으로 시큐리티 인증 처리
@@ -88,7 +92,7 @@ public class KakaoController {
 				member.getAuthorities()
 			);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
+		log.debug("포인트 로그 실행되나요? 333");
 		// 인증 처리 후 메인 페이지로 리다이렉트
 		return new RedirectView(request.getContextPath() + "/");
 	}
