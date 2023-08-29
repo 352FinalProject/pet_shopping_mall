@@ -547,8 +547,7 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '장난감');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
-
-commit;
 

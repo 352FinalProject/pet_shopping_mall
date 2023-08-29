@@ -31,6 +31,12 @@
 				<li><a href="${pageContext.request.contextPath}/pet/petProfile.do">펫 등록</a></li>
 			</ul>
 		</li>
+		<li class="sidebar2-member">
+			<h2 class="sidebar2-title2"></h2></a>
+			<form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
+				<a  type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
+			</form:form>
+		</li>
 	</ul>
 </div>
 <script>
