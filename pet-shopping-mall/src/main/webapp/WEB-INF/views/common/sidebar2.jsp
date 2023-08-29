@@ -31,7 +31,57 @@
 				<li><a href="${pageContext.request.contextPath}/pet/petProfile.do">펫 등록</a></li>
 			</ul>
 		</li>
+		<li class="sidebar2-member">
+			<h2 class="sidebar2-title2"></h2></a>
+			<form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
+				<a  type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
+			</form:form>
+		</li>
 	</ul>
 </div>
+<div id="deleteMember-div" class="deleteMember-class">
+	<div class=deleteMember>
+		<span class="deletememberForm-close" >&times;</span>
+		<h2>회원 탈퇴</h2>
+		<p>정말 탈퇴하시겠습니까??</p>
+		<form:form id="deleteMemberForm"
+			onsubmit="submitIdFinderForm(); return false;">
+			<label for="deleteMember-password">비밀번호입력:</label> <input
+				class="deleteMemberForm-input-password" type="password" id="password"
+				name="password" required>
+			<button class="deleteMemberForm-button" type="submit" >회원탈퇴</button>
+				<button type="button" id="deleteMemberForm-closeModalBtn" onclick="closDeleteMemberModal();">닫기</button>
+		</form:form>
+	</div>
+</div>
 <script>
+$(document).ready(function() {
+	  const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+	  const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+	  $("#deleteMemberForm-closeModalBtn").click(function() {
+	    const deleteMemberPassword = $("#deleteMember-password").val();
+	    $.ajax({
+	      type: 'POST',
+	      url: '${pageContext.request.contextPath}/member/deleteMember.do',
+	      data: {
+	        'password': deleteMemberPassword
+	      },
+	      dataType: "text",
+	      beforeSend: function(xhr) {
+	        xhr.setRequestHeader(csrfHeader, csrfToken); // Add CSRF token to header
+	      },
+	      success: function(result) {
+	        console.log(result);
+	        if (result === "no") {
+	          alert('비밀번호가 틀렸습니다.');
+	        } else {
+	          alert('회원 탈퇴완료ㅠㅠ.');
+	        }
+	      },
+	      error: function() {
+	        console.log('에러 체크!!');
+	      }
+	    });
+	  });
 </script>
