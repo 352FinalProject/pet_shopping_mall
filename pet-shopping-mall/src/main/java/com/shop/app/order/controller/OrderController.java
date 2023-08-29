@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderController {
 	
-	public static String[] status = {"입금대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
+	public static String[] status = {"결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
  
 	
 	@Autowired
@@ -124,7 +124,9 @@ public class OrderController {
 	        model.addAttribute("reviewWrite", reviewWrite);
 	        
 	    }
-
+	    
+	    log.debug("orderDetailMap= {}", orderDetailMap);
+	    log.debug("status = {}", status);
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderDetail", orderDetailMap);
 	}
