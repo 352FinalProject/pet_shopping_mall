@@ -57,5 +57,14 @@ public interface ProductService {
 	// 찜 수 증감 (선모)
 	int updateLikeCnt(Map<String, Object> param);
 
+	// 모든 상품 조회(수경)
+	List<Product> findAllProducts();
+	
+	// 상품아이디로 모든 상품디테일 조회(수경)
+	List<ProductDetail> findProductDetailsByProductId(int productId);
+	
+	// 상품검색 (수경)
+	List<Product> searchProducts(String searchKeyword, String searchCategory);
+
 
 }

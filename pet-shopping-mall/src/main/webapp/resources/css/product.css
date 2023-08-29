@@ -93,14 +93,19 @@
 	margin-bottom: 50px;
 }
 
-
+/* 상품상세 - 리뷰 */
 .review-product-utility{
 	display: flex;
 	flex-direction: column;
-	gap: 200px;
+	gap: 100px;
 	justify-content: flex-start;
 	margin-left: 80px;
-	margin-bottom: 100px;
+	margin-bottom: 150px;
+}
+
+/* 리뷰 구분선 */
+.review-hr {
+	margin-top: 60px;
 }
 
 .review-title{
@@ -113,6 +118,44 @@
 
 .review-regdate {
 	margin-left: -20px;
+}
+
+/* 상품상세 - 리뷰 정보 css */
+.review-info-id {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.review-info-date{
+	color: #808080;
+	font-size: 12px;
+}
+
+.review-pet-name {
+	font-size: 13px;
+}
+.review-pet-gender, .review-pet-age, .review-pet-weight, .review-pet-breed{
+	color: #808080;
+	font-size: 12px;
+}
+
+.review-em {
+	color: #cacaca;
+	font-size: 12px;
+}
+
+.product-review-small-space{
+	display: inline-block;
+	height: 0.8em;
+}
+
+.review-info-title{
+	font-size: 16px;
+}
+
+.review-info-content {
+	height: 2em;
+	font-size: 18px;
 }
 
 select[name=product-option] {

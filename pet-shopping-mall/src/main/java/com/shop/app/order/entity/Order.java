@@ -1,6 +1,6 @@
 package com.shop.app.order.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class Order {
 	private int orderId; // 시퀀스
 	private String orderNo; // 주문번호 (ex 230811-001)
 	private String memberId;
-	private Date orderDate; // 주문날짜
+	private Timestamp orderDate; // 주문날짜
 	
 	// 주문 상태
 	// 1: 결제완료 / 2: 배송준비 / 3: 배송중 / 4: 배송완료 / 5: 주문취소(환불) / 6: 구매확정
@@ -26,10 +26,9 @@ public class Order {
 	private int totalPrice; // 순수 상품의 가격
 	private int deliveryFee; // 배송비 (고정 3000원)
 	private int discount; // 할인금액 (포인트 또는 쿠폰으로 발생한 차감액)
+	private String discountDetail; // true면 쿠폰, false면 포인트
 	private int amount; // 실 결제 금액
 	
-	private int memberCouponId; // 쿠폰 기능 할 수도 있으니까 만들어놓은 컬럼, null 처리해도 됨
-	
-	private int productId;
+	private Integer memberCouponId; // 멤버 쿠폰 아이디
 	
 }

@@ -36,7 +36,6 @@ public class OrderServiceImpl implements OrderService {
 	private OrderRepository orderRepository;
 	
 	
-	
 
 	// 주문 내역 및 주문 상세내역 테이블에 저장 (담희)
 	@Override
@@ -169,5 +168,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public boolean reviewWrite(String memberId, int orderId) {
 		return orderRepository.reviewWrite(memberId, orderId);
+	}
+	
+	// 상품별 주문확정 주문 수 조회 (수경)
+	@Override
+	public int findOrderCntByProductId(int productDetailId) {
+		return orderRepository.findOrderCntByProductId(productDetailId);
 	}
 }

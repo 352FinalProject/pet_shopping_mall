@@ -103,12 +103,10 @@ public class MemberSecurityController {
       String encodedPassword = passwordEncoder.encode(rawPassword);
       member.setPassword(encodedPassword);
 
-      // 포인트 테이블에 디비 저장 (예라)
-      member.setPoint(3000);
-
       // 회원 정보 DB에 저장
       int result = memberService.insertMember(member);
 
+      // 포인트 테이블에 디비 저장 (예라)
       Point point = new Point();
       point.setPointMemberId(member.getMemberId());
       point.setPointCurrent(3000);

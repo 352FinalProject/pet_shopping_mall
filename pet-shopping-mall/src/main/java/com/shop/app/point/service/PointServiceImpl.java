@@ -61,4 +61,10 @@ public class PointServiceImpl implements PointService {
 	public Point getPointByReviewId(int reviewId) {
 		return pointRepository.getPointByReviewId(reviewId);
 	}
+
+	// 포인트 롤백
+	@Override
+	public List<Point> findRollbackPointCurrentById(Point rollbackPoint) {
+		return pointRepository.findRollbackPointCurrentById(rollbackPoint);
+	}
 }

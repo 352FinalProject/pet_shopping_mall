@@ -16,6 +16,8 @@ import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.oauth.entity.LoginProvider;
+import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +28,9 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private PointService pointService;
 
 	/**
 	 * 카카오 인증 후 반환된 code 또는 토큰을 이용하여 사용자 정보를 가져옴.
@@ -83,6 +88,17 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 
 		            int result = memberService.insertMember(memberCreateDto);
 		            member = (MemberDetails) memberService.loadUserByUsername(memberId);
+		            
+					// 포인트 테이블에 디비 저장 (예라)
+					
+					Point point = new Point();
+					point.setPointMemberId(member.getMemberId());
+					point.setPointCurrent(3000);
+					point.setPointType("회원가입");
+					point.setPointAmount(3000);
+					
+					int resultPoint = pointService.insertPoint(point);
+					log.debug("resultPoint = {}", resultPoint);
 
 		        } else if (LoginProvider.valueOf(provider) == LoginProvider.NAVER) {
 		            // NAVER 특정 속성을 사용하여 회원을 생성하는 방법을 처리합니다.
@@ -104,6 +120,17 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 
 			            int result = memberService.insertMember(memberCreateDto);
 			            member = (MemberDetails) memberService.loadUserByUsername(memberId);
+			            
+						// 포인트 테이블에 디비 저장 (예라)
+						
+						Point point = new Point();
+						point.setPointMemberId(member.getMemberId());
+						point.setPointCurrent(3000);
+						point.setPointType("회원가입");
+						point.setPointAmount(3000);
+						
+						int resultPoint = pointService.insertPoint(point);
+						log.debug("resultPoint = {}", resultPoint);
 		        }
 		    }
 

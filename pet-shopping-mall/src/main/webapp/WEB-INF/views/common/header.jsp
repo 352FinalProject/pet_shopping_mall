@@ -4,79 +4,78 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
-<meta id="_csrf_header" name="_csrf_header"
-	content="${_csrf.headerName}" />
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <style>
 /* 모달 배경 스타일 */
 .deleteMember-class {
-	display: none; /* 초기에는 보이지 않도록 설정 */
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
-	z-index: 9999; /* 다른 요소보다 위에 표시 */
-	justify-content: center;
-	align-items: center;
+    display: none; /* 초기에는 보이지 않도록 설정 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
+    z-index: 9999; /* 다른 요소보다 위에 표시 */
+    justify-content: center;
+    align-items: center;
 }
 
 /* 모달 내부 컨테이너 스타일 */
 .deleteMember {
-	background-color: white;
-	padding: 20px;
-	border-radius: 8px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-	width: 300px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    width: 300px;
 }
 
 /* 모달 내부 요소 스타일 */
 .deleteMember h2 {
-	font-size: 24px;
-	margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
 .deleteMember p {
-	font-size: 16px;
-	margin-bottom: 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 .deleteMemberForm-input-password {
-	width: 100%;
-	padding: 8px;
-	margin-bottom: 10px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .deleteMemberForm-button {
-	background-color: #007bff;
-	color: white;
-	border: none;
-	padding: 8px 16px;
-	border-radius: 4px;
-	cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 /* 닫기 버튼 스타일 */
+.deleteMemberForm-close,
 #deleteMemberForm-closeModalBtn {
-	background-color: #c8c8c8;
-	color: white;
-	border: none;
-	padding: 8px 30px;
-	border-radius: 4px;
-	margin-left: 80px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
 }
+
 </style>
 <title>반려동물 쇼핑몰</title>
 
@@ -84,6 +83,9 @@
 	<script>
 		alert('${msg}');
 	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
 </c:if>
 </head>
 <link rel="stylesheet"
@@ -102,6 +104,7 @@
 	href="${pageContext.request.contextPath}/resources/css/point.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <body>
@@ -110,15 +113,37 @@
 			action="${pageContext.request.contextPath}/member/memberLogout.do"
 			method="POST">
 		</form:form>
+		
+		<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="noticeModalLabel"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			  <div class="modal-body"></div>
+			  <div class="modal-footer flex-column">
+				<div class="d-flex justify-content-between w-100">
+					<div>보낸사람 : <span class='badge badge-primary from'></span></div>
+					<div>작성일 : <span class='when'></span></div>
+				</div>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
 	</sec:authorize>
+	
 	<header>
 		<div class="header">
 			<span id="notification"></span>
 			<ul class="utility">
-				<sec:authorize access="isAuthenticated()">
-				권한 : <sec:authentication property="authorities" />
-				아이디 : <sec:authentication property="principal.username" />
-				</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				권한 : <sec:authentication property="authorities"/>
+				아이디 : <sec:authentication property="principal.username"/>
+			</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<li class="login_li"><a
 						href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
@@ -137,12 +162,11 @@
 					<li><a class="" type="button" href="#"
 						onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
 					</li>
-					<li><form:form id="deleteMemberForm"
-							action="${pageContext.request.contextPath}/member/deleteMember.do"
-							method="post">
-							<a type="button" id="deleteMemberBtn" onclick=""
-								style="cursor: pointer;">회원 탈퇴</a>
-						</form:form></li>
+					<li>
+						<form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
+							<a  type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
+						</form:form>
+					</li>
 				</sec:authorize>
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
@@ -150,6 +174,16 @@
 				<li class="community_li"><a
 					href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
 				</li>
+				<%-- <sec:authorize access="isAuthenticated()">
+					<li class="community_li">
+						<c:if test="${empty nofification}">
+							<i class="bi bi-bell"></i>
+						</c:if>	
+						<c:if test="${not empty nofification}">
+							<i class="bi bi-bell-fill"></i>
+						</c:if>
+					</li>
+				</sec:authorize> --%>
 			</ul>
 			<div class="logo_top_wrap">
 				<div class="logo_wrap">
@@ -165,10 +199,10 @@
 						<div class="search_top_btn">
 							<!-- 검색 창 -->
 							<div class="search_box">
-								<form name="searchBoxForm" id="searchBoxForm" action="">
+								<form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
 									<img
 										src="${pageContext.request.contextPath}/resources/images/home/search.png"
-										id="center-image" alt="검색" />
+										id="search-img" alt="검색" />
 								</form>
 							</div>
 						</div>
@@ -225,79 +259,74 @@
 	</header>
 	<div id="deleteMember-div" class="deleteMember-class">
 		<div class=deleteMember>
-			<span onclick=>&times;</span>
+			<span class="deletememberForm-close" >&times;</span>
 			<h2>회원 탈퇴</h2>
 			<p>정말 탈퇴하시겠습니까??</p>
 			<form:form id="deleteMemberForm"
 				onsubmit="submitIdFinderForm(); return false;">
-				<label for="deleteMember-password">비밀번호입력:</label>
-				<input class="deleteMemberForm-input-password" type="password"
-					id="password" name="password" required>
-				<button class="deleteMemberForm-button" type="submit">회원탈퇴</button>
-				<button type="button" id="deleteMemberForm-closeModalBtn"
-					onclick="closDeleteMemberModal();">닫기</button>
+				<label for="deleteMember-password">비밀번호입력:</label> <input
+					class="deleteMemberForm-input-password" type="password" id="password"
+					name="password" required>
+				<button class="deleteMemberForm-button" type="submit" >회원탈퇴</button>
+					<button type="button" id="deleteMemberForm-closeModalBtn" onclick="closDeleteMemberModal();">닫기</button>
 			</form:form>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-		/* alert('${msg}'); */
-		/* const deleteMember = () => {
-		 if (confirm('정말로 회원 탈퇴하시겠습니까?')) {
-		 document.getElementById('deleteMemberForm').submit();
-		 } else {
-		 alert('회원 탈퇴를 실패했습니다.');
-		 }
-		 }; */
+<script>
 
-		const deleteMemberBtn = document.getElementById("deleteMemberBtn");
-		const closeDeleteModalBtn = document
-				.getElementById("deleteMemberForm-closeModalBtn");
-		const deleteMemberModal = document.getElementById("deleteMember-div");
+$(document).ready(function() {
+	  const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+	  const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-		// 회원탈퇴 버튼 클릭 시 모달 열기
-		deleteMemberBtn.addEventListener("click", function() {
-			deleteMemberModal.style.display = "block";
-		});
+	  $("#deleteMemberForm-closeModalBtn").click(function() {
+	    const deleteMemberPassword = $("#deleteMember-password").val();
+	    $.ajax({
+	      type: 'POST',
+	      url: '${pageContext.request.contextPath}/member/deleteMember.do',
+	      data: {
+	        'password': deleteMemberPassword
+	      },
+	      dataType: "text",
+	      beforeSend: function(xhr) {
+	        xhr.setRequestHeader(csrfHeader, csrfToken); // Add CSRF token to header
+	      },
+	      success: function(result) {
+	        console.log(result);
+	        if (result === "no") {
+	          alert('비밀번호가 틀렸습니다.');
+	        } else {
+	          alert('회원 탈퇴완료ㅠㅠ.');
+	        }
+	      },
+	      error: function() {
+	        console.log('에러 체크!!');
+	      }
+	    });
+	  });
 
-		// 모달 닫기 버튼 클릭 시 모달 닫기
-		closeDeleteModalBtn.addEventListener("click", function() {
-			deleteMemberModal.style.display = "none";
-		});
+	  const searchBoxForm = document.getElementById("searchBoxForm");
+	  const searchImg = document.getElementById("search-img");
 
-		$(document).ready(function() {
-		    $("#deleteMemberForm-button").click(function() {
-		        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-		        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-		        const deleteMemberPassword = $("#deleteMember-password").val();
-		        
-		        $("#deleteMemberForm-closeModalBtn").click(function() {
-		            $.ajax({
-		                type: 'POST',
-		                url: '${pageContext.request.contextPath}/member/deleteMember.do',
-		                data: {
-		                    'password': deleteMemberPassword
-		                },
-		                dataType: "text",
-		                beforeSend: function(xhr) {
-		                    xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
-		                },
-		                success: function(result) {
-		                    console.log(result);
-		                    if (result === "no") {
-		                        alert('비밀번호가 틀렸습니다.');
-		                        userEmail.submit();
-		                    } else {
-		                        alert('회원 탈퇴 완료했습니다. 😢');
-		                    }
-		                },
-		                error: function() {
-		                    console.log('에러 체크!!');
-		                }
-		            });
-		        });
-		    });
-		});
+	  searchImg.addEventListener("click", function () {
+	    const inputElement = document.createElement("input");
+	    inputElement.type = "text";
+	    inputElement.name = "searchQuery";
+	    inputElement.placeholder = "Enter the product name you are looking for";
 
-	</script>
+	    searchBoxForm.appendChild(inputElement);
+
+	    inputElement.addEventListener("keyup", function(event) {
+	      if (event.key === "Enter") {
+	        event.preventDefault();
+	        searchBoxForm.submit();
+	      }
+	    });
+	  });
+
+	});
+	
+
+
+</script>
+
 	<jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>

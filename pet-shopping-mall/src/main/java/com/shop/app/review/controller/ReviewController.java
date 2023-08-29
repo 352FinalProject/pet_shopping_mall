@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,12 +103,28 @@ public class ReviewController {
 				"reviewMemberId", reviewMemberId
 				);
 
+		log.debug("첫번째 params = {}", params);
+		
 		int totalCount = reviewService.findTotalReviewCount(reviewMemberId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 
 		List<Review> reviews = reviewService.findReviewAll(params);
+		log.debug("두번째 params = {}", params);
+		
 		model.addAttribute("reviews", reviews);
+		
+//	    Map<Review, List<Order>> reviewToOrderMap = new HashMap<>();
+//
+//	    for (Review review : reviews) {
+//	        List<Order> orders = orderService.findOrdersByReviewId(review.getReviewId());
+//	        reviewToOrderMap.put(review, orders);
+//	    }
+//
+//	    model.addAttribute("reviewToOrderMap", reviewToOrderMap);
+//		
+//	    log.debug("reviewToOrderMap = {}", reviewToOrderMap);
+		
 		
 		// 구매한 상품과 연결
 		String memberId = member.getMemberId();
@@ -115,6 +132,8 @@ public class ReviewController {
 		orderList = orderService.getOrderList(memberId);
 		model.addAttribute("orderHistories", orderList);
 
+//		log.debug("orderList = {}", orderList);
+		
 		// 구매한 상품 - 주문상세내역
 		List<Map<OrderHistoryDto, Payment>> orderDetailMap = new ArrayList<>(); // 초기화
 
@@ -124,7 +143,11 @@ public class ReviewController {
 		    orderDetailMap.addAll(orderDetail); // 주문상세내역을 orderDetailMap에 추가
 		}
 
-		model.addAttribute("orderDetailMap", orderDetailMap);
+		model.addAttribute("orderDetail", orderDetailMap);
+		
+		log.debug("orderDetailMap = {}", orderDetailMap );
+		
+		
 	
 	}
 
@@ -185,6 +208,7 @@ public class ReviewController {
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
 				.petId(pet.getPetId())
+				//.petId(_review.getPetId())
 				.orderId(_review.getOrderId())
 				.productId(_review.getProductId()) // 리뷰작성할 때 productId 넘기기 (예라)
 				.reviewMemberId(_review.getReviewMemberId())
@@ -207,10 +231,14 @@ public class ReviewController {
 		
 		if (!petInfo.isEmpty()) { // 펫정보가 비어있지 않다면
 			Pet firstPet = petInfo.get(0); // 첫번째 Pet 객체 가져오기
-			reviews.setPetId(firstPet.getPetId()); // db에 pet정보 저장 
+			reviews.setPetId(firstPet.getPetId()); // db에 pet정보 저장
+		
+		} else {
+			reviews.setPetId(null);
 		}
+			
+		log.debug("펫아이디 확인 reviews = {}", reviews);
 
-		log.debug("리뷰 이미지 확인 reviews = {}", reviews);
 		
 		// 상품 - 리뷰 연결
 		// Product 객체 생성

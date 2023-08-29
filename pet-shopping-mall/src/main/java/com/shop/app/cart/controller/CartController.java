@@ -53,6 +53,7 @@ public class CartController {
 
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
+
 	}
 	
 	@PostMapping("/deleteCartOne.do")

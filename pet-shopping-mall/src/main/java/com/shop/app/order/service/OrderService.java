@@ -3,12 +3,15 @@ package com.shop.app.order.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
+import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
@@ -64,6 +67,11 @@ public interface OrderService {
 
 	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
 	boolean reviewWrite(String memberId, int orderId);
+	
+	
+
+	// 상품별 주문확정 주문 수 조회 (수경)
+	int findOrderCntByProductId(int productDetailId);
 
 	
 }

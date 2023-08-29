@@ -24,6 +24,7 @@ import com.shop.app.order.entity.Order;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.payment.entity.Payment;
 import com.shop.app.point.entity.Point;
+import com.shop.app.point.service.PointService;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.entity.Review;
 
@@ -35,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderController {
 	
-	public static String[] status = {"입금대기", "결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
+	public static String[] status = {"결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
  
 	
 	@Autowired
@@ -43,6 +44,9 @@ public class OrderController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	PointService pointService;
 	
 	
 	@GetMapping("/orderExchange.do")
@@ -78,6 +82,7 @@ public class OrderController {
 	@PostMapping("/cancelOrder.do")
 	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo, @RequestParam String isRefund) {
 		int result = orderService.insertCancelOrder(orderNo, isRefund);
+		
 		return "redirect:/order/orderList.do";
 	}
 	
@@ -116,11 +121,12 @@ public class OrderController {
 	        int orderId = orderHistory.getOrderId();
 	        String memberId = member.getMemberId();
 	        boolean reviewWrite = orderService.reviewWrite(memberId, orderId);
-
 	        model.addAttribute("reviewWrite", reviewWrite);
 	        
 	    }
-
+	    
+	    log.debug("orderDetailMap= {}", orderDetailMap);
+	    log.debug("status = {}", status);
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderDetail", orderDetailMap);
 	}

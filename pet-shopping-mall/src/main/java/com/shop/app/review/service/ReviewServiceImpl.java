@@ -94,7 +94,6 @@ public class ReviewServiceImpl implements ReviewService {
 	@Transactional
 	public ReviewDetailDto findReviewId(int reviewId) {
 		Review review = reviewRepository.findReviewId(reviewId);
-		Pet pet = petRepository.findPetById(review.getPetId());
 		
 	    ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
 	    reviewDetailDto.setReviewId(review.getReviewId());
@@ -103,13 +102,20 @@ public class ReviewServiceImpl implements ReviewService {
 	    reviewDetailDto.setReviewStarRate(review.getReviewStarRate());
 	    reviewDetailDto.setReviewCreatedAt(review.getReviewCreatedAt());
 
+	    // 펫정보 연결
+	    Integer petId = review.getPetId();
+
+	    // 펫정보가 없는 경우
+	    if (petId != null ) {
+	    Pet pet = petRepository.findPetById(review.getPetId());
 	    reviewDetailDto.setPetId(pet.getPetId());
 	    reviewDetailDto.setPetName(pet.getPetName());
 	    reviewDetailDto.setPetAge(pet.getPetAge());
 	    reviewDetailDto.setPetBreed(pet.getPetBreed());
 	    reviewDetailDto.setPetWeight(pet.getPetWeight());
 	    reviewDetailDto.setPetGender(pet.getPetGender());
-
+	    
+	    } 
 	    
 	    log.debug("reviewDetailDto = {}", reviewDetailDto);
 	    return reviewDetailDto;

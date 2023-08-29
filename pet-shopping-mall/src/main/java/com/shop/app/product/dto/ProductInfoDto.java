@@ -24,19 +24,12 @@ import lombok.NonNull;
 @AllArgsConstructor
 @Builder
 public class ProductInfoDto {
-	@NonNull
-	private int productDetailId;
 	private int productId;
-	private String optionName;
-	private String optionValue;
-	private int additionalPrice;
-	private int saleState;
-	private String productName;
-	private int likeCnt;
 	
 	private ProductCategory productCategory; // 카테고리명 저장용
 	private Product product; // 상품정보 저장용
-	
+	private List<ProductDetail> productDetails; // 해당 상품 아이디에 해당하는 productDetail 객체를 모아둠
+	private int orderCnt; // 구매확정된 주문의 수
 	private List<ImageAttachment> attachments;
 	private List<ImageAttachmentMapping> attachmentMapping;
 

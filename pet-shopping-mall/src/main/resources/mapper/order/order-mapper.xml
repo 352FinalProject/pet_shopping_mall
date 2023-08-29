@@ -366,4 +366,5 @@
       <result column="image_original_filename" property="imageOriginalFileName" />
       <result column="image_renamed_filename" property="imageRenamedFileName" />
    </resultMap>
+   
 </mapper>
