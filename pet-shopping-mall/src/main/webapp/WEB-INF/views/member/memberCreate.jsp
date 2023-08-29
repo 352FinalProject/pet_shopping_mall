@@ -210,7 +210,6 @@ span duplicate {
                </tr>
             </table>
          </form:form>
-         <button onclick="test();">눌러봐</button>
       </div>
    </div>
    <div id="kakaoInput" hidden="true">   

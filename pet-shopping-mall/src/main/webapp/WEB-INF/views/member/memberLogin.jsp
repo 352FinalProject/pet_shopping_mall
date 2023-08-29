@@ -319,7 +319,7 @@ background-color: #ccc;
                         <input class="saveId" type="checkbox" name="saveId">
                      </div>
                      <div class="search-id">
-                        <p>아이디저장</p>
+                        <p>로그인유지</p>
                         <button type="button" class="search" id="searchId"
                            onclick="openIdFinderModal();">아이디찾기</button>
                         <button type="button" class="search" id="searchPassword">비밀번호찾기</button>
@@ -377,7 +377,7 @@ background-color: #ccc;
                <label for="email">이메일 주소:</label> <input type="email"
                   class="modal-form-control" id="userEmail" name="email" required>
             </div>
-            <button type="submit" id="sendEmail" class="btn-primary">이메일
+            <button type="button" id="sendEmail" class="btn-primary">이메일
                전송</button>
          </form:form>
          <div class="password-close-modal">
@@ -464,11 +464,11 @@ $(document).ready(function() {
             },
             success: function(result) {
                console.log(result);
-                if (result === "no") {
-                    alert('임시비밀번호를 전송 했습니다.');
-                    userEmail.submit();
+                if (result == "0") {
+                	passwordResetModal.style.display = "none";
+                    alert("임시비밀번호 발송");
                 } else {
-                    alert('임시비밀번호를 전송 했습니다.');
+                    alert('임시비밀번호 발송에 실패했습니다.');
                 }
             },
             error: function() {

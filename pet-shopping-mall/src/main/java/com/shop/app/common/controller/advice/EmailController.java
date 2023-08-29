@@ -96,7 +96,7 @@ public class EmailController {
 		MailSender mailSender = new MailSender();
 		String temporaryPassword = mailSender.generateTemporaryPassword(10);
 		
-		mailSender.sendTemporaryPasswordEmail(email, temporaryPassword);
+		mailSender.sendTemporaryPasswordEmail(email, temporaryPassword); 
 		
 		// 임시 비밀번호 저장
 		tokenStore.put(email, temporaryPassword);
@@ -116,8 +116,7 @@ public class EmailController {
 
 	    return ResponseEntity.status(HttpStatus.OK)
                .header("Location", "/member/myPage.do")  // 여기서 "/my-page"는 실제 리디렉션할 URL로 변경해야 합니다.
-               .body("임시 비밀번호가 성공적으로 전송되었습니다. 내 페이지로 이동합니다.");
-	
+               .body("0");
 	}
 
 }
