@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shop.app.order.repository.PaymentRepository">
+<mapper namespace="com.shop.app.payment.repository.PaymentRepository">
 
    <select id="notificationFindOrderByOrderNo" resultMap="paymentCompleteNotificationDto">
 	SELECT 
@@ -17,7 +17,7 @@
 		JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
 		JOIN product p ON pd.product_id = p.product_id
 	WHERE
-		order_no = #{orderNo};
+		order_no = #{orderNo}
    </select>
    <resultMap type="PaymentCompleteNotificationDto" id="paymentCompleteNotificationDto">
       <id column="order_id" property="orderId" />
