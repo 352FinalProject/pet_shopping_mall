@@ -55,8 +55,8 @@
 						<c:if test="${not empty orderDetail}">
 							<sec:authentication property="principal" var="loginMember" />
 							<c:forEach var="orderMap" items="${orderDetail}">
-								<c:set var="index" value="${entry.key.orderStatus}"/>
 								<c:forEach var="entry" items="${orderMap}">
+								<c:set var="index" value="${entry.key.orderStatus}"/>
 								<c:set var="option" value="${entry.key.optionName}" />
 								<c:set var="amount" value="${entry.key.amount}" />
 								<fmt:formatDate value="${entry.key.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
@@ -87,14 +87,14 @@
 										<p>${status[index]}</p>
                               			<c:if test="${status[index] == '배송완료'}">
                                 			<c:forEach var="order" items="${orderMap}">
-                                 			<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+                                 			<form:form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
                                      		<input type="hidden" name="productId" value="${order.key.productId}">
                                      		<input type="hidden" name="orderId" value="${order.key.orderId}">
+                                			</form:form>
                                    			</c:forEach>
                                    			<c:if test="${not reviewWrite}">
                                      			<button class="review-btn" type="submit">리뷰쓰기</button>
                                      		</c:if>
-                                			</form>
                               			</c:if>
 									</td>
 								</tr>

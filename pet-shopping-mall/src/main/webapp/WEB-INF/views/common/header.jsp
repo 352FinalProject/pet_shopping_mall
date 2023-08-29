@@ -168,12 +168,6 @@
 						</form:form>
 					</li>
 				</sec:authorize>
-				<li class="community_li"><a
-					href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
-				</li>
-				<li class="community_li"><a
-					href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
-				</li>
 				<%-- <sec:authorize access="isAuthenticated()">
 					<li class="community_li">
 						<c:if test="${empty nofification}">
