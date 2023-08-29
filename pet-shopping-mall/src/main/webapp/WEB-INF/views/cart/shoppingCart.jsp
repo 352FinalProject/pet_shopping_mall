@@ -166,7 +166,7 @@ function updateSubmitButtonStatus() {
             }
         });
     orderButton.disabled = !isChecked;
-}
+};
 
 function updatePrice () {
 	let total = 0;
@@ -179,14 +179,6 @@ function updatePrice () {
     
 	document.querySelector("#amount").innerHTML = formatPrice(total);
 }
-
-const payment = () => {
-	if("${empty cartList}") {
-		alert('장바구니에 담긴 상품이 없습니다.');
-		return;
-	}
-	window.location.href = '${pageContext.request.contextPath}/payment/paymentInfo.do';
-};
 
 const formatPrice = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
