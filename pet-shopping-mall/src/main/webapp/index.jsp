@@ -8,7 +8,7 @@
           <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경" />
         </div>
         <div class="swiper-slide">
-          <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경3" />
+          <img src="${pageContext.request.contextPath}/resources/images/배너/1.배너.png" alt="홈 배경3" />
         </div>
         <div class="swiper-slide">
           <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경4" />
