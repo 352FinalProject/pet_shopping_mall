@@ -14,6 +14,16 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+
+<sec:authorize access="isAuthenticated()">
+	<script>
+	const memberId = '<sec:authentication property="principal.username"/>';
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
+</sec:authorize>
+
 <style>
 /* 모달 배경 스타일 */
 .deleteMember-class {
@@ -84,9 +94,6 @@
 		alert('${msg}');
 	</script>
 </c:if>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
 </head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -162,20 +169,26 @@
 							<i class="bi bi-bell-fill"></i>
 						</c:if>
 					</li> --%>
-					<li class="community_li">
+					<!-- <li class="community_li"> -->
 					  <div class="notification-container">
 					    <button id="openPopupBtn">
 					      <i class="bi bi-bell"></i>
 					    </button>
 					    <div id="notificationPopup" class="popup">
 					      <div class="popup-content">
-					        <p class="notification-content">1번째 알림내용입니다 김대원김대원</p>
-					        <p class="notification-content">2번째 알림내용입니다 김대원김대원</p>
-					        <p class="notification-content">3번째 알림내용입니다 김대원김대원</p>
+					        
+					        <c:if test="${empty notifications}">
+					      	  <p class="notification-content">조회된 알람이 없습니다.</p>
+					        </c:if>
+					        <c:if test="${not empty notifications}">
+						        <c:forEach items="${notifications}" var="notification" varStatus="vs">
+						       		<p class="notification-content">${notification.memberId}님 ${notification.notiContent}.${notification.notiCreatedAt}</p>
+						        </c:forEach>
+					        </c:if>
 					      </div>
 					    </div>
 					  </div>
-					</li>
+					<!-- </li> -->
 				</sec:authorize>
 			</ul>
 			<div class="logo_top_wrap">
@@ -327,7 +340,6 @@ document.addEventListener("DOMContentLoaded", function() {
         notificationPopup.classList.toggle("active");
     });
 });
-
 
 </script>
 

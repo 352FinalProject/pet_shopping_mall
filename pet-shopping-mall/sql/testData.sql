@@ -969,5 +969,5 @@ JOIN product p ON pd.product_id = p.product_id
 where member_id = 'king';
 
 select * from notification where member_id='king';
-
+delete notification where member_id='king';
 

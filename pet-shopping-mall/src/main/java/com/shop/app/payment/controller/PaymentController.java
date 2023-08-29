@@ -285,7 +285,6 @@ public class PaymentController {
 		Order order = orderService.findOrderByOrderNo(orderNo);
 		model.addAttribute("order", order);
 		
-		
 		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
 	    
 		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
@@ -295,26 +294,9 @@ public class PaymentController {
 	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
 	            .memberId(paymentCompleteNotificationDto.getMemberId())
 	            .build();
-		log.debug("paymentCompleteNotificationDto={}",paymentCompleteNotificationDto);
 	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
 		
 	}
-	
-//	@PostMapping("/paymentCompleted.do")
-//	public void paymentCompleteNotification(@RequestParam String orderNo) {
-//		
-//		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
-//	    
-//		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
-//	            .orderId(paymentCompleteNotificationDto.getOrderId())
-//	            .orderNo(paymentCompleteNotificationDto.getOrderNo())
-//	            .productName(paymentCompleteNotificationDto.getProductName())
-//	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
-//	            .memberId(paymentCompleteNotificationDto.getMemberId())
-//	            .build();
-//		log.debug("paymentCompleteNotificationDto={}",paymentCompleteNotificationDto);
-//	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
-//	}
 	
 	/*
 	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)

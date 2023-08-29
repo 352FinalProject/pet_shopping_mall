@@ -25,7 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 */
 	@Override
 	public int paymentCompleteNotification(PaymentCompleteNotificationDto paymentCompleteNotificationDto) {
-		// board 작성자의 구독자에게 실시간 알림을 보낸다.
+		// 실시간 알림을 보낸다.
 		// 1. 작성자의 구독자 조회
 		// 2. 각 사용자에게 알림메세지 발송(stomp)
         String to = paymentCompleteNotificationDto.getMemberId();
@@ -38,13 +38,13 @@ public class NotificationServiceImpl implements NotificationService {
             .memberId(to) 
             .build();
 
-		simpMessagingTemplate.convertAndSend("/app/notice/" + to, notification);
+		simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
 		
 		// 3. db 알림행 등록
 		return notificationRepository.insertNotification(notification);
 	}
 	
-	@Override
+	@Override // db에서 알림 가져오기
 	public List<Notification> findAllNotification(String memberId) {
 		return notificationRepository.findAllNotification(memberId);
 	}
