@@ -316,6 +316,8 @@
       ot.order_status,
       (select product_name from product where product_id = pd.product_id)
       product_name,
+      pd.option_name,
+      pd.option_value,
       od.product_detail_id,
       od.quantity,
       ot.amount,
@@ -360,6 +362,8 @@
       <result column="order_status" property="orderStatus" />
       <result column="product_id" property="productId"/>
       <result column="product_name" property="productName" />
+      <result column="option_name" property="optionName" />
+      <result column="option_value" property="optionValue" />
       <result column="product_detail_id" property="productDetailId" />
       <result column="quantity" property="quantity" />
       <result column="amount" property="amount" />
