@@ -110,41 +110,38 @@ public class OrderController {
 		return "redirect:/cart/shoppingCart.do";
 	}
 	
-//	@GetMapping("/orderDetail.do")
-//	public void getOrderDetail(Model model, @RequestParam String orderNo, @AuthenticationPrincipal MemberDetails member) {
-//	    
-//	    List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
-//	    
-//	    log.debug("저건뭐뜸 orderDetailMap = {}", orderDetailMap);
-//
-//	    // 리뷰 작성하면 리뷰버튼 없애기 (예라, 혜령(productId 조건 추가))
-//	    if(!orderDetailMap.isEmpty()) {
-//	        List<Map<OrderHistoryDto, Payment>> orderHistory = orderDetailMap;
-//	        
-//	        log.debug("이거뭐뜸 orderHistory = {}", orderHistory);
-//	        
-//	        // 이새끼 맵으로 받아서 forEach나 List 돌려야함 지금 존나 ListMap
-////	        String orderNo = orderHistory.getOrderNo();
-////	        int productDetailId = orderHistory.getProductDetailId();
-//	        
-////	        log.debug("이새끼 머임 productDetailId = {}", productDetailId);
-//	        
-////	        int reviewWrite = orderService.reviewWrite(orderNo, productDetailId);
-//	        
-////	        model.addAttribute("reviewWrite", reviewWrite);
-////	        log.debug("reviewWrite = {}", reviewWrite);
-//	        
-//	        
-//	        
-//	        
-//	    }
-//	    
-//	    model.addAttribute("status", status);
-//	    model.addAttribute("orderDetail", orderDetailMap);
-//
-//	    log.debug(" 주문상태 status = {}", status);
-//	    log.debug("orderDetailMap= {}", orderDetailMap);
-//	}
+	@GetMapping("/orderDetail.do")
+	public void getOrderDetail(Model model, @RequestParam String orderNo, @AuthenticationPrincipal MemberDetails member) {
+	    
+	    List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
+	    
+	    log.debug("저건뭐뜸 orderDetailMap = {}", orderDetailMap);
+
+	    // 리뷰 작성하면 리뷰버튼 없애기 (예라, 혜령(productId 조건 추가))
+	    if(!orderDetailMap.isEmpty()) {
+	        List<Map<OrderHistoryDto, Payment>> orderHistory = orderDetailMap;
+	        
+	        log.debug("이거뭐뜸 orderHistory = {}", orderHistory);
+	        
+	        // 이새끼 맵으로 받아서 forEach나 List 돌려야함 지금 존나 ListMap
+//	        String orderNo = orderHistory.getOrderNo();
+//	        int productDetailId = orderHistory.getProductDetailId();
+	        
+//	        log.debug("이새끼 머임 productDetailId = {}", productDetailId);
+	        
+//	        int reviewWrite = orderService.reviewWrite(orderNo, productDetailId);
+	        
+//	        model.addAttribute("reviewWrite", reviewWrite);
+//	        log.debug("reviewWrite = {}", reviewWrite);
+	        
+	    }
+	    
+	    model.addAttribute("status", status);
+	    model.addAttribute("orderDetail", orderDetailMap);
+
+	    log.debug(" 주문상태 status = {}", status);
+	    log.debug("orderDetailMap= {}", orderDetailMap);
+	}
 
 
 
