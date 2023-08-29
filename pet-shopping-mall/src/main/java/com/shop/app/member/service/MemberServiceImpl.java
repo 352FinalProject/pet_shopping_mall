@@ -88,6 +88,12 @@ public class MemberServiceImpl implements MemberService {
 	public int subscribeCancel(String memberId) {
 		return memberRepository.subscribeCancel(memberId);
 	}
+	
+	
+	@Override
+	public SubMember findSubMemberByMemberId(String memberId) {
+		return memberRepository.findSubMemberByMemberId(memberId);
+	}
 
 
 }

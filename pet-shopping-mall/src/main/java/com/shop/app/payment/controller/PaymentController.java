@@ -427,6 +427,14 @@ public class PaymentController {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
-        
     }
+	
+	@PostMapping("/unsubscribe.do")
+	public void unsubscribe (@RequestParam String customerUid) {
+		// sub_member 조회를 해서, 거기서 가져온 merchant_uid를 포스트 요청 보내야 함.
+		// member 테이블에서 구독 N 처리
+		SubMember subMember = memberService.findSubMemberByMemberId(customerUid);
+		String result = schedulePay.cancelSchedule(subMember);
+		
+	}
 }
