@@ -64,20 +64,13 @@
 								</form:form></td>
 							<td><span id="total-price"><fmt:formatNumber
 										value="${order.amount}" groupingUsed="true" />원</span></td>
-							<td><c:choose>
-									<c:when test="${index eq 0}">
-										<a
-											href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button
-												class="cancel-btn">취소신청</button></a>
-									</c:when>
-									<c:when test="${index ge 1 && index le 4}">
-										<a
-											href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button
-												class="cancel-btn">취소/환불신청</button></a>
-									</c:when>
-									<c:otherwise>
-									</c:otherwise>
-								</c:choose></td>
+							<td>
+								<c:if test="${index eq 0}">
+									<a
+										href="${pageContext.request.contextPath}/order/cancelOrderDetail.do?orderNo=${order.orderNo}"><button
+										class="cancel-btn">취소신청</button></a>
+								</c:if>
+							</td>
 							<td>
 								<p>${status[index]}</p>
 							</td>
@@ -122,6 +115,6 @@ const handleSelectChange = () => {
 };
 
 periodSelect.addEventListener('change', handleSelectChange);
-	</script>
+</script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

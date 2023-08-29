@@ -273,10 +273,10 @@ public class PaymentController {
 	@PostMapping("/successPay.do")
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid,
-			@AuthenticationPrincipal MemberDetails member) {
+			@AuthenticationPrincipal MemberDetails member, @RequestParam("pg_provider") String pgProvider) {
 		String orderNo = merchantUid;
 		// payment 테이블에 삽입 및 orderTbl 상태 업데이트
-		int result = paymentService.updatePayStatus(orderNo);
+		int result = paymentService.updatePayStatus(orderNo, pgProvider);
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of("result", 1));
 	}
 
