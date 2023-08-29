@@ -56,52 +56,52 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/product")
 @Controller
 public class ProductController {
+
 	@Autowired
 	private ProductService productService;
 	
 	@Autowired
 	private OrderService orderService;
 
-	@Autowired
-	private ReviewService reviewService;
-	
-	@Autowired
-	private WishlistService wishlistService;
+   @Autowired
+   private ReviewService reviewService;
+   
+   @Autowired
+   private WishlistService wishlistService;
 
-	@Autowired
-	private PetService petService;
+   @Autowired
+   private PetService petService;
 
-	@GetMapping("/productDetail.do")
-	public void productDetail(@RequestParam int productId,
-	                          @RequestParam(defaultValue = "1") int page,
-	                          @AuthenticationPrincipal MemberDetails member,
-	                          Model model) {
+   @GetMapping("/productDetail.do")
+   public void productDetail(@RequestParam int productId,
+                             @RequestParam(defaultValue = "1") int page,
+                             @AuthenticationPrincipal MemberDetails member,
+                             Model model) {
 
-	    int limit = 3;
-	    Map<String, Object> params = Map.of("page", page, "limit", limit);
+       int limit = 3;
+       Map<String, Object> params = Map.of("page", page, "limit", limit);
 
-	    int totalCount = reviewService.findProductTotalReviewCount();
-	    int totalPages = (int) Math.ceil((double) totalCount / limit);
-	    model.addAttribute("totalPages", totalPages);
+       int totalCount = reviewService.findProductTotalReviewCount();
+       int totalPages = (int) Math.ceil((double) totalCount / limit);
+       model.addAttribute("totalPages", totalPages);
 
-	    List<Review> reviews = reviewService.findProductReviewAll(params, productId);
-	    model.addAttribute("reviews", reviews);
+       List<Review> reviews = reviewService.findProductReviewAll(params, productId);
+       model.addAttribute("reviews", reviews);
 
-	    // 상품 아이디로 정보 가져오기
-	    Product product = productService.findProductById(productId);
-	    List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
-	    ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
-	    log.debug("productDetails = {}", productDetails);
-	    log.debug("productImages = {}", productImages);
-	    
-	    // 상품정보 담아주기
-	    model.addAttribute("product", product); // 상품정보
-	    model.addAttribute("productImages", productImages); // 상품이미지
-	    model.addAttribute("productDetails", productDetails); // 상품옵션
-	    
-	    // 상품 상세 페이지에 펫 정보 뿌려주기
-	    Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
-
+       // 상품 아이디로 정보 가져오기
+       Product product = productService.findProductById(productId);
+       List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
+       ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
+       log.debug("productDetails = {}", productDetails);
+       log.debug("productImages = {}", productImages);
+       
+       // 상품정보 담아주기
+       model.addAttribute("product", product); // 상품정보
+       model.addAttribute("productImages", productImages); // 상품이미지
+       model.addAttribute("productDetails", productDetails); // 상품옵션
+       
+       // 상품 상세 페이지에 펫 정보 뿌려주기
+       Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 	    for (Review review : reviews) {
 	        List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
 	        reviewPetsMap.put(review.getReviewId(), pets);
@@ -197,65 +197,65 @@ public class ProductController {
 		    
 		    log.debug("productI 가져오니 = {}", productId);
 
-		    int reviewTotalCount = reviewService.findReviewTotalCount(productId);
-		    model.addAttribute("reviewTotalCount", reviewTotalCount);
-		    
-		    log.debug("reviewTotalCount = {}", reviewTotalCount);
-		    
-		}
-	}
-	
-	
-	/* 하트 클릭 (선모) */
-	@ResponseBody
-	@PostMapping("/insertPick.do")
-	public Map insertPick(@Valid @RequestBody Map<String, Object> param, @AuthenticationPrincipal MemberDetails member) {
-		Map<String, Object> resultMap = new HashMap<>();
-		String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제";
-		String getProductId = param.get("productId").toString();
-		int productId = getProductId.isEmpty() ? 0 : Integer.parseInt(getProductId);
-		resultMap.put("rs", "fail");
-		resultMap.put("msg", "찜 " + state + "에 실패하였습니다.");
-		
-		if(productId != 0) {
-			// 데이터 Setting
-			param.put("productId", productId);
-			
-			if("insert".equals(param.get("state").toString())) {
-				param.put("cnt", 1);
-				
-				if(wishlistService.insertPick(productId, member.getMemberId()) > 0) {
-					if(productService.updateLikeCnt(param) > 0) {
-						resultMap.put("rs", "insertS");
-						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
-					}
-				}
-			} else if("delete".equals(param.get("state").toString())) {
-				param.put("cnt", -1);
-				
-				if(wishlistService.deletePick(productId, member.getMemberId()) > 0) {
-					if(productService.updateLikeCnt(param) > 0) {
-						resultMap.put("rs", "deleteS");
-						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
-					}
-				}
-			}
-		}
-		return resultMap;
-	}
+          int reviewTotalCount = reviewService.findReviewTotalCount(productId);
+          model.addAttribute("reviewTotalCount", reviewTotalCount);
+          
+          log.debug("reviewTotalCount = {}", reviewTotalCount);
+          
+      }
+   }
+   
+   
+   /* 하트 클릭 (선모) */
+   @ResponseBody
+   @PostMapping("/insertPick.do")
+   public Map insertPick(@Valid @RequestBody Map<String, Object> param, @AuthenticationPrincipal MemberDetails member) {
+      Map<String, Object> resultMap = new HashMap<>();
+      String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제";
+      String getProductId = param.get("productId").toString();
+      int productId = getProductId.isEmpty() ? 0 : Integer.parseInt(getProductId);
+      resultMap.put("rs", "fail");
+      resultMap.put("msg", "찜 " + state + "에 실패하였습니다.");
+      
+      if(productId != 0) {
+         // 데이터 Setting
+         param.put("productId", productId);
+         
+         if("insert".equals(param.get("state").toString())) {
+            param.put("cnt", 1);
+            
+            if(wishlistService.insertPick(productId, member.getMemberId()) > 0) {
+               if(productService.updateLikeCnt(param) > 0) {
+                  resultMap.put("rs", "insertS");
+                  resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+               }
+            }
+         } else if("delete".equals(param.get("state").toString())) {
+            param.put("cnt", -1);
+            
+            if(wishlistService.deletePick(productId, member.getMemberId()) > 0) {
+               if(productService.updateLikeCnt(param) > 0) {
+                  resultMap.put("rs", "deleteS");
+                  resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+               }
+            }
+         }
+      }
+      return resultMap;
+   }
 
-	
-	
-	
-	
-	
-	
-	@GetMapping("/searchProduct.do")
-	public void searchProducts(Model model, @RequestParam String searchQuery) {
-		List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
-		
-		model.addAttribute("productInfos",productInfos);
-		
-	}
-	
+   
+   
+   
+   
+   
+   
+   @GetMapping("/searchProduct.do")
+   public void searchProducts(Model model, @RequestParam String searchQuery) {
+      List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
+      
+      model.addAttribute("productInfos",productInfos);
+      
+   }
+   
 }

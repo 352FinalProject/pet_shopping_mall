@@ -68,8 +68,10 @@
 								<fmt:formatNumber value='${totalPrice}' pattern="0,000" var="formattedTotal" />
 								<strong class="price">결제 금액</strong>
 								<p class="price" id="amount"></p>
-								<div>배송비와 쿠폰, 적립금이 미적용된 금액입니다.</div>
 							</div>
+						</div>
+						<div class="payment-info">
+							<div>배송비와 쿠폰, 적립금이 미적용된 금액입니다.</div>
 						</div>
 						<c:choose>
 						    <c:when test="${empty cartList}">
@@ -164,7 +166,7 @@ function updateSubmitButtonStatus() {
             }
         });
     orderButton.disabled = !isChecked;
-}
+};
 
 function updatePrice () {
 	let total = 0;
@@ -177,8 +179,6 @@ function updatePrice () {
     
 	document.querySelector("#amount").innerHTML = formatPrice(total);
 }
-
-
 
 const formatPrice = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

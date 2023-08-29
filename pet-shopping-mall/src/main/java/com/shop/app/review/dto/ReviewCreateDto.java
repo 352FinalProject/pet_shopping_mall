@@ -8,6 +8,7 @@ import com.shop.app.pet.entity.PetGender;
 import com.shop.app.review.entity.Review;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ public class ReviewCreateDto {
 	
 	private int reviewId;
 	private String reviewMemberId; // 작성자
+	
 	private int petId;
 	private int orderId;
 	private int productId;

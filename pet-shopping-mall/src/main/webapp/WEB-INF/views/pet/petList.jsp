@@ -11,7 +11,7 @@
 <!-- 펫 등록 리스트 -->
 <section class="common-section" id="common-section-List">
     <div class="common-title">펫 등록 리스트</div>
-    <div class="common-container">
+    <div class="common-container-side">
         <div class="common-div">
             <!-- 검색 폼 -->
             <form:form name="petSearchFrm"
@@ -35,8 +35,8 @@
             </form>
 
             <!-- 펫 리스트 테이블 -->
-            <div class="service-util-div">
-                <table class="service-product-utility">
+            <div class="service-util-div-sidebar">
+                <table class="service-product-utility-sidebar">
                     <thead>
                         <tr>
                             <th>번호</th>

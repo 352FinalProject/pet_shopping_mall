@@ -25,13 +25,14 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	// 1:1 목록 조회 질문 (예라)
 	@Override
-	public List<Question> findQuestionAll(Map<String, Object> params) {
+	public List<QuestionDetails> findQuestionAll(Map<String, Object> params) {
 		int limit = (int) params.get("limit");
 		int page = (int) params.get("page");
 		int offset = (page - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return questionRepository.findQuestionAll(rowBounds);
 	}
+
 	
 	// 1:1 목록 상세 조회 (예라)
 	@Override
@@ -125,6 +126,11 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public int calculateAnswerCount(int questionId) {
 		return questionRepository.calculateAnswerCount(questionId);
+	}
+
+	@Override
+	public ImageAttachment findAttachmentById(int questionId) {
+		return questionRepository.findAttachmentById(questionId);
 	}
 
 }

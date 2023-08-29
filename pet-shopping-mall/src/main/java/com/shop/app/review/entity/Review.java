@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class Review {
 
 	private int reviewId;
-	private int petId;
+	private Integer petId;
 	private int orderId;
 	private int productId;
 	private String reviewMemberId;

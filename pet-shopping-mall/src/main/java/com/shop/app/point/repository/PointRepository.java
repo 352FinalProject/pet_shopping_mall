@@ -54,8 +54,9 @@ public interface PointRepository {
 	Point getPointByReviewId(int reviewId);
 
 	// 포인트 롤백
-	@Select("select * from point")
+	@Select("select * from point where point_member_id = #{pointMemberId} order by point_date desc")
 	List<Point> findRollbackPointCurrentById(Point rollbackPoint);
+
 
 
 

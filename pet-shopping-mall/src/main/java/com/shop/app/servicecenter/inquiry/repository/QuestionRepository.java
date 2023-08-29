@@ -1,6 +1,7 @@
 package com.shop.app.servicecenter.inquiry.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -20,7 +21,7 @@ public interface QuestionRepository {
 
 	// 1:1 목록 조회 질문 (예라)
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) answer_count from question q order by question_id desc")
-	List<Question> findQuestionAll(RowBounds rowBounds);
+	List<QuestionDetails> findQuestionAll(RowBounds rowBounds);
 
 	// 1:1 목록 상세 조회 (예라)
 	@Select("select * from question where question_id = #{questionId}")
@@ -60,7 +61,7 @@ public interface QuestionRepository {
 	@Select("select count (*) from question")
 	int findTotalQuestionCount();
 
-	// 질문 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장 (예라)
+	// 질문 id와 이미지 id를 사용하여 매핑 정보를 DB에 저장 (예라)
 	@Insert("insert into image_attachment_mapping (mapping_id, ref_table, ref_id, image_id) VALUES (seq_image_attachment_mapping_id.nextval, 'question', #{questionId}, #{imageId})")
 	int insertMapping(int questionId, int imageId);
 
@@ -74,5 +75,9 @@ public interface QuestionRepository {
 	// 각 질문의 답변 수 계산하여 추가 (예라)
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) answer_count from question q where q.question_id = #{questionId} order by question_id desc")
 	int calculateAnswerCount(int questionId);
+
+	// 이미지 다운로드 (예라)
+	ImageAttachment findAttachmentById(int questionId);
+	
 
 }

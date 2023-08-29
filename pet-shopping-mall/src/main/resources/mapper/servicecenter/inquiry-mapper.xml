@@ -34,9 +34,22 @@
     	q.question_id = #{questionId}
 	</select>
 
+	<select id="findAttachmentById" resultMap="ImageAttachmentResultMap">
+	select 
+		q.*, ia.*
+	from 
+		question q
+	join 
+		image_attachment_mapping iam ON q.question_id = iam.ref_id
+	join 
+		image_attachment ia ON iam.image_id = ia.image_id
+	where 
+		q.question_id = #{questionId} and iam.ref_table = 'question'
+	</select>
+
     <resultMap type="Question" id="questionResultMap">
         <id property="questionId" column="question_id"/>
-        <result property="memberId" column="question_member_id"/>
+        <result property="questionMemberId" column="question_member_id"/>
         <result property="questionCategory" column="question_category"/>
         <result property="questionEmail" column="question_email"/>
         <result property="questionTitle" column="question_title"/>
@@ -44,24 +57,35 @@
         <result property="questionCreatedAt" column="question_created_at"/>
     </resultMap>
     
-<resultMap type="QuestionDetails" id="QuestionDetailsResultMap">
-    <id property="questionId" column="question_id"/>
-    <result property="memberId" column="question_member_id"/>
-    <result property="questionCategory" column="question_category"/>
-    <result property="questionEmail" column="question_email"/>
-    <result property="questionTitle" column="question_title"/>
-    <result property="questionContent" column="question_content"/>
-    <result property="questionCreatedAt" column="question_created_at"/>
+	<resultMap type="QuestionDetails" id="QuestionDetailsResultMap">
+	    <id property="questionId" column="question_id"/>
+	    <result property="questionMemberId" column="question_member_id"/>
+	    <result property="questionCategory" column="question_category"/>
+	    <result property="questionEmail" column="question_email"/>
+	    <result property="questionTitle" column="question_title"/>
+	    <result property="questionContent" column="question_content"/>
+	    <result property="questionCreatedAt" column="question_created_at"/>
+	
+	    <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
+	    <collection property="attachments" ofType="ImageAttachment">
+	        <result property="imageId" column="image_id"/>
+	        <result property="imageType" column="image_type"/>
+	        <result property="imageCategory" column="image_category"/>
+	        <result property="imageOriginalFilename" column="image_original_filename"/>
+	        <result property="imageRenamedFilename" column="image_renamed_filename"/>
+	        <result property="imageFileSize" column="image_file_size"/>
+	        <result property="imageCreatedAt" column="image_created_at"/>
+	    </collection>
+	</resultMap>
 
-    <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
-    <collection property="attachments" ofType="ImageAttachment">
-        <result property="imageId" column="image_id"/>
-        <result property="imageType" column="image_type"/>
-        <result property="imageCategory" column="image_category"/>
-        <result property="imageOriginalFilename" column="image_original_filename"/>
-        <result property="imageRenamedFilename" column="image_renamed_filename"/>
-        <result property="imageFileSize" column="image_file_size"/>
-        <result property="imageCreatedAt" column="image_created_at"/>
-    </collection>
-</resultMap>
+	<resultMap type="ImageAttachment" id="ImageAttachmentResultMap">
+	    <id property="imageId" column="image_id"/>
+	    <result property="imageType" column="image_type"/>
+	   	<result property="imageCategory" column="image_category"/>
+	    <result property="imageOriginalFilename" column="image_original_filename"/>
+	    <result property="imageRenamedFilename" column="image_renamed_filename"/>
+	    <result property="imageFileSize" column="image_file_size"/>
+	    <result property="imageCreatedAt" column="image_created_at"/>
+	    <!-- 기타 필드 -->
+	</resultMap>
 </mapper>

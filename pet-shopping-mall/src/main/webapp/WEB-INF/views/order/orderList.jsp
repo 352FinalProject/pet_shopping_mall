@@ -80,7 +80,6 @@
 								</c:choose></td>
 							<td>
 								<p>${status[index]}</p>
-
 							</td>
 						</tr>
 					</c:forEach>
