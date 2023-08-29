@@ -38,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
 				.build();
 		int result = paymentRepository.insertPayment(payment);
 		result =  paymentRepository.updatePayStatus(orderNo);
-		result = orderRepository.updateOrderStatus(orderNo, 1);
+		result = orderRepository.updateOrderStatus(orderNo, 0);
 		// 장바구니 비우기
 		result= cartRepository.deleteCartAll(order.getMemberId());
 		
