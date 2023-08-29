@@ -19,7 +19,9 @@
 				</div>
 				<div class="card-body">
 					  <div class="container-fluid px-4">
-					    <form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" enctype="multipart/form-data" method="post" class="mt-4">
+					    <form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" 
+					    name ="createProductFrm"
+					    enctype="multipart/form-data" method="post" class="mt-4">
 					
 					      <div class="mb-3">
 					        
@@ -29,7 +31,7 @@
 					          </div>
 					          <div class="col-md-3">
 					            <select name="categoryId" id="categoryId" class="form-select">
-					              <option value="-선택-">-선택-</option>
+					              <option value="0">-선택-</option>
 					              <c:if test="${empty categories}">
 					                <option value="1">카테고리가 없습니다. 카테고리를 추가해주세요</option>
 					              </c:if>
@@ -82,7 +84,7 @@
 					          <div class="col-md-2">
 					            <select name="productDetail.saleState" id="saleState" class="form-select">
 					              <option value="0">판매대기</option>
-					              <option value="1">판매중</option>
+					              <option value="1" selected>판매중</option>
 					              <option value="2">품절</option>
 					              <option value="3">기타</option>
 					            </select>
@@ -116,7 +118,39 @@
 			
 		</div>
 	</main>
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<script>
+	// 유효성 검사
+	
+	$(document).ready(function() {
+		
+	    $("#productCreateFrm").on("submit", (e) => {
+			// 카테고리 유효성 검사
+	    	const categoryValue = document.querySelector('select[name=categoryId]').value;
+			console.log("categoryValue=", categoryValue);
+			if(categoryValue === 0){
+				alert("카테고리를 선택해주세요.");
+				// return
+				e.preventDefault();
+			}
+			
+			// 상품명 검사
+	    	const productNameValue = document.querySelector('select[name=productName]').value;
+			console.log("productNameValue=", productNameValue);
+			
+			
+			// 상품금액 검사
+	    	const productPriceValue = document.querySelector('select[name=ProductPrice]').value;
+			console.log("productPriceValue=", productPriceValue);
+			if(productPriceValue < 0){
+				alert("상품가격은 음수를 입력할 수 없습니다.");
+				// return
+				e.preventDefault();
+			}
+			
+	    });
+	});
+	
 	let optionNumber = 1;
 	let optionValueInput = null;
 	const addOptionValue = () => {
