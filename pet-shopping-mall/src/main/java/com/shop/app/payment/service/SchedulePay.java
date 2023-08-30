@@ -155,7 +155,7 @@ public class SchedulePay {
     	// 스케쥴이 지나면 sub_member 테이블에서 삭제하기
     	// member 테이블에서 구독 N 처리
     	String memberId = subMember.getMemberId();
-    	// memberService.cancelSubscribe(memberId);
+    	memberService.cancelSubscribe(memberId);
 
     	
     	

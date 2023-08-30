@@ -95,5 +95,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findSubMemberByMemberId(memberId);
 	}
 
+	@Override
+	public int cancelSubscribe(String memberId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
