@@ -113,4 +113,8 @@ public interface ProductRepository {
 	@Select("select * from product_detail where product_id = #{productId} order by 1")
 	List<ProductDetail> findProductDetailsByProductId(int productId);
 
+	// (수경)
+	@Select("select * from product where product_name like '%' || #{searchKeyword} || '%'")
+	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
+
 }
