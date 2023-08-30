@@ -377,23 +377,52 @@ window.onload = function() {
     nameInput.addEventListener("input", validateName);
 };
 
+const validatePhone = () => {
+    const phone = phoneInput.value;
+
+    if (phone.length >= 8) {
+        // 이름 조건이 충족되었을 때 스타일 변경
+        phoneInput.style.border = "1px solid #5886d3";
+    } else {
+        // 이름 조건이 충족되지 않았을 때 스타일 변경
+       phoneInput.style.border = "1px solid red";
+    }
+};
+
+
+const validatePhone = () => {
+    const phone = phoneInput.value;
+
+    if (phone.length >= 8) {
+        // 이름 조건이 충족되었을 때 스타일 변경
+        phoneInput.style.border = "1px solid #5886d3";
+    } else {
+        // 이름 조건이 충족되지 않았을 때 스타일 변경
+       phoneInput.style.border = "1px solid red";
+    }
+};
+
+// 입력이 변경될 때마다 이름 유효성 검사 실행
+phoneInput.addEventListener("input", validatePhone);
+
+// 입력이 변경될 때마다 이름 유효성 검사 실행
+phoneInput.addEventListener("input", validatePhone);
+
+
 function validateEmail() {
     const emailInput = document.getElementById("emailInput");
-    const emailValidationMessage = document.getElementById("emailValidationMessage");
 
     const emailPattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
     if (!emailPattern.test(emailInput.value)) {
-        emailValidationMessage.textContent = "유효한 이메일 주소를 입력하세요.";
-        emailValidationMessage.style.display = "block";
         emailInput.style.border = "1px solid red"; // 이메일 형식이 유효하지 않을 때 색상 변경
     } else {
-        emailValidationMessage.textContent = "";
-        emailValidationMessage.style.display = "none";
         emailInput.style.border = "1px solid #58586d3"; // 이메일 형식이 유효할 때 기본 색상으로 변경
     }
     emailInput.addEventListener("input", validateEmail);
 };
+
+
 
 function sample4_execDaumPostcode() {
     new daum.Postcode({
