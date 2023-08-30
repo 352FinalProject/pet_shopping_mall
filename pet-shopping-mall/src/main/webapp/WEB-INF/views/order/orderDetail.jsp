@@ -101,6 +101,9 @@
 												<p>구매확정</p>
 											</c:if>
 										</c:if>
+										<c:if test="${status[index] ne '배송완료'}">
+											<p>${status[index]}</p>
+										</c:if>
 									</td>
 								</tr>
 								<c:if test="${payment eq null}">
