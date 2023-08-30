@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -65,6 +66,7 @@ public interface ProductService {
 	
 	// 상품검색 (수경)
 	List<Product> searchProducts(String searchKeyword, String searchCategory);
+	List<ProductSearchDto> searchProducts(String searchQuery);
 
 
 }
