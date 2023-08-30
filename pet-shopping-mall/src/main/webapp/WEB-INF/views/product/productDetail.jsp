@@ -318,7 +318,8 @@ pageEncoding="UTF-8"%>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-/* 상품수량에 따라 가격 바꾸기(수경) */
+
+// 상품수량에 따라 가격 바꾸기
 document.addEventListener("DOMContentLoaded", () => {
 	const optionSelect = document.querySelector("[name='product-option']");
 	const originalPrice = parseInt(${product.productPrice});
@@ -328,27 +329,42 @@ document.addEventListener("DOMContentLoaded", () => {
 	const productBottomPrice = document.querySelector("#product-bottom-price");
     const optionMinusButton = document.querySelector(".minus");
     const optionPlusButton = document.querySelector(".plus");
-    
+    let currentQuantity = parseInt(quantityInput.value) || 1;  // 수량이 지정되지 않은 경우 1로 설정
+
+    const formatNumberWithCommas = (num) => {
+        return num.toLocaleString('en-US');
+    };
+
     optionSelect.addEventListener("change", function() {
         const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
         const price = document.getElementById(productDetailId).innerHTML;
-        if(document.getElementById(productDetailId).innerHTML != null){}
-        	additionalPriceValue = parseInt(price);
-      });
-    
+        if(price !== null) {
+        	additionalPrice = parseInt(price);
+        }
+    });
+
+    const updatePrice = () => {
+        const updateTotalPrice = (originalPrice + additionalPrice) * currentQuantity;
+        totalPrice.innerHTML = formatNumberWithCommas(updateTotalPrice);
+        productBottomPrice.innerHTML = formatNumberWithCommas(updateTotalPrice);
+    };
+
     optionMinusButton.addEventListener("click", () => {
-    	const updateQuantity = quantityInput.value;
-       totalPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
-       productBottomPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
-      });
+        if (currentQuantity > 1) {
+            currentQuantity--;
+            quantityInput.value = currentQuantity;
+        }
+        updatePrice();
+    });
 
     optionPlusButton.addEventListener("click", () => {
-        const updateQuantity = quantityInput.value;
-        
-        totalPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
-        productBottomPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
-      });
-    
+        currentQuantity++;
+        quantityInput.value = currentQuantity;
+        updatePrice();
+    });
+
+    // 초기 총액 계산
+    updatePrice();
 });
 
 
@@ -397,6 +413,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+// 장바구니에 담기 (담희)
 function addCart() {
    const frm = document.querySelector("#addCartFrm");
    
