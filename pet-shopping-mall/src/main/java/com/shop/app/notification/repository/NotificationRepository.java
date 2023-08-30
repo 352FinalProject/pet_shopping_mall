@@ -14,7 +14,7 @@ public interface NotificationRepository {
 	@Insert("insert into notification(id, noti_category, noti_content, noti_created_at, member_id) values (seq_notification_id.nextval, #{notiCategory}, #{notiContent}, CURRENT_TIMESTAMP, #{memberId})")
 	int insertNotification(Notification message);
 	
-	@Select("select * from notification where member_id= #{memberId}")
+	@Select("select * from notification where member_id= #{memberId, jdbcType=VARCHAR}")
 	List<Notification> findAllNotification(String memberId);
 	
 	
