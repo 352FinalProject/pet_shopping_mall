@@ -158,8 +158,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 상품검색 (수경)
 	@Override
-	public List<Product> searchProducts(String searchKeyword, String searchCategory) {
-		return productRepository.searchProducts(searchKeyword, searchCategory);
+	public List<Product> adminProductSearch(String searchKeyword, String searchCategory) {
+		return productRepository.adminProductSearch(searchKeyword, searchCategory);
 	}
 	
 }

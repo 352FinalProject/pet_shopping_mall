@@ -68,7 +68,7 @@ public interface ProductService {
 	List<ProductDetail> findProductDetailsByProductId(int productId);
 	
 	// 상품검색 (수경)
-	List<Product> searchProducts(String searchKeyword, String searchCategory);
+	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
 
 }

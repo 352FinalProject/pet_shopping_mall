@@ -82,41 +82,41 @@
 					        
 					        
 		<div class="optionValueInput" id="optionValueInput">
-		<div class="viewOption" id="viewOption" style="display : none;">
-          <div class="row mb-3">
-	          <div class="col-md-2">
-	            <label for="optionName" class="form-label">옵션명</label>
-	            <input type="text" name="productDetail[0].optionName" id="optionName" class="form-control">
+			<div class="viewOption" id="viewOption" style="display : none;">
+	          <div class="row mb-3">
+		          <div class="col-md-2">
+		            <label for="optionName" class="form-label">옵션명</label>
+		            <input type="text" name="productDetail[0].optionName" id="optionName" class="form-control">
+		          </div>
+	            <div class="col-md-2">
+	              <label for="optionValue" class="form-label">옵션값</label>
+	              <input type="text" name="productDetail[0].optionValue" id="optionValue" class="form-control">
+	            </div>
+	            <div class="col-md-2">
+	              <label for="additionalPrice" class="form-label">옵션추가금</label>
+	              <input type="number" name="productDetail[0].additionalPrice" id="additionalPrice" class="form-control" value="0">
+	            </div>
 	          </div>
-            <div class="col-md-2">
-              <label for="optionValue" class="form-label">옵션값</label>
-              <input type="text" name="productDetail[0].optionValue" id="optionValue" class="form-control">
-            </div>
-            <div class="col-md-2">
-              <label for="additionalPrice" class="form-label">옵션추가금</label>
-              <input type="number" name="productDetail[0].additionalPrice" id="additionalPrice" class="form-control" value="0">
-            </div>
-          </div>
-		</div>
-	        <div class="row mb-3">
-	          <div class="col-md-1">
-	            <label for="saleState" class="form-label">판매상태</label>
-	          </div>
-	          <div class="col-md-2">
-	            <select name="productDetail[0].saleState" id="saleState" class="form-select">
-	              <option value="0">판매대기</option>
-	              <option value="1" selected>판매중</option>
-	              <option value="2">품절</option>
-	              <option value="3">기타</option>
-	            </select>
-	          </div>
-        </div>
+			</div>
+		        <div class="row mb-3">
+		          <div class="col-md-1">
+		            <label for="saleState" class="form-label">판매상태</label>
+		          </div>
+		          <div class="col-md-2">
+		            <select name="productDetail[0].saleState" id="saleState" class="form-select">
+		              <option value="0">판매대기</option>
+		              <option value="1" selected>판매중</option>
+		              <option value="2">품절</option>
+		              <option value="3">기타</option>
+		            </select>
+		          </div>
+	        </div>
       </div>
 					        
 					        
 					        <!-- 옵션추가 버튼 -->
-				        	<div class="row mb-3">
-					            <div class="col-md-3">
+				        	<div class="row mb-3" id="option-add-btn" style="display : none;">
+					            <div class="col-md-3" >
 					              <button type="button" class="btn btn-secondary" onclick="addOptionValue()">옵션추가</button>
 					            </div>
 					        </div>
@@ -143,10 +143,9 @@
 	// 유효성검사
 	const productNameInput = document.getElementById("productName");
 	const productPriceInput = document.getElementById("productPrice");
-	const hasOptionInput = document.querySelector("input[name=hasOption]");
+	const hasOptionInputs = document.querySelectorAll("input[name=hasOption]");
 	const optionValueInput = document.getElementById("optionValueInput");
-	
-	console.log("hasOptionInput=",hasOptionInput);
+	const viewOption = document.getElementById("viewOption");
 
 	// 상품명 검사 함수
     const validateProductName = () => {
@@ -170,24 +169,21 @@
     	
     }
 	
-	
+ // 옵션 여부 처리 함수
     const validateHasOption = () => {
-	    // 옵션 여부 입력
-	    const hasOptionValue = hasOptionInput.value;
-	        console.log("hasOptionValue=", hasOptionValue);
-	    if (hasOptionValue === "no") {
-	        // 옵션이 없을 때
-	        console.log("옵션없음");
-	        const viewOption = document.getElementById("viewOption");
-	        console.log("viewOption=", viewOption);
-	        viewOption.style.display="none";
-	        
-	    } else {
-	        console.log("옵션있음");
-	        // 추가적인 처리 가능
-	    }
-    	
+        const selectedOption = document.querySelector("input[name=hasOption]:checked").value;
+        const optionAddBtn = document.querySelector("#option-add-btn");
+        console.dir(optionAddBtn);
+        
+        if (selectedOption === "yes") {
+            viewOption.style.display = "block";
+            optionAddBtn.style.display = "block";
+        } else {
+            viewOption.style.display = "none";
+            optionAddBtn.style.display = "none";
+        }
     }
+
     
     
     
@@ -196,7 +192,7 @@
     
     productNameInput.addEventListener("input", validateProductName);
     productPriceInput.addEventListener("input", validateProductPrice);
-    hasOptionInput.addEventListener("input", validateHasOption);
+    hasOptionInputs.forEach(input => input.addEventListener("change", validateHasOption));
 	
 	// 파일추가 
 	document.querySelectorAll("[name=upFile]").forEach((input) => {

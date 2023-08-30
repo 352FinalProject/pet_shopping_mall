@@ -403,7 +403,7 @@ public class AdminController {
 		String searchCategory = _searchContent.getSearchCategory();
 		
 		// 키워드로 상품찾기
-		List<Product> products = productService.searchProducts(searchKeyword, searchCategory);
+		List<Product> products = productService.adminProductSearch(searchKeyword, searchCategory);
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(Product product : products) {
