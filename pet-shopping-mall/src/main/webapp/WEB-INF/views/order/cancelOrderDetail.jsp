@@ -70,7 +70,7 @@
 							<div class="product-price">
 								<span>결제수단</span>
 								<p>
-									<c:set var="method" value="${cancelInfo.paymentMethod eq 1 ? '카드' : '현금'}" />
+									<c:set var="method" value="${cancelInfo.paymentMethod eq 1 ? '카카오페이' : '신용카드'}" />
 									<span>${method}</span>
 								</p>
 							</div>

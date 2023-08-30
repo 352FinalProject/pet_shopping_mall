@@ -125,8 +125,6 @@ public class OrderController {
 	        
 	    }
 	    
-	    log.debug("orderDetailMap= {}", orderDetailMap);
-	    log.debug("status = {}", status);
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderDetail", orderDetailMap);
 	}

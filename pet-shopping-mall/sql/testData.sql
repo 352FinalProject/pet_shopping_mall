@@ -68,7 +68,8 @@ left join (
 where
     m.member_id = 'member1';
 
-
+select * from payment;
+select * from orderTbl where order_no='1693296419851';
 select 
     *
 from 

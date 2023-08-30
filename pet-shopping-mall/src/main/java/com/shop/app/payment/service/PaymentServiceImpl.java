@@ -29,16 +29,25 @@ public class PaymentServiceImpl implements PaymentService {
 	MemberRepository memberRepository;
 	
 	@Override
-	public int updatePayStatus(String orderNo) {
+	public int updatePayStatus(String orderNo, String pgProvider) {
 		
 		Order order = orderRepository.findOrderByOrderNo(orderNo);
 		Payment payment = Payment.builder()
 				.orderId(order.getOrderId())
 				.amount(order.getAmount())
 				.build();
-		int result = paymentRepository.insertPayment(payment);
-		result =  paymentRepository.updatePayStatus(orderNo);
+		
+		int result  = 0;
+		
+		if(pgProvider.equals("kakaopay")) {
+			result = paymentRepository.insertPayment(payment, 1);
+		} else {
+			result = paymentRepository.insertPayment(payment, 0);
+			
+		}
 		result = orderRepository.updateOrderStatus(orderNo, 0);
+		
+		result =  paymentRepository.updatePayStatus(orderNo);
 		// 장바구니 비우기
 		result= cartRepository.deleteCartAll(order.getMemberId());
 		
@@ -51,8 +60,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int insertPayment(Payment payment) {
-		return paymentRepository.insertPayment(payment);
+	public int insertPayment(Payment payment, int paymentMethod) {
+		return paymentRepository.insertPayment(payment, paymentMethod);
 	}
 
 	@Override

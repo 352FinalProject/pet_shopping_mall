@@ -102,7 +102,7 @@
 								<tr class="detail-row">
 							        <td colspan="5">
 							            <div class="detail-content">
-							            	<c:set var="paymentMethod" value="${entry.value.paymentMethod eq 1 ? '카드' : '카카오페이'}" />
+							            	<c:set var="paymentMethod" value="${entry.value.paymentMethod eq 1 ? '카카오페이' : '신용카드'}" />
 							                <p>결제 방법 : ${paymentMethod}</p>
 							                <p>결제 날짜 : ${entry.value.paymentDate}</p>
 							                <p>결제 금액 : <span><fmt:formatNumber value="${entry.value.amount}"
