@@ -45,7 +45,6 @@ public class SchedulePay {
 	@Autowired
 	MemberRepository memberRepository;
 	
-    // ObjectMapper를 주입
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -149,8 +148,6 @@ public class SchedulePay {
     	HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
 
     	String result = restTemplate.postForObject(IMPORT_UNSCHEDULE_URL, entity, String.class);
-    	
-    	log.debug(result);
     	
     	// 스케쥴이 지나면 sub_member 테이블에서 삭제하기
     	// member 테이블에서 구독 N 처리

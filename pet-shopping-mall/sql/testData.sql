@@ -975,3 +975,28 @@ delete notification where member_id='king';
 select * from orderTbl;
 
 update orderTbl set order_date ='23/08/22' where order_no = '1693362757498'; 
+select * from member;
+select * from sub_member;
+select * from sub_payment;
+
+update member set subscribe = 'Y' where member_id = 'honggd';
+update sub_member set schedule_status = 'cancel' where member_id = 'honggd';
+update sub_member set schedule_at = sysdate where member_id = 'honggd';
+
+SELECT *
+FROM sub_member
+WHERE schedule_status = 'cancel'
+    AND TRUNC(schedule_at) <= TRUNC(SYSDATE);
+
+select * from payment;
+select * from sub_member;
+select * from member;
+update sub_member set schedule_at = '23/08/29' where member_id='sinsa';
+
+select * from orderTbl;
+select 
+    * 
+from 
+    orderTbl 
+where 
+    order_date <= systimestamp - interval '7' day and order_status = 5;
