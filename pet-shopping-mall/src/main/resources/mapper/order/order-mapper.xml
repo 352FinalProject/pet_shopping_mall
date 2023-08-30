@@ -381,7 +381,7 @@
 	LEFT JOIN 
 	    review r ON od.product_detail_id = r.product_detail_id
 	WHERE 
-	    o.order_no = #{orderNo} and od.product_detail_id = #{productDetailId}
+	    o.order_id = #{orderId} and r.product_detail_id = #{productDetailId} and r.review_member_id = #{reviewMemberId}
    </select>
 
 
