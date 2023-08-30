@@ -5,29 +5,41 @@ const stompClient = Stomp.over(ws);
 
 stompClient.connect({}, (frame) => {
     console.log('Connected:', frame);
-	
-	stompClient.subscribe('/pet/notice', (message) => {
-		console.log('/pet/notice : ', message);
-		renderMessage(message);
-	});
-	
+
+    stompClient.subscribe('/pet/notice', (message) => {
+        console.log('/pet/notice : ', message.body);
+        renderMessage(message.body);
+    });
+
     stompClient.subscribe(`/pet/notice/${memberId}`, (message) => {
-    console.log('/pet/notice/${memberId} : ', message);
-        renderMessage(message);
+        console.log(`/pet/notice/${memberId} : `, message.body);
+        renderMessage(message.body);
     });
 });
 
 const renderMessage = (message) => {
     const { id, notiCategory, notiContent, notiCreatedAt, memberId } = JSON.parse(message);
-    // id, notiCategory, notiContent, notiCreatedAt, memberId 속성이 있는 개체로 변환
-    const $notificationPopup = $("#notificationPopup"); // $notificationPopup은 전체 알림 팝업 요소
-    const $popupContent = $notificationPopup.find(".popup-content"); // popupContent는 알림이 표시될 팝업 내의 콘텐츠 컨테이너
 
-    const newNotification = document.createElement("p"); // 새로운 <p> 요소가 생성
+    const $notificationPopup = $("#notificationPopup");
+    const $popupContent = $notificationPopup.find(".popup-content");
+
+    const newNotificationContainer = document.createElement("div");
+    newNotificationContainer.className = "notification-container";
+    
+    const newNotification = document.createElement("p");
     newNotification.className = "notification-content";
-    newNotification.textContent = `알림${memberId}님 ${notiContent}.${notiCreatedAt}`;
+    newNotification.textContent = `${memberId}님 ${notiContent}.${notiCreatedAt}`;
 
-    $popupContent.prepend(newNotification);
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = `X`; // 
+    deleteButton.className = "notification-delete-button"; 
+    deleteButton.id = id; 
+
+    newNotification.appendChild(deleteButton);
+
+    newNotificationContainer.appendChild(newNotification);
+
+    $popupContent.prepend(newNotificationContainer);
 
     $notificationPopup.addClass("active");
 

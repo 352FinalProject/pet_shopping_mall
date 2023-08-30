@@ -972,3 +972,6 @@ where member_id = 'king';
 select * from notification where member_id='king';
 delete notification where member_id='king';
 
+select * from orderTbl;
+
+update orderTbl set order_date ='23/08/22' where order_no = '1693362757498'; 

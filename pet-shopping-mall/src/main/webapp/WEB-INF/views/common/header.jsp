@@ -116,7 +116,9 @@
 
 .search-input::placeholder {
    color: #aaa;
+   
 }
+
 </style>
 <title>반려동물 쇼핑몰</title>
 
@@ -213,7 +215,10 @@
                        </c:if>
                        <c:if test="${not empty notifications}">
                           <c:forEach items="${notifications}" var="notification" varStatus="vs">
-                               <p class="notification-content">${notification.memberId}님 ${notification.notiContent}.${notification.notiCreatedAt}</p>
+                               <div>
+                               	<p class="notification-content">db${notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
+                               	<button class="notification-delete-button" id="${notification.id}">x</button>
+                               </div>
                           </c:forEach>
                        </c:if>
                      </div>
