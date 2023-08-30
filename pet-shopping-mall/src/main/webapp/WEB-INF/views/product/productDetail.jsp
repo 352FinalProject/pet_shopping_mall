@@ -95,19 +95,19 @@ pageEncoding="UTF-8"%>
            <div>
               <select name="product-option">
               <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-		        <c:if test="${empty productDetail.optionName}">
-		           <option class="options" value="${productDetail.productDetailId}">[옵션 선택 안함]</option>
-		        </c:if>
-		        <c:if test="${not empty productDetail.optionName}">
-		           <option class="options" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
-		      	</c:if>
+              <c:if test="${empty productDetail.optionName}">
+                 <option class="options" value="${productDetail.productDetailId}">[옵션 선택 안함]</option>
+              </c:if>
+              <c:if test="${not empty productDetail.optionName}">
+                 <option class="options" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+               </c:if>
               </c:forEach>
               </select>
            </div>
            <!-- 옵션추가금 -->
            <div class="additional-price-container" id="additional-price-container" style="display : none;">
            <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-           	<div class="additional-price" id="${productDetail.productDetailId}">${productDetail.additionalPrice}</div>
+              <div class="additional-price" id="${productDetail.productDetailId}">${productDetail.additionalPrice}</div>
            </c:forEach>
            </div>
            <div class="purchase-cnt">
@@ -321,12 +321,12 @@ pageEncoding="UTF-8"%>
 
 // 상품수량에 따라 가격 바꾸기
 document.addEventListener("DOMContentLoaded", () => {
-	const optionSelect = document.querySelector("[name='product-option']");
-	const originalPrice = parseInt(${product.productPrice});
-	let additionalPrice = 0;
-	const quantityInput = document.querySelector(".quantity-input");
-	const totalPrice = document.querySelector("#totalPrice");
-	const productBottomPrice = document.querySelector("#product-bottom-price");
+   const optionSelect = document.querySelector("[name='product-option']");
+   const originalPrice = parseInt(${product.productPrice});
+   let additionalPrice = 0;
+   const quantityInput = document.querySelector(".quantity-input");
+   const totalPrice = document.querySelector("#totalPrice");
+   const productBottomPrice = document.querySelector("#product-bottom-price");
     const optionMinusButton = document.querySelector(".minus");
     const optionPlusButton = document.querySelector(".plus");
     let currentQuantity = parseInt(quantityInput.value) || 1;  // 수량이 지정되지 않은 경우 1로 설정
@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
         const price = document.getElementById(productDetailId).innerHTML;
         if(price !== null) {
-        	additionalPrice = parseInt(price);
+           additionalPrice = parseInt(price);
         }
     });
 
