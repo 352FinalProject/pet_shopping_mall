@@ -25,48 +25,8 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
+select * from notification;    
     
-    
-select
-  p.product_id,
-  ot.order_id,
-  ot.order_date,
-  ot.order_no,
-  ot.order_status,
-  (select product_name from product where product_id = pd.product_id)
-  product_name,
-  od.product_detail_id,
-  od.quantity,
-  ot.amount,
-  ia.image_original_filename,
-  ia.image_renamed_filename
-from
-  orderTbl ot 
-  left join 
-      order_detail od on ot.order_id = od.order_id
-  left join 
-      product_detail pd on od.product_detail_id = pd.product_detail_id
-  left join 
-      product p on p.product_id = pd.product_id
-  left join 
-    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
-  left join
-    image_attachment ia ON iam.image_id = ia.image_id
-where
-  ot.order_no = 1693279104847;
-      
-    
-SELECT q.*, ia.*
-FROM question q
-JOIN image_attachment_mapping iam ON q.question_id = iam.ref_id
-JOIN image_attachment ia ON iam.image_id = ia.image_id
-WHERE q.question_id = 1 and iam.ref_table = 'question';
-    
-select * from (select * from point where point_member_id = #{pointMemberId} order by point_date desc) where rownum <= 1
-
-update member set subscribe = 'Y' where member_id = 'null@naver';
-
-select * from point where point_member_id = 'null@naver' order by point_date desc;
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
 values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
@@ -108,7 +68,8 @@ left join (
 where
     m.member_id = 'member1';
 
-
+select * from payment;
+select * from orderTbl where order_no='1693296419851';
 select 
     *
 from 
@@ -132,9 +93,9 @@ insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values 
 
 delete from product where product_id = 1;
 
-delete from cartitem where cartitem_id = '39';
+delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 4 where order_id = 44;
+update orderTbl set order_status = 4 where order_id = 4;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
@@ -240,7 +201,7 @@ values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드�
 
 ------------------ point insert ---------------------------
 INSERT INTO point (point_id, point_member_id, point_current, point_type, point_amount)
-VALUES (45, 'null@naver', 10000, '구매적립', 10000);
+VALUES (2, '사용자2', 50, '사용', -500);
 
 ------------------ product insert ---------------------------
 -- 카테고리 생성
@@ -1006,8 +967,8 @@ FROM orderTbl ot
 JOIN order_detail od ON ot.order_id = od.order_id
 JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
 JOIN product p ON pd.product_id = p.product_id
-where order_no = '230811-001';
+where member_id = 'king';
 
-
+select * from notification where member_id='king';
 
 

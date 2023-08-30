@@ -363,3 +363,44 @@ footer p {
 	width: 250px;
 	z-index: 999;
 }
+
+/* --- 팝업---  */
+#openPopupBtn {
+    padding: 0;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.notification-container {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  top: calc(100% + 5px); /* Adjust the spacing as needed */
+  left: 0;
+  display: none;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  z-index: 999; /* Adjust as needed */
+  width: 300px; /* Adjust the width as needed */
+}
+
+.popup.active {
+  display: block;
+}
+
+.popup-content {
+  padding: 10px;
+}
+
+.notification-content {
+  margin: 0; /* Remove the default margin for <p> elements */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Show ellipsis (...) for overflowed text */
+}
+
+

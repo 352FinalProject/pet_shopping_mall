@@ -1,6 +1,7 @@
 package com.shop.app.notification.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -42,5 +43,9 @@ public class NotificationServiceImpl implements NotificationService {
 		// 3. db 알림행 등록
 		return notificationRepository.insertNotification(notification);
 	}
-
+	
+	@Override
+	public List<Notification> findAllNotification(String memberId) {
+		return notificationRepository.findAllNotification(memberId);
+	}
 }

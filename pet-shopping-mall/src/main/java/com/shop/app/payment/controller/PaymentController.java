@@ -273,10 +273,10 @@ public class PaymentController {
 	@PostMapping("/successPay.do")
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid,
-			@AuthenticationPrincipal MemberDetails member) {
+			@AuthenticationPrincipal MemberDetails member, @RequestParam("pg_provider") String pgProvider) {
 		String orderNo = merchantUid;
 		// payment 테이블에 삽입 및 orderTbl 상태 업데이트
-		int result = paymentService.updatePayStatus(orderNo);
+		int result = paymentService.updatePayStatus(orderNo, pgProvider);
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of("result", 1));
 	}
 
@@ -284,10 +284,7 @@ public class PaymentController {
 	public void paymentCompleted(@RequestParam String orderNo, Model model) {
 		Order order = orderService.findOrderByOrderNo(orderNo);
 		model.addAttribute("order", order);
-	}
-	
-	@PostMapping("/paymentCompleted.do")
-	public void paymentCompleteNotification(@RequestParam String orderNo) {
+		
 		
 		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
 	    
@@ -298,9 +295,26 @@ public class PaymentController {
 	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
 	            .memberId(paymentCompleteNotificationDto.getMemberId())
 	            .build();
-
+		log.debug("paymentCompleteNotificationDto={}",paymentCompleteNotificationDto);
 	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
+		
 	}
+	
+//	@PostMapping("/paymentCompleted.do")
+//	public void paymentCompleteNotification(@RequestParam String orderNo) {
+//		
+//		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
+//	    
+//		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
+//	            .orderId(paymentCompleteNotificationDto.getOrderId())
+//	            .orderNo(paymentCompleteNotificationDto.getOrderNo())
+//	            .productName(paymentCompleteNotificationDto.getProductName())
+//	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
+//	            .memberId(paymentCompleteNotificationDto.getMemberId())
+//	            .build();
+//		log.debug("paymentCompleteNotificationDto={}",paymentCompleteNotificationDto);
+//	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
+//	}
 	
 	/*
 	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)

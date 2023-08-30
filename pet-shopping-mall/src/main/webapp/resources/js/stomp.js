@@ -14,8 +14,8 @@ stompClient.connect({}, (frame) => {
 });
 
 const renderMessage = (message) => {
-	const {id, from, notiCategory, notiContent, notiCreatedAt, memberId} = JSON.parse(message.body);
-	console.log(id, from, notiCategory, notiContent, notiCreatedAt, memberId);
+	const {id, notiCategory, notiContent, notiCreatedAt, memberId} = JSON.parse(message.body);
+	console.log(id, notiCategory, notiContent, notiCreatedAt, memberId);
 	
 	const $noticeModal = $("#noticeModal");
 	$noticeModal.find(".modal-title").html(`<span class='badge badge-primary from'>${to}</span>`);
