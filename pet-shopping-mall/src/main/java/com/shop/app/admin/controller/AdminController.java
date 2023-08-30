@@ -55,7 +55,6 @@ import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductOptionDeleteDto;
-import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.dto.ProductSearchKeywordDto;
 import com.shop.app.product.dto.ProductUpdateDto;
 import com.shop.app.product.entity.Product;

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.product.dto.ProductInfoDto;
-import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
