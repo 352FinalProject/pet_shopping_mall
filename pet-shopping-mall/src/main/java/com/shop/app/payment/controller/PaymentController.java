@@ -407,11 +407,13 @@ public class PaymentController {
     }
 	
 	@PostMapping("/unsubscribe.do")
-	public void unsubscribe (@RequestParam String customerUid) {
+	public String unsubscribe (@RequestParam String customerUid, RedirectAttributes redirectAttr) {
 		// sub_member 조회를 해서, 거기서 가져온 merchant_uid를 포스트 요청 보내야 함.
 		// member 테이블에서 구독 N 처리
 		SubMember subMember = memberService.findSubMemberByMemberId(customerUid);
 		String result = schedulePay.cancelSchedule(subMember);
 		
+		redirectAttr.addFlashAttribute("msg", "구독이 해제되었습니다.");
+		return "redirect:/member/myPage.do";
 	}
 }

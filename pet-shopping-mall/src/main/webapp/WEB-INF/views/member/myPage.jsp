@@ -79,12 +79,19 @@
                                 <a class="benefits-link" href="#" onclick="subscribes();">📌 구독하기</a>
                                 </c:if>
                                 <c:if test="${myPage.subMember ne null}">
-                                <p>다음 달 멤버쉽 결제 날짜 : ${myPage.subMember.scheduleAt}</p>
-                                <p>결제 예정 금액 : ${myPage.subMember.amount}원</p>
-                                <form:form method="POST" action="${pageContext.request.contextPath}/payment/unsubscribe.do">
-                                	<input type="hidden" name="customerUid" value="${myPage.memberId}" />
-	                                <button type="submit">멤버쉽 해제</button>
-                                </form:form>
+                                <c:choose>
+                                	<c:when test="${myPage.subMember.scheduleStatus eq 'scheduled'}">
+		                                <p>다음 달 멤버쉽 결제 날짜 : ${myPage.subMember.scheduleAt}</p>
+		                                <p>결제 예정 금액 : ${myPage.subMember.amount}원</p>
+		                                <form:form method="POST" action="${pageContext.request.contextPath}/payment/unsubscribe.do">
+		                                	<input type="hidden" name="customerUid" value="${myPage.memberId}" />
+			                                <button type="submit" class="review-btn">멤버쉽 해제</button>
+		                                </form:form>
+                                	</c:when>
+                                	<c:when test="${myPage.subMember.scheduleStatus eq 'cancel'}">
+		                                <p>남은 멤버쉽 기간 : <span> ~ <fmt:formatDate value="${myPage.subMember.scheduleAt}" pattern="yyyy-MM-dd" /></span></p>
+                                	</c:when>
+                                </c:choose>
                                 </c:if>
                             </div>
                             <!-- 팝업 컨테이너 -->

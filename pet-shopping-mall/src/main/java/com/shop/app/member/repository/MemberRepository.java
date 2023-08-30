@@ -64,7 +64,7 @@ public interface MemberRepository {
 	@Update("update sub_member set schedule_status = 'cancel' where member_id = #{memberId}")
 	int cancelSubscribe(String memberId);
 
-	@Select("select * from sub_member where schedule_status = 'cancel' and trunc(schedule_at) = trunc(sysdate)")
+	@Select("select * from sub_member where schedule_status = 'cancel' and trunc(schedule_at) <= trunc(sysdate)")
 	List<SubMember> updateCancelSubscribers();
 
 	
