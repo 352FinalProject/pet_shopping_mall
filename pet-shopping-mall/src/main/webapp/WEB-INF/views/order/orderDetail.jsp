@@ -84,18 +84,23 @@
 									<td><span id="total-price"><fmt:formatNumber
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
-										<p>${status[index]}</p>
-                              			<c:if test="${status[index] == '배송완료'}">
-                                			<c:forEach var="order" items="${orderMap}">
-                                 			<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
-                                     		<input type="hidden" name="productId" value="${order.key.productId}">
-                                     		<input type="hidden" name="orderId" value="${order.key.orderId}">
-                                   			</c:forEach>
-                                   			<c:if test="${not reviewWrite}">
-                                     			<button class="review-btn" type="submit">리뷰쓰기</button>
-                                     		</c:if>
-                                			</form>
-                              			</c:if>
+										<c:if test="${status[index] == '배송완료'}">
+										    <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+										        <input type="hidden" name="productDetailId" value="${entry.key.productDetailId}">
+										        <input type="hidden" name="productId" value="${entry.key.productId}">
+										        <input type="hidden" name="orderId" value="${entry.key.orderId}">
+										        <c:set var="compositeKey" value="${entry.key.orderId}-${entry.key.productDetailId}-${entry.key.productId}" />
+										  	<c:if test="${reviewWrite[compositeKey] == false}">
+												<p>${status[index]}</p>
+											</c:if>
+										        <c:if test="${reviewWrite[compositeKey] == false}">
+										            <button class="review-btn" type="submit">리뷰쓰기</button>
+										        </c:if>
+										    </form>
+											<c:if test="${reviewWrite[compositeKey] == true}">
+												<p>구매확정</p>
+											</c:if>
+										</c:if>
 									</td>
 								</tr>
 								<c:if test="${payment eq null}">

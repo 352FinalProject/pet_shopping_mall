@@ -4,23 +4,44 @@ const ws = new SockJS(`http://${location.host}/pet/stomp`); // endpoint
 const stompClient = Stomp.over(ws);
 
 stompClient.connect({}, (frame) => {
-	console.log('open : ', frame);
-	
-	stompClient.subscribe(`/app/notice/${memberId}`, (message) => {
-		console.log(`/app/notice/${memberId} : `, message);
-		renderMessage(message);
-	});
-	
+    console.log('Connected:', frame);
+
+    stompClient.subscribe('/pet/notice', (message) => {
+        console.log('/pet/notice : ', message.body);
+        renderMessage(message.body);
+    });
+
+    stompClient.subscribe(`/pet/notice/${memberId}`, (message) => {
+        console.log(`/pet/notice/${memberId} : `, message.body);
+        renderMessage(message.body);
+    });
 });
 
 const renderMessage = (message) => {
-	const {id, notiCategory, notiContent, notiCreatedAt, memberId} = JSON.parse(message.body);
-	console.log(id, notiCategory, notiContent, notiCreatedAt, memberId);
-	
-	const $noticeModal = $("#noticeModal");
-	$noticeModal.find(".modal-title").html(`<span class='badge badge-primary from'>${to}</span>`);
-	$noticeModal.find(".modal-body").html(content);
-	$noticeModal.find(".modal-footer .from").html(from); 
-	$noticeModal.modal();
-}
+    const { id, notiCategory, notiContent, notiCreatedAt, memberId } = JSON.parse(message);
 
+    const $notificationPopup = $("#notificationPopup");
+    const $popupContent = $notificationPopup.find(".popup-content");
+
+    const newNotificationContainer = document.createElement("div");
+    newNotificationContainer.className = "notification-container";
+    
+    const newNotification = document.createElement("p");
+    newNotification.className = "notification-content";
+    newNotification.textContent = `${memberId}님 ${notiContent}${notiCreatedAt}`;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = `X`; // 
+    deleteButton.className = "notification-delete-button"; 
+    deleteButton.id = id; 
+
+    newNotification.appendChild(deleteButton);
+
+    newNotificationContainer.appendChild(newNotification);
+
+    $popupContent.prepend(newNotificationContainer);
+
+    $notificationPopup.addClass("active");
+
+    console.log(newNotification.textContent);
+};

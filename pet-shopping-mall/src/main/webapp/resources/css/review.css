@@ -325,7 +325,7 @@
 }
 
 /* 페이징바 전체 스타일 */
-.review-pagination-sm {
+.review-pagination {
     	display: -ms-flexbox;
 	display: flex;
 	padding-left: 0;

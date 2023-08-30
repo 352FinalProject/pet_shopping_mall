@@ -6,15 +6,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <style>
-section.product-board {
-	display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 50px 0px 0px 0px;
-    padding: 0 0 60px 0;
-    border-bottom: 1px solid #e7e7e7;
-}
 ul.nav {
     background: #fff;
     margin: 0 auto;
@@ -25,16 +16,6 @@ ul.nav {
     display: flex;
     font-size: 16px;
     gap: 109px;
-}
-.product-sort ul.nav {
-	padding: 8px;
-    background: #fff;
-    margin: 0 auto;
-    display: flex;
-    /* justify-content: center; */
-    gap: 8px;
-    justify-content: flex-end;
-    margin: 0 10px;
 }
 .product-sort ul.nav .font{
 	color : #828282;
@@ -78,47 +59,6 @@ ul.nav {
     cursor: pointer;
     padding: 5px;
 }
-.product-card .product-thumbnail {
-	box-sizing: border-box;
-    position: relative;
-    margin: 0 5px;
-    padding-bottom: 75%;
-    /* border-bottom: 1px solid #051619; */
-    border-radius: 0;
-    overflow: hidden;
-}
-.product-card .product-thumbnail img {
-	position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.product-card .product-desc {
-    padding: 1.5rem 1.75rem;
-    color : #828282;
-    box-sizing: border-box;
-}
-.product-card .product-desc .product-name {
-    margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-}
-.product-card .product-desc .product-price {
-    margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-    font-weight: 500;
-}
-.product-card .product-desc .review-star img {
-    width: 15px;
-    height: 15px;
-    margin-right: 4px;
-}
-.product-card .product-desc .review-cnt {
-    margin: 0 0 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 400;
-}
 
 #not-found {
 	font-size: 24px;
@@ -131,8 +71,7 @@ ul.nav {
 }
 .category-id {
 	font-size:28px;
-	font-weight: 700;
-	margin: 20px;
+	margin-top: 50px;
 	
 }
 </style>
@@ -187,6 +126,7 @@ ul.nav {
 											<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
 											<span> &nbsp;|&nbsp; </span>
 											<span class="review-cnt">후기 ${productInfo.reviewCnt}건</span>
+
 										</div>
                                     </a>
                                 </div>

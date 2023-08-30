@@ -15,7 +15,13 @@
 			</ol>
 			<div class="card mb-4">
 				<div class="card-body">
-					<div class="admin-member-search-container">
+					김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원</div>
+			</div>
+			<div class="card mb-4">
+				<div class="card-header">
+					<i class="fas fa-table me-1"></i> 현재 회원 : ${totalCount}명 
+				</div>
+				<div class="admin-member-search-container">
 					<form:form name="adminMemberSearchFrm"
 						action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
 						method="get">
@@ -24,13 +30,6 @@
 						<input type="submit" value="검색">
 					</form:form>
 				</div>
-				</div>
-			</div>
-			<div class="card mb-4">
-				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 현재 회원 : ${totalCount}명 
-				</div>
-				
 				<div class="card-body">
 					<table id="datatablesSimple">
 						<thead>

@@ -17,6 +17,7 @@ import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
@@ -94,17 +95,19 @@ public interface OrderRepository {
 
 	List<OrderHistoryDto> getOrderDetail(String orderNo);
 
-	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
-	@Select("select count(*) from review where review_member_id = #{memberId} and order_id = #{orderId}")
-	boolean reviewWrite(String memberId, int orderId);
+	@Select("SELECT count(*) FROM orderTbl o LEFT JOIN order_detail od ON o.order_id = od.order_id LEFT JOIN review r ON od.product_detail_id = r.product_detail_id WHERE r.order_id = #{orderId} and r.product_detail_id = #{productDetailId} and o.member_id = #{memberId} and r.product_id = #{productId}")
+	boolean reviewWrite(String memberId, int orderId, int productDetailId, int productId);
 
 	// 상품별 주문확정 주문 수 조회 (수경)
 	@Select("select count(*) from order_detail where product_detail_id = #{productDetailId}")
 	int findOrderCntByProductId(int productDetailId);
 
 
-	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status = 5")
+	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day")
 	List<Order> findOrdersWithExpiredStatus();
+
+	
+	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
 	
 }

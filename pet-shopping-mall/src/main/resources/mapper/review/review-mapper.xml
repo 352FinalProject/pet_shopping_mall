@@ -91,7 +91,7 @@
 	    product p join review r 
 	        ON p.product_id = r.product_id
 	WHERE
-	    p.product_id = r.product_id
+	    p.product_id = #{productId} and r.product_id = #{productId}
 	GROUP BY
 	    p.product_id, p.product_name
 	</select>
@@ -101,6 +101,75 @@
 		<result column="product_name" property="productName" />
 		<result column="review_star_rate" property="reviewStarRate" />
 	</resultMap>
+	
+	<select id="findReviewAll" resultType="ReviewListDto">
+	SELECT 
+		r.review_id,
+	    r.order_id,
+	    r.review_star_rate,
+	    r.review_created_at,
+	    p.product_id, 
+	    p.product_name,
+	    pd.option_name, 
+	    pd.option_value,
+	    pd.product_detail_id,
+	    ia.image_original_filename,
+	    ia.image_renamed_filename    
+	FROM 
+	    review r 
+	    left join product_detail pd 
+	        on r.product_detail_id = pd.product_detail_id 
+	    left join product p 
+	        on p.product_id = pd.product_id 
+	    left join orderTbl o
+	        on r.review_id = o.order_id
+	    join image_attachment_mapping iam 
+	        on p.product_id = iam.ref_id and iam.ref_table = 'product'
+	    join image_attachment ia 
+	        ON iam.image_id = ia.image_id
+	WHERE 
+	    r.review_member_id = #{reviewMemberId}
+	</select>	
+	
+	<resultMap type="ReviewListDto" id="reviewListDto">
+      <result column="review_id" property="reviewId" />
+      <result column="order_id" property="orderId" />
+      <result column="product_id" property="productId" />
+      <result column="product_detail_id" property="productDetailId" />
+      <result column="review_star_rate" property="reviewStarRate" />
+      <result column="review_created_at" property="reviewCreatedAt" />
+      <result column="product_name" property="productName" />
+      <result column="option_name" property="optionName" />
+      <result column="option_value" property="optionValue" />
+      <result column="image_original_filename" property="imageOriginalFileName" />
+      <result column="image_renamed_filename" property="imageRenamedFileName" />
+   </resultMap>
+   
+   
+   
+	<select id="findProductReviewId" resultType="ReviewProductDto">
+	SELECT 
+	    p.product_name,
+	    pd.option_name, 
+	    pd.option_value
+	FROM 
+	    review r 
+	    left join product_detail pd 
+	        on r.product_detail_id = pd.product_detail_id 
+	    left join product p 
+	        on p.product_id = pd.product_id 
+	    left join orderTbl o
+	        on r.review_id = o.order_id
+	WHERE 
+	    r.review_id = #{reviewId}
+	</select>	
+   
+	<resultMap type="ReviewProductDto" id="reviewProductDto">
+      <result column="review_id" property="reviewId" />
+      <result column="product_name" property="productName" />
+      <result column="option_name" property="optionName" />
+      <result column="option_value" property="optionValue" />
+   </resultMap>
 	
 	
 	

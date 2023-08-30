@@ -4,7 +4,7 @@ values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울�
 select * from member;
 select * from point order by point_date desc;
 select * from pet;
-select * from review;
+select * from review order by review_created_at desc;
 select * from coupon;
 select * from member_coupon order by member_coupon_id desc;
 select * from terms;
@@ -38,6 +38,7 @@ select * from member_coupon where coupon_id = 1 and member_id = 'member3' and en
 delete from member where name = '예라'; 
 delete from wishlist where wishlist_id = 10; 
 
+select count(*) from orderTbl o Left Join order_detail od on o.order_id = od.order_id left join review r on od.product_detail_id = r.product_detail_id where r.order_id = 53 and r.product_detail_id = 23 and o.member_id = 'null@naver';
 
 select
     m.member_id,
@@ -85,6 +86,18 @@ where product_id = 1;
     select * from review
 where product_id = #{productId};
 
+
+SELECT 
+    count(*) 
+FROM orderTbl o 
+LEFT JOIN order_detail od 
+ON o.order_id = od.order_id 
+LEFT JOIN review r 
+ON od.product_detail_id = r.product_detail_id 
+WHERE r.order_id = 55 and r.product_detail_id = 27 and r.review_member_id = 'null@naver';
+
+
+SELECT count(*) FROM orderTbl o LEFT JOIN order_detail od ON o.order_id = od.order_id LEFT JOIN review r ON od.product_detail_id = r.product_detail_id WHERE o.order_id = #{orderId} and r.product_detail_id = #{productDetailId} and r.review_member_id = #{reviewMemberId}
     
 select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
 
@@ -95,10 +108,11 @@ delete from product where product_id = 1;
 
 delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 4 where order_id = 4;
+update orderTbl set order_status = 3 where order_id = 55;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
+
 
 select count(*) from review where review_member_id = 'member1' and order_id = 2;
 select count(*) from member_coupon where member_id = 'member4';
@@ -970,6 +984,11 @@ JOIN product p ON pd.product_id = p.product_id
 where member_id = 'king';
 
 select * from notification where member_id='king';
+delete notification where member_id='king';
+
+select * from orderTbl;
+
+update orderTbl set order_date ='23/08/22' where order_no = '1693375836571'; 
 select * from member;
 select * from sub_member;
 select * from sub_payment;
@@ -994,4 +1013,4 @@ select
 from 
     orderTbl 
 where 
-    order_date <= systimestamp - interval '7' day and order_status = 5;
+    order_date <= systimestamp - interval '7' day ;

@@ -3,7 +3,9 @@ package com.shop.app.common.scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
+import com.shop.app.notification.service.NotificationService;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.order.service.OrderService;
 
@@ -14,6 +16,9 @@ public class OrderScheduler {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	NotificationService notificationService;
+
 	@Autowired
 	MemberService memberService;
 	
@@ -26,9 +31,9 @@ public class OrderScheduler {
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void updateOrderStatus() {
 		int result = orderService.updateOrderStatusIfExpired();
+		int notice = notificationService.updateOrderStatusNotification();
+		
 	}
-	
-	
 	
 	/**
 	 * (담희)

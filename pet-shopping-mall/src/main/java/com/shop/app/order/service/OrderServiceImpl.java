@@ -14,6 +14,7 @@ import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
@@ -164,11 +165,12 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.findOrderByOrderNo(orderNo);
 	}
 
-	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
+	// 리뷰 작성하면 리뷰버튼 없애기
 	@Override
-	public boolean reviewWrite(String memberId, int orderId) {
-		return orderRepository.reviewWrite(memberId, orderId);
+	public boolean reviewWrite(String memberId, int orderId, int productDetailId, int productId) {
+		return orderRepository.reviewWrite(memberId, orderId, productDetailId, productId);
 	}
+
 	
 	// 상품별 주문확정 주문 수 조회 (수경)
 	@Override
@@ -176,6 +178,11 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.findOrderCntByProductId(productDetailId);
 	}
 
+	// 리뷰 리스트 - 주문자 연결 (혜령)
+	@Override
+	public List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId) {
+		return orderRepository.findOrdersByReviewId(reviewMemberId);
+	}
 	
 	@Override
 	public int updateOrderStatusIfExpired() {
@@ -185,5 +192,6 @@ public class OrderServiceImpl implements OrderService {
             result = orderRepository.updateOrderStatus(order.getOrderNo(), 6);
         }
         return result;
+
 	}
 }

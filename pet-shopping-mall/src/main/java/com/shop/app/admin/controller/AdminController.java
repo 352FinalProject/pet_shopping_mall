@@ -54,6 +54,7 @@ import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
 import com.shop.app.product.dto.ProductInfoDto;
+import com.shop.app.product.dto.ProductOptionCreateDto;
 import com.shop.app.product.dto.ProductOptionDeleteDto;
 import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.dto.ProductSearchKeywordDto;
@@ -498,11 +499,15 @@ public class AdminController {
 		// 2.1. productDetail 객체 저장
 		List<ProductDetail> productDetails = _product.getProductDetail();
 		for(ProductDetail productDetail : productDetails) {
-			productDetail.setProductId(productId);
-			log.debug("productDetail = {}", productDetail);
-			int result = productService.insertProductDetail(productDetail);
-			int productDetailId = productDetail.getProductDetailId();
-			log.debug("productDetailId = {}", productDetailId);
+			if(productDetail.getOptionName() == null || productDetail.getOptionName() == "") {
+				
+			} else {
+				productDetail.setProductId(productId);
+				int result = productService.insertProductDetail(productDetail);
+				int productDetailId = productDetail.getProductDetailId();
+				log.debug("productDetailId = {}", productDetailId);
+				
+			}
 			
 		}
 		
@@ -555,6 +560,23 @@ public class AdminController {
 		return ResponseEntity.ok(result);
 	}
 	
+	// 상품옵션 추가
+	@PostMapping("/adminOptionCreate.do")
+	public ResponseEntity<?> adminOptionCreate(
+			@Valid @RequestBody ProductOptionCreateDto _product,
+			@AuthenticationPrincipal MemberDetails member 
+			) {
+		log.debug("ProductOptionCreateDto = {}", _product);
+		int productId = _product.getProductId();
+		ProductDetail productDetail = _product.toProductDetail();
+    	
+        // 상품 옵션 업데이트 로직 수행
+        int result = productService.adminOptionCreate(productId, productDetail);
+
+        return ResponseEntity.ok("옵션이 성공적으로 추가되었습니다.");
+	}
+	
+	
 	// 상품옵션 수정
 	@PostMapping("/adminProductDetailUpdate.do")
 	public ResponseEntity<?> adminProductDetailUpdate(
@@ -563,11 +585,11 @@ public class AdminController {
 			) {
 		log.debug("ProductDetailUpdateDto = {}", _product);
 		ProductDetail productDetail = _product.toProductDetail();
-    	
-        // 상품 옵션 업데이트 로직 수행
-        int result = productService.updateProductDetail(productDetail);
-
-        return ResponseEntity.ok(result);
+		
+		// 상품 옵션 업데이트 로직 수행
+		int result = productService.updateProductDetail(productDetail);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	
