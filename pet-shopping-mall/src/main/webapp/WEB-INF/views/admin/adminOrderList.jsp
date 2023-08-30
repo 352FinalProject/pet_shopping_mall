@@ -14,11 +14,7 @@
 			</ol>
 			<div class="card mb-4">
 				<div class="card-body">
-					김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원
-				</div>
-			</div>
-			
-			<div class="admin-order-search-container">
+					<div class="admin-order-search-container">
 			    <form:form 
 			    	method="GET" 
 			    	name="adminOrderSearch"
@@ -60,6 +56,8 @@
 			        
 			        <button type="submit">검색</button>
 			    </form:form>
+			</div>
+				</div>
 			</div>
 			
 			<div class="card mb-4">
