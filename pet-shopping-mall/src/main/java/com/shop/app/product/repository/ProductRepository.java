@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.product.dto.ProductInfoDto;
-import com.shop.app.product.dto.ProductSearchDto;
+import com.shop.app.product.dto.ProductSearchKeywordDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
@@ -105,7 +105,7 @@ public interface ProductRepository {
 	int updateLikeCnt(Map<String, Object> param);
 
 	
-	List<ProductSearchDto> searchProducts(String searchQuery);
+	List<ProductSearchKeywordDto> searchProducts(String searchQuery);
 
 	@Select("select * from product order by 1")
 	List<Product> findAllProducts();

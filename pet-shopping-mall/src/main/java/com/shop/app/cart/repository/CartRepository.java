@@ -45,4 +45,6 @@ public interface CartRepository {
 
 	@Select("select * from cartitem i left join cart c on i.cart_id = c.cart_id where i.cart_id= #{cartId}")
 	List<CartItem> getCartListByCartId(int cartId);
+
+	int insertCart(int cartId, int optionId, int productDetailId, int quantity);
 }
