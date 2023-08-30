@@ -2,8 +2,6 @@ package com.shop.app.notification.service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,6 @@ public class NotificationServiceImpl implements NotificationService {
 	@Autowired
 	OrderRepository orderRepository;
 	
-	private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm:ss");
 	/**
 	 * 1. 실시간알림
 	 * 2. notification db 저장
@@ -44,14 +41,14 @@ public class NotificationServiceImpl implements NotificationService {
 			String to = order.getMemberId();
 	        Notification notification = Notification.builder()
 	            .id(order.getOrderId())
-	            .notiCategory(1)
+	            .notiCategory(3)
 	            .notiContent(order.getOrderNo() + "번 주문이 구매확정되었습니다.")
-	            .notiCreatedAt(formatTimestamp(LocalDateTime.now()))
+	            .notiCreatedAt(formatTimestampNow())
 	            .memberId(to) 
 	            .build();
-			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
 			
 			result = notificationRepository.insertNotification(notification);
+			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
 		}
 		return result;
 	}
@@ -64,10 +61,10 @@ public class NotificationServiceImpl implements NotificationService {
 	        .id(paymentCompleteNotificationDto.getOrderId())
 	        .notiCategory(1)
 	        .notiContent(paymentCompleteNotificationDto.getProductName() + "상품 주문완료 되었습니다.")
-	        .notiCreatedAt(formatTimestamp(LocalDateTime.now()))
+	        .notiCreatedAt(formatTimestampNow())
 	        .memberId(to) 
 	        .build();
-	
+		
 		return notificationRepository.insertNotification(notification);
 	}
 	
@@ -76,9 +73,17 @@ public class NotificationServiceImpl implements NotificationService {
 		return notificationRepository.findAllNotification(memberId);
 	}
 	
-	private Timestamp formatTimestamp(LocalDateTime localDateTime) {
-        String formattedDate = localDateTime.format(dateFormatter);
-        return Timestamp.valueOf(formattedDate);
+	private String formatTimestamp(Timestamp timestamp) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        return dateFormat.format(timestamp);
     }
-	
+
+    private String formatTimestampNow() {
+        return formatTimestamp(new Timestamp(System.currentTimeMillis()));
+    }
+    
+    @Override
+    public int deleteNotification(int id) {
+    	return notificationRepository.deleteNotification(id);
+    }
 }

@@ -22,7 +22,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
-
 </sec:authorize>
 
 <style>
@@ -118,7 +117,6 @@
    color: #aaa;
    
 }
-
 </style>
 <title>반려동물 쇼핑몰</title>
 
@@ -194,15 +192,6 @@
                href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
             </li>
             <sec:authorize access="isAuthenticated()">
-               <%-- <li class="community_li">
-                  <c:if test="${empty nofification}">
-                     <i class="bi bi-bell"></i>
-                  </c:if>   
-                  <c:if test="${not empty nofification}">
-                     <i class="bi bi-bell-fill"></i>
-                  </c:if>
-               </li> --%>
-               <!-- <li class="community_li"> -->
                  <div class="notification-container">
                    <button id="openPopupBtn">
                      <i class="bi bi-bell"></i>
@@ -215,9 +204,9 @@
                        </c:if>
                        <c:if test="${not empty notifications}">
                           <c:forEach items="${notifications}" var="notification" varStatus="vs">
-                               <div>
-                               	<p class="notification-content">db${notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
-                               	<button class="notification-delete-button" id="${notification.id}">x</button>
+                               <div class="notification-container" id="notification${notification.id}">
+                               	<p class="notification-content">디비${notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
+                               	<button class="notification-delete-button" id="notificationDelete${notification.id}" onclick="notificationDelete(${notification.id})">x</button>
                                </div>
                           </c:forEach>
                        </c:if>
@@ -372,21 +361,45 @@ $(document).ready(function() {
      searchInput.addEventListener("click", function(event) {
        event.stopPropagation();
      })
+     
+     
+     /* 팝업 */
+	document.addEventListener("DOMContentLoaded", function() {
+	    const openPopupBtn = document.getElementById("openPopupBtn");
+	    openPopupBtn.addEventListener('click', function() {
+	        console.log("Button clicked!");
+	        const notificationPopup = document.getElementById("notificationPopup");
+	        notificationPopup.classList.toggle("active");
+    	});
+	});
+	
+	/* 알림삭제 */
+	 * 
+	 */
+	 function notificationDelete(notificationId) {
+		    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+		    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+	
+		    $.ajax({
+		        type: 'POST',
+		        url: '${pageContext.request.contextPath}/notification/deleteNotification.do',
+		        data: JSON.stringify{
+		            'id': notificationId
+		        },
+		        beforeSend: function(xhr) {
+		            xhr.setRequestHeader(csrfHeader, csrfToken)
+		        },
+		        success: function(result) {
+		            const containerDiv = document.getElementById(`notification${notificationId}`);
+		            if (containerDiv) {
+		                containerDiv.remove();
+		            }
+		        }
+		    });
+	}
 
    });
    
-
-   
-/* 팝업 */
-document.addEventListener("DOMContentLoaded", function() {
-    const openPopupBtn = document.getElementById("openPopupBtn");
-    const notificationPopup = document.getElementById("notificationPopup");
-
-    openPopupBtn.addEventListener("click", function() {
-        notificationPopup.classList.toggle("active");
-    });
-    
-});
 
 </script>
 
