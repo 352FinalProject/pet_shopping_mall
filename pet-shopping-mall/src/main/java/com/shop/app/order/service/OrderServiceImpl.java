@@ -175,4 +175,16 @@ public class OrderServiceImpl implements OrderService {
 	public int findOrderCntByProductId(int productDetailId) {
 		return orderRepository.findOrderCntByProductId(productDetailId);
 	}
+
+	
+	@Override
+	public int updateOrderStatusIfExpired() {
+		int result = 0;
+        List<Order> orders = orderRepository.findOrdersWithExpiredStatus();
+        log.debug("orders = {}", orders);
+        for (Order order : orders) {
+            result = orderRepository.updateOrderStatus(order.getOrderNo(), 6);
+        }
+        return result;
+	}
 }

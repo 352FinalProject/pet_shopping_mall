@@ -33,7 +33,9 @@ public class SchedulePay {
 	
 	@Autowired
 	private IamportApi iamportApi;
+	
 	public static final String IMPORT_SCHEDULE_URL = "https://api.iamport.kr/subscribe/payments/schedule";
+	public static final String IMPORT_UNSCHEDULE_URL = "https://api.iamport.kr/subscribe/payments/unschedule";
 
 	
 	@Autowired
@@ -82,6 +84,8 @@ public class SchedulePay {
     	HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
 
     	String result = restTemplate.postForObject(IMPORT_SCHEDULE_URL, entity, String.class);
+    	
+    	
     	SubMember newSubMember = new SubMember();
     	try {
     	    Map<String, Object> responseMap = objectMapper.readValue(result, new TypeReference<Map<String, Object>>() {});
@@ -113,4 +117,36 @@ public class SchedulePay {
     	    return "예외발생!";
     	}
     }
+    
+    
+    
+
+	public String cancelSchedule(SubMember subMember) {
+    	String token = iamportApi.getImportToken();
+
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setBearerAuth(token);
+    	
+    	Map<String, Object> unScheduleMap = new HashMap<>();
+    	unScheduleMap.put("customer_uid", subMember.getMemberId());
+    	unScheduleMap.put("merchant_uid", subMember.getMerchantUid());
+    	
+    	String requestBody;
+    	
+    	try {
+    	    requestBody = objectMapper.writeValueAsString(unScheduleMap);
+    	} catch (Exception e) {
+    	    return "json 형변환 실패";
+    	}
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
+
+    	String result = restTemplate.postForObject(IMPORT_UNSCHEDULE_URL, entity, String.class);
+    	// 스케쥴이 지나면 sub_member 테이블에서 삭제하기
+    	// member 테이블에서 구독 N 처리
+		return result;
+	}
 }
