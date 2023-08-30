@@ -5,8 +5,8 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -29,6 +29,16 @@ pageEncoding="UTF-8"%>
     .pink {
         color: pink; /* 핑크색 하트 */
     }
+    
+.review-img {
+  text-align: center; /* 내용을 가운데로 정렬 */
+  overflow: hidden; /* 내용이 넘치는 부분은 숨김 처리 */
+}
+
+.review-img .carousel {
+  display: inline-block; /* 이미지 슬라이더를 인라인 블록 요소로 표시 */
+}
+    
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -237,15 +247,31 @@ pageEncoding="UTF-8"%>
 	                  <em class="review-info-content">${review.reviewContent}</em> <!-- 리뷰내용 -->
 	                  <span class="product-review-small-space"></span>
 						<!-- 리뷰 이미지 -->
-						<c:if test="${not empty reviewImageMap[review.reviewId]}"> 
-						  <div class="review-warp">
-						    <div class="detail-upload">
-		                  	<br>
-						      <img src="${pageContext.request.contextPath}/resources/upload/review/${reviewImageMap[review.reviewId]}" 
-						        alt="Review Image">
+						<c:forEach var="review" items="${reviews}">
+						    <div class="review-item">
+						        <div class="review-img">
+						            <div style="display: inline-block;"></div>
+						            <br>
+						            <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
+						                <div class="carousel-inner">
+						                    <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
+						                    <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
+						                        <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
+						                        <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+						                            <img class="review-img2" alt="Review Image" src="${imagePath}">
+						                        </div>
+						                    </c:forEach>
+						                </div>
+						                <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
+						                    <span class="carousel-control-prev-icon"></span>
+						                </a>
+						                <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
+						                    <span class="carousel-control-next-icon"></span>
+						                </a>
+						            </div>
+						        </div>
 						    </div>
-						  </div>
-						</c:if>
+						</c:forEach>
 				  </div>
                 </div>
             <hr class="review-hr"/>
@@ -342,6 +368,21 @@ pageEncoding="UTF-8"%>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const swiperContainers = document.querySelectorAll(".swiper-container");
+
+    swiperContainers.forEach(container => {
+      new Swiper(container, {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+          el: container.querySelector(".swiper-pagination"),
+          clickable: true,
+        },
+      });
+    });
+  });
+
 /* 상품수량에 입력란 만들기(수경) */
 const productOption = document.querySelector("select[name='product-option']");
 productOption.addEventListener("change", () => {
@@ -543,5 +584,4 @@ $("#clickHeart").on("click", function() {
 </script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

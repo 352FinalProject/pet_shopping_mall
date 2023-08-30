@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.order.service.OrderService;
@@ -108,19 +109,25 @@ public class ProductController {
 	    }
 	    
 	    // 상품 상세 페이지에 이미지 파일 뿌려주기
-	    Map<Integer, String> reviewImageMap = new HashMap<>();
+	    Map<Integer, List<String>> reviewImageMap = new HashMap<>();
 	    for (Review review : reviews) {
 	        int reviewId2 = review.getReviewId();
 	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 	        
 	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-	            String imageFilename = reviewDetails.getAttachments().get(0).getImageRenamedFilename();
-	            //log.debug("imageFilename = {}", imageFilename);
-	            reviewImageMap.put(reviewId2, imageFilename);
+	            List<String> imageFilenames = new ArrayList<>();
+	            
+	            for (ImageAttachment attachment : reviewDetails.getAttachments()) {
+	                imageFilenames.add(attachment.getImageRenamedFilename());
+	            }
+	            
+	            reviewImageMap.put(reviewId2, imageFilenames);
+
 	        }
 	    }
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
+	    log.debug(" 이미지 reviewImageMap = {}", reviewImageMap);
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	    
 	    // 리뷰 전체개수 확인
@@ -134,11 +141,11 @@ public class ProductController {
 //		model.addAttribute("reviews2", reviews2);
 //		  
 //		log.debug("reviews2 = {} ", reviews2);
-//		  
-		int productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-		
-		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+////		  
+//		int productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+//		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+//		
+//		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
 //		  
 		 
 	    
