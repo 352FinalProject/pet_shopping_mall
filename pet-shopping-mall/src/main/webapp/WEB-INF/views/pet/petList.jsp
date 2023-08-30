@@ -8,10 +8,19 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 
+
+<style>
+	.rightTbl {
+		margin-left: 25%;
+    	margin-top: 2.3%;
+	}
+
+</style>
+
 <!-- 펫 등록 리스트 -->
 <section class="common-section" id="common-section-List">
     <div class="common-title">펫 등록 리스트</div>
-    <div class="common-container-side">
+    <div class="common-container-side rightTbl">
         <div class="common-div">
     
 

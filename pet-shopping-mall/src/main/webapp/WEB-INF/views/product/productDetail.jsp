@@ -304,15 +304,12 @@ pageEncoding="UTF-8"%>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
+        	<span class="heart-button pink" id="clickHeart">
         	<c:choose>
-        		<c:when test="${product.likeCnt == 0}">
-					<span class="heart-button" id="clickHeart">♡</span>
-				</c:when>
-				<c:otherwise>
-					<span class="heart-button pink" id="clickHeart">♥</span>
-					
-				</c:otherwise>
+        		<c:when test="${product.likeCnt == 0}">♡</c:when>
+				<c:otherwise>♥</c:otherwise>
 			</c:choose>
+			</span>
         </button>
         <span id="likeCnt">${product.likeCnt}</span>
       </div>
@@ -495,7 +492,7 @@ $(function() {
 });
 
 $("#clickHeart").on("click", function() {
-    var state = $("#clickHeart").hasClass("pink") ? "delete" : "insert"; // 이전 상태에 따라 반대로 설정
+    var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // 이전 상태에 따라 반대로 설정
     
     $.ajax({
         type: "POST",
@@ -510,12 +507,12 @@ $("#clickHeart").on("click", function() {
         success: function(result) {
             if (result.rs == "insertS") {
             	$("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-                $("#clickHeart").addClass("pink");
+                $("#clickHeart").text("♥");
             } else if (result.rs == "deleteS") {
             	$("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-                $("#clickHeart").removeClass("pink");
+                $("#clickHeart").text("♡");
             }
-
+            
             alert(result.msg);
         },
         error: function(req, status, error) {

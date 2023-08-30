@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+<jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 
 <html lang="en">
 
@@ -29,9 +29,14 @@
             display: flex;
             flex-wrap: wrap;
         }
+        
+        .listImgSize {
+        	width: 220px;
+        	height:200px !important;
+        }
 
         .box {
-            width: 275px;
+            width: 230	px;
             height: 400px;
             margin-right: 25px;
         }
@@ -76,6 +81,11 @@
             height: auto; /* Reset the height to maintain aspect ratio */
             max-height: 275px; /* Set a maximum height to prevent stretching */
         }
+        
+        .nextDiv {
+        	float: left;
+        	margin-left: 35%;
+        }
     </style>
 </head>
 
@@ -83,11 +93,11 @@
     <div class="common-section">
         <div class="common-title">찜 목록</div>
         
-        <div class="list">
+        <div class="list nextDiv">
             <c:forEach items="${myWishList}" var="list">
                 <div class="box">
                     <a href="<c:url value='/product/productDetail.do'/>?productId=${list.PRODUCT_ID}">
-                        <img src="${pageContext.request.contextPath}/resources/upload/product/${list.IMAGE_RENAMED_FILENAME}" alt="">
+                        <img class="listImgSize" src="${pageContext.request.contextPath}/resources/upload/product/${list.IMAGE_RENAMED_FILENAME}" alt="">
                         <p>${list.PRODUCT_NAME}</p>
                         <h5><fmt:formatNumber value="${list.PRODUCT_PRICE}" pattern="#,###"/> 원</h5>
                         <span><img src="${pageContext.request.contextPath }/resources/images/상품/star.png" alt="">5.0 | 후기
