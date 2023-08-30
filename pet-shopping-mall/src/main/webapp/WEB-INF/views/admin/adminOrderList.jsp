@@ -14,11 +14,7 @@
 			</ol>
 			<div class="card mb-4">
 				<div class="card-body">
-					김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원
-				</div>
-			</div>
-			
-			<div class="admin-order-search-container">
+					<div class="admin-order-search-container">
 			    <form:form 
 			    	method="GET" 
 			    	name="adminOrderSearch"
@@ -34,32 +30,34 @@
 				    <input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
 					<label for="all">전체</label>
 				    <input type="checkbox" id="deposit" name="paymentMethod" value="0">
-				    <label for="deposit">카카오페이</label>
+				    <label for="deposit">신용카드</label>
 				    <input type="checkbox" id="creditcard" name="paymentMethod" value="1">
-				    <label for="creditcard">신용카드</label>
+				    <label for="creditcard">카카오페이</label>
 			        <br>
 			        
 			        <label>주문상태:</label>
 				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
 				    <label for="orderStatusAll">전체</label>
 				    <input type="checkbox" id="waiting" name="orderStatus" value="0">
-				    <label for="waiting">결제대기</label>
+				    <label for="waiting">결제완료</label>
 				    <input type="checkbox" id="completeDeposit" name="orderStatus" value="1">
-				    <label for="completePayment">결제완료</label>
+				    <label for="completePayment">배송준비</label>
 				    <input type="checkbox" id="readyDelivery" name="orderStatus" value="2">
-				    <label for="readyDelivery">배송준비</label>
+				    <label for="readyDelivery">배송중</label>
 				    <input type="checkbox" id="delivering" name="orderStatus" value="3">
-				    <label for="delivering">배송중</label>
+				    <label for="delivering">배송완료</label>
 				    <input type="checkbox" id="delivered" name="orderStatus" value="4">
-				    <label for="delivered">배송완료</label>
+				    <label for="delivered">주문취소</label>
 				    <input type="checkbox" id="canceled" name="orderStatus" value="5">
-				    <label for="canceled">주문취소</label>
+				    <label for="canceled">환불완료</label>
 				    <input type="checkbox" id="refunded" name="orderStatus" value="6">
-				    <label for="refunded">환불</label>
+				    <label for="refunded">구매확정</label>
 			        <br>
 			        
 			        <button type="submit">검색</button>
 			    </form:form>
+			</div>
+				</div>
 			</div>
 			
 			<div class="card mb-4">
@@ -89,33 +87,36 @@
 									<td>${orderlist.orderNo}</td>
 									<td>${orderlist.productName}</td>
 									<td>
-										<c:if test="${orderlist.orderStatus == 1}">
+										<c:if test="${orderlist.orderStatus == 0}">
 											결제완료
 										</c:if>
-										<c:if test="${orderlist.orderStatus == 2}">
+										<c:if test="${orderlist.orderStatus == 1}">
 											배송준비
 										</c:if>
-										<c:if test="${orderlist.orderStatus == 3}">
+										<c:if test="${orderlist.orderStatus == 2}">
 											배송중
 										</c:if>
-										<c:if test="${orderlist.orderStatus == 4}">
+										<c:if test="${orderlist.orderStatus == 3}">
 											배송완료
 										</c:if>
-										<c:if test="${orderlist.orderStatus == 5}">
+										<c:if test="${orderlist.orderStatus == 4}">
 											주문취소
 										</c:if>
+										<c:if test="${orderlist.orderStatus == 5}">
+											환불완료
+										</c:if>
 										<c:if test="${orderlist.orderStatus == 6}">
-											반품
+											구매확정
 										</c:if>
 									</td>
 									<td>${orderlist.memberId}</td>
 									<td>${orderlist.amount}</td>
 									<td>${orderlist.deliveryFee}</td>
 									<td>
-										<c:if test="${orderlist.paymentMethod == 0}">
+										<c:if test="${orderlist.paymentMethod == 1}">
 											카카오페이
 										</c:if>
-										<c:if test="${orderlist.paymentMethod == 1}">
+										<c:if test="${orderlist.paymentMethod == 0}">
 											신용카드
 										</c:if>
 									</td>

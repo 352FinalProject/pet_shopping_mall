@@ -81,10 +81,7 @@ pageEncoding="UTF-8"%>
           오후 1시 이전 주문 시 오늘 출발 <br />
         </div>
         <hr class="hr-line" />
-        <!-- 선택 옵션 -->
-        <!-- 옵션 없을 때 -->
-        <c:if test="${empty productDetails}">
-           <!-- 상품구입 개수 입력 -->
+        <c:if test="${fn:length(productDetails) eq 1}">
            <div class="purchase-cnt">
              <div class="quantity-container">
                 <spna>수량  </spna>
@@ -93,23 +90,19 @@ pageEncoding="UTF-8"%>
                 <button class="quantity-btn plus">+</button>
             </div>
            </div>
-           
         </c:if>
-        <!-- 옵션 있을 때 -->
-        <c:if test="${not empty productDetails}">
+        <c:if test="${fn:length(productDetails) gt 1}">
            <div>
-             <select name="product-option">
-               <option value="">[필수]옵션선택</option>
-               <!-- 옵션나열 -->
+              <select name="product-option">
               <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-                 <c:if test="${empty productDetail.optionName}">
-                     <option class="options" value="${productDetail.productDetailId}">[옵션없음]</option>
-                 </c:if>
-                 <c:if test="${not empty productDetail.optionName}">
-                     <option class="options" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
-                 </c:if>
+		        <c:if test="${empty productDetail.optionName}">
+		           <option class="options" value="${productDetail.productDetailId}">[옵션 선택 안함]</option>
+		        </c:if>
+		        <c:if test="${not empty productDetail.optionName}">
+		           <option class="options" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+		      	</c:if>
               </c:forEach>
-             </select>
+              </select>
            </div>
            <!-- 옵션추가금 -->
            <div class="additional-price-container" id="additional-price-container" style="display : none;">
@@ -117,20 +110,15 @@ pageEncoding="UTF-8"%>
            	<div class="additional-price" id="${productDetail.productDetailId}">${productDetail.additionalPrice}</div>
            </c:forEach>
            </div>
-           
-               <!-- 상품구입 개수 입력 -->
            <div class="purchase-cnt">
              <div class="quantity-container">
-                <spna>수량  </spna>
+                <span>수량  </span >
                 <button class="quantity-btn minus">-</button>
                 <input type="text" id="quantity" class="quantity-input" value="1">
                 <button class="quantity-btn plus">+</button>
             </div>
            </div>
-           
         </c:if>
-        
-        
         
         <div class="product-price">
           <div class="product-price-desc">
@@ -324,8 +312,8 @@ pageEncoding="UTF-8"%>
     </div>
   </div>
   <form:form id="addCartFrm">
-     <input type="hidden" value="" id="_quantity" name="quantity">
-     <input type="hidden" value="" id="_productDetailId" name="productDetailId">
+     <input type="hidden" value="1" id="_quantity" name="quantity">
+     <input type="hidden" value="${productDetails[0].productDetailId}" id="_productDetailId" name="productDetailId">
   </form:form>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -431,36 +419,6 @@ function addCart() {
       }); 
 };
 
-
-  // 리뷰 페이지 아코디언 효과
-  /* const ques = document.querySelectorAll(".que");
-const anws = document.querySelectorAll(".anw");
-
-ques.forEach(que => {
-  que.addEventListener("click", function() {
-    const currentAnw = this.nextElementSibling;
-    
-    // 다른 질문들에 있는 'on' 클래스 제거
-    ques.forEach(item => {
-      if (item !== this) {
-        item.classList.remove('on');
-      }
-    });
-    
-    // 현재 질문에 'on' 클래스 토글
-    this.classList.toggle('on');
-    
-    // 현재 질문의 답변 토글
-    currentAnw.style.display = currentAnw.style.display === 'block' ? 'none' : 'block';
-    
-    // 다른 답변들 닫기
-    anws.forEach(anw => {
-      if (anw !== currentAnw && anw.style.display === 'block') {
-        anw.style.display = 'none';
-      }
-    });
-  });
-}); */
 
 // 하트 클릭 이벤트 (선모)
 let token = $("meta[name='_csrf']").attr("content");

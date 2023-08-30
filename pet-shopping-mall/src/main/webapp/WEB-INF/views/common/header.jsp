@@ -402,5 +402,3 @@ $(document).ready(function() {
    
 
 </script>
-
-   <jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>
