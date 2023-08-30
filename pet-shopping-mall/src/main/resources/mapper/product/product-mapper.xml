@@ -23,7 +23,7 @@
 	    	p.product_id = #{productId}
 	</select>
 	
-<!-- 	<select id="searchProducts" resultMap="productSearchDto">
+ 	<select id="searchProducts" resultMap="productSearchDto">
 		select
 		    p.product_id,
 		    p.category_id,
@@ -38,7 +38,8 @@
 		    image_attachment ia ON iam.image_id = ia.image_id
 		where 
 	    	p.product_name like '%' || #{searchQuery} || '%'
-	</select> -->
+	</select>
+	
 	<resultMap type="ProductSearchDto" id="productSearchDto">
         <result property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>
