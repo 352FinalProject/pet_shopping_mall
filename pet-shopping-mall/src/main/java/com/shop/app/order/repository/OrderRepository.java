@@ -109,5 +109,8 @@ public interface OrderRepository {
 	
 	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
+	@Update("update orderTbl set order_status = #{i} where order_id = #{orderId}")
+	void updateReviewOrderStatus(int orderId, int i);
+
 	
 }

@@ -108,7 +108,7 @@ delete from product where product_id = 1;
 
 delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 3 where order_id = 55;
+update orderTbl set order_status = 3 where order_id = 59;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
