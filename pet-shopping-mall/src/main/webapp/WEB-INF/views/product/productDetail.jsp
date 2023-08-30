@@ -38,8 +38,7 @@ pageEncoding="UTF-8"%>
       <div class="product-img">
         <img
           src="${pageContext.request.contextPath}/resources/upload/product/${productImages.attachments[0].imageRenamedFilename}"
-          width="400px"
-        />
+          width="400px" />
       </div>
       <div class="product-info">
         <div id="product-title">${product.productName}</div>
@@ -72,8 +71,7 @@ pageEncoding="UTF-8"%>
         <div class="shipped_img">
           <img
             src="${pageContext.request.contextPath}/resources/images/product/shipped.png"
-            width="30px"
-          />
+            width="30px" />
           <div class="shipped_text">배송</div>
         </div>
         <div class="shipped_desc">
@@ -89,6 +87,9 @@ pageEncoding="UTF-8"%>
                 <input type="text" id="quantity" class="quantity-input" value="1">
                 <button class="quantity-btn plus">+</button>
             </div>
+           </div>
+           <div class="additional-price-container" id="additional-price-container" style="display : none;">
+           		<div class="additional-price" id="${productDetails[0].productDetailId}">${productDetails[0].additionalPrice}</div>
            </div>
         </c:if>
         <c:if test="${fn:length(productDetails) gt 1}">
@@ -318,8 +319,7 @@ pageEncoding="UTF-8"%>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-
-// 상품수량에 따라 가격 바꾸기
+//상품수량에 따라 가격 바꾸기
 document.addEventListener("DOMContentLoaded", () => {
    const optionSelect = document.querySelector("[name='product-option']");
    const originalPrice = parseInt(${product.productPrice});
@@ -331,17 +331,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionPlusButton = document.querySelector(".plus");
     let currentQuantity = parseInt(quantityInput.value) || 1;  // 수량이 지정되지 않은 경우 1로 설정
 
+    // 선택한 상품디테일 아이디
+    <c:if test="${fn:length(productDetails) eq 1}">
+	 	 let choicedId = ${productDetails[0].productDetailId};
+	</c:if>
+	<c:if test="${fn:length(productDetails) gt 1}">
+	 	 let choicedId = optionSelect.options[optionSelect.selectedIndex].value;
+	</c:if>
+	console.log("choicedId=",choicedId);
+	console.log("originalPrice=",originalPrice);
+
+  // 상품디테일 아이디에 해당하는 추가금액
+  additionalPrice = parseInt(document.getElementById(`\${choicedId}`).innerHTML);
+  console.log("additionalPrice=", additionalPrice);
+
     const formatNumberWithCommas = (num) => {
         return num.toLocaleString('en-US');
     };
 
-    optionSelect.addEventListener("change", function() {
-        const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
-        const price = document.getElementById(productDetailId).innerHTML;
-        if(price !== null) {
-           additionalPrice = parseInt(price);
-        }
-    });
+    if(optionSelect !== null){
+	    optionSelect.addEventListener("change", function() {
+	        const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
+	        const price = document.getElementById(productDetailId).innerHTML;
+	        if(price !== null) {
+	           additionalPrice = parseInt(price);
+	        }
+	    });
+    	
+    }
 
     const updatePrice = () => {
         const updateTotalPrice = (originalPrice + additionalPrice) * currentQuantity;
@@ -368,58 +385,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-     const optionSelect = document.querySelector("[name='product-option']");
-     const quantityInput = document.querySelector(".quantity-input");
-     const optionMinusButton = document.querySelector(".minus");
-     const optionPlusButton = document.querySelector(".plus");
-     const frm = document.querySelector("#addCartFrm");
-
-     let currentQuantity = 1;
-
-     optionMinusButton.addEventListener("click", () => {
-       if (currentQuantity > 1) {
-         currentQuantity--;
-         quantityInput.value = currentQuantity;
-         frm.quantity.value = currentQuantity;
-       }
-     });
-
-     optionPlusButton.addEventListener("click", () => {
-       currentQuantity++;
-       quantityInput.value = currentQuantity;
-       frm.quantity.value = currentQuantity;
-     });
-     
-     console.log("optionSelect = ", optionSelect);
-     
-     optionSelect.addEventListener("change", function() {
-       const selectedOption = optionSelect.options[optionSelect.selectedIndex];
-       const selectedValue = selectedOption.value;
-       const updateQuantity = quantityInput.value;
-       
-       frm.productDetailId.value = selectedValue;
-       frm.quantity.value = updateQuantity;
-     });
-     
-     let token = $("meta[name='_csrf']").attr("content");
-     let header = $("meta[name='_csrf_header']").attr("content");
-
-     $(function() {
-         $(document).ajaxSend(function(e, xhr, options) {
-             xhr.setRequestHeader(header, token);
-         });
-     });
-
-});
-
 // 장바구니에 담기 (담희)
 function addCart() {
    const frm = document.querySelector("#addCartFrm");
    
    const quantityValue = frm.querySelector("#_quantity").value;
    const productDetailIdValue = frm.querySelector("#_productDetailId").value;
-     
+   
+   console.log("quantityValue=",quantityValue);
+   console.log("productDetailIdValue=",productDetailIdValue);
+   
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/cart/insertCart.do",
@@ -496,9 +471,6 @@ $("#clickHeart").on("click", function() {
         }
     });
 });
-
-
-
 </script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
