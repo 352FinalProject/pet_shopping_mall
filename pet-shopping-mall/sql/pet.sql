@@ -497,6 +497,7 @@ create sequence seq_sub_payment_id;
 create sequence seq_susubscribe_id;
 
 
+
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
 after insert on member

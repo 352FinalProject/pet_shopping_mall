@@ -510,8 +510,7 @@ from
 left join product_detail pd on p.product_id = pd.product_id
 left join cartitem ci on pd.product_detail_id = ci.product_detail_id;
 
-
-    
+select * from member;
 update cartitem set product_detail_id = 2, quantity = 2 where cartitem_id =13;
 
 delete from orderTbl where member_id = 'honggd'; 
