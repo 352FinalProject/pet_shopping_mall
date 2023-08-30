@@ -243,12 +243,6 @@ public class ProductController {
       }
       return resultMap;
    }
-
-   
-   
-   
-   
-   
    
    @GetMapping("/searchProduct.do")
    public void searchProducts(Model model, @RequestParam String searchQuery) {

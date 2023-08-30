@@ -121,6 +121,7 @@ public class OrderController {
 	        int orderId = orderHistory.getOrderId();
 	        String memberId = member.getMemberId();
 	        boolean reviewWrite = orderService.reviewWrite(memberId, orderId);
+	        log.debug("reviewWrite = {}", reviewWrite);
 	        model.addAttribute("reviewWrite", reviewWrite);
 	        
 	    }
