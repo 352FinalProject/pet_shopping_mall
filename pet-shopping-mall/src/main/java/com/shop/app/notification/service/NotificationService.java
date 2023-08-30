@@ -13,6 +13,8 @@ public interface NotificationService {
 
 	int paymentCompleteNotification(PaymentCompleteNotificationDto paymentCompleteNotificationDto);
 
+	int deleteNotification(int id);
+
 
 
 }

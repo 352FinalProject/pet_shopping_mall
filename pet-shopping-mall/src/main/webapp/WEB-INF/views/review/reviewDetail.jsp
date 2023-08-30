@@ -38,7 +38,7 @@ a {
 <%-- 			<div class="review-detail-title input[type="text"]" style="display: inline-block;">
 				<input type="text" name="reviewTitle" id="reivewTitle" value="${reviews.reviewTitle}" readonly required>
 			</div> --%>
-			<span class="review-div-title">${reviews.reviewTitle}${reviews.petId}</span><span class="small-space"></span>
+			<span class="review-div-title">${reviews.reviewTitle}</span><span class="small-space"></span>
 		<br>
 		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
  		<div id="review-div"></div>
@@ -46,11 +46,12 @@ a {
 				    ${reviews.petName} | ${reviews.petAge}살 | ${reviews.petWeight}kg | ${reviews.petBreed}
 			</div><span class="small-space"></span>
 		<br><span class="small-space"></span>
-		<br>
 		<%-- 상품 옵션 --%>
 		<div id="review-div"></div>
 			<div id="review-div">
-			색상 : 노란색
+			구매한 상품 : ${reviewProduct.productName}
+			<br>
+			${reviewProduct.optionName}:${reviewProduct.optionValue}
 			</div><span class="small-space"></span>
 		<br>
 		<%-- 별점 --%>

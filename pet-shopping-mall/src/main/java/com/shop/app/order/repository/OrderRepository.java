@@ -17,6 +17,7 @@ import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
@@ -102,8 +103,11 @@ public interface OrderRepository {
 	int findOrderCntByProductId(int productDetailId);
 
 
-	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status = 5")
+	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day")
 	List<Order> findOrdersWithExpiredStatus();
+
+	
+	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
 	
 }

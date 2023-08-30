@@ -28,7 +28,7 @@ const renderMessage = (message) => {
     
     const newNotification = document.createElement("p");
     newNotification.className = "notification-content";
-    newNotification.textContent = `${memberId}님 ${notiContent}.${notiCreatedAt}`;
+    newNotification.textContent = `${memberId}님 ${notiContent}${notiCreatedAt}`;
 
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = `X`; // 

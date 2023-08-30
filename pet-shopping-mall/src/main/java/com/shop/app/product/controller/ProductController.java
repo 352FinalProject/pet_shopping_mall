@@ -113,16 +113,12 @@ public class ProductController {
 	        int reviewId2 = review.getReviewId();
 	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 	        
-	        //log.debug("reviewDetails = {}", reviewDetails);
-	        
 	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
 	            String imageFilename = reviewDetails.getAttachments().get(0).getImageRenamedFilename();
 	            //log.debug("imageFilename = {}", imageFilename);
 	            reviewImageMap.put(reviewId2, imageFilename);
 	        }
 	    }
-	    
-	    // log.debug("reviewImageMap = {}", reviewImageMap);
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
@@ -141,9 +137,9 @@ public class ProductController {
 //		  
 //		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 //		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-//	
+////	
 //		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
-		  
+//		  
 		 
 	    
 	    
@@ -194,15 +190,11 @@ public class ProductController {
 		// 리뷰 전체개수 출력 (혜령)
 		for (ProductInfoDto productInfo : productInfos) {
 		    int productId = productInfo.getProductId();
-		    
-		    log.debug("productI 가져오니 = {}", productId);
 
-          int reviewTotalCount = reviewService.findReviewTotalCount(productId);
-          model.addAttribute("reviewTotalCount", reviewTotalCount);
-          
-          log.debug("reviewTotalCount = {}", reviewTotalCount);
-          
-      }
+		    int productListReviewTotalCount = reviewService.findProductListReviewTotalCount(productId);
+		    productInfo.setReviewCnt(productListReviewTotalCount);
+		}
+		model.addAttribute("productInfos", productInfos); 
    }
    
    

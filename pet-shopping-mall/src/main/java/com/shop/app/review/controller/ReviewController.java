@@ -35,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.order.dto.OrderHistoryDto;
@@ -50,6 +51,8 @@ import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
+import com.shop.app.review.dto.ReviewListDto;
+import com.shop.app.review.dto.ReviewProductDto;
 import com.shop.app.review.dto.ReviewUpdateDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
@@ -97,58 +100,24 @@ public class ReviewController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String reviewMemberId = authentication.getName();
+		
+		// 리뷰 작성자가 주문한 상품 내역들
+		List<OrderReviewListDto> orders = orderService.findOrdersByReviewId(reviewMemberId);
 
 		Map<String, Object> params = Map.of(
 				"page", page,
 				"limit", limit,
-				"reviewMemberId", reviewMemberId
+				"reviewMemberId", reviewMemberId,
+				"orders", orders
 				);
-
-		log.debug("첫번째 params = {}", params);
 		
 		int totalCount = reviewService.findTotalReviewCount(reviewMemberId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 
-		List<Review> reviews = reviewService.findReviewAll(params);
-		log.debug("두번째 params = {}", params);
+		List<ReviewListDto> reviews = reviewService.findReviewAll(params);
 		
 		model.addAttribute("reviews", reviews);
-		
-		
-//	    Map<Review, List<Order>> reviewToOrderMap = new HashMap<>();
-//	    
-//	    for (Review review : reviews) {
-//	        List<Order> orders = orderService.findOrdersByReviewId(review.getReviewId());
-//	        reviewToOrderMap.put(review, orders);
-//	    }
-//
-//	    model.addAttribute("reviewToOrderMap", reviewToOrderMap);
-//		
-//	    log.debug("reviewToOrderMap = {}", reviewToOrderMap);
-		
-		
-		// 구매한 상품과 연결
-//		String memberId = member.getMemberId();
-//		List<Order> orderList;
-//		orderList = orderService.getOrderList(memberId);
-//		model.addAttribute("orderHistories", orderList);
-//
-////		log.debug("orderList = {}", orderList);
-//		
-		// 구매한 상품 - 주문상세내역
-//		List<Map<OrderHistoryDto, Payment>> orderDetailMap = new ArrayList<>(); // 초기화
-//
-//		for (Order order : orderList) {
-//		    String orderNo = order.getOrderNo(); // 각 주문의 orderNo 가져오기
-//		    List<Map<OrderHistoryDto, Payment>> orderDetail = orderService.getOrderDetail(orderNo);
-//		    orderDetailMap.addAll(orderDetail); // 주문상세내역을 orderDetailMap에 추가
-//		}
-//
-//		model.addAttribute("orderDetail", orderDetailMap);
-//		
-//		log.debug("orderDetailMap = {}", orderDetailMap );
-	
 	}
 
 
@@ -244,7 +213,6 @@ public class ReviewController {
 //		for(Product p : findProduct) {
 //			product.setProductId(p.getProductId());
 //		}
-		
 		//List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		
 		int reviewId = reviewService.insertReview(reviews);
@@ -333,13 +301,16 @@ public class ReviewController {
 		
 		ReviewDetailDto reviews = reviewService.findReviewId(reviewId);
 		model.addAttribute("reviews", reviews);
-
-		// log.debug("펫정보 reviews 가져올수있니 = {}", reviews);
 		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
-		// log.debug("reviewDetails = {}", reviewDetails);
 		model.addAttribute("reviewDetails", reviewDetails);
+		
+		// 구매한 상품 정보 조회
+		ReviewProductDto reviewProduct = reviewService.findProductReviewId(reviewId);
+		model.addAttribute("reviewProduct", reviewProduct);
+		
+		log.debug("reviewProduct = {}", reviewProduct);
 		
 	}
 

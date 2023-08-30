@@ -36,29 +36,10 @@
                            <td>
                               <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">${review.reviewId}</a>
                            </td>
-                            <td>
-                                <c:if test="${not empty orderDetail}">
-                                <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
-                                     <c:forEach var="orderMap" items="${orderDetail}">
-			                              <c:forEach var="entry" items="${orderMap}">
-			                              <c:set var="option" value="${entry.key.optionName}" />
-			                              <c:set var="amount" value="${entry.key.amount}" />
-                                      <div style="display: flex; align-items: center;">
-                                           <img style="width: 100px; height: 100px; margin-right: 10px; cursor: pointer;"
-                                                 src="${pageContext.request.contextPath}/resources/upload/product/${entry.key.imageRenamedFileName}">
-                                      </div>
-                                    <div>
-                                       <p>${entry.key.productName}</p>
-                                       <br />
-                                       <c:if test="${option ne null}">
-                                          <p>${entry.key.optionName} : ${entry.key.optionValue}</p>
-                                       </c:if>
-                                     </div>
-                                      </c:forEach>
-                                      </c:forEach>
-                                </a>
-                                   </c:if>
-                            </td>
+                           <td>
+                           		<img src="${pageContext.request.contextPath}/resources/upload/product/${review.imageRenamedFileName}" width="110px" height="50px">
+                           		${review.productName} ${review.optionName}:${review.optionValue}
+                           </td>
                             <td>
                                <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
                                 <c:choose>
