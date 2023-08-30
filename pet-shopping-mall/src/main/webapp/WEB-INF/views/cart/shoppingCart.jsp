@@ -44,14 +44,12 @@
 		                				</div>
 		                			</div>
 		                		</div>
+		                	<button id="cart-delete-btn" onclick="deleteCartOne('${product.cartitemId}');">✖</button>
 		                	</div>
 		                	<c:set var="totalPrice" value="${totalPrice + ((product.productPrice + product.additionalPrice) * product.quantity)}" />
 		                	<form:form id="deleteOneFrm" method="POST" action="${pageContext.request.contextPath}/cart/deleteCartOne.do">
 		                		<input type="hidden" name="cartitemId" value="">
 		                	</form:form>
-			                <div>
-			                	<button class="cart-btn" onclick="deleteCartOne('${product.cartitemId}');">선택 상품 삭제</button>
-			                </div>
 		                	</c:forEach>
 		                </c:if>
 		                <c:if test="${empty cartList}">

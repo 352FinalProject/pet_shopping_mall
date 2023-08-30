@@ -465,3 +465,13 @@ div.modal-div {
     width: 80%;
     margin-top: 10px;
 }
+
+#cart-delete-btn {
+	border: none;
+    background: white;
+    padding: 5px;
+    border-radius: 2px;
+    margin-left: 220px;
+    margin-top: -110px;
+    cursor: pointer;
+}
