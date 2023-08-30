@@ -59,7 +59,7 @@ pageEncoding="UTF-8"%>
             <img
               src="${pageContext.request.contextPath}/resources/images/상품/star.png"
               alt="별점"
-            /><span>5.0</span> <span>&nbsp;|&nbsp;</span>
+            /><span>${productReviewStarAvg.reviewStarRate}</span> <span>&nbsp;|&nbsp;</span>
             <span><a href="#product-review-box">후기 ${reviewTotalCount}건</a></span>
           </div>
         </div>
@@ -281,7 +281,7 @@ pageEncoding="UTF-8"%>
    </ul>
 </div>
 <!-- 페이징 바 -->
-<nav aria-label="..." class="product-review-paging">
+<%-- <nav aria-label="..." class="product-review-paging">
   <ul class="review-pagination-sm">
     <c:forEach begin="1" end="${totalPages}" var="pageNumber">
       <li class="page-item ${page == pageNumber ? 'active' : ''}">
@@ -294,7 +294,7 @@ pageEncoding="UTF-8"%>
       </li>
     </c:forEach>
   </ul>
-</nav>
+</nav> --%>
     <!-- 교환/반품/배송 -->
     <div class="util-div" id="product-notice-box">
       <ul class="product-utility" >

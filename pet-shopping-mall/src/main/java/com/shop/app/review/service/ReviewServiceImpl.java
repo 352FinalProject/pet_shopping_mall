@@ -196,7 +196,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	// 상품 - 리뷰 평점
 	@Override
-	public int productReviewStarAvg(int productId) {
+	public ProductReviewAvgDto productReviewStarAvg(int productId) {
 		return reviewRepository.productReviewStarAvg(productId);
 	}
 

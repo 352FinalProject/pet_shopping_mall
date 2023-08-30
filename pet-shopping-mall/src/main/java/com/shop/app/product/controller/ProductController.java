@@ -114,6 +114,8 @@ public class ProductController {
 	        int reviewId2 = review.getReviewId();
 	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 	        
+	        log.debug("reviewDetails = {}", reviewDetails);
+	        
 	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
 	            List<String> imageFilenames = new ArrayList<>();
 	            
@@ -130,25 +132,18 @@ public class ProductController {
 	    log.debug(" 이미지 reviewImageMap = {}", reviewImageMap);
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	    
-	    // 리뷰 전체개수 확인
+	    // 상품 상세 페이지 - 리뷰 전체개수 확인
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
 	    
 	    // log.debug("reveiwTotalCount = {}", reveiwTotalCount);
 	    
-	    // 리뷰 평점
-//		List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(productId);
-//		model.addAttribute("reviews2", reviews2);
-//		  
-//		log.debug("reviews2 = {} ", reviews2);
-////		  
-//		int productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-//		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-//		
-//		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
-//		  
-		 
-	    
+	    // 리뷰 별점 평균
+	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+		log.debug("평균 별점 productReviewStarAvg = {}", productReviewStarAvg);
+
+		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+		
 	    
 	    /* 찜 등록 여부 가져오기 (선모) */
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
@@ -194,14 +189,21 @@ public class ProductController {
 		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productInfos", productInfos);
 		
-		// 리뷰 전체개수 출력 (혜령)
+		// 리뷰 전체개수, 리뷰 별점 평균 (혜령)
 		for (ProductInfoDto productInfo : productInfos) {
 		    int productId = productInfo.getProductId();
 
 		    int productListReviewTotalCount = reviewService.findProductListReviewTotalCount(productId);
 		    productInfo.setReviewCnt(productListReviewTotalCount);
+		    
+	        ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+	        productInfo.setProductReviewStarAvg(productReviewStarAvg);
 		}
 		model.addAttribute("productInfos", productInfos); 
+		
+		log.debug("별점나왔니 productInfos = {}", productInfos);
+		
+		
    }
    
    
