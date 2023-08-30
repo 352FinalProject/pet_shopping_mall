@@ -46,6 +46,7 @@ import com.shop.app.pet.service.PetService;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
 import com.shop.app.product.entity.Product;
+import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
@@ -114,8 +115,9 @@ public class ReviewController {
 		
 		model.addAttribute("reviews", reviews);
 		
+		
 //	    Map<Review, List<Order>> reviewToOrderMap = new HashMap<>();
-//
+//	    
 //	    for (Review review : reviews) {
 //	        List<Order> orders = orderService.findOrdersByReviewId(review.getReviewId());
 //	        reviewToOrderMap.put(review, orders);
@@ -127,34 +129,38 @@ public class ReviewController {
 		
 		
 		// 구매한 상품과 연결
-		String memberId = member.getMemberId();
-		List<Order> orderList;
-		orderList = orderService.getOrderList(memberId);
-		model.addAttribute("orderHistories", orderList);
-
-//		log.debug("orderList = {}", orderList);
-		
+//		String memberId = member.getMemberId();
+//		List<Order> orderList;
+//		orderList = orderService.getOrderList(memberId);
+//		model.addAttribute("orderHistories", orderList);
+//
+////		log.debug("orderList = {}", orderList);
+//		
 		// 구매한 상품 - 주문상세내역
-		List<Map<OrderHistoryDto, Payment>> orderDetailMap = new ArrayList<>(); // 초기화
-
-		for (Order order : orderList) {
-		    String orderNo = order.getOrderNo(); // 각 주문의 orderNo 가져오기
-		    List<Map<OrderHistoryDto, Payment>> orderDetail = orderService.getOrderDetail(orderNo);
-		    orderDetailMap.addAll(orderDetail); // 주문상세내역을 orderDetailMap에 추가
-		}
-
-		model.addAttribute("orderDetail", orderDetailMap);
-		
-		log.debug("orderDetailMap = {}", orderDetailMap );
-		
-		
+//		List<Map<OrderHistoryDto, Payment>> orderDetailMap = new ArrayList<>(); // 초기화
+//
+//		for (Order order : orderList) {
+//		    String orderNo = order.getOrderNo(); // 각 주문의 orderNo 가져오기
+//		    List<Map<OrderHistoryDto, Payment>> orderDetail = orderService.getOrderDetail(orderNo);
+//		    orderDetailMap.addAll(orderDetail); // 주문상세내역을 orderDetailMap에 추가
+//		}
+//
+//		model.addAttribute("orderDetail", orderDetailMap);
+//		
+//		log.debug("orderDetailMap = {}", orderDetailMap );
 	
 	}
 
 
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
-	public void reviewCreate(@RequestParam("productId") int productId, @RequestParam("orderId") int orderId, Model model) {
+	public void reviewCreate(
+			@RequestParam("productDetailId") int productDetailId, 
+			@RequestParam("productId") int productId, 
+			@RequestParam("orderId") int orderId, 
+			Model model) {
+		
+		model.addAttribute("productDetailId", productDetailId);
 		model.addAttribute("productId", productId);
 		model.addAttribute("orderId", orderId);
 	   
@@ -208,55 +214,48 @@ public class ReviewController {
 		ReviewDetails reviews = ReviewDetails.builder()
 				.reviewId(_review.getReviewId())
 				.petId(pet.getPetId())
-				//.petId(_review.getPetId())
 				.orderId(_review.getOrderId())
-				.productId(_review.getProductId()) // 리뷰작성할 때 productId 넘기기 (예라)
+				.productId(_review.getProductId())
+				.productDetailId(_review.getProductDetailId())
 				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
 				.reviewContent(_review.getReviewContent())
 				.attachments(attachments)
 				.build();
-
 		
 		// petId 연결하기
-//		String memberId = principal.getName();
-//		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 로그인 한 회원의 펫정보 가져오기
-
 		// petId 로그인 멤버 말고 리뷰작성자랑 연결하기
 		String memberId = _review.getReviewMemberId();
 		List<Pet> petInfo = petService.findPetsByMemberId(memberId); // 리뷰작성자의 펫정보 가져오기
 		
-		// log.debug("petInfo = {}", petInfo);
-		
 		if (!petInfo.isEmpty()) { // 펫정보가 비어있지 않다면
 			Pet firstPet = petInfo.get(0); // 첫번째 Pet 객체 가져오기
 			reviews.setPetId(firstPet.getPetId()); // db에 pet정보 저장
-		
 		} else {
 			reviews.setPetId(null);
 		}
 			
-		log.debug("펫아이디 확인 reviews = {}", reviews);
-
 		
 		// 상품 - 리뷰 연결
 		// Product 객체 생성
-		Product product = new Product();
-		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
+//		Product product = new Product();
+//		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
+//		for(Product p : findProduct) {
+//			product.setProductId(p.getProductId());
+//		}
 		
-		log.debug("findProduct = {}", findProduct); 
-		
-		for(Product p : findProduct) {
-			product.setProductId(p.getProductId());
-		}
+		//List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		
 		int reviewId = reviewService.insertReview(reviews);
+
+		
+		
+		
 		
 		log.debug("_review = {}", _review);
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 
-		
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
 		point.setReviewId(_review.getReviewId());

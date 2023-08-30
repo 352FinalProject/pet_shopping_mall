@@ -38,7 +38,7 @@ a {
 <%-- 			<div class="review-detail-title input[type="text"]" style="display: inline-block;">
 				<input type="text" name="reviewTitle" id="reivewTitle" value="${reviews.reviewTitle}" readonly required>
 			</div> --%>
-			<span class="review-div-title">${reviews.reviewTitle}</span><span class="small-space"></span>
+			<span class="review-div-title">${reviews.reviewTitle}${reviews.petId}</span><span class="small-space"></span>
 		<br>
 		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
  		<div id="review-div"></div>
@@ -59,7 +59,7 @@ a {
 				<!-- <div class="star-rating-detail" id="starContainer"></div></div> -->
 	            <c:choose>
 			        <c:when test="${reviews.reviewStarRate == 1}">
-			            <span class="star-rating-detail">★★★★☆</span> (1.0)
+			            <span class="star-rating-detail">★☆☆☆☆</span> (1.0)
 			        </c:when>
 			        <c:when test="${reviews.reviewStarRate == 2}">
 			            <span class="star-rating-detail">★★☆☆☆</span>  (2.0)
