@@ -97,20 +97,36 @@ pageEncoding="UTF-8"%>
         </c:if>
         <!-- 옵션 있을 때 -->
         <c:if test="${not empty productDetails}">
-	        <div class="select-product-options">
-	          <select name="product-option" id="product-option">
-	            <option value="">[필수]옵션선택</option>
-	            <!-- 옵션나열 -->
-	        	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
-	        		<c:if test="${empty productDetail.optionName}">
-	            		<option name="productOptions[${productDetail.productDetailId}]" id="productOptions[${productDetail.productDetailId}]" value="${productDetail.productDetailId}">[옵션없음]</option>
-	        		</c:if>
-	        		<c:if test="${not empty productDetail.optionName}">
-	            		<option name="productOptions[${productDetail.productDetailId}]" id="productOptions[${productDetail.productDetailId}]" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
-	        		</c:if>
-	        	</c:forEach>
-	          </select>
-	        </div>
+           <div>
+             <select name="product-option">
+             	<option value="">[필수]옵션선택</option>
+               <!-- 옵션나열 -->
+              <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+                 <c:if test="${empty productDetail.optionName}">
+                     <option class="options" value="${productDetail.productDetailId}">[옵션없음]</option>
+                 </c:if>
+                 <c:if test="${not empty productDetail.optionName}">
+                     <option class="options" value="${productDetail.productDetailId}">[${productDetail.optionName}] ${productDetail.optionValue}</option>
+                 </c:if>
+              </c:forEach>
+             </select>
+           </div>
+           <!-- 옵션추가금 -->
+           <div class="additional-price-container" id="additional-price-container" style="display : none;">
+           <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+           	<div class="additional-price" id="${productDetail.productDetailId}">${productDetail.additionalPrice}</div>
+           </c:forEach>
+           </div>
+           
+               <!-- 상품구입 개수 입력 -->
+           <div class="purchase-cnt">
+             <div class="quantity-container">
+                <spna>수량  </spna>
+                <button class="quantity-btn minus">-</button>
+                <input type="text" id="quantity" class="quantity-input" value="1">
+                <button class="quantity-btn plus">+</button>
+            </div>
+           </div>
         </c:if>
         
         <!-- 상품구입 수량 입력 -->
