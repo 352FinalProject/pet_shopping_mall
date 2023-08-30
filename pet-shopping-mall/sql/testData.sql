@@ -4,7 +4,7 @@ values ('admin', '1234', '관리자', '01011112222', 'admin@naver.com', '서울�
 select * from member;
 select * from point order by point_date desc;
 select * from pet;
-select * from review;
+select * from review order by review_created_at desc;
 select * from coupon;
 select * from member_coupon order by member_coupon_id desc;
 select * from terms;
@@ -25,19 +25,8 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
+select * from notification;    
     
-    
-SELECT q.*, ia.*
-FROM question q
-JOIN image_attachment_mapping iam ON q.question_id = iam.ref_id
-JOIN image_attachment ia ON iam.image_id = ia.image_id
-WHERE q.question_id = 1;
-    
-select * from (select * from point where point_member_id = #{pointMemberId} order by point_date desc) where rownum <= 1
-
-update member set subscribe = 'Y' where member_id = 'null@naver';
-
-select * from point where point_member_id = 'null@naver' order by point_date desc;
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
 values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
@@ -49,6 +38,7 @@ select * from member_coupon where coupon_id = 1 and member_id = 'member3' and en
 delete from member where name = '예라'; 
 delete from wishlist where wishlist_id = 10; 
 
+select count(*) from orderTbl o Left Join order_detail od on o.order_id = od.order_id left join review r on od.product_detail_id = r.product_detail_id where r.order_id = 53 and r.product_detail_id = 23 and o.member_id = 'null@naver';
 
 select
     m.member_id,
@@ -79,7 +69,8 @@ left join (
 where
     m.member_id = 'member1';
 
-
+select * from payment;
+select * from orderTbl where order_no='1693296419851';
 select 
     *
 from 
@@ -95,6 +86,18 @@ where product_id = 1;
     select * from review
 where product_id = #{productId};
 
+
+SELECT 
+    count(*) 
+FROM orderTbl o 
+LEFT JOIN order_detail od 
+ON o.order_id = od.order_id 
+LEFT JOIN review r 
+ON od.product_detail_id = r.product_detail_id 
+WHERE r.order_id = 55 and r.product_detail_id = 27 and r.review_member_id = 'null@naver';
+
+
+SELECT count(*) FROM orderTbl o LEFT JOIN order_detail od ON o.order_id = od.order_id LEFT JOIN review r ON od.product_detail_id = r.product_detail_id WHERE o.order_id = #{orderId} and r.product_detail_id = #{productDetailId} and r.review_member_id = #{reviewMemberId}
     
 select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
 
@@ -105,10 +108,11 @@ delete from product where product_id = 1;
 
 delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 4 where order_id = 4;
+update orderTbl set order_status = 3 where order_id = 55;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
+
 
 select count(*) from review where review_member_id = 'member1' and order_id = 2;
 select count(*) from member_coupon where member_id = 'member4';
@@ -211,7 +215,7 @@ values (seq_answer_answer_id.nextval, '관리자', 2, '배고프면 밥을 드�
 
 ------------------ point insert ---------------------------
 INSERT INTO point (point_id, point_member_id, point_current, point_type, point_amount)
-VALUES (45, 'null@naver', 10000, '구매적립', 10000);
+VALUES (2, '사용자2', 50, '사용', -500);
 
 ------------------ product insert ---------------------------
 -- 카테고리 생성
@@ -977,8 +981,36 @@ FROM orderTbl ot
 JOIN order_detail od ON ot.order_id = od.order_id
 JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
 JOIN product p ON pd.product_id = p.product_id
-where order_no = '230811-001';
+where member_id = 'king';
 
+select * from notification where member_id='king';
+delete notification where member_id='king';
 
+select * from orderTbl;
 
+update orderTbl set order_date ='23/08/22' where order_no = '1693362757498'; 
+select * from member;
+select * from sub_member;
+select * from sub_payment;
 
+update member set subscribe = 'Y' where member_id = 'honggd';
+update sub_member set schedule_status = 'cancel' where member_id = 'honggd';
+update sub_member set schedule_at = sysdate where member_id = 'honggd';
+
+SELECT *
+FROM sub_member
+WHERE schedule_status = 'cancel'
+    AND TRUNC(schedule_at) <= TRUNC(SYSDATE);
+
+select * from payment;
+select * from sub_member;
+select * from member;
+update sub_member set schedule_at = '23/08/29' where member_id='sinsa';
+
+select * from orderTbl;
+select 
+    * 
+from 
+    orderTbl 
+where 
+    order_date <= systimestamp - interval '7' day and order_status = 5;

@@ -46,7 +46,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetails memberDetails = memberRepository.loadUserByUsername(username);
-		log.debug("memberDetails = {}", memberDetails);
 		if (memberDetails == null)
 			throw new UsernameNotFoundException(username);
 		return memberDetails;
@@ -88,6 +87,25 @@ public class MemberServiceImpl implements MemberService {
 	public int subscribeCancel(String memberId) {
 		return memberRepository.subscribeCancel(memberId);
 	}
+	
+	
+	@Override
+	public SubMember findSubMemberByMemberId(String memberId) {
+		return memberRepository.findSubMemberByMemberId(memberId);
+	}
 
+	@Override
+	public int cancelSubscribe(String memberId) {
+		return memberRepository.cancelSubscribe(memberId);
+	}
 
+	@Override
+	public int updateCancelSubscribers() {
+		List<SubMember> subMembers = memberRepository.updateCancelSubscribers();
+		int result = 0;
+		for(SubMember s : subMembers) {
+			result = memberRepository.subscribeCancel(s.getMemberId());
+		}
+		return result; 
+	}
 }

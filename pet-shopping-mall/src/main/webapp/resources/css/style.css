@@ -184,6 +184,7 @@ body {
 	margin-top: 11px;
 	padding-bottom: 11px;
 	border-bottom: 1px solid #e7e7e7;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* 홈 슬라이드 */
@@ -326,16 +327,16 @@ body {
 
 /* 카피라이터 */
 footer {
-	border-top: 1px solid #e7e7e7;
+	border-top: 1px solid #ccc;
 	padding: 10px;
 	height: 180px;
 	display: flex;
 	flex-direction: column;
-	margin-top: 150px;
+	margin-top: 100px;
 }
 
 footer img {
-	width: 800px;
+	width: 700px;
 	display: block;
 	margin: 0 auto;
 	color: #4d4d4d;
@@ -363,3 +364,44 @@ footer p {
 	width: 250px;
 	z-index: 999;
 }
+
+/* --- 팝업---  */
+#openPopupBtn {
+    padding: 0;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.notification-container {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  top: calc(100% + 5px); /* Adjust the spacing as needed */
+  left: 0;
+  display: none;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  z-index: 999; /* Adjust as needed */
+  width: 300px; /* Adjust the width as needed */
+}
+
+.popup.active {
+  display: block;
+}
+
+.popup-content {
+  padding: 10px;
+}
+
+.notification-content {
+  margin: 0; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  font-size: 15px;
+}
+
+

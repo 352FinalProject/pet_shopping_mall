@@ -26,7 +26,7 @@
 		                		<div class="product-thumbnail"><img src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}" width="110px"></div>
 		                		<div>
 		                			<div>
-		                				<input type="checkbox" class="checkbox" name="productName" value="${formattedPrice}">
+		                				<input type="checkbox" class="checkbox" name="productName" value="${formattedPrice}" cartitem-id="${product.cartitemId}">
 		                				<label>${product.productName}</label>
 		                			</div>
 		                			<div> 
@@ -47,8 +47,12 @@
 		                	</div>
 		                	<c:set var="totalPrice" value="${totalPrice + ((product.productPrice + product.additionalPrice) * product.quantity)}" />
 		                	<form:form id="deleteOneFrm" method="POST" action="${pageContext.request.contextPath}/cart/deleteCartOne.do">
-		                		<input type="hidden" name="id" value="${product.cartitemId}">
+		                		<input type="hidden" name="cartitemId" value="">
 		                	</form:form>
+			                <div>
+			                	<button class="cart-btn" onclick="deleteCartOne('${product.cartitemId}');">선택 상품 삭제</button>
+			                	<button class="cart-btn" onclick="deleteAll();">전체 상품 삭제</button>
+			                </div>
 		                	</c:forEach>
 		                </c:if>
 		                <c:if test="${empty cartList}">
@@ -56,10 +60,6 @@
 		                		<p>장바구니에 담긴 상품이 없습니다.</p>
 		                	</div>
 		                </c:if>
-	                	<div>
-	                		<button class="cart-btn" onclick="deleteCartOne();">선택 상품 삭제</button>
-	                		<button class="cart-btn" onclick="deleteAll();">전체 상품 삭제</button>
-	                	</div>
 	                </div>
 	                <div class="cart-right">
 						<span>결제금액</span>
@@ -166,7 +166,7 @@ function updateSubmitButtonStatus() {
             }
         });
     orderButton.disabled = !isChecked;
-}
+};
 
 function updatePrice () {
 	let total = 0;
@@ -180,14 +180,6 @@ function updatePrice () {
 	document.querySelector("#amount").innerHTML = formatPrice(total);
 }
 
-const payment = () => {
-	if("${empty cartList}") {
-		alert('장바구니에 담긴 상품이 없습니다.');
-		return;
-	}
-	window.location.href = '${pageContext.request.contextPath}/payment/paymentInfo.do';
-};
-
 const formatPrice = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
@@ -196,8 +188,10 @@ const deleteAll = () => {
 	$("#deleteAllFrm").submit();
 };
 
-const deleteCartOne = () => {
-	$("#deleteOneFrm").submit();
+const deleteCartOne = (cartItemId) => {
+    const frm = document.getElementById('deleteOneFrm');
+    frm.cartitemId.value = cartItemId;
+    frm.submit();
 };
 
 

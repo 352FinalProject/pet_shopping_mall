@@ -104,7 +104,6 @@ public interface ProductRepository {
 	@Update("UPDATE product SET LIKE_CNT = NVL(LIKE_CNT, 0) + #{cnt} WHERE PRODUCT_ID  = #{productId}")
 	int updateLikeCnt(Map<String, Object> param);
 
-	
 	List<ProductSearchDto> searchProducts(String searchQuery);
 
 	@Select("select * from product order by 1")
@@ -113,6 +112,12 @@ public interface ProductRepository {
 	@Select("select * from product_detail where product_id = #{productId} order by 1")
 	List<ProductDetail> findProductDetailsByProductId(int productId);
 
+	// (수경)
 	@Select("select * from product where product_name like '%' || #{searchKeyword} || '%'")
-	List<Product> searchProducts(String searchKeyword, String searchCategory);
+	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
+
+	// (수경)
+	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
+	int adminOptionCreate(int productId, ProductDetail productDetail);
+
 }

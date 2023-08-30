@@ -9,7 +9,7 @@ default tablespace users;
 
 grant connect, resource to pet;
 
-alter user pet quota unlimited on users;
+grant unlimited tablespace to pet;
 
 grant create session,
 grant create table to pet;
@@ -17,88 +17,89 @@ grant create table to pet;
 -- 모든 테이블 조회
 SELECT *  FROM all_tables;
 
+
 --==============================
 -- 초기화 블럭
 --==============================
 --
-drop table review;
-drop table image_attachment;
-drop table image_attachment_mapping;
-drop table answer;
-drop table question;
-drop table point;
-drop table discount_rule;
-drop table product_category;
-drop table product;
-drop table product_detail;
-drop table cart;
-drop table payment;
-drop table cartitem;
-drop table orderTbl;
-drop table order_detail;
-drop table refund;
-drop table cancel_order;
-drop table authority;
-drop table product_category;
-drop table community;
-drop table wishlist;
-drop table pet;
-drop table persistent_logins;
-drop table image_attachment_mapping;
-drop table member;
-drop table ordertbl;
-drop table return;
-drop table terms;
-drop table terms_history;
-drop table chat;
-drop table chat_room;
-drop table breed;
-drop table coupon;
-drop table member_coupon;
-
-
----- 외래키 붙어있는 테이블삭제
-drop table member cascade constraints;
-drop table review cascade constraints;
-drop table product cascade constraints;
-drop table product_detail cascade constraints;
-drop table pet cascade constraints;
-drop table breed cascade constraints;
-drop table order_detail cascade constraints;
-drop table notification cascade constraints;
-
-
-drop sequence seq_question_id;
-drop sequence seq_answer_id;
-drop sequence seq_image_attachment_id;
-drop sequence seq_image_attachment_mapping_id;
-drop sequence seq_point_id;
-drop sequence seq_product_category_id;
-drop sequence seq_product_id;
-drop sequence seq_product_detail_id;
-drop sequence seq_cart_id;
-drop sequence seq_payment_id;
-drop sequence seq_cartitem_id;
-drop sequence seq_ordertbl_id;
-drop sequence seq_refund_id;
-drop sequence seq_cancel_order_id;
-drop sequence seq_authority_id;
-drop sequence seq_community_id;
-drop sequence seq_wishlist_id;
-drop sequence seq_pet_id;
-drop sequence seq_persistent_logins_id;
-drop sequence seq_member_id;
-drop sequence seq_review_id;
-drop sequence seq_chat_id;
-drop sequence seq_chat_room_id;
-drop sequence seq_cancel_id;
-drop sequence seq_history_id;
-drop sequence seq_terms_id;
-drop sequence seq_product_option_id;
-drop sequence seq_member_coupon_id;
-drop sequence seq_coupon_id;
-drop sequence seq_category_id;
-drop sequence seq_terms_history_id;
+--drop table review;
+--drop table image_attachment;
+--drop table image_attachment_mapping;
+--drop table answer;
+--drop table question;
+--drop table point;
+--drop table discount_rule;
+--drop table product_category;
+--drop table product;
+--drop table product_detail;
+--drop table cart;
+--drop table payment;
+--drop table cartitem;
+--drop table orderTbl;
+--drop table order_detail;
+--drop table refund;
+--drop table cancel_order;
+--drop table authority;
+--drop table product_category;
+--drop table community;
+--drop table wishlist;
+--drop table pet;
+--drop table persistent_logins;
+--drop table image_attachment_mapping;
+--drop table member;
+--drop table ordertbl;
+--drop table return;
+--drop table terms;
+--drop table terms_history;
+--drop table chat;
+--drop table chat_room;
+--drop table breed;
+--drop table coupon;
+--drop table member_coupon;
+--
+--
+------ 외래키 붙어있는 테이블삭제
+--drop table member cascade constraints;
+--drop table review cascade constraints;
+--drop table product cascade constraints;
+--drop table product_detail cascade constraints;
+--drop table pet cascade constraints;
+--drop table breed cascade constraints;
+--drop table order_detail cascade constraints;
+--drop table notification cascade constraints;
+--
+--
+--drop sequence seq_question_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_image_attachment_mapping_id;
+--drop sequence seq_point_id;
+--drop sequence seq_product_category_id;
+--drop sequence seq_product_id;
+--drop sequence seq_product_detail_id;
+--drop sequence seq_cart_id;
+--drop sequence seq_payment_id;
+--drop sequence seq_cartitem_id;
+--drop sequence seq_ordertbl_id;
+--drop sequence seq_refund_id;
+--drop sequence seq_cancel_order_id;
+--drop sequence seq_authority_id;
+--drop sequence seq_community_id;
+--drop sequence seq_wishlist_id;
+--drop sequence seq_pet_id;
+--drop sequence seq_persistent_logins_id;
+--drop sequence seq_member_id;
+--drop sequence seq_review_id;
+--drop sequence seq_chat_id;
+--drop sequence seq_chat_room_id;
+--drop sequence seq_cancel_id;
+--drop sequence seq_history_id;
+--drop sequence seq_terms_id;
+--drop sequence seq_product_option_id;
+--drop sequence seq_member_coupon_id;
+--drop sequence seq_coupon_id;
+--drop sequence seq_category_id;
+--drop sequence seq_terms_history_id;
 
 
 --==============================
@@ -497,10 +498,6 @@ create sequence seq_sub_payment_id;
 create sequence seq_susubscribe_id;
 
 
-select *from member;
-select * from sub_payment;
-
-
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거
 create or replace trigger cart_create_trriger
 after insert on member
@@ -547,7 +544,7 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '패션용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '산책용품');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '위생용품');
+insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '장난감');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
 
-commit;

@@ -8,10 +8,10 @@
           <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경" />
         </div>
         <div class="swiper-slide">
-          <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경3" />
+          <img src="${pageContext.request.contextPath}/resources/images/배너/1.배너.png" alt="홈 배경3" />
         </div>
         <div class="swiper-slide">
-          <img src="${pageContext.request.contextPath}/resources/images/배너/0.배너.png" alt="홈 배경4" />
+          <img src="${pageContext.request.contextPath}/resources/images/배너/2.배너.png" alt="홈 배경4" />
         </div>
       </div>
       <div class="swiper-pagination1">
@@ -20,81 +20,9 @@
     </div>
   </div>
   <div class="section section_2" id="section_2">
-	<div class="title_group">
+	  <div class="title_group">
 		<div class="title_custom">
-			<div class="title_desc">💖 우동친이 추천하는 베스트 아이템
-				<a href="#"></a>
-			</div>
-			<div class="title_plus">더보기
-				<img src="${pageContext.request.contextPath}/resources/images/home/right-arrow.png" alt="홈 배경4" />
-				<a href="#"></a>
-			</div>
-		</div>
-	<div class="gallery_wrap">
-	      <ul class="gallery">
-	        <li class="gallery_item1">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄
-	            </div>
-	          </a>
-	        </li>
-	        <li class="gallery_item2">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item3">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item4">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	        </li>
-	        <li class="gallery_item5">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄
-	            </div>
-	          </a>
-	        </li>
-	        <li class="gallery_item6">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄 리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item7">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"  class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	      </ul>
-	    </div>
-	    <div class="button_box">
-	      <div class="prev_btn">
-	        <img
-	                src="${pageContext.request.contextPath}/resources/images/home/left-arrow.png"
-	                alt="이전"
-	        />
-	      </div>
-	      <div class="next_btn">
-	        <img
-	                src="${pageContext.request.contextPath}/resources/images/home/right-arrow.png"
-	                alt="다음"
-	        />
-	      </div>
-	    </div>
-	  </div>
-	  	<div class="title_group">
-		<div class="title_custom">
-			<div class="title_desc">💥 최대 90%까지 폭탄 세일!
+			<div class="title_desc">💪 털복숭이 친구들을 위한 영양간식
 				<a href="#"></a>
 			</div>
 			<div class="title_plus">더보기
@@ -166,7 +94,7 @@
 	  </div>
 	  	<div class="title_group">
 		<div class="title_custom">
-			<div class="title_desc">💪 털복숭이 친구들의 건강 챙기기
+			<div class="title_desc">✨ 예쁘고 귀여운 패션용품
 				<a href="#"></a>
 			</div>
 			<div class="title_plus">더보기

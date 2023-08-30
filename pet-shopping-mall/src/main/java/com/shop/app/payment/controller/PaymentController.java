@@ -91,9 +91,6 @@ public class PaymentController {
 	PointService pointService;
 	
 	@Autowired
-	PaymentScheduler paymentScheduler;
-	
-	@Autowired
 	SchedulePay schedulePay;
 	
 	@Autowired
@@ -273,10 +270,10 @@ public class PaymentController {
 	@PostMapping("/successPay.do")
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid,
-			@AuthenticationPrincipal MemberDetails member) {
+			@AuthenticationPrincipal MemberDetails member, @RequestParam("pg_provider") String pgProvider) {
 		String orderNo = merchantUid;
 		// payment 테이블에 삽입 및 orderTbl 상태 업데이트
-		int result = paymentService.updatePayStatus(orderNo);
+		int result = paymentService.updatePayStatus(orderNo, pgProvider);
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of("result", 1));
 	}
 
@@ -284,10 +281,6 @@ public class PaymentController {
 	public void paymentCompleted(@RequestParam String orderNo, Model model) {
 		Order order = orderService.findOrderByOrderNo(orderNo);
 		model.addAttribute("order", order);
-	}
-	
-	@PostMapping("/paymentCompleted.do")
-	public void paymentCompleteNotification(@RequestParam String orderNo) {
 		
 		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
 	    
@@ -298,8 +291,8 @@ public class PaymentController {
 	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
 	            .memberId(paymentCompleteNotificationDto.getMemberId())
 	            .build();
-
 	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
+		
 	}
 	
 	/*
@@ -415,4 +408,15 @@ public class PaymentController {
         
         
     }
+	
+	@PostMapping("/unsubscribe.do")
+	public String unsubscribe (@RequestParam String customerUid, RedirectAttributes redirectAttr) {
+		// sub_member 조회를 해서, 거기서 가져온 merchant_uid를 포스트 요청 보내야 함.
+		// member 테이블에서 구독 N 처리
+		SubMember subMember = memberService.findSubMemberByMemberId(customerUid);
+		String result = schedulePay.cancelSchedule(subMember);
+		
+		redirectAttr.addFlashAttribute("msg", "구독이 해제되었습니다.");
+		return "redirect:/member/myPage.do";
+	}
 }

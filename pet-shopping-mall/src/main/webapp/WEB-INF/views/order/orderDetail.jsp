@@ -55,8 +55,8 @@
 						<c:if test="${not empty orderDetail}">
 							<sec:authentication property="principal" var="loginMember" />
 							<c:forEach var="orderMap" items="${orderDetail}">
-								<c:set var="index" value="${entry.key.orderStatus}"/>
 								<c:forEach var="entry" items="${orderMap}">
+								<c:set var="index" value="${entry.key.orderStatus}"/>
 								<c:set var="option" value="${entry.key.optionName}" />
 								<c:set var="amount" value="${entry.key.amount}" />
 								<fmt:formatDate value="${entry.key.orderDate}" pattern="yyyy-MM-dd" var="formattedDate"/>
@@ -85,24 +85,27 @@
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
 										<p>${status[index]}</p>
-                              			<c:if test="${status[index] == '배송완료'}">
-                                			<c:forEach var="order" items="${orderMap}">
-                                 			<form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
-                                     		<input type="hidden" name="productId" value="${order.key.productId}">
-                                     		<input type="hidden" name="orderId" value="${order.key.orderId}">
-                                   			</c:forEach>
-                                   			<c:if test="${not reviewWrite}">
-                                     			<button class="review-btn" type="submit">리뷰쓰기</button>
-                                     		</c:if>
-                                			</form>
-                              			</c:if>
+										<c:if test="${status[index] == '배송완료'}">
+										    <c:forEach var="order" items="${orderMap}">
+										        <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+										            <input type="hidden" name="productDetailId" value="${order.key.productDetailId}">
+										            <input type="hidden" name="productId" value="${order.key.productId}">
+										            <input type="hidden" name="orderId" value="${order.key.orderId}">
+										            ${order.key.productDetailId}-${order.key.productId}
+													<c:set var="compositeKey" value="${order.key.productDetailId}-${order.key.productId}" />
+													<c:if test="${reviewWrite[compositeKey] == false}">
+													    <button class="review-btn" type="submit">리뷰쓰기</button>
+													</c:if>
+										        </form>
+										    </c:forEach>
+										</c:if>
 									</td>
 								</tr>
 								<c:if test="${payment eq null}">
 								<tr class="detail-row">
 							        <td colspan="5">
 							            <div class="detail-content">
-							            	<c:set var="paymentMethod" value="${entry.value.paymentMethod eq 1 ? '카드' : '카카오페이'}" />
+							            	<c:set var="paymentMethod" value="${entry.value.paymentMethod eq 1 ? '카카오페이' : '신용카드'}" />
 							                <p>결제 방법 : ${paymentMethod}</p>
 							                <p>결제 날짜 : ${entry.value.paymentDate}</p>
 							                <p>결제 금액 : <span><fmt:formatNumber value="${entry.value.amount}"

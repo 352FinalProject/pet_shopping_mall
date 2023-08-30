@@ -36,7 +36,6 @@ public class OrderServiceImpl implements OrderService {
 	private OrderRepository orderRepository;
 	
 	
-	
 
 	// 주문 내역 및 주문 상세내역 테이블에 저장 (담희)
 	@Override
@@ -111,7 +110,7 @@ public class OrderServiceImpl implements OrderService {
 				.orderId(orderId)
 				.build();
 		result = orderRepository.insertCancelOrder(cancel);
-		result = orderRepository.updateOrderStatus(orderNo, 5);
+		result = orderRepository.updateOrderStatus(orderNo, 4);
 			
 		return result;
 	}
@@ -165,15 +164,27 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.findOrderByOrderNo(orderNo);
 	}
 
-	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
+	// 리뷰 작성하면 리뷰버튼 없애기
 	@Override
-	public boolean reviewWrite(String memberId, int orderId) {
-		return orderRepository.reviewWrite(memberId, orderId);
+	public boolean reviewWrite(String memberId, int orderId, int productDetailId, int productId) {
+		return orderRepository.reviewWrite(memberId, orderId, productDetailId, productId);
 	}
+
 	
 	// 상품별 주문확정 주문 수 조회 (수경)
 	@Override
 	public int findOrderCntByProductId(int productDetailId) {
 		return orderRepository.findOrderCntByProductId(productDetailId);
+	}
+
+	
+	@Override
+	public int updateOrderStatusIfExpired() {
+		int result = 0;
+        List<Order> orders = orderRepository.findOrdersWithExpiredStatus();
+        for (Order order : orders) {
+            result = orderRepository.updateOrderStatus(order.getOrderNo(), 6);
+        }
+        return result;
 	}
 }

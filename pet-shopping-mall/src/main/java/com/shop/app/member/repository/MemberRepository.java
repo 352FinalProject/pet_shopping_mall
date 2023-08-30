@@ -18,10 +18,11 @@ import com.shop.app.member.entity.SubMember;
 @Mapper
 public interface MemberRepository {
 
+
 	@Select("select * from member where member_id = #{memberId}")
 	Member findMemberById(String memberId);
 
-	@Insert("INSERT INTO member VALUES (#{memberId}, #{password}, #{name, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
+	@Insert("INSERT INTO member VALUES (#{memberId, jdbcType=VARCHAR}, #{password}, #{name, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
 	int insertMember(MemberCreateDto member);
 
 	@Update("update member set name = #{name}, password = #{password}, email = #{email} where member_id = #{memberId}")
@@ -56,7 +57,15 @@ public interface MemberRepository {
 
 	@Select("select * from sub_member where member_id = #{memberId}")
 	SubMember findSubMemberByMemberId(String memberId);
+
 	
+	
+	
+	@Update("update sub_member set schedule_status = 'cancel' where member_id = #{memberId}")
+	int cancelSubscribe(String memberId);
+
+	@Select("select * from sub_member where schedule_status = 'cancel' and trunc(schedule_at) <= trunc(sysdate)")
+	List<SubMember> updateCancelSubscribers();
 
 	
 }
