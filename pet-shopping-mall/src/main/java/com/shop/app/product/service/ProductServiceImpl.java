@@ -15,6 +15,7 @@ import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.review.repository.ReviewRepository;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
 
@@ -24,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class ProductServiceImpl implements ProductService {
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	@Autowired
 	private ProductRepository productRepository;
@@ -142,6 +146,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductSearchDto> searchProducts(String searchQuery) {
 		return productRepository.searchProducts(searchQuery);
+		List<ProductSearchDto> productList = productRepository.searchProducts(searchQuery);
+				
+		for(ProductSearchDto p : productList) {
+			int cnt = reviewRepository.findProductListReviewTotalCount(p.getProductId());
+			p.setReviewCnt(cnt);
+		}
+		return productList;
 	}
 	
 	// 모든상품 조회(수경)

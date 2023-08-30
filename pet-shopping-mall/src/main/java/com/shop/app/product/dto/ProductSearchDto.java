@@ -12,4 +12,5 @@ public class ProductSearchDto {
 	
 	// 별점
 	// 리뷰 추가
+	private int reviewCnt;
 }
