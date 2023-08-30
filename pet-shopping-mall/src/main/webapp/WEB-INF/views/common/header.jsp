@@ -229,7 +229,6 @@
          </ul>
          <div class="logo_top_wrap">
             <div class="logo_wrap">
-               <!-- 로고 이미지 -->
                <div class="logo_img">
                   <a href="${pageContext.request.contextPath}/"> <img
                      src="${pageContext.request.contextPath}/resources/images/home/logo.png"
@@ -237,9 +236,7 @@
                   </a>
                </div>
                <div class="cdt">
-                  <!-- 검색 -->
                   <div class="search_top_btn">
-                     <!-- 검색 창 -->
                      <div class="search_box">
                         <form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
                            <img
@@ -249,7 +246,6 @@
                         </form>
                      </div>
                   </div>
-                  <!-- 주문조회 -->
                   <div class="order_checks_top_btn">
                      <a href="${pageContext.request.contextPath}/member/myPage.do">
                         <img

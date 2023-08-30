@@ -9,7 +9,7 @@ public class ProductSearchDto {
 	private String productName;
 	private int productPrice;
 	private String imageRenamedFileName;
-	
+	private int reviewCnt;
 	// 별점
 	// 리뷰 추가
 }
