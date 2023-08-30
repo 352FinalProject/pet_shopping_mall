@@ -154,7 +154,12 @@ public class ReviewController {
 
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
-	public void reviewCreate(@RequestParam("productId") int productId, @RequestParam("orderId") int orderId, Model model) {
+	public void reviewCreate(
+			@RequestParam("productDetailId") int productDetailId, 
+			@RequestParam("productId") int productId, 
+			@RequestParam("orderId") int orderId, 
+			Model model) {
+		model.addAttribute("productDetailId", productDetailId);
 		model.addAttribute("productId", productId);
 		model.addAttribute("orderId", orderId);
 	   
@@ -209,8 +214,8 @@ public class ReviewController {
 				.reviewId(_review.getReviewId())
 				.petId(pet.getPetId())
 				.orderId(_review.getOrderId())
-				.productId(_review.getProductId()) // 리뷰작성할 때 productId 넘기기 (예라)
-				//.product_detail_id(_review.getProduct_detail_id())
+				.productId(_review.getProductId())
+				.productDetailId(_review.getProductDetailId())
 				.reviewMemberId(_review.getReviewMemberId())
 				.reviewStarRate(_review.getReviewStarRate())
 				.reviewTitle(_review.getReviewTitle())
@@ -234,11 +239,11 @@ public class ReviewController {
 		
 		// 상품 - 리뷰 연결
 		// Product 객체 생성
-		Product product = new Product();
-		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
-		for(Product p : findProduct) {
-			product.setProductId(p.getProductId());
-		}
+//		Product product = new Product();
+//		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
+//		for(Product p : findProduct) {
+//			product.setProductId(p.getProductId());
+//		}
 		
 		//List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		

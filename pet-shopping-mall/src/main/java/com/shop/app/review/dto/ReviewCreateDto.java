@@ -23,7 +23,7 @@ public class ReviewCreateDto {
 	private int petId;
 	private int orderId;
 	private int productId;
-	private int product_detail_id;
+	private int productDetailId;
 	
 	private int reviewStarRate; // 별점
 	
@@ -40,7 +40,7 @@ public class ReviewCreateDto {
 				.orderId(orderId)
 				.productId(productId)
 				.reviewMemberId(reviewMemberId)
-				.product_detail_id(product_detail_id)
+				.productDetailId(productDetailId)
 				.reviewStarRate(reviewStarRate)
 				.reviewTitle(reviewTitle)
 				.reviewContent(reviewContent)

@@ -22,7 +22,7 @@ public class Review {
 	private int orderId;
 	private int productId;
 	private String reviewMemberId;
-	private int product_detail_id;
+	private int productDetailId;
 	private String reviewTitle;
 	private String reviewContent;
 	private int reviewStarRate;
