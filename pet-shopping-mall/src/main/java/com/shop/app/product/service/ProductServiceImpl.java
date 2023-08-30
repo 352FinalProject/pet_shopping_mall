@@ -155,5 +155,10 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDetail> findProductDetailsByProductId(int productId) {
 		return productRepository.findProductDetailsByProductId(productId);
 	}
+
+	@Override
+	public List<Product> adminProductSearch(String searchKeyword, String searchCategory) {
+		return productRepository.adminProductSearch(searchKeyword, searchCategory);
+	}
 	
 }

@@ -392,41 +392,41 @@ public class AdminController {
 		model.addAttribute("productInfos", productInfos);
 	}
 
-//	// 상품검색 (수경)
-//	@GetMapping("adminProductSearch.do")
-//	public String adminProductSearch(
-//			@Valid ProductSearchKeywordDto _searchContent,
-//			@AuthenticationPrincipal MemberDetails member,
-//			Model model) {
-//		log.debug("_searchContent = {}", _searchContent); //(searchKeyword=고양, searchCategory=productName, saleState=[0, 1, 2, 3])
-//		String searchKeyword = _searchContent.getSearchKeyword();
-//		String searchCategory = _searchContent.getSearchCategory();
-//		
-//		// 키워드로 상품찾기
-//		List<Product> products = productService.searchProducts(searchKeyword, searchCategory);
-//		
-//		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
-//		for(Product product : products) {
-//			// 상품이미지
-//			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
-//			// 카테고리
-//			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
-//			// 해당 상품의 옵션들
-//			List<ProductDetail> productDetails = productService.findProductDetailsByProductId(product.getProductId());
-//			ProductInfoDto productInfo = ProductInfoDto.builder()
-//					.productId(product.getProductId())
-//					.product(product)
-//					.productCategory(productCategory)
-//					.attachments(productImages.getAttachments())
-//					.attachmentMapping(productImages.getAttachmentMapping())
-//					.productDetails(productDetails)
-//					.build();
-//			// 리스트에 추가
-//			productInfos.add(productInfo);
-//		}
-//		model.addAttribute("productInfos", productInfos);
-//		return "admin/adminProductList";
-//	}
+	// 상품검색 (수경)
+	@GetMapping("adminProductSearch.do")
+	public String adminProductSearch(
+			@Valid ProductSearchKeywordDto _searchContent,
+			@AuthenticationPrincipal MemberDetails member,
+			Model model) {
+		log.debug("_searchContent = {}", _searchContent); //(searchKeyword=고양, searchCategory=productName, saleState=[0, 1, 2, 3])
+		String searchKeyword = _searchContent.getSearchKeyword();
+		String searchCategory = _searchContent.getSearchCategory();
+		
+		// 키워드로 상품찾기
+		List<Product> products = productService.adminProductSearch(searchKeyword, searchCategory);
+		
+		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
+		for(Product product : products) {
+			// 상품이미지
+			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+			// 카테고리
+			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
+			// 해당 상품의 옵션들
+			List<ProductDetail> productDetails = productService.findProductDetailsByProductId(product.getProductId());
+			ProductInfoDto productInfo = ProductInfoDto.builder()
+					.productId(product.getProductId())
+					.product(product)
+					.productCategory(productCategory)
+					.attachments(productImages.getAttachments())
+					.attachmentMapping(productImages.getAttachmentMapping())
+					.productDetails(productDetails)
+					.build();
+			// 리스트에 추가
+			productInfos.add(productInfo);
+		}
+		model.addAttribute("productInfos", productInfos);
+		return "admin/adminProductList";
+	}
 	
 	/**
 	 * @author 전수경
