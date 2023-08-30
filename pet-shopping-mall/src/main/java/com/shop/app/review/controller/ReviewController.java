@@ -155,6 +155,9 @@ public class ReviewController {
 	// 리뷰 작성 페이지 불러오기
 	@GetMapping("/reviewCreate.do")
 	public void reviewCreate(@RequestParam("productId") int productId, @RequestParam("orderId") int orderId, Model model) {
+		// orderNo랑 productDetailId 받아와서
+		// orderNo로 orderId를 먼저 조회해
+		// 그 조회한 값을 밑에 model에 세팅해주면 됨
 		model.addAttribute("productId", productId);
 		model.addAttribute("orderId", orderId);
 	   
