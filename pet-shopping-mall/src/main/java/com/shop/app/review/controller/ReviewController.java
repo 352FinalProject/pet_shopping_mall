@@ -159,6 +159,7 @@ public class ReviewController {
 			@RequestParam("productId") int productId, 
 			@RequestParam("orderId") int orderId, 
 			Model model) {
+		
 		model.addAttribute("productDetailId", productDetailId);
 		model.addAttribute("productId", productId);
 		model.addAttribute("orderId", orderId);
@@ -222,7 +223,6 @@ public class ReviewController {
 				.reviewContent(_review.getReviewContent())
 				.attachments(attachments)
 				.build();
-
 		
 		// petId 연결하기
 		// petId 로그인 멤버 말고 리뷰작성자랑 연결하기
@@ -248,6 +248,10 @@ public class ReviewController {
 		//List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		
 		int reviewId = reviewService.insertReview(reviews);
+
+		
+		
+		
 		
 		log.debug("_review = {}", _review);
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
