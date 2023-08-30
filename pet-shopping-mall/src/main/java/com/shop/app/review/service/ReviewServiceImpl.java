@@ -73,7 +73,10 @@ public class ReviewServiceImpl implements ReviewService {
 			}
 		}
 		int orderId = review.getOrderId();
-		orderRepository.updateReviewOrderStatus(orderId, 6);
+		int productDetailId = review.getProductDetailId();
+		int productId = review.getProductId();
+		int newStatus = 6;
+		orderRepository.updateOrderStatusWithDetail(orderId, productDetailId, newStatus, productId);
 
 		return result;
 	}

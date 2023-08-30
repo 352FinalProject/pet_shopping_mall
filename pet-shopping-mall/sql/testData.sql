@@ -26,7 +26,7 @@ select * from cartitem;
 select * from cart;
 select * from wishlist;
 select * from notification;    
-    
+
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
 values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
@@ -39,35 +39,6 @@ delete from member where name = '예라';
 delete from wishlist where wishlist_id = 10; 
 
 select count(*) from orderTbl o Left Join order_detail od on o.order_id = od.order_id left join review r on od.product_detail_id = r.product_detail_id where r.order_id = 53 and r.product_detail_id = 23 and o.member_id = 'null@naver';
-
-select
-    m.member_id,
-    m.name,
-    m.subscribe,
-    recent_point.point_current,
-    (
-        select count(*)
-        from member_coupon
-        where member_id = m.member_id and use_status = 0
-    ) as coupon_count
-from
-    member m
-left join (
-    select
-        point_member_id,
-        point_current
-    from (
-        select
-            p.point_member_id,
-            p.point_current,
-            row_number() over (partition by p.point_member_id order by p.point_date desc) as rn
-        from
-            point p
-    ) temp
-    where temp.rn = 1
-) recent_point on m.member_id = recent_point.point_member_id
-where
-    m.member_id = 'member1';
 
 select * from payment;
 select * from orderTbl where order_no='1693296419851';
@@ -86,19 +57,6 @@ where product_id = 1;
     select * from review
 where product_id = #{productId};
 
-
-SELECT 
-    count(*) 
-FROM orderTbl o 
-LEFT JOIN order_detail od 
-ON o.order_id = od.order_id 
-LEFT JOIN review r 
-ON od.product_detail_id = r.product_detail_id 
-WHERE r.order_id = 55 and r.product_detail_id = 27 and r.review_member_id = 'null@naver';
-
-
-SELECT count(*) FROM orderTbl o LEFT JOIN order_detail od ON o.order_id = od.order_id LEFT JOIN review r ON od.product_detail_id = r.product_detail_id WHERE o.order_id = #{orderId} and r.product_detail_id = #{productDetailId} and r.review_member_id = #{reviewMemberId}
-    
 select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where m.member_id = 'member1';
 
 insert into cartitem (cartitem_id, cart_id, product_detail_id, quantity) values (30, 1, 21, 1);
@@ -108,11 +66,10 @@ delete from product where product_id = 1;
 
 delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 3 where order_id = 59;
+update orderTbl set order_status = 3 where order_id = 29;
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
-
 
 select count(*) from review where review_member_id = 'member1' and order_id = 2;
 select count(*) from member_coupon where member_id = 'member4';
