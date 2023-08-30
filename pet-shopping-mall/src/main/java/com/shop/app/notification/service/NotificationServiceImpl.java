@@ -2,6 +2,7 @@ package com.shop.app.notification.service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,11 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Override // db에서 알림 가져오기
 	public List<Notification> findAllNotification(String memberId) {
-		return notificationRepository.findAllNotification(memberId);
+	    List<Notification> notifications = notificationRepository.findAllNotification(memberId);
+	    if (notifications == null) {
+	        return Collections.emptyList();
+	    }
+	    return notifications;
 	}
 	
 	private String formatTimestamp(Timestamp timestamp) {

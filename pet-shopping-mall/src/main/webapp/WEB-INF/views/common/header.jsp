@@ -12,7 +12,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <sec:authorize access="isAuthenticated()">
@@ -198,7 +197,8 @@
                    </button>
                    <div id="notificationPopup" class="popup">
                      <div class="popup-content">
-                       
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                        <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
                        <c:if test="${empty notifications}">
                           <p class="notification-content">조회된 알람이 없습니다.</p>
                        </c:if>
@@ -206,7 +206,7 @@
                           <c:forEach items="${notifications}" var="notification" varStatus="vs">
                                <div class="notification-container" id="notification${notification.id}">
                                	<p class="notification-content">디비${notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
-                               	<button class="notification-delete-button" id="notificationDelete${notification.id}" onclick="notificationDelete(${notification.id})">x</button>
+                               	<button class="notification-delete-button" id="notificationDelete${notification.id}" onclick="notificationDelete('${notification.id}')">x</button>
                                </div>
                           </c:forEach>
                        </c:if>
@@ -222,7 +222,7 @@
                <div class="logo_img">
                   <a href="${pageContext.request.contextPath}/"> <img
                      src="${pageContext.request.contextPath}/resources/images/home/logo.png"
-                     id="center-image" alt="로고" />
+                     class="center-image" alt="로고" />
                   </a>
                </div>
                <div class="cdt">
@@ -305,7 +305,6 @@
       </div>
    </div>
 <script>
-
 $(document).ready(function() {
      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
      const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
@@ -336,7 +335,6 @@ $(document).ready(function() {
        });
      });
 
-
      const searchBoxForm = document.getElementById("searchBoxForm");
      const searchImg = document.getElementById("search-img");
      const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
@@ -362,43 +360,51 @@ $(document).ready(function() {
        event.stopPropagation();
      })
      
-     
-     /* 팝업 */
-	document.addEventListener("DOMContentLoaded", function() {
-	    const openPopupBtn = document.getElementById("openPopupBtn");
-	    openPopupBtn.addEventListener('click', function() {
-	        console.log("Button clicked!");
-	        const notificationPopup = document.getElementById("notificationPopup");
-	        notificationPopup.classList.toggle("active");
-    	});
+     /* 알림삭제 */
+   function notificationDelete(notificationId) {
+      console.log(notificationId);
+      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+      const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+      var id = notificationId;
+      $.ajax({
+         method: "POST",
+         url: "${pageContext.request.contextPath}/notification/deleteNotification.do",
+         data: {
+               "id":id
+         },
+         beforeSend: function (xhr) {
+               xhr.setRequestHeader(csrfHeader, csrfToken);
+         },
+         success: function(result) {
+               // 삭제된 알림 컨테이너를 제거
+               const containerDiv = document.getElementById(`notification${notificationId}`);
+               if (containerDiv) {
+                  containerDiv.remove();
+               }
+         },
+         error: function(xhr, textStatus, errorThrown) {
+               console.log('Error:');
+         }
+      });
+   };
+
+   const openPopupBtn = document.getElementById("openPopupBtn");
+    openPopupBtn.addEventListener('click', function() {
+        console.log("Button clicked!");
+        const notificationPopup = document.getElementById("notificationPopup");
+        notificationPopup.classList.toggle("active");
 	});
-	
-	/* 알림삭제 */
-	 * 
-	 */
-	 function notificationDelete(notificationId) {
-		    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-		    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-	
-		    $.ajax({
-		        type: 'POST',
-		        url: '${pageContext.request.contextPath}/notification/deleteNotification.do',
-		        data: JSON.stringify{
-		            'id': notificationId
-		        },
-		        beforeSend: function(xhr) {
-		            xhr.setRequestHeader(csrfHeader, csrfToken)
-		        },
-		        success: function(result) {
-		            const containerDiv = document.getElementById(`notification${notificationId}`);
-		            if (containerDiv) {
-		                containerDiv.remove();
-		            }
-		        }
-		    });
-	}
 
-   });
-   
+});
+/* 팝업 */
+// document.addEventListener("DOMContentLoaded", function() {
+//     const openPopupBtn = document.getElementById("openPopupBtn");
+//     openPopupBtn.addEventListener('click', function() {
+//         console.log("Button clicked!");
+//         const notificationPopup = document.getElementById("notificationPopup");
+//         notificationPopup.classList.toggle("active");
+// 	});
+// });
 
+// " onclick="notificationDelete(${notification.id})">x</button>
 </script>

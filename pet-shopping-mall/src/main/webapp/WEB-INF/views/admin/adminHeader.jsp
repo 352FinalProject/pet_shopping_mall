@@ -16,9 +16,11 @@
 <script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
 </head>
 <body class="sb-nav-fixed">
-	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-white">
 		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/">펫쇼핑몰</a>
+		<a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/">
+			<img src="${pageContext.request.contextPath}/resources/images/home/adminLogo.png" class="adminLogo" alt="로고" />
+		</a>
 		<!-- Sidebar Toggle-->
 		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
 			<i class="fas fa-bars"></i>

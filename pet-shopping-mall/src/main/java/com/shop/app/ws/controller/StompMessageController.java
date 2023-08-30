@@ -37,7 +37,7 @@ public class StompMessageController {
 	public Notification a(Notification message) {
 		log.debug("message = {}", message);
 		return message;
-}
+	}
    
    /**
     * 개개인에게
@@ -51,5 +51,5 @@ public class StompMessageController {
       
       System.out.println("message: "  + message);
       return message;
-   }
+   	}
 }
