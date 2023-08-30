@@ -33,5 +33,7 @@ public interface MemberService extends UserDetailsService {
 
 	SubMember findSubMemberByMemberId(String memberId);
 
+	int cancelSubscribe(String memberId);
+
 
 }

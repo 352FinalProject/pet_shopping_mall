@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.app.member.entity.SubMember;
 import com.shop.app.member.repository.MemberRepository;
+import com.shop.app.member.service.MemberService;
 import com.shop.app.payment.controller.IamportApi;
 import com.shop.app.payment.dto.ApiResponse;
 import com.sun.source.tree.MemberReferenceTree;
@@ -33,6 +34,9 @@ public class SchedulePay {
 	
 	@Autowired
 	private IamportApi iamportApi;
+	
+	@Autowired
+	MemberService memberService;
 	
 	public static final String IMPORT_SCHEDULE_URL = "https://api.iamport.kr/subscribe/payments/schedule";
 	public static final String IMPORT_UNSCHEDULE_URL = "https://api.iamport.kr/subscribe/payments/unschedule";
@@ -145,8 +149,19 @@ public class SchedulePay {
     	HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
 
     	String result = restTemplate.postForObject(IMPORT_UNSCHEDULE_URL, entity, String.class);
+    	
+    	log.debug(result);
+    	
     	// 스케쥴이 지나면 sub_member 테이블에서 삭제하기
     	// member 테이블에서 구독 N 처리
+    	String memberId = subMember.getMemberId();
+    	memberService.cancelSubscribe(memberId);
+
+    	
+    	
+    	
+    	
+    	
 		return result;
 	}
 }
