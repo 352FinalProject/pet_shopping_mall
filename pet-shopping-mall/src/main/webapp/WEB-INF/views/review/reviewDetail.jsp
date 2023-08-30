@@ -43,16 +43,15 @@ a {
 		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
  		<div id="review-div"></div>
 			<div id="review-div">
-				<%-- <c:if test="${not empty petId}"> --%>
 				    ${reviews.petName} | ${reviews.petAge}살 | ${reviews.petWeight}kg | ${reviews.petBreed}
-				<%-- </c:if> --%>
 			</div><span class="small-space"></span>
 		<br><span class="small-space"></span>
-		<br>
 		<%-- 상품 옵션 --%>
 		<div id="review-div"></div>
 			<div id="review-div">
-			색상 : 노란색
+			구매한 상품 : ${reviewProduct.productName}
+			<br>
+			${reviewProduct.optionName}:${reviewProduct.optionValue}
 			</div><span class="small-space"></span>
 		<br>
 		<%-- 별점 --%>
@@ -61,19 +60,19 @@ a {
 				<!-- <div class="star-rating-detail" id="starContainer"></div></div> -->
 	            <c:choose>
 			        <c:when test="${reviews.reviewStarRate == 1}">
-			            <span class="star-rating-detail">★</span> (1)
+			            <span class="star-rating-detail">★☆☆☆☆</span> (1.0)
 			        </c:when>
 			        <c:when test="${reviews.reviewStarRate == 2}">
-			            <span class="star-rating-detail">★</span>  (2)
+			            <span class="star-rating-detail">★★☆☆☆</span>  (2.0)
 			        </c:when>
 			        <c:when test="${reviews.reviewStarRate == 3}">
-			            <span class="star-rating-detail">★</span> (3)
+			            <span class="star-rating-detail">★★★☆☆</span> (3.0)
 			        </c:when> 
 			        <c:when test="${reviews.reviewStarRate == 4}">
-			            <span class="star-rating-detail">★</span> (4)
+			            <span class="star-rating-detail">★★★★☆</span> (4.0)
 			        </c:when>
 			        <c:when test="${reviews.reviewStarRate == 5}">
-			            <span class="star-rating-detail">★</span> (5)
+			            <span class="star-rating-detail">★★★★★</span> (5.0)
 			        </c:when>
 				</c:choose>
 			</div><span class="small-space"></span>

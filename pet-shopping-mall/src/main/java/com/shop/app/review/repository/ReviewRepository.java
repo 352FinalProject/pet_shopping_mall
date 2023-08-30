@@ -11,9 +11,11 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.dto.ReviewDetailDto;
-
+import com.shop.app.review.dto.ReviewListDto;
+import com.shop.app.review.dto.ReviewProductDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 
@@ -21,7 +23,7 @@ import com.shop.app.review.entity.ReviewDetails;
 public interface ReviewRepository {
 
 	// 리뷰작성
-	@Insert("insert into review (review_id, pet_id, order_id, product_id, review_member_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId, jdbcType=INTEGER}, #{orderId}, #{productId}, #{reviewMemberId, jdbcType=VARCHAR}, #{reviewStarRate}, #{reviewTitle, jdbcType=VARCHAR}, #{reviewContent, jdbcType=VARCHAR}, default)")
+	@Insert("insert into review (review_id, pet_id, order_id, product_id, review_member_id, product_detail_id, review_star_rate, review_title, review_content, review_created_at) values(seq_review_id.nextval, #{petId, jdbcType=INTEGER}, #{orderId}, #{productId}, #{reviewMemberId, jdbcType=VARCHAR}, #{productDetailId}, #{reviewStarRate}, #{reviewTitle, jdbcType=VARCHAR}, #{reviewContent, jdbcType=VARCHAR}, default)")
 	@SelectKey(
 			before = false, 
 			keyProperty = "reviewId", 
@@ -37,8 +39,9 @@ public interface ReviewRepository {
 	int insertMapping(int reviewId, int imageId);
 
 	// 내가 쓴 리뷰 조회
-	@Select("SELECT * FROM review WHERE review_member_id = #{reviewMemberId, jdbcType=VARCHAR} ORDER BY review_id DESC")
-	List<Review> findReviewAll(String reviewMemberId, RowBounds rowBounds);
+//	@Select("SELECT * FROM review WHERE review_member_id = #{reviewMemberId, jdbcType=VARCHAR} ORDER BY review_id DESC")
+//	@Select("select r.review_id, r.review_star_rate, r.review_created_at, pd.option_name, pd.option_value, p.product_name from review r join product_detail pd on r.product_detail_id = pd.product_detail_id join product p on p.product_id = pd.product_id where r.review_member_id = #{reviewMemberId}")
+	List<ReviewListDto> findReviewAll(String reviewMemberId, RowBounds rowBounds);
 
 	// 리뷰 전체 카운트
 	@Select("select count (*) from review where review_member_id = #{reviewMemberId, jdbcType=VARCHAR}")
@@ -49,12 +52,14 @@ public interface ReviewRepository {
 	int reviewDelete(int reviewId);
 	
 	// 리뷰 상세조회
-//	@Select("select * from review r join pet p on r.pet_id = p.pet_id where review_id = #{reviewId}")
 	@Select("select * from review where review_id = #{reviewId}")
 	Review findReviewId(int reviewId);
 
 	// 리뷰 상세조회 - 이미지 조회
 	ReviewDetails findImageAttachmentsByReviewId(int reviewId);
+	
+	// 리뷰 상세조회 - 상품조회
+	ReviewProductDto findProductReviewId(int reviewId);
 
 	// 리뷰수정
 	@Update("update review set review_title = #{reviewTitle}, review_content = #{reviewContent}, review_star_rate = #{reviewStarRate} where review_id = #{reviewId}")
@@ -83,15 +88,21 @@ public interface ReviewRepository {
 	@Select("select * from review where review_id = #{reviewId}")
 	Review findPoductListReviewId(int reviewId);
 
-	// 상품 - 리뷰 전체개수 확인
+	// 상품 디테일 - 리뷰 전체개수 확인
 	@Select("select count (*) from review where product_id = #{productId}")
 	int findReviewTotalCount(int productId);
 
 	// 상품 - 리뷰 평점
 	ProductReviewAvgDto productReviewStarAvg(int productId);
 
-	@Select("select * from review")
-	List<ProductReviewAvgDto> findProductReviewAvgAll();
+	@Select("select * from review where product_id = #{productId}")
+	List<ProductReviewAvgDto> findProductReviewAvgAll(int productId);
+
+	// 상품 리스트 - 리뷰 전체개수 확인
+	@Select("select count(*) from review where product_id = #{productId}")
+	int findProductListReviewTotalCount(int productId);
+
+	
 	
 	
 

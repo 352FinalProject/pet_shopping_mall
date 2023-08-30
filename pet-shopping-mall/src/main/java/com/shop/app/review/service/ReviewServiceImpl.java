@@ -12,10 +12,13 @@ import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.repository.PetRepository;
 import com.shop.app.pet.service.PetService;
+import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.repository.ProductRepository;
 import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.dto.ReviewDetailDto;
+import com.shop.app.review.dto.ReviewListDto;
+import com.shop.app.review.dto.ReviewProductDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
@@ -74,7 +77,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	// 내가 쓴 리뷰목록 조회
 	@Override
-	public List<Review> findReviewAll(Map<String, Object> params) {
+	public List<ReviewListDto> findReviewAll(Map<String, Object> params) {
 		int limit = (int) params.get("limit");
 		int page = (int) params.get("page");
 		int offset = (page - 1) * limit;
@@ -126,6 +129,12 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public ReviewDetails findImageAttachmentsByReviewId(int reviewId) {
 		return reviewRepository.findImageAttachmentsByReviewId(reviewId);
+	}
+	
+	// 리뷰 상세조회 - 상품조회
+	@Override
+	public ReviewProductDto findProductReviewId(int reviewId) {
+		return reviewRepository.findProductReviewId(reviewId);
 	}
 
 	// 리뷰 수정
@@ -191,10 +200,17 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.productReviewStarAvg(productId);
 	}
 
+//	@Override
+//	public List<ProductReviewAvgDto> findProductReviewAvgAll(int productId) {
+//		return reviewRepository.findProductReviewAvgAll(productId);
+//	}
+
 	@Override
-	public List<ProductReviewAvgDto> findProductReviewAvgAll() {
-		return reviewRepository.findProductReviewAvgAll();
+	public int findProductListReviewTotalCount(int productId) {
+		return reviewRepository.findProductListReviewTotalCount(productId);
 	}
+
+
 }
 
 
