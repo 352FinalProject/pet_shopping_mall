@@ -273,7 +273,6 @@ public class PaymentController {
 	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
 	            .memberId(paymentCompleteNotificationDto.getMemberId())
 	            .build();
-		log.debug("paymentCompleteNotificationDto={}",paymentCompleteNotificationDto);
 	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
 		
 	}

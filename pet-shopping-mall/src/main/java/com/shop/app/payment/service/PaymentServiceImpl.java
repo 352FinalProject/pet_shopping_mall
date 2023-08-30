@@ -40,9 +40,11 @@ public class PaymentServiceImpl implements PaymentService {
 		int result  = 0;
 		
 		if(pgProvider.equals("kakaopay")) {
-			result = paymentRepository.insertPayment(payment, 1);
+			payment.setPaymentMethod(1);
+			result = paymentRepository.insertPayment(payment);
 		} else {
-			result = paymentRepository.insertPayment(payment, 0);
+			payment.setPaymentMethod(0);
+			result = paymentRepository.insertPayment(payment);
 			
 		}
 		result = orderRepository.updateOrderStatus(orderNo, 0);
