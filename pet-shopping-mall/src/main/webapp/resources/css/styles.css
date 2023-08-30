@@ -8193,7 +8193,7 @@ textarea.form-control-lg {
 
 .bg-white {
   --bs-bg-opacity: 1;
-  background-color: hotpink;
+  background-color: whitesmoke;
 }
 
 .bg-body {
@@ -11024,7 +11024,7 @@ body {
 }
 
 .sb-sidenav-dark {
-  background-color: hotpink;
+  background-color: whitesmoke;
   color: black;
 }
 .sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
