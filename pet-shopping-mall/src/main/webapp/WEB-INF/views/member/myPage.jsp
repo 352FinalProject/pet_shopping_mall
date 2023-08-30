@@ -26,10 +26,13 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    max-width: 400px; /* 팝업 창 최대 너비 설정 */
+    max-width: 600px; /* 팝업 창 최대 너비 설정 */
     width: 90%; /* 팝업 창 너비 설정 */
     text-align: center;
     font-size: 18px;
+}
+.popup-content img {
+	width: 60%;
 }
 
 #closePopupBtn {
@@ -78,15 +81,17 @@
                                 <c:if test="${myPage.subMember ne null}">
                                 <p>다음 달 멤버쉽 결제 날짜 : ${myPage.subMember.scheduleAt}</p>
                                 <p>결제 예정 금액 : ${myPage.subMember.amount}원</p>
+                                <form:form method="POST" action="${pageContext.request.contextPath}/payment/unsubscribe.do">
+                                	<input type="hidden" name="customerUid" value="${myPage.memberId}" />
+	                                <button type="submit">멤버쉽 해제</button>
+                                </form:form>
                                 </c:if>
                             </div>
                             <!-- 팝업 컨테이너 -->
 						    <div class="popup-container" id="popupContainer">
 						        <div class="popup-content">
 						            <h2>🎁 <span style="color: #01A9DB;">우동친</span>만의 특별한 멤버쉽 혜택 🎁</h2>
-						            <img src="${pageContext.request.contextPath}/resources/images/상품/gift.png" />
-						            <div>1. 배송비 무료</div>
-						            <div>2. 포인트 3% 추가 적립</div>
+						            <img src="${pageContext.request.contextPath}/resources/images/배너/membership_benefit.png" />
 						            <button id="closePopupBtn">닫기</button>
 						        </div>
 						    </div>

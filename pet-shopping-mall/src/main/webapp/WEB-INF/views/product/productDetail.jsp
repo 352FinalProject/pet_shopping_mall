@@ -128,7 +128,7 @@ pageEncoding="UTF-8"%>
         
         <div class="product-price">
           <div class="product-price-desc">
-            총 상품 금액 <span><fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></span>원
+            총 상품 금액 <span class="totalPrice" id="totalPrice"></span>원
           </div>
         </div>
       </div>
@@ -294,7 +294,7 @@ pageEncoding="UTF-8"%>
     <div class="product-bottom2">
       <div>
         <span id="product-bottom-title">${product.productName}</span> <br />
-        <span>11,000원</span>
+        <span id="product-bottom-price">11,000원</span>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
@@ -325,6 +325,36 @@ pageEncoding="UTF-8"%>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 /* 상품수량에 따라 가격 바꾸기(수경) */
+document.addEventListener("DOMContentLoaded", () => {
+	const optionSelect = document.querySelector("[name='product-option']");
+	const originalPrice = ${product.productPrice};
+	const additionalPrice = 0;
+	const quantityInput = document.querySelector(".quantity-input");
+	const totalPrice = document.querySelector("#totalPrice");
+	const productBottomPrice = document.querySelector("#product-bottom-price");
+    const optionMinusButton = document.querySelector(".minus");
+    const optionPlusButton = document.querySelector(".plus");
+    console.log("originalPrice = ", originalPrice);
+    
+    optionMinusButton.addEventListener("click", () => {
+       const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+       const productDetailId = selectedOption.value;
+       const updateQuantity = quantityInput.value;
+       
+       totalPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
+       productBottomPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
+      });
+
+    optionPlusButton.addEventListener("click", () => {
+        const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+        const productDetailId = selectedOption.value;
+        const updateQuantity = quantityInput.value;
+        totalPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
+        productBottomPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
+      });
+    
+});
+
 
 document.addEventListener("DOMContentLoaded", function () {
      const optionSelect = document.querySelector("[name='product-option']");
@@ -349,7 +379,7 @@ document.addEventListener("DOMContentLoaded", function () {
        frm.quantity.value = currentQuantity;
      });
      
-     console.log(optionSelect);
+     console.log("optionSelect = ", optionSelect);
      
      optionSelect.addEventListener("change", function() {
        const selectedOption = optionSelect.options[optionSelect.selectedIndex];
