@@ -51,7 +51,6 @@
 		                	</form:form>
 			                <div>
 			                	<button class="cart-btn" onclick="deleteCartOne('${product.cartitemId}');">선택 상품 삭제</button>
-			                	<button class="cart-btn" onclick="deleteAll();">전체 상품 삭제</button>
 			                </div>
 		                	</c:forEach>
 		                </c:if>
@@ -60,6 +59,9 @@
 		                		<p>장바구니에 담긴 상품이 없습니다.</p>
 		                	</div>
 		                </c:if>
+		                <div>
+		                	<button class="cart-btn" onclick="deleteAll();">전체 상품 삭제</button>
+		                </div>
 	                </div>
 	                <div class="cart-right">
 						<span>결제금액</span>
