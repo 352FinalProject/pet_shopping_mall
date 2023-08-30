@@ -19,7 +19,5 @@ public class ProductReviewAvgDto {
 	
 	private String productName; // product
 	private int productId; // product
-	
 	private int reviewStarRate; // review
-	private int AVG;
 }

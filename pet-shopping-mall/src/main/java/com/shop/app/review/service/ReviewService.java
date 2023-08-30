@@ -67,7 +67,7 @@ public interface ReviewService {
 //	List<ProductReviewAvgDto> findProductReviewAvgAll(int productId);
 
 	// 상품 - 리뷰 평균 별점
-	ProductReviewAvgDto productReviewStarAvg(int productId);
+	int productReviewStarAvg(int productId);
 
 	int findProductListReviewTotalCount(int productId);
 

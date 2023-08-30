@@ -135,10 +135,10 @@ public class ProductController {
 //		  
 //		log.debug("reviews2 = {} ", reviews2);
 //		  
-//		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-//		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-////	
-//		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+		int productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+		
+		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
 //		  
 		 
 	    
