@@ -101,12 +101,11 @@ body {
 
 /* 로고 */
 .logo_img img {
-	width: 1000px;
+	width: 200px;
 	margin: 0 auto;
 }
 
 .logo_img {
-	margin-left: 100px; display : flex; /* 수직 방향으로 가운데로 정렬 */
 	align-items: center;
 	display: flex; /* 수직 방향으로 가운데로 정렬 */
 }
@@ -135,6 +134,7 @@ body {
 	margin: 0 auto;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 /* 검색 버튼 */
@@ -152,10 +152,17 @@ body {
 }
 
 /* 검색, 주문조회, 장바구니 wap*/
+.cdt-info {
+   display: flex;
+   position: absolute;
+   right: 0;
+}
+
 .cdt {
 	display: flex;
 	gap: 30px;
-	margin-left: -51px;
+	margin-top: -78px;
+	width: 499px;
 }
 
 /* 메뉴 폰트 */
@@ -181,8 +188,9 @@ body {
 .menu-container {
 	display: flex;
 	align-items: center;
-	margin-top: 11px;
 	padding-bottom: 11px;
+	padding-top: 11px;
+	border-top: 1px solid #e7e7e7;
 	border-bottom: 1px solid #e7e7e7;
 	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }

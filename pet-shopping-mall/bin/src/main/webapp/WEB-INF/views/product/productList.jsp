@@ -27,9 +27,6 @@ section.product-board {
     font-size: 16px;
     gap: 70px;
 }
-.on {
-	color: blue;
-}
 
 </style>
 	
