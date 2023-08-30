@@ -32,7 +32,7 @@
 		                			<div> 
 		                				<div id="cart-option">
 		                					<div>
-		                						<p>옵션 : ${product.optionName}</p>
+		                						<p>옵션 : ${product.optionName ne null ? product.optionName : '없음'}</p>
 		                						<p>수량 : ${product.quantity}</p>
 		                					</div>
 		                					<div>
