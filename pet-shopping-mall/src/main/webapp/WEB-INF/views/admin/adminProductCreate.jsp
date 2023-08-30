@@ -77,52 +77,49 @@
 							    </div>
 							</div>
 							
-							<!-- 옵션 추가용 태그 -->
-							<div class="optionValueInput" id="optionValueInput"></div>
-					        
-					        
-		<div class="optionValueInput" id="optionValueInput">
-			<div class="viewOption" id="viewOption" style="display : none;">
-	          <div class="row mb-3">
-		          <div class="col-md-2">
-		            <label for="optionName" class="form-label">옵션명</label>
-		            <input type="text" name="productDetail[0].optionName" id="optionName" class="form-control">
-		          </div>
-	            <div class="col-md-2">
-	              <label for="optionValue" class="form-label">옵션값</label>
-	              <input type="text" name="productDetail[0].optionValue" id="optionValue" class="form-control">
-	            </div>
-	            <div class="col-md-2">
-	              <label for="additionalPrice" class="form-label">옵션추가금</label>
-	              <input type="number" name="productDetail[0].additionalPrice" id="additionalPrice" class="form-control" value="0">
-	            </div>
-	          </div>
-			</div>
-		        <div class="row mb-3">
-		          <div class="col-md-1">
-		            <label for="saleState" class="form-label">판매상태</label>
-		          </div>
-		          <div class="col-md-2">
-		            <select name="productDetail[0].saleState" id="saleState" class="form-select">
-		              <option value="0">판매대기</option>
-		              <option value="1" selected>판매중</option>
-		              <option value="2">품절</option>
-		              <option value="3">기타</option>
-		            </select>
-		          </div>
-	        </div>
-      </div>
-					        
-					        
+							<!-- 옵션 추가 -->
+							<div class="optionValueInput" id="optionValueInput">
+								<div class="viewOption" id="viewOption" style="display : none;">
+						          <div class="row mb-3">
+							          <div class="col-md-2">
+							            <label for="optionName" class="form-label">옵션명</label>
+							            <input type="text" name="productDetail[0].optionName" id="optionName" class="form-control">
+							          </div>
+						            <div class="col-md-2">
+						              <label for="optionValue" class="form-label">옵션값</label>
+						              <input type="text" name="productDetail[0].optionValue" id="optionValue" class="form-control">
+						            </div>
+						            <div class="col-md-2">
+						              <label for="additionalPrice" class="form-label">옵션추가금</label>
+						              <input type="number" name="productDetail[0].additionalPrice" id="additionalPrice" class="form-control" value="0">
+						            </div>
+						          </div>
+								</div>
+							    <div class="row mb-3">
+							          <div class="col-md-1">
+							            <label for="saleState" class="form-label">판매상태</label>
+							          </div>
+							          <div class="col-md-2">
+							            <select name="productDetail[0].saleState" id="saleState" class="form-select">
+							              <option value="0">판매대기</option>
+							              <option value="1" selected>판매중</option>
+							              <option value="2">품절</option>
+							              <option value="3">기타</option>
+							            </select>
+							          </div>
+						        </div>
+						        
+						        
 					        <!-- 옵션추가 버튼 -->
-				        	<div class="row mb-3" id="option-add-btn" style="display : none;">
-					            <div class="col-md-3" >
-					              <button type="button" class="btn btn-secondary" onclick="addOptionValue()">옵션추가</button>
+				        	<div class="row mb-5" id="option-btn-container" style="display : none;">
+					            <div class="col-md-5 d-flex" >
+					              <button type="button" class="btn btn-secondary" id="option-add-btn">옵션추가</button>
+					              <button type="button" class="btn btn-secondary" id="option-del-btn">옵션삭제</button>
 					            </div>
 					        </div>
-
-							<!-- 옵션추가용 태그 -->
-					        <div class="optionValueInput" id="optionValueInput"> </div>
+						        
+					      </div>        
+					        
 					        
 					      <div class="row mb-5">
 						      <div class="col-md-5 d-flex justify-content-end">
@@ -146,6 +143,10 @@
 	const hasOptionInputs = document.querySelectorAll("input[name=hasOption]");
 	const optionValueInput = document.getElementById("optionValueInput");
 	const viewOption = document.getElementById("viewOption");
+	let optionButtonContainers = document.querySelectorAll("#option-btn-container");
+	let addOptionBtn = document.querySelectorAll("#option-add-btn");
+	let deleteOptionBtn = document.querySelectorAll("#option-del-btn");
+	
 
 	// 상품명 검사 함수
     const validateProductName = () => {
@@ -169,30 +170,93 @@
     	
     }
 	
- // 옵션 여부 처리 함수
+ 	// 옵션 여부 처리 함수
     const validateHasOption = () => {
         const selectedOption = document.querySelector("input[name=hasOption]:checked").value;
         const optionAddBtn = document.querySelector("#option-add-btn");
-        console.dir(optionAddBtn);
+        const optionDelBtn = document.querySelector("#option-del-btn");
+        const addedOptions = document.querySelectorAll("#addedOption");
         
         if (selectedOption === "yes") {
+        	// 옵션이 있다면
             viewOption.style.display = "block";
-            optionAddBtn.style.display = "block";
+            optionButtonContainers.forEach(div => div.style.display = "block");
         } else {
-            viewOption.style.display = "none";
-            optionAddBtn.style.display = "none";
+            // 옵션이 없다면
+        	viewOption.style.display = "none";
+            optionButtonContainers.forEach(div => div.style.display = "none");
+            // 추가했던 옵션들 삭제
+            addedOptions.forEach((option) => {
+            	console.log(option);
+            	option.remove();
+            	
+            });
         }
     }
 
+    let optionCnt = 1;
+    // 옵션추가 함수
+    const addOptions = () => {
+    	
+    	const newOption = `
+		    <div class="addedOption" id="addedOption">
+		      <div class="row mb-3">
+			          <div class="col-md-2">
+			            <label for="optionName" class="form-label">옵션명</label>
+			            <input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control">
+			          </div>
+		            <div class="col-md-2">
+		              <label for="optionValue" class="form-label">옵션값</label>
+		              <input type="text" name="productDetail[\${optionCnt}].optionValue" id="optionValue" class="form-control">
+		            </div>
+		            <div class="col-md-2">
+		              <label for="additionalPrice" class="form-label">옵션추가금</label>
+		              <input type="number" name="productDetail[\${optionCnt}].additionalPrice" id="additionalPrice" class="form-control" value="0">
+		            </div>
+		      </div>
+			  <div class="row mb-3">
+			          <div class="col-md-1">
+			            <label for="saleState" class="form-label">판매상태</label>
+			          </div>
+			          <div class="col-md-2">
+			            <select name="productDetail[\${optionCnt}].saleState" id="saleState" class="form-select">
+			              <option value="0">판매대기</option>
+			              <option value="1" selected>판매중</option>
+			              <option value="2">품절</option>
+			              <option value="3">기타</option>
+			            </select>
+			          </div>
+			  </div>
+			  
+			    <div class="row mb-3" id="option-btn-container">
+		            <div class="col-md-5 d-flex" >
+		              	<button type="button" class="btn btn-secondary" id="option-add-btn" onclick="addOptions()">옵션추가</button>
+		              	<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
+		            </div>
+		        </div>
+			  
+		   	</div>
+    	`;
+    	
+    	//optionValueInput.innerHTML += newOption;
+        optionValueInput.insertAdjacentHTML("beforeend", newOption);
+    	optionCnt += 1;
+
+    };
     
-    
-    
-    
-    
+    // 옵션삭제 함수
+    const delOptions = (optionCnt) => {
+        console.log("optionCnt=",optionCnt);
+    	const optionToRemove = document.getElementById(`addedOption${optionCnt}`);
+        console.log(optionToRemove);
+    	optionToRemove.remove();
+    	
+    }
     
     productNameInput.addEventListener("input", validateProductName);
     productPriceInput.addEventListener("input", validateProductPrice);
     hasOptionInputs.forEach(input => input.addEventListener("change", validateHasOption));
+    addOptionBtn.forEach(button => button.addEventListener("click", addOptions));
 	
 	// 파일추가 
 	document.querySelectorAll("[name=upFile]").forEach((input) => {
