@@ -111,4 +111,5 @@ public interface ProductRepository {
 
 	@Select("select * from product_detail where product_id = #{productId} order by 1")
 	List<ProductDetail> findProductDetailsByProductId(int productId);
+}
 
