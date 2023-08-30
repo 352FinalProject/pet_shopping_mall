@@ -377,7 +377,7 @@ window.onload = function() {
     nameInput.addEventListener("input", validateName);
 };
 
-const validatePhone = () => {
+/* const validatePhone = () => {
     const phone = phoneInput.value;
 
     if (phone.length >= 8) {
@@ -387,7 +387,7 @@ const validatePhone = () => {
         // 이름 조건이 충족되지 않았을 때 스타일 변경
        phoneInput.style.border = "1px solid red";
     }
-};
+}; */
 
 
 const validatePhone = () => {
