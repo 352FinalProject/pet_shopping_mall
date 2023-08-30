@@ -99,6 +99,7 @@ pageEncoding="UTF-8"%>
         <c:if test="${not empty productDetails}">
            <div>
              <select name="product-option">
+             	<option value="">[필수]옵션선택</option>
                <!-- 옵션나열 -->
               <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
                  <c:if test="${empty productDetail.optionName}">
