@@ -62,8 +62,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int insertPayment(Payment payment, int paymentMethod) {
-		return paymentRepository.insertPayment(payment, paymentMethod);
+	public int insertPayment(Payment payment) {
+		return paymentRepository.insertPayment(payment);
 	}
 
 	@Override
