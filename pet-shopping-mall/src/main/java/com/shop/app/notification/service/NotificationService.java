@@ -11,6 +11,8 @@ public interface NotificationService {
 
 	int updateOrderStatusNotification();
 
+	int paymentCompleteNotification(PaymentCompleteNotificationDto paymentCompleteNotificationDto);
+
 
 
 }
