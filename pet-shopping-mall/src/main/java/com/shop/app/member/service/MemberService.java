@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.shop.app.member.dto.MemberCreateDto;
 import com.shop.app.member.dto.MypageDto;
 import com.shop.app.member.entity.Member;
+import com.shop.app.member.entity.SubMember;
 import com.shop.app.point.entity.Point;
 
 
@@ -29,5 +30,10 @@ public interface MemberService extends UserDetailsService {
 	int memberSubscribe(String memberId);
 
 	int subscribeCancel(String memberId);
+
+	SubMember findSubMemberByMemberId(String memberId);
+
+	int cancelSubscribe(String memberId);
+
 
 }

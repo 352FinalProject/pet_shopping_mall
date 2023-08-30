@@ -56,7 +56,6 @@ public interface MemberRepository {
 
 	@Select("select * from sub_member where member_id = #{memberId}")
 	SubMember findSubMemberByMemberId(String memberId);
-	
 
 	
 }
