@@ -76,12 +76,11 @@
 							<div class="col-md-6">
 					            <button type="button" class="btn btn-secondary" onclick='updateProduct();'>상품 수정</button>
 					            <button type="button" class="btn btn-danger" onclick="deleteProduct();">상품 삭제</button>
+					            <button type="button" class="btn btn-danger" onclick="addOption();">옵션 추가</button>
 					        </div>
 					          
 					          
 					        </div>
-					        
-					        
 					        
 	<!-- 상품옵션 정보 -->
 	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
@@ -129,10 +128,16 @@
 	        </div>
 	    </div>
 	</c:forEach> 
-					      
+				
+				<!-- 옵션 추가 -->
+				<div class="addOptionDiv" id="addOptionDiv">
+				
+				</div>
+				
+				
 					    <%-- </form:form> --%>
 					  </div>
-				</div>
+				</div><!-- card-body -->
 			</div>
 
 			
@@ -269,6 +274,63 @@ const deleteProductOption = (productDetailId) => {
         });
     }
 };
+
+// 옵션추가
+const addOption = () => {
+	const addOptionDiv = document.getElementById("addOptionDiv");
+	
+	const newOption =`
+    <form:form name="memberCreateFrm"
+        action="${pageContext.request.contextPath}/adimin/adminOptionCreate.do"
+        method="POST">
+	    <div class="productDetail-container">
+	    <input type="text" name="productId" id="productId" class="form-control" value="${product.productId}">
+        <div class="row mb-3">
+            <div class="col">
+                <label for="optionName" class="form-label">옵션명</label>
+            </div>
+            <div class="col">
+                <input type="text" name="optionName" id="optionName" class="form-control">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="optionValue" class="form-label">옵션값</label>
+            </div>
+            <div class="col">
+                <input type="text" name="optionValue" id="optionValue" class="form-control">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="additionalPrice}" class="form-label">옵션추가금</label>
+            </div>
+            <div class="col">
+                <input type="number" name="additionalPrice" id="additionalPrice" class="form-control">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="saleState" class="form-label">판매상태</label>
+            </div>
+            <div class="col">
+                <select name="saleState" id="saleState" class="form-select">
+                    <option value="0"} >판매대기</option>
+                    <option value="1"}>판매중</option>
+                    <option value="2"}>품절</option>
+                    <option value="3"}>기타</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-secondary">옵션 등록</button>
+        </div>
+    	</div>
+    </form:form>
+	`;
+	
+	addOptionDiv.insertAdjacentHTML("beforeend", newOption);
+}
 
 // 파일업로드
 document.querySelectorAll("[name=upFile]").forEach((input) => {

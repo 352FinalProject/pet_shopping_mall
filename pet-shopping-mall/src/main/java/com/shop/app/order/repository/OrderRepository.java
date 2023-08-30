@@ -101,7 +101,8 @@ public interface OrderRepository {
 	@Select("select count(*) from order_detail where product_detail_id = #{productDetailId}")
 	int findOrderCntByProductId(int productDetailId);
 
-	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day")
+
+	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status = 5")
 	List<Order> findOrdersWithExpiredStatus();
 
 	

@@ -7,7 +7,6 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.shop.app.member.service.MemberService;
 import com.shop.app.notification.entity.Notification;
@@ -33,15 +32,24 @@ public class StompMessageController {
    @Autowired
    private NotificationService notificationService;
    
+	@MessageMapping("/notice")
+	@SendTo("/pet/notice")
+	public Notification a(Notification message) {
+		log.debug("message = {}", message);
+		return message;
+}
+   
    /**
     * 개개인에게
     */
    @MessageMapping("/notice/{memberId}")
-   @SendTo("/app/notice/{memberId}")
+   @SendTo("/pet/notice/{memberId}")
    public Notification noticeEach(@DestinationVariable String memberId, Notification message) {
                         // 경로변수
       log.debug("memberId = {}", memberId);
       log.debug("message = {}", message);
+      
+      System.out.println("message: "  + message);
       return message;
    }
 }

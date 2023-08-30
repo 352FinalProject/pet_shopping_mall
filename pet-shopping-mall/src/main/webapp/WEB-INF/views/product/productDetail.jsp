@@ -111,6 +111,12 @@ pageEncoding="UTF-8"%>
               </c:forEach>
              </select>
            </div>
+           <!-- 옵션추가금 -->
+           <div class="additional-price-container" id="additional-price-container" style="display : none;">
+           <c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
+           	<div class="additional-price" id="${productDetail.productDetailId}">${productDetail.additionalPrice}</div>
+           </c:forEach>
+           </div>
            
                <!-- 상품구입 개수 입력 -->
            <div class="purchase-cnt">
@@ -330,28 +336,30 @@ pageEncoding="UTF-8"%>
 /* 상품수량에 따라 가격 바꾸기(수경) */
 document.addEventListener("DOMContentLoaded", () => {
 	const optionSelect = document.querySelector("[name='product-option']");
-	const originalPrice = ${product.productPrice};
-	const additionalPrice = 0;
+	const originalPrice = parseInt(${product.productPrice});
+	let additionalPrice = 0;
 	const quantityInput = document.querySelector(".quantity-input");
 	const totalPrice = document.querySelector("#totalPrice");
 	const productBottomPrice = document.querySelector("#product-bottom-price");
     const optionMinusButton = document.querySelector(".minus");
     const optionPlusButton = document.querySelector(".plus");
-    console.log("originalPrice = ", originalPrice);
+    
+    optionSelect.addEventListener("change", function() {
+        const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
+        const price = document.getElementById(productDetailId).innerHTML;
+        if(document.getElementById(productDetailId).innerHTML != null){}
+        	additionalPriceValue = parseInt(price);
+      });
     
     optionMinusButton.addEventListener("click", () => {
-       const selectedOption = optionSelect.options[optionSelect.selectedIndex];
-       const productDetailId = selectedOption.value;
-       const updateQuantity = quantityInput.value;
-       
+    	const updateQuantity = quantityInput.value;
        totalPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
        productBottomPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
       });
 
     optionPlusButton.addEventListener("click", () => {
-        const selectedOption = optionSelect.options[optionSelect.selectedIndex];
-        const productDetailId = selectedOption.value;
         const updateQuantity = quantityInput.value;
+        
         totalPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
         productBottomPrice.innerHTML = (originalPrice + additionalPrice)*updateQuantity;
       });
