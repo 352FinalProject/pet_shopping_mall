@@ -7,9 +7,9 @@ import com.shop.app.payment.dto.PaymentCompleteNotificationDto;
 
 public interface NotificationService {
 
-	int paymentCompleteNotification(PaymentCompleteNotificationDto paymentCompleteNotificationDto);
-
 	List<Notification> findAllNotification(String memberId);
+
+	int updateOrderStatusNotification();
 
 
 

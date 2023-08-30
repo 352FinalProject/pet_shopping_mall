@@ -24,7 +24,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * 2. notification db 저장
 	 */
 	@Override
-	public int paymentCompleteNotification(PaymentCompleteNotificationDto paymentCompleteNotificationDto) {
+	public int updateOrderStatusNotification() {
 		// 실시간 알림을 보낸다.
 		// 1. 작성자의 구독자 조회
 		// 2. 각 사용자에게 알림메세지 발송(stomp)
