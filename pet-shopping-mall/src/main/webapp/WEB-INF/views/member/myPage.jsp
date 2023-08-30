@@ -81,6 +81,10 @@
                                 <c:if test="${myPage.subMember ne null}">
                                 <p>다음 달 멤버쉽 결제 날짜 : ${myPage.subMember.scheduleAt}</p>
                                 <p>결제 예정 금액 : ${myPage.subMember.amount}원</p>
+                                <form:form method="POST" action="${pageContext.request.contextPath}/payment/unsubscribe.do">
+                                	<input type="hidden" name="customerUid" value="${myPage.memberId}" />
+	                                <button type="submit">멤버쉽 해제</button>
+                                </form:form>
                                 </c:if>
                             </div>
                             <!-- 팝업 컨테이너 -->

@@ -364,9 +364,9 @@ const requestPaymentByCard = (data) => {
 	        $.ajax({
 	            type: 'POST',
 	            url : '${pageContext.request.contextPath}/payment/verifyAndHandleCancelledPayment/' + response.imp_uid,
-	            data: JSON.stringify(orderData), // orderData를 JSON 문자열로 변환
-	            contentType: "application/json", // 전송 데이터의 종류
-	            dataType: "json", // 응답 데이터의 종류
+	            data: JSON.stringify(orderData), 
+	            contentType: "application/json", 
+	            dataType: "json", 
 	        }).done((data) =>  {
 	            alert("결제가 취소되었습니다.");
 	        });
@@ -399,7 +399,6 @@ const successPay = (pg_provider, imp_uid, merchant_uid) => {
 		 },
 		 success(data){
 			if(data.result > 0){
-         		alert("결제 및 검증 완료");
            		location.href="${pageContext.request.contextPath}/payment/paymentCompleted.do?orderNo=" + merchant_uid;
             }else{
               	alert("결제 완료 되었으나 에러 발생하였습니다. 관리자에게 문의하세요.")
