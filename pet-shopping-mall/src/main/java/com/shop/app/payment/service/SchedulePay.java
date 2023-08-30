@@ -156,12 +156,6 @@ public class SchedulePay {
     	// member 테이블에서 구독 N 처리
     	String memberId = subMember.getMemberId();
     	memberService.cancelSubscribe(memberId);
-
-    	
-    	
-    	
-    	
-    	
 		return result;
 	}
 }

@@ -253,7 +253,6 @@ public class ProductController {
    @GetMapping("/searchProduct.do")
    public void searchProducts(Model model, @RequestParam String searchQuery) {
       List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
-      
       model.addAttribute("productInfos",productInfos);
       
    }
