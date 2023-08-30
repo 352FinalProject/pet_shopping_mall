@@ -69,4 +69,10 @@ public interface ProductService {
 	
 	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
+	// 상품검색 (수경)
+	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
+
+	// 옵션추가 (수경)
+	int adminOptionCreate(int productId, ProductDetail productDetail);
+
 }

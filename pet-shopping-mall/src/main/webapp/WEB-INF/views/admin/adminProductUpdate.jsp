@@ -76,12 +76,11 @@
 							<div class="col-md-6">
 					            <button type="button" class="btn btn-secondary" onclick='updateProduct();'>상품 수정</button>
 					            <button type="button" class="btn btn-danger" onclick="deleteProduct();">상품 삭제</button>
+					            <button type="button" class="btn btn-danger" onclick="addOption();">옵션 추가</button>
 					        </div>
 					          
 					          
 					        </div>
-					        
-					        
 					        
 	<!-- 상품옵션 정보 -->
 	<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
@@ -129,10 +128,16 @@
 	        </div>
 	    </div>
 	</c:forEach> 
-					      
+				
+				<!-- 옵션 추가 -->
+				<div class="addOptionDiv" id="addOptionDiv">
+				
+				</div>
+				
+				
 					    <%-- </form:form> --%>
 					  </div>
-				</div>
+				</div><!-- card-body -->
 			</div>
 
 			

@@ -10,7 +10,7 @@ public interface PaymentService {
 	
 	int updatePayStatus(String orderNo, String pgProvider);
 	
-	int insertPayment(Payment payment, int paymentMethod);
+	int insertPayment(Payment payment);
 	
 	Payment getPaymentInfo(int orderId);
 

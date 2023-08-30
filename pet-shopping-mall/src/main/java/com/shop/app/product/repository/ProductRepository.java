@@ -117,8 +117,7 @@ public interface ProductRepository {
 	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
 	// (수경)
-	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId, jdbcType=INTEGER}, #{optionName, jdbcType=VARCHAR}, #{optionValue, jdbcType=VARCHAR}, #{additionalPrice, jdbcType=INTEGER}, #{saleState, jdbcType=INTEGER})")
+	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
 	int adminOptionCreate(int productId, ProductDetail productDetail);
-	
-}
 
+}

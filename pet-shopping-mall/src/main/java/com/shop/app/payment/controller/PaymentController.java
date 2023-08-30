@@ -1,7 +1,18 @@
 package com.shop.app.payment.controller;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,9 +25,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.apache.http.HttpResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,9 +39,14 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.shop.app.cart.dto.CartInfoDto;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.coupon.dto.MemberCouponDto;
+import com.shop.app.coupon.entity.Coupon;
 import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.service.CouponService;
 import com.shop.app.member.dto.MypageDto;
@@ -263,7 +282,6 @@ public class PaymentController {
 		Order order = orderService.findOrderByOrderNo(orderNo);
 		model.addAttribute("order", order);
 		
-		
 		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
 	    
 		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
@@ -273,26 +291,9 @@ public class PaymentController {
 	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
 	            .memberId(paymentCompleteNotificationDto.getMemberId())
 	            .build();
-		log.debug("paymentCompleteNotificationDto={}",paymentCompleteNotificationDto);
 	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
 		
 	}
-	
-//	@PostMapping("/paymentCompleted.do")
-//	public void paymentCompleteNotification(@RequestParam String orderNo) {
-//		
-//		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
-//	    
-//		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
-//	            .orderId(paymentCompleteNotificationDto.getOrderId())
-//	            .orderNo(paymentCompleteNotificationDto.getOrderNo())
-//	            .productName(paymentCompleteNotificationDto.getProductName())
-//	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
-//	            .memberId(paymentCompleteNotificationDto.getMemberId())
-//	            .build();
-//		log.debug("paymentCompleteNotificationDto={}",paymentCompleteNotificationDto);
-//	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
-//	}
 	
 	/*
 	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)
@@ -405,14 +406,17 @@ public class PaymentController {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
+        
     }
 	
 	@PostMapping("/unsubscribe.do")
-	public void unsubscribe (@RequestParam String customerUid) {
+	public String unsubscribe (@RequestParam String customerUid, RedirectAttributes redirectAttr) {
 		// sub_member 조회를 해서, 거기서 가져온 merchant_uid를 포스트 요청 보내야 함.
 		// member 테이블에서 구독 N 처리
 		SubMember subMember = memberService.findSubMemberByMemberId(customerUid);
 		String result = schedulePay.cancelSchedule(subMember);
 		
+		redirectAttr.addFlashAttribute("msg", "구독이 해제되었습니다.");
+		return "redirect:/member/myPage.do";
 	}
 }

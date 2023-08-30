@@ -398,10 +398,10 @@ footer p {
 }
 
 .notification-content {
-  margin: 0; /* Remove the default margin for <p> elements */
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide any overflow */
-  text-overflow: ellipsis; /* Show ellipsis (...) for overflowed text */
+  margin: 0; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  font-size: 15px;
 }
 
 
