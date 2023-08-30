@@ -24,6 +24,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 @Builder
 public class ProductInfoDto {
+	
 	private int productId;
 	
 	private ProductCategory productCategory; // 카테고리명 저장용
@@ -32,5 +33,7 @@ public class ProductInfoDto {
 	private int orderCnt; // 구매확정된 주문의 수
 	private List<ImageAttachment> attachments;
 	private List<ImageAttachmentMapping> attachmentMapping;
+	
+	private int reviewCnt;
 
 }

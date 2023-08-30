@@ -13,6 +13,7 @@ import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderCreateDto;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.order.repository.OrderRepository;
@@ -72,6 +73,9 @@ public interface OrderService {
 
 	// 상품별 주문확정 주문 수 조회 (수경)
 	int findOrderCntByProductId(int productDetailId);
+
+	// 리뷰 리스트 - 주문자 연결 (혜령)
+	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
 	
 	// 리뷰-상품연결 테스트

@@ -17,6 +17,7 @@ import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.dto.OrderCancelInfoDto;
 import com.shop.app.order.dto.OrderHistoryDto;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.CancelOrder;
 import com.shop.app.order.entity.Order;
 import com.shop.app.order.entity.OrderDetail;
@@ -100,6 +101,9 @@ public interface OrderRepository {
 	// 상품별 주문확정 주문 수 조회 (수경)
 	@Select("select count(*) from order_detail where product_detail_id = #{productDetailId}")
 	int findOrderCntByProductId(int productDetailId);
+
+	
+	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
 	
 }
