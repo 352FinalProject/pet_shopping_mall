@@ -170,9 +170,6 @@ function subscribes() {
                         "merchantUid": "bill"+new Date().getTime()
                     }),
                     success(response) {
-                    	console.log(response);
-                    	let responseObject = JSON.parse(response);
-                    	response.
                         alert('다음 결제일이 등록되었습니다.');
                     }
                 });

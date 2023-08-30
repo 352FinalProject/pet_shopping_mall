@@ -35,6 +35,7 @@ public class OrderScheduler {
 	 * 구독 취소를 한 멤버를 찾아서, 다음달 결제 예정일이 되었는데 구독 취소 신청을 한 상태라면
 	 * 멤버 테이블의 subscribe 컬럼을 N 로 바꿔서 일반 회원으로 내리기 위한 스케쥴러
 	 */
+	@Scheduled(cron = "0 0 0 * * ?")
 	public void updateCancelSubscribers() {
 		int result = memberService.updateCancelSubscribers();
 	}
