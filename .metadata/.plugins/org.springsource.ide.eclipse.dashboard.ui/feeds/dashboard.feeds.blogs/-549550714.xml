@@ -1,4 +1,233 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 28 Aug 2023 22:04:25 GMT</lastBuildDate><item><title><![CDATA[A Bootiful Podcast: cloud native Chris Richardson]]></title><link>https://spring.io/blog/2023/08/25/a-bootiful-podcast-cloud-native-chris-richardson</link><guid isPermaLink="true">https://spring.io/blog/2023/08/25/a-bootiful-podcast-cloud-native-chris-richardson</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Fri, 25 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment, Josh Long (@starbuxman) talks to original cloud native Chris Richardson on microservices, architecture, and more.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 29 Aug 2023 17:48:32 GMT</lastBuildDate><item><title><![CDATA[My SpringOne 2023 Recap  ]]></title><link>https://spring.io/blog/2023/08/29/my-springone-2023-recap</link><guid isPermaLink="true">https://spring.io/blog/2023/08/29/my-springone-2023-recap</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Tue, 29 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Look, it&apos;s Monday after the first in-person SpringOne of the 2020s and the first since the pandemic, and, being honest, I&apos;m bushed! Vegas is a dizzying, sensational, overwhelming, exciting experience, and SpringOne is too. But it was worth it. The SpringOne show surpassed all expectations, so it was definitely worth it.&lt;/p&gt;
+&lt;p&gt;This overwhelming scale was nowhere more evident than in the keynote, which was standing room only. I can&apos;t really recap the entire show, but I do want to talk about some of the huge themes you&apos;d have seen addressed in the keynote.&lt;/p&gt;
+&lt;p&gt;During the keynote, the good, the great, the incomparable Dr. David Syer, Moritz Halbritter, and I celebrated ten years of Spring Boot. (Yes, it is already ten years old. I can&apos;t believe it either!) And this year, we also celebrated twenty (20!) years of Spring Framework. The astute among you will know that Spring Framework 1.0 didn&apos;t come out until 2004, 19 years ago, but there were early releases of Spring Framework that looked and were called like what we know today as Spring Framework. And the doubly astute among, you may remember that Spring Boot came out on April 1, 2014, nine years ago, but there were also early releases in 2013.&lt;/p&gt;
+&lt;img width=&quot;500&quot; src=&quot;https://pbs.twimg.com/media/F4EYOQ4aEAAbslR?format=webp&amp;amp;name=medium&quot;&gt;
+&lt;p&gt;Dr. Syer and I revisited the past ten years, looking at the various releases of the technology, including some anecdotes and musing about how things have changed and evolved, and how - importantly - things are the same. We did some incredible things. We revived (possibly for a limited time only?) the ancient Spring Initializers! Want to generate a Spring Boot 1.0-centric project? Visit &lt;a href=&quot;https://start100.spring.io&quot;&gt;start100.spring.io&lt;/a&gt;. 1.5? &lt;a href=&quot;https://start150.spring.io&quot;&gt;Start150.spring.io&lt;/a&gt;. 2.0-ish? &lt;a href=&quot;https://start200.spring.io&quot;&gt;start200.spring.io&lt;/a&gt;. And, of course, if you want to build a 3.x project, visit the contemporary &lt;a href=&quot;https://start.spring.io&quot;&gt;start.spring.io&lt;/a&gt; experience. In our demo we evolved the same application from 1.0 (look! starters, &lt;code&gt;start.spring.io&lt;/code&gt;, autoconfiguration, etc.), 2.0 (reactive, animated ASCII art, Kubernetes support, etc.), all the way until the penultimate release of Spring Boot, version 3.0 (GraalVM native images, optimizations, Jakarta EE, etc), released November of 2022. But what about 3.1?&lt;/p&gt;
+&lt;img width=&quot;500&quot; src=&quot;https://pbs.twimg.com/media/F4UzLkuX0AATQPv?format=webp&amp;amp;name=small&quot;&gt;
+&lt;p&gt;Spring Boot contributor Moritz Halbritter, clad in &lt;em&gt;Lederhosen&lt;/em&gt; (you just &lt;em&gt;had&lt;/em&gt; to be there...), helped Dr. Syer and me catch up to the latest and greatest in Spring Boot 3.1, adding in Testcontainers and Docker Compose support. The whole 15 minutes was delicious fun, but it was not even close to the only thing we saw that day.&lt;/p&gt;
+&lt;img width=&quot;500&quot; src=&quot;https://pbs.twimg.com/media/F4UzLg2WoAETB13?format=jpg&amp;amp;name=4096x4096&quot;&gt;
+&lt;p&gt;Spring Framework  lead, legend, and cofounder Juergen Hoeller reviewed 20 years of Spring&apos;s history (and who better? He&apos;s been there for all 20 years!), and then  introduced some fantastic new opportunities and themes supported in Spring Framework 6.1 (and Spring Boot 3.2, due by the end of November of this year), including Project Loom, Project CRaC, Java 21,  and more.&lt;/p&gt;
+&lt;p&gt;Juergen set the table, and the follow-up speakers served dessert, bringing us details. For my money, Cora Iberkleid&apos;s contribution, introducing (and demystifying), the incredible power of virtual threads (Project Loom) in Spring Framework 6.1, was probably my favorite segment of the keynote. She  introduced &lt;code&gt;spring.threads.virtual.enabled=true&lt;/code&gt;, which you&apos;ll specify in Spring Boot 3.2, with Spring Framework 6.1, to enable virtual threads across the supported portfolio projects like Apache Tomcat, Spring Data, etc.&lt;/p&gt;
+&lt;img width=&quot;500&quot; src=&quot;https://pbs.twimg.com/media/F4EgYSSaAAYVRD3?format=jpg&amp;amp;name=4096x4096&quot;&gt;
+&lt;p&gt;I&apos;ve long been saying that virtual threads are probably my favorite single feature to have been added to Java. People have left the ecosystem and made do with vastly inferior languages to get what Project Loom promises to bring Java. It&apos;s &lt;em&gt;that&lt;/em&gt; revolutionary, and I can&apos;t wait! Remember, Java 21, which includes Project Loom, is due September 19 September 19, 2023! Do &lt;em&gt;not&lt;/em&gt; miss it!&lt;/p&gt;
+&lt;p&gt;Project Loom promises markedly improved scalability for workloads with blocking IO, but how about startup and performance? Spring has a great story with GraalVM, which has been supported since Spring Boot 3.0 and 2022. The story is only getting better. GraalVM does well at reducing the memory overhead of a given service &lt;em&gt;and&lt;/em&gt; improving startup time.&lt;/p&gt;
+&lt;p&gt;But GraalVM isn&apos;t the only way to improve startup time. There&apos;s also a new initiative, also supported in Spring Framework 6.1, called Project CRaC (Coordinated Restore at Checkpoint), that offers dramatically improved startup time. Reactive and Netty legend Violeta Georgieva took the stage to discuss scaling to zero with JVM checkpoint restore.&lt;/p&gt;
+&lt;p&gt;Startup time is critical in all sorts of workloads, like platforms-as-a-services, but especially in serverless, scale-to-zero, and function-as-a-service platforms. And here we had some exciting new developments. AWS&apos;s Mark Sailles and Spring and eventing legend Oleg Zhurakousky introduced an exciting new frontier: writing Spring MVC-style `@Controller&apos;s that could be deployed and scale-to-zero, on severless infrastructure like AWS Lambda and Azure Functions.&lt;/p&gt;
+&lt;p&gt;And speaking of Azure, &lt;a href=&quot;https://pbs.twimg.com/media/F4EoFPFaAAIC_fc?format=jpg&amp;#x26;name=large&quot;&gt;Microsoft&apos;s Asir Selvasingh and VMWare&apos;s Adib Saikali&lt;/a&gt; had an excellent segment introducing some of the fantastic new opportunities (and discounts!) for Azure Spring Apps, a jointly developed and managed platform run on Microsoft Azure. One of the things they demonstrated was using AI - &quot;artificial intelligence?&quot; I hear you gasp, &quot;In 2023? I could not have seen this coming!&quot; - via Azures OpenAI integration, a sort of managed OpenAI-as-a-service offering that people can consume in a familiar, integrated fashion via Microsoft Azure. It works brilliantly with the new Spring AI project!&lt;/p&gt;
+&lt;p&gt;Which brings us to that: Spring AI has arrived! This little session  exploded in popularity. The legendary Dr. Mark Pollack, first lead of Spring Data, creator of Spring.NET, and cofounder of Spring Cloud Data Flow, had a session that was overflowing with interest in the nascent Spring AI, and I even did a &lt;a href=&quot;https://www.youtube.com/watch?v=0P8UU5vkvI8&quot;&gt;livestream with him to talk about it&lt;/a&gt;. Spring AI brings a simple &lt;code&gt;AiClient&lt;/code&gt; that you can autoconfigure (provide the appropriate key for the large language model of your choice) and inject to have it generate responses to human language queries. What a time to be alive!&lt;/p&gt;
+&lt;p&gt;There was an incredible five minutes-long montage with kudos and congratulations and well-wishes from luminaries in the Spring ecosystem - the likes of Matt Raible (Okta developer advocate and fellow Java Champion), Trisha Gee (Gradle developer advocate and fellow Java Champion), Mala Gupta (Jetbrains IntelliJ IDEA developer advocate and fellow Java Champion), Sergei Egorov (Testcontainers and Atomicjar cofounder), Andreas Marek (GraphQL Java founder), Alina Yurenko (GraalVM developer advocate at Oracle Labs), Roman Elizarov (Kotlin language and coroutines luminary), and Marc Philipp (JUnit team lead).&lt;/p&gt;
+&lt;p&gt;These are just some of the major themes
+You &lt;a href=&quot;https://springone.io/&quot;&gt;should just watch it here&lt;/a&gt;. And I have &lt;em&gt;no shot&lt;/em&gt; at being able to capture even my top ten favorite sessions. You should &lt;a href=&quot;https://www.vmware.com/explore/video-library/search.html#sessiontype=%22SpringOne%20at%20VMware%20Explore%22&amp;#x26;year=2023&quot;&gt;just watch them here&lt;/a&gt; as they&apos;re put online. (There are already some of them there, so get goin&apos;!)&lt;/p&gt;
+&lt;p&gt;This show was loaded with an impossible burden - providing the long-awaited return to in-person events for SpringOne while celebrating 20 years of Spring (&lt;a href=&quot;https://springone.io/history-of-spring&quot;&gt;did you see this&lt;/a&gt;) and 10 years of Spring Boot, all the while capturing the unparalleled diversity of ideas in the modern JVM zeitgeist and preparing the largest ecosystem in the world for what lay ahead. But, somehow, it did it! I can&apos;t wait for next year!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[This Week in Spring - August 29th, 2023 - the post SpringOne recovery blog]]></title><link>https://spring.io/blog/2023/08/29/this-week-in-spring-august-29th-2023-the-post-springone-recovery-blog</link><guid isPermaLink="true">https://spring.io/blog/2023/08/29/this-week-in-spring-august-29th-2023-the-post-springone-recovery-blog</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Tue, 29 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! I&apos;m exhausted. Seriously. Last week was mental. If you need me, I&apos;ll be over sipping on a tea...&lt;/p&gt;
+&lt;p&gt;But, before that, there&apos;s a ton of things to cover from this last week, as always, and there&apos;s no rest for the curious, so let&apos;s get that out of the way first, shall we?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I did a (personal) recap of my experience at SpringOne 2023, our annual tentpole event that we held coincadent &lt;a href=&quot;https://tanzu.vmware.com/content/josh-blog/my-springone-2023&quot;&gt;with VMWare Explore 2023 in sunny Las Vegas, NV&lt;/a&gt;. If you were there, &lt;em&gt;you know&lt;/em&gt;, if you weren&apos;t, well, read on...!&lt;/li&gt;
+&lt;li&gt;Our friend Siva has a great blog looking at the new &lt;a href=&quot;https://www.sivalabs.in/spring-boot-jdbcclient-tutorial/&quot;&gt;&lt;code&gt;JdbcClient&lt;/code&gt; in Spring Framework 6.1 &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I just realized that Spring Cloud Alibaba &lt;a href=&quot;https://sca.aliyun.com/en-us/&quot;&gt;has a fancy landing page!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/25/a-bootiful-podcast-cloud-native-chris-richardson&quot;&gt;A Bootiful Podcast: cloud native Chris Richardson&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.felpfe.com/2023/08/24/from-buzz-to-brilliance-spring-kafka-unleashed-for-asynchronous-microservices-magic/&quot;&gt;From Buzz to Brilliance: Spring Kafka Unleashed for Asynchronous Microservices Magic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://inside.java/2022/08/02/jepcafe13/&quot;&gt;Java Asynchronous Programming Full Tutorial with Loom and Structured Concurrency - JEP Caf? #13&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now&quot;&gt;Spring Authorization Server 1.1.2 available now&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/24/spring-boot-2-7-15-available-now&quot;&gt;Spring Boot 2.7.15 available now&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://neuw.medium.com/spring-boot-3-oauth2-client-for-servlets-based-project-1343de8bab34&quot;&gt;Spring Boot 3 OAuth2 Client for Servlets based project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LbBGUDGXuV8&quot;&gt;I did a(n English language) discussion of Spring Boot and Armeria with fellow Java Champion and Netty and Armeria founder Trustin Lee a few months ago in Seoul, Korea&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/29/spring-data-jdbc-how-to-maintain-your-database-schema&quot;&gt;Spring Data JDBC - How To Maintain Your Database Schema&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/22/tackling-the-oauth2-client-component-model-in-spring-security&quot;&gt;Tackling the OAuth2 Client component model in Spring Security&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.linkedin.com/pulse/java-landscape-month-vaadin-openjdk-insights-a-n-m-bazlur-rahman/?trackingId=iW33LATaTISNALBBClnyXg%253D%253D&quot;&gt;The Java Landscape: A Month with Vaadin, OpenJDK Insights, and Java Enhancements&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/blog/2023/08/28/kubernetes-1-28-feature-mixed-version-proxy-alpha/&quot;&gt;Blog: Kubernetes 1.28: A New (alpha) Mechanism For Safer Cluster Upgrades&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/blog/2023/08/24/swap-linux-beta/&quot;&gt;Blog: Kubernetes 1.28: Beta support for using swap on Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/blog/2023/08/23/kubelet-podresources-api-ga/&quot;&gt;Blog: Kubernetes 1.28: Node podresources API Graduates to GA&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/blog/2023/08/25/native-sidecar-containers/&quot;&gt;Blog: Kubernetes v1.28: Introducing native sidecar containers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Data JDBC - How To Maintain Your Database Schema]]></title><link>https://spring.io/blog/2023/08/29/spring-data-jdbc-how-to-maintain-your-database-schema</link><guid isPermaLink="true">https://spring.io/blog/2023/08/29/spring-data-jdbc-how-to-maintain-your-database-schema</guid><dc:creator><![CDATA[Jens Schauder]]></dc:creator><pubDate>Tue, 29 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This is the fifth article of a series about how to tackle various challenges you might encounter when using Spring Data JDBC. The series consists of:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/blog/2021/09/09/spring-data-jdbc-how-to-use-custom-id-generation&quot;&gt;Spring Data JDBC - How to use custom ID generation?&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/blog/2021/09/22/spring-data-jdbc-how-do-i-make-bidirectional-relationships&quot;&gt;Spring Data JDBC - How do I make bidirectional relationships?&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/blog/2021/10/18/spring-data-jdbc-how-do-i-implement-caching&quot;&gt;Spring Data JDBC - How do I implement caching?&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/blog/2022/01/20/spring-data-jdbc-how-can-i-do-a-partial-update-of-an-aggregate-root&quot;&gt;Spring Data JDBC - How Can I Do a Partial Update of an Aggregate Root?&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Spring Data JDBC - How do I Generate the Schema for my Domain Model? (This article)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you are new to Spring Data JDBC, you should start by reading its &lt;a href=&quot;https://spring.io/blog/2018/09/17/introducing-spring-data-jdbc&quot;&gt;introduction&lt;/a&gt; and &lt;a href=&quot;https://spring.io/blog/2018/09/24/spring-data-jdbc-references-and-aggregates&quot;&gt;this article, which explains the relevance of aggregates in the context of Spring Data JDBC&lt;/a&gt; to understand the basic concepts.&lt;/p&gt;
+&lt;p&gt;With any Object Relational Mapper (ORM), you have to create two things, and they have to match each other:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A domain model in the form of Java classes.&lt;/li&gt;
+&lt;li&gt;A database schema consisting of tables, columns, indexes, and constraints.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Starting with &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/wiki/Spring-Data-2023.1-%28Vaughan%29-Release-Notes&quot;&gt;version 3.2.0-M1 Spring Data Relational&lt;/a&gt; will help you do this.
+This article shows you how to make it work.&lt;/p&gt;
+&lt;h2&gt;Creating an Initial Schema&lt;/h2&gt;
+&lt;p&gt;The first thing to do is to find a place to put the code for the schema generation.
+We recommend using a test for this.
+You can use the configuration of your main application from it, and it cannot run by accident in production.&lt;/p&gt;
+&lt;p&gt;The next thing to do is to get a &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/current/api/org/springframework/data/relational/core/mapping/RelationalMappingContext.html&quot;&gt;&lt;code&gt;RelationalMappingContext&lt;/code&gt;&lt;/a&gt;.
+This is the class that is at the core of Spring Data Relational, which is parent to both Spring Data JDBC and Spring Data R2DBC.
+This class holds all the mapping meta information about your aggregates, once it is fully initialized.
+But this initialization happens lazily, so you have to register your aggregate roots yourself.&lt;/p&gt;
+&lt;p&gt;Then you need to create a &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/LiquibaseChangeSetWriter.html&quot;&gt;&lt;code&gt;LiquibaseChangeSetWriter&lt;/code&gt;&lt;/a&gt; from it
+and use that to write out a Liquibase change set.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// context is a RelationalMappingContext that you autowire in your test.
+context.setInitialEntitySet(Collections.singleton(Minion.class));
+LiquibaseChangeSetWriter writer = new LiquibaseChangeSetWriter(context);
+
+writer.writeChangeSet(new FileSystemResource(&quot;cs-minimum.yaml&quot;));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For this to work, you need Liquibase in your dependencies:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
+    &amp;#x3C;groupId&gt;org.liquibase&amp;#x3C;/groupId&gt;
+    &amp;#x3C;artifactId&gt;liquibase-core&amp;#x3C;/artifactId&gt;
+&amp;#x3C;/dependency&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: If you use Spring Boot, the Liquibase dependency will trigger schema initialization using Liquibase, which will fail, because it cannot find any change sets.
+You can easily disable this by &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto.data-initialization.migration-tool.liquibase&quot;&gt;adding this line to your &lt;code&gt;application.properties&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;spring.liquibase.enabled=false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you run this test, you should find a file named &lt;code&gt;cs-minimum.yaml&lt;/code&gt; in the root folder of your project:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;databaseChangeLog:
+- changeSet:
+    id: &apos;1692728224754&apos;
+    author: Spring Data Relational
+    objectQuotingStrategy: LEGACY
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: true
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: true
+            name: name
+            type: VARCHAR(255 BYTE)
+        tableName: minion
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You should review this, modify it as desired, and put it in the proper location for Liquibase to pick up.
+If you have disabled it before, now enable schema initialization by Liquibase in order to actually use this change set.&lt;/p&gt;
+&lt;h2&gt;Creating an Update Schema&lt;/h2&gt;
+&lt;p&gt;For the second release of your application, you probably have some updates to the database schema.
+Spring Data JDBC can help you with these as well.&lt;/p&gt;
+&lt;p&gt;In order to create such an incremental schema update, we need to provide the current state of the database.
+This is done with an instance of &lt;a href=&quot;https://javadoc.liquibase.com/liquibase-core/liquibase/database/Database.html&quot;&gt;&lt;code&gt;liquibase.database.Database&lt;/code&gt;&lt;/a&gt;, which you can create from a &lt;code&gt;DataSource&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Autowired
+DataSource ds;
+
+// ...
+
+context.setInitialEntitySet(Collections.singleton(Minion.class));
+LiquibaseChangeSetWriter writer = new LiquibaseChangeSetWriter(context);
+
+try (Database db = new HsqlDatabase()) {
+
+	db.setConnection(new JdbcConnection(ds.getConnection()));
+
+	writer.writeChangeSet(new FileSystemResource(&quot;cs-diff.yaml&quot;), db);
+
+} catch (IOException | SQLException | LiquibaseException e) {
+	throw new RuntimeException(&quot;Changeset generation failed&quot;, e);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The example above uses a &lt;code&gt;HsqlDatabase&lt;/code&gt;.
+You would use an implementation that matches your actual database.&lt;/p&gt;
+&lt;p&gt;By default, the change set never drops columns or tables from your schema.
+Just because they are not modeled in the domain model does not mean that you do not need them, right?
+However, if you actually want to delete some or all of the tables and columns not present in your Java domain model, register a [&lt;code&gt;DropTableFilter&lt;/code&gt;][18] or [&lt;code&gt;DropColumnFilter&lt;/code&gt;][19], like in the following example, which drops all unmapped columns except those named &lt;code&gt;special&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;writer.setDropColumnFilter((table, column) -&gt; !column.equalsIgnoreCase(&quot;special&quot;));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Customizing the Schema Generation&lt;/h2&gt;
+&lt;p&gt;Spring Data JDBC does not have annotations for specifying the exact database type for columns.
+But it does offer a hook to use the types that you want.
+You can provide a &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/SqlTypeMapping.html&quot;&gt;&lt;code&gt;SqlTypeMapping&lt;/code&gt;&lt;/a&gt; to the &lt;code&gt;LiquibaseChangeSetWriter&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;writer.setSqlTypeMapping(((SqlTypeMapping) property -&gt; {
+	if (property.getName().equalsIgnoreCase(&quot;name&quot;)) {
+		return &quot;VARCHAR(500)&quot;;
+	}
+	return null;
+}).and(new DefaultSqlTypeMapping()));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You have to implement just a single method of that interface: &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/SqlTypeMapping.html#getColumnType(org.springframework.data.relational.core.mapping.RelationalPersistentProperty))&quot;&gt;&lt;code&gt;String getColumnType(RelationalPersistentProperty property)&lt;/code&gt;&lt;/a&gt;.
+In the likely case that you want to modify the types for only some cases, you can combine it with a &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/DefaultSqlTypeMapping.html&quot;&gt;&lt;code&gt;DefaultSqlTypeMapping&lt;/code&gt;&lt;/a&gt;, which will be used for all the cases where your implementation returns &lt;code&gt;null&lt;/code&gt;, as shown in the example.&lt;/p&gt;
+&lt;h2&gt;Using Annotations to Control Schema Types&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/current/api/org/springframework/data/relational/core/mapping/RelationalPersistentProperty.html&quot;&gt;&lt;code&gt;RelationalPersistentProperty&lt;/code&gt;&lt;/a&gt; has some very helpful methods, like &lt;code&gt;findAnnotation&lt;/code&gt; to access an annotation (including meta annotations) on the property or its owning entity.
+You can use this feature to use your own annotations and meta annotations to control the database types used for your domain model.&lt;/p&gt;
+&lt;p&gt;For example, you may create a layer of annotations that specify database level types
+and another domain-specific set of annotations using the first, as demonstrated in the following code snippets:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Retention(RetentionPolicy.RUNTIME)
+public @interface Varchar {
+
+	/**
+	 * the size of the varchar.
+	 */
+	int value();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Varchar(20)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Name {
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You could then use this annotation to annotate properties in your domain model and use a matching &lt;code&gt;SqlTypeMapping&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Name
+String name;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;writer.setSqlTypeMapping(((SqlTypeMapping) property -&gt; {
+
+  if (!property.getType().equals(String.class)) {
+    return null;
+  }
+
+  // findAnnotation will find meta annotations
+  Varchar varchar = property.findAnnotation(Varchar.class);
+  int value = varchar.value();
+
+  if (varchar == null) {
+    return null;
+  }
+  return &quot;VARCHAR(&quot; +
+      varchar.value() +
+      &quot;)&quot;;
+
+}).and(new DefaultSqlTypeMapping()));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Limitations&lt;/h2&gt;
+&lt;p&gt;Schema generation currently does not support references.
+Those will currently be silently ignored. Of course, we will improve on that in the future.&lt;/p&gt;
+&lt;h2&gt;Why so Complicated?&lt;/h2&gt;
+&lt;p&gt;If you are coming from JPA/Hibernate, you are used to having a simple configuration to directly generate the schema in the database and also to having schema information as part of the mapping annotations.
+It&apos;s natural to ask why we chose a different way.&lt;/p&gt;
+&lt;p&gt;There are multiple answers to this question:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Schema changes are potentially dangerous.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You can easily do things that you can recover from only by applying a database backup.
+We do not think it is a good thing to condition developers to do this kind of thing without really seeing, let alone thinking about, the changes they apply.
+That is why we create the changes but leave applying the changes as a separate step.&lt;/p&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;Schema changes should be controlled by version control, and they need to be managed by a dedicated tool, since they are not idempotent. That is, you cannot reapply a SQL script that adds a table or column to make sure that column is present.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;That is why we chose Liquibase for creating and managing changes.&lt;/p&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;The exact datatypes used in the database are not relevant for an object relational mapper, such as Spring Data JDBC.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Therefore, this kind of information should not be part of the mapping annotations used by Spring Data JDBC.
+Instead, this kind of information should be derived from your model in a way that is really independent of Spring Data JDBC. We think the demonstrated meta annotation approach is a good way to do that.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;With current milestone and upcoming GA releases, Spring Data JDBC provides a flexible and powerful way to generate database migrations from your domain model.
+We look forward to hear about your opinions and experiences with this.&lt;/p&gt;
+&lt;p&gt;The complete &lt;a href=&quot;https://github.com/spring-projects/spring-data-examples/tree/main/jdbc/howto/schema-generation&quot;&gt;example code is available in the Spring Data Example repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;[18]: &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/LiquibaseChangeSetWriter.html#setDropTableFilter(java.util.function.Predicate%5C)&quot;&gt;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/LiquibaseChangeSetWriter.html#setDropTableFilter(java.util.function.Predicate\)&lt;/a&gt;
+[19]: &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/LiquibaseChangeSetWriter.html#setDropColumnFilter(java.util.function.BiPredicate%5C)&quot;&gt;https://docs.spring.io/spring-data/jdbc/docs/3.2.x/api/org/springframework/data/jdbc/core/mapping/schema/LiquibaseChangeSetWriter.html#setDropColumnFilter(java.util.function.BiPredicate\)&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: cloud native Chris Richardson]]></title><link>https://spring.io/blog/2023/08/25/a-bootiful-podcast-cloud-native-chris-richardson</link><guid isPermaLink="true">https://spring.io/blog/2023/08/25/a-bootiful-podcast-cloud-native-chris-richardson</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Fri, 25 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment, Josh Long (@starbuxman) talks to original cloud native Chris Richardson on microservices, architecture, and more.&lt;/p&gt;
 &lt;iframe title=&quot;A Roving Conversation with Legendary Cloud Native Chris Richardson&quot; allowtransparency=&quot;true&quot; height=&quot;150&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:150px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?i=ym2j5-148c025-pb&amp;from=pb6admin&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;logo_link=episode_page&amp;btn-skin=7&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Boot 3.2.0-M2 available now]]></title><link>https://spring.io/blog/2023/08/24/spring-boot-3-2-0-m2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/08/24/spring-boot-3-2-0-m2-available-now</guid><dc:creator><![CDATA[St?phane Nicoll]]></dc:creator><pubDate>Thu, 24 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring Boot &lt;code&gt;3.2.0-M2&lt;/code&gt; has been released and is now available from &lt;a href=&quot;https://repo.spring.io/milestone&quot;&gt;https://repo.spring.io/milestone&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This release includes &lt;a href=&quot;https://github.com/spring-projects/spring-boot/releases/tag/v3.2.0-M2&quot;&gt;132 enhancements, documentation improvements, dependency upgrades, and bug fixes&lt;/a&gt;. Notable new features include:&lt;/p&gt;
 &lt;ul&gt;
@@ -69,386 +298,4 @@
 &lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/16/spring-modulith-1-0-rc2-released&quot;&gt;Spring Modulith 1.0 RC2 released&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/08/22/tackling-the-oauth2-client-component-model-in-spring-security&quot;&gt;Tackling the OAuth2 Client component model in Spring Security&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://oracle.github.io/microservices-datadriven/spring/&quot;&gt;Oracle Backend for Spring Boot - Developer Preview&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Authorization Server 1.1.2 available now]]></title><link>https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/08/22/spring-authorization-server-1-1-2-available-now</guid><dc:creator><![CDATA[Joe Grandja]]></dc:creator><pubDate>Tue, 22 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, it is my pleasure to announce the general availability of Spring Authorization Server 1.1.2.&lt;/p&gt;
-&lt;p&gt;See the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/releases/tag/1.1.2&quot;&gt;1.1.2&lt;/a&gt; release notes for complete details.&lt;/p&gt;
-&lt;p&gt;To get started using Spring Authorization Server, see the &lt;a href=&quot;https://docs.spring.io/spring-authorization-server/docs/current/reference/html/getting-started.html&quot;&gt;Getting Started&lt;/a&gt; chapter of the reference documentation and the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/tree/1.1.x/samples&quot;&gt;samples&lt;/a&gt; to become familiar with setup and configuration.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-authorization-server&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/issues&quot;&gt;GitHub Issues&lt;/a&gt; | &lt;a href=&quot;https://github.com/orgs/spring-projects/projects/8/views/21&quot;&gt;Project Board&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Tackling the OAuth2 Client component model in Spring Security]]></title><link>https://spring.io/blog/2023/08/22/tackling-the-oauth2-client-component-model-in-spring-security</link><guid isPermaLink="true">https://spring.io/blog/2023/08/22/tackling-the-oauth2-client-component-model-in-spring-security</guid><dc:creator><![CDATA[Steve Riesenberg]]></dc:creator><pubDate>Tue, 22 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;In Spring Security 5, we saw many developments in the OAuth2 story with the introduction of OAuth2 Resource Server and OAuth2 Client into the framework.&lt;/p&gt;
-&lt;p&gt;Today, it is quite convenient to develop applications that are secured by OAuth2 using the features available in OAuth2 Resource Server.
-Additionally, we can take advantage OAuth2 Client features to integrate with OAuth 2.0 and OpenID Connect 1.0 providers, making it possible to authenticate users with OAuth2 Login and/or make protected requests to applications secured by OAuth2.&lt;/p&gt;
-&lt;p&gt;However, the OAuth2 landscape is very complex, and customization is often required to integrate with third parties that have inflexible or even non-compliant implementations of various OAuth2-related standards.
-With all of this complexity, Spring Security&apos;s OAuth2 Client components were developed with extreme flexibility in mind.
-This flexibility comes with tradeoffs, particularly in the area of configuration.&lt;/p&gt;
-&lt;p&gt;We have listened to feedback from the community regarding configuration, and a common theme is simplifying configuration of the various OAuth2 Client components.
-Let&apos;s take a look at how configuration has been simplified in the latest Spring Security milestone, &lt;a href=&quot;https://github.com/spring-projects/spring-security/releases/tag/6.2.0-M2&quot;&gt;6.2.0-M2&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Getting Started&lt;/h2&gt;
-&lt;p&gt;Let&apos;s start with a simple application from &lt;a href=&quot;https://start.spring.io/#!type#gradle-project&amp;#x26;language#java&amp;#x26;platformVersion#3.2.0-M2&amp;#x26;packaging#jar&amp;#x26;jvmVersion#17&amp;#x26;groupId#com.example&amp;#x26;artifactId#client&amp;#x26;name#client&amp;#x26;description#Demo%20project%20for%20Spring%20Boot&amp;#x26;packageName#com.example.client&amp;#x26;dependencies#web,oauth2-client&quot;&gt;start.spring.io&lt;/a&gt; that we can build on for various use cases we might encounter.
-The following configuration is equivalent to the default arrangement provided by Spring Boot:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-			.authorizeHttpRequests((authorize) -&gt; authorize
-				.anyRequest().authenticated()
-			)
-			.oauth2Client(Customizer.withDefaults())
-			.oauth2Login(Customizer.withDefaults());
-
-		return http.build();
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;All that is required is a &lt;code&gt;ClientRegistration&lt;/code&gt; in &lt;code&gt;application.yml&lt;/code&gt;, such as the following:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          my-oauth2-client:
-            provider: my-auth-server
-            client-id: my-client-id
-            client-secret: my-client-secret
-            authorization-grant-type: authorization_code
-            client-authentication-method: client_secret_basic
-            scope: openid,profile,message.read,message.write
-        provider:
-          my-auth-server:
-            issuer-uri: https://my-auth-server.com
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Use Cases&lt;/h2&gt;
-&lt;p&gt;With the above configuration in mind, let&apos;s consider the following use cases:&lt;/p&gt;
-&lt;h3&gt;Use-case: I want to customize token request parameters&lt;/h3&gt;
-&lt;p&gt;One common use case is the need to customize request parameters when obtaining an &lt;code&gt;access_token&lt;/code&gt;.
-For example, let&apos;s say we want to add a custom &lt;code&gt;audience&lt;/code&gt; parameter to the token request because the provider requires this parameter for the &lt;code&gt;authorization_code&lt;/code&gt; grant.&lt;/p&gt;
-&lt;p&gt;Previously, we had to ensure that this customization was applied for both OAuth2 Login (if we are using this feature) and OAuth2 Client components using the Spring Security DSL.
-Here&apos;s what the configuration might have looked like:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		OAuth2AuthorizationCodeGrantRequestEntityConverter requestEntityConverter =
-			new OAuth2AuthorizationCodeGrantRequestEntityConverter();
-		requestEntityConverter.addParametersConverter(parametersConverter());
-
-		DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient =
-			new DefaultAuthorizationCodeTokenResponseClient();
-		accessTokenResponseClient.setRequestEntityConverter(requestEntityConverter);
-
-		http
-			.authorizeHttpRequests((authorize) -&gt; authorize
-				.anyRequest().authenticated()
-			)
-			.oauth2Client((oauth2Client) -&gt; oauth2Client
-				.authorizationCodeGrant((authorizationCode) -&gt; authorizationCode
-					.accessTokenResponseClient(accessTokenResponseClient)
-				)
-			)
-			.oauth2Login((oauth2Login) -&gt; oauth2Login
-				.tokenEndpoint((tokenEndpoint) -&gt; tokenEndpoint
-					.accessTokenResponseClient(accessTokenResponseClient)
-				)
-			);
-
-		return http.build();
-	}
-
-	private static Converter&amp;#x3C;OAuth2AuthorizationCodeGrantRequest, MultiValueMap&amp;#x3C;String, String&gt;&gt; parametersConverter() {
-		return (grantRequest) -&gt; {
-			MultiValueMap&amp;#x3C;String, String&gt; parameters = new LinkedMultiValueMap&amp;#x3C;&gt;();
-			parameters.set(&quot;audience&quot;, &quot;xyz_value&quot;);
-
-			return parameters;
-		};
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In the latest milestone, we can simply publish a bean of type &lt;code&gt;OAuth2AccessTokenResponseClient&amp;#x3C;T&gt;&lt;/code&gt; (where &lt;code&gt;T&lt;/code&gt; is &lt;code&gt;OAuth2AuthorizationCodeGrantRequest&lt;/code&gt;) and it will be picked up automatically.
-This configuration can now be simplified to:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-public class SecurityConfig {
-
-	@Bean
-	public DefaultAuthorizationCodeTokenResponseClient authorizationCodeAccessTokenResponseClient() {
-		OAuth2AuthorizationCodeGrantRequestEntityConverter requestEntityConverter =
-			new OAuth2AuthorizationCodeGrantRequestEntityConverter();
-		requestEntityConverter.addParametersConverter(parametersConverter());
-
-		DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient =
-			new DefaultAuthorizationCodeTokenResponseClient();
-		accessTokenResponseClient.setRequestEntityConverter(requestEntityConverter);
-
-		return accessTokenResponseClient;
-	}
-
-	private static Converter&amp;#x3C;OAuth2AuthorizationCodeGrantRequest, MultiValueMap&amp;#x3C;String, String&gt;&gt; parametersConverter() {
-		// ...
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt;
-Notice that because this was the only customization we performed, we can actually omit the &lt;code&gt;SecurityFilterChain&lt;/code&gt; bean entirely and use the default provided by Spring Boot.
-This may not always be the case if we need to configure other things, but is worth considering as our configuration is simpler either way.&lt;/p&gt;
-&lt;p&gt;We can publish similar beans for other grant types as well.
-For example, to customize token requests for the &lt;code&gt;client_credentials&lt;/code&gt; grant we can publish the following bean:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-public class SecurityConfig {
-
-	@Bean
-	public DefaultClientCredentialsTokenResponseClient clientCredentialsAccessTokenResponseClient() {
-		OAuth2ClientCredentialsGrantRequestEntityConverter requestEntityConverter =
-			new OAuth2ClientCredentialsGrantRequestEntityConverter();
-		requestEntityConverter.addParametersConverter(parametersConverter());
-
-		DefaultClientCredentialsTokenResponseClient accessTokenResponseClient =
-				new DefaultClientCredentialsTokenResponseClient();
-		accessTokenResponseClient.setRequestEntityConverter(requestEntityConverter);
-
-		return accessTokenResponseClient;
-	}
-
-	private static Converter&amp;#x3C;OAuth2ClientCredentialsGrantRequest, MultiValueMap&amp;#x3C;String, String&gt;&gt; parametersConverter() {
-		// ...
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Use-case: I want to customize the &lt;code&gt;RestOperations&lt;/code&gt; used by OAuth2 Client components&lt;/h3&gt;
-&lt;p&gt;Another common use case is the need to customize the &lt;code&gt;RestOperations&lt;/code&gt; (or &lt;code&gt;WebClient&lt;/code&gt; for reactive applications) used when obtaining an &lt;code&gt;access_token&lt;/code&gt;.
-We might need to do this to customize processing of the response (via a custom &lt;code&gt;HttpMessageConverter&lt;/code&gt;) or to apply proxy settings for a corporate network (via a customized &lt;code&gt;ClientHttpRequestFactory&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;Let&apos;s imagine we want to customize multiple grant types simultaneously.
-Previously, we had to ensure this customization was applied to both OAuth2 Login (if we are using this feature) and OAuth2 Client components.
-We had to use both the Spring Security DSL (for the &lt;code&gt;authorization_code&lt;/code&gt; grant) and publish a bean of type &lt;code&gt;OAuth2AuthorizedClientManager&lt;/code&gt; for other grant types, which required very verbose configuration.
-Here&apos;s what the configuration might have looked like:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient =
-			new DefaultAuthorizationCodeTokenResponseClient();
-		accessTokenResponseClient.setRestOperations(restTemplate());
-
-		http
-			.authorizeHttpRequests((authorize) -&gt; authorize
-				.anyRequest().authenticated()
-			)
-			.oauth2Client((oauth2Client) -&gt; oauth2Client
-				.authorizationCodeGrant((authorizationCode) -&gt; authorizationCode
-					.accessTokenResponseClient(accessTokenResponseClient)
-				)
-			)
-			.oauth2Login((oauth2Login) -&gt; oauth2Login
-				.tokenEndpoint((tokenEndpoint) -&gt; tokenEndpoint
-					.accessTokenResponseClient(accessTokenResponseClient)
-				)
-			);
-
-		return http.build();
-	}
-
-	@Bean
-	public OAuth2AuthorizedClientManager authorizedClientManager(
-			ClientRegistrationRepository clientRegistrationRepository,
-			OAuth2AuthorizedClientRepository authorizedClientRepository) {
-
-		DefaultRefreshTokenTokenResponseClient refreshTokenAccessTokenResponseClient =
-			new DefaultRefreshTokenTokenResponseClient();
-		refreshTokenAccessTokenResponseClient.setRestOperations(restTemplate());
-
-		DefaultClientCredentialsTokenResponseClient clientCredentialsAccessTokenResponseClient =
-			new DefaultClientCredentialsTokenResponseClient();
-		clientCredentialsAccessTokenResponseClient.setRestOperations(restTemplate());
-
-		DefaultPasswordTokenResponseClient passwordAccessTokenResponseClient =
-			new DefaultPasswordTokenResponseClient();
-		passwordAccessTokenResponseClient.setRestOperations(restTemplate());
-
-		OAuth2AuthorizedClientProvider authorizedClientProvider =
-			OAuth2AuthorizedClientProviderBuilder.builder()
-				.authorizationCode()
-				.refreshToken((refreshToken) -&gt; refreshToken
-					.accessTokenResponseClient(refreshTokenAccessTokenResponseClient)
-				)
-				.clientCredentials((clientCredentials) -&gt; clientCredentials
-					.accessTokenResponseClient(clientCredentialsAccessTokenResponseClient)
-				)
-				.password((password) -&gt; password
-					.accessTokenResponseClient(passwordAccessTokenResponseClient)
-				)
-				.build();
-
-		DefaultOAuth2AuthorizedClientManager authorizedClientManager =
-			new DefaultOAuth2AuthorizedClientManager(
-				clientRegistrationRepository, authorizedClientRepository);
-		authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
-
-		return authorizedClientManager;
-	}
-
-	@Bean
-	public RestTemplate restTemplate() {
-		// ...
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In the latest milestone, we can simply publish beans for each of the &lt;code&gt;OAuth2AccessTokenResponseClient&amp;#x3C;T&gt;&lt;/code&gt; (where &lt;code&gt;T&lt;/code&gt; is a grant type supported out-of-the-box in Spring Security).
-This configuration can now be simplified to:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-public class SecurityConfig {
-
-	@Bean
-	public DefaultAuthorizationCodeTokenResponseClient authorizationCodeAccessTokenResponseClient() {
-		DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient =
-			new DefaultAuthorizationCodeTokenResponseClient();
-		accessTokenResponseClient.setRestOperations(restTemplate());
-
-		return accessTokenResponseClient;
-	}
-
-	@Bean
-	public DefaultRefreshTokenTokenResponseClient refreshTokenAccessTokenResponseClient() {
-		DefaultRefreshTokenTokenResponseClient accessTokenResponseClient =
-				new DefaultRefreshTokenTokenResponseClient();
-		accessTokenResponseClient.setRestOperations(restTemplate());
-
-		return accessTokenResponseClient;
-	}
-
-	@Bean
-	public DefaultClientCredentialsTokenResponseClient clientCredentialsAccessTokenResponseClient() {
-		DefaultClientCredentialsTokenResponseClient accessTokenResponseClient =
-				new DefaultClientCredentialsTokenResponseClient();
-		accessTokenResponseClient.setRestOperations(restTemplate());
-
-		return accessTokenResponseClient;
-	}
-
-	@Bean
-	public DefaultPasswordTokenResponseClient passwordAccessTokenResponseClient() {
-		DefaultPasswordTokenResponseClient accessTokenResponseClient =
-				new DefaultPasswordTokenResponseClient();
-		accessTokenResponseClient.setRestOperations(restTemplate());
-
-		return accessTokenResponseClient;
-	}
-
-	@Bean
-	public RestTemplate restTemplate() {
-		// ...
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In fact, we can even opt-in to the extension grant type &lt;code&gt;jwt-bearer&lt;/code&gt; simply by publishing the corresponding &lt;code&gt;OAuth2AccessTokenResponseClient&lt;/code&gt; bean:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Bean
-public DefaultJwtBearerTokenResponseClient jwtBearerAccessTokenResponseClient() {
-	DefaultJwtBearerTokenResponseClient accessTokenResponseClient =
-			new DefaultJwtBearerTokenResponseClient();
-	accessTokenResponseClient.setRestOperations(restTemplate());
-
-	return accessTokenResponseClient;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt;
-Notice that we did not need to publish a bean of type &lt;code&gt;OAuth2AuthorizedClientManager&lt;/code&gt;.
-One will now be published for us by Spring Security.&lt;/p&gt;
-&lt;p&gt;We can now use the fully configured &lt;code&gt;OAuth2AuthorizedClientManager&lt;/code&gt; via dependency injection, like so:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@RestController
-class MyController {
-	private final OAuth2AuthorizedClientManager authorizedClientManager;
-
-	MyController(OAuth2AuthorizedClientManager authorizedClientManager) {
-		this.authorizedClientManager = authorizedClientManager;
-	}
-
-	// ...
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Use-case: I want to enable an extension grant type&lt;/h3&gt;
-&lt;p&gt;Another use case involves enabling and/or configuring an extension grant type.
-For example, Spring Security provides support for the &lt;code&gt;jwt-bearer&lt;/code&gt; grant type, but does not enable it by default.&lt;/p&gt;
-&lt;p&gt;Previously, we had to publish a bean of type &lt;code&gt;OAuth2AuthorizedClientManager&lt;/code&gt; and ensure we re-enabled default grant types as well, which required some verbose configuration.
-Here&apos;s what the configuration might have looked like:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-public class SecurityConfig {
-
-	@Bean
-	public OAuth2AuthorizedClientManager authorizedClientManager(
-			ClientRegistrationRepository clientRegistrationRepository,
-			OAuth2AuthorizedClientRepository authorizedClientRepository) {
-
-		OAuth2AuthorizedClientProvider authorizedClientProvider =
-			OAuth2AuthorizedClientProviderBuilder.builder()
-				.authorizationCode()
-				.refreshToken()
-				.clientCredentials()
-				.password()
-				.provider(new JwtBearerOAuth2AuthorizedClientProvider())
-				.build();
-
-		DefaultOAuth2AuthorizedClientManager authorizedClientManager =
-			new DefaultOAuth2AuthorizedClientManager(
-				clientRegistrationRepository, authorizedClientRepository);
-		authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
-
-		return authorizedClientManager;
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In the latest milestone, we can simply publish a bean for one or more &lt;code&gt;OAuth2AuthorizedClientProvider&lt;/code&gt; and they will be picked up automatically.
-This configuration can now be simplified to:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-public class SecurityConfig {
-
-	@Bean
-	public OAuth2AuthorizedClientProvider jwtBearer() {
-		return new JwtBearerOAuth2AuthorizedClientProvider();
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt;
-Any published bean of type &lt;code&gt;OAuth2AuthorizedClientProvider&lt;/code&gt; that is not provided by Spring Security will also be picked up, and applied after the default grant types.&lt;/p&gt;
-&lt;p&gt;This also provides the opportunity for customizing an existing grant type without the need to re-define the defaults.
-For example, if we want to customize the clock skew of the &lt;code&gt;OAuth2AuthorizedClientProvider&lt;/code&gt; for the &lt;code&gt;client_credentials&lt;/code&gt; grant, we can simply publish a bean like so:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration
-public class SecurityConfig {
-
-	@Bean
-	public OAuth2AuthorizedClientProvider clientCredentials() {
-		ClientCredentialsOAuth2AuthorizedClientProvider authorizedClientProvider =
-				new ClientCredentialsOAuth2AuthorizedClientProvider();
-		authorizedClientProvider.setClockSkew(Duration.ofMinutes(5));
-
-		return authorizedClientProvider;
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;I hope you are as excited as I am about the simplified approach to configuring OAuth2 Client components in Spring Security simply by publishing a &lt;code&gt;@Bean&lt;/code&gt;.
-If you want to get involved, please try out the milestone and &lt;a href=&quot;https://github.com/spring-projects/spring-security/issues/new/choose&quot;&gt;give us feedback&lt;/a&gt;!
-We are continuing to listen and look for opportunities to simplify configuration for users of Spring Security.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Modulith 1.0 GA released]]></title><link>https://spring.io/blog/2023/08/21/spring-modulith-1-0-ga-released</link><guid isPermaLink="true">https://spring.io/blog/2023/08/21/spring-modulith-1-0-ga-released</guid><dc:creator><![CDATA[Oliver Drotbohm]]></dc:creator><pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community and everyone who contributed, I&apos;m proud to announce the release of Spring Modulith 1.0 GA. What started as an R&amp;#x26;D side project over 5 years ago, became an experimental Spring project in 2022 is now available as a fully supported, top-level project to the Spring community.&lt;/p&gt;
-&lt;p&gt;Just as Spring has evolved over &lt;a href=&quot;https://springone.io/history-of-spring&quot;&gt;the last 20 years&lt;/a&gt; we always wanted Java developers to be able to build software that&apos;s evolvable over time. Back then, placing dependency injection at the heart of the component model was revolutionary and enabled developers to unit test their code easily. Spring&apos;s support for integration testing outside an application server was unprecedented at the time, too, and helped to raise the quality of enterprise applications significantly. We now continue that mission on a slightly higher, architectural level of abstraction.&lt;/p&gt;
-&lt;p&gt;In the same way that Spring Boot has an opinion on the technical arrangement of an application, Spring Modulith implements an opinion on how to structure it functionally and how the individual, logical parts of it should interact with each other. As a result, it allows developers to build high-quality applications that are evolvable to accommodate changing business requirements over time.&lt;/p&gt;
-&lt;p&gt;At its core, Spring Modulith provides・&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;・ &lt;a href=&quot;https://docs.spring.io/spring-modulith/docs/1.0.0/reference/html/#fundamentals.modules&quot;&gt;a convention-based module model&lt;/a&gt; for Spring Boot applications&lt;/li&gt;
-&lt;li&gt;・ &lt;a href=&quot;https://docs.spring.io/spring-modulith/docs/1.0.0/reference/html/#verification&quot;&gt;verification&lt;/a&gt; that the functional architecture does not accidentally degrade&lt;/li&gt;
-&lt;li&gt;・ &lt;a href=&quot;https://docs.spring.io/spring-modulith/docs/1.0.0/reference/html/#testing&quot;&gt;the ability to integration test&lt;/a&gt; functional modules individually&lt;/li&gt;
-&lt;li&gt;・ an opinionated, eventually consistent &lt;a href=&quot;https://docs.spring.io/spring-modulith/docs/1.0.0/reference/html/#events&quot;&gt;application module interaction model&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;・ support to &lt;a href=&quot;https://docs.spring.io/spring-modulith/docs/1.0.0/reference/html/#documentation&quot;&gt;derive architectural documentation&lt;/a&gt; from the arrangement&lt;/li&gt;
-&lt;li&gt;・ &lt;a href=&quot;https://docs.spring.io/spring-modulith/docs/1.0.0/reference/html/#production-ready&quot;&gt;application observability and actuators&lt;/a&gt; driven by the functional architecture&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;If you want to find out more about the individual features, please check out the &lt;a href=&quot;https://docs.spring.io/spring-modulith/docs/1.0.0/reference/html/&quot;&gt;reference documentation&lt;/a&gt;. Beyond that, the &lt;a href=&quot;https://spring.io/blog/2022/10/21/introducing-spring-modulith&quot;&gt;blog post&lt;/a&gt; originally announcing the project is a great overview, too.&lt;/p&gt;
-&lt;p&gt;I would like to thank everyone who has accompanied the project until this point through ideas, feedback, or even pull requests.&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;/ul&gt;</content:encoded></item></channel></rss>
