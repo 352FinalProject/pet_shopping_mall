@@ -65,8 +65,8 @@ public interface OrderService {
 
 	Order findOrderByOrderNo(String orderNo);
 
-	// 리뷰 작성하면 리뷰버튼 없애기 (예라)
-	int reviewWrite(String orderNo, int productDetailId);
+	// 리뷰 작성하면 리뷰버튼 없애기 
+	Boolean reviewWrite(int orderId, int productDetailId, String reviewMemberId);
 	
 	
 
