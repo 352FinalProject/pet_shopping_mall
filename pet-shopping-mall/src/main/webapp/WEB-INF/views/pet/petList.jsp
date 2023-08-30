@@ -7,28 +7,49 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
-
-
 <style>
-	.rightTbl {
-		margin-left: 25%;
-    	margin-top: 2.3%;
-	}
+.form-inline {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    margin-top: 20px; /* 위쪽 여백 조정 */
+}
 
+.btn-add {
+    margin-left: 997px; /* 왼쪽 여백 */
+    margin-right: 10px; /* 오른쪽 여백 */
+}
+
+/* 수정 및 삭제 링크 스타일 */
+.edit-link {
+	position: absolute;
+	margin-left: 40px;
+	margin-top: -10px;
+	background: #fff;
+	border: 1px solid lightgray;
+	padding: 8px;
+	cursor: pointer;
+}
+.delete-link {
+	position: absolute;
+	margin-left: 12px;
+	margin-top: -10px;
+	background: #fff;
+	border: 1px solid lightgray;
+	padding: 8px;
+	cursor: pointer;
+}
 </style>
-
 <!-- 펫 등록 리스트 -->
 <section class="common-section" id="common-section-List">
     <div class="common-title">펫 등록 리스트</div>
-    <div class="common-container-side rightTbl">
+    <div class="common-container-side">
         <div class="common-div">
-    
-
+ 
 
             <!-- 펫 등록 버튼 -->
             <form action="${pageContext.request.contextPath}/pet/petProfile.do"
-                class="form-inline">
-                <button class="btn-add">펫 등록</button>
+               class="form-inline">
+				<button class="btn-add">펫 등록하기 </button>
             </form>
 
             <!-- 펫 리스트 테이블 -->
@@ -57,8 +78,9 @@
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petWeight}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petAge}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petName}</a></td>
-                                <td><a href="${pageContext.request.contextPath}/pet/petGoDetail.do?petId=${pet.petId}"> 수정 </a></td>
-                                <td><a href="javascript:void(0)" onclick="fnDelete('${pet.petId}');"> 삭제 </a></td>
+								<td><a class="edit-link" href="${pageContext.request.contextPath}/pet/petGoDetail.do?petId=${pet.petId}">수정</a></td>
+								<td><a class="delete-link" href="javascript:void(0)" onclick="fnDelete('${pet.petId}');">삭제</a></td>
+
                             </tr>
                         </c:forEach>
                     </tbody>
