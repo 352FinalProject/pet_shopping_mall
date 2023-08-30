@@ -145,7 +145,6 @@ public class ProductServiceImpl implements ProductService {
 	// index 검색 (담희)
 	@Override
 	public List<ProductSearchDto> searchProducts(String searchQuery) {
-		return productRepository.searchProducts(searchQuery);
 		List<ProductSearchDto> productList = productRepository.searchProducts(searchQuery);
 				
 		for(ProductSearchDto p : productList) {
@@ -154,6 +153,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return productList;
 	}
+	
 	
 	// 모든상품 조회(수경)
 	@Override

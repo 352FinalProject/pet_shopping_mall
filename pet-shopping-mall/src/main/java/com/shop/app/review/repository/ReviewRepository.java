@@ -93,6 +93,7 @@ public interface ReviewRepository {
 	@Select("select * from review where product_id = #{productId}")
 	List<ProductReviewAvgDto> findProductReviewAvgAll(int productId);
 
+	@Select("select count(*) from review where product_id = #{productId}")
 	int findProductListReviewTotalCount(int productId);
 	
 	
