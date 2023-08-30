@@ -18,7 +18,6 @@
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 현재 구독회원 : ${totalCount}명
-					<span><button onclick="submit">구독회원 알림발송</button></span>
 				</div>
 				<div class="admin-member-search-container">
 					<form:form name="adminMemberSearchFrm"

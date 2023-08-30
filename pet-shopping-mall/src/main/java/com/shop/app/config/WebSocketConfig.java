@@ -20,10 +20,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 	@Override // Stomp 사용을 위한 Message Broker 설정을 해주는 메소드
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
 		// 1. simpleBroker로 처리하는 url 등록. 메세지를 받을 때, 경로를 설정
-		registry.enableSimpleBroker("/app");
+		registry.enableSimpleBroker("/pet");
 		
 		// 2. MessageHandler로 처리하는 url 등록. 메세지를 보낼 때, 경로를 설정
-		registry.setApplicationDestinationPrefixes("/app");
+		registry.setApplicationDestinationPrefixes("/pet");
 		
 		
 	}
