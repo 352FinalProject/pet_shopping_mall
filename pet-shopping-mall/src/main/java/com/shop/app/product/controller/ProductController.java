@@ -144,7 +144,7 @@ public class ProductController {
 	    
 	    
 	    /* 찜 등록 여부 가져오기 (선모) */
-			model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId())); // 찜 여부 가져오기
+		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
 
 	/**
@@ -235,17 +235,10 @@ public class ProductController {
       }
       return resultMap;
    }
-
-   
-   
-   
-   
-   
    
    @GetMapping("/searchProduct.do")
    public void searchProducts(Model model, @RequestParam String searchQuery) {
       List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
-      
       model.addAttribute("productInfos",productInfos);
       
    }

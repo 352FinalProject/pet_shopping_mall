@@ -66,12 +66,12 @@
 					<div>
 						<div class="flex-box">
 							<p class="order-info-title">배송지</p>
-							<button class="cart-btn-update">수정</button>
+							<button class="cart-btn-update" onclick="updateDelivery();">수정</button>
 						</div>
 						<p id="">${loginMember.name}</p>
 						<p id="phone">${loginMember.phone}</p>
 						<p>
-							[<span id="zip-code">818181</span>]<span id="address">${loginMember.address}</span>
+							<span id="address">${loginMember.address}</span>
 						</p>
 					</div>
 					<div>
@@ -364,9 +364,9 @@ const requestPaymentByCard = (data) => {
 	        $.ajax({
 	            type: 'POST',
 	            url : '${pageContext.request.contextPath}/payment/verifyAndHandleCancelledPayment/' + response.imp_uid,
-	            data: JSON.stringify(orderData), // orderData를 JSON 문자열로 변환
-	            contentType: "application/json", // 전송 데이터의 종류
-	            dataType: "json", // 응답 데이터의 종류
+	            data: JSON.stringify(orderData), 
+	            contentType: "application/json", 
+	            dataType: "json", 
 	        }).done((data) =>  {
 	            alert("결제가 취소되었습니다.");
 	        });
@@ -378,25 +378,27 @@ const requestPaymentByCard = (data) => {
 			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid,
 		}).done((data) =>  {
 			if(response.paid_amount == data.response.amount) {
-				successPay(response.imp_uid, response.merchant_uid);
+				console.log(data);
+				console.log(response);
+				successPay(response.pg_provider, response.imp_uid, response.merchant_uid);
 			}
 		})
 	});
 }; 
 
-const successPay = (imp_uid, merchant_uid) => {
+const successPay = (pg_provider, imp_uid, merchant_uid) => {
 	$.ajax({  
 		 url : "${pageContext.request.contextPath}/payment/successPay.do",
 		 type : "POST",
 		 async : true,
 		 dataType : "Json", 
 		 data :{
+			pg_provider: pg_provider,
 			imp_uid: imp_uid,            // 결제 고유번호
          	merchant_uid: merchant_uid   // 주문번호 
 		 },
 		 success(data){
 			if(data.result > 0){
-         		alert("결제 및 검증 완료");
            		location.href="${pageContext.request.contextPath}/payment/paymentCompleted.do?orderNo=" + merchant_uid;
             }else{
               	alert("결제 완료 되었으나 에러 발생하였습니다. 관리자에게 문의하세요.")
@@ -523,6 +525,11 @@ $('#points').change(function() {
     updateFinalAmount();
 });
 
+
+const updateDelivery = () => {
+	alert('수정을 위해 회원정보 수정 페이지로 넘어갑니다.');
+	location.href="${pageContext.request.contextPath}/member/updateMember.do";
+}
 
 </script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />

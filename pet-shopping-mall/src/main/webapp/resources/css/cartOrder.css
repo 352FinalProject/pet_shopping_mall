@@ -57,10 +57,6 @@
 	color: #444;
 }
 
-.product-thumbnail img {
-	margin-top: 20px;
-}
-
 .discount-point-btn {
 	font-size: 12px;
 	padding-left: 8px;
@@ -380,7 +376,7 @@ div.modal-div {
 
 .user-profile {
 	width: 700px;
-	height: 200px;
+	height: 250px;
 	background-color: #F2F2F2;
 	display: flex;
 	align-items: center;

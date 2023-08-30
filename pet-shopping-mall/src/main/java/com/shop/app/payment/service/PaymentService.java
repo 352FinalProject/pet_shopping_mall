@@ -8,7 +8,7 @@ import com.shop.app.payment.entity.Payment;
 
 public interface PaymentService {
 	
-	int updatePayStatus(String orderNo);
+	int updatePayStatus(String orderNo, String pgProvider);
 	
 	int insertPayment(Payment payment);
 	

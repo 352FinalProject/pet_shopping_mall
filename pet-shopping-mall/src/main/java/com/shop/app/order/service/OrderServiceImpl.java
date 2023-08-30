@@ -111,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
 				.orderId(orderId)
 				.build();
 		result = orderRepository.insertCancelOrder(cancel);
-		result = orderRepository.updateOrderStatus(orderNo, 5);
+		result = orderRepository.updateOrderStatus(orderNo, 4);
 			
 		return result;
 	}
@@ -167,9 +167,10 @@ public class OrderServiceImpl implements OrderService {
 
 	// 리뷰 작성하면 리뷰버튼 없애기
 	@Override
-	public Boolean reviewWrite(int orderId, int productDetailId, String reviewMemberId) {
-		return orderRepository.reviewWrite(orderId, productDetailId, reviewMemberId);
+	public boolean reviewWrite(String memberId, int orderId, int productDetailId, int productId) {
+		return orderRepository.reviewWrite(memberId, orderId, productDetailId, productId);
 	}
+
 	
 	// 상품별 주문확정 주문 수 조회 (수경)
 	@Override
@@ -181,5 +182,15 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId) {
 		return orderRepository.findOrdersByReviewId(reviewMemberId);
+	
+	@Override
+	public int updateOrderStatusIfExpired() {
+		int result = 0;
+        List<Order> orders = orderRepository.findOrdersWithExpiredStatus();
+        for (Order order : orders) {
+            result = orderRepository.updateOrderStatus(order.getOrderNo(), 6);
+        }
+        return result;
+
 	}
 }

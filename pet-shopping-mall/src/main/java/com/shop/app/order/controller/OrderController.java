@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderController {
 	
-	public static String[] status = {"결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료"};
+	public static String[] status = {"결제완료", "배송준비", "배송중", "배송완료", "주문취소", "환불완료", "구매확정"};
  
 	
 	@Autowired
@@ -114,26 +114,28 @@ public class OrderController {
 	public void getOrderDetail(Model model, @RequestParam String orderNo, @AuthenticationPrincipal MemberDetails member) {
 	    
 	    List<Map<OrderHistoryDto, Payment>> orderDetailMap = orderService.getOrderDetail(orderNo);
-	    
-	    log.debug("저건뭐뜸 orderDetailMap = {}", orderDetailMap);
 
-	    // 리뷰 작성하면 리뷰버튼 없애기 (예라, 혜령(productId 조건 추가))
-	    if(!orderDetailMap.isEmpty()) {
-	        List<Map<OrderHistoryDto, Payment>> orderHistory = orderDetailMap;
+	    if (!orderDetailMap.isEmpty()) {
+
+	        String memberId = member.getMemberId();
 	        
-	        log.debug("이거뭐뜸 orderHistory = {}", orderHistory);
+	        Map<String, Boolean> reviewWriteMap = new HashMap<>();
 	        
-	        // 이새끼 맵으로 받아서 forEach나 List 돌려야함 지금 존나 ListMap
-//	        String orderNo = orderHistory.getOrderNo();
-//	        int productDetailId = orderHistory.getProductDetailId();
-	        
-//	        log.debug("이새끼 머임 productDetailId = {}", productDetailId);
-	        
-//	        int reviewWrite = orderService.reviewWrite(orderNo, productDetailId);
-	        
-//	        model.addAttribute("reviewWrite", reviewWrite);
-//	        log.debug("reviewWrite = {}", reviewWrite);
-	        
+	        for (Map<OrderHistoryDto, Payment> map : orderDetailMap) {
+	            for (OrderHistoryDto orderHistory : map.keySet()) {
+	                int productDetailId = orderHistory.getProductDetailId();
+	                int productId = orderHistory.getProductId();
+	                int orderId = orderHistory.getOrderId();
+	                
+	                boolean reviewWrite = orderService.reviewWrite(memberId, orderId, productDetailId, productId);
+	               
+	                String key = productDetailId + "-" + productId;
+	                
+	                reviewWriteMap.put(key, reviewWrite);
+	            }
+	        }
+	        log.debug("reviewWriteMap = {}", reviewWriteMap);
+	        model.addAttribute("reviewWrite", reviewWriteMap);
 	    }
 	    
 	    model.addAttribute("status", status);
@@ -142,9 +144,6 @@ public class OrderController {
 	    log.debug(" 주문상태 status = {}", status);
 	    log.debug("orderDetailMap= {}", orderDetailMap);
 	}
-
-
-
 
 	
 	@GetMapping("/orderHistory.do")

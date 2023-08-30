@@ -216,22 +216,14 @@ public class ReviewController {
 		//List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		
 		int reviewId = reviewService.insertReview(reviews);
-		log.debug("reviewId = {}", reviewId);
-		
 		int orderId = reviews.getOrderId();
-		log.debug("orderId = {}", orderId);
-		
 		int productDetailId = reviews.getProductDetailId();
-		log.debug("productDetailId = {}", productDetailId);
-		
 		String reviewMemberId = reviews.getReviewMemberId();
-		log.debug("reviewMemberId = {}", reviewMemberId);
 		
-		Boolean reviewWirte = orderService.reviewWrite(orderId, productDetailId, reviewMemberId);
-		log.debug("reviewWirte = {}", reviewWirte);
-		
-		model.addAttribute("reviewWirte", reviewWirte);
-		
+		/*
+		 * Boolean reviewWirte = orderService.reviewWrite(orderId, productDetailId,reviewMemberId); log.debug("reviewWirte = {}", reviewWirte);
+		 * model.addAttribute("reviewWirte", reviewWirte);
+		 */
 		
 		log.debug("_review = {}", _review);
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());

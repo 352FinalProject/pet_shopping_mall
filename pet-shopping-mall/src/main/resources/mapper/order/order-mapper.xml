@@ -370,19 +370,6 @@
       <result column="image_original_filename" property="imageOriginalFileName" />
       <result column="image_renamed_filename" property="imageRenamedFileName" />
    </resultMap>
-   
-   <select id="reviewWrite" resultType="orderHistoryDto">
-   	SELECT
-	    count(*)
-	FROM 
-	    orderTbl o
-	LEFT JOIN 
-	    order_detail od ON o.order_id = od.order_id
-	LEFT JOIN 
-	    review r ON od.product_detail_id = r.product_detail_id
-	WHERE 
-	    o.order_id = #{orderId} and r.product_detail_id = #{productDetailId} and r.review_member_id = #{reviewMemberId}
-   </select>
 
 	<select id="findOrdersByReviewId" resultType="OrderReviewListDto">
 	SELECT 
