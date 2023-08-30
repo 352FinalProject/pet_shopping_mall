@@ -155,7 +155,6 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDetail> findProductDetailsByProductId(int productId) {
 		return productRepository.findProductDetailsByProductId(productId);
 	}
-	
 
 	// 상품검색 (수경)
 	@Override

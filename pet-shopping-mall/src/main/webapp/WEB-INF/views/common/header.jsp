@@ -16,12 +16,13 @@
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <sec:authorize access="isAuthenticated()">
-   <script>
-   const memberId = '<sec:authentication property="principal.username"/>';
-   </script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
+	<script>
+	const memberId = '<sec:authentication property="principal.username"/>';
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
+
 </sec:authorize>
 
 <style>
@@ -115,7 +116,9 @@
 
 .search-input::placeholder {
    color: #aaa;
+   
 }
+
 </style>
 <title>반려동물 쇼핑몰</title>
 
@@ -212,7 +215,10 @@
                        </c:if>
                        <c:if test="${not empty notifications}">
                           <c:forEach items="${notifications}" var="notification" varStatus="vs">
-                               <p class="notification-content">${notification.memberId}님 ${notification.notiContent}.${notification.notiCreatedAt}</p>
+                               <div>
+                               	<p class="notification-content">db${notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
+                               	<button class="notification-delete-button" id="${notification.id}">x</button>
+                               </div>
                           </c:forEach>
                        </c:if>
                      </div>
@@ -382,7 +388,4 @@ document.addEventListener("DOMContentLoaded", function() {
     
 });
 
-
 </script>
-
-   <jsp:include page="/WEB-INF/views/common/chatIconSide.jsp"></jsp:include>

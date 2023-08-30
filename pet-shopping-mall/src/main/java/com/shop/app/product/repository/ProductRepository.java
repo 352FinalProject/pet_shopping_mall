@@ -104,7 +104,6 @@ public interface ProductRepository {
 	@Update("UPDATE product SET LIKE_CNT = NVL(LIKE_CNT, 0) + #{cnt} WHERE PRODUCT_ID  = #{productId}")
 	int updateLikeCnt(Map<String, Object> param);
 
-	
 	List<ProductSearchDto> searchProducts(String searchQuery);
 
 	@Select("select * from product order by 1")

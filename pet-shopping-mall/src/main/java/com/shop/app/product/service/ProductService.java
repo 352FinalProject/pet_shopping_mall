@@ -73,5 +73,4 @@ public interface ProductService {
 	// 옵션추가 (수경)
 	int adminOptionCreate(int productId, ProductDetail productDetail);
 
-
 }

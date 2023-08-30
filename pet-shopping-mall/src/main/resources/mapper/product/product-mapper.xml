@@ -39,7 +39,6 @@
 		where 
 	    	p.product_name like '%' || #{searchQuery} || '%'
 	</select>
-	
 	<resultMap type="ProductSearchDto" id="productSearchDto">
         <result property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>

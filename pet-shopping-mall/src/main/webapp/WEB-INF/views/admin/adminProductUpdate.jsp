@@ -281,7 +281,7 @@ const addOption = () => {
 	
 	const newOption =`
     <form:form name="memberCreateFrm"
-        action="${pageContext.request.contextPath}/adimin/adminOptionCreate.do"
+        action="${pageContext.request.contextPath}/admin/adminOptionCreate.do"
         method="POST">
 	    <div class="productDetail-container">
 	    <input type="text" name="productId" id="productId" class="form-control" value="${product.productId}">

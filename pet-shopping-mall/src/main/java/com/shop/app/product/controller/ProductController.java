@@ -134,15 +134,15 @@ public class ProductController {
 	    // log.debug("reveiwTotalCount = {}", reveiwTotalCount);
 	    
 	    // 리뷰 평점
-		List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(productId);
-		model.addAttribute("reviews2", reviews2);
-		  
-		log.debug("reviews2 = {} ", reviews2);
-		  
-		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-	
-		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
+//		List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(productId);
+//		model.addAttribute("reviews2", reviews2);
+//		  
+//		log.debug("reviews2 = {} ", reviews2);
+//		  
+//		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+//		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+//	
+//		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
 		  
 		 
 	    
@@ -243,12 +243,6 @@ public class ProductController {
       }
       return resultMap;
    }
-
-   
-   
-   
-   
-   
    
    @GetMapping("/searchProduct.do")
    public void searchProducts(Model model, @RequestParam String searchQuery) {
