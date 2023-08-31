@@ -210,6 +210,12 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.findProductListReviewTotalCount(productId);
 	}
 
+	// 별점 퍼센트 구하기 위한 전체 리뷰
+	@Override
+	public List<Review> findProductReviewAllNoPageBar(int productId) {
+		return reviewRepository.findProductReviewAllNoPageBar(productId);
+	}
+
 
 }
 

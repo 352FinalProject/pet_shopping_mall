@@ -30,7 +30,33 @@ pageEncoding="UTF-8"%>
         color: pink; /* 핑크색 하트 */
     }
 
-    
+    .progress {
+        width: 300px;
+        background-color: #f0f0f0;
+        height: 10px;
+        margin-top: 5px;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: #58ACFA;
+        transition: width 0.5s;
+    }
+
+    .star-label {
+        display: inline-block;
+        width: 50px;
+        margin-right: 10px;
+    }
+    .star-label-and-progress {
+	    display: flex;
+	    align-items: center;
+	    margin-bottom: 10px;
+	}
+	.percentage {
+    margin-left: 10px;
+}
+
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -174,6 +200,61 @@ pageEncoding="UTF-8"%>
         	작성된 리뷰가 없습니다. 
         </c:if>
         <c:if test="${not empty reviews}">
+        <div class="review-percent" style="position: absolute; margin-top:250px;">
+			<ul>
+			    <li>
+ 					<div class="star-label-and-progress">
+                		<span class="star-label">1점</span>
+		                <div class="progress">
+		                    <div class="progress-bar" style="width: ${formattedPercentages[1]}%;"></div>
+		                </div>
+                        <span class="percentage">${formattedPercentages[1]}</span>
+                
+            		</div>
+			    </li>
+			    <li>
+ 					<div class="star-label-and-progress">
+                		<span class="star-label">2점</span>
+		                <div class="progress">
+		                    <div class="progress-bar" style="width: ${formattedPercentages[2]}%;"></div>
+		                </div>
+                        <span class="percentage">${formattedPercentages[2]}</span>
+                
+            		</div>
+			    </li>
+			    <li>
+ 					<div class="star-label-and-progress">
+                		<span class="star-label">3점</span>
+		                <div class="progress">
+		                    <div class="progress-bar" style="width: ${formattedPercentages[3]}%;"></div>
+		                </div>
+                        <span class="percentage">${formattedPercentages[3]}</span>
+                
+            		</div>
+			    </li>
+			    <li>
+ 					<div class="star-label-and-progress">
+                		<span class="star-label">4점</span>
+		                <div class="progress">
+		                    <div class="progress-bar" style="width: ${formattedPercentages[5]}%;"></div>
+		                </div>
+                        <span class="percentage">${formattedPercentages[4]}</span>
+                
+            		</div>
+			    </li>
+			    <li>
+ 					<div class="star-label-and-progress">
+                		<span class="star-label">5점</span>
+		                <div class="progress">
+		                    <div class="progress-bar" style="width: ${formattedPercentages[5]}%;"></div>
+		                </div>
+                        <span class="percentage">${formattedPercentages[5]}</span>
+                
+            		</div>
+			    </li>
+			</ul>
+		</div>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
           <c:forEach items="${reviews}" var="review" varStatus="vs">
             <li>
               <div class="review-box">

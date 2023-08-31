@@ -100,6 +100,10 @@ public interface ReviewRepository {
 	@Select("select count(*) from review where product_id = #{productId}")
 	int findProductListReviewTotalCount(int productId);
 
+	// 별점 퍼센트 구하기 위한 전체 리뷰
+	@Select("select * from review where product_id = #{productId}")
+	List<Review> findProductReviewAllNoPageBar(int productId);
+
 	
 	
 	

@@ -2,31 +2,465 @@
 
 
 .product-div {
-	display: flex;
-	justify-content: space-between;
+   display: flex;
+   justify-content: space-between;
 }
 
 .product-info {
-	
+   
 }
 
 
 #product-detail {
-	
+   
 }
 
 .hr-line {
-	border: 1px solid;
-	color: #e7e7e7;
+   border: 1px solid;
+   color: #e7e7e7;
 }
 
 .util-div {
-	border-bottom: 1px solid #e7e7e7;
-	border-top: 1px solid #e7e7e7;
-	height: 50px;
-	margin-top: 100px;
-	font-size: 15px;
-	padding: 13px;
+   border-bottom: 1px solid #e7e7e7;
+   border-top: 1px solid #e7e7e7;
+   height: 50px;
+   margin-top: 100px;
+   font-size: 15px;
+   padding: 13px;
+}
+
+#product-notice-box {
+   margin-top: 800px;
+}
+
+/* 상품 상세페이지 리뷰박스 */
+.review-div {
+   /* border-bottom: 1px solid #e7e7e7; */
+   /* border-top: 1px solid #e7e7e7; */
+   height: 50px;
+   margin-top: 20px;
+   font-size: 15px;
+   padding: 13px;
+}
+
+
+.common-container2 {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 100px;
+}
+
+#product-title {
+   font-size: 26px;
+}
+
+.product-img img {
+   width: 630px;
+}
+
+.product-info div {
+   margin-bottom: 25px;
+}
+
+.product-assist {
+   display: flex;
+   justify-content: space-between;
+   font-size: 19px;
+}
+
+.product-assist img {
+   width: 25px;
+   height: 25px;
+   margin-right: 5px;
+}
+
+/* 하단 리뷰 */
+
+.product-utility {
+   display: flex;
+   gap: 200px;
+   justify-content: center;
+}
+
+/* 리뷰 전체길이 */
+.review-div {
+   margin-bottom: 400px;
+}
+
+/* 리뷰 페이징 바 */
+.product-review-paging{
+   margin-bottom: 50px;
+}
+
+/* 상품상세 - 리뷰 */
+.review-product-utility{
+   display: flex;
+   flex-direction: column;
+   gap: 100px;
+   justify-content: flex-start;
+   margin-left: 80px;
+   margin-bottom: 150px;
+}
+
+/* 리뷰 구분선 */
+.review-hr {
+   margin-top: 60px;
+}
+
+.review-title{
+   margin-left: 150px;
+}
+
+.review-title-name{
+   margin-left: 150px;
+}
+
+.review-regdate {
+   margin-left: -20px;
+}
+
+/* 상품상세 - 리뷰 정보 css */
+.review-info-id {
+   font-weight: bold;
+   font-size: 15px;
+}
+
+.review-info-date{
+   color: #808080;
+   font-size: 12px;
+}
+
+.review-pet-name {
+   font-size: 13px;
+}
+.review-pet-gender, .review-pet-age, .review-pet-weight, .review-pet-breed{
+   color: #808080;
+   font-size: 12px;
+}
+
+.review-em {
+   color: #cacaca;
+   font-size: 12px;
+}
+
+.product-review-small-space{
+   display: inline-block;
+   height: 0.8em;
+}
+
+.review-info-title{
+   font-size: 16px;
+}
+
+.review-info-content {
+   height: 2em;
+   font-size: 18px;
+}
+
+select[name=product-option] {
+   width: 100%;
+   font-size: 15px;
+   heiht: 40px;
+   padding: 10px;
+   margin-top: 30px;
+}
+
+#price-info {
+   font-size: 23px;
+   font-weight: 600;
+}
+
+.btn {
+   width: 170px;
+   height: 50px;
+   border-radius: 5px;
+   border: none;
+   font-size: 15px;
+   color: #fff;
+   background: #c8c8c8;
+}
+
+.product-bottom {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   background-color: white;
+   padding: 10px 20px;
+   box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+   z-index: 1000;
+   display: flex;
+}
+.product-bottom2 {
+   display: flex;
+   width: 1200px;
+   margin: 0 auto;
+   justify-content: space-between;
+}
+
+.product-bottom div {
+   margin-top: 10px;
+   font-size: 16px;
+}
+
+.product-bottom2 div {
+}
+
+.btn2 {
+   color: #fff;
+   background: #5886d3;
+}
+
+#product-bottom-title {
+   font-size: 20px;
+}
+
+
+.heart-img {
+   margin-left: 620px; */
+   
+}
+
+.product-price-desc {
+   font-size: 18px;
+   padding-top: 25px;
+   float: right;
+}
+
+.product-price-desc span {
+   font-size: 30px;
+   font-weight: 600;
+}
+
+.won_img, .shipped_img {
+   display: flex;
+   align-items: center;
+}
+
+.won_text, .shipped_text {
+   margin-top: 25px;
+   margin-left: 5px;
+   font-weight: 600;
+}
+
+.won_desc, .shipped_desc {
+   margin-top: -20px;
+   color: #828282;
+}
+
+/* 아코디언 효과 */
+* {
+   box-sizing: border-box;
+}
+
+.que {
+   position: relative;
+   padding: 17px 0;
+   cursor: pointer;
+   font-size: 14px;
+   border-bottom: 1px solid #dddddd;
+   display: flex;
+   justify-content: space-around
+}
+
+.que::before {
+   display: inline-block;
+   font-size: 14px;
+   color: #5886d3;
+   margin: 0 5px;
+}
+
+.que.on>span {
+   font-weight: bold;
+}
+
+.star_test {
+   padding: 3px;
+}
+
+.anw {
+   display: none;
+   overflow: hidden;
+   font-size: 14px;
+   padding: 27px 0;
+   border-bottom: 1px solid #dddddd;
+}
+
+.anw span {
+   color: #828282;
+   font-size: 12px;
+}
+
+.anw img {
+   width: 300px;
+   margin-top: 30px;
+   margin-bottom: 30px;
+}
+
+.anw::before {
+   display: inline-block;
+   font-size: 14px;
+   font-weight: bold;
+   color: #666;
+   margin: 0 5px;
+}
+
+.score_star img {
+   width: 15px;
+   height: 15px;
+}
+
+.review-desc {
+   margin-bottom: 20px;
+}
+
+/* 교환 절차 */
+.processing-wrap {
+   margin-top: 70px;
+}
+
+.processing-wrap span {
+   font-size: 17px;
+   font-weight: 600;
+}
+
+.change, .return, .refund, .procedure {
+   font-size: 15px;
+   margin-top: 12px;
+   color: #828282;
+}
+
+.reivew-pet-box {
+   margon-bottom: 100px;
+}
+
+.detail-upload img {
+    width: 300px;
+    height: 300px;
+}
+
+
+/* 상품 리스트 css */
+section.product-board {
+   display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0px 0px 0px;
+    padding: 0 0 60px 0;
+    border-bottom: 1px solid #e7e7e7;
+}
+ul.nav {
+    background: #fff;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+ul.nav {
+    display: flex;
+    font-size: 16px;
+    gap: 109px;
+}
+.product-sort ul.nav {
+   padding: 8px;
+    background: #fff;
+    margin: 0 auto;
+    display: flex;
+    /* justify-content: center; */
+    gap: 15px;
+    justify-content: flex-end;
+}
+.product-sort ul.nav .font{
+   color : #828282;
+   font-size: 14px;
+}
+.board-title {
+    text-align: center;
+    font-size: 30px;
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+.board-category {
+   padding: 0x 0px 60px;
+   display: flex;
+    align-items: center;
+    margin-top: 11px;
+    padding-bottom: 11px;
+}
+.board-category .nav ul {
+    font-size: 16px;
+    gap: 70px;
+}
+
+.product-gallery {
+   max-width: 1200px;
+   margin-top: 35px;
+}
+.gallery {
+   display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10px;
+}
+.product-card {
+    box-sizing: border-box;
+    position: relative;
+    text-decoration: none;
+    display: block;
+    width: 25%;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 20px;
+}
+.product-card .product-thumbnail {
+   box-sizing: border-box;
+    position: relative;
+    padding-bottom: 75%;
+    border-radius: 0;
+    overflow: hidden;
+    width: 280px;
+    height: 280px;
+    margin-right: 20px;
+    
+}
+.product-card .product-thumbnail img {
+   position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    object-fit: cover;
+}
+.product-card .product-desc {
+/*     color : #828282; */
+    box-sizing: border-box;
+}
+
+.product-desc {
+   margin-top: 17px;
+}
+.product-card .product-desc .product-name {
+    margin: 0 0 0.5rem;
+    font-size: 16px;
+}
+.product-card .product-desc .product-price {
+    margin: 0 0 0.5rem;
+    font-size: 19px;
+    font-weight: 500;
+}
+.product-card .product-desc .review-star img {
+    width: 15px;
+    height: 15px;
+    margin-right: 4px;
+}
+.product-card .product-desc .review-cnt {
+    margin: 0 0 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.product-desc2 {
+   color: #828282;
 }
 
 .product-util-div {
@@ -38,96 +472,6 @@
 	padding: 13px;
 }
 
-#product-notice-box {
-	margin-top: 800px;
-}
-
-/* 상품 상세페이지 리뷰박스 */
-.review-div {
-	/* border-bottom: 1px solid #e7e7e7; */
-	/* border-top: 1px solid #e7e7e7; */
-	height: 50px;
-	margin-top: 20px;
-	font-size: 15px;
-	padding: 13px;
-}
-
-
-.common-container2 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 100px;
-}
-
-#product-title {
-	font-size: 26px;
-}
-
-.product-img img {
-	width: 630px;
-}
-
-.product-info div {
-	margin-bottom: 25px;
-}
-
-.product-assist {
-	display: flex;
-	justify-content: space-between;
-	font-size: 19px;
-}
-
-.product-assist img {
-	width: 25px;
-	height: 25px;
-	margin-right: 5px;
-}
-
-/* 하단 리뷰 */
-
-.product-utility {
-	display: flex;
-	gap: 200px;
-	justify-content: center;
-}
-
-/* 리뷰 전체길이 */
-.review-div {
-	margin-bottom: 400px;
-}
-
-/* 리뷰 페이징 바 */
-.product-review-paging{
-	margin-bottom: 50px;
-}
-
-/* 상품상세 - 리뷰 */
-.review-product-utility{
-	display: flex;
-	flex-direction: column;
-	gap: 100px;
-	justify-content: flex-start;
-	margin-left: 80px;
-	margin-bottom: 150px;
-}
-
-/* 리뷰 구분선 */
-.review-hr {
-	margin-top: 60px;
-}
-
-.review-title{
-	margin-left: 150px;
-}
-
-.review-title-name{
-	margin-left: 150px;
-}
-
-.review-regdate {
-	margin-left: -20px;
-}
 
 /* 상품후기 말풍선 */
 .bubble {
@@ -167,348 +511,5 @@ width: 0;
 z-index: 0;
 bottom: -18px;
 left: 107px;
-
-/* 상품상세 - 리뷰 정보 css */
-.review-info-id {
-	font-weight: bold;
-	font-size: 15px;
 }
 
-.review-info-date{
-	color: #808080;
-	font-size: 12px;
-}
-
-.review-pet-name {
-	font-size: 13px;
-}
-.review-pet-gender, .review-pet-age, .review-pet-weight, .review-pet-breed{
-	color: #808080;
-	font-size: 12px;
-}
-
-.review-em {
-	color: #cacaca;
-	font-size: 12px;
-}
-
-.product-review-small-space{
-	display: inline-block;
-	height: 0.8em;
-}
-
-.review-info-title{
-	font-size: 16px;
-}
-
-.review-info-content {
-	height: 2em;
-	font-size: 18px;
-}
-
-select[name=product-option] {
-	width: 100%;
-	font-size: 15px;
-	heiht: 40px;
-	padding: 10px;
-	margin-top: 30px;
-}
-
-#price-info {
-	font-size: 23px;
-	font-weight: 600;
-}
-
-.btn {
-	width: 170px;
-	height: 50px;
-	border-radius: 5px;
-	border: none;
-	font-size: 15px;
-	color: #fff;
-	background: #c8c8c8;
-}
-
-.product-bottom {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	background-color: white;
-	padding: 10px 20px;
-	box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
-	z-index: 1000;
-	display: flex;
-}
-.product-bottom2 {
-	display: flex;
-	width: 1200px;
-	margin: 0 auto;
-	justify-content: space-between;
-}
-
-.product-bottom div {
-	margin-top: 10px;
-	font-size: 16px;
-}
-
-.product-bottom2 div {
-}
-
-.btn2 {
-	color: #fff;
-	background: #5886d3;
-}
-
-#product-bottom-title {
-	font-size: 20px;
-}
-
-
-.heart-img {
-	margin-left: 620px; */
-	
-}
-
-.product-price-desc {
-	font-size: 18px;
-	padding-top: 25px;
-	float: right;
-}
-
-.product-price-desc span {
-	font-size: 30px;
-	font-weight: 600;
-}
-
-.won_img, .shipped_img {
-	display: flex;
-	align-items: center;
-}
-
-.won_text, .shipped_text {
-	margin-top: 25px;
-	margin-left: 5px;
-	font-weight: 600;
-}
-
-.won_desc, .shipped_desc {
-	margin-top: -20px;
-	color: #828282;
-}
-
-/* 아코디언 효과 */
-* {
-	box-sizing: border-box;
-}
-
-.que {
-	position: relative;
-	padding: 17px 0;
-	cursor: pointer;
-	font-size: 14px;
-	border-bottom: 1px solid #dddddd;
-	display: flex;
-	justify-content: space-around
-}
-
-.que::before {
-	display: inline-block;
-	font-size: 14px;
-	color: #5886d3;
-	margin: 0 5px;
-}
-
-.que.on>span {
-	font-weight: bold;
-}
-
-.star_test {
-	padding: 3px;
-}
-
-.anw {
-	display: none;
-	overflow: hidden;
-	font-size: 14px;
-	padding: 27px 0;
-	border-bottom: 1px solid #dddddd;
-}
-
-.anw span {
-	color: #828282;
-	font-size: 12px;
-}
-
-.anw img {
-	width: 300px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-}
-
-.anw::before {
-	display: inline-block;
-	font-size: 14px;
-	font-weight: bold;
-	color: #666;
-	margin: 0 5px;
-}
-
-.score_star img {
-	width: 15px;
-	height: 15px;
-}
-
-.review-desc {
-	margin-bottom: 20px;
-}
-
-/* 교환 절차 */
-.processing-wrap {
-	margin-top: 70px;
-}
-
-.processing-wrap span {
-	font-size: 17px;
-	font-weight: 600;
-}
-
-.change, .return, .refund, .procedure {
-	font-size: 15px;
-	margin-top: 12px;
-	color: #828282;
-}
-
-.reivew-pet-box {
-	margon-bottom: 100px;
-}
-
-.detail-upload img {
-    width: 300px;
-    height: 300px;
-}
-
-
-/* 상품 리스트 css */
-section.product-board {
-	display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 50px 0px 0px 0px;
-    padding: 0 0 60px 0;
-    border-bottom: 1px solid #e7e7e7;
-}
-ul.nav {
-    background: #fff;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-}
-ul.nav {
-    display: flex;
-    font-size: 16px;
-    gap: 109px;
-}
-.product-sort ul.nav {
-	padding: 8px;
-    background: #fff;
-    margin: 0 auto;
-    display: flex;
-    /* justify-content: center; */
-    gap: 15px;
-    justify-content: flex-end;
-}
-.product-sort ul.nav .font{
-	color : #828282;
-	font-size: 14px;
-}
-.board-title {
-    text-align: center;
-    font-size: 30px;
-    padding-top: 40px;
-    padding-bottom: 30px;
-}
-.board-category {
-	padding: 0x 0px 60px;
-	display: flex;
-    align-items: center;
-    margin-top: 11px;
-    padding-bottom: 11px;
-}
-.board-category .nav ul {
-    font-size: 16px;
-    gap: 70px;
-}
-.on {
-	color: blue;
-}
-.product-gallery {
-	max-width: 1200px;
-	margin-top: 35px;
-}
-.gallery {
-	display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 10px;
-}
-.product-card {
-    box-sizing: border-box;
-    position: relative;
-    text-decoration: none;
-    display: block;
-    width: 25%;
-    cursor: pointer;
-    padding: 10px;
-    margin-top: 20px;
-}
-.product-card .product-thumbnail {
-	box-sizing: border-box;
-    position: relative;
-    padding-bottom: 75%;
-    border-radius: 0;
-    overflow: hidden;
-    width: 280px;
-    height: 280px;
-    margin-right: 20px;
-    
-}
-.product-card .product-thumbnail img {
-	position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    object-fit: cover;
-}
-.product-card .product-desc {
-/*     color : #828282; */
-    box-sizing: border-box;
-}
-
-.product-desc {
-	margin-top: 17px;
-}
-.product-card .product-desc .product-name {
-    margin: 0 0 0.5rem;
-    font-size: 16px;
-}
-.product-card .product-desc .product-price {
-    margin: 0 0 0.5rem;
-    font-size: 19px;
-    font-weight: 500;
-}
-.product-card .product-desc .review-star img {
-    width: 15px;
-    height: 15px;
-    margin-right: 4px;
-}
-.product-card .product-desc .review-cnt {
-    margin: 0 0 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 400;
-}
-
-.product-desc2 {
-	color: #828282;
-}

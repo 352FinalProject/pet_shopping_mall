@@ -2,6 +2,7 @@ package com.shop.app.product.controller;
 
 import java.lang.reflect.Member;
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -96,6 +97,40 @@ public class ProductController {
        // 상품Id에 대한 모든 리뷰 가져오기
        List<Review> reviews = reviewService.findProductReviewAll(params, productId);
        model.addAttribute("reviews", reviews);
+       
+       // 별점 퍼센트
+       List<Review> allReviews = reviewService.findProductReviewAllNoPageBar(productId);
+       
+       int[] starCounts = new int[6];  // 인덱스 1부터 5까지 사용
+       for (Review review : allReviews) {
+           int star = review.getReviewStarRate();
+           starCounts[star]++;
+       }
+
+       int totalReviews = allReviews.size();
+       log.debug("totalReviews 토탈리뷰 = {}", totalReviews);
+
+
+       double[] starPercentages = new double[6];  // 각 별점별 백분율을 저장할 배열
+       log.debug("스타퍼센트 starPercentages = {}", starPercentages);
+       
+       for (int i = 1; i <= 5; i++) {
+           starPercentages[i] = (double) starCounts[i] / totalReviews * 100;
+       }
+
+       model.addAttribute("starPercentages", starPercentages);
+       log.debug("starPercentages = {}", starPercentages);
+
+       // starPercentages 배열을 계산하고, 백분율로 변환하여 소수점 없이 포맷팅한 리스트를 생성
+       List<String> formattedPercentages = new ArrayList<>();
+       for (double percentage : starPercentages) {
+           String formatted = new DecimalFormat("###").format(percentage); // 소수점 없이 포맷팅
+           formattedPercentages.add(formatted);
+       }
+
+       model.addAttribute("formattedPercentages", formattedPercentages);
+       log.debug("포매팅 결과 formattedPercentages = {}", formattedPercentages);
+       
 
        // 상품 아이디로 정보 가져오기
        Product product = productService.findProductById(productId);
@@ -158,6 +193,7 @@ public class ProductController {
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
 
+   
 	/**
 	 * @author 전수경
 	 * - 상품게시판 연결

@@ -70,6 +70,9 @@ public interface ReviewService {
 
 	// 상품 상세 페이지 - 리뷰 전체개수 확인
 	int findProductListReviewTotalCount(int productId);
+   
+	// 별점 퍼센트 구하기 위한 전체 리뷰
+	List<Review> findProductReviewAllNoPageBar(int productId);
 
 
 
