@@ -524,44 +524,6 @@ $(".idFinderForm-findId").click(function() {
     });
 });
 
-/* //로그인 버튼 클릭 이벤트
-document.getElementById('loginButton').addEventListener('click', function(event) {
-    event.preventDefault();
-
-    const id = document.getElementById('inputId').value;
-    const password = document.getElementById('inputPassword').value;
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-    // AJAX 요청을 통한 로그인 검증 및 결과 처리
-    $.ajax({
-        type: 'POST',
-        url: '${pageContext.request.contextPath}/member/memberLogin.do',
-        data: {
-            'memberId': id,
-            'password': password
-        },
-        dataType: 'json',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
-        },
-        success: function(response) {
-            if (response.result === 'success') {
-                // 로그인 성공 처리
-                window.location.href = '${pageContext.request.contextPath}/'; 
-            } else if (response.result === 'password_wrong') {
-                alert('비밀번호가 틀렸습니다.');
-            } else if (response.result === 'not_registered') {
-                alert('등록된 회원이 아닙니다.');
-            }
-        },
-        error: function() {
-            alert('로그인 요청에 실패했습니다.');
-        }
-    });
-});
- */
-
 </script>
 
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
