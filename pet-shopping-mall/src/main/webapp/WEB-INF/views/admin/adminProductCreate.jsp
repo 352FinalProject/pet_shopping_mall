@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
 <div id="layoutSidenav_content">
 	<main>
-		<div class="container-fluid px-4">
+		<div class="container-md px-4">
 			<h1 class="mt-4">상품 등록</h1>
 			<ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item"><a
@@ -18,7 +18,7 @@
 					<i class="fas fa-table me-1"></i> 기본상품목록
 				</div>
 				<div class="card-body">
-				<div class="container-fluid px-4">
+				<div class=".container-md px-4 mx-auto">
 					<form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" 
 					    name ="createProductFrm"
 					    enctype="multipart/form-data" 
@@ -90,7 +90,7 @@
 					        <div class="row mb-5">
 								<!-- 1열 -->					        
 					        	<div class="col-md-2">
-					            	<input type="button" id="addOptions" value="옵션 추가" class="form-control">
+						        	<input class="btn btn-outline-secondary" id="addOptions" type="button" value="옵션 추가">
 					        	</div>
 					        </div>
 					        
