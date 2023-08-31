@@ -234,6 +234,7 @@ public class MemberSecurityController {
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
 
+      
       model.addAttribute("member", member); 
 
       // 새로운 비밀번호가 입력되었을 경우 암호화 처리

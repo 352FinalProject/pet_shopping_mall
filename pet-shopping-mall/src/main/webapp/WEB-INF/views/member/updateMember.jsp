@@ -120,9 +120,8 @@ button, input {
 					<tr>
 						<th>아이디</th>
 						<td><input type="text" name="memberId" id="memberId"
-							value="${member.memberId}"  required readonly/></td>
-						<td rowspan="2" class="pet-info-container">
-						</td>
+							value="${member.memberId}" required readonly /></td>
+						<td rowspan="2" class="pet-info-container"></td>
 					</tr>
 					<tr>
 						<th>이름</th>
@@ -133,8 +132,7 @@ button, input {
 						<th>비밀번호</th>
 						<td><input type="password" name="password" id="password"
 							value="" required></td>
-						<td rowspan="2" class="pet-info-container">
-						</td>
+						<td rowspan="2" class="pet-info-container"></td>
 					</tr>
 					<tr>
 						<th>비밀번호 확인</th>
@@ -145,8 +143,7 @@ button, input {
 						<th>핸드폰 번호</th>
 						<td><input type="tel" name="tel" id="tel"
 							value="${member.phone}" required></td>
-						<td rowspan="2" class="pet-info-container">
-						</td>
+						<td rowspan="2" class="pet-info-container"></td>
 					</tr>
 					<tr>
 						<th>생일</th>
@@ -156,16 +153,30 @@ button, input {
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="이메일" value="${principal.member.email}" required readonly>
-							<input
-							type="button" value="이메일 인증" onclick="emailCheck()">
-						</td>
+							placeholder="이메일" value="${principal.member.email}" required
+							readonly> <input type="button" value="이메일 인증"
+							onclick="emailCheck()"></td>
 					</tr>
 					<tr>
-						<th>주소</th> <!-- value="${member.address}" 생략되었지만 getter 사용됨 -->
-						<td><input type="text" name="address" id="address"
-							value="${member.address}" required> <input 
-							type="button" value="주소 검색"></td>
+						<th>주소</th>
+						<td>
+							<div style="text-align: right;">
+								<input type="button" class="address"
+									onclick="sample4_execDaumPostcode();" value="주소 검색">
+							</div> <br>
+							<div style="margin-top: -60px; position: absolute;">
+								<input type="text" class="address" id="roadAddress"
+									placeholder="도로명주소" oninput="updateAddress()">
+							</div> <br>
+							<div style="margin-top: -30px;">
+								<input type="text" class="address" id="jibunAddress"
+									placeholder="지번주소" oninput="updateAddress()">
+							</div> <br> <span id="guide" style="color: #999; display: none"></span>
+							<div style="margin-top: -10px;">
+								<input type="text" class="address" id="detailAddress"
+									placeholder="상세주소" oninput="updateAddress()">
+							</div> <input type="hidden" name="address" id="address" value="" />
+						</td>
 					</tr>
 					<tr>
 						<td class="resetAndSubmit" colspan="2"><input type="reset"
@@ -179,5 +190,124 @@ button, input {
 	</div>
 </section>
 <script>
+	function sample4_execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var roadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 참고 항목 변수
+
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('sample4_postcode').value = data.zonecode;
+						document.getElementById("roadAddress").value = roadAddr;
+						document.getElementById("jibunAddress").value = data.jibunAddress;
+
+						// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+						if (roadAddr !== '') {
+							document.getElementById("extraAddress").value = extraRoadAddr;
+
+						} else {
+							document.getElementById("extraAddress").value = '';
+						}
+						document.getElementById('roadAddress').value = roadAddr;
+
+						// 도로명 주소와 지번 주소, 상세 주소를 합쳐서 전체 주소로 설정한다.
+						var jibunAddress = data.jibunAddress; // Add this line
+						var fullAddress = roadAddr
+								+ jibunAddress
+								+ " "
+								+ document.getElementById("detailAddress").value;
+						document.getElementById("address").value = fullAddress;
+					}
+				}).open();
+	};
+
+	function updateAddress() {
+		const roadAddress = document.getElementById("roadAddress").value;
+		const jibunAddress = document.getElementById("jibunAddress").value;
+		const detailAddress = document.getElementById("detailAddress").value;
+
+		var fullAddress = roadAddress + jibunAddress + " " + detailAddress;
+		document.getElementById("address").value = fullAddress;
+	}
+
+	function sample4_execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var roadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 참고 항목 변수
+
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('sample4_postcode').value = data.zonecode;
+						document.getElementById("roadAddress").value = roadAddr;
+						document.getElementById("jibunAddress").value = data.jibunAddress;
+
+						// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+						if (roadAddr !== '') {
+							document.getElementById("extraAddress").value = extraRoadAddr;
+
+						} else {
+							document.getElementById("extraAddress").value = '';
+						}
+						document.getElementById('roadAddress').value = roadAddr;
+
+						// 도로명 주소와 지번 주소, 상세 주소를 합쳐서 전체 주소로 설정한다.
+						var jibunAddress = data.jibunAddress; // Add this line
+						var fullAddress = roadAddr
+								+ jibunAddress
+								+ " "
+								+ document.getElementById("detailAddress").value;
+						document.getElementById("address").value = fullAddress;
+					}
+				}).open();
+	};
+
+	function updateAddress() {
+		const roadAddress = document.getElementById("roadAddress").value;
+		const jibunAddress = document.getElementById("jibunAddress").value;
+		const detailAddress = document.getElementById("detailAddress").value;
+
+		var fullAddress = roadAddress + jibunAddress + " " + detailAddress;
+		document.getElementById("address").value = fullAddress;
+	}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
