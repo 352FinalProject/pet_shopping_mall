@@ -175,7 +175,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 옵션추가 (수경)
 	@Override
-	public int adminOptionCreate(int productId, ProductDetail productDetail) {
-		return productRepository.adminOptionCreate(productId, productDetail);
+	public int adminOptionCreate(ProductDetail productDetail) {
+		return productRepository.adminOptionCreate(productDetail);
 	}
 }

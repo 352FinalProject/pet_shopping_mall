@@ -14,6 +14,7 @@ public class ProductOptionCreateDto {
 	
     public ProductDetail toProductDetail() {
     	return ProductDetail.builder()
+    			.productId(productId)
     			.optionName(optionName)
     			.optionValue(optionValue)
     			.additionalPrice(additionalPrice)

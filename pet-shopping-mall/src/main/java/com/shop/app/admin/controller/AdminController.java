@@ -542,6 +542,26 @@ public class AdminController {
 	}
 	
 	
+	
+	
+	// 상품옵션 추가 (수경)
+	@PostMapping("/adminOptionCreate.do")
+	public ResponseEntity<?> adminOptionCreate(
+			@Valid @RequestBody ProductOptionCreateDto _product,
+			@AuthenticationPrincipal MemberDetails member 
+			) {
+		log.debug("ProductOptionCreateDto = {}", _product);
+		int productId = _product.getProductId();
+		ProductDetail productDetail = _product.toProductDetail();
+    	
+        // 상품 옵션 업데이트 로직 수행
+        int result = productService.adminOptionCreate(productDetail);
+
+        return ResponseEntity.ok("옵션이 성공적으로 추가되었습니다.");
+	}
+	
+	
+	
 	/**
 	 * @author 전수경
 	 * 상품 수정
@@ -558,22 +578,6 @@ public class AdminController {
 		int result = productService.updateProduct(product);
 		
 		return ResponseEntity.ok(result);
-	}
-	
-	// 상품옵션 추가
-	@PostMapping("/adminOptionCreate.do")
-	public ResponseEntity<?> adminOptionCreate(
-			@Valid @RequestBody ProductOptionCreateDto _product,
-			@AuthenticationPrincipal MemberDetails member 
-			) {
-		log.debug("ProductOptionCreateDto = {}", _product);
-		int productId = _product.getProductId();
-		ProductDetail productDetail = _product.toProductDetail();
-    	
-        // 상품 옵션 업데이트 로직 수행
-        int result = productService.adminOptionCreate(productId, productDetail);
-
-        return ResponseEntity.ok("옵션이 성공적으로 추가되었습니다.");
 	}
 	
 	

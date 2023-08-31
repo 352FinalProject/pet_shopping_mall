@@ -47,8 +47,13 @@ pageEncoding="UTF-8"%>
           <div class="product-assist">
             <img
               src="${pageContext.request.contextPath}/resources/images/상품/star.png"
-              alt="별점"
-            /><span>${productReviewStarAvg.reviewStarRate}</span> <span>&nbsp;|&nbsp;</span>
+              alt="별점"/>
+              <c:if test="${productReviewStarAvg.reviewStarRate == null}">
+				<span>0.0</span> <span>&nbsp;|&nbsp;</span>
+			  </c:if>
+              <c:if test="${productReviewStarAvg.reviewStarRate != null}">
+				<span>${productReviewStarAvg.reviewStarRate}</span> <span>&nbsp;|&nbsp;</span>
+			  </c:if>
             <span><a href="#product-review-box">후기 ${reviewTotalCount}건</a></span>
           </div>
         </div>

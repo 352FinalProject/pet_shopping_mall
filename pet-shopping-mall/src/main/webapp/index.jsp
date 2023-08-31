@@ -187,12 +187,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	  });
 	});
 
-/* 하단 슬라이드 1 */
-document.addEventListener("DOMContentLoaded", function() {
-    let imgs = document.querySelector(".gallery");
-    createSlider(imgs);
-});
-
 /* 하단 슬라이드 2 */
 document.addEventListener("DOMContentLoaded", function() {
     let imgs = document.querySelector(".gallery2");

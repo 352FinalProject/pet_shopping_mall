@@ -85,7 +85,7 @@
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
 										<c:if test="${status[index] == '배송완료'}">
-										    <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+										  <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
 										        <input type="hidden" name="productDetailId" value="${entry.key.productDetailId}">
 										        <input type="hidden" name="productId" value="${entry.key.productId}">
 										        <input type="hidden" name="orderId" value="${entry.key.orderId}">
