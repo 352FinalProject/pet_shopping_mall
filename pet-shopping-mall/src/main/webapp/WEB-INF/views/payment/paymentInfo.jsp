@@ -170,6 +170,8 @@
 	</div>
 <form:form name="orderDeleteFrm" id="orderDeleteFrm" method="POST" action="${pageContext.request.contextPath}/order/deleteOrder.do">
 	<input type="hidden" name="orderNo" value=""/>
+	<input type="hidden" name="pointsUsed" value=""/>
+	<input type="hidden" name="useCoupon" value=""/>
 </form:form>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -225,7 +227,6 @@ document.getElementById('couponSelect').addEventListener('change', function() {
   } else { // 쿠폰이 선택되지 않으면
     useCoupon = false;
   }
-  console.log("After change, useCoupon value: ", useCoupon);
 });
 
 /* 결제 관련 js */
@@ -269,7 +270,6 @@ const proceedPay = () => {
     }
 
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
-    console.log("Before sending, useCoupon value: ", useCoupon);
 	const data = {
 		orderNo: new Date().getTime(),
 		memberId: '${loginMember.memberId}',
@@ -305,26 +305,39 @@ const proceedPay = () => {
 	
 	data.forms = formDatas;
 	
-	
 	$.ajax({
-		url: '${pageContext.request.contextPath}/payment/proceed.do',
-		type: 'POST',
-		async: true,
-		contentType:'application/json',
-		data : JSON.stringify(data),
-		success(response) {
-			console.log(response);
-			if(response.result > 0){
-				if(confirm("주문하시겠습니까?")) {
-					requestPaymentByCard(data);
-				} else {
-					alert("주문이 취소되었습니다.");
-					const frm = document.querySelector("#orderDeleteFrm");
-					frm.orderNo.value = data.orderNo;
-					frm.submit();
-				}
-			}
-		}
+	    url: '${pageContext.request.contextPath}/payment/proceed.do',
+	    type: 'POST',
+	    async: true,
+	    contentType:'application/json',
+	    data : JSON.stringify(data),
+	    success(response) {
+	        console.log(response);
+	        if(response.result > 0){
+	            if(confirm("주문하시겠습니까?")) {
+	                requestPaymentByCard(data);
+	            } else {
+
+	             // 포인트나 쿠폰을 사용했는지 확인
+	                let dataToSend = { memberId: memberId };
+
+	                if (pointValue > 0) {
+	                    dataToSend.pointsUsed = pointValue;
+	                }
+
+	                if (useCoupon) {
+	                    dataToSend.useCoupon = useCoupon;
+	                }
+	            
+	                alert("주문이 취소되었습니다.");
+	                const frm = document.querySelector("#orderDeleteFrm");
+	                frm.orderNo.value = data.orderNo;
+	                frm.pointsUsed.value = data.pointsUsed;
+	                frm.useCoupon.value = data.useCoupon;
+	                frm.submit();
+	            }
+	        }
+	    }
 	});
 };
 

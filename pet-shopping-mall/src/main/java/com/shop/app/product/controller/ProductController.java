@@ -97,8 +97,6 @@ public class ProductController {
        Product product = productService.findProductById(productId);
        List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
        ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
-       log.debug("productDetails = {}", productDetails);
-       log.debug("productImages = {}", productImages);
        
        // 상품정보 담아주기
        model.addAttribute("product", product); // 상품정보
@@ -118,8 +116,6 @@ public class ProductController {
 	        int reviewId2 = review.getReviewId();
 	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 	        
-	        log.debug("reviewDetails = {}", reviewDetails);
-	        
 	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
 	            List<String> imageFilenames = new ArrayList<>();
 	            
@@ -131,18 +127,14 @@ public class ProductController {
 	    }
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
-	    log.debug(" 이미지 reviewImageMap = {}", reviewImageMap);
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	    
 	    // 상품 상세 페이지 - 리뷰 전체개수 확인
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
 	    
-	    // log.debug("reveiwTotalCount = {}", reveiwTotalCount);
-	    
 	    // 리뷰 별점 평균
 	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-		log.debug("평균 별점 productReviewStarAvg = {}", productReviewStarAvg);
 
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
@@ -160,7 +152,6 @@ public class ProductController {
 			@RequestParam int id,
 			Model model
 			) {
-		log.debug("categoryId = {}", id);
 		// 카테고리 정보 가져오기
 		ProductCategory productCategory = productService.findProductCategoryById(id); 
 		// 해당 카테고리의 상품 가져오기
@@ -186,7 +177,6 @@ public class ProductController {
 					.attachmentMapping(productImages.getAttachmentMapping())
 					.build());
 		}
-		log.debug("productInfos = {}", productInfos);
 		
 		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productInfos", productInfos);
@@ -202,8 +192,6 @@ public class ProductController {
 	        productInfo.setProductReviewStarAvg(productReviewStarAvg);
 		}
 		model.addAttribute("productInfos", productInfos); 
-		
-		log.debug("별점나왔니 productInfos = {}", productInfos);
 		
 		
    }

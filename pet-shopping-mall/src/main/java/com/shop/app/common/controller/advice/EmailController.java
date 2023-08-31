@@ -59,7 +59,6 @@ public class EmailController {
 
       Map<String, Object> response = new HashMap<>();
       response.put("success", true);
-      log.debug("Response being sent: " + response);
       return response;
    }
 
@@ -92,7 +91,6 @@ public class EmailController {
 	// 이메일로 임시 비밀번호 발송하는 메소드 추가
 	@PostMapping("/email/sendTemporaryPassword.do")
 	public ResponseEntity<String> sendTemporaryPassword(@RequestParam String email, HttpSession session) {
-		log.debug("임시 비밀번호 호출!!!");
 		
 		// 이메일 전송 로직
 		MailSender mailSender = new MailSender();

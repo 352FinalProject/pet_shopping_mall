@@ -173,8 +173,6 @@ public class ReviewController {
 						.imageType(imageType)
 						.imageFileSize(upFile.getSize())
 						.build();
-
-				// log.debug("review attach = {}", attach);
 				attachments.add(attach);
 				hasImage = true; // 이미지가 있으면 true (예라)
 			}
@@ -221,12 +219,6 @@ public class ReviewController {
 		int productDetailId = reviews.getProductDetailId();
 		String reviewMemberId = reviews.getReviewMemberId();
 		
-		/*
-		 * Boolean reviewWirte = orderService.reviewWrite(orderId, productDetailId,reviewMemberId); log.debug("reviewWirte = {}", reviewWirte);
-		 * model.addAttribute("reviewWirte", reviewWirte);
-		 */
-		
-		log.debug("_review = {}", _review);
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 
 		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
@@ -252,8 +244,7 @@ public class ReviewController {
 		newPoint.setPointType("리뷰적립");
 		newPoint.setPointMemberId(_review.getReviewMemberId());
 		newPoint.setReviewId(pointReviewId.getReviewId());
-		
-		// log.debug("newPoint = {}", newPoint);
+
 		int newPointResult = pointService.insertPoint(newPoint);
 
 		return "redirect:/review/reviewList.do";
@@ -265,7 +256,6 @@ public class ReviewController {
 
 		// 1. 리뷰 id로 적립된 포인트 찾기
 		Point earnedPoint = pointService.getPointByReviewId(reviewId);
-		// log.debug("earnedPoint = {}", earnedPoint);
 
 		if (earnedPoint != null) {
 			// 2. 현재 포인트에서 적립된 포인트 빼기
@@ -279,8 +269,6 @@ public class ReviewController {
 			rollbackPoint.setPointType("리뷰삭제");
 			rollbackPoint.setPointMemberId(earnedPoint.getPointMemberId());
 			rollbackPoint.setReviewId(reviewId);
-			
-			// log.debug("rollbackPoint = {}", rollbackPoint);
 
 			int rollbackResult = pointService.insertRollbackPoint(rollbackPoint);
 		}
@@ -311,8 +299,6 @@ public class ReviewController {
 		ReviewProductDto reviewProduct = reviewService.findProductReviewId(reviewId);
 		model.addAttribute("reviewProduct", reviewProduct);
 		
-		log.debug("reviewProduct = {}", reviewProduct);
-		
 	}
 
 
@@ -331,9 +317,7 @@ public class ReviewController {
 
 		Review reviews = _review.toReview();
 		int result = reviewService.updateReview(reviews);
-
-		// log.debug("리뷰수정 result = {}", result);
-
+		
 		return "redirect:/review/reviewDetail.do?reviewId=" + reviews.getReviewId();
 
 	}

@@ -28,8 +28,6 @@ public class CouponController {
 		String memberId = principal.getName(); // 로그인한 사용자의 ID
 		List<MemberCouponDto> memberCoupons = couponService.findCouponsByMemberId(memberId);
 		model.addAttribute("memberCoupons", memberCoupons);
-
-		log.debug("memberCoupons = {}", memberCoupons);
 	}
 
 }
