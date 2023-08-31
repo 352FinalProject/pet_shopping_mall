@@ -71,6 +71,6 @@ public interface ProductService {
 	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
 	// 옵션추가 (수경)
-	int adminOptionCreate(int productId, ProductDetail productDetail);
+	int adminOptionCreate(ProductDetail productDetail);
 
 }
