@@ -105,15 +105,10 @@ public class CartController {
 		int quantity = Integer.parseInt(_quantity);
 		int productDetailId = Integer.parseInt(_productDetailId);
 		
-		log.debug("quantity = {}", quantity);
-		log.debug("productDetailId = {}", productDetailId);
-		
 		int result = cartService.insertCart(memberId, productDetailId, quantity);
 		
 		Map<String, Object> map = new HashMap<>();
-		
 		map.put("msg", "상품 추가 완료");
-		
 		return map;
 	}
 }

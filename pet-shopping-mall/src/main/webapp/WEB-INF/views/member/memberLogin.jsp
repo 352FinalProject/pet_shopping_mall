@@ -287,95 +287,105 @@ background-color: #ccc;
 </style>
 <section class="common-section" id="#">
    <div class="common-container">
-      <form:form
-         action="${pageContext.request.contextPath}/member/memberLogin.do"
-         method="post">
-         <table class="table-bordered">
-            <tr>
-               <td>
-                  <div class="login-form">
-                     <h2>로그인</h2>
-                  </div>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <div class="login-modal">
-                     <div class="login-input">
-                        <input type="text" id="inputId" class="form-control"
-                           name="memberId" required="required" placeholder="아이디" />
-                     </div>
-                     <div class="login-input">
-                        <input type="password" id="inputPassword" class="form-control2"
-                           name="password" required="required" placeholder="비밀번호">
-                     </div>
-                  </div>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <div class="save-search">
-                     <div class="saveId">
-                        <input class="saveId" type="checkbox" name="saveId">
-                     </div>
-                     <div class="search-id">
-                        <p>로그인 유지</p>
-                        <button type="button" class="search" id="searchId"
-                           onclick="openIdFinderModal();">아이디찾기</button>
-                        <button type="button" class="search" id="searchPassword">비밀번호찾기</button>
-                     </div>
-                  </div>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <div class="login-btnAll">
-                     <!-- 로그인 버튼 -->
-                     <button type="submit" name="btn-outline-success" id="loginButton"
-                        class="login-btn">로그인</button>
-                  </div>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <div class="login-btnAll">
-                     <button type="submit" class="kakao-btn"
-                        onclick="location.href='${pageContext.request.contextPath}/oauth2/authorization/kakao'">카카오
-                        로그인</button>
-                  </div>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <div class="login-btnAll">
-                     <button type="submit" class="naver-btn"
-                        onclick="location.href='${pageContext.request.contextPath}/oauth2/authorization/naver'">네이버
-                        로그인</button>
-                  </div>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <div class="login-btnAll">
-                     <button type="submit" class="signUp-btn"
-                        onclick="location.href='${pageContext.request.contextPath}/member/terms.do'">회원가입</button>
-                  </div>
-               </td>
-            </tr>
-         </table>
-      </form:form>
-   </div>
+			<div class="common-container">
+		<form:form
+			action="${pageContext.request.contextPath}/member/memberLogin.do"
+			method="post">
+		<c:if test="${param.error ne null}">
+    		<script>
+        	alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+    		</script>
+		</c:if>
+			<table class="table-bordered">
+				<tr>
+					<td>
+						<div class="login-form">
+							<h2>로그인</h2>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="login-modal">
+							<div class="login-input">
+								<input type="text" id="inputId" class="form-control"
+									name="memberId" required="required" placeholder="아이디" />
+							</div>
+							<div class="login-input">
+								<input type="password" id="inputPassword" class="form-control2"
+									name="password" required="required" placeholder="비밀번호">
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="save-search">
+							<div class="saveId">
+								<input class="saveId" type="checkbox" name="saveId">
+							</div>
+							<div class="search-id">
+								<p>로그인유지</p>
+								<button type="button" class="search" id="searchId"
+									onclick="openIdFinderModal();">아이디찾기</button>
+								<button type="button" class="search" id="searchPassword">비밀번호찾기</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="login-btnAll">
+							<!-- 로그인 버튼 -->
+							<button type="submit" name="btn-outline-success" id="loginButton"
+								class="login-btn">로그인</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="login-btnAll">
+							<button type="submit" class="kakao-btn"
+								onclick="location.href='${pageContext.request.contextPath}/oauth2/authorization/kakao'">카카오
+								로그인</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="login-btnAll">
+							<button type="submit" class="naver-btn"
+								onclick="location.href='${pageContext.request.contextPath}/oauth2/authorization/naver'">네이버
+								로그인</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="login-btnAll">
+							<button type="submit" class="signUp-btn"
+								onclick="location.href='${pageContext.request.contextPath}/member/terms.do'">회원가입</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form:form>
+	</div>
    <!-- 비밀번호 찾기 모달 -->
    <div id="passwordResetModal" class="modal">
       <div class="modal-content">
          <h2>비밀번호 찾기</h2>
          <p>이메일을 입력하여 비밀번호 재설정 링크를 받아보세요.</p>
+         <form:form id="passwordResetForm"
+            action="${pageContext.request.contextPath}/email/sendTemporaryPassword.do"
+            method="post" name="sendEmail">
             <div class="form-group">
                <label for="email">이메일 주소:</label> <input type="email"
                   class="modal-form-control" id="userEmail" name="email" required>
             </div>
             <button type="submit" id="sendEmail" class="btn-primary">이메일
                전송</button>
+         </form:form>
          <div class="password-close-modal">
             <button type="button" id="closeModalBtn">닫기</button>
          </div>
@@ -445,9 +455,8 @@ closeModalBtn.addEventListener("click", function() {
 $(document).ready(function() {
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-    const sendEmail = document.getElementById("sendEmail");
-
-    $("#sendEmail").off('click').on('click', function() {
+   const sendEmail = document.getElementById("sendEmail");
+    $("#sendEmail").click(function() {
         const userEmail = $("#userEmail").val();
         $.ajax({
             type: 'POST',
@@ -457,11 +466,16 @@ $(document).ready(function() {
             },
             dataType: "text",
             beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
+                xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
             },
             success: function(result) {
-                alert('임시비밀번호를 전송 했습니다.');
-                window.location.href = "${pageContext.request.contextPath}/member/memberLogin.do";
+               console.log(result);
+                if (result === "no") {
+                    alert('임시비밀번호를 전송 했습니다.');
+                    userEmail.submit();
+                } else {
+                    alert('임시비밀번호를 전송 했습니다.');
+                }
             },
             error: function() {
                 console.log('에러 체크!!');
@@ -469,7 +483,6 @@ $(document).ready(function() {
         });
     });
 });
-
 
 // 아이디 찾기 모달
 const findIdModal = document.getElementById("findIdModal");
@@ -500,7 +513,7 @@ $(".idFinderForm-findId").click(function() {
             if (result === "not_found") {
                 alert('해당 이메일로 등록된 회원이 없습니다');
             } else {
-                alert('해당 이메일로 등록된 id는 : ' + result + '입니다.'); // css 먹여놓은걸로 바꾸기
+                alert('해당 이메일로 등록된 id는 : ' + result); // css 먹여놓은걸로 바꾸기
             }
         },
         error: function() {
@@ -508,6 +521,7 @@ $(".idFinderForm-findId").click(function() {
         }
     });
 });
+
 
 
 
