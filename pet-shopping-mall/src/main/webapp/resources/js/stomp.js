@@ -45,3 +45,4 @@ const renderMessage = (message) => {
 
     console.log(newNotification.textContent);
 };
+

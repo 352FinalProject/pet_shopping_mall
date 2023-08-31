@@ -29,9 +29,9 @@ public class NotificationController {
 	
 	@ResponseBody
 	@GetMapping("/findAllNotification.do")
-	public void findAllNotification(@RequestParam String memberId, Model model) {
+	public List<Notification> findAllNotification(@RequestParam String memberId, Model model) {
 	    List<Notification> notifications = notificationService.findAllNotification(memberId);
-	    model.addAttribute("notifications", notifications);
+	    return notifications;
 	}
 	
 	

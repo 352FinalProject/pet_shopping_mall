@@ -359,6 +359,41 @@ $(document).ready(function() {
 	}); */
 
 });
+
+
+
+const renderNotification = (message) => {
+	    const { id, notiCategory, notiContent, notiCreatedAt, memberId } = JSON.parse(message);
+
+	    const $notificationPopup = $("#notificationPopup");
+	    const $popupContent = $notificationPopup.find(".popup-content");
+
+	    const newNotificationContainer = document.createElement("div");
+	    newNotificationContainer.className = "notification-container";
+	    
+	    const newNotification = document.createElement("p");
+	    newNotification.className = "notification-content";
+	    newNotification.textContent = `${memberId}님 ${notiContent}${notiCreatedAt}`;
+
+	    const deleteButton = document.createElement("button");
+	    deleteButton.innerHTML = `X`; // 
+	    deleteButton.className = "notification-delete-button"; 
+	    deleteButton.id = id; 
+
+	    newNotification.appendChild(deleteButton);
+
+	    newNotificationContainer.appendChild(newNotification);
+
+	    $popupContent.prepend(newNotificationContainer);
+
+	    $notificationPopup.addClass("active");
+
+	    console.log(newNotification.textContent);
+	};
+
+	
+	
+
 	/* 팝업창 열고 알림생성 */
 	function loadNotifications(memberId) {
 		const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
@@ -375,8 +410,9 @@ $(document).ready(function() {
 	        beforeSend: function (xhr) {
 	               xhr.setRequestHeader(csrfHeader, csrfToken);
 	         },
-	        success: function (result) {
-	        	renderMessage(result);
+	        success: function (notifications) {
+	        	
+	        	renderNotification(result);
 	        },
 	        error: function (xhr, textStatus, errorThrown) {
 	            console.log('Error:', textStatus);
