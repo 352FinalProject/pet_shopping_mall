@@ -82,7 +82,7 @@
 	    </collection>
 	</resultMap>
 	
-	<select id="productReviewStarAvg" resultMap="ProductReviewAvgDto">
+	<select id="productReviewStarAvg" resultMap="productReviewAvgDto">
 	SELECT
 	    p.product_id,
 	    ROUND(AVG(r.review_star_rate), 1) as AVG,
@@ -91,16 +91,16 @@
 	    product p join review r 
 	        ON p.product_id = r.product_id
 	WHERE
-	    p.product_id = #{productId} and r.product_id = #{productId}
+	    p.product_id = #{productId}
 	GROUP BY
 	    p.product_id, p.product_name
 	</select>
 	
-	<resultMap type="ProductReviewAvgDto" id="ProductReviewAvgDto">
-		<result column="product_id" property="productId" />
-		<result column="product_name" property="productName" />
-		<result column="review_star_rate" property="reviewStarRate" />
-	</resultMap>
+<resultMap type="ProductReviewAvgDto" id="productReviewAvgDto">
+    <result column="product_id" property="productId" />
+    <result column="product_name" property="productName" />
+    <result column="AVG" property="reviewStarRate" />
+</resultMap>
 	
 	<select id="findReviewAll" resultType="ReviewListDto">
 	SELECT 

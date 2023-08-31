@@ -28,8 +28,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
@@ -79,7 +81,10 @@ public class ProductController {
                              Model model) {
 
        int limit = 3;
-       Map<String, Object> params = Map.of("page", page, "limit", limit);
+       
+       Map<String, Object> params = Map.of(
+    		   "page", page, 
+    		   "limit", limit);
 
        int totalCount = reviewService.findProductTotalReviewCount();
        int totalPages = (int) Math.ceil((double) totalCount / limit);
@@ -108,40 +113,39 @@ public class ProductController {
 	    }
 	    
 	    // 상품 상세 페이지에 이미지 파일 뿌려주기
-	    Map<Integer, String> reviewImageMap = new HashMap<>();
+	    Map<Integer, List<String>> reviewImageMap = new HashMap<>();
 	    for (Review review : reviews) {
 	        int reviewId2 = review.getReviewId();
 	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 	        
+	        log.debug("reviewDetails = {}", reviewDetails);
+	        
 	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-	            String imageFilename = reviewDetails.getAttachments().get(0).getImageRenamedFilename();
-	            //log.debug("imageFilename = {}", imageFilename);
-	            reviewImageMap.put(reviewId2, imageFilename);
+	            List<String> imageFilenames = new ArrayList<>();
+	            
+	            for (ImageAttachment attachment : reviewDetails.getAttachments()) {
+	                imageFilenames.add(attachment.getImageRenamedFilename());
+	            }
+	            reviewImageMap.put(reviewId2, imageFilenames);
 	        }
 	    }
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
+	    log.debug(" 이미지 reviewImageMap = {}", reviewImageMap);
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	    
-	    // 리뷰 전체개수 확인
+	    // 상품 상세 페이지 - 리뷰 전체개수 확인
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
 	    
 	    // log.debug("reveiwTotalCount = {}", reveiwTotalCount);
 	    
-	    // 리뷰 평점
-//		List<ProductReviewAvgDto> reviews2 = reviewService.findProductReviewAvgAll(productId);
-//		model.addAttribute("reviews2", reviews2);
-//		  
-//		log.debug("reviews2 = {} ", reviews2);
-//		  
-//		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-//		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-////	
-//		log.debug("productReviewStarAvg = {}", productReviewStarAvg);
-//		  
-		 
-	    
+	    // 리뷰 별점 평균
+	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+		log.debug("평균 별점 productReviewStarAvg = {}", productReviewStarAvg);
+
+		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
+		
 	    
 	    /* 찜 등록 여부 가져오기 (선모) */
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
@@ -187,14 +191,21 @@ public class ProductController {
 		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productInfos", productInfos);
 		
-		// 리뷰 전체개수 출력 (혜령)
+		// 리뷰 전체개수, 리뷰 별점 평균 (혜령)
 		for (ProductInfoDto productInfo : productInfos) {
 		    int productId = productInfo.getProductId();
 
 		    int productListReviewTotalCount = reviewService.findProductListReviewTotalCount(productId);
 		    productInfo.setReviewCnt(productListReviewTotalCount);
+		    
+	        ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+	        productInfo.setProductReviewStarAvg(productReviewStarAvg);
 		}
 		model.addAttribute("productInfos", productInfos); 
+		
+		log.debug("별점나왔니 productInfos = {}", productInfos);
+		
+		
    }
    
    

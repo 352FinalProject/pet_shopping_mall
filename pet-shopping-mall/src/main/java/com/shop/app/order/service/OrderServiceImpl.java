@@ -182,6 +182,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId) {
 		return orderRepository.findOrdersByReviewId(reviewMemberId);
+		
 	}
 	
 	@Override
