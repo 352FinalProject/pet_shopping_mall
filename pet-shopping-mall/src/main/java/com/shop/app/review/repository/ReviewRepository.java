@@ -39,8 +39,6 @@ public interface ReviewRepository {
 	int insertMapping(int reviewId, int imageId);
 
 	// 내가 쓴 리뷰 조회
-//	@Select("SELECT * FROM review WHERE review_member_id = #{reviewMemberId, jdbcType=VARCHAR} ORDER BY review_id DESC")
-//	@Select("select r.review_id, r.review_star_rate, r.review_created_at, pd.option_name, pd.option_value, p.product_name from review r join product_detail pd on r.product_detail_id = pd.product_detail_id join product p on p.product_id = pd.product_id where r.review_member_id = #{reviewMemberId}")
 	List<ReviewListDto> findReviewAll(String reviewMemberId, RowBounds rowBounds);
 
 	// 리뷰 전체 카운트

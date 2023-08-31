@@ -109,5 +109,8 @@ public interface OrderRepository {
 	
 	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
+	// 상품 상세 - 리뷰 - 상품
+	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
+
 	
 }

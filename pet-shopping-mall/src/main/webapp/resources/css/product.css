@@ -29,6 +29,15 @@
 	padding: 13px;
 }
 
+.product-util-div {
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #e7e7e7;
+	height: 50px;
+	margin-top: 40px;
+	font-size: 15px;
+	padding: 13px;
+}
+
 #product-notice-box {
 	margin-top: 800px;
 }
@@ -119,6 +128,45 @@
 .review-regdate {
 	margin-left: -20px;
 }
+
+/* 상품후기 말풍선 */
+.bubble {
+position: absolute;
+width: 259px;
+height: 35px;
+padding: 0px;
+background: #FFFFFF;
+margin-left : 335px;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+border: #5886d3 solid 4px;
+}
+
+.bubble:after {
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 11px 9px 0;
+border-color: #FFFFFF transparent;
+display: block;
+width: 0;
+z-index: 1;
+bottom: -11px;
+left: 110px;
+}
+
+.bubble:before {
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 14px 12px 0;
+border-color: #5886d3 transparent;
+display: block;
+width: 0;
+z-index: 0;
+bottom: -18px;
+left: 107px;
 
 /* 상품상세 - 리뷰 정보 css */
 .review-info-id {

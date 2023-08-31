@@ -29,6 +29,8 @@ pageEncoding="UTF-8"%>
     .pink {
         color: pink; /* 핑크색 하트 */
     }
+
+    
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -47,8 +49,13 @@ pageEncoding="UTF-8"%>
           <div class="product-assist">
             <img
               src="${pageContext.request.contextPath}/resources/images/상품/star.png"
-              alt="별점"
-            /><span>${productReviewStarAvg.reviewStarRate}</span> <span>&nbsp;|&nbsp;</span>
+              alt="별점"/>
+              <c:if test="${productReviewStarAvg.reviewStarRate == null}">
+				<span>0.0</span> <span>&nbsp;|&nbsp;</span>
+			  </c:if>
+              <c:if test="${productReviewStarAvg.reviewStarRate != null}">
+				<span>${productReviewStarAvg.reviewStarRate}</span> <span>&nbsp;|&nbsp;</span>
+			  </c:if>
             <span><a href="#product-review-box">후기 ${reviewTotalCount}건</a></span>
           </div>
         </div>
@@ -129,7 +136,10 @@ pageEncoding="UTF-8"%>
       </div>
     </div>
     <!-- 상품 정보 -->
-    <div class="util-div">
+    <div class="bubble">
+  		<span>&nbsp;&nbsp;후기 작성하면 최대 1000원 지급!✨</span>
+	</div>
+    <div class="product-util-div">
       <ul class="product-utility">
         <li><a href="#">상품정보</a></li>
         <li><a href="#product-review-box">상품후기</a></li>
@@ -137,6 +147,7 @@ pageEncoding="UTF-8"%>
         <li><a href="#">1:1문의</a></li>
       </ul>
     </div>
+
     <!-- 상세 페이지 -->
     <div class="common-container2">
       <div>
@@ -176,6 +187,12 @@ pageEncoding="UTF-8"%>
                     />
                     <fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd" />
                   </em>
+			    <c:set var="ReviewOrders" value="${reviewProductMap[review.reviewId]}" />
+			    <c:forEach items="${ReviewOrders}" var="orders">
+			        ${orders.productName}
+			        <br>
+			        ${orders.optionName} : ${orders.optionValue}
+			    </c:forEach>
                 </div>
                 <!-- 리뷰 펫 -->
                 <c:set var="pets" value="${reviewPetsMap[review.reviewId]}" />

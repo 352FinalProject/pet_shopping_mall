@@ -4,8 +4,10 @@ import java.lang.reflect.Member;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
@@ -46,6 +48,7 @@ import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.dto.ReviewCreateDto;
 import com.shop.app.review.dto.ReviewDetailDto;
+import com.shop.app.review.dto.ReviewListDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
@@ -89,7 +92,8 @@ public class ProductController {
        int totalCount = reviewService.findProductTotalReviewCount();
        int totalPages = (int) Math.ceil((double) totalCount / limit);
        model.addAttribute("totalPages", totalPages);
-
+       
+       // 상품Id에 대한 모든 리뷰 가져오기
        List<Review> reviews = reviewService.findProductReviewAll(params, productId);
        model.addAttribute("reviews", reviews);
 
@@ -130,23 +134,26 @@ public class ProductController {
 	        }
 	    }
 	    
+	    // 리뷰 작성자 - 상품 
+	    Map<Integer, List<OrderReviewListDto>> reviewProductMap = new HashMap<>();
+	    	for (Review review : reviews) {
+	    		List<OrderReviewListDto> ReviewOrders = orderService.findProductByReviewId(review.getReviewId(), productId);
+	    		reviewProductMap.put(review.getReviewId(), ReviewOrders);
+	    	}
+	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
-	    log.debug(" 이미지 reviewImageMap = {}", reviewImageMap);
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
+	    model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보
 	    
 	    // 상품 상세 페이지 - 리뷰 전체개수 확인
 	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
 	    
-	    // log.debug("reveiwTotalCount = {}", reveiwTotalCount);
-	    
 	    // 리뷰 별점 평균
 	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 		log.debug("평균 별점 productReviewStarAvg = {}", productReviewStarAvg);
-
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
-	    
 	    /* 찜 등록 여부 가져오기 (선모) */
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}

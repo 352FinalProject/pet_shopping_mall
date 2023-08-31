@@ -195,4 +195,10 @@ public class OrderServiceImpl implements OrderService {
         return result;
 
 	}
+
+	// 상품상세 - 리뷰 - 상품
+	@Override
+	public List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId) {
+		return orderRepository.findProductByReviewId(reviewId, productId);
+	}
 }
