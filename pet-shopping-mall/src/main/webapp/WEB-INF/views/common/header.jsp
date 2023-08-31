@@ -143,7 +143,7 @@
    href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
    <sec:authorize access="isAuthenticated()">
       <form:form name="memberLogoutFrm"
@@ -360,7 +360,6 @@ $(document).ready(function() {
        event.stopPropagation();
      })
      
-   // 팝업창 실행 메소드
    const openPopupBtn = document.getElementById("openPopupBtn");
     openPopupBtn.addEventListener('click', function() {
         console.log("팝업창 실행");
@@ -370,10 +369,22 @@ $(document).ready(function() {
 
 });
 
+
+/* 팝업 */
+// document.addEventListener("DOMContentLoaded", function() {
+//     const openPopupBtn = document.getElementById("openPopupBtn");
+//     openPopupBtn.addEventListener('click', function() {
+//         console.log("팝업창 실행");
+//         const notificationPopup = document.getElementById("notificationPopup");
+//         notificationPopup.classList.toggle("active");
+// 	});
+// });
+
 // " onclick="notificationDelete(${notification.id})">x</button>
+
   /* 알림삭제 */
   function notificationDelete(notificationId) {
-      console.log(notificationId);
+      console.log(notificationId, '버튼id값');
       const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
       const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
       var id = notificationId;
@@ -398,5 +409,4 @@ $(document).ready(function() {
          }
       });
    };
-
 </script>
