@@ -35,16 +35,4 @@ public class GlobalControllerAdvice {
 //		return "common/error";
 //	}
 	
-	// 김대원 알림
-	@Autowired
-    private NotificationService notificationService;
-
-    @ModelAttribute("notifications")
-    public List<Notification> addNotificationsToModel(@AuthenticationPrincipal MemberDetails member) {
-        if (member != null) {
-            List<Notification> notifications = notificationService.findAllNotification(member.getMemberId());
-            return notifications;
-        }
-        return Collections.emptyList();
-    }
 }

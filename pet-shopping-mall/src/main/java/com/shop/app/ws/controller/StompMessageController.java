@@ -32,13 +32,6 @@ public class StompMessageController {
    @Autowired
    private NotificationService notificationService;
    
-	@MessageMapping("/notice")
-	@SendTo("/pet/notice")
-	public Notification a(Notification message) {
-		log.debug("message = {}", message);
-		return message;
-	}
-   
    /**
     * 개개인에게
     */
@@ -46,9 +39,6 @@ public class StompMessageController {
    @SendTo("/pet/notice/{memberId}")
    public Notification noticeEach(@DestinationVariable String memberId, Notification message) {
                         // 경로변수
-      log.debug("memberId = {}", memberId);
-      log.debug("message = {}", message);
-      
       System.out.println("message: "  + message);
       return message;
    	}

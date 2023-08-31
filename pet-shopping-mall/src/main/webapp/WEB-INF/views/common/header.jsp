@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"   uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -192,28 +192,18 @@
             </li>
             <sec:authorize access="isAuthenticated()">
                  <div class="notification-container">
-                   <button id="openPopupBtn">
-                     <i class="bi bi-bell"></i>
-                   </button>
+					<button id="openPopupBtn" onclick="loadNotifications('${memberId}')">
+					    <i class="bi bi-bell"></i>
+					</button>
                    <div id="notificationPopup" class="popup">
                      <div class="popup-content">
-                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                        <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
-                       <c:if test="${empty notifications}">
-                          <p class="notification-content">조회된 알람이 없습니다.</p>
-                       </c:if>
-                       <c:if test="${not empty notifications}">
-                          <c:forEach items="${notifications}" var="notification" varStatus="vs">
-                               <div class="notification-container" id="notification${notification.id}">
-                               	<p class="notification-content">디비${notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
-                               	<button class="notification-delete-button" id="notificationDelete${notification.id}" onclick="notificationDelete('${notification.id}')">x</button>
-                               </div>
-                          </c:forEach>
-                       </c:if>
+				        <div class="notification-container" id="notification${notification.id}">
+				            <p class="notification-content">{notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
+				            <button class="notification-delete-button" id="notification${notification.id}" onclick="notificationDelete(${notification.id})">x</button>
+				        </div>
                      </div>
                    </div>
                  </div>
-               <!-- </li> -->
             </sec:authorize>
          </ul>
          <div class="logo_top_wrap">
@@ -305,6 +295,7 @@
       </div>
    </div>
 <script>
+
 $(document).ready(function() {
      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
      const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
@@ -360,53 +351,65 @@ $(document).ready(function() {
        event.stopPropagation();
      })
      
-   const openPopupBtn = document.getElementById("openPopupBtn");
+/*    const openPopupBtn = document.getElementById("openPopupBtn");
     openPopupBtn.addEventListener('click', function() {
         console.log("팝업창 실행");
         const notificationPopup = document.getElementById("notificationPopup");
         notificationPopup.classList.toggle("active");
-	});
+	}); */
 
 });
-
-
-/* 팝업 */
-// document.addEventListener("DOMContentLoaded", function() {
-//     const openPopupBtn = document.getElementById("openPopupBtn");
-//     openPopupBtn.addEventListener('click', function() {
-//         console.log("팝업창 실행");
-//         const notificationPopup = document.getElementById("notificationPopup");
-//         notificationPopup.classList.toggle("active");
-// 	});
-// });
-
-// " onclick="notificationDelete(${notification.id})">x</button>
+	/* 팝업창 열고 알림생성 */
+	function loadNotifications(memberId) {
+		const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+	    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+	    const notificationPopup = document.getElementById("notificationPopup");
+	    notificationPopup.classList.add("active");
+	    
+	    $.ajax({
+	        method: "GET",
+	        url: "${pageContext.request.contextPath}/notification/findAllNotification.do",
+	        data: {
+	            memberId: memberId
+	        },
+	        beforeSend: function (xhr) {
+	               xhr.setRequestHeader(csrfHeader, csrfToken);
+	         },
+	        success: function (result) {
+	        	renderMessage(result);
+	        },
+	        error: function (xhr, textStatus, errorThrown) {
+	            console.log('Error:', textStatus);
+	        }
+	    });
+	}
 
   /* 알림삭제 */
   function notificationDelete(notificationId) {
-      console.log(notificationId, '버튼id값');
       const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
       const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-      var id = notificationId;
       $.ajax({
+    	 async:true,
          method: "POST",
          url: "${pageContext.request.contextPath}/notification/deleteNotification.do",
          data: {
-               "id":id
+               "id":notificationId
          },
          beforeSend: function (xhr) {
                xhr.setRequestHeader(csrfHeader, csrfToken);
          },
          success: function(result) {
-               // 삭제된 알림 컨테이너를 제거
-               const containerDiv = document.getElementById(`notification${notificationId}`);
-               if (containerDiv) {
-                  containerDiv.remove();
-               }
+            // 다시 태그 로드
+            const containerDiv = document.getElementById(`notification${notificationId}`);
+	         if (containerDiv) {
+	            containerDiv.remove();
+	         }
          },
          error: function(xhr, textStatus, errorThrown) {
                console.log('Error:');
          }
       });
+      
    };
+   
 </script>

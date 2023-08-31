@@ -394,7 +394,6 @@ public class PaymentController {
         
         try {
             List<MemberCouponDto> coupons = couponService.findCouponsByMemberId(memberId);
-            log.debug("coupons = {}", coupons);
             if (coupons.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 
