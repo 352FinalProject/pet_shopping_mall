@@ -76,10 +76,10 @@
 										<td>
 											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
 												<c:if test="${empty productDetail.optionName || ''}">
-													<p>옵션없음</p>
+													<p>옵션비어있음</p>
 												</c:if>
 												<c:if test="${not empty productDetail.optionName}">
-													<p>${productDetail.optionName} - ${productDetail.optionValue}</p>
+													<p>[${productDetail.optionName}] ${productDetail.optionValue}</p>
 												</c:if>
 											</c:forEach>
 										</td>
