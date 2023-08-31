@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.service.PetService;
@@ -80,7 +81,10 @@ public class ProductController {
                              Model model) {
 
        int limit = 3;
-       Map<String, Object> params = Map.of("page", page, "limit", limit);
+       
+       Map<String, Object> params = Map.of(
+    		   "page", page, 
+    		   "limit", limit);
 
        int totalCount = reviewService.findProductTotalReviewCount();
        int totalPages = (int) Math.ceil((double) totalCount / limit);
@@ -122,9 +126,7 @@ public class ProductController {
 	            for (ImageAttachment attachment : reviewDetails.getAttachments()) {
 	                imageFilenames.add(attachment.getImageRenamedFilename());
 	            }
-	            
 	            reviewImageMap.put(reviewId2, imageFilenames);
-
 	        }
 	    }
 	    

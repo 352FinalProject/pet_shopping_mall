@@ -115,6 +115,7 @@ public class ReviewController {
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 
+		// 리뷰에 보여줄 내용들
 		List<ReviewListDto> reviews = reviewService.findReviewAll(params);
 		
 		model.addAttribute("reviews", reviews);
