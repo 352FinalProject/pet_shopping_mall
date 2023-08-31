@@ -143,7 +143,7 @@ button, input {
 					</tr>
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="tel" name="tel" id="tel"
+						<td><input type="tel" name="phone" id="phone"
 							value="${member.phone}" required></td>
 						<td rowspan="2" class="pet-info-container">
 						</td>

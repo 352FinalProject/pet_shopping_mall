@@ -232,9 +232,9 @@ public class MemberSecurityController {
       Member member = _member.toMember();
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
-
-      model.addAttribute("member", member); 
-
+      
+      log.debug("member = {}", member);
+      
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
          String rawPassword = _member.getPassword();
          String encodedPassword = passwordEncoder.encode(rawPassword);
@@ -243,11 +243,12 @@ public class MemberSecurityController {
       
       int result = memberService.updateMember(member);
 
+      log.debug("update result = {}", result);
+      
       UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(memberDetails,
             memberDetails.getPassword(), memberDetails.getAuthorities());
       SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
       session.invalidate(); 
       redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
       return "redirect:/member/updateMember.do";

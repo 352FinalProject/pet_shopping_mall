@@ -25,7 +25,7 @@ public interface MemberRepository {
 	@Insert("INSERT INTO member VALUES (#{memberId, jdbcType=VARCHAR}, #{password}, #{name, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
 	int insertMember(MemberCreateDto member);
 
-	@Update("update member set name = #{name}, password = #{password}, email = #{email} where member_id = #{memberId}")
+	@Update("update member set name = #{name}, password = #{password}, email = #{email}, address=#{address}, phone = #{phone, jdbcType=VARCHAR} where member_id = #{memberId}")
 	int updateMember(Member member);
 
 	@Delete("delete from member where member_id = #{memberId}")
