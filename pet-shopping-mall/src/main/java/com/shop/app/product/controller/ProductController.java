@@ -168,11 +168,10 @@ public class ProductController {
 	                
 	            }
 	            reviewImageMap.put(reviewId2, imageFilenames);
-	            log.debug("reviewImageMap 이미지왜두갠데 = {}", reviewImageMap);
 	        }
-        	log.debug("reviewImageMap 이미지왜두갠데2 = {}", reviewImageMap);
 	    }
-	    log.debug("reviewImageMap 이미지왜두갠데3 = {}", reviewImageMap);
+	    
+	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    
 	    // 리뷰 작성자 - 상품 
 	    Map<Integer, List<OrderReviewListDto>> reviewProductMap = new HashMap<>();
@@ -181,7 +180,6 @@ public class ProductController {
 	    		reviewProductMap.put(review.getReviewId(), ReviewOrders);
 	    	}
 	    
-	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    
 	    log.debug("reviewImageMap = {}", reviewImageMap);
 	    

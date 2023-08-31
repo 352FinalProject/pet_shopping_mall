@@ -338,34 +338,31 @@ pageEncoding="UTF-8"%>
                   <em class="review-info-content">${review.reviewContent}</em> <!-- 리뷰내용 -->
                   <span class="product-review-small-space"></span>
 	              <!-- 리뷰 이미지 -->
-	<c:forEach var="review" items="${reviews}">
-    <div class="review-item">
-        <div class="review-img">
-            <div style="display: inline-block;"></div>
-            <br>
-            <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
-            <c:if test="${not empty imageFilenames}">
-                <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
-                    <div class="carousel-inner">
-                        <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
-                            <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
-                            <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-                                <img class="review-img2" alt="Review Image" src="${imagePath}">
-                            </div>
-                        </c:forEach>
-                    </div>
-                    <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </a>
-                    <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </a>
-                </div>
-            </c:if>
-        </div>
-    </div>
-</c:forEach>
-
+	    <div class="review-item">
+	        <div class="review-img">
+	            <div style="display: inline-block;"></div>
+	            <br>
+	            <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
+	            <c:if test="${not empty imageFilenames}">
+	                <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
+	                    <div class="carousel-inner">
+	                        <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
+	                            <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
+	                            <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+	                                <img class="review-img2" alt="Review Image" src="${imagePath}">
+	                            </div>
+	                        </c:forEach>
+	                    </div>
+	                    <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
+	                        <span class="carousel-control-prev-icon"></span>
+	                    </a>
+	                    <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
+	                        <span class="carousel-control-next-icon"></span>
+	                    </a>
+	                </div>
+	            </c:if>
+	        </div>
+	    </div>
                 </div>
               </div>
             </li>
