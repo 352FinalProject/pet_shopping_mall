@@ -51,11 +51,12 @@ pageEncoding="UTF-8"%>
     .star-label-and-progress {
 	    display: flex;
 	    align-items: center;
-	    margin-bottom: 10px;
+	    margin-bottom: 44px;
+	    
 	}
 	.percentage {
     margin-left: 10px;
-}
+	}
 
 </style>
 
@@ -200,7 +201,35 @@ pageEncoding="UTF-8"%>
         	작성된 리뷰가 없습니다. 
         </c:if>
         <c:if test="${not empty reviews}">
-        <div class="review-percent" style="position: absolute; margin-top:250px;">
+        <div class="review-avg-star">
+       	    <c:if test="${productReviewStarAvg.reviewStarRate == null}">
+				<div>0.0</div>
+				<div>☆☆☆☆☆</div> 
+		    </c:if>
+			<c:if test="${productReviewStarAvg.reviewStarRate != null}">
+			    <div>${productReviewStarAvg.reviewStarRate}</div>
+			    <div class="review-avg-star2">
+			        <c:choose>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 4.5}">
+			                ★★★★★
+			            </c:when>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 3.5}">
+			                ★★★★☆
+			            </c:when>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 2.5}">
+			                ★★★☆☆
+			            </c:when>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 1.5}">
+			                ★★☆☆☆
+			            </c:when>
+			            <c:otherwise>
+			                ☆☆☆☆☆
+			            </c:otherwise>
+			        </c:choose>
+			    </div>
+			</c:if>
+        </div>
+        <div class="review-percent" style="position: absolute; margin-top:333px; margin-left: 260px;">
 			<ul>
 			    <li>
  					<div class="star-label-and-progress">
@@ -208,8 +237,7 @@ pageEncoding="UTF-8"%>
 		                <div class="progress">
 		                    <div class="progress-bar" style="width: ${formattedPercentages[1]}%;"></div>
 		                </div>
-                        <span class="percentage">${formattedPercentages[1]}</span>
-                
+                        <span class="percentage">${formattedPercentages[1]}%</span>
             		</div>
 			    </li>
 			    <li>
@@ -218,8 +246,7 @@ pageEncoding="UTF-8"%>
 		                <div class="progress">
 		                    <div class="progress-bar" style="width: ${formattedPercentages[2]}%;"></div>
 		                </div>
-                        <span class="percentage">${formattedPercentages[2]}</span>
-                
+                        <span class="percentage">${formattedPercentages[2]}%</span>
             		</div>
 			    </li>
 			    <li>
@@ -228,18 +255,16 @@ pageEncoding="UTF-8"%>
 		                <div class="progress">
 		                    <div class="progress-bar" style="width: ${formattedPercentages[3]}%;"></div>
 		                </div>
-                        <span class="percentage">${formattedPercentages[3]}</span>
-                
+                        <span class="percentage">${formattedPercentages[3]}%</span>
             		</div>
 			    </li>
 			    <li>
  					<div class="star-label-and-progress">
                 		<span class="star-label">4점</span>
 		                <div class="progress">
-		                    <div class="progress-bar" style="width: ${formattedPercentages[5]}%;"></div>
+		                    <div class="progress-bar" style="width: ${formattedPercentages[4]}%;"></div>
 		                </div>
-                        <span class="percentage">${formattedPercentages[4]}</span>
-                
+                        <span class="percentage">${formattedPercentages[4]}%</span>
             		</div>
 			    </li>
 			    <li>
@@ -248,13 +273,12 @@ pageEncoding="UTF-8"%>
 		                <div class="progress">
 		                    <div class="progress-bar" style="width: ${formattedPercentages[5]}%;"></div>
 		                </div>
-                        <span class="percentage">${formattedPercentages[5]}</span>
-                
+                        <span class="percentage">${formattedPercentages[5]}%</span>
             		</div>
 			    </li>
 			</ul>
 		</div>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<div class="review-dividing-line"></div>
           <c:forEach items="${reviews}" var="review" varStatus="vs">
             <li>
               <div class="review-box">
@@ -314,31 +338,34 @@ pageEncoding="UTF-8"%>
                   <em class="review-info-content">${review.reviewContent}</em> <!-- 리뷰내용 -->
                   <span class="product-review-small-space"></span>
 	              <!-- 리뷰 이미지 -->
-		          <c:forEach var="review" items="${reviews}">
-		              <div class="review-item">
-		                  <div class="review-img">
-		                      <div style="display: inline-block;"></div>
-		                      <br>
-		                      <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
-		                          <div class="carousel-inner">
-		                              <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
-		                              <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
-		                                  <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
-		                                  <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-		                                      <img class="review-img2" alt="Review Image" src="${imagePath}">
-		                                  </div>
-		                              </c:forEach>
-		                          </div>
-		                          <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
-		                              <span class="carousel-control-prev-icon"></span>
-		                          </a>
-		                          <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
-		                              <span class="carousel-control-next-icon"></span>
-		                          </a>
-		                      </div>
-		                  </div>
-		              </div>
-		          </c:forEach>
+	<c:forEach var="review" items="${reviews}">
+    <div class="review-item">
+        <div class="review-img">
+            <div style="display: inline-block;"></div>
+            <br>
+            <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
+            <c:if test="${not empty imageFilenames}">
+                <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
+                    <div class="carousel-inner">
+                        <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
+                            <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
+                            <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+                                <img class="review-img2" alt="Review Image" src="${imagePath}">
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </a>
+                </div>
+            </c:if>
+        </div>
+    </div>
+</c:forEach>
+
                 </div>
               </div>
             </li>
@@ -347,20 +374,20 @@ pageEncoding="UTF-8"%>
       </ul>
     </div>
 	<!-- 페이징 바 -->
-	<nav aria-label="..." class="product-review-paging">
-	  <ul class="pagination pagination-sm">
-	    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
-	      <li class="page-item ${page == pageNumber ? 'active' : ''}">
-	        <a
-	          class="page-link"
-	          href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
-	        >
-	          <span class="page-number">${pageNumber}</span>
-	        </a>
-	      </li>
-	    </c:forEach>
-	  </ul>
-	</nav>
+<nav aria-label="..." class="product-review-paging">
+  <ul class="pagination pagination-sm">
+    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+      <li class="page-item ${page == pageNumber ? 'active' : ''}">
+        <a
+          class="page-link"
+          href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
+        >
+          <span class="page-number">${pageNumber}</span>
+        </a>
+      </li>
+    </c:forEach>
+  </ul>
+</nav>
     <!-- 교환/반품/배송 -->
     <div class="util-div" id="product-notice-box">
       <ul class="product-utility" >

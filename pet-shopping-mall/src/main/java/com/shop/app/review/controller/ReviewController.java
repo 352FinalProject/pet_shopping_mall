@@ -95,7 +95,7 @@ public class ReviewController {
 			Model model
 			) {
 
-		int limit = 5;
+		int limit = 2;
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String reviewMemberId = authentication.getName();

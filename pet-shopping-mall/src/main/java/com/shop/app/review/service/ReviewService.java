@@ -42,7 +42,7 @@ public interface ReviewService {
 	ReviewDetails getDeleteReviewById(int reviewId);
 
 	// 상품 상세페이지 리뷰 전체 카운트
-	int findProductTotalReviewCount();
+	int findProductTotalReviewCount(int productId);
 
 	// 상품 상세페이지 전체 리뷰 
 	List<Review> findProductReviewAll(Map<String, Object> params, int productId);
@@ -73,6 +73,9 @@ public interface ReviewService {
    
 	// 별점 퍼센트 구하기 위한 전체 리뷰
 	List<Review> findProductReviewAllNoPageBar(int productId);
+
+	ReviewDetails findProductImageAttachmentsByReviewId2(int reviewId2, int orderId);
+//	ReviewDetails findProductImageAttachmentsByReviewId2(int reviewId2);
 
 
 

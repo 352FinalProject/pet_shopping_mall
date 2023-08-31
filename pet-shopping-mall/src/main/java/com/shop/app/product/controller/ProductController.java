@@ -84,13 +84,16 @@ public class ProductController {
                              @AuthenticationPrincipal MemberDetails member,
                              Model model) {
 
-       int limit = 3;
+       int limit = 5;
        
        Map<String, Object> params = Map.of(
     		   "page", page, 
     		   "limit", limit);
 
-       int totalCount = reviewService.findProductTotalReviewCount();
+       int totalCount = reviewService.findProductTotalReviewCount(productId);
+       
+       log.debug("totalCount 몇개임 = {}", totalCount);
+       
        int totalPages = (int) Math.ceil((double) totalCount / limit);
        model.addAttribute("totalPages", totalPages);
        
@@ -101,25 +104,21 @@ public class ProductController {
        // 별점 퍼센트
        List<Review> allReviews = reviewService.findProductReviewAllNoPageBar(productId);
        
-       int[] starCounts = new int[6];  // 인덱스 1부터 5까지 사용
+       int[] starCounts = new int[6];  
        for (Review review : allReviews) {
            int star = review.getReviewStarRate();
            starCounts[star]++;
        }
 
        int totalReviews = allReviews.size();
-       log.debug("totalReviews 토탈리뷰 = {}", totalReviews);
-
 
        double[] starPercentages = new double[6];  // 각 별점별 백분율을 저장할 배열
-       log.debug("스타퍼센트 starPercentages = {}", starPercentages);
        
        for (int i = 1; i <= 5; i++) {
            starPercentages[i] = (double) starCounts[i] / totalReviews * 100;
        }
 
        model.addAttribute("starPercentages", starPercentages);
-       log.debug("starPercentages = {}", starPercentages);
 
        // starPercentages 배열을 계산하고, 백분율로 변환하여 소수점 없이 포맷팅한 리스트를 생성
        List<String> formattedPercentages = new ArrayList<>();
@@ -129,8 +128,6 @@ public class ProductController {
        }
 
        model.addAttribute("formattedPercentages", formattedPercentages);
-       log.debug("포매팅 결과 formattedPercentages = {}", formattedPercentages);
-       
 
        // 상품 아이디로 정보 가져오기
        Product product = productService.findProductById(productId);
@@ -155,19 +152,27 @@ public class ProductController {
 	    Map<Integer, List<String>> reviewImageMap = new HashMap<>();
 	    for (Review review : reviews) {
 	        int reviewId2 = review.getReviewId();
-	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
+	        int orderId = review.getOrderId();
 	        
-	        log.debug("reviewDetails = {}", reviewDetails);
+	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId2(reviewId2, orderId);
+//	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId2(reviewId2);
 	        
-	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+	        log.debug("reviewDetails 이미지확인 = {}", reviewDetails);
+	        
+//	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+        	if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
 	            List<String> imageFilenames = new ArrayList<>();
 	            
 	            for (ImageAttachment attachment : reviewDetails.getAttachments()) {
 	                imageFilenames.add(attachment.getImageRenamedFilename());
+	                
 	            }
 	            reviewImageMap.put(reviewId2, imageFilenames);
+	            log.debug("reviewImageMap 이미지왜두갠데 = {}", reviewImageMap);
 	        }
+        	log.debug("reviewImageMap 이미지왜두갠데2 = {}", reviewImageMap);
 	    }
+	    log.debug("reviewImageMap 이미지왜두갠데3 = {}", reviewImageMap);
 	    
 	    // 리뷰 작성자 - 상품 
 	    Map<Integer, List<OrderReviewListDto>> reviewProductMap = new HashMap<>();
@@ -177,6 +182,9 @@ public class ProductController {
 	    	}
 	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
+	    
+	    log.debug("reviewImageMap = {}", reviewImageMap);
+	    
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	    model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보
 	    
