@@ -105,6 +105,7 @@
 }
 .search_box {
    position: relative;
+   z-index: 999;
 }
 
 .search-input:focus {
@@ -225,38 +226,39 @@
                      id="center-image" alt="로고" />
                   </a>
                </div>
-               <div class="cdt">
-                  <!-- 검색 -->
-                  <div class="search_top_btn">
-                     <!-- 검색 창 -->
-                     <div class="search_box">
-                        <form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
-                           <img
-                              src="${pageContext.request.contextPath}/resources/images/home/search.png"
-                              id="search-img" alt="검색" />
-                              <input class="search-input" type="text" value="" placeholder="입력" name="searchQuery" />
-                        </form>
-                     </div>
-                  </div>
-                  <!-- 주문조회 -->
-                  <div class="order_checks_top_btn">
-                     <a href="${pageContext.request.contextPath}/member/myPage.do">
-                        <img
-                        src="${pageContext.request.contextPath}/resources/images/home/login.png"
-                        id="center-image" alt="주문조회" />
-                     </a>
-                  </div>
-                  <!-- 장바구니 -->
-                  <div class="cart_top_btn">
-                     <a href="${pageContext.request.contextPath}/cart/shoppingCart.do">
-                        <img
-                        src="${pageContext.request.contextPath}/resources/images/home/cart.png"
-                        id="center-image" alt="장바구니" />
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
+          </div>
+          <div class="cdt-info">
+              <div class="cdt">
+                 <!-- 검색 -->
+                 <div class="search_top_btn">
+                    <!-- 검색 창 -->
+                    <div class="search_box">
+                       <form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
+                          <img
+                             src="${pageContext.request.contextPath}/resources/images/home/search.png"
+                             id="search-img" alt="검색" />
+                             <input class="search-input" type="text" value="" placeholder="입력" name="searchQuery" />
+                       </form>
+                    </div>
+                 </div>
+                 <!-- 주문조회 -->
+                 <div class="order_checks_top_btn">
+                    <a href="${pageContext.request.contextPath}/member/myPage.do">
+                       <img
+                       src="${pageContext.request.contextPath}/resources/images/home/login.png"
+                       id="center-image" alt="주문조회" />
+                    </a>
+                 </div>
+                 <!-- 장바구니 -->
+                 <div class="cart_top_btn">
+                    <a href="${pageContext.request.contextPath}/cart/shoppingCart.do">
+                       <img
+                       src="${pageContext.request.contextPath}/resources/images/home/cart.png"
+                       id="center-image" alt="장바구니" />
+                    </a>
+                 </div>
+              </div>
+           </div>
          <div class="menu-container">
             <ul class="nav">
                <ul>
