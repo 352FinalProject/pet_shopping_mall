@@ -4,12 +4,13 @@ import lombok.Data;
 
 @Data
 public class ProductSearchDto {
-   private int productId;
-   private int categoryId;
-   private String productName;
-   private int productPrice;
-   private String imageRenamedFileName;
-   
-   // 별점
-   // 리뷰 추가
+	private int productId;
+	private int categoryId;
+	private String productName;
+	private int productPrice;
+	private String imageRenamedFileName;
+	
+	// 별점
+	// 리뷰 추가
+	private int reviewCnt;
 }

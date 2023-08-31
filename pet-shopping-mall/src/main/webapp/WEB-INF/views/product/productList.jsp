@@ -53,7 +53,15 @@
 					<div class="product-desc">
 						<p class="product-name">${productInfo.product.productName}</p>
 						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> 원</p>
-						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
+						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" >
+						<c:if test="${productInfo.productReviewStarAvg.reviewStarRate == null}">
+							<span>0.0</span>
+						</c:if>
+						<c:if test="${productInfo.productReviewStarAvg.reviewStarRate != 0}" >
+							<span>${productInfo.productReviewStarAvg.reviewStarRate}</span>
+						</c:if>
+						</span>
+						
 						<span> &nbsp;|&nbsp; </span>
 						<span class="review-cnt">후기 ${productInfo.reviewCnt}건</span>
 					</div>

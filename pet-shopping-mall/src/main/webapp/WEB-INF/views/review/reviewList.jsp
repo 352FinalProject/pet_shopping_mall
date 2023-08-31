@@ -15,11 +15,11 @@
     <div class="common-container-side">
         <div class="common-div">
             <div class="service-util-div-sidebar">
-                <table class="service-product-utility-sidebar">
+                <table class="myReviewList">
                <thead>
                   <tr>
                      <th>번호</th>
-                     <th>상품명</th>
+                     <th colspan="2">상품명</th>
                      <th>별점</th>
                      <th>작성일</th>
                   </tr>
@@ -37,8 +37,16 @@
                               <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">${review.reviewId}</a>
                            </td>
                            <td>
-                           		<img src="${pageContext.request.contextPath}/resources/upload/product/${review.imageRenamedFileName}" width="110px" height="50px">
-                           		${review.productName} ${review.optionName}:${review.optionValue}
+                           		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
+                           			<img class="reviewList-img" src="${pageContext.request.contextPath}/resources/upload/product/${review.imageRenamedFileName}">
+                           		</a>
+                           </td>
+                           <td>
+                           		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
+	                          		${review.productName}
+	                          		<br>
+	                          		${review.optionName}:${review.optionValue}
+                          		</a>
                            </td>
                             <td>
                                <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
@@ -64,7 +72,7 @@
                             <td>
                                <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
                         <fmt:parseDate value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
-                        <fmt:formatDate value="${createdAt}" pattern="yy/MM/dd HH:mm"/>
+                        <fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd"/>
                         </a>
                             </td>
                         </tr>

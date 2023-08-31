@@ -8,14 +8,10 @@
 	SELECT 
 		ot.order_no, 
 		ot.order_id, 
-		p.product_name, 
 		ot.order_status, 
 		ot.member_id
 	FROM 
 		orderTbl ot
-		JOIN order_detail od ON ot.order_id = od.order_id
-		JOIN product_detail pd ON od.product_detail_id = pd.product_detail_id
-		JOIN product p ON pd.product_id = p.product_id
 	WHERE
 		order_no = #{orderNo}
    </select>

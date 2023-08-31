@@ -39,7 +39,6 @@ public class CartServiceImpl implements CartService {
 			product = cartRepository.getCartInfoList(cartItemList.get(i).getProductDetailId());
 			cartInfoList.add(product);
 		}
-
 		return cartInfoList;
 	}
 
@@ -64,7 +63,6 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public int updateCart(CartItem cartitem, String memberId) {
-	    log.debug("cartitem = {}", cartitem);
 	    int detailId = cartitem.getProductDetailId();
 	    List<CartItem> cartList = cartRepository.getCartList(memberId);
 	    int result = 0;
@@ -90,17 +88,51 @@ public class CartServiceImpl implements CartService {
 	}
 
 
-	// 상품 페이지에서 장바구니 버튼 눌러서 장바구니에 담기 (예라)
-	@Override
-	public int insertCart(int cartId, int optionId, int productDetailId, int quantity) {
-		return cartRepository.insertCart(cartId, optionId, productDetailId, quantity);
-	}
-
-
 	// 장바구니 찾기 (예라)
 	@Override
 	public int findCartById(String member) {
 		return cartRepository.findCartById(member);
+	}
+
+
+	@Override
+	public int insertCart(String memberId, int productDetailId, int quantity) {
+	    List<CartInfoDto> cartList = getCartInfoList(memberId);
+	    log.debug("cartList = {}", cartList);
+	    int cartId = findCartById(memberId);
+	    
+	    int result = 0;
+	    boolean found = false;
+
+	    for (CartInfoDto c : cartList) {
+	        int detailId = c.getProductDetailId();
+	        if (detailId == productDetailId) {
+	            int cartitemId = c.getCartitemId();
+
+	            CartItem cartitem = CartItem.builder()
+	                    .cartitemId(cartitemId)
+	                    .cartId(cartId)
+	                    .quantity(quantity)
+	                    .productDetailId(productDetailId)
+	                    .build();
+	            result = cartRepository.updateCart(cartitem);
+	            found = true;
+	            break; 
+	        }
+	    }
+
+	    if (!found) {
+	        log.debug("detailId not found");
+	        
+	        CartItem cartitem = CartItem.builder()
+	                .cartId(cartId)
+	                .quantity(quantity)
+	                .productDetailId(productDetailId)
+	                .build();
+	        result = cartRepository.insertCart(cartitem);
+	    }
+
+	    return result;
 	}
 
 }

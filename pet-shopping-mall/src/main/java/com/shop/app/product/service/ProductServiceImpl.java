@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductSearchDto;
-import com.shop.app.product.dto.ProductSearchKeywordDto;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.review.repository.ReviewRepository;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
 
@@ -25,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class ProductServiceImpl implements ProductService {
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	@Autowired
 	private ProductRepository productRepository;
@@ -140,10 +143,17 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	// index 검색 (담희)
-//	@Override
-//	public List<ProductSearchKeywordDto> searchProducts(String searchQuery) {
-//		return productRepository.searchProducts(searchQuery);
-//	}
+	@Override
+	public List<ProductSearchDto> searchProducts(String searchQuery) {
+		List<ProductSearchDto> productList = productRepository.searchProducts(searchQuery);
+				
+		for(ProductSearchDto p : productList) {
+			int cnt = reviewRepository.findProductListReviewTotalCount(p.getProductId());
+			p.setReviewCnt(cnt);
+		}
+		return productList;
+	}
+	
 	
 	// 모든상품 조회(수경)
 	@Override
@@ -165,13 +175,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 옵션추가 (수경)
 	@Override
-	public int adminOptionCreate(int productId, ProductDetail productDetail) {
-		return productRepository.adminOptionCreate(productId, productDetail);
-	}
-
-	@Override
-	public List<ProductSearchDto> searchProducts(String searchQuery) {
-		// TODO Auto-generated method stub
-		return null;
+	public int adminOptionCreate(ProductDetail productDetail) {
+		return productRepository.adminOptionCreate(productDetail);
 	}
 }

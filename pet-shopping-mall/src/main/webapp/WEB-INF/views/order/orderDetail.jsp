@@ -85,7 +85,7 @@
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
 										<c:if test="${status[index] == '배송완료'}">
-										    <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+										  <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
 										        <input type="hidden" name="productDetailId" value="${entry.key.productDetailId}">
 										        <input type="hidden" name="productId" value="${entry.key.productId}">
 										        <input type="hidden" name="orderId" value="${entry.key.orderId}">
@@ -100,6 +100,9 @@
 											<c:if test="${reviewWrite[compositeKey] == true}">
 												<p>구매확정</p>
 											</c:if>
+										</c:if>
+										<c:if test="${status[index] ne '배송완료'}">
+											<p>${status[index]}</p>
 										</c:if>
 									</td>
 								</tr>

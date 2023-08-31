@@ -280,7 +280,8 @@ const addOption = () => {
 	const addOptionDiv = document.getElementById("addOptionDiv");
 	
 	const newOption =`
-    <form:form name="memberCreateFrm"
+    <form:form 
+    	name="optionCreateFrm"
         action="${pageContext.request.contextPath}/admin/adminOptionCreate.do"
         method="POST">
 	    <div class="productDetail-container">
@@ -316,7 +317,7 @@ const addOption = () => {
             <div class="col">
                 <select name="saleState" id="saleState" class="form-select">
                     <option value="0"} >판매대기</option>
-                    <option value="1"}>판매중</option>
+                    <option value="1" selected}>판매중</option>
                     <option value="2"}>품절</option>
                     <option value="3"}>기타</option>
                 </select>
@@ -331,6 +332,43 @@ const addOption = () => {
 	
 	addOptionDiv.insertAdjacentHTML("beforeend", newOption);
 }
+
+
+//폼 제출 시 동작
+$(document).on('submit', function(e) {
+	// 동적으로 폼을 추가할 때는 일일이 핸들러를 추가해주어야 한다. 그렇게 하기는 번거롭기 때문에 상위 요소에서 접근해서 처리한다.
+	const createFrm = e.target.matches('[name=optionCreateFrm]');
+
+	if(e.target.matches('[name=optionCreateFrm]')) {
+		  event.preventDefault(); 
+		  
+		  const optionData = {
+		    productId: $('#productId').val(),
+		    optionName: $('#optionName').val(),
+		    optionValue: $('#optionValue').val(),
+		    additionalPrice: $('#additionalPrice').val(),
+		    saleState: $('#saleState').val()
+		  };
+		
+		  $.ajax({
+		    type: 'POST',
+		    url: '${pageContext.request.contextPath}/admin/adminOptionCreate.do',
+		    contentType: 'application/json',
+		    data: JSON.stringify(optionData),
+		    success: function(response) {
+		      console.log(response);
+		      alert('옵션이 성공적으로 추가되었습니다.');
+		    },
+		    error: function(error) {
+		      console.error(error);
+		      alert('옵션 추가 중 오류가 발생했습니다.');
+		    }
+		  });
+	}
+
+	
+});
+
 
 // 파일업로드
 document.querySelectorAll("[name=upFile]").forEach((input) => {

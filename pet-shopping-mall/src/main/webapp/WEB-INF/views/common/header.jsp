@@ -179,6 +179,11 @@
                <li><a class="" type="button" href="#"
                   onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
                </li>
+               <li>
+                  <form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
+                     <a type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
+                  </form:form>
+               </li>
             </sec:authorize>
             <li class="community_li"><a
                href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
@@ -211,7 +216,7 @@
                <!-- </li> -->
             </sec:authorize>
          </ul>
-         <div class="logo_top_wrap">
+		        <div class="logo_top_wrap">
             <div class="logo_wrap">
                <!-- 로고 이미지 -->
                <div class="logo_img">
@@ -220,37 +225,38 @@
                      id="center-image" alt="로고" />
                   </a>
                </div>
-               <div class="cdt">
-                  <!-- 검색 -->
-                  <div class="search_top_btn">
-                     <!-- 검색 창 -->
-                     <div class="search_box">
-                        <form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
-                           <img
-                              src="${pageContext.request.contextPath}/resources/images/home/search.png"
-                              id="search-img" alt="검색" />
-                              <input class="search-input" type="text" value="" placeholder="입력" name="searchQuery" />
-                        </form>
-                     </div>
-                  </div>
-                  <!-- 주문조회 -->
-                  <div class="order_checks_top_btn">
-                     <a href="${pageContext.request.contextPath}/member/myPage.do">
-                        <img
-                        src="${pageContext.request.contextPath}/resources/images/home/login.png"
-                        id="center-image" alt="주문조회" />
-                     </a>
-                  </div>
-                  <!-- 장바구니 -->
-                  <div class="cart_top_btn">
-                     <a href="${pageContext.request.contextPath}/cart/shoppingCart.do">
-                        <img
-                        src="${pageContext.request.contextPath}/resources/images/home/cart.png"
-                        id="center-image" alt="장바구니" />
-                     </a>
-                  </div>
-               </div>
-            </div>
+          </div>
+          <div class="cdt-info">
+              <div class="cdt">
+                 <!-- 검색 -->
+                 <div class="search_top_btn">
+                    <!-- 검색 창 -->
+                    <div class="search_box">
+                       <form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
+                          <img
+                             src="${pageContext.request.contextPath}/resources/images/home/search.png"
+                             id="search-img" alt="검색" />
+                             <input class="search-input" type="text" value="" placeholder="입력" name="searchQuery" />
+                       </form>
+                    </div>
+                 </div>
+                 <!-- 주문조회 -->
+                 <div class="order_checks_top_btn">
+                    <a href="${pageContext.request.contextPath}/member/myPage.do">
+                       <img
+                       src="${pageContext.request.contextPath}/resources/images/home/login.png"
+                       id="center-image" alt="주문조회" />
+                    </a>
+                 </div>
+                 <!-- 장바구니 -->
+                 <div class="cart_top_btn">
+                    <a href="${pageContext.request.contextPath}/cart/shoppingCart.do">
+                       <img
+                       src="${pageContext.request.contextPath}/resources/images/home/cart.png"
+                       id="center-image" alt="장바구니" />
+                    </a>
+                 </div>
+              </div>
          </div>
          <div class="menu-container">
             <ul class="nav">
@@ -284,70 +290,57 @@
          </div>
       </div>
    </header>
+   <div id="deleteMember-div" class="deleteMember-class">
+      <div class=deleteMember>
+         <span class="deletememberForm-close" >&times;</span>
+         <h2>회원 탈퇴</h2>
+         <p>정말 탈퇴하시겠습니까??</p>
+         <form:form id="deleteMemberForm"
+            onsubmit="submitIdFinderForm(); return false;">
+            <label for="deleteMember-password">비밀번호입력:</label> <input
+               class="deleteMemberForm-input-password" type="password" id="password"
+               name="password" required>
+            <button class="deleteMemberForm-button" type="submit" >회원탈퇴</button>
+               <button type="button" id="deleteMemberForm-closeModalBtn" onclick="closDeleteMemberModal();">닫기</button>
+         </form:form>
+      </div>
+   </div>
 <script>
+const searchBoxForm = document.getElementById("searchBoxForm");
+const searchImg = document.getElementById("search-img");
+const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
 
-     const searchBoxForm = document.getElementById("searchBoxForm");
-     const searchImg = document.getElementById("search-img");
-     const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
+searchImg.addEventListener("click", function(event) {
+  searchInput.classList.add("on");
+  event.stopPropagation();
+});
 
-     searchImg.addEventListener("click", function(event) {
-       searchInput.classList.add("on");
-       event.stopPropagation();
-     });
+// 추가: 입력 상자에 대한 keyup 이벤트 처리
+searchInput.addEventListener("keyup", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchBoxForm.submit();
+  }
+});
 
-     // 추가: 입력 상자에 대한 keyup 이벤트 처리
-     searchInput.addEventListener("keyup", function(event) {
-       if (event.key === "Enter") {
-         event.preventDefault();
-         searchBoxForm.submit();
-       }
-     });
+document.addEventListener("click", function() {
+  searchInput.classList.remove("on");
+});
 
-     document.addEventListener("click", function() {
-       searchInput.classList.remove("on");
-     });
-
-     searchInput.addEventListener("click", function(event) {
-       event.stopPropagation();
-     })
-     
-     
-     /* 팝업 */
-	document.addEventListener("DOMContentLoaded", function() {
-	    const openPopupBtn = document.getElementById("openPopupBtn");
-	    openPopupBtn.addEventListener('click', function() {
-	        console.log("Button clicked!");
-	        const notificationPopup = document.getElementById("notificationPopup");
-	        notificationPopup.classList.toggle("active");
-    	});
-	});
-	
-	/* 알림삭제 */
-	 * 
-	 */
-	 function notificationDelete(notificationId) {
-		    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-		    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-	
-		    $.ajax({
-		        type: 'POST',
-		        url: '${pageContext.request.contextPath}/notification/deleteNotification.do',
-		        data: JSON.stringify{
-		            'id': notificationId
-		        },
-		        beforeSend: function(xhr) {
-		            xhr.setRequestHeader(csrfHeader, csrfToken)
-		        },
-		        success: function(result) {
-		            const containerDiv = document.getElementById(`notification${notificationId}`);
-		            if (containerDiv) {
-		                containerDiv.remove();
-		            }
-		        }
-		    });
-	}
-
-   });
+searchInput.addEventListener("click", function(event) {
+  event.stopPropagation();
+})
+    
+    
+    /* 팝업 */
+document.addEventListener("DOMContentLoaded", function() {
+    const openPopupBtn = document.getElementById("openPopupBtn");
+    openPopupBtn.addEventListener('click', function() {
+        console.log("Button clicked!");
+        const notificationPopup = document.getElementById("notificationPopup");
+        notificationPopup.classList.toggle("active");
+      });
+});
    
 
 </script>

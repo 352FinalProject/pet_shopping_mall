@@ -109,5 +109,9 @@ public interface OrderRepository {
 	
 	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
+	// 리뷰 작성 시 구매확정으로 바뀌기 (예라)
+	@Update("update orderTbl set order_status = 6 where order_id IN (select o.order_id from orderTbl o join order_detail od on o.order_id = od.order_id join product p on od.product_detail_id = p.product_id where o.order_id = #{orderId} and od.product_detail_id = #{productDetailId} and p.product_id = #{productId})")
+	void updateOrderStatusWithDetail(int orderId, int productDetailId, int newStatus, int productId);
+
 	
 }

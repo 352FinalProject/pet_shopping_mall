@@ -20,24 +20,10 @@
 			    	action="${pageContext.request.contextPath}/admin/adminProductSearch.do">
 			        
 		        	<label for="searchKeyword">검색어:</label> 
-					<select name="searchCategory">
-						<option value="product_name">상품명</option>
-						<!-- <option value="product_category">카테고리</option> -->
-					</select> <input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명"><br> 
-					
-					<label>판매 여부:</label> 
-					<input type="checkbox" id="saleStatusAll" onclick="selectAllStatus();">
-					<label for="saleStatusAll">전체</label> 
-					<input type="checkbox" id="saleStatusDiscontinued" name="saleState" value="0">
-					<label for="saleStatusDiscontinued">판매대기</label> 
-					<input type="checkbox" id="saleStatusOnSale" name="saleState" value="1">
-					<label for="saleStatusOnSale">판매중</label> 
-					<input type="checkbox" id="saleStatusSoldOut" name="saleState" value="2"> 
-					<label for="saleStatusSoldOut">품절</label>
-					<input type="checkbox" id="saleStatusOther" name="saleState" value="3"> 
-					<label for="saleStatusOther">기타</label><br>
-			        
+		        	<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명"> 
+			        <br>
 			        <button type="submit">검색</button>
+			        
 			    </form:form>
 
 				</div><!-- admin-product-search-container -->
@@ -59,7 +45,6 @@
 							<th>상품가격</th>
 							<th>옵션</th>
 							<th>옵션추가금</th>
-							<th>판매상태</th>
 						</thead>
 						<tbody>
 
@@ -101,16 +86,6 @@
 										<td>
 											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
 												<p>${productDetail.additionalPrice}</p>
-											</c:forEach>
-										</td>
-										<td>
-											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
-												<p>
-													<c:if test="${productDetail.saleState eq 0}">판매대기</c:if>
-													<c:if test="${productDetail.saleState eq 1}">판매중</c:if>
-													<c:if test="${productDetail.saleState eq 2}">품절</c:if>
-													<c:if test="${productDetail.saleState eq 3}">기타</c:if>										
-												</p>
 											</c:forEach>
 										</td>
 									</tr>

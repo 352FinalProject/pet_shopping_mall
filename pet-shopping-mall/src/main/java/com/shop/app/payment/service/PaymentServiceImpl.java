@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.cart.repository.CartRepository;
 import com.shop.app.member.repository.MemberRepository;
@@ -13,6 +14,7 @@ import com.shop.app.payment.dto.PaymentCompleteNotificationDto;
 import com.shop.app.payment.entity.Payment;
 import com.shop.app.payment.repository.PaymentRepository;
 
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class PaymentServiceImpl implements PaymentService {
 	

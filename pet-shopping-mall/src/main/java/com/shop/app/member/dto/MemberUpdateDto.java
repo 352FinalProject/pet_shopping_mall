@@ -12,24 +12,28 @@ import lombok.Data;
 import com.shop.app.member.entity.Member;
 @Data
 public class MemberUpdateDto {
-	@NotBlank(message = "이름은 필수입니다.") // null, "", "  " 모두 허용하지 않음
+	@NotBlank(message = "이름은 필수입니다.") 
 	private String name;
 	
-	private LocalDate birthday;
+	private String phone;
 	
-	@Email(message = "유효한 이메일을 작성해주세요.") // "" 허용
+	@Email(message = "유효한 이메일을 작성해주세요.") 
 	private String email;
 
 	@NotBlank(message = "비밀번호는 필수입니다.")
-	@Pattern(regexp = "\\w{4,}", message = "비밀번호는 영문자/숫자 4글자이상이어야 합니다.")
 	private String password;
 	
+	@NotBlank(message = "비밀번호는 필수입니다.")
+	private String address;
+
 	public Member toMember() {
 		return Member.builder()
 			.name(name)
+			.phone(phone)
 			.password(password)
-			.birthday(birthday)
 			.email(email)
+			.address(address)
 			.build();
 	}
+	
 }
