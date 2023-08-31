@@ -85,7 +85,7 @@
 	
 	.nextDiv {
 	    float: left; /* 왼쪽으로 플로팅 */
-	    margin-left: 35%; /* 왼쪽 여백 추가하여 가운데 정렬 */
+	    margin-left: 0%; /* 왼쪽 여백 추가하여 가운데 정렬 */
 	}
     </style>
 </head>
