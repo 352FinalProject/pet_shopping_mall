@@ -129,8 +129,7 @@ public class OrderController {
 	                
 	                boolean reviewWrite = orderService.reviewWrite(memberId, orderId, productDetailId, productId);
 	               
-	                String key = productDetailId + "-" + productId;
-	                
+	                String key = orderId + "-" + productDetailId + "-" + productId;
 	                reviewWriteMap.put(key, reviewWrite);
 	            }
 	        }
