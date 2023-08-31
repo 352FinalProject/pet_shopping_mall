@@ -19,7 +19,7 @@
 					<i class="fas fa-table me-1"></i> 기본상품목록
 				</div>
 				<div class="card-body">
-				<div class="container-fluid px-4">
+				<div class="container-md px-4">
 						
 						<!-- 1행 -->
 						<div class="row mb-1">
