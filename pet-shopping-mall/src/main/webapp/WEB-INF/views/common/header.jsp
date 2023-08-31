@@ -404,7 +404,7 @@ $(document).ready(function() {
 	         if (containerDiv) {
 	            containerDiv.remove();
 	         }
-         },
+         }, 
          error: function(xhr, textStatus, errorThrown) {
                console.log('Error:');
          }
