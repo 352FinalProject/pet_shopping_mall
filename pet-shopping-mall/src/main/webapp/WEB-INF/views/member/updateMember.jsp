@@ -114,7 +114,7 @@ button, input {
 	<div class="common-container">
 		<div class="common-div">
 			<form:form name="memberUpdateFrm"
-				action="${pageContext.request.contextPath}/member/memberUpdate.do"
+				action="${pageContext.request.contextPath}/member/updateMember.do"
 				method="POST">
 				<table>
 					<tr>
