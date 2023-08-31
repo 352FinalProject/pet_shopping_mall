@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.order.repository.OrderRepository;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.repository.PetRepository;
@@ -44,6 +45,9 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private OrderRepository orderRepository;
+	
 	
 	// 리뷰추가
 	@Override
@@ -64,8 +68,14 @@ public class ReviewServiceImpl implements ReviewService {
 				int imageId = attach.getImageId();
 				// 3. 리뷰 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 				int reviewIdImageId = reviewRepository.insertMapping(refId, imageId);
+				
 			}
 		}
+		int orderId = review.getOrderId();
+		int productDetailId = review.getProductDetailId();
+		int productId = review.getProductId();
+		int newStatus = 6;
+		orderRepository.updateOrderStatusWithDetail(orderId, productDetailId, newStatus, productId);
 		
 		return result;
 	}
