@@ -172,6 +172,7 @@
 	<input type="hidden" name="orderNo" value=""/>
 	<input type="hidden" name="pointsUsed" value=""/>
 	<input type="hidden" name="useCoupon" value=""/>
+	<input type="hidden" name="couponId" value=""/>
 </form:form>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -334,6 +335,7 @@ const proceedPay = () => {
 	                frm.orderNo.value = data.orderNo;
 	                frm.pointsUsed.value = data.pointsUsed;
 	                frm.useCoupon.value = data.useCoupon;
+	                frm.couponId.value = data.couponId;
 	                frm.submit();
 	            }
 	        }

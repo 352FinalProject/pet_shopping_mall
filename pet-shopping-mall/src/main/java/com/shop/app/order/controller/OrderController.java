@@ -110,7 +110,10 @@ public class OrderController {
 	
 	// 결제창이 넘어가기 전에 취소하면 주문 테이블 자체에서 삭제
 	@PostMapping("/deleteOrder.do")
-	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member, @RequestParam(name = "pointsUsed", required = false) Integer pointsUsed, @RequestParam(name = "useCoupon", required = false) String useCoupon) {
+	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member, 
+			@RequestParam(name = "pointsUsed", required = false) Integer pointsUsed, 
+			@RequestParam(name = "useCoupon", required = false) String useCoupon,
+			@RequestParam(name = "couponId", required = false) Integer couponId) {
 		String memberId = member.getMemberId();
 		
 		int result = orderService.deleteOrder(orderNo);
@@ -118,10 +121,10 @@ public class OrderController {
 	    // 포인트 반환 로직
 		if (pointsUsed != null) {
 		    Point rollbackPoint = new Point();
-		    log.debug("rollbackPoint = {}", rollbackPoint);
 		    rollbackPoint.setPointMemberId(memberId);
 		    rollbackPoint.setPointType("구매취소");
 		    rollbackPoint.setPointAmount(pointsUsed);
+		    log.debug("rollbackPoint = {}", rollbackPoint);
 	
 		    Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
 	
@@ -136,7 +139,8 @@ public class OrderController {
 	    // 쿠폰 반환 로직
 		if (useCoupon != null && !useCoupon.isEmpty()) {
 	    MemberCoupon coupon = new MemberCoupon();
-	    log.debug("coupon = {}", coupon);
+	    	coupon.setCouponId(couponId);
+	    	coupon.setMemberId(memberId);
 	        coupon.setUseStatus(0); // 사용 안 함으로 변경
 	        coupon.setUseDate(null); // 사용 날짜를 null로 설정
 	        
