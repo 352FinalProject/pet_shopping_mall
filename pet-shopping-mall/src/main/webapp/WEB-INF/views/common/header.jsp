@@ -360,8 +360,19 @@ $(document).ready(function() {
        event.stopPropagation();
      })
      
-     /* 알림삭제 */
-   function notificationDelete(notificationId) {
+   // 팝업창 실행 메소드
+   const openPopupBtn = document.getElementById("openPopupBtn");
+    openPopupBtn.addEventListener('click', function() {
+        console.log("팝업창 실행");
+        const notificationPopup = document.getElementById("notificationPopup");
+        notificationPopup.classList.toggle("active");
+	});
+
+});
+
+// " onclick="notificationDelete(${notification.id})">x</button>
+  /* 알림삭제 */
+  function notificationDelete(notificationId) {
       console.log(notificationId);
       const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
       const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
@@ -388,23 +399,4 @@ $(document).ready(function() {
       });
    };
 
-   const openPopupBtn = document.getElementById("openPopupBtn");
-    openPopupBtn.addEventListener('click', function() {
-        console.log("Button clicked!");
-        const notificationPopup = document.getElementById("notificationPopup");
-        notificationPopup.classList.toggle("active");
-	});
-
-});
-/* 팝업 */
-// document.addEventListener("DOMContentLoaded", function() {
-//     const openPopupBtn = document.getElementById("openPopupBtn");
-//     openPopupBtn.addEventListener('click', function() {
-//         console.log("Button clicked!");
-//         const notificationPopup = document.getElementById("notificationPopup");
-//         notificationPopup.classList.toggle("active");
-// 	});
-// });
-
-// " onclick="notificationDelete(${notification.id})">x</button>
 </script>

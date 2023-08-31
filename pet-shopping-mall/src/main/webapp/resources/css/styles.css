@@ -6711,7 +6711,7 @@ textarea.form-control-lg {
   background-color: RGBA(248, 249, 250, var(--bs-bg-opacity, 1)) !important;
 }
 
-.text-bg-dark {
+.text- {
   color: #fff !important;
   background-color: RGBA(33, 37, 41, var(--bs-bg-opacity, 1)) !important;
 }
@@ -8146,9 +8146,10 @@ textarea.form-control-lg {
   --bs-text-opacity: 1;
 }
 
-.bg-primary {
+/* 어드민 카테고리버튼 주문관리 */
+.bg-primary { 
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+  background-color: #006494;
 }
 
 .bg-secondary {
@@ -8156,24 +8157,26 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
 
+/* 어드민 카테고리버튼 회원관리 */
 .bg-success {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+  background-color: #588157;
 }
 
 .bg-info {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-info-rgb), var(--bs-bg-opacity)) !important;
 }
-
+/* 어드민 카테고리 버튼 상품관리 */
 .bg-warning {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
+  background-color: #e09f3e;
 }
 
+/* 어드민 카테고리 버튼 매출통계 */
 .bg-danger {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-danger-rgb), var(--bs-bg-opacity)) !important;
+  background-color: #9e2a2b;
 }
 
 .bg-light {
@@ -8183,7 +8186,7 @@ textarea.form-control-lg {
 
 .bg-dark {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+  background-color: whitesmoke;
 }
 
 .bg-black {
@@ -8193,7 +8196,7 @@ textarea.form-control-lg {
 
 .bg-white {
   --bs-bg-opacity: 1;
-  background-color: whitesmoke;
+  background-color: #343a40;
 }
 
 .bg-body {
@@ -10971,7 +10974,7 @@ body {
   margin: 0;
 }
 .sb-topnav.navbar-dark #sidebarToggle {
-  color: black;
+  color: whitesmoke;
 }
 .sb-topnav.navbar-light #sidebarToggle {
   color: rgba(255, 255, 255, 0.5);
@@ -11024,20 +11027,20 @@ body {
 }
 
 .sb-sidenav-dark {
-  background-color: whitesmoke;
+  background-color: #343a40;
   color: black;
 }
 .sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
-  color: black;
+  color: whitesmoke;
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link {
-  color: black;
+  color: whitesmoke;
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-nav-link-icon {
-  color: black;
+  color: whitesmoke;
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
-  color: black;
+  color: whitesmoke;
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
   color: #fff;

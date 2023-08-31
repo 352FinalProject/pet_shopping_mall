@@ -28,7 +28,7 @@ public class OrderScheduler {
 	 * 매일 정각에 시행 (0 0 0 * * ?)
 	 * 매 1분 시행 (0 *_/1 * * * ?) _는 제거 후 사용
 	 */
-	@Scheduled(cron = "0 0 0 * * ?")
+	@Scheduled(cron = "0 */1 * * * ?")
 	public void updateOrderStatus() {
 		int result = orderService.updateOrderStatusIfExpired();
 		int notice = notificationService.updateOrderStatusNotification();

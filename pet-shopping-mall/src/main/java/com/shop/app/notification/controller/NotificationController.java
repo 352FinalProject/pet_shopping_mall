@@ -25,15 +25,13 @@ public class NotificationController {
     NotificationService notificationService;
     
     @PostMapping("/deleteNotification.do")
-    public String deleteNotification(@RequestParam("id") String _id
-    		) {
-    	
-    	int id = Integer.parseInt(_id);
+    public String deleteNotification(@RequestParam String id) {
+    	int _id = Integer.parseInt(id);
     	
     	System.out.println("ㅋㅋㅋ");
     	log.debug("id = {}", id);
         try {
-            notificationService.deleteNotification(id);
+            notificationService.deleteNotification(_id);
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
