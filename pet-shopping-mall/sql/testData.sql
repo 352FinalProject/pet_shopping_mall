@@ -975,9 +975,15 @@ where
 
 
 
+
+
+
+
+
 SELECT
     p.product_id,
     p.category_id,
+    p.create_date,
     p.product_name,
     p.product_price,
     ia.image_renamed_filename,
@@ -994,14 +1000,34 @@ LEFT JOIN
 WHERE
     p.product_name LIKE '%' || '옵' || '%';
  
-
+select * from product;
 
         
-        
-        select * from product;
+
+
+		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename
+		from 
+		    product p
+		left join 
+		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		left join
+		    image_attachment ia ON iam.image_id = ia.image_id
+        where
+            p.category_id=1
+        order by
+            p.product_price desc;
+
 
 select * from product where category_id = 1 order By product_price desc; --  가격 높은순
 select * from product where category_id = 1 order By product_price asc; -- 가격 낮은순
+
+
 select * from product where category_id = 1 order By create_date desc; --  최근 등록순
 
 -- 별점순
@@ -1021,16 +1047,15 @@ review_star_rate
  -- 리뷰많은 순
  select 
 p.*,
-DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate
+(select count(*) from review where product_id = p.product_id) reviewCnt
 from 
-product p left join
-(SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
-on r.product_id = p.product_id
+product p
 where 
-category_id = 1 
-order By 
-review_star_rate
- desc;
+category_id = 1
+order by
+reviewCnt
+desc;
+
 
  
  

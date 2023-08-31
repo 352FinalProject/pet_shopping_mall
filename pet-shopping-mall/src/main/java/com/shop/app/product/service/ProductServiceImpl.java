@@ -201,12 +201,12 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
-	public List<ProductSearchDto> alignByHighReviews(int categoryId) {
-		return productRepository.alignByHighReviews(categoryId);
+	public List<ProductSearchDto> alignByHighReviewStar(int categoryId) {
+		return productRepository.alignByHighReviewStar(categoryId);
 	}
 
 	@Override
-	public List<ProductSearchDto> alignByHighSales(int categoryId) {
-		return productRepository.alignByHighSales(categoryId);
+	public List<ProductSearchDto> alignByReviewCnt(int categoryId) {
+		return productRepository.alignByReviewCnt(categoryId);
 	}
 }

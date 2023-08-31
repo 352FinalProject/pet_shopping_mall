@@ -214,10 +214,10 @@ public class ProductController {
 		    } else if (align.equals("높은가격")) {
 		        String inOrder = "desc";
 		        _productInfos = productService.alignByPrice(id, inOrder);
-		    } else if (align.equals("리뷰많은순")) {
-		        _productInfos = productService.alignByHighReviews(id);
+		    } else if (align.equals("별점높은순")) {
+		        _productInfos = productService.alignByHighReviewStar(id);
 		    } else {
-		        _productInfos = productService.alignByHighSales(id);
+		        _productInfos = productService.alignByReviewCnt(id);
 		    }
 		    model.addAttribute("alignProductInfos", _productInfos);
 		}

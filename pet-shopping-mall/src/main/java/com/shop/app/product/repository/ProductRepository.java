@@ -126,8 +126,8 @@ public interface ProductRepository {
 
 	List<ProductSearchDto> alignByPrice(int categoryId, String inOrder);
 
-	List<ProductSearchDto> alignByHighReviews(int categoryId);
+	List<ProductSearchDto> alignByHighReviewStar(int categoryId);
 
-	List<ProductSearchDto> alignByHighSales(int categoryId);
+	List<ProductSearchDto> alignByReviewCnt(int categoryId);
 
 }

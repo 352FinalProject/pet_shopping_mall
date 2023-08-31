@@ -89,9 +89,53 @@
 			create_date desc
 	</select>
 	
+	<select id="alignByHighReviewStar" resultMap="productSearchDto">
+		select 
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename,
+		    DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate
+		from 
+	        product p
+			left join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+			left join
+			    image_attachment ia ON iam.image_id = ia.image_id
+	        left join
+	        	(SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+	            on r.product_id = p.product_id
+	    where
+	        p.category_id= #{catogoryId}
+		order By 
+			review_star_rate desc
+	</select>
 	
-	
-	
+	<select id="alignByReviewCnt" resultMap="productSearchDto">
+		select 
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+	        product p
+			left join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+			left join
+			    image_attachment ia ON iam.image_id = ia.image_id
+	        left join
+	        (SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+	            on r.product_id = p.product_id
+        where
+            p.category_id= #{categoryId}
+		order By 
+			reviewCnt desc
+	</select>
 	
 	
 	

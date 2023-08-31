@@ -31,10 +31,10 @@
 					<a href="#" class="font" onclick="setSortOption('높은가격')">높은가격</a>
 				</li>
 				<li>
-					<a href="#" class="font" onclick="setSortOption('리뷰많은순')">리뷰많은순</a>
+					<a href="#" class="font" onclick="setSortOption('별점높은순')">별점높은순</a>
 				</li>
 				<li>
-					<a href="#" class="font" onclick="setSortOption('판매량순')">판매량순</a>
+					<a href="#" class="font" onclick="setSortOption('리뷰많은순')">리뷰많은순</a>
 				</li>
 			</ul>
 		</div>
