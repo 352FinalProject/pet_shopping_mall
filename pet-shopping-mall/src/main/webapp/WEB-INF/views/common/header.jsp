@@ -317,33 +317,6 @@ document.addEventListener("DOMContentLoaded", function() {
         notificationPopup.classList.toggle("active");
    	});
 });
-
-/* 알림삭제 */
- * 
- */
- function notificationDelete(notificationId) {
-	    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-	    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-	    $.ajax({
-	        type: 'POST',
-	        url: '${pageContext.request.contextPath}/notification/deleteNotification.do',
-	        data: JSON.stringify{
-	            'id': notificationId
-	        },
-	        beforeSend: function(xhr) {
-	            xhr.setRequestHeader(csrfHeader, csrfToken)
-	        },
-	        success: function(result) {
-	            const containerDiv = document.getElementById(`notification${notificationId}`);
-	            if (containerDiv) {
-	                containerDiv.remove();
-	            }
-	        }
-	    });
-}
-
-  });
    
 
 </script>

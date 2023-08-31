@@ -391,6 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentQuantity > 1) {
             currentQuantity--;
             quantityInput.value = currentQuantity;
+            document.getElementById('_quantity').value = currentQuantity;
         }
         updatePrice();
     });
@@ -398,6 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
     optionPlusButton.addEventListener("click", () => {
         currentQuantity++;
         quantityInput.value = currentQuantity;
+        document.getElementById('_quantity').value = currentQuantity;
         updatePrice();
     });
 
