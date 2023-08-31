@@ -288,25 +288,22 @@ pageEncoding="UTF-8"%>
   <div class="product-bottom">
     <div class="product-bottom2">
       <div>
-        <span id="product-bottom-title">${product.productName}</span> <br />
-        <span id="product-bottom-price">11,000원</span>
+        <span id="product-bottom-title" style="font-size: 24px;">${product.productName}</span> <br />
+        <span style="font-size: 18px; font-weight: 600;">
+           <fmt:formatNumber value="${product.productPrice}" pattern="#,###" /> 원
+        </span>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
-           ${likeState}
+           <span class="heart-button pink" id="clickHeart">
            <c:choose>
-              <c:when test="${product.likeCnt == 0}">
-               <span class="heart-button" id="clickHeart">♡</span>
-            </c:when>
-            <c:otherwise>
-               <span class="heart-button pink" id="clickHeart">♥</span>
-               
-            </c:otherwise>
+              <c:when test="${product.likeCnt == 0}">♡</c:when>
+            <c:otherwise>♥</c:otherwise>
          </c:choose>
+         </span>
         </button>
         <span id="likeCnt">${product.likeCnt}</span>
       </div>
-      <div>
         <button class="btn btn1" onclick="addCart();">장바구니</button>
         <button class="btn btn2">구매하기</button>
       </div>
@@ -412,7 +409,7 @@ function addCart() {
 };
 
 
-// 하트 클릭 이벤트 (선모)
+// 찜하기
 let token = $("meta[name='_csrf']").attr("content");
 let header = $("meta[name='_csrf_header']").attr("content");
 
@@ -422,20 +419,9 @@ $(function() {
     });
 });
 
-//중복 클릭 방지 플래그
-let isProcessing = false;
-let isPink = $("#clickHeart").hasClass("pink"); // 이전 상태 저장
-
 $("#clickHeart").on("click", function() {
-    if (isProcessing) {
-        return;
-    }
-
-    isProcessing = true;
-
-    console.log(isPink); // 이전 상태 출력
-    var state = isPink ? "insert" : "delete"; // 이전 상태에 따라 반대로 설정
-
+    var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // 이전 상태에 따라 반대로 설정
+    
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/product/insertPick.do",
@@ -448,29 +434,23 @@ $("#clickHeart").on("click", function() {
         }),
         success: function(result) {
             if (result.rs == "insertS") {
-                if (isPink) { // 이전 상태에 따라 조건 분기
-                    $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-                }
-                $("#clickHeart").addClass("pink");
+               $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
+                $("#clickHeart").text("♥");
             } else if (result.rs == "deleteS") {
-                if (!isPink) { // 이전 상태에 따라 조건 분기
-                    $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-                }
-                $("#clickHeart").removeClass("pink");
+               $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
+                $("#clickHeart").text("♡");
             }
-
+            
             alert(result.msg);
         },
         error: function(req, status, error) {
             alert("에러가 발생하였습니다.");
             console.log(req.responseText);
-        },
-        complete: function() {
-            isProcessing = false;
-            isPink = !isPink; // 이전 상태 업데이트
         }
     });
 });
+
+
 </script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
