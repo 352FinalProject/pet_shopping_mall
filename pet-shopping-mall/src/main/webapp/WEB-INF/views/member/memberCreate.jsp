@@ -325,20 +325,39 @@ $(document).ready(function() {
         
         e.preventDefault();
 
-   /*      if (password.val() !== passwordConfirmation.val()) {
-            alert("비밀번호가 일치하지 않습니다.");
-            e.preventDefault(); // 폼 제출을 중단
-            return;
-        } */
-        
     });
 });
 
-window.onload = function() {
+/* const passwordInput = document.getElementById("password");
+const passwordConfirmInput = document.getElementById("passwordConfirm");
+
+// 비밀번호 입력란과 비밀번호 확인 입력란에 대한 input 이벤트 처리
+passwordInput.addEventListener("input", validatePassword);
+passwordConfirmInput.addEventListener("input", validatePassword);
+
+function validatePassword() {
+    const passwordValue = passwordInput.value;
+    const passwordConfirmValue = passwordConfirmInput.value;
+
+    // 비밀번호 패턴 검사
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    if (passwordPattern.test(passwordValue) && passwordValue === passwordConfirmValue) {
+        passwordInput.style.borderColor = "blue"; // 유효한 패턴 및 일치하는 경우 테두리 색상을 파란색으로 변경
+        passwordConfirmInput.style.borderColor = "blue";
+    } else if (passwordValue.trim() === "" && passwordConfirmValue.trim() === "") {
+        passwordInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
+        passwordConfirmInput.style.borderColor = "";
+    } else {
+        passwordInput.style.borderColor = "red"; // 유효하지 않은 패턴 또는 불일치하는 경우 테두리 색상을 빨간색으로 변경
+        passwordConfirmInput.style.borderColor = "red";
+    }
+} */
+
+ window.onload = function() {
     // 필요한 요소들을 가져오기
     var passwordInput = document.getElementById("password");
     var confirmPasswordInput = document.getElementById("passwordConfirm");
-    var nameInput = document.getElementById("name");
     
     // 비밀번호 일치 여부 확인 함수
     function validatePassword() {
@@ -348,81 +367,104 @@ window.onload = function() {
         if (password === confirmPassword) {
             // 비밀번호 일치 시 스타일 변경
             passwordInput.style.border = "1px solid #5886d3";
-            confirmPasswordInput.style.border = "1px solid #58586d3";
+            confirmPasswordInput.style.border = "1px solid #5886d3";
         } else {
             // 비밀번호 불일치 시 스타일 변경
             passwordInput.style.border = "1px solid red";
             confirmPasswordInput.style.border = "1px solid red";
         }
     };
-    
+     
     // 입력이 변경될 때마다 비밀번호 일치 여부 확인
     passwordInput.addEventListener("input", validatePassword);
     confirmPasswordInput.addEventListener("input", validatePassword);
 
     // 이름 유효성 검사 함수
-    function validateName() {
-        var name = nameInput.value;
-        
-        if (name.length >= 2) {
-            // 이름 조건에 맞을 때 스타일 변경
-            nameInput.style.border = "1px solid #5886d3";
+    const nameInput = document.getElementById("name");
+
+    nameInput.addEventListener("input", function() {
+        const namePattern = /^[가-힣a-zA-Z]+$/;
+        if (nameInput.value === "") {
+            nameInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
+        } else if (namePattern.test(nameInput.value)) {
+            nameInput.style.borderColor = "#5886d3";
         } else {
-            // 이름 조건에 맞지 않을 때 스타일 변경
-            nameInput.style.border = "1px solid red";
+            nameInput.style.borderColor = "red";
         }
-    };
-    
-    // 입력이 변경될 때마다 이름 유효성 검사 실행
-    nameInput.addEventListener("input", validateName);
+    });
 };
 
-/* const validatePhone = () => {
-    const phone = phoneInput.value;
+// 핸드폰 유효성검사 이벤트처리 함수
+const phoneInput = document.getElementById("tel");
 
-    if (phone.length >= 8) {
-        // 이름 조건이 충족되었을 때 스타일 변경
-        phoneInput.style.border = "1px solid #5886d3";
+phoneInput.addEventListener("input", function() {
+    const phonePattern = /^010\d{8}$/;
+    if (phoneInput.value === "") {
+        phoneInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
+    } else if (phonePattern.test(phoneInput.value)) {
+        phoneInput.style.borderColor = "#5886d3";
     } else {
-        // 이름 조건이 충족되지 않았을 때 스타일 변경
-       phoneInput.style.border = "1px solid red";
+        phoneInput.style.borderColor = "red";
     }
-}; */
+});
 
+const birthdayInput = document.getElementById("birthday");
 
-const validatePhone = () => {
-    const phone = phoneInput.value;
+// 생일 입력란에 대한 input 이벤트 처리
+birthdayInput.addEventListener("input", validateBirthday);
 
-    if (phone.length >= 8) {
-        // 이름 조건이 충족되었을 때 스타일 변경
-        phoneInput.style.border = "1px solid #5886d3";
+function validateBirthday() {
+    const birthdayValue = birthdayInput.value;
+    const birthdayPattern = /^\d{4}-\d{2}-\d{2}$/;
+
+    if (birthdayPattern.test(birthdayValue)) {
+        birthdayInput.style.borderColor = "#5886d3"; // 유효한 형식일 경우 테두리 색상을 파란색으로 변경
+    } else if (birthdayValue.trim() === "") {
+        birthdayInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
     } else {
-        // 이름 조건이 충족되지 않았을 때 스타일 변경
-       phoneInput.style.border = "1px solid red";
+        birthdayInput.style.borderColor = "red"; // 유효하지 않은 형식일 경우 테두리 색상을 빨간색으로 변경
     }
-};
+}
+// 이메일 유효성검사 이벤트처리 함수
+const emailInput = document.getElementById("emailInput");
 
-// 입력이 변경될 때마다 이름 유효성 검사 실행
-phoneInput.addEventListener("input", validatePhone);
-
-// 입력이 변경될 때마다 이름 유효성 검사 실행
-phoneInput.addEventListener("input", validatePhone);
-
-
-function validateEmail() {
-    const emailInput = document.getElementById("emailInput");
-
-    const emailPattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-
-    if (!emailPattern.test(emailInput.value)) {
-        emailInput.style.border = "1px solid red"; // 이메일 형식이 유효하지 않을 때 색상 변경
+emailInput.addEventListener("input", function() {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (emailInput.value === "") {
+        emailInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
+    } else if (emailPattern.test(emailInput.value)) {
+        emailInput.style.borderColor = "#5886d3";
     } else {
-        emailInput.style.border = "1px solid #58586d3"; // 이메일 형식이 유효할 때 기본 색상으로 변경
+        emailInput.style.borderColor = "red";
     }
-    emailInput.addEventListener("input", validateEmail);
-};
+});
 
+// 주소 유효성검사 이벤트처리 함수
+const roadAddressInput = document.getElementById("roadAddress");
+const jibunAddressInput = document.getElementById("jibunAddress");
+const detailAddressInput = document.getElementById("detailAddress");
 
+// 주소 입력란들에 대한 input 이벤트 처리
+roadAddressInput.addEventListener("input", updateAddress);
+jibunAddressInput.addEventListener("input", updateAddress);
+detailAddressInput.addEventListener("input", updateAddress);
+
+function updateAddress() {
+    const roadAddress = roadAddressInput.value;
+    const jibunAddress = jibunAddressInput.value;
+    const detailAddress = detailAddressInput.value;
+
+    const fullAddress = roadAddress + jibunAddress + " " + detailAddress;
+
+    const addressInput = document.getElementById("address");
+    if (fullAddress.trim() === "") {
+        addressInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
+    } else {
+        addressInput.style.borderColor = "#5886d3";
+    }
+
+    addressInput.value = fullAddress;
+}
 
 function sample4_execDaumPostcode() {
     new daum.Postcode({

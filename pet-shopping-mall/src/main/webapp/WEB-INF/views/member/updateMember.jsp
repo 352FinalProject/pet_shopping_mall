@@ -153,7 +153,7 @@ button, input {
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="이메일" value="${principal.member.email}" required
+							placeholder="이메일" value="${member.email}" required
 							readonly> <input type="button" value="이메일 인증"
 							onclick="emailCheck()"></td>
 					</tr>
@@ -166,16 +166,16 @@ button, input {
 							</div> <br>
 							<div style="margin-top: -60px; position: absolute;">
 								<input type="text" class="address" id="roadAddress"
-									placeholder="도로명주소" oninput="updateAddress()">
+									placeholder="도로명주소" oninput="updateAddress()" value="${member.address}">
 							</div> <br>
 							<div style="margin-top: -30px;">
 								<input type="text" class="address" id="jibunAddress"
-									placeholder="지번주소" oninput="updateAddress()">
+									placeholder="지번주소" oninput="updateAddress()" value="${member.address}">
 							</div> <br> <span id="guide" style="color: #999; display: none"></span>
 							<div style="margin-top: -10px;">
 								<input type="text" class="address" id="detailAddress"
 									placeholder="상세주소" oninput="updateAddress()">
-							</div> <input type="hidden" name="address" id="address" value="" />
+							</div> <input type="hidden" name="address" id="address" value="${member.address}" />
 						</td>
 					</tr>
 					<tr>
