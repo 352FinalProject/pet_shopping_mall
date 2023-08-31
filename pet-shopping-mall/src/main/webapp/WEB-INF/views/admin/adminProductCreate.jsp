@@ -21,7 +21,8 @@
 				<div class="container-fluid px-4">
 					<form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" 
 					    name ="createProductFrm"
-					    enctype="multipart/form-data" method="post" class="mt-4">
+					    enctype="multipart/form-data" 
+					    method="post" class="mt-4">
 					        
 					        <!-- 1행 -->
 					        <div class="row mb-1">
@@ -70,7 +71,7 @@
 					        <div class="row mb-5">
 								<!-- 1열 -->					        
 					        	<div class="col-md-6">
-					            	<input type="file" name="upFile" id="file" class="form-control">
+					            	<input type="file" name="upFile" id="file" class="form-control" multiple>
 					        	</div>
 					        	<!-- 2열 -->
 					        	<div class="col-md-6">

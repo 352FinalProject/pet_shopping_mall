@@ -70,12 +70,15 @@
 					        <div class="col-md-6">
 					        	<!-- 상품이미지가 있다면 -->
  					        	<c:if test="${not empty attachments}">
-									<img alt="" 
-										src="${pageContext.request.contextPath}/resources/upload/product/${attachments[0].imageRenamedFilename}"
-										width="100px">
+ 					        		<c:forEach items="${attachments}" var="attachment" varStatus="vs">
+										<img alt="" 
+											src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}"
+											width="100px">
+ 					        		</c:forEach>
 					        	</c:if>
 					        	<!-- 상품이미지가 없다면 -->
  					        	<c:if test="${empty attachments}">
+ 					        		이미지가 없습니다.
 						            <input type="file" name="upFile" id="file" class="form-control">
 					        	</c:if>
 					        </div>
