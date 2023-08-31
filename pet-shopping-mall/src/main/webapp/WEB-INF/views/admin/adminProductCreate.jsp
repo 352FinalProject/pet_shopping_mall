@@ -187,7 +187,7 @@
     const addOptions = () => {
     	
     	const newOption = `
-    	<div class="addedOption" id="addedOption">
+    	<div class="addedOption" id="addedOption\${optionCnt}">
 			<div class="row mb-3">
 				<div class="col-md-2">
 					<label for="optionName" class="form-label">옵션명</label>
@@ -224,7 +224,7 @@
     // 옵션삭제 함수
     const delOptions = (optionCnt) => {
         console.log("optionCnt=",optionCnt);
-    	const optionToRemove = document.getElementById(`addedOption${optionCnt}`);
+    	const optionToRemove = document.getElementById(`addedOption\${optionCnt}`);
         console.log(optionToRemove);
     	optionToRemove.remove();
     	
