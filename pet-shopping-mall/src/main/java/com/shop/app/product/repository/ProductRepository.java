@@ -119,5 +119,15 @@ public interface ProductRepository {
 	// 상품수정시 옵션 추가등록(수경)
 	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
 	int adminOptionCreate(ProductDetail productDetail);
+	
+	
+
+	List<ProductSearchDto> alignByNewProduct(int categoryId);
+
+	List<ProductSearchDto> alignByPrice(int categoryId, String inOrder);
+
+	List<ProductSearchDto> alignByHighReviews(int categoryId);
+
+	List<ProductSearchDto> alignByHighSales(int categoryId);
 
 }

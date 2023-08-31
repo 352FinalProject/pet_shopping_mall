@@ -158,12 +158,11 @@ public class ProductController {
 	@GetMapping("/productList.do")
 	public void productList(
 			@RequestParam int id,
-			Model model
+			Model model,
+			@RequestParam(required = false) String align
 			) {
-		log.debug("categoryId = {}", id);
-		// 카테고리 정보 가져오기
+		
 		ProductCategory productCategory = productService.findProductCategoryById(id); 
-		// 해당 카테고리의 상품 가져오기
 		List<Product> products = productService.findProductsByCategoryId(id);
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
@@ -186,10 +185,8 @@ public class ProductController {
 					.attachmentMapping(productImages.getAttachmentMapping())
 					.build());
 		}
-		log.debug("productInfos = {}", productInfos);
-		
-		model.addAttribute("productCategory", productCategory);
 		model.addAttribute("productInfos", productInfos);
+		model.addAttribute("productCategory", productCategory);
 		
 		// 리뷰 전체개수, 리뷰 별점 평균 (혜령)
 		for (ProductInfoDto productInfo : productInfos) {
@@ -201,11 +198,29 @@ public class ProductController {
 	        ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 	        productInfo.setProductReviewStarAvg(productReviewStarAvg);
 		}
+		
 		model.addAttribute("productInfos", productInfos); 
 		
-		log.debug("별점나왔니 productInfos = {}", productInfos);
 		
 		
+		// 정렬
+		if (align != null) {
+		    List<ProductSearchDto> _productInfos = null;
+		    if (align.equals("신상품")) {
+		        _productInfos = productService.alignByNewProduct(id);
+		    } else if (align.equals("낮은가격")) {
+		        String inOrder = "asc";
+		        _productInfos = productService.alignByPrice(id, inOrder);
+		    } else if (align.equals("높은가격")) {
+		        String inOrder = "desc";
+		        _productInfos = productService.alignByPrice(id, inOrder);
+		    } else if (align.equals("리뷰많은순")) {
+		        _productInfos = productService.alignByHighReviews(id);
+		    } else {
+		        _productInfos = productService.alignByHighSales(id);
+		    }
+		    model.addAttribute("alignProductInfos", _productInfos);
+		}
    }
    
    
@@ -253,5 +268,6 @@ public class ProductController {
       model.addAttribute("productInfos",productInfos);
       
    }
+   
    
 }

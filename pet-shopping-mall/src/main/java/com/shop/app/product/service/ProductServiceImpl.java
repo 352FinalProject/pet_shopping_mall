@@ -15,6 +15,7 @@ import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.repository.ReviewRepository;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
@@ -146,7 +147,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductSearchDto> searchProducts(String searchQuery) {
 		List<ProductSearchDto> productList = productRepository.searchProducts(searchQuery);
-				
+		
 		for(ProductSearchDto p : productList) {
 			int cnt = reviewRepository.findProductListReviewTotalCount(p.getProductId());
 			p.setReviewCnt(cnt);
@@ -177,5 +178,35 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int adminOptionCreate(ProductDetail productDetail) {
 		return productRepository.adminOptionCreate(productDetail);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	// 정렬
+
+	@Override
+	public List<ProductSearchDto> alignByNewProduct(int categoryId) {
+		return productRepository.alignByNewProduct(categoryId);
+	}
+
+	@Override
+	public List<ProductSearchDto> alignByPrice(int categoryId, String inOrder) {
+		return productRepository.alignByPrice(categoryId, inOrder);
+	}
+
+
+	@Override
+	public List<ProductSearchDto> alignByHighReviews(int categoryId) {
+		return productRepository.alignByHighReviews(categoryId);
+	}
+
+	@Override
+	public List<ProductSearchDto> alignByHighSales(int categoryId) {
+		return productRepository.alignByHighSales(categoryId);
 	}
 }
