@@ -229,10 +229,12 @@ public class MemberSecurityController {
    @PostMapping("/memberUdapte.do")
    public String memberUpdate(@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
          @Valid MemberUpdateDto _member, HttpSession session, BindingResult bindingResult,
-         RedirectAttributes redirectAttr) {
+         RedirectAttributes redirectAttr, Model model) {
       Member member = _member.toMember();
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
+
+      model.addAttribute("member", member); 
 
       // 새로운 비밀번호가 입력되었을 경우 암호화 처리
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {

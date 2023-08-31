@@ -156,7 +156,7 @@ button, input {
 					<tr>
 						<th>이메일</th>
 						<td><input type="email" name="email" id="email"
-							placeholder="이메일" value="${member.email}" required readonly>
+							placeholder="이메일" value="${principal.member.email}" required readonly>
 							<input
 							type="button" value="이메일 인증" onclick="emailCheck()">
 						</td>
