@@ -38,8 +38,7 @@ pageEncoding="UTF-8"%>
       <div class="product-img">
         <img
           src="${pageContext.request.contextPath}/resources/upload/product/${productImages.attachments[0].imageRenamedFilename}"
-          width="400px"
-        />
+          width="400px" />
       </div>
       <div class="product-info">
         <div id="product-title">${product.productName}</div>
@@ -49,8 +48,8 @@ pageEncoding="UTF-8"%>
             <img
               src="${pageContext.request.contextPath}/resources/images/상품/star.png"
               alt="별점"
-            /><span>5.0</span> <span>&nbsp;|&nbsp;</span>
-            <span><a href="#">후기 102건</a></span>
+            /><span>${productReviewStarAvg.reviewStarRate}</span> <span>&nbsp;|&nbsp;</span>
+            <span><a href="#product-review-box">후기 ${reviewTotalCount}건</a></span>
           </div>
         </div>
         <hr class="hr-line" />
@@ -72,8 +71,7 @@ pageEncoding="UTF-8"%>
         <div class="shipped_img">
           <img
             src="${pageContext.request.contextPath}/resources/images/product/shipped.png"
-            width="30px"
-          />
+            width="30px" />
           <div class="shipped_text">배송</div>
         </div>
         <div class="shipped_desc">
@@ -89,6 +87,9 @@ pageEncoding="UTF-8"%>
                 <input type="text" id="quantity" class="quantity-input" value="1">
                 <button class="quantity-btn plus">+</button>
             </div>
+           </div>
+           <div class="additional-price-container" id="additional-price-container" style="display : none;">
+                 <div class="additional-price" id="${productDetails[0].productDetailId}">${productDetails[0].additionalPrice}</div>
            </div>
         </c:if>
         <c:if test="${fn:length(productDetails) gt 1}">
@@ -159,14 +160,14 @@ pageEncoding="UTF-8"%>
     <div class="review-div" > 
       <ul class="review-product-utility">
         <c:if test="${empty reviews}"> 
-           작성된 리뷰가 없습니다. 
+        	작성된 리뷰가 없습니다. 
         </c:if>
         <c:if test="${not empty reviews}">
           <c:forEach items="${reviews}" var="review" varStatus="vs">
             <li>
               <div class="review-box">
                 <div class="review-info-box">
-                  <em class="review-info-id">${review.reviewMemberId}</em> <!-- 리뷰 작성자 -->
+                  <em class="review-info-id">${review.reviewMemberId}&nbsp;</em> <!-- 리뷰 작성자 -->
                   <em class="review-info-date"> <!-- 작성일 -->
                     <fmt:parseDate
                       value="${review.reviewCreatedAt}"
@@ -176,73 +177,92 @@ pageEncoding="UTF-8"%>
                     <fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd" />
                   </em>
                 </div>
+                <!-- 리뷰 펫 -->
                 <c:set var="pets" value="${reviewPetsMap[review.reviewId]}" />
                 <c:if test="${not empty pets}">
                   <div class="reivew-pet-box"> <!-- 펫정보 -->
                     <c:forEach items="${pets}" var="pet">
-                      <em class="review-pet-name">${pet.petName} |</em>
-                      <em class="review-pet-name">${pet.petGender} |</em>
-                      <em class="review-pet-name">${pet.petAge}살 |</em>
-                      <em class="review-pet-name">${pet.petWeight}kg |</em>
-                      <em class="review-pet-name">${pet.petBreed}</em>
+                      <em class="review-pet-name">${pet.petName} &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-gender">${pet.petGender} &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-age">${pet.petAge}살 &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-weight">${pet.petWeight}kg &nbsp;<em class="review-em">|</em></em>
+                      <em class="review-pet-breed">${pet.petBreed}</em>
                     </c:forEach>
                   </div>
                 </c:if>
+                <!-- 리뷰 별점 -->
                 <c:set var="myReviewId" value="${review.reviewId}" />
                 <div class="review-detail-box">
-                     <em class="review-info-id">${review.reviewTitle}</em> <!-- 리뷰제목 -->
-                     <div class="score_star"> <!-- 별점 -->
-                       <c:choose>
-                         <c:when test="${review.reviewStarRate == 1}">
-                           <span class="star-rating">★☆☆☆☆</span> (1)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 2}">
-                           <span class="star-rating">★★☆☆☆</span> (2)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 3}">
-                           <span class="star-rating">★★★☆☆</span> (3)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 4}">
-                           <span class="star-rating">★★★★☆</span> (4)
-                         </c:when>
-                         <c:when test="${review.reviewStarRate == 5}">
-                           <span class="star-rating">★★★★★</span> (5)
-                         </c:when>
-                       </c:choose>
-                     </div>
-                     <em class="review-info-id">${review.reviewContent}</em> <!-- 리뷰내용 -->
-                  <!-- 리뷰 이미지 -->
-                  <c:if test="${not empty reviewImageMap[review.reviewId]}"> 
-                    <div class="review-warp">
-                      <div class="detail-upload">
-                        <img src="${pageContext.request.contextPath}/resources/upload/review/${reviewImageMap[review.reviewId]}" 
-                          alt="Review Image">
-                      </div>
-                    </div>
-                  </c:if>
-              </div>
+                  <em class="review-info-title">${review.reviewTitle}</em> <!-- 리뷰제목 -->
+                  <div class="score_star"> <!-- 별점 -->
+                    <c:choose>
+                      <c:when test="${review.reviewStarRate == 1}">
+                        <span class="star-rating">★☆☆☆☆</span> (1.0)
+                      </c:when>
+                      <c:when test="${review.reviewStarRate == 2}">
+                        <span class="star-rating">★★☆☆☆</span> (2.0)
+                      </c:when>
+                      <c:when test="${review.reviewStarRate == 3}">
+                        <span class="star-rating">★★★☆☆</span> (3.0)
+                      </c:when>
+                      <c:when test="${review.reviewStarRate == 4}">
+                        <span class="star-rating">★★★★☆</span> (4.0)
+                      </c:when>
+                      <c:when test="${review.reviewStarRate == 5}">
+                        <span class="star-rating">★★★★★</span> (5.0)
+                      </c:when>
+                    </c:choose>
+                  </div>
+                  <em class="review-info-content">${review.reviewContent}</em> <!-- 리뷰내용 -->
+                  <span class="product-review-small-space"></span>
+	              <!-- 리뷰 이미지 -->
+		          <c:forEach var="review" items="${reviews}">
+		              <div class="review-item">
+		                  <div class="review-img">
+		                      <div style="display: inline-block;"></div>
+		                      <br>
+		                      <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
+		                          <div class="carousel-inner">
+		                              <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
+		                              <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
+		                                  <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
+		                                  <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+		                                      <img class="review-img2" alt="Review Image" src="${imagePath}">
+		                                  </div>
+		                              </c:forEach>
+		                          </div>
+		                          <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
+		                              <span class="carousel-control-prev-icon"></span>
+		                          </a>
+		                          <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
+		                              <span class="carousel-control-next-icon"></span>
+		                          </a>
+		                      </div>
+		                  </div>
+		              </div>
+		          </c:forEach>
                 </div>
+              </div>
             </li>
-         </c:forEach>
-      </c:if>
-   </ul>
-</div>
-<!-- 페이징 바 -->
-<nav aria-label="..." class="product-review-paging">
-  <ul class="pagination pagination-sm">
-    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
-      <li class="page-item ${page == pageNumber ? 'active' : ''}">
-        <a
-          class="page-link"
-          href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
-        >
-          <span class="page-number">${pageNumber}</span>
-        </a>
-      </li>
-    </c:forEach>
-  </ul>
-</nav>
-
+          </c:forEach>
+        </c:if>
+      </ul>
+    </div>
+	<!-- 페이징 바 -->
+	<nav aria-label="..." class="product-review-paging">
+	  <ul class="pagination pagination-sm">
+	    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+	      <li class="page-item ${page == pageNumber ? 'active' : ''}">
+	        <a
+	          class="page-link"
+	          href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
+	        >
+	          <span class="page-number">${pageNumber}</span>
+	        </a>
+	      </li>
+	    </c:forEach>
+	  </ul>
+	</nav>
     <!-- 교환/반품/배송 -->
     <div class="util-div" id="product-notice-box">
       <ul class="product-utility" >
@@ -287,25 +307,22 @@ pageEncoding="UTF-8"%>
   <div class="product-bottom">
     <div class="product-bottom2">
       <div>
-        <span id="product-bottom-title">${product.productName}</span> <br />
-        <span id="product-bottom-price">11,000원</span>
+        <span id="product-bottom-title" style="font-size: 24px;">${product.productName}</span> <br />
+        <span style="font-size: 18px; font-weight: 600;">
+           <fmt:formatNumber value="${product.productPrice}" pattern="#,###" /> 원
+        </span>
       </div>
       <div class="heart-img">
         <button class="heart-button" id="heartButton">
-           ${likeState}
+           <span class="heart-button pink" id="clickHeart">
            <c:choose>
-              <c:when test="${product.likeCnt == 0}">
-               <span class="heart-button" id="clickHeart">♡</span>
-            </c:when>
-            <c:otherwise>
-               <span class="heart-button pink" id="clickHeart">♥</span>
-               
-            </c:otherwise>
+              <c:when test="${product.likeCnt == 0}">♡</c:when>
+            <c:otherwise>♥</c:otherwise>
          </c:choose>
+         </span>
         </button>
         <span id="likeCnt">${product.likeCnt}</span>
       </div>
-      <div>
         <button class="btn btn1" onclick="addCart();">장바구니</button>
         <button class="btn btn2">구매하기</button>
       </div>
@@ -318,8 +335,7 @@ pageEncoding="UTF-8"%>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-
-// 상품수량에 따라 가격 바꾸기
+//상품수량에 따라 가격 바꾸기
 document.addEventListener("DOMContentLoaded", () => {
    const optionSelect = document.querySelector("[name='product-option']");
    const originalPrice = parseInt(${product.productPrice});
@@ -331,17 +347,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionPlusButton = document.querySelector(".plus");
     let currentQuantity = parseInt(quantityInput.value) || 1;  // 수량이 지정되지 않은 경우 1로 설정
 
+    // 선택한 상품디테일 아이디
+    <c:if test="${fn:length(productDetails) eq 1}">
+        let choicedId = ${productDetails[0].productDetailId};
+   </c:if>
+   <c:if test="${fn:length(productDetails) gt 1}">
+        let choicedId = optionSelect.options[optionSelect.selectedIndex].value;
+   </c:if>
+   console.log("choicedId=",choicedId);
+   console.log("originalPrice=",originalPrice);
+
+  // 상품디테일 아이디에 해당하는 추가금액
+  additionalPrice = parseInt(document.getElementById(`\${choicedId}`).innerHTML);
+  console.log("additionalPrice=", additionalPrice);
+
     const formatNumberWithCommas = (num) => {
         return num.toLocaleString('en-US');
     };
 
-    optionSelect.addEventListener("change", function() {
-        const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
-        const price = document.getElementById(productDetailId).innerHTML;
-        if(price !== null) {
-           additionalPrice = parseInt(price);
-        }
-    });
+    if(optionSelect !== null){
+       optionSelect.addEventListener("change", function() {
+           const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
+           const price = document.getElementById(productDetailId).innerHTML;
+           if(price !== null) {
+              additionalPrice = parseInt(price);
+           }
+       });
+       
+    }
 
     const updatePrice = () => {
         const updateTotalPrice = (originalPrice + additionalPrice) * currentQuantity;
@@ -368,58 +401,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-     const optionSelect = document.querySelector("[name='product-option']");
-     const quantityInput = document.querySelector(".quantity-input");
-     const optionMinusButton = document.querySelector(".minus");
-     const optionPlusButton = document.querySelector(".plus");
-     const frm = document.querySelector("#addCartFrm");
-
-     let currentQuantity = 1;
-
-     optionMinusButton.addEventListener("click", () => {
-       if (currentQuantity > 1) {
-         currentQuantity--;
-         quantityInput.value = currentQuantity;
-         frm.quantity.value = currentQuantity;
-       }
-     });
-
-     optionPlusButton.addEventListener("click", () => {
-       currentQuantity++;
-       quantityInput.value = currentQuantity;
-       frm.quantity.value = currentQuantity;
-     });
-     
-     console.log("optionSelect = ", optionSelect);
-     
-     optionSelect.addEventListener("change", function() {
-       const selectedOption = optionSelect.options[optionSelect.selectedIndex];
-       const selectedValue = selectedOption.value;
-       const updateQuantity = quantityInput.value;
-       
-       frm.productDetailId.value = selectedValue;
-       frm.quantity.value = updateQuantity;
-     });
-     
-     let token = $("meta[name='_csrf']").attr("content");
-     let header = $("meta[name='_csrf_header']").attr("content");
-
-     $(function() {
-         $(document).ajaxSend(function(e, xhr, options) {
-             xhr.setRequestHeader(header, token);
-         });
-     });
-
-});
-
 // 장바구니에 담기 (담희)
 function addCart() {
    const frm = document.querySelector("#addCartFrm");
    
    const quantityValue = frm.querySelector("#_quantity").value;
    const productDetailIdValue = frm.querySelector("#_productDetailId").value;
-     
+   
+   console.log("quantityValue=",quantityValue);
+   console.log("productDetailIdValue=",productDetailIdValue);
+   
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/cart/insertCart.do",
@@ -437,7 +428,7 @@ function addCart() {
 };
 
 
-// 하트 클릭 이벤트 (선모)
+// 찜하기
 let token = $("meta[name='_csrf']").attr("content");
 let header = $("meta[name='_csrf_header']").attr("content");
 
@@ -447,20 +438,9 @@ $(function() {
     });
 });
 
-//중복 클릭 방지 플래그
-let isProcessing = false;
-let isPink = $("#clickHeart").hasClass("pink"); // 이전 상태 저장
-
 $("#clickHeart").on("click", function() {
-    if (isProcessing) {
-        return;
-    }
-
-    isProcessing = true;
-
-    console.log(isPink); // 이전 상태 출력
-    var state = isPink ? "insert" : "delete"; // 이전 상태에 따라 반대로 설정
-
+    var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // 이전 상태에 따라 반대로 설정
+    
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/product/insertPick.do",
@@ -473,30 +453,21 @@ $("#clickHeart").on("click", function() {
         }),
         success: function(result) {
             if (result.rs == "insertS") {
-                if (isPink) { // 이전 상태에 따라 조건 분기
-                    $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-                }
-                $("#clickHeart").addClass("pink");
+               $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
+                $("#clickHeart").text("♥");
             } else if (result.rs == "deleteS") {
-                if (!isPink) { // 이전 상태에 따라 조건 분기
-                    $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-                }
-                $("#clickHeart").removeClass("pink");
+               $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
+                $("#clickHeart").text("♡");
             }
-
+            
             alert(result.msg);
         },
         error: function(req, status, error) {
             alert("에러가 발생하였습니다.");
             console.log(req.responseText);
-        },
-        complete: function() {
-            isProcessing = false;
-            isPink = !isPink; // 이전 상태 업데이트
         }
     });
 });
-
 
 
 </script>
