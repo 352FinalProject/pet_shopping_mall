@@ -7,6 +7,7 @@ import com.shop.app.common.entity.ImageAttachmentMapping;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
+import com.shop.app.review.dto.ProductReviewAvgDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +35,8 @@ public class ProductInfoDto {
 	private List<ImageAttachment> attachments;
 	private List<ImageAttachmentMapping> attachmentMapping;
 	
-	private int reviewCnt;
+	private int reviewCnt; // 리뷰 전체 개수
+
+	private ProductReviewAvgDto productReviewStarAvg; // 리뷰 평균 별점 dto
 
 }

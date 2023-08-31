@@ -31,7 +31,7 @@
 				<option value="12">최근 12개월</option>
 			</select>
 			<div class="order-review" style="margin-right : -90px;">
-				<a style="margin-bottom: 10px;" href="#">내가 쓴 상품 후기 ▶</a>
+				<a style="margin-bottom: 10px;" href="${pageContext.request.contextPath}/review/reviewList.do">내가 쓴 상품 후기 ▶</a>
 			</div>
 		</div>
 	</div>

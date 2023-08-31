@@ -83,7 +83,7 @@ div.product-desc span{
 			<option value>12개월</option>
 		</select>
 		
-		<span class="my-reviews"><a href="${pageContext.request.contextPath}/member/reviews.do?memberId=">내가 쓴 상품 후기></a></span>
+		<span class="my-reviews"><a href="${pageContext.request.contextPath}/review/reviewList.do">내가 쓴 상품 후기></a></span>
 	</section>
 	
 	<!-- 주문 바디 -->
