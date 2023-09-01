@@ -517,9 +517,6 @@ function addCart() {
    const quantityValue = frm.querySelector("#_quantity").value;
    const productDetailIdValue = frm.querySelector("#_productDetailId").value;
    
-   console.log("quantityValue=",quantityValue);
-   console.log("productDetailIdValue=",productDetailIdValue);
-   
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/cart/insertCart.do",
@@ -530,18 +527,36 @@ function addCart() {
         success(response) {
             alert(response.msg);
         },
-        error: function (error) {
+        error(error) {
           console.error(error);
         },
       }); 
 };
 
 function purchase() {
-	const frm = document.querySelector("#addCartFrm");
-	frm.action = "${pageContext.request.contextPath}/payment/paymentInfo.do";
-	frm.method = "POST";
-	frm.submit();
-};
+    if (confirm("정말 구매하시겠습니까?")) {
+        const frm = document.querySelector("#addCartFrm");
+        const productDetailIdValue = frm.querySelector("#_productDetailId").value;
+
+        $.ajax({
+            url: "${pageContext.request.contextPath}/cart/getCartList.do",
+            method: "GET",
+            success(cartList) {
+                for (const product of cartList) {
+                    if (product.productDetailId === productDetailIdValue) {
+                        alert("이미 장바구니에 담겨있는 상품입니다.");
+                        return;
+                    }
+                }
+                frm.action = "${pageContext.request.contextPath}/payment/paymentInfo.do";
+                frm.method = "POST";
+                frm.submit();
+            }
+        });
+    } else {
+        alert("취소되었습니다.");
+    }
+}
 
 
 // 찜하기

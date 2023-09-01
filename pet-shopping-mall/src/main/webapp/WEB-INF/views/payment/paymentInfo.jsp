@@ -25,7 +25,7 @@
 								<c:set var="amount" value="${amount + productTotal}" />
 								<div class="product-thumbnail">
 									<img
-										src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
+										src="${pageContext.request.contextPath}/resources/upload/product/${product.thumbnail}"
 										width="110px">
 								</div>
 								<div>
@@ -67,7 +67,7 @@
 								<c:set var="amount" value="${amount + productTotal}" />
 								<div class="product-thumbnail">
 									<img
-										src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
+										src="${pageContext.request.contextPath}/resources/upload/product/${product.thumbnail}"
 										width="110px">
 								</div>
 								<div>
@@ -306,7 +306,6 @@ const proceedPay = () => {
     let selectedCouponType = $('#couponSelect').find(':selected').data('type');
     let selectedCouponValue = $('#couponSelect').val();
     let totalPrice = parseInt($('#total-price').text().replace(/,/g, ''));
-    let deliveryFee = 3000;
     let couponDiscount = 0;
     let pointsDiscount = enteredPoints;
 
@@ -317,7 +316,10 @@ const proceedPay = () => {
             couponDiscount = Math.floor((totalPrice - pointsDiscount) * 0.1);
         }
     }
-
+    
+	const memberRole = '${myPage.subscribe}';
+	const delfee = (memberRole === 'Y' ? 0 : 3000);
+	
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
 	const data = {
 		orderNo: new Date().getTime(),
@@ -329,7 +331,7 @@ const proceedPay = () => {
 		buyerAddr: '${loginMember.address}',
 		postcode: 1,
 		totalPrice: '${productTotal}',
-		deliveryFee: 3000,
+		deliveryFee: delfee,
 		discount: pointValue + couponDiscount,
 		couponId: $("#couponSelect").val(),
 		amount: amountNumber - pointValue - couponDiscount,
@@ -354,7 +356,7 @@ const proceedPay = () => {
 	
 	data.forms = formDatas;
 	
-	$.ajax({
+ 	$.ajax({
 	    url: '${pageContext.request.contextPath}/payment/proceed.do',
 	    type: 'POST',
 	    async: true,
@@ -388,7 +390,7 @@ const proceedPay = () => {
 	            }
 	        }
 	    }
-	});
+	}); 
 };
 
 const requestPaymentByCard = (data) => {

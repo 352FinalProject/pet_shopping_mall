@@ -321,8 +321,7 @@
       od.product_detail_id,
       od.quantity,
       ot.amount,
-      ia.image_original_filename,
-     ia.image_renamed_filename
+      ia.image_renamed_filename as thumbnail
    from
       orderTbl ot 
       left join 
@@ -331,10 +330,10 @@
           product_detail pd on od.product_detail_id = pd.product_detail_id
       left join 
           product p on p.product_id = pd.product_id
-      left join 
-       image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
-      left join
-       image_attachment ia ON iam.image_id = ia.image_id
+	  join 
+		  image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+	  join
+		  image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
    where
       ot.order_no = #{orderNo}
    </select>

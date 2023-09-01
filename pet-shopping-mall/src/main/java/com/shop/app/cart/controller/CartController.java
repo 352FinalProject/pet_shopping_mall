@@ -57,6 +57,13 @@ public class CartController {
 
 	}
 	
+	@GetMapping("/getCartList.do")
+	public ResponseEntity<?> getCartList(@AuthenticationPrincipal MemberDetails member) {
+		List<CartInfoDto> cartList = cartService.getCartInfoList(member.getMemberId());
+		return ResponseEntity.ok(cartList);
+	}
+	
+	
 	@PostMapping("/deleteCartOne.do")
 	public String deleteOne(@RequestParam("cartitemId") String _id, RedirectAttributes redirectAttr, 
 			Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
