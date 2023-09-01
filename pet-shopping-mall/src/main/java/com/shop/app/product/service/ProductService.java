@@ -72,5 +72,21 @@ public interface ProductService {
 
 	// 옵션추가 (수경)
 	int adminOptionCreate(ProductDetail productDetail);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 상품 조회 정렬 (담희)
+	List<ProductSearchDto> alignByNewProduct(int categoryId);
+	List<ProductSearchDto> alignByPrice(int categoryId, String inOrder);
+	List<ProductSearchDto> alignByHighReviewStar(int categoryId);
+	List<ProductSearchDto> alignByReviewCnt(int categoryId);
 
 }

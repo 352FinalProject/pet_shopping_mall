@@ -181,7 +181,18 @@
                <li><a class="" type="button" href="#"
                   onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
                </li>
+               <li>
+                  <form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
+                     <a type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
+                  </form:form>
+               </li>
             </sec:authorize>
+            <li class="community_li"><a
+               href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
+            </li>
+            <li class="community_li"><a
+               href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
+            </li>
             <sec:authorize access="isAuthenticated()">
                  <div class="notification-container">
                    <button id="openPopupBtn">
@@ -207,7 +218,7 @@
                <!-- </li> -->
             </sec:authorize>
          </ul>
-         <div class="logo_top_wrap">
+		        <div class="logo_top_wrap">
             <div class="logo_wrap">
                <!-- 로고 이미지 -->
                <div class="logo_img">
@@ -248,7 +259,7 @@
                     </a>
                  </div>
               </div>
-           </div>
+         </div>
          <div class="menu-container">
             <ul class="nav">
                <ul>
@@ -281,8 +292,22 @@
          </div>
       </div>
    </header>
+   <div id="deleteMember-div" class="deleteMember-class">
+      <div class=deleteMember>
+         <span class="deletememberForm-close" >&times;</span>
+         <h2>회원 탈퇴</h2>
+         <p>정말 탈퇴하시겠습니까??</p>
+         <form:form id="deleteMemberForm"
+            onsubmit="submitIdFinderForm(); return false;">
+            <label for="deleteMember-password">비밀번호입력:</label> <input
+               class="deleteMemberForm-input-password" type="password" id="password"
+               name="password" required>
+            <button class="deleteMemberForm-button" type="submit" >회원탈퇴</button>
+               <button type="button" id="deleteMemberForm-closeModalBtn" onclick="closDeleteMemberModal();">닫기</button>
+         </form:form>
+      </div>
+   </div>
 <script>
-
 const searchBoxForm = document.getElementById("searchBoxForm");
 const searchImg = document.getElementById("search-img");
 const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
@@ -316,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Button clicked!");
         const notificationPopup = document.getElementById("notificationPopup");
         notificationPopup.classList.toggle("active");
-   	});
+      });
 });
    
 

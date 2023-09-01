@@ -27,6 +27,29 @@
 		select
 		    p.product_id,
 		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate
+		from 
+		    product p
+		left join 
+		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		left join
+		    image_attachment ia ON iam.image_id = ia.image_id
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id
+		where 
+	    	p.product_name like '%' || #{searchQuery} || '%'
+	</select>
+	
+	<select id="alignByPrice" resultMap="productSearchDto">
+		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
 		    p.product_name,
 		    p.product_price,
 		    ia.image_renamed_filename
@@ -36,15 +59,95 @@
 		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
 		left join
 		    image_attachment ia ON iam.image_id = ia.image_id
-		where 
-	    	p.product_name like '%' || #{searchQuery} || '%'
+        where
+            p.category_id= #{categoryId}
+        order by
+            p.product_price
+		<choose>
+			<when test="inOrder == 'asc'">asc</when>
+			<when test="inOrder == 'desc'">desc</when>
+		</choose>
 	</select>
+	
+	<select id="alignByNewProduct" resultMap="productSearchDto">
+		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename
+		from 
+		    product p
+		left join 
+		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		left join
+		    image_attachment ia ON iam.image_id = ia.image_id
+        where
+            p.category_id= #{categoryId}
+        order by
+			create_date desc
+	</select>
+	
+	<select id="alignByHighReviewStar" resultMap="productSearchDto">
+		select 
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename,
+		    DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate
+		from 
+	        product p
+			left join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+			left join
+			    image_attachment ia ON iam.image_id = ia.image_id
+	        left join
+	        	(SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+	            on r.product_id = p.product_id
+	    where
+	        p.category_id= #{catogoryId}
+		order By 
+			review_star_rate desc
+	</select>
+	
+	<select id="alignByReviewCnt" resultMap="productSearchDto">
+		select 
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+	        product p
+			left join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+			left join
+			    image_attachment ia ON iam.image_id = ia.image_id
+	        left join
+	        (SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+	            on r.product_id = p.product_id
+        where
+            p.category_id= #{categoryId}
+		order By 
+			reviewCnt desc
+	</select>
+	
+	
+	
+	
 	<resultMap type="ProductSearchDto" id="productSearchDto">
         <result property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>
+        <result property="createDate" column="create_date"/>
         <result property="productName" column="product_name"/>
         <result property="productPrice" column="product_price"/>
         <result property="imageRenamedFileName" column="image_renamed_filename"/>
+        <result property="reviewStarRate" column="review_star_rate"/>
     </resultMap>
 
     <resultMap type="Product" id="productResultMap">

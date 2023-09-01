@@ -93,10 +93,9 @@ public class ReviewController {
 			@RequestParam(defaultValue = "1") int page,
 			@AuthenticationPrincipal MemberDetails member,
 			Model model
-//			@RequestParam String orderNo
 			) {
 
-		int limit = 5;
+		int limit = 2;
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String reviewMemberId = authentication.getName();

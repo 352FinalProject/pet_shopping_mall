@@ -88,7 +88,9 @@ public class EmailController {
       }
    }
 
-	// 이메일로 임시 비밀번호 발송하는 메소드 추가
+   
+   
+   
 	@PostMapping("/email/sendTemporaryPassword.do")
 	public ResponseEntity<String> sendTemporaryPassword(@RequestParam String email, HttpSession session) {
 		

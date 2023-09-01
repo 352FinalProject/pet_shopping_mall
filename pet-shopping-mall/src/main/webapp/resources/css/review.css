@@ -68,9 +68,41 @@
 
 /* 상품상세 - 리뷰 */
 .review-product-utility li {
-  margin-bottom: -100px; 
-  
+	margin-bottom: -100px; 
 }
+
+/* 평균별점 게이지 전체박스 */
+.progress {
+    width: 300px;
+    background-color: #f0f0f0;
+    height: 10px;
+    margin-top: 5px;
+}
+
+/* 평균별점 게이지 바 내부박스 */
+.progress-bar {
+    height: 100%;
+    background-color: #58ACFA;
+    transition: width 0.5s;
+}
+
+.star-label {
+    display: inline-block;
+    width: 50px;
+    margin-right: 10px;
+}
+
+.star-label-and-progress {
+	display: flex;
+	align-items: center;
+	margin-bottom: 44px;
+}
+
+.percentage {
+	margin-left: 10px;
+}
+
+
 
 /* 리뷰상세 부트스트랩 */
 .carousel-inner img {
