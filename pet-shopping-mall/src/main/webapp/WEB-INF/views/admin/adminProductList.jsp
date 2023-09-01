@@ -39,7 +39,7 @@
 					<table id="datatablesSimple">
 						<thead>
 							<th>상품아이디</th>
-							<th>이미지</th>
+							<th>썸네일 이미지</th>
 							<th>상품명</th>
 							<th>카테고리</th>
 							<th>상품가격</th>
@@ -58,14 +58,17 @@
 										<td>${productInfo.productId}</td>
 										<td>
 											<c:if test="${empty productInfo.attachments}">
-												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-			                                        class="product-img"
-			                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+												이미지없음
 											</c:if>
-											<c:if test="${not empty productInfo.attachments}">
+ 											<c:if test="${not empty productInfo.attachments}">
+ 											<c:forEach items="${productInfo.attachments}" var="attachment" varStatus="vs">
+ 												<!-- 썸네일이미지만 출력 -->
+												<c:if test="${attachment.thumbnail eq 'Y'}">
 												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
 			                                        class="product-img"
-			                                        src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
+			                                        src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}">
+												</c:if>
+ 											</c:forEach>
 											</c:if>
 										</td>
 										<td>
