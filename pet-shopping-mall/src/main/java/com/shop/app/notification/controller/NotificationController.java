@@ -1,35 +1,52 @@
 package com.shop.app.notification.controller;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.notification.entity.Notification;
 import com.shop.app.notification.service.NotificationService;
 
 import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/notification")
-@Slf4j
 public class NotificationController {
-    
-    @Autowired
-    NotificationService notificationService;
-    
-    @ResponseBody
-    @PostMapping("/deleteNotification.do")
-    public String deleteNotification(@RequestParam int id) {
-        try {
-            notificationService.deleteNotification(id);
-            return "success";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
-        }
-    }
+	
+	
+	@Autowired
+	private NotificationService notificationService;
+	
+	@ResponseBody
+	@GetMapping("/findAllNotification.do")
+	public List<Notification> findAllNotification(@RequestParam String memberId) {
+	    List<Notification> notifications = notificationService.findAllNotification(memberId);
+	    System.out.println("매핑됨!!!");
+	    return notifications;
+	}
+	
+	@ResponseBody
+	@PostMapping("/deleteNotification.do")
+	public String deleteNotification(@RequestParam int id) {
+		System.out.println("id = " + id);
+		int result = notificationService.deleteNotification(id);
+		if (result == 1) {
+			System.out.println("삭제완료!!!!");
+			
+			return "delete 성공";
+		}else {
+			return "delete 오류";
+		}
+		
+	}
 }

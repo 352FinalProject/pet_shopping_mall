@@ -9,8 +9,7 @@
 		<div class="container-md px-4">
 			<h1 class="mt-4">상품 등록</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a
-					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item"></li>
 			</ol>
 
 			<div class="card mb-4">
@@ -70,7 +69,7 @@
 					        <div class="row mb-5">
 								<!-- 1열 -->					        
 					        	<div class="col-md-6">
-					            	<input type="file" name="thumbnailFile" id="file" class="form-control" multiple>
+					            	<input type="file" name="thumbnailFile" id="file" class="form-control" multiple required>
 					        	</div>
 					        	<!-- 2열 -->
 					        	<div class="col-md-6">
@@ -92,7 +91,7 @@
 					        <div class="row mb-5">
 								<!-- 1열 -->					        
 					        	<div class="col-md-6">
-					            	<input type="file" name="detailFile" id="file" class="form-control" multiple>
+					            	<input type="file" name="detailFile" id="file" class="form-control" multiple required>
 					        	</div>
 					        	<!-- 2열 -->
 					        	<div class="col-md-6">
@@ -162,7 +161,6 @@
 					    </div><!-- container-fluid -->
 					  </div><!-- card-body -->
 				</div><!-- card -->
-			</div>
 			
 		</div>
 	</main>
@@ -213,7 +211,7 @@
 			<div class="row mb-3">
 				<div class="col-md-3">
 					<label for="optionName" class="form-label">옵션명</label>
-					<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control">
+					<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control" required>
 				</div>
 		        <div class="col-md-3">
 		              <label for="optionValue" class="form-label">옵션값</label>

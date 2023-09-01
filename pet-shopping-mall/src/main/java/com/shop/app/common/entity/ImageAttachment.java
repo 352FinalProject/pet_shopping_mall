@@ -15,7 +15,6 @@ public class ImageAttachment {
 	
 	private int imageId;
 	private int imageType;
-	private int imageCategory;
 	private String imageOriginalFilename;
 	private String imageRenamedFilename;
 	private Long imageFileSize;

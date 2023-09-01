@@ -74,12 +74,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/index.jsp").permitAll() // 모든 사용자 허용
+		http.authorizeRequests().antMatchers("/", "/index.jsp", "/product/productDetail.do", "/servicecenter/service.do", "/product/productList.do").permitAll() // 모든 사용자 허용
 				.antMatchers("/servicecenter/inquiry/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
 				.antMatchers("/member/terms.do","/member/memberCreate.do", "/member/checkIdDuplicate.do").anonymous() // 비로그인 사용자만 허용
-				.antMatchers("/oauth/**").permitAll();
+				.antMatchers("/oauth/**").permitAll()
 //				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-//				.anyRequest().authenticated(); // 나머지 요청은 인증 필요
+				.anyRequest().authenticated(); // 나머지 요청은 인증 필요
 
 		http.formLogin().loginPage("/member/memberLogin.do") // 로그인 페이지 경로
 				.loginProcessingUrl("/member/memberLogin.do") // 로그인 성공시 이동할 URL

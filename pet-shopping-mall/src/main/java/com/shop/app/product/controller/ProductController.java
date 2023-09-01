@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
@@ -86,7 +88,8 @@ public class ProductController {
        
        Map<String, Object> params = Map.of(
     		   "page", page, 
-    		   "limit", limit);
+    		   "limit", limit,
+    		   "productId", productId);
 
        int totalCount = reviewService.findProductTotalReviewCount(productId);
        
@@ -97,6 +100,7 @@ public class ProductController {
        
        // 상품Id에 대한 모든 리뷰 가져오기
        List<Review> reviews = reviewService.findProductReviewAll(params, productId);
+       log.debug("reviews = {}", reviews);
        model.addAttribute("reviews", reviews);
        
        // 별점 퍼센트
@@ -201,8 +205,10 @@ public class ProductController {
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
 	    /* 찜 등록 여부 가져오기 (선모) */
+		if (member != null) {
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
+	}
 
    
 	/**
@@ -330,5 +336,6 @@ public class ProductController {
       
    }
    
+
    
 }

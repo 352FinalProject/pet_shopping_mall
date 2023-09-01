@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"   uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,18 +12,24 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <sec:authorize access="isAuthenticated()">
 	<script>
 	const memberId = '<sec:authentication property="principal.username"/>';
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
 </sec:authorize>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
+<c:if test="${not empty msg}">
+   <script>
+      alert('${msg}');
+   </script>
+</c:if>
 <style>
 /* 모달 배경 스타일 */
 .deleteMember-class {
@@ -122,11 +128,7 @@
 </style>
 <title>반려동물 쇼핑몰</title>
 
-<c:if test="${not empty msg}">
-   <script>
-      alert('${msg}');
-   </script>
-</c:if>
+
 </head>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -145,8 +147,7 @@
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-<jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
    <sec:authorize access="isAuthenticated()">
       <form:form name="memberLogoutFrm"
@@ -181,41 +182,16 @@
                <li><a class="" type="button" href="#"
                   onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
                </li>
-               <li>
-                  <form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
-                     <a type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
-                  </form:form>
-               </li>
             </sec:authorize>
-            <li class="community_li"><a
-               href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
-            </li>
-            <li class="community_li"><a
-               href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
-            </li>
             <sec:authorize access="isAuthenticated()">
-                 <div class="notification-container">
-                   <button id="openPopupBtn">
+               <div class="notification-container">
+                  <button id="openPopupBtn" onclick="loadNotifications(memberId)">
                      <i class="bi bi-bell"></i>
-                   </button>
-                   <div id="notificationPopup" class="popup">
-                     <div class="popup-content">
-                       
-                       <c:if test="${empty notifications}">
-                          <p class="notification-content">조회된 알람이 없습니다.</p>
-                       </c:if>
-                       <c:if test="${not empty notifications}">
-                          <c:forEach items="${notifications}" var="notification" varStatus="vs">
-                               <div class="notification-container" id="notification${notification.id}">
-                               	<p class="notification-content">디비${notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
-                               	<button class="notification-delete-button" id="notificationDelete${notification.id}" onclick="notificationDelete(${notification.id})">x</button>
-                               </div>
-                          </c:forEach>
-                       </c:if>
-                     </div>
-                   </div>
-                 </div>
-               <!-- </li> -->
+                  </button>
+                  <div id="notificationPopup" class="popup">
+                     <div class="popup-content"></div>
+                  </div>
+               </div>
             </sec:authorize>
          </ul>
 		        <div class="logo_top_wrap">
@@ -224,7 +200,7 @@
                <div class="logo_img">
                   <a href="${pageContext.request.contextPath}/"> <img
                      src="${pageContext.request.contextPath}/resources/images/home/logo.png"
-                     id="center-image" alt="로고" />
+                     class="center-image" alt="로고" />
                   </a>
                </div>
           </div>
@@ -332,17 +308,4 @@ document.addEventListener("click", function() {
 searchInput.addEventListener("click", function(event) {
   event.stopPropagation();
 })
-    
-    
-    /* 팝업 */
-document.addEventListener("DOMContentLoaded", function() {
-    const openPopupBtn = document.getElementById("openPopupBtn");
-    openPopupBtn.addEventListener('click', function() {
-        console.log("Button clicked!");
-        const notificationPopup = document.getElementById("notificationPopup");
-        notificationPopup.classList.toggle("active");
-      });
-});
-   
-
 </script>

@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=996ecdd9f48b29fc6a4f2ee5c20e6d3c&libraries=services"></script>
-    <meta charset="utf-8">
-    <title>키워드로 장소검색하고 목록으로 표출하기</title>
-    <style>
+ <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 250px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
 #menu_wrap .option p {margin:10px 0;}  
 #menu_wrap .option button {margin-left:5px;}
 #placesList li {list-style: none;}
-#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-#placesList .item span {display: block;margin-top:4px;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px; }
+#placesList .item span {display: block; margin-top:4px;width:300px;}
 #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 #placesList .item .info{padding:10px 0 10px 55px;}
 #placesList .info .gray {color:#8a8a8a;}
@@ -44,17 +46,47 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
-</style>
-</head>
-<body>
-<div class="map_wrap">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
+#placesResultList li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 20px; /* 각 항목 사이의 간격 조절 */
+    vertical-align: top; /* 항목 위쪽 정렬 */
+    width: calc(33.33% - 7px); /* 가로로 3개의 항목이 배치되도록 설정 */
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    
+}
+
+.place-image {
+	margin-left: 355px;
+	margin-top: 1300px;
+} 
+
+#placesResultList {
+	margin-left: 650px;
+	margin-top: -700px;
+}
+
+.boomo {
+    position: absolute;
+	display: flex;
+}
+
+</style>
+
+
+<section class="common-section" id="common-section-List" style="padding-bottom: 350px;" >
+<div class="common-title">내 주변 동물병원</div>
+<div class="map_wrap">
+    <div id="map" style="width:70%;height:100%;position:relative;overflow:hidden; margin: 0 auto;"></div>
     <div id="menu_wrap" class="bg_white">
         <div class="option">
             <div>
-                <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
+                <form id="searchForm" onsubmit="searchPlaces(); return false;">
+                    키워드 : <input type="text" value="동물병원" id="keyword" size="15"> 
                     <button type="submit">검색하기</button> 
                 </form>
             </div>
@@ -64,9 +96,42 @@
         <div id="pagination"></div>
     </div>
 </div>
+<br><br><br>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 APP KEY를 사용하세요&libraries=services"></script>
+<div class="boomo" >
+<div class="places-info" >
+    <div class="place-image">
+        <img src="${pageContext.request.contextPath}/resources/images/hospital/hospitalBanner.png" style="height:800px; width:250px;">
+    </div>
+    <div class="place-details">
+    	<ul id="placesResultList"></ul>
+        <button class="reserve-button">예약하기</button>
+    </div>
+</div>  
+</div>
+
+
 <script>
+const getCurrentCoordinate = async () => {
+	  console.log("getCurrentCoordinate 함수 실행!!!");
+	  return new Promise((res, rej) => {
+	    // HTML5의 geolocaiton으로 사용할 수 있는지 확인합니다.
+	    if (navigator.geolocation) {
+	      // GeoLocation을 이용해서 접속 위치를 얻어옵니다.
+	      navigator.geolocation.getCurrentPosition(function (position) {
+	        console.log(position);
+	        const lat = position.coords.latitude; // 위도
+	        const lon = position.coords.longitude; // 경도
+
+	        const coordinate = new kakao.maps.LatLng(lat, lon);
+	        res(coordinate);
+	      });
+	    } else {
+	      rej(new Error("현재 위치를 불러올 수 없습니다."));
+	    }
+	  });
+	};
+
 // 마커를 담을 배열입니다
 var markers = [];
 
@@ -89,17 +154,21 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
+async function searchPlaces() {
 
+    console.log("searchPlaces 실행!!!");
     var keyword = document.getElementById('keyword').value;
-
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
+    const currentCoordinate = await getCurrentCoordinate();
+    console.log(currentCoordinate);
+    var options = {
+      location: currentCoordinate,
+      radius: 10000,
+      sort: kakao.maps.services.SortBy.DISTANCE,
+      size: 10
+    };
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
+    ps.keywordSearch(keyword, placesSearchCB, options); 
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -108,7 +177,9 @@ function placesSearchCB(data, status, pagination) {
 
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
+         displayPlaces(data);
+        console.log(data);
+        displayPlacesResult(data);
 
         // 페이지 번호를 표출합니다
         displayPagination(pagination);
@@ -125,6 +196,61 @@ function placesSearchCB(data, status, pagination) {
 
     }
 }
+
+function displayPlacesResult(data) {
+    var placesResultList = document.getElementById('placesResultList');
+    placesResultList.innerHTML = ''; // 기존 목록 초기화
+    
+    for (var i = 0; i < data.length; i++) {
+        var place = data[i];
+        
+        var listItem = document.createElement('li');
+        listItem.className = 'place-item';
+        
+        var placeLink = document.createElement('a');
+        placeLink.href = place.place_url;
+        placeLink.target = '_blank'; // 링크를 새 탭에서 열기
+        placeLink.textContent = place.place_name;
+        placeLink.style.color = '#58ACFA'; 
+        placeLink.style.fontSize = '18px'; 
+        placeLink.style.fontWeight = 'bold'; 
+        
+        var placeAddress = document.createElement('p');
+        placeAddress.textContent = place.road_address_name;
+        
+        var placePhone = document.createElement('p');
+        if (place.phone) {
+            placePhone.innerHTML = '📞' + place.phone;
+        } else {
+            placePhone.textContent = '전화번호가 존재하지 않습니다.';
+        } 
+        
+        listItem.appendChild(placeLink);
+        listItem.appendChild(placeAddress);
+        listItem.appendChild(placePhone);
+        
+        placesResultList.appendChild(listItem);
+        
+/*         var lineBreak = document.createElement('br');
+        placesResultList.appendChild(lineBreak); */
+    }
+}
+
+var data = [
+	  {
+	    place_name: 'listItem',
+	    place_url: 'placeLink',
+	    road_address_name: 'placeAddress',
+	    phone: 'placePhone'
+	  }
+	];
+
+// 검색결과 목록을 생성하고 표시하는 함수 호출
+displayPlacesResult(data); // data는 검색 결과 데이터를 의미하는 배열
+console.log(data);
+
+
+
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
@@ -275,8 +401,10 @@ function displayInfowindow(marker, title) {
 
     infowindow.setContent(content);
     infowindow.open(map, marker);
+    
 }
 
+    
  // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {   
     while (el.hasChildNodes()) {
@@ -295,5 +423,12 @@ map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 var zoomControl = new kakao.maps.ZoomControl();
 map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 </script>
-</body>
-</html>
+
+</section>
+
+
+
+
+
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -13,24 +13,26 @@
 					href="${pageContext.request.contextPath}/admin/adminQuestionSearch.do"></a></li>
 	</ol>
 	<div class="card mb-4">
-		<div class="card-body"></div>
+		<div class="card-body">
+			<div class="admin-member-search-container">
+				<form:form name="questionSearchFrm"
+					action="${pageContext.request.contextPath}/admin/adminQuestionSearch.do"
+					method="get">
+					<div class="admin-member-search-container">
+						<form:form name="adminMemberSearchFrm"
+							action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
+							method="get">
+							<label for="searchKeyword">문의검색:</label>
+							<input type="text" id="searchKeyword" name="searchKeyword" placeholder="제목 또는 내용">
+							<input type="submit" value="검색">
+						</form:form>
+					</div>
+				</form:form>
+			</div>
+		</div>
 	</div>
 	<div class="card mb-4">
-		<div class="admin-member-search-container">
-			<form:form name="questionSearchFrm"
-				action="${pageContext.request.contextPath}/admin/adminQuestionSearch.do"
-				method="get">
-				<div class="admin-member-search-container">
-					<form:form name="adminMemberSearchFrm"
-						action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
-						method="get">
-						<label for="searchKeyword">문의검색:</label>
-						<input type="text" id="searchKeyword" name="searchKeyword" placeholder="제목 또는 내용">
-						<input type="submit" value="검색">
-					</form:form>
-				</div>
-			</form:form>
-		</div>
+		
 		<div class="card-body">
 			<table id="datatablesSimple">
 				<thead>
