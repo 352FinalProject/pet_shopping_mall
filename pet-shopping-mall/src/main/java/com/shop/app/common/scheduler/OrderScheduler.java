@@ -31,7 +31,8 @@ public class OrderScheduler {
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void updateOrderStatus() {
 		int result = orderService.updateOrderStatusIfExpired();
-		int notice = notificationService.updateOrderStatusNotification();
+		int updateOrderStatusNotification = notificationService.updateOrderStatusNotification();
+		
 		
 	}
 	

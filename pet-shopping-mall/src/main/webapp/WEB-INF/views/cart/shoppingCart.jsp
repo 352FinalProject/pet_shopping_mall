@@ -99,7 +99,10 @@
         </div>
 	    <div id="modal">
 	    	<div class="modal-div">
-		    	<div id="modal-content"></div>
+		    	<div id="modal-product-name"></div>
+		    	<div>
+		    		<img id="modal-img" scr="" style="width:90px"/>
+		    	</div>
 		    	<div class="quantity-container">
 		    		수량
 				    <button class="quantity-btn minus">-</button>
@@ -107,7 +110,7 @@
 				    <button class="quantity-btn plus">+</button>
 				</div>
 		    	<div>
-		    	    <select id="modal-option" onchange="updateProduct(this);">
+		    	    <select id="modal-option" onchange="updateProduct(this);" style="width:250px">
 		    	    	<option class="options" value="">옵션을 선택해주세요</option>
 		    		</select>
 		    	</div>
@@ -115,7 +118,7 @@
 		    		<input type="hidden" value="" name="cartitemId" id="cartitemId" />
 		    	</form:form>
 		    	<div>
-		    		<button id="close-modal">완료</button>
+		    		💖수량 선택 후 옵션을 선택해주세요💖
 		    	</div>
 	    	</div>
 	   	</div>
@@ -197,8 +200,6 @@ const deleteCartOne = (cartItemId) => {
 
 const modal = document.querySelector("#modal");
 const openModalBtns = document.querySelectorAll(".update-btn");
-const closeModalBtn = document.querySelector("#close-modal");
-const modalContent = document.querySelector("#modal-content");
 const options = document.querySelector("#modal-option");
 const updateFrm = document.querySelector("#updateFrm");
 const cartitemIdInput = document.querySelector("#cartitemId");
@@ -206,26 +207,22 @@ const quantity = document.querySelector("#quantity");
 
 openModalBtns.forEach(btn => {
     btn.addEventListener("click", () => {
+    	const modalContent = document.querySelector("#modal-product-name");
         const productId = btn.getAttribute("product-id");
         const productDetailId = btn.getAttribute("product-detail-id");
+        const img = document.querySelector("#modal-img");
+        
         cartitemIdInput.value = btn.value;
+        
         
      	$.ajax({
      		url: "${pageContext.request.contextPath}/cart/findProductOptionById.do?id=" + productId,
             method: 'GET',
             success(productInfo) {
                 console.log(productInfo);
-                modalContent.innerHTML = "";
-
-                if (productInfo.length > 0) {
-                    modalContent.innerHTML = `
-                        <h2>${productInfo[0].productName}</h2>
-                    `;
-                } else {
-                    modalContent.innerHTML = "<p>No product information available.</p>";
-                }
-                
 				productInfo.forEach((product) => {
+                	modalContent.innerHTML = product.productName;
+                	img.src = "${pageContext.request.contextPath}/resources/upload/product/"+ product.thumbnail;
 					const optionName = product.optionName ? product.optionName : "옵션 없음";
 					const optionValue = product.optionValue ? product.optionValue : " ";
 					const addtionalPrice = product.additionalPrice ? "(+ " + product.additionalPrice + "원 )" : " ";
@@ -238,13 +235,6 @@ openModalBtns.forEach(btn => {
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
     });
-});
-
-closeModalBtn.addEventListener("click", () => {
-	
-	modal.style.display = "none";
-    document.body.style.overflow = "auto";
-	options.innerHTML = ''; // 초기화
 });
 
 const updateProduct = (product) => {

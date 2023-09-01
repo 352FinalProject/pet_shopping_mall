@@ -9,25 +9,26 @@
 		<div class="container-fluid px-4">
 			<h1 class="mt-4">구독회원 조회</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item"></li>
 			</ol>
 			<div class="card mb-4">
 				<div class="card-body">
-					김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원김대원</div>
+					<div class="admin-member-search-container">
+						<form:form name="adminMemberSearchFrm"
+							action="${pageContext.request.contextPath}/admin/adminSubscribeSearchByNameOrId.do"
+							method="get">
+							<label for="searchKeyword">회원검색:</label>
+							<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
+							<input type="submit" value="검색">
+						</form:form>
+					</div>
+				</div>
 			</div>
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 현재 구독회원 : ${totalCount}명
 				</div>
-				<div class="admin-member-search-container">
-					<form:form name="adminMemberSearchFrm"
-						action="${pageContext.request.contextPath}/admin/adminSubscribeSearchByNameOrId.do"
-						method="get">
-						<label for="searchKeyword">회원검색:</label>
-						<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
-						<input type="submit" value="검색">
-					</form:form>
-				</div>
+				
 				<div class="card-body">
 					<table id="datatablesSimple">
 						<thead>
