@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.order.dto.OrderReviewListDto;
@@ -47,9 +50,6 @@ import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ProductReviewAvgDto;
-import com.shop.app.review.dto.ReviewCreateDto;
-import com.shop.app.review.dto.ReviewDetailDto;
-import com.shop.app.review.dto.ReviewListDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
@@ -88,7 +88,8 @@ public class ProductController {
        
        Map<String, Object> params = Map.of(
     		   "page", page, 
-    		   "limit", limit);
+    		   "limit", limit,
+    		   "productId", productId);
 
        int totalCount = reviewService.findProductTotalReviewCount(productId);
        
@@ -99,6 +100,7 @@ public class ProductController {
        
        // 상품Id에 대한 모든 리뷰 가져오기
        List<Review> reviews = reviewService.findProductReviewAll(params, productId);
+       log.debug("reviews = {}", reviews);
        model.addAttribute("reviews", reviews);
        
        // 별점 퍼센트
@@ -129,16 +131,29 @@ public class ProductController {
 
        model.addAttribute("formattedPercentages", formattedPercentages);
 
-       // 상품 아이디로 정보 가져오기
+       // 상품 아이디로 상품정보 가져오기
        Product product = productService.findProductById(productId);
        List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
        ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
-       log.debug("productDetails = {}", productDetails);
-       log.debug("productImages = {}", productImages);
+       
+       // 썸네일이미지와 상세이미지 분리
+       List<ImageAttachment> attachments = productImages.getAttachments();
+       List<ImageAttachment> thumbnailImages = new ArrayList<>();
+       List<ImageAttachment> detailImages = new ArrayList<>();
+       for(ImageAttachment attach : attachments) {
+    	   if(attach != null && attach.getImageOriginalFilename() != null) {
+    		   if(attach.getThumbnail() == Thumbnail.Y) {
+    			   thumbnailImages.add(attach);
+    		   } else {
+    			   detailImages.add(attach);
+    		   }
+    	   }
+       }
        
        // 상품정보 담아주기
        model.addAttribute("product", product); // 상품정보
-       model.addAttribute("productImages", productImages); // 상품이미지
+       model.addAttribute("thumbnailImages", thumbnailImages); // 썸네일이미지
+       model.addAttribute("detailImages", detailImages); // 상세이미지
        model.addAttribute("productDetails", productDetails); // 상품옵션
        
        // 상품 상세 페이지에 펫 정보 뿌려주기
@@ -148,29 +163,24 @@ public class ProductController {
 	        reviewPetsMap.put(review.getReviewId(), pets);
 	    }
 	    
-	    // 상품 상세 페이지에 이미지 파일 뿌려주기
-	    Map<Integer, List<String>> reviewImageMap = new HashMap<>();
-	    for (Review review : reviews) {
-	        int reviewId2 = review.getReviewId();
-	        int orderId = review.getOrderId();
-	        
-	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId2(reviewId2, orderId);
-//	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId2(reviewId2);
-	        
-	        log.debug("reviewDetails 이미지확인 = {}", reviewDetails);
-	        
-//	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-        	if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-	            List<String> imageFilenames = new ArrayList<>();
-	            
-	            for (ImageAttachment attachment : reviewDetails.getAttachments()) {
-	                imageFilenames.add(attachment.getImageRenamedFilename());
-	                
-	            }
-	            reviewImageMap.put(reviewId2, imageFilenames);
-	        }
-	    }
-	    
+       // 상품 상세 페이지에 이미지 파일 뿌려주기
+       Map<Integer, List<String>> reviewImageMap = new HashMap<>();
+       for (Review review : reviews) {
+           int reviewId2 = review.getReviewId();
+           ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
+           
+           log.debug("reviewDetails = {}", reviewDetails);
+           
+           if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+               List<String> imageFilenames = new ArrayList<>();
+               
+               for (ImageAttachment attachment : reviewDetails.getAttachments()) {
+                   imageFilenames.add(attachment.getImageRenamedFilename());
+               }
+               reviewImageMap.put(reviewId2, imageFilenames);
+           }
+       }
+
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    
 	    // 리뷰 작성자 - 상품 
@@ -182,7 +192,7 @@ public class ProductController {
 	    
 	    
 	    log.debug("reviewImageMap = {}", reviewImageMap);
-	    
+
 	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 	    model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보
 	    
@@ -192,12 +202,13 @@ public class ProductController {
 	    
 	    // 리뷰 별점 평균
 	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-		log.debug("평균 별점 productReviewStarAvg = {}", productReviewStarAvg);
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
 	    /* 찜 등록 여부 가져오기 (선모) */
+		if (member != null) {
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
+	}
 
    
 	/**
@@ -210,7 +221,7 @@ public class ProductController {
 			Model model,
 			@RequestParam(required = false) String align
 			) {
-		
+
 		ProductCategory productCategory = productService.findProductCategoryById(id); 
 		List<Product> products = productService.findProductsByCategoryId(id);
 		
@@ -234,6 +245,7 @@ public class ProductController {
 					.attachmentMapping(productImages.getAttachmentMapping())
 					.build());
 		}
+
 		model.addAttribute("productInfos", productInfos);
 		model.addAttribute("productCategory", productCategory);
 		
@@ -250,24 +262,30 @@ public class ProductController {
 		
 		model.addAttribute("productInfos", productInfos); 
 		
-		
-		
 		// 정렬
+		String alignType = "";
+		String inOrder = "";
+		
 		if (align != null) {
 		    List<ProductSearchDto> _productInfos = null;
 		    if (align.equals("신상품")) {
-		        _productInfos = productService.alignByNewProduct(id);
+		    	alignType = "byNewDate";
+		        
 		    } else if (align.equals("낮은가격")) {
-		        String inOrder = "asc";
-		        _productInfos = productService.alignByPrice(id, inOrder);
+		    	alignType = "byPrice";
+		        inOrder = "asc";
+		        
 		    } else if (align.equals("높은가격")) {
-		        String inOrder = "desc";
-		        _productInfos = productService.alignByPrice(id, inOrder);
+		    	alignType = "byPrice";
+		        inOrder = "desc";
+		        
 		    } else if (align.equals("별점높은순")) {
-		        _productInfos = productService.alignByHighReviewStar(id);
+		    	alignType = "byHighReviewStar";
+		        
 		    } else {
-		        _productInfos = productService.alignByReviewCnt(id);
+		    	alignType = "byReviewCnt";
 		    }
+		    _productInfos = productService.alignProducts(id, alignType, inOrder);
 		    model.addAttribute("alignProductInfos", _productInfos);
 		}
    }
@@ -318,5 +336,6 @@ public class ProductController {
       
    }
    
+
    
 }

@@ -6,7 +6,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <div class="common-section">
-
 	<!-- 컨테이너 -->
 	<div class="common-container">
 		<section class="product-board">
@@ -76,18 +75,13 @@
 				<div class="product-card">
                     <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
 					<figure class="product-thumbnail">
-						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.imageRenamedFileName}">
+						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.thumbnail}">
 					</figure>
 					<div class="product-desc">
 						<p class="product-name">${productInfo.productName}</p>
 						<p class="product-price"><fmt:formatNumber value="${productInfo.productPrice}" pattern="#,###" /> 원</p>
 						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" >
-						<c:if test="${productInfo.reviewStarRate == null}">
-							<span>0.0</span>
-						</c:if>
-						<c:if test="${productInfo.reviewStarRate != 0}" >
 							<span>${productInfo.reviewStarRate}</span>
-						</c:if>
 						</span>
 						<span> &nbsp;|&nbsp; </span>
 						<span class="review-cnt">후기 ${productInfo.reviewCnt}건</span>

@@ -26,10 +26,9 @@
 					        
 					        <!-- 1행 -->
 					        <div class="row mb-1">
-					          <!-- 1열 -->
-					          <div class="col-md-6">
-					            <label for="categoryId" class="form-label">상품 카테고리</label>
-					          </div>
+					          <!-- 1. 상품카테고리 -->
+					          <label for="categoryId" class="col-sm-2 col-form-label visually-hidden">상품 카테고리</label>
+					          
 					          <!-- 2열 -->
 					          <div class="col-md-6">
 					            <label for="productName" class="form-label">상품명</label>
@@ -60,7 +59,7 @@
 					        <div class="row mb-1">
 					        	<!-- 1열 -->
 					          <div class="col-md-6">
-					            <label for="file" class="form-label">제품 사진</label>
+					            <label for="file" class="form-label">썸네일 사진(필수)</label>
 					          </div>
 					          <!-- 2열 -->
 					          <div class="col-md-6">
@@ -71,15 +70,36 @@
 					        <div class="row mb-5">
 								<!-- 1열 -->					        
 					        	<div class="col-md-6">
-					            	<input type="file" name="upFile" id="file" class="form-control" multiple>
+					            	<input type="file" name="thumbnailFile" id="file" class="form-control" multiple required>
 					        	</div>
 					        	<!-- 2열 -->
 					        	<div class="col-md-6">
-					            	<input type="number" name="productPrice" id="productPrice" class="form-control" required>
+					            	<input type="number" name="productPrice" id="productPrice" class="form-control" value="0" required>
 					        	</div>
 					        </div>
 					        
 					        <!-- 5행 -->
+					        <div class="row mb-1">
+					        	<!-- 1열 -->
+					          <div class="col-md-6">
+					            <label for="file" class="form-label">제품상세 이미지</label>
+					          </div>
+					          <!-- 2열 -->
+					          <div class="col-md-6">
+					          </div>
+					        </div>
+					        <!-- 6행 -->
+					        <div class="row mb-5">
+								<!-- 1열 -->					        
+					        	<div class="col-md-6">
+					            	<input type="file" name="detailFile" id="file" class="form-control" multiple required>
+					        	</div>
+					        	<!-- 2열 -->
+					        	<div class="col-md-6">
+					        	</div>
+					        </div>
+					        
+					        <!-- 7행 -->
 					        <div class="row mb-1">
 					        	<!-- 1열 -->
 					        	<div class="col-md-6">
@@ -193,7 +213,7 @@
 			<div class="row mb-3">
 				<div class="col-md-3">
 					<label for="optionName" class="form-label">옵션명</label>
-					<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control">
+					<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control" required>
 				</div>
 		        <div class="col-md-3">
 		              <label for="optionValue" class="form-label">옵션값</label>
@@ -234,15 +254,15 @@
     addOptionBtn.addEventListener("click", addOptions);
 	
 	// 파일추가 
-	document.querySelectorAll("[name=upFile]").forEach((input) => {
+	document.querySelectorAll("[id=file]").forEach((input) => {
 		input.onchange = (e) => {
-			const label = e.target.previousElementSibling;
 			const files = e.target.files;
+			console.log("files=", files);
 			if(files[0]) {
-				label.innerHTML = files[0].name;
+				console.log("파일선택됨");
 			}
 			else {
-				label.innerHTML = "파일을 선택하세요";
+				console.log("파일선택 안됨");
 			}
 		}
 	});

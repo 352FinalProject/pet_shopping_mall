@@ -10,10 +10,8 @@ public class ProductSearchDto {
 	private int categoryId;
 	private String productName;
 	private int productPrice;
-	private String imageRenamedFileName;
+	private String thumbnail;
 	private Timestamp createDate;
-	// 별점
-	// 리뷰 추가
 	private int reviewCnt;
 	private double reviewStarRate;
 }

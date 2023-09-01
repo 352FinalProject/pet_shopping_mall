@@ -26,6 +26,5 @@ public class CartInfoDto{
 	private int additionalPrice; // product.getProductPrice +  productDetail.additionalPrice
 	private int quantity; // cartitemId
 	
-	private String imageOriginalFileName; // 이미지 파일 불러오기
-	private String imageRenamedFileName;
+	private String thumbnail;
 }

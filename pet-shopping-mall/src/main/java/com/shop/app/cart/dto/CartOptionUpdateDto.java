@@ -16,6 +16,6 @@ public class CartOptionUpdateDto {
     private String optionValue;
     private String productPrice;
     private String additionalPrice;
-    private String imageRenamedFileName;
+    private String thumbnail;
 	
 }

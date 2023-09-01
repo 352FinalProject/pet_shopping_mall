@@ -52,28 +52,54 @@
 					            <input type="text" name="productName" id="productName" value="${product.productName}" class="form-control" required>
 					          </div>
 						</div>
-					        
+						
+
 						<!-- 3행 -->
 						<div class="row mb-1">
 							<!-- 1열 : 제품사진 -->
 					        <div class="col-md-6">
-					            <label for="file" class="form-label">제품 사진</label>
+					            <label for="productPrice" class="form-label">상품금액</label>
 					        </div>
 					        <!-- 2열 : 상품금액 -->
 					        <div class="col-md-6">
-					        	<label for="productPrice" class="form-label">상품금액</label>
+					        
 					        </div>
 				        </div>
 					    <!-- 4행 -->
 					    <div class="row mb-5">
-							<!-- 1열 : 제품사진 이미지 -->					        
+					        <!-- 1열 : 상품금액 값 -->
+					        <div class="col-md-6">
+					            <input type="number" name="productPrice" id="productPrice" value="${product.productPrice}" class="form-control" required>
+					        </div>
+							<!-- 2열 : 제품사진 이미지 -->					        
+					        <div class="col-md-6">
+					        </div>
+					    </div>
+						
+					        
+						<!-- 5행 -->
+						<div class="row mb-1">
+							<!-- 1열 : 제품사진 -->
+					        <div class="col-md-6">
+					            <label for="file" class="form-label">썸네일 이미지</label>
+					        </div>
+					        <!-- 2열 : 상품금액 -->
+					        <div class="col-md-6">
+					        	<label for="productPrice" class="form-label">상품상세 이미지</label>
+					        </div>
+				        </div>
+					    <!-- 6행 -->
+					    <div class="row mb-5">
+							<!-- 1열 : 썸네일 이미지 -->					        
 					        <div class="col-md-6">
 					        	<!-- 상품이미지가 있다면 -->
  					        	<c:if test="${not empty attachments}">
  					        		<c:forEach items="${attachments}" var="attachment" varStatus="vs">
-										<img alt="" 
-											src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}"
-											width="100px">
+ 					        			<c:if test="${attachment.thumbnail eq 'Y'}">
+											<img alt="" 
+												src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}"
+												width="100px">
+ 					        			</c:if>
  					        		</c:forEach>
 					        	</c:if>
 					        	<!-- 상품이미지가 없다면 -->
@@ -82,13 +108,27 @@
 						            <input type="file" name="upFile" id="file" class="form-control">
 					        	</c:if>
 					        </div>
-					        <!-- 2열 : 상품금액 값 -->
+					        <!-- 2열 : 상세 이미지 -->
 					        <div class="col-md-6">
-					            <input type="number" name="productPrice" id="productPrice" value="${product.productPrice}" class="form-control" required>
+ 					        	<c:if test="${not empty attachments}">
+ 					        		<c:forEach items="${attachments}" var="attachment" varStatus="vs">
+ 					        			<c:if test="${attachment.thumbnail eq 'N'}">
+											<img alt="" 
+												src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}"
+												width="100px">
+ 					        			</c:if>
+ 					        		</c:forEach>
+					        	</c:if>
+					        	<!-- 상품이미지가 없다면 -->
+ 					        	<c:if test="${empty attachments}">
+ 					        		이미지가 없습니다.
+						            <input type="file" name="upFile" id="file" class="form-control">
+					        	</c:if>
 					        </div>
 					    </div>
-					        
-					    <!-- 5행 -->
+
+
+					    <!-- 버튼 행 -->
 					    <div class="row mb-3">
 							<div class="col-md-6">
 								<button type="button" class="btn btn-secondary" onclick='updateProduct();'>상품 수정</button>
@@ -106,11 +146,11 @@
 	    <!-- 상품명이 있는 경우 -->
 		<c:if test="${not empty productDetail.optionName}">
 			<c:if test="${productDetail.optionName eq '옵션없음'}">
-		    <div class="row mb-3">
+<!-- 		    <div class="row mb-3">
 		        <div class="col-md-6">
 		        옵션없음
 				</div>
-		    </div>
+		    </div> -->
 			</c:if>
 			<!-- 옵션정보 -->
 	    	<div class="productDetail-container-${productDetail.productDetailId}">
@@ -322,7 +362,7 @@ const addOption = () => {
 	        <div class="row mb-4">
 	        	<!-- 1열 -->
 	        	<div class="col-md-3">
-		        	<input type="text" name="optionName" id="optionName" class="form-control">
+		        	<input type="text" name="optionName" id="optionName" class="form-control" required>
 	        	</div>
 	        	<div class="col-md-3">
 		        	<input type="text" name="optionValue" id="optionValue" class="form-control">

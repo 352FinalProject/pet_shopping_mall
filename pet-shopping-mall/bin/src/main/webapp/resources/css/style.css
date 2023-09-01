@@ -38,8 +38,8 @@ blockquote:before, blockquote:after, q:before, q:after {
 }
 
 .indexImg {
-	width: 250px;
-	height: 250px;
+	width: 280px;
+	height: 280px;
 }
 
 table {
@@ -171,6 +171,7 @@ body {
 	margin: 0 auto;
 	padding: 11px;
 	gap: 25px;
+	font-size: 15px;
 }
 
 /* 메뉴 폰트와 utility 컨테이너 */

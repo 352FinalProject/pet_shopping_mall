@@ -31,6 +31,10 @@ public interface CouponRepository {
 	@Select("select * from member_coupon where coupon_id = #{couponId}")
 	int findCouponById();
 
+	// 멤버 쿠폰 전체 조회 (예라)
+	@Select("select * from member_coupon m left join coupon c on m.coupon_id = c.coupon_id where  member_id = #{memberId}")
+	List<MemberCouponDto> findCouponAll(String memberId);
+	
 	// 멤버 쿠폰 조회 (예라)
 	@Select("select * from member_coupon where coupon_id = #{couponId}")
 	List<MemberCoupon> findCouponCurrendById(MemberCoupon coupon);
