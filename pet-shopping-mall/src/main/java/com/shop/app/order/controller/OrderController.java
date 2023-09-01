@@ -114,9 +114,10 @@ public class OrderController {
 			@RequestParam(name = "pointsUsed", required = false) Integer pointsUsed, 
 			@RequestParam(name = "useCoupon", required = false) String useCoupon,
 			@RequestParam(name = "couponId", required = false) Integer couponId) {
-		String memberId = member.getMemberId();
 		
-		int result = orderService.deleteOrder(orderNo);
+		if (member != null) {
+			String memberId = member.getMemberId();
+			int result = orderService.deleteOrder(orderNo);
 		
 	    // 포인트 반환 로직
 		if (pointsUsed != null) {
@@ -137,7 +138,7 @@ public class OrderController {
 		}
 			
 	    // 쿠폰 반환 로직
-		if (useCoupon != null && !useCoupon.isEmpty()) {
+		if (useCoupon != null && !useCoupon.isEmpty() && couponId != null) {
 	    MemberCoupon coupon = new MemberCoupon();
 	    	coupon.setCouponId(couponId);
 	    	coupon.setMemberId(memberId);
@@ -147,7 +148,9 @@ public class OrderController {
 	        log.debug("coupon = {}", coupon);
 	        int updateCoupon = couponService.updateCoupon(coupon); 
 	    	}
+		}
 		return "redirect:/cart/shoppingCart.do";
+		
 	}
 	
 	@GetMapping("/orderDetail.do")
