@@ -18,7 +18,6 @@
 					<c:set var="amount" value="0" />
 					<c:choose>
 						<c:when test="${not empty cartList}">
-							<div>${cartList}</div>
 							<c:forEach items="${cartList}" var="product" varStatus="vs">
 							<div class="cart-product-info">
 								<c:set var="productTotal"
@@ -286,6 +285,8 @@ const proceedPay = () => {
 		title = "${cartList[0].productName}";
 	} else if (cartListLength > 1) {
 		title = "${cartList[0].productName}" +" 외" + (cartListLength - 1) + "개";
+	} else {
+		title ="${purchaseOne.productName}"
 	}
 	
 	// 포인트 입력 값 가져오기 (예라)
@@ -294,7 +295,6 @@ const proceedPay = () => {
 	// 배송비 3000원 추가 (예라)
     let amountNumber = parseInt('${amount}'.replace(/,/g, ''));
     amountNumber += 3000;
-    console.log(amountNumber);
     
     // 쿠폰 할인값 계산
     let enteredPoints = parseInt(document.getElementById('discount').innerText.replace(/,/g, '').replace('원', '')) || 0;
@@ -335,7 +335,7 @@ const proceedPay = () => {
 		pg: checkedButton.value,
 		
 	};
-	
+	console.log(data);
 	const formDatas = [];
 	
 	forms.forEach(form => {
@@ -416,8 +416,8 @@ const requestPaymentByCard = (data) => {
 	            alert("결제가 취소되었습니다.");
 	        });
 	        return;
-	    }
-		
+	    } // if문 끝
+	    
  		$.ajax({
 			type: 'POST',
 			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid,

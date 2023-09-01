@@ -361,7 +361,6 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 //상품수량에 따라 가격 바꾸기
-//상품수량에 따라 가격 바꾸기
 document.addEventListener("DOMContentLoaded", () => {
    const optionSelect = document.querySelector("[name='product-option']");
    const originalPrice = parseInt(${product.productPrice});
@@ -395,11 +394,11 @@ document.addEventListener("DOMContentLoaded", () => {
        optionSelect.addEventListener("change", function() {
            const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
            const price = document.getElementById(productDetailId).innerHTML;
+           document.getElementById('_productDetailId').value = productDetailId;
            if(price !== null) {
               additionalPrice = parseInt(price);
            }
        });
-       
     }
 
     const updatePrice = () => {
