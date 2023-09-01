@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.product.entity.Product;
 import com.shop.app.product.entity.ProductDetail;
 
@@ -20,6 +21,10 @@ public class ProductCreateDto {
 	@NotNull(message = "상품가격은 필수입력입니다.")
 	private int productPrice;
 	private List<ProductDetail> productDetail;
+	
+	// 이미지 저장용
+	private List<MultipartFile> thumbnailFile;
+	private List<MultipartFile> detailFile;
 	
 	public Product toProduct() {
 		return Product.builder()

@@ -85,4 +85,5 @@ public interface ProductService {
 	
 	// 인덱스 페이지 패션용품 불러오기 (예라)
 	List<Product> findFashionAll(int _categoryId);
+	List<ProductSearchDto> alignProducts(int id, String alignType, String inOrder);
 }

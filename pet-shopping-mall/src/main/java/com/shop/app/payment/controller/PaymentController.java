@@ -44,6 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.PurchaseDto;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.coupon.dto.MemberCouponDto;
 import com.shop.app.coupon.entity.Coupon;
@@ -119,20 +120,35 @@ public class PaymentController {
 	 * 결제하기 (담희)
 	 */
 	@GetMapping("/paymentInfo.do")
-	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
+	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam(required=false) Integer productDetailId, @RequestParam(required=false) Integer quantity) {
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-
-		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
+		
+		if(productDetailId != null) {
+			PurchaseDto purchaseOne = cartService.paymentOneInfo(productDetailId);
+			purchaseOne.setQuantity(quantity);
+			model.addAttribute("purchaseOne", purchaseOne);
+			
+		} else {
+			List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
+			model.addAttribute("cartList", cartList);
+		}
+		
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
-
         MypageDto myPage = memberService.getMyPage(principal.getMemberId());
         int couponCount = myPage.getMemberCoupon();
         
+        model.addAttribute("myPage", myPage);
         model.addAttribute("couponCount", couponCount);
-		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
-
 	}
+	
+	
+	@PostMapping("/paymentInfo.do")
+	public String paymentOne(Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam int quantity, @RequestParam int productDetailId, RedirectAttributes redirectAttr) {
+		return "redirect:/payment/paymentInfo.do?productDetailId="+productDetailId+"&quantity="+quantity;
+	}
+	
+	
 
 	/**
 	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드 (담희)

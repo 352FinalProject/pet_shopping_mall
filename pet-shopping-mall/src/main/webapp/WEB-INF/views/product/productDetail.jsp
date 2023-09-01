@@ -36,9 +36,11 @@
       <div class="common-container">
          <div class="product-div">
             <div class="product-img">
+            <c:if test="${not empty thumbnailImages}">
                <img
-                  src="${pageContext.request.contextPath}/resources/upload/product/${productImages.attachments[0].imageRenamedFilename}"
+                  src="${pageContext.request.contextPath}/resources/upload/product/${thumbnailImages[0].imageRenamedFilename}"
                   width="400px" />
+            </c:if>
             </div>
             <div class="product-info">
                <div id="product-title">${product.productName}</div>
@@ -156,13 +158,22 @@
         <li><a href="#">1:1문의</a></li>
       </ul>
     </div>
+    
     <!-- 상세 페이지 -->
-    <div class="common-container2">
-      <div>
-        <img
-          src="${pageContext.request.contextPath}/resources/images/1690801774638.jpg"
-          width="500px"
-        />
+    <div class="common-container2" style="display: grid">
+    	<!-- 상세 이미지가 없다면 -->
+    	<c:if test="${empty detailImages}"></c:if>
+    	<!-- 상세 이미지가 있다면 -->
+    	<c:if test="${not empty detailImages}">
+    		<c:forEach items="${detailImages}" var="image" varStatus="vs">
+    			<div class="product-img">
+			        <img
+			          src="${pageContext.request.contextPath}/resources/upload/product/${image.imageRenamedFilename}"
+			          width="500px" />
+    			</div>
+    		</c:forEach>
+    	</c:if>
+		<div>
       </div>
     </div>
     </div>
@@ -420,7 +431,7 @@
             <span id="likeCnt">${product.likeCnt}</span>
          </div>
          <button class="btn btn1" onclick="addCart();">장바구니</button>
-         <button class="btn btn2">구매하기</button>
+         <button class="btn btn2" onclick="purchase();">구매하기</button>
       </div>
    </div>
    <form:form id="addCartFrm">
@@ -504,9 +515,6 @@ function addCart() {
    const quantityValue = frm.querySelector("#_quantity").value;
    const productDetailIdValue = frm.querySelector("#_productDetailId").value;
    
-   console.log("quantityValue=",quantityValue);
-   console.log("productDetailIdValue=",productDetailIdValue);
-   
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/cart/insertCart.do",
@@ -517,11 +525,36 @@ function addCart() {
         success(response) {
             alert(response.msg);
         },
-        error: function (error) {
+        error(error) {
           console.error(error);
         },
       }); 
 };
+
+function purchase() {
+    if (confirm("정말 구매하시겠습니까?")) {
+        const frm = document.querySelector("#addCartFrm");
+        const productDetailIdValue = frm.querySelector("#_productDetailId").value;
+
+        $.ajax({
+            url: "${pageContext.request.contextPath}/cart/getCartList.do",
+            method: "GET",
+            success(cartList) {
+                for (const product of cartList) {
+                    if (product.productDetailId === productDetailIdValue) {
+                        alert("이미 장바구니에 담겨있는 상품입니다.");
+                        return;
+                    }
+                }
+                frm.action = "${pageContext.request.contextPath}/payment/paymentInfo.do";
+                frm.method = "POST";
+                frm.submit();
+            }
+        });
+    } else {
+        alert("취소되었습니다.");
+    }
+}
 
 
 // 찜하기
@@ -570,6 +603,6 @@ $("#clickHeart").on("click", function() {
 </script>
 
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

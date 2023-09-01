@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.order.dto.OrderReviewListDto;
@@ -49,9 +50,6 @@ import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ProductReviewAvgDto;
-import com.shop.app.review.dto.ReviewCreateDto;
-import com.shop.app.review.dto.ReviewDetailDto;
-import com.shop.app.review.dto.ReviewListDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
@@ -133,14 +131,29 @@ public class ProductController {
 
        model.addAttribute("formattedPercentages", formattedPercentages);
 
-       // 상품 아이디로 정보 가져오기
+       // 상품 아이디로 상품정보 가져오기
        Product product = productService.findProductById(productId);
        List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
        ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
        
+       // 썸네일이미지와 상세이미지 분리
+       List<ImageAttachment> attachments = productImages.getAttachments();
+       List<ImageAttachment> thumbnailImages = new ArrayList<>();
+       List<ImageAttachment> detailImages = new ArrayList<>();
+       for(ImageAttachment attach : attachments) {
+    	   if(attach != null && attach.getImageOriginalFilename() != null) {
+    		   if(attach.getThumbnail() == Thumbnail.Y) {
+    			   thumbnailImages.add(attach);
+    		   } else {
+    			   detailImages.add(attach);
+    		   }
+    	   }
+       }
+       
        // 상품정보 담아주기
        model.addAttribute("product", product); // 상품정보
-       model.addAttribute("productImages", productImages); // 상품이미지
+       model.addAttribute("thumbnailImages", thumbnailImages); // 썸네일이미지
+       model.addAttribute("detailImages", detailImages); // 상세이미지
        model.addAttribute("productDetails", productDetails); // 상품옵션
        
        // 상품 상세 페이지에 펫 정보 뿌려주기
@@ -248,21 +261,29 @@ public class ProductController {
 		model.addAttribute("productInfos", productInfos); 
 		
 		// 정렬
+		String alignType = "";
+		String inOrder = "";
+		
 		if (align != null) {
 		    List<ProductSearchDto> _productInfos = null;
 		    if (align.equals("신상품")) {
-		        _productInfos = productService.alignByNewProduct(id);
+		    	alignType = "byNewDate";
+		        
 		    } else if (align.equals("낮은가격")) {
-		        String inOrder = "asc";
-		        _productInfos = productService.alignByPrice(id, inOrder);
+		    	alignType = "byPrice";
+		        inOrder = "asc";
+		        
 		    } else if (align.equals("높은가격")) {
-		        String inOrder = "desc";
-		        _productInfos = productService.alignByPrice(id, inOrder);
+		    	alignType = "byPrice";
+		        inOrder = "desc";
+		        
 		    } else if (align.equals("별점높은순")) {
-		        _productInfos = productService.alignByHighReviewStar(id);
+		    	alignType = "byHighReviewStar";
+		        
 		    } else {
-		        _productInfos = productService.alignByReviewCnt(id);
+		    	alignType = "byReviewCnt";
 		    }
+		    _productInfos = productService.alignProducts(id, alignType, inOrder);
 		    model.addAttribute("alignProductInfos", _productInfos);
 		}
    }

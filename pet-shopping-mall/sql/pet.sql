@@ -56,9 +56,9 @@ SELECT *  FROM all_tables;
 --drop table breed;
 --drop table coupon;
 --drop table member_coupon;
+--drop table sub_member;
 --drop table sub_payment;
---
---
+
 ------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;

@@ -9,10 +9,12 @@
 		<div class="container-fluid px-4">
 			<h1 class="mt-4">상품 조회</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a
-					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item">
+				<i class="fas fa-house fa-2x me-3"></i><a href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a>
+				</li>
 			</ol>
 			<div class="card mb-4">
+				<!-- 상품검색 -->
 				<div class="admin-product-search-container">
 				<form:form 
 			    	method="GET" 
@@ -21,9 +23,7 @@
 			        
 		        	<label for="searchKeyword">검색어:</label> 
 		        	<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명"> 
-			        <br>
 			        <button type="submit">검색</button>
-			        
 			    </form:form>
 
 				</div><!-- admin-product-search-container -->
@@ -36,10 +36,18 @@
 					<input type="button" value="상품등록" id="btn-add"/>
 				</div>
 				<div class="card-body">
+				<!-- 등록된 상품이 없으면 -->
+				<c:if test="${empty productInfos}">
+					<div>
+					등록된 상품이 없습니다.
+					</div>
+				</c:if>
+				<!-- 등록된 상품이 있으면 -->
+				<c:if test="${not empty productInfos}">
 					<table id="datatablesSimple">
 						<thead>
 							<th>상품아이디</th>
-							<th>이미지</th>
+							<th>썸네일 이미지</th>
 							<th>상품명</th>
 							<th>카테고리</th>
 							<th>상품가격</th>
@@ -47,52 +55,50 @@
 							<th>옵션추가금</th>
 						</thead>
 						<tbody>
-
-							<c:if test="${empty productInfos}">
-								<td colspan="5">등록된 상품이 없습니다.</td>
-							</c:if>
-							<c:if test="${not empty productInfos}">
-								<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
-									<tr>
-										<%-- <c:if test="${not empty productInfo.productDetails}"></c:if> --%>
-										<td>${productInfo.productId}</td>
-										<td>
-											<c:if test="${empty productInfo.attachments}">
-												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-			                                        class="product-img"
-			                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
-											</c:if>
-											<c:if test="${not empty productInfo.attachments}">
-												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-			                                        class="product-img"
-			                                        src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
-											</c:if>
-										</td>
-										<td>
-											<a href="${pageContext.request.contextPath}/admin/adminProductUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
-										</td>
-										<td>${productInfo.productCategory.categoryName}</td>
-										<td>${productInfo.product.productPrice}</td>
-										<td>
-											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
-												<c:if test="${empty productDetail.optionName || ''}">
-													<p>옵션비어있음</p>
-												</c:if>
-												<c:if test="${not empty productDetail.optionName}">
-													<p>[${productDetail.optionName}] ${productDetail.optionValue}</p>
-												</c:if>
-											</c:forEach>
-										</td>
-										<td>
-											<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
-												<p>${productDetail.additionalPrice}</p>
-											</c:forEach>
-										</td>
-									</tr>
-								</c:forEach>
-							</c:if>
+						<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
+							<tr>
+								<td>${productInfo.productId}</td>
+								<td>
+									<c:if test="${empty productInfo.attachments}">
+										이미지없음
+									</c:if>
+										<c:if test="${not empty productInfo.attachments}">
+										<c:forEach items="${productInfo.attachments}" var="attachment" varStatus="vs">
+											<!-- 썸네일이미지만 출력 -->
+										<c:if test="${attachment.thumbnail eq 'Y'}">
+										<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
+	                                        class="product-img"
+	                                        src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}">
+										</c:if>
+										</c:forEach>
+									</c:if>
+								</td>
+								<td>
+									<a href="${pageContext.request.contextPath}/admin/adminProductUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
+								</td>
+								<td>${productInfo.productCategory.categoryName}</td>
+								<td>${productInfo.product.productPrice}</td>
+								<td>
+									<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
+										<c:if test="${empty productDetail.optionName || ''}">
+											<p>옵션비어있음</p>
+										</c:if>
+										<c:if test="${not empty productDetail.optionName}">
+											<p>[${productDetail.optionName}] ${productDetail.optionValue}</p>
+										</c:if>
+									</c:forEach>
+								</td>
+								<td>
+									<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
+										<p>${productDetail.additionalPrice}</p>
+									</c:forEach>
+								</td>
+							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
+				</c:if>
+					
 				</div>
 			</div>
 			
