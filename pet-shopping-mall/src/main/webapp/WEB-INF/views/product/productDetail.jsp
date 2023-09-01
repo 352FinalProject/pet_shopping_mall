@@ -114,7 +114,7 @@
                            <c:if test="${not empty productDetail.optionName}">
                               <option class="options"
                                  value="${productDetail.productDetailId}">[${productDetail.optionName}]
-                                 ${productDetail.optionValue}</option>
+                                 ${productDetail.optionValue} (+ ${productDetail.additionalPrice})</option>
                            </c:if>
                         </c:forEach>
                      </select>

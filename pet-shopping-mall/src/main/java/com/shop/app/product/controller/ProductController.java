@@ -146,31 +146,24 @@ public class ProductController {
 	        reviewPetsMap.put(review.getReviewId(), pets);
 	    }
 	    
-	    // 상품 상세 페이지에 이미지 파일 뿌려주기
-	    Map<Integer, List<String>> reviewImageMap = new HashMap<>();
-	    for (Review review : reviews) {
-	        int reviewId2 = review.getReviewId();
-	        int orderId = review.getOrderId();
-	        
-	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId2(reviewId2, orderId);
-//	        ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId2(reviewId2);
-	        
-	        log.debug("reviewDetails 이미지확인 = {}", reviewDetails);
-	        
-//	        if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-        	if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+       // 상품 상세 페이지에 이미지 파일 뿌려주기
+       Map<Integer, List<String>> reviewImageMap = new HashMap<>();
+       for (Review review : reviews) {
+           int reviewId2 = review.getReviewId();
+           ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
+           
+           log.debug("reviewDetails = {}", reviewDetails);
+           
+           if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+               List<String> imageFilenames = new ArrayList<>();
+               
+               for (ImageAttachment attachment : reviewDetails.getAttachments()) {
+                   imageFilenames.add(attachment.getImageRenamedFilename());
+               }
+               reviewImageMap.put(reviewId2, imageFilenames);
+           }
+       }
 
-	            List<String> imageFilenames = new ArrayList<>();
-	            
-	            for (ImageAttachment attachment : reviewDetails.getAttachments()) {
-	                imageFilenames.add(attachment.getImageRenamedFilename());
-	                
-	            }
-	            reviewImageMap.put(reviewId2, imageFilenames);
-	        }
-	    }
-	    
 	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
 	    
 	    // 리뷰 작성자 - 상품 
