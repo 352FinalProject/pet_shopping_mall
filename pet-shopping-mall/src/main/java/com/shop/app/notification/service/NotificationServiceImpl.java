@@ -43,6 +43,7 @@ public class NotificationServiceImpl implements NotificationService {
 	        Notification insertNotification = Notification.builder()
 	            .notiCategory(3)
 	            .notiContent(order.getOrderNo() + "번 주문이 구매확정되었습니다.")
+	            .notiCreatedAt(formatTimestampNow())
 	            .memberId(to) 
 	            .build();
 			
@@ -64,6 +65,7 @@ public class NotificationServiceImpl implements NotificationService {
 	        .id(paymentCompleteNotificationDto.getOrderId())
 	        .notiCategory(1)
 	        .notiContent(paymentCompleteNotificationDto.getProductName() + "상품 주문완료 되었습니다.")
+	        .notiCreatedAt(formatTimestampNow())
 	        .memberId(to) 
 	        .build();
 		
