@@ -95,11 +95,7 @@
 	        </otherwise>
 	    </choose>
 	</select>
-	
 
-	
-	
-	
 	<resultMap type="ProductSearchDto" id="productSearchDto">
         <result property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>
@@ -123,7 +119,7 @@
         <result property="viewCnt" column="view_cnt"/>
     </resultMap>
     
-<resultMap type="ProductImages" id="ProductImagesResultMap">
+	<resultMap type="ProductImages" id="ProductImagesResultMap">
         <id property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>
         <result property="productName" column="product_name"/>
@@ -138,7 +134,6 @@
     <collection property="attachments" ofType="ImageAttachment">
         <result property="imageId" column="image_id"/>
         <result property="imageType" column="image_type"/>
-        <result property="imageCategory" column="image_category"/>
         <result property="imageOriginalFilename" column="image_original_filename"/>
         <result property="imageRenamedFilename" column="image_renamed_filename"/>
         <result property="imageFileSize" column="image_file_size"/>

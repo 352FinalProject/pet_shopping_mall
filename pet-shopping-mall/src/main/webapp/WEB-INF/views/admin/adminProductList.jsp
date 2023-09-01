@@ -52,7 +52,6 @@
 							<th>카테고리</th>
 							<th>상품가격</th>
 							<th>옵션</th>
-							<th>옵션추가금</th>
 						</thead>
 						<tbody>
 						<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
@@ -60,15 +59,23 @@
 								<td>${productInfo.productId}</td>
 								<td>
 									<c:if test="${empty productInfo.attachments}">
-										이미지없음
+										<div class="card text-center" style="width: 10rem; height: 10rem;">
+											<p class="h4 align-middle">이미지 없음</p>
+										</div>
 									</c:if>
 										<c:if test="${not empty productInfo.attachments}">
-										<c:forEach items="${productInfo.attachments}" var="attachment" varStatus="vs">
-											<!-- 썸네일이미지만 출력 -->
+										<!-- 썸네일이미지만 출력 -->
+										<c:forEach items="${productInfo.attachments}" var="attachment" varStatus="fileCnt">
 										<c:if test="${attachment.thumbnail eq 'Y'}">
-										<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-	                                        class="product-img"
-	                                        src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}">
+										<div id="thumbnail${vs.count}-${fileCnt.count}" class="carousel slide" data-bs-ride="carousel">
+											<div class="carousel-inner">
+											<div class="card carousel-item ${ fileCnt.count==1 ? 'active' : ''}" data-bs-interval="2000" style="width: 10rem;">
+												<img alt="상품이미지" 
+			                                        class="img-thumbnail d-block w-100"
+			                                        src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}">
+											</div>
+											</div>
+										</div>
 										</c:if>
 										</c:forEach>
 									</c:if>
@@ -84,13 +91,8 @@
 											<p>옵션비어있음</p>
 										</c:if>
 										<c:if test="${not empty productDetail.optionName}">
-											<p>[${productDetail.optionName}] ${productDetail.optionValue}</p>
+											<p>[${productDetail.optionName}] ${productDetail.optionValue} (+${productDetail.additionalPrice})</p>
 										</c:if>
-									</c:forEach>
-								</td>
-								<td>
-									<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
-										<p>${productDetail.additionalPrice}</p>
 									</c:forEach>
 								</td>
 							</tr>
@@ -114,35 +116,6 @@
 	        xhr.setRequestHeader(header, token);
 	    });
 	});
-	
-	
-/* 	adminProductSearch.onsubmit = (e) => {
-		const {searchKeyword, searchCategory, saleState} = e.target;
-		console.log(searchKeyword.value);
-		console.log(searchCategory.value);
-		console.log(saleState);
-	    const searchKeyword = searchKeyword.value; 
-	    const searchCategory = searchCategory.value; 
-	    
-	    const requestData = {
-	    	searchKeyword: searchKeyword,
-	    	searchCategory: searchCategory
-	    };
-		if (searchKeyword.length > 0){
-		    // Ajax 요청
-		    $.ajax({
-		        url: '${pageContext.request.contextPath}/admin/adminProductSearch.do',
-		        type: 'GET',
-		        dataType: 'json',
-		        contentType: 'application/json',
-		        data: JSON.stringify(requestData)
-		    }).done(function(data) {
-		        updateQuestionList(data.productInfos);
-		      });
-		}
-		e.preventDefault();
-	} */
-	
 	
 	const selectAllStatus = () => {
 		const checkAll = document.getElementById('saleStatusAll');
