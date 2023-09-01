@@ -114,7 +114,7 @@ button, input {
 	<div class="common-container">
 		<div class="common-div">
 			<form:form name="memberUpdateFrm"
-				action="${pageContext.request.contextPath}/member/memberUpdate.do"
+				action="${pageContext.request.contextPath}/member/updateMember.do"
 				method="POST">
 				<table>
 					<tr>
@@ -143,7 +143,7 @@ button, input {
 					</tr>
 					<tr>
 						<th>핸드폰 번호</th>
-						<td><input type="tel" name="tel" id="tel"
+						<td><input type="tel" name="phone" id="phone"
 							value="${member.phone}" required></td>
 						<td rowspan="2" class="pet-info-container">
 						</td>

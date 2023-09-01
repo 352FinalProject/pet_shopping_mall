@@ -25,7 +25,7 @@ public interface MemberRepository {
 	@Insert("INSERT INTO member VALUES (#{memberId, jdbcType=VARCHAR}, #{password}, #{name, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, default, #{address, jdbcType=VARCHAR}, #{birthday, jdbcType=DATE}, default)")
 	int insertMember(MemberCreateDto member);
 
-	@Update("update member set name = #{name}, password = #{password}, email = #{email} where member_id = #{memberId}")
+	@Update("update member set name = #{name}, password = #{password}, email = #{email}, address=#{address}, phone = #{phone, jdbcType=VARCHAR} where member_id = #{memberId}")
 	int updateMember(Member member);
 
 	@Delete("delete from member where member_id = #{memberId}")
@@ -55,7 +55,7 @@ public interface MemberRepository {
 	@Insert("insert into sub_member (subscribe_id, member_id, merchant_uid, schedule_at, schedule_status, amount) values(seq_subscribe_id.nextVal, #{memberId}, #{merchantUid, jdbcType=VARCHAR}, #{scheduleAt, jdbcType=DATE}, #{scheduleStatus, jdbcType=VARCHAR}, #{amount, jdbcType=INTEGER})")
 	int insertSubMember(SubMember subMember);
 
-	@Select("select * from sub_member where member_id = #{memberId}")
+	@Select("select * from sub_member where member_id = #{memberId} order by  schedule_at desc fetch first 1 row only")
 	SubMember findSubMemberByMemberId(String memberId);
 
 	

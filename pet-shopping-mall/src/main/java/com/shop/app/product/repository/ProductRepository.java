@@ -116,8 +116,18 @@ public interface ProductRepository {
 	@Select("select * from product where product_name like '%' || #{searchKeyword} || '%'")
 	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
-	// (수경)
+	// 상품수정시 옵션 추가등록(수경)
 	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
-	int adminOptionCreate(int productId, ProductDetail productDetail);
+	int adminOptionCreate(ProductDetail productDetail);
+	
+	
+
+	List<ProductSearchDto> alignByNewProduct(int categoryId);
+
+	List<ProductSearchDto> alignByPrice(int categoryId, String inOrder);
+
+	List<ProductSearchDto> alignByHighReviewStar(int categoryId);
+
+	List<ProductSearchDto> alignByReviewCnt(int categoryId);
 
 }

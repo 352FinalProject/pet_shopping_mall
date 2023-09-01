@@ -167,14 +167,12 @@ public class MemberSecurityController {
          redirectAttr.addFlashAttribute("msg", "약관에 동의해주세요.");
          return "redirect:/member/terms.do";
       }
-
-      // 회원 정보 세션 제거 (예라)
       session.removeAttribute("emailVerified");
 
       return "redirect:/member/memberCreateComplete.do";
    }
+   
 
-   // 약관 동의 정보를 세션에 임시 저장 (예라)
    @PostMapping("/updateTerms.do")
    public ResponseEntity<?> updateTerms(@RequestParam Map<String, String> data, HttpSession session) {
 
@@ -191,28 +189,28 @@ public class MemberSecurityController {
 
       return new ResponseEntity<>(HttpStatus.OK);
    }
+   
+   
 
    @GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
-   public void memberLogin() {
-   }
+   public void memberLogin() {}
 
-   // 멤버 상세 조회
+   
    @GetMapping("/updateMember.do")
-   public void memberDetail(Authentication authentication, // 현재 사용자 인증 정보와 멤버 정보를 가져와서 상세 정보 페이지에 표시.
-         @AuthenticationPrincipal MemberDetails _member, // member: 현재 사용자 멤버 정보
-         Model model) { // model: 뷰와 컨트롤러 사이에서 데이터를 전달하는 객체
+   public void memberDetail(Authentication authentication, 
+         @AuthenticationPrincipal MemberDetails _member, 
+         Model model) { 
 
-      // 현재 인증된 사용자가 가진 권한(롤) 목록을 가져옴.
-      // 예를 들어, 사용자가 'ROLE_USER', 'ROLE_ADMIN' 등의 권한을 가지고 있다면, 이를 가져올 수 있음.
-      MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-      Object credentials = authentication.getCredentials(); // 열람불가
-      Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
+		Object credentials = authentication.getCredentials();
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-      Member member = memberService.findMemberById(_member.getMemberId());
-
-      log.debug("member = {}", member);
+		Member member = memberService.findMemberById(_member.getMemberId());
+		
+		model.addAttribute("member", member);
    }
-
+   
+   
    @GetMapping("/myPage.do")
    public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
       String memberId = member.getMemberId();
@@ -225,57 +223,61 @@ public class MemberSecurityController {
       model.addAttribute("couponCount", couponCount);
    }
 
-   // 멤버 정보 업데이트
-   @PostMapping("/memberUdapte.do")
+   
+   
+   @PostMapping("/updateMember.do")
    public String memberUpdate(@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
          @Valid MemberUpdateDto _member, HttpSession session, BindingResult bindingResult,
-         RedirectAttributes redirectAttr) {
+         RedirectAttributes redirectAttr, Model model) {
       Member member = _member.toMember();
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
-
-      // 새로운 비밀번호가 입력되었을 경우 암호화 처리
+      
+      log.debug("member = {}", member);
+      
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
          String rawPassword = _member.getPassword();
          String encodedPassword = passwordEncoder.encode(rawPassword);
          member.setPassword(encodedPassword);
       }
-      // 1. db수정요청
+      
       int result = memberService.updateMember(member);
 
-      // 2. security의 authentication 갱신
+      log.debug("update result = {}", result);
+      
       UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(memberDetails,
             memberDetails.getPassword(), memberDetails.getAuthorities());
       SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
-      session.invalidate(); // 세션 종료
+      session.invalidate(); 
       redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
-      return "redirect:/member/myPage.do";
+      return "redirect:/member/updateMember.do";
    }
+   
+   
 
    @PostMapping("/deleteMember.do")
    public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr,
          HttpSession session) {
-      String memberId = principal.getMemberId(); // 현재 로그인한 회원의 ID를 가져옵니다.
+      String memberId = principal.getMemberId();
       memberService.deleteMember(memberId); // 회원 삭제 서비스 호출
       session.invalidate(); // 세션 종료
 
       return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
    }
+   
+   
 
    @GetMapping("/checkIdDuplicate.do")
-
-   // 중복 ID 검사
    public ResponseEntity<?> checkIdDuplicate(@RequestParam String memberId) {
       boolean available = false;
       try {
          UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       } catch (UsernameNotFoundException e) {
-         available = true; // 사용가능한 ID일 경우 true
+         available = true;
       }
 
-      return ResponseEntity // 응답 상태와 정보 반환
+      return ResponseEntity 
             .status(HttpStatus.OK).body(Map.of("available", available, "memberId", memberId));
    }
 

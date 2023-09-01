@@ -13,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -21,13 +22,12 @@ import com.shop.app.member.entity.SubMember;
 import com.shop.app.member.repository.MemberRepository;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.payment.controller.IamportApi;
-import com.shop.app.payment.dto.ApiResponse;
-import com.sun.source.tree.MemberReferenceTree;
 
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+@Transactional(rollbackFor = Exception.class)
 @Slf4j
 @Service
 public class SchedulePay {

@@ -529,17 +529,39 @@ public class AdminController {
 		List<ProductCategory> categories = productService.findAll();
 		// 상품정보 가져오기
 		Product product = productService.findProductById(productId);
-		log.debug("product = {}", product);
 		// 상품이미지 가져오기
-//		List<imageAttachment> attachments = productService.findImageAttachmentsByProductId(productId);
+		ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
+		List<ImageAttachment> attachments = productImages.getAttachments();
+		log.debug("productImages = {}", productImages);
 		// 상품옵션 가져오기(리스트)
 		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		log.debug("productDetails = {}", productDetails);
 		
 		model.addAttribute("categories", categories);
 		model.addAttribute("product", product);
+		model.addAttribute("attachments", attachments);
 		model.addAttribute("productDetails", productDetails);
 	}
+	
+	
+	
+	
+	// 상품옵션 추가 (수경)
+	@PostMapping("/adminOptionCreate.do")
+	public ResponseEntity<?> adminOptionCreate(
+			@Valid @RequestBody ProductOptionCreateDto _product,
+			@AuthenticationPrincipal MemberDetails member 
+			) {
+		log.debug("ProductOptionCreateDto = {}", _product);
+		int productId = _product.getProductId();
+		ProductDetail productDetail = _product.toProductDetail();
+    	
+        // 상품 옵션 업데이트 로직 수행
+        int result = productService.adminOptionCreate(productDetail);
+
+        return ResponseEntity.ok("옵션이 성공적으로 추가되었습니다.");
+	}
+	
 	
 	
 	/**
@@ -558,22 +580,6 @@ public class AdminController {
 		int result = productService.updateProduct(product);
 		
 		return ResponseEntity.ok(result);
-	}
-	
-	// 상품옵션 추가
-	@PostMapping("/adminOptionCreate.do")
-	public ResponseEntity<?> adminOptionCreate(
-			@Valid @RequestBody ProductOptionCreateDto _product,
-			@AuthenticationPrincipal MemberDetails member 
-			) {
-		log.debug("ProductOptionCreateDto = {}", _product);
-		int productId = _product.getProductId();
-		ProductDetail productDetail = _product.toProductDetail();
-    	
-        // 상품 옵션 업데이트 로직 수행
-        int result = productService.adminOptionCreate(productId, productDetail);
-
-        return ResponseEntity.ok("옵션이 성공적으로 추가되었습니다.");
 	}
 	
 	

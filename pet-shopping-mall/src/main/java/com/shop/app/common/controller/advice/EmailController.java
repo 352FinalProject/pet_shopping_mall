@@ -89,14 +89,17 @@ public class EmailController {
       }
    }
 
-	// 이메일로 임시 비밀번호 발송하는 메소드 추가
+   
+   
+   
 	@PostMapping("/email/sendTemporaryPassword.do")
 	public ResponseEntity<String> sendTemporaryPassword(@RequestParam String email, HttpSession session) {
+		
 		// 이메일 전송 로직
 		MailSender mailSender = new MailSender();
 		String temporaryPassword = mailSender.generateTemporaryPassword(10);
 		
-		mailSender.sendTemporaryPasswordEmail(email, temporaryPassword);
+		mailSender.sendTemporaryPasswordEmail(email, temporaryPassword); 
 		
 		// 임시 비밀번호 저장
 		tokenStore.put(email, temporaryPassword);
@@ -114,10 +117,9 @@ public class EmailController {
 		// 세션에 임시 비밀번호 발송 완료 상태 저장
 		session.setAttribute("temporaryPasswordSent", true);
 
-	    return ResponseEntity.status(HttpStatus.OK)
-               .header("Location", "/member/myPage.do")  // 여기서 "/my-page"는 실제 리디렉션할 URL로 변경해야 합니다.
-               .body("임시 비밀번호가 성공적으로 전송되었습니다. 내 페이지로 이동합니다.");
-	
+		return ResponseEntity.status(HttpStatus.FOUND)
+			       .header("Location", "/pet/member/memberLogin.do")
+			       .body("0");
 	}
 
 }
