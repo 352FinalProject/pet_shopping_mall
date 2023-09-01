@@ -92,7 +92,6 @@ public class KakaoController {
 				member.getAuthorities()
 			);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		log.debug("포인트 로그 실행되나요? 333");
 		// 인증 처리 후 메인 페이지로 리다이렉트
 		return new RedirectView(request.getContextPath() + "/");
 	}

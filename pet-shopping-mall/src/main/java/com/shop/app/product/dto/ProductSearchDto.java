@@ -1,5 +1,7 @@
 package com.shop.app.product.dto;
 
+import java.sql.Timestamp;
+
 import lombok.Data;
 
 @Data
@@ -9,8 +11,7 @@ public class ProductSearchDto {
 	private String productName;
 	private int productPrice;
 	private String imageRenamedFileName;
-	
-	// 별점
-	// 리뷰 추가
+	private Timestamp createDate;
 	private int reviewCnt;
+	private double reviewStarRate;
 }

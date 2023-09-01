@@ -82,7 +82,6 @@ public class CartController {
 	public List<CartInfoDto> findProductOptionById(@RequestParam("id") String _id) {
 		int id = Integer.parseInt(_id);
 		List<CartInfoDto> productInfo =  cartService.findProductOptionById(id);
-		log.debug("productInfo = {}", productInfo);
 		return productInfo;
 	}
 	

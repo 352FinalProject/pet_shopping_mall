@@ -60,7 +60,6 @@ public class AnswerController {
 	    if (result > 0) {
 	        // 답변이 등록되면 이메일을 보낸다
 	        mailSender.sendEmailOnAnswerRegistration(questionEmail, _answer.getAnswerContent(), questionId);
-	        log.debug("questionEmail = {}", questionEmail);
 	    }
 		
 		// questionId 객체 생성

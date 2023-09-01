@@ -106,6 +106,7 @@
 .search_box {
    position: relative;
    z-index: 999;
+   cursor: pointer;
 }
 
 .search-input:focus {
@@ -217,7 +218,7 @@
                <!-- </li> -->
             </sec:authorize>
          </ul>
-         <div class="logo_top_wrap">
+		        <div class="logo_top_wrap">
             <div class="logo_wrap">
                <!-- 로고 이미지 -->
                <div class="logo_img">
@@ -258,7 +259,7 @@
                     </a>
                  </div>
               </div>
-           </div>
+         </div>
          <div class="menu-container">
             <ul class="nav">
                <ul>
@@ -307,100 +308,41 @@
       </div>
    </div>
 <script>
+const searchBoxForm = document.getElementById("searchBoxForm");
+const searchImg = document.getElementById("search-img");
+const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
 
-$(document).ready(function() {
-     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+searchImg.addEventListener("click", function(event) {
+  searchInput.classList.add("on");
+  event.stopPropagation();
+});
 
-     $("#deleteMemberForm-closeModalBtn").click(function() {
-       const deleteMemberPassword = $("#deleteMember-password").val();
-       $.ajax({
-         type: 'POST',
-         url: '${pageContext.request.contextPath}/member/deleteMember.do',
-         data: {
-           'password': deleteMemberPassword
-         },
-         dataType: "text",
-         beforeSend: function(xhr) {
-           xhr.setRequestHeader(csrfHeader, csrfToken); // Add CSRF token to header
-         },
-         success: function(result) {
-           console.log(result);
-           if (result === "no") {
-             alert('비밀번호가 틀렸습니다.');
-           } else {
-             alert('회원 탈퇴완료ㅠㅠ.');
-           }
-         },
-         error: function() {
-           console.log('에러 체크!!');
-         }
-       });
-     });
+// 추가: 입력 상자에 대한 keyup 이벤트 처리
+searchInput.addEventListener("keyup", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchBoxForm.submit();
+  }
+});
 
+document.addEventListener("click", function() {
+  searchInput.classList.remove("on");
+});
 
-     const searchBoxForm = document.getElementById("searchBoxForm");
-     const searchImg = document.getElementById("search-img");
-     const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
-
-     searchImg.addEventListener("click", function(event) {
-       searchInput.classList.add("on");
-       event.stopPropagation();
-     });
-
-     // 추가: 입력 상자에 대한 keyup 이벤트 처리
-     searchInput.addEventListener("keyup", function(event) {
-       if (event.key === "Enter") {
-         event.preventDefault();
-         searchBoxForm.submit();
-       }
-     });
-
-     document.addEventListener("click", function() {
-       searchInput.classList.remove("on");
-     });
-
-     searchInput.addEventListener("click", function(event) {
-       event.stopPropagation();
-     })
-     
-     
-     /* 팝업 */
-	document.addEventListener("DOMContentLoaded", function() {
-	    const openPopupBtn = document.getElementById("openPopupBtn");
-	    openPopupBtn.addEventListener('click', function() {
-	        console.log("Button clicked!");
-	        const notificationPopup = document.getElementById("notificationPopup");
-	        notificationPopup.classList.toggle("active");
-    	});
-	});
-	
-	/* 알림삭제 */
-	 * 
-	 */
-	 function notificationDelete(notificationId) {
-		    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-		    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-	
-		    $.ajax({
-		        type: 'POST',
-		        url: '${pageContext.request.contextPath}/notification/deleteNotification.do',
-		        data: JSON.stringify{
-		            'id': notificationId
-		        },
-		        beforeSend: function(xhr) {
-		            xhr.setRequestHeader(csrfHeader, csrfToken)
-		        },
-		        success: function(result) {
-		            const containerDiv = document.getElementById(`notification${notificationId}`);
-		            if (containerDiv) {
-		                containerDiv.remove();
-		            }
-		        }
-		    });
-	}
-
-   });
+searchInput.addEventListener("click", function(event) {
+  event.stopPropagation();
+})
+    
+    
+    /* 팝업 */
+document.addEventListener("DOMContentLoaded", function() {
+    const openPopupBtn = document.getElementById("openPopupBtn");
+    openPopupBtn.addEventListener('click', function() {
+        console.log("Button clicked!");
+        const notificationPopup = document.getElementById("notificationPopup");
+        notificationPopup.classList.toggle("active");
+      });
+});
    
 
 </script>

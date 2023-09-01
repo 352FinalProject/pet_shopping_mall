@@ -46,7 +46,6 @@ public class NaverController {
 		Map<String, Object> tokens = naverService.getTokens(code);  
 		model.addAttribute("access_token", tokens.get("access_token"));
 		model.addAttribute("refresh_token", tokens.get("refresh_token"));
-		log.debug("access_token {} =", tokens);
 		Map<String, Object> attributes = naverService.getProfile((String) tokens.get("access_token")); 
 		
 		String memberId = attributes.get("id") + "@naver";  

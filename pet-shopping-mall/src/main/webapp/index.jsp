@@ -94,7 +94,7 @@
 	  </div>
 	  	<div class="title_group">
 		<div class="title_custom">
-			<div class="title_desc">✨ 예쁘고 귀여운 패션용품
+			<div class="title_desc">✨ 패션으로 강아지의 개성을 뽐내세요!
 				<a href="#"></a>
 			</div>
 			<div class="title_plus">더보기

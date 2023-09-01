@@ -136,20 +136,17 @@ public class MemberSecurityController {
       
        // 약관 동의 정보 가져오기
        Object obj = session.getAttribute("userAgreements");
-       log.debug("obj = {}", obj);
        // Terms 객체 생성
        Terms terms = new Terms();
 
       if (obj instanceof HashMap) {
          HashMap<Integer, Accept> userAgreements = (HashMap<Integer, Accept>) obj;
 
-         log.debug("userAgreements = {}", userAgreements);
          // 회원 id 설정 (회원가입이 완료된 후에 설정)
          terms.setMemberId(member.getMemberId());
 
          List<TermsHistory> findTermsHistory = termsService.fineTermsHistory();
 
-         log.debug("findTermsHistory = {}", findTermsHistory);
 
          for (TermsHistory th : findTermsHistory) {
             terms.setHistoryId(th.getTermsId());
@@ -157,7 +154,6 @@ public class MemberSecurityController {
             terms.setAccept(userAgreements.getOrDefault(th.getTermsId(), Accept.N));
 
             int result2 = termsService.insertTerms(terms);
-            log.debug("result2 = {}", result2);
          }
 
          // 약관 동의 세션 제거
@@ -232,9 +228,9 @@ public class MemberSecurityController {
       Member member = _member.toMember();
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
-
-      model.addAttribute("member", member); 
-
+      
+      log.debug("member = {}", member);
+      
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
          String rawPassword = _member.getPassword();
          String encodedPassword = passwordEncoder.encode(rawPassword);
@@ -243,11 +239,12 @@ public class MemberSecurityController {
       
       int result = memberService.updateMember(member);
 
+      log.debug("update result = {}", result);
+      
       UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(memberDetails,
             memberDetails.getPassword(), memberDetails.getAuthorities());
       SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
       session.invalidate(); 
       redirectAttr.addFlashAttribute("msg", "회원정보를 성공적으로 수정했습니다.🎁");
       return "redirect:/member/updateMember.do";

@@ -16,46 +16,91 @@
 				<div class="payment-left">
 					<sec:authentication property="principal" var="loginMember" />
 					<c:set var="amount" value="0" />
-					<c:forEach items="${cartList}" var="product" varStatus="vs">
-						<div class="cart-product-info">
-							<c:set var="productTotal"
-								value="${(product.productPrice + product.additionalPrice) * product.quantity}" />
-							<c:set var="amount" value="${amount + productTotal}" />
-							<div class="product-thumbnail">
-								<img
-									src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
-									width="110px">
-							</div>
-							<div>
-								<div>
-									<p id="buy-title">${product.productName}</p>
+					<c:choose>
+						<c:when test="${not empty cartList}">
+							<c:forEach items="${cartList}" var="product" varStatus="vs">
+							<div class="cart-product-info">
+								<c:set var="productTotal"
+									value="${(product.productPrice + product.additionalPrice) * product.quantity}" />
+								<c:set var="amount" value="${amount + productTotal}" />
+								<div class="product-thumbnail">
+									<img
+										src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
+										width="110px">
 								</div>
 								<div>
-									<div id="cart-option">
-										<div>
+									<div>
+										<p id="buy-title">${product.productName}</p>
+									</div>
+									<div>
+										<div id="cart-option">
+											<div>
+												<p>
+													옵션 : ${product.optionName} ${product.optionValue} <span>(+<fmt:formatNumber
+															value="${product.additionalPrice}" groupingUsed="true" />)
+													</span>
+												</p>
+												<p>수량 : ${product.quantity}개</p>
+											</div>
+										</div>
+										<div class="productTotal-title">
 											<p>
-												옵션 : ${product.optionName} ${product.optionValue} <span>(+<fmt:formatNumber
-														value="${product.additionalPrice}" groupingUsed="true" />)
-												</span>
+												상품 금액 <span class="productTotal-title2"><fmt:formatNumber
+														value="${productTotal}" groupingUsed="true" /></span>원
 											</p>
-											<p>수량 : ${product.quantity}개</p>
 										</div>
 									</div>
-									<div class="productTotal-title">
-										<p>
-											상품 금액 <span class="productTotal-title2"><fmt:formatNumber
-													value="${productTotal}" groupingUsed="true" /></span>원
-										</p>
+								</div>
+							</div>
+							<form:form name="orderDetailFrm">
+								<input type="hidden" value="${product.productDetailId}"
+									class="productDetailId" />
+								<input type="hidden" value="${product.quantity}" class="quantity" />
+							</form:form>
+							</c:forEach>
+						</c:when>
+						<c:when test="${not empty purchaseOne}">
+							<c:set value="${purchaseOne}" var="product"/>
+							<div class="cart-product-info">
+								<c:set var="productTotal"
+									value="${(product.productPrice + product.additionalPrice) * product.quantity}" />
+								<c:set var="amount" value="${amount + productTotal}" />
+								<div class="product-thumbnail">
+									<img
+										src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
+										width="110px">
+								</div>
+								<div>
+									<div>
+										<p id="buy-title">${product.productName}</p>
+									</div>
+									<div>
+										<div id="cart-option">
+											<div>
+												<p>
+													옵션 : ${product.optionName} ${product.optionValue} <span>(+<fmt:formatNumber
+															value="${product.additionalPrice}" groupingUsed="true" />)
+													</span>
+												</p>
+												<p>수량 : ${product.quantity}개</p>
+											</div>
+										</div>
+										<div class="productTotal-title">
+											<p>
+												상품 금액 <span class="productTotal-title2"><fmt:formatNumber
+														value="${productTotal}" groupingUsed="true" /></span>원
+											</p>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<form:form name="orderDetailFrm">
-							<input type="hidden" value="${product.productDetailId}"
-								class="productDetailId" />
-							<input type="hidden" value="${product.quantity}" class="quantity" />
-						</form:form>
-					</c:forEach>
+							<form:form name="orderDetailFrm">
+								<input type="hidden" value="${product.productDetailId}"
+									class="productDetailId" />
+								<input type="hidden" value="${product.quantity}" class="quantity" />
+							</form:form>
+						</c:when>
+					</c:choose>
 					<div class="order-info">
 						<div>
 							<p class="order-info-title">주문자</p>
@@ -170,11 +215,13 @@
 	</div>
 <form:form name="orderDeleteFrm" id="orderDeleteFrm" method="POST" action="${pageContext.request.contextPath}/order/deleteOrder.do">
 	<input type="hidden" name="orderNo" value=""/>
+	<input type="hidden" name="pointsUsed" value=""/>
+	<input type="hidden" name="useCoupon" value=""/>
+	<input type="hidden" name="couponId" value=""/>
 </form:form>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-
 let token = $("meta[name='_csrf']").attr("content");
 let header = $("meta[name='_csrf_header']").attr("content");
 
@@ -225,13 +272,15 @@ document.getElementById('couponSelect').addEventListener('change', function() {
   } else { // 쿠폰이 선택되지 않으면
     useCoupon = false;
   }
-  console.log("After change, useCoupon value: ", useCoupon);
 });
 
-/* 결제 관련 js */
-/* 결제 전 주문 페이지에 주문 정보를 담는다 */
 const proceedPay = () => {
-	/* 주문 테이블에 들어갈 값 */
+    
+	if (!checkAll.checked) {
+        alert("이용약관에 동의해야 결제를 진행할 수 있습니다.");
+        return; 
+    }
+    
 	const checkedButton = document.querySelector('.paybtn input[type="radio"]:checked');
 	
 	let title;
@@ -241,6 +290,8 @@ const proceedPay = () => {
 		title = "${cartList[0].productName}";
 	} else if (cartListLength > 1) {
 		title = "${cartList[0].productName}" +" 외" + (cartListLength - 1) + "개";
+	} else {
+		title ="${purchaseOne.productName}"
 	}
 	
 	// 포인트 입력 값 가져오기 (예라)
@@ -249,7 +300,6 @@ const proceedPay = () => {
 	// 배송비 3000원 추가 (예라)
     let amountNumber = parseInt('${amount}'.replace(/,/g, ''));
     amountNumber += 3000;
-    console.log(amountNumber);
     
     // 쿠폰 할인값 계산
     let enteredPoints = parseInt(document.getElementById('discount').innerText.replace(/,/g, '').replace('원', '')) || 0;
@@ -269,7 +319,6 @@ const proceedPay = () => {
     }
 
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
-    console.log("Before sending, useCoupon value: ", useCoupon);
 	const data = {
 		orderNo: new Date().getTime(),
 		memberId: '${loginMember.memberId}',
@@ -290,7 +339,7 @@ const proceedPay = () => {
 		pg: checkedButton.value,
 		
 	};
-	
+	console.log(data);
 	const formDatas = [];
 	
 	forms.forEach(form => {
@@ -305,26 +354,40 @@ const proceedPay = () => {
 	
 	data.forms = formDatas;
 	
-	
 	$.ajax({
-		url: '${pageContext.request.contextPath}/payment/proceed.do',
-		type: 'POST',
-		async: true,
-		contentType:'application/json',
-		data : JSON.stringify(data),
-		success(response) {
-			console.log(response);
-			if(response.result > 0){
-				if(confirm("주문하시겠습니까?")) {
-					requestPaymentByCard(data);
-				} else {
-					alert("주문이 취소되었습니다.");
-					const frm = document.querySelector("#orderDeleteFrm");
-					frm.orderNo.value = data.orderNo;
-					frm.submit();
-				}
-			}
-		}
+	    url: '${pageContext.request.contextPath}/payment/proceed.do',
+	    type: 'POST',
+	    async: true,
+	    contentType:'application/json',
+	    data : JSON.stringify(data),
+	    success(response) {
+	        console.log(response);
+	        if(response.result > 0){
+	            if(confirm("주문하시겠습니까?")) {
+	                requestPaymentByCard(data);
+	            } else {
+
+	             // 포인트나 쿠폰을 사용했는지 확인
+	                let dataToSend = { memberId: memberId };
+
+	                if (pointValue > 0) {
+	                    dataToSend.pointsUsed = pointValue;
+	                }
+
+	                if (useCoupon) {
+	                    dataToSend.useCoupon = useCoupon;
+	                }
+	            
+	                alert("주문이 취소되었습니다.");
+	                const frm = document.querySelector("#orderDeleteFrm");
+	                frm.orderNo.value = data.orderNo;
+	                frm.pointsUsed.value = data.pointsUsed;
+	                frm.useCoupon.value = data.useCoupon;
+	                frm.couponId.value = data.couponId;
+	                frm.submit();
+	            }
+	        }
+	    }
 	});
 };
 
@@ -333,15 +396,15 @@ const requestPaymentByCard = (data) => {
 	IMP.init('imp60204862');
 	/* 2. 결제 데이터 정의 */
 	IMP.request_pay({
-		pg : data.pg,                         // PG사
+		pg : data.pg,                         
     	pay_method: "card",
-    	merchant_uid: data.orderNo,   // 주문번호
+    	merchant_uid: data.orderNo,   
     	name: data.title,
-    	amount: data.amount,                         // 숫자 타입
+    	amount: data.amount,                         
     	buyer_email: data.buyerEmail,
     	buyer_name: data.name,
     	buyer_tel: data.buyerTel,
-    	buyer_addr: "쓰레기통",
+    	buyer_addr: data.buyerAddr,
     	buyer_postcode: "01181"
 	}, 
 	function (response) {
@@ -371,8 +434,8 @@ const requestPaymentByCard = (data) => {
 	            alert("결제가 취소되었습니다.");
 	        });
 	        return;
-	    }
-		
+	    } // if문 끝
+	    
  		$.ajax({
 			type: 'POST',
 			url : '${pageContext.request.contextPath}/payment/verifyIamport/' + response.imp_uid,
