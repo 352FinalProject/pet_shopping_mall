@@ -250,8 +250,7 @@ const updateProductOption = (productDetailId) => {
         contentType: 'application/json',
         data: JSON.stringify(requestData),
         success: function(response) {
-        	console.log(response);
-            if (response == 1) {
+            if (response === 1) {
                 alert('상품 옵션이 성공적으로 업데이트되었습니다.');
             } else {
                 alert('상품 옵션 업데이트 실패! 관리자에게 문의하세요.');
@@ -267,7 +266,7 @@ const deleteProductOption = (productDetailId) => {
     const requestData = {
     	productDetailId: `\${productDetailId}`	
     };
-	console.log(requestData);
+
 	if (confirm('정말로 이 옵션을 삭제하시겠습니까?')) {
         $.ajax({
             url: '${pageContext.request.contextPath}/admin/adminProductOptionDelete.do',
@@ -277,10 +276,10 @@ const deleteProductOption = (productDetailId) => {
             data: JSON.stringify(requestData),
             success: function(response) {
                 if (response === 1) {
-                	const optionDiv = document.querySelector('.productDetail-container-${productDetail.productDetailId}');
                 	console.log(response);
-                	optionDiv.remove();
                     alert('옵션이 성공적으로 삭제되었습니다.');
+                	const optionDiv = document.querySelector(`.productDetail-container-\${productDetailId}`);
+                	optionDiv.remove();
                 } else {
                     alert('옵션 삭제 실패! 관리자에게 문의하세요.');
                 }
@@ -367,6 +366,7 @@ $(document).on('submit', function(e) {
 		    success: function(response) {
 		      console.log(response);
 		      alert('옵션이 성공적으로 추가되었습니다.');
+		      location.reload();
 		    },
 		    error: function(error) {
 		      console.error(error);
