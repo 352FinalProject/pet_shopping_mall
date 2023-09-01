@@ -10,7 +10,7 @@
 		<div class="container-fluid px-4">
 			<h1 class="mt-4">주문 조회</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item"></li>
 			</ol>
 			<div class="card mb-4">
 				<div class="card-body">
