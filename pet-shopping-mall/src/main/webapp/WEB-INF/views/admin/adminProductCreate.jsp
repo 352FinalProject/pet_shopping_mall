@@ -26,10 +26,9 @@
 					        
 					        <!-- 1행 -->
 					        <div class="row mb-1">
-					          <!-- 1열 -->
-					          <div class="col-md-6">
-					            <label for="categoryId" class="form-label">상품 카테고리</label>
-					          </div>
+					          <!-- 1. 상품카테고리 -->
+					          <label for="categoryId" class="col-sm-2 col-form-label visually-hidden">상품 카테고리</label>
+					          
 					          <!-- 2열 -->
 					          <div class="col-md-6">
 					            <label for="productName" class="form-label">상품명</label>
