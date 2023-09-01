@@ -202,7 +202,7 @@
 			    	</div>
 				</c:if>
         	</div>
-        	<div class="review-percent" style="position: absolute; margin-top:333px; margin-left: 260px;">
+        	<div class="review-percent" style="position: absolute; margin-top:333px; margin-left: 180px;">
         	 	<ul>
 			    	<li>
 	 					<div class="star-label-and-progress">
@@ -251,8 +251,8 @@
 				    </li>
 				</ul>
 			</div>				   	
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-			<div class="review-dividing-line"></div>                
+			<br><br>
+			<div class="review-dividing-line"></div> <!-- 리뷰 시작 구분선 -->      
 				<c:forEach items="${reviews}" var="review" varStatus="vs">
 					<li>
 						<div class="review-box">
@@ -406,7 +406,7 @@
 		<div class="product-bottom2">
 			<div>
 				<span id="product-bottom-title" style="font-size: 24px;">${product.productName}</span>
-				<br /> <span style="font-size: 18px; font-weight: 600;"> <fmt:formatNumber
+				<br /> <span id="product-price" style="font-size: 18px; font-weight: 600;"> <fmt:formatNumber
 						value="${product.productPrice}" pattern="#,###" /> 원
 				</span>
 			</div>

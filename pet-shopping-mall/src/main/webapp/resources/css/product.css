@@ -92,12 +92,10 @@
    margin-bottom: 50px;
 }
 
-/* */
 .review-box {
 	margin-bottom: 30px;
 	border-bottom: 1px solid #e7e7e7;
 }
-
 
 .review-percent {
 	position: absolute;
@@ -109,8 +107,7 @@
 	margin-top:20px;
 	font-size:50px;
 	font-weight:bold;
-	margin-left: 400px;
-	
+	margin-left: 350px;
 }
 
 .review-avg-star2 {
@@ -123,10 +120,9 @@
 	color: #58ACFA;
 }
 
-
 /* 리뷰 구분선 */
 .review-dividing-line {
-	margin-top: 430px;
+	margin-top: 320px;
 	border-bottom: 1px solid #c8c8c8;
 }
 /* 상품상세 - 리뷰 */
