@@ -38,8 +38,8 @@ blockquote:before, blockquote:after, q:before, q:after {
 }
 
 .indexImg {
-	width: 250px;
-	height: 250px;
+	width: 280px;
+	height: 280px;
 }
 
 table {
@@ -182,6 +182,13 @@ body {
 	margin: 0 auto;
 	padding: 11px;
 	gap: 25px;
+	font-size: 14px;
+	align-items: center;
+}
+
+.utility li a{
+	text-align: center;
+	color: #828282;
 }
 
 /* 메뉴 폰트와 utility 컨테이너 */
@@ -220,7 +227,7 @@ body {
 /* 하단 슬라이드 */
 .gallery_wrap, .gallery_wrap2, .gallery_wrap3 {
 	position: relative;
-	height: 400px;
+	height: 500px;
 	overflow: hidden;
 	margin-top: 20px;
 }
@@ -235,7 +242,7 @@ body {
 
 .gallery_wrap .gallery li, .gallery_wrap2 .gallery2 li, .gallery_wrap3 .gallery3 li {
 	width: 276px;
-	margin-right: 40px;
+	margin-right: 32px;
 	margin-top: 30px;
 }
 
@@ -328,8 +335,8 @@ body {
 
 .title_plus img {
 	width: 13px;
-	height: 15px;
-	margin-top: 2px;
+	height: 14px;
+	margin-top: 4px;
 	color: #828282;
 }
 
@@ -344,7 +351,7 @@ footer {
 }
 
 footer img {
-	width: 700px;
+	width: 200px;
 	display: block;
 	margin: 0 auto;
 	color: #4d4d4d;
@@ -409,4 +416,15 @@ footer p {
   font-size: 15px;
 }
 
+/* 인덱스 페이지 슬라이드 */
+.product-desc .review-star img {
+    width: 15px;
+    height: 15px;
+    margin-right: 4px;
+}
 
+.product-desc .product-price {
+    margin: 0 0 0.5rem;
+    font-size: 19px;
+    font-weight: 500;
+}

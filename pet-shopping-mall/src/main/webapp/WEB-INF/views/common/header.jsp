@@ -182,18 +182,7 @@
                <li><a class="" type="button" href="#"
                   onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
                </li>
-               <li>
-                  <form:form id="deleteMemberForm" action="${pageContext.request.contextPath}/member/deleteMember.do" method="post">
-                     <a type="button" href="#" onclick="closeIdFinderModal();">회원 탈퇴</a>
-                  </form:form>
-               </li>
             </sec:authorize>
-            <li class="community_li"><a
-               href="<%=request.getContextPath()%>/community/communityList.do">펫스토리</a>
-            </li>
-            <li class="community_li"><a
-               href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
-            </li>
             <sec:authorize access="isAuthenticated()">
                <div class="notification-container">
                   <button id="openPopupBtn" onclick="loadNotifications(memberId)">
