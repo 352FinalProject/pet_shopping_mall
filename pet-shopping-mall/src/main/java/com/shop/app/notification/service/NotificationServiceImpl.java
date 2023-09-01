@@ -38,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
 		int result = 0;
 		List<Order> orders = orderRepository.findOrdersWithExpiredStatus();
 		for (Order order : orders) {
-			
+			// 주문상태를 주문확정으로 바꾸고
 			String to = order.getMemberId();
 	        Notification insertNotification = Notification.builder()
 	            .notiCategory(3)
@@ -47,10 +47,11 @@ public class NotificationServiceImpl implements NotificationService {
 	            .memberId(to) 
 	            .build();
 			
+	        // db에 알림저장
 			result = notificationRepository.insertNotification(insertNotification);
-			
+			// db에서 가장 최신 알림 꺼내서
 			Notification notification = notificationRepository.latestNotification();
-			
+			// 메세지 보냄
 			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
 		}
 		return result;

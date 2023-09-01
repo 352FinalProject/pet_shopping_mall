@@ -83,7 +83,6 @@ function loadNotifications(memberId) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (result) {
-            console.log(result);
             const containerDiv = document.getElementById(notificationId);
             containerDiv.remove();
         },
