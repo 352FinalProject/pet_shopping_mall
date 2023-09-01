@@ -68,7 +68,7 @@ public interface ProductRepository {
 	ProductImages findImageAttachmentsByProductId(int productId);
 
 	// 상품 이미지 파일 저장
-	@Insert("insert into image_attachment (image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, image_created_at) values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)")
+	@Insert("insert into image_attachment values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, #{thumbnail}, default)")
 	@SelectKey(
 			before = false,
 			keyProperty = "imageId",

@@ -196,6 +196,7 @@ create table image_attachment (
     image_original_filename varchar2(500),
     image_renamed_filename varchar2(500),
     image_file_size number,
+    thumbnail char(1),
     image_created_at timestamp default systimestamp,
     constraint pk_image_attachment_id primary key(image_id)
 );

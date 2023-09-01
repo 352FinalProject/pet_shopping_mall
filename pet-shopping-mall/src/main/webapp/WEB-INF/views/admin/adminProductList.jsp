@@ -58,9 +58,7 @@
 										<td>${productInfo.productId}</td>
 										<td>
 											<c:if test="${empty productInfo.attachments}">
-												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
-			                                        class="product-img"
-			                                        src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg">
+												이미지없음
 											</c:if>
 											<c:if test="${not empty productInfo.attachments}">
 												<img style="width: 100px; height: 100px; margin-right: 10px;" alt="상품이미지" 
