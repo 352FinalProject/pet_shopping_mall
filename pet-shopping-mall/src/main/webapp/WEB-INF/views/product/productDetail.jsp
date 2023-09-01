@@ -114,7 +114,7 @@
                            <c:if test="${not empty productDetail.optionName}">
                               <option class="options"
                                  value="${productDetail.productDetailId}">[${productDetail.optionName}]
-                                 ${productDetail.optionValue} (+ ${productDetail.additionalPrice})</option>
+                                 ${productDetail.optionValue}</option>
                            </c:if>
                         </c:forEach>
                      </select>
@@ -430,53 +430,56 @@
       <input type="hidden" value="${productDetails[0].productDetailId}"
          id="_productDetailId" name="productDetailId">
    </form:form>
+
 </section>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-// 상품 수량, 금액 조절
+//상품수량에 따라 가격 바꾸기
 document.addEventListener("DOMContentLoaded", () => {
+   const optionSelect = document.querySelector("[name='product-option']");
+   const originalPrice = parseInt(${product.productPrice});
+   let additionalPrice = 0;
+   const quantityInput = document.querySelector(".quantity-input");
+   const totalPrice = document.querySelector("#totalPrice");
+   const productBottomPrice = document.querySelector("#product-bottom-price");
+    const optionMinusButton = document.querySelector(".minus");
+    const optionPlusButton = document.querySelector(".plus");
+    let currentQuantity = parseInt(quantityInput.value) || 1;  // 수량이 지정되지 않은 경우 1로 설정
+
+    // 선택한 상품디테일 아이디
+    <c:if test="${fn:length(productDetails) eq 1}">
+        let choicedId = ${productDetails[0].productDetailId};
+   </c:if>
+   <c:if test="${fn:length(productDetails) gt 1}">
+        let choicedId = optionSelect.options[optionSelect.selectedIndex].value;
+   </c:if>
+   console.log("choicedId=",choicedId);
+   console.log("originalPrice=",originalPrice);
+
+  // 상품디테일 아이디에 해당하는 추가금액
+  additionalPrice = parseInt(document.getElementById(`\${choicedId}`).innerHTML);
+  console.log("additionalPrice=", additionalPrice);
+
     const formatNumberWithCommas = (num) => {
         return num.toLocaleString('en-US');
     };
 
-    const updatePrice = () => {
-        const updateTotalPrice = (originalPrice + additionalPrice) * currentQuantity;
-        if (totalPrice) {
-            totalPrice.innerHTML = formatNumberWithCommas(updateTotalPrice) + " 원";
-        }
-        if (productBottomPrice) {
-            productBottomPrice.innerHTML = formatNumberWithCommas(updateTotalPrice) + " 원";
-        }
-        if (productPriceElement) {
-            productPriceElement.innerHTML = formatNumberWithCommas(updateTotalPrice) + " 원";
-        }
-    };
-
-    const optionSelect = document.querySelector("[name='product-option']");
-    const originalPrice = parseInt('<c:out value="${product.productPrice}"/>');
-    let additionalPrice = 0;
-    const quantityInput = document.querySelector(".quantity-input");
-    const totalPrice = document.querySelector("#totalPrice");
-    const productBottomPrice = document.querySelector("#product-bottom-price");
-    const optionMinusButton = document.querySelector(".minus");
-    const optionPlusButton = document.querySelector(".plus");
-    const productPriceElement = document.getElementById("product-price");
-    
-    let currentQuantity = parseInt(quantityInput.value) || 1;  // 수량이 지정되지 않은 경우 1로 설정
-
-    // 상품디테일 아이디에 해당하는 추가금액
     if(optionSelect !== null){
        optionSelect.addEventListener("change", function() {
            const productDetailId = optionSelect.options[optionSelect.selectedIndex].value;
            const price = document.getElementById(productDetailId).innerHTML;
-           document.getElementById('_productDetailId').value = productDetailId;
-           document.getElementById('product-price').value = productPriceElement;
            if(price !== null) {
               additionalPrice = parseInt(price);
            }
-           updatePrice();
        });
+       
     }
+
+    const updatePrice = () => {
+        const updateTotalPrice = (originalPrice + additionalPrice) * currentQuantity;
+        totalPrice.innerHTML = formatNumberWithCommas(updateTotalPrice);
+        productBottomPrice.innerHTML = formatNumberWithCommas(updateTotalPrice);
+    };
 
     optionMinusButton.addEventListener("click", () => {
         if (currentQuantity > 1) {
