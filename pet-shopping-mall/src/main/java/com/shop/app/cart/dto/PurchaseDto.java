@@ -19,5 +19,5 @@ public class PurchaseDto {
 	private int additionalPrice; 
 	private int quantity; 
 	
-	private String imageRenamedFileName;
+	private String thumbnail;
 }

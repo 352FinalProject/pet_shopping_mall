@@ -23,7 +23,6 @@ public class OrderHistoryDto {
 	
 	private int productId;
 	
-	private String imageOriginalFileName; // 이미지 파일 불러오기
-	private String imageRenamedFileName;
+	private String thumbnail;
 	
 }

@@ -25,7 +25,7 @@
 								<c:set var="amount" value="${amount + productTotal}" />
 								<div class="product-thumbnail">
 									<img
-										src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
+										src="${pageContext.request.contextPath}/resources/upload/product/${product.thumbnail}"
 										width="110px">
 								</div>
 								<div>
@@ -67,7 +67,7 @@
 								<c:set var="amount" value="${amount + productTotal}" />
 								<div class="product-thumbnail">
 									<img
-										src="${pageContext.request.contextPath}/resources/upload/product/${product.imageRenamedFileName}"
+										src="${pageContext.request.contextPath}/resources/upload/product/${product.thumbnail}"
 										width="110px">
 								</div>
 								<div>

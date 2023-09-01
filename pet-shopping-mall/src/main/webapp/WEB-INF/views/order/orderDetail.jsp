@@ -67,7 +67,7 @@
 									</td>
 									<td>
 										<div class="flex">
-											<img src="${pageContext.request.contextPath}/resources/upload/product/${entry.key.imageRenamedFileName}" width="110px">
+											<img src="${pageContext.request.contextPath}/resources/upload/product/${entry.key.thumbnail}" width="110px">
 											<div>
 												<p>${entry.key.productName}</p>
 												<br />

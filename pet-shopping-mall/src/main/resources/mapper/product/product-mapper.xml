@@ -35,15 +35,15 @@
 		    p.create_date,
 		    p.product_name,
 		    p.product_price,
-		    ia.image_renamed_filename,
+		    ia.image_renamed_filename as thumbnail,
 		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
 		    (select count(*) from review where product_id = p.product_id) reviewCnt
 		from 
 		    product p
-		left join 
-		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
-		left join
-		    image_attachment ia ON iam.image_id = ia.image_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		left join
 			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
 			on p.product_id = r.product_id
@@ -52,29 +52,29 @@
 	</select>
 	
 	<select id="alignProducts" resultMap="productSearchDto">
-	    SELECT
+	    select
 	        p.product_id,
 	        p.category_id,
 	        p.create_date,
 	        p.product_name,
 	        p.product_price,
-	        ia.image_renamed_filename,
-	        DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate,
-	        (SELECT COUNT(*) FROM review WHERE product_id = p.product_id) reviewCnt
-	    FROM
+	        ia.image_renamed_filename as thumbnail,
+	        decode(avg_star, null, 0.0, avg_star) as review_star_rate,
+	        (select count(*) from review where product_id = p.product_id) reviewCnt
+	    from
 	        product p
-	    LEFT JOIN
-	        image_attachment_mapping iam ON p.product_id = iam.ref_id AND iam.ref_table = 'product'
-	    LEFT JOIN
-	        image_attachment ia ON iam.image_id = ia.image_id
-	    LEFT JOIN
-	        (SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+	    left join
+	        (select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
 	        ON r.product_id = p.product_id
-	    WHERE
+	    where
 	        p.category_id = #{categoryId}
 	    <choose>
 	        <when test="alignType == 'byPrice'">
-	            ORDER BY
+	            order By
 	                p.product_price
 	                <choose>
 	                    <when test="inOrder == 'asc'">ASC</when>
@@ -82,13 +82,13 @@
 	                </choose>
 	        </when>
 	        <when test="alignType == 'byNewDate'">
-	            ORDER BY p.create_date DESC
+	            order By p.create_date DESC
 	        </when>
 	        <when test="alignType == 'byHighReviewStar'">
-	            ORDER BY review_star_rate DESC
+	            order By review_star_rate DESC
 	        </when>
 	        <when test="alignType == 'byReviewCnt'">
-	            ORDER BY reviewCnt DESC
+	            order By reviewCnt DESC
 	        </when>
 	        <otherwise>
 	        	order By create_date desc
@@ -107,7 +107,7 @@
         <result property="productName" column="product_name"/>
         <result property="productPrice" column="product_price"/>
         <result property="reviewCnt" column="reviewCnt"/>
-        <result property="imageRenamedFileName" column="image_renamed_filename"/>
+        <result property="thumbnail" column="thumbnail"/>
         <result property="reviewStarRate" column="review_star_rate"/>
     </resultMap>
 

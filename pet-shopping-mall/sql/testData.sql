@@ -1063,3 +1063,71 @@ desc;
  update orderTbl set order_status = 3 where order_no = '1693467409526'; 
  
  select * from review;
+ 
+ 
+ 
+ 
+ 		select 
+		    p.product_id,
+		    pd.product_detail_id,
+		    p.product_name,
+		    pd.option_name,
+		    pd.option_value,
+		    p.product_price,
+		    pd.additional_price,
+			ia.image_renamed_filename
+		from 
+		    product p 
+		    left join 
+		        product_detail pd on p.product_id = pd.product_id
+		    left join 
+		        cartitem ci on pd.product_detail_id = ci.product_detail_id
+		    left join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		    left join
+			    image_attachment ia ON iam.image_id = ia.image_id
+		where 
+		    pd.product_detail_id = 1;
+            
+            
+            update orderTbl set order_status=3 where order_no='1693535898716';
+            
+            
+            
+            select * from product_detail;
+            
+            
+            
+		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename,
+            DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate,
+            (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+		left join 
+		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		left join
+		    image_attachment ia ON iam.image_id = ia.image_id
+        left join
+	        	(SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+	            on r.product_id = p.product_id
+        where
+            p.category_id= 1
+        order by
+            p.product_price;
+            
+            select * from member;
+            
+            select * from cartitem;
+            delete from cartitem where cartitem_id = 67;
+            
+            select * from orderTbl where order_no = '1693539663229';
+            
+            
+            select * from product;
+            
