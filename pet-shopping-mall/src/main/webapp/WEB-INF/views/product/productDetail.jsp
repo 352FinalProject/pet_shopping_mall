@@ -421,7 +421,7 @@
             <span id="likeCnt">${product.likeCnt}</span>
          </div>
          <button class="btn btn1" onclick="addCart();">장바구니</button>
-         <button class="btn btn2">구매하기</button>
+         <button class="btn btn2" onclick="purchase();">구매하기</button>
       </div>
    </div>
    </div>

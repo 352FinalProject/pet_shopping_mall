@@ -82,12 +82,7 @@
 						<p class="product-name">${productInfo.productName}</p>
 						<p class="product-price"><fmt:formatNumber value="${productInfo.productPrice}" pattern="#,###" /> 원</p>
 						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" >
-						<c:if test="${productInfo.reviewStarRate == null}">
-							<span>0.0</span>
-						</c:if>
-						<c:if test="${productInfo.reviewStarRate != 0}" >
 							<span>${productInfo.reviewStarRate}</span>
-						</c:if>
 						</span>
 						<span> &nbsp;|&nbsp; </span>
 						<span class="review-cnt">후기 ${productInfo.reviewCnt}건</span>

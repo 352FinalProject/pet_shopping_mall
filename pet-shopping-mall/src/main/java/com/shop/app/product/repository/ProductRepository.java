@@ -120,14 +120,7 @@ public interface ProductRepository {
 	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
 	int adminOptionCreate(ProductDetail productDetail);
 	
-	
 
-	List<ProductSearchDto> alignByNewProduct(int categoryId);
-
-	List<ProductSearchDto> alignByPrice(int categoryId, String inOrder);
-
-	List<ProductSearchDto> alignByHighReviewStar(int categoryId);
-
-	List<ProductSearchDto> alignByReviewCnt(int categoryId);
+	List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder);
 
 }

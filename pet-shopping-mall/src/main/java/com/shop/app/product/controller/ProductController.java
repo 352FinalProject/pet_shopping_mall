@@ -47,9 +47,6 @@ import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;
 import com.shop.app.review.dto.ProductReviewAvgDto;
-import com.shop.app.review.dto.ReviewCreateDto;
-import com.shop.app.review.dto.ReviewDetailDto;
-import com.shop.app.review.dto.ReviewListDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
@@ -244,21 +241,29 @@ public class ProductController {
 		model.addAttribute("productInfos", productInfos); 
 		
 		// 정렬
+		String alignType = "";
+		String inOrder = "";
+		
 		if (align != null) {
 		    List<ProductSearchDto> _productInfos = null;
 		    if (align.equals("신상품")) {
-		        _productInfos = productService.alignByNewProduct(id);
+		    	alignType = "byNewDate";
+		        
 		    } else if (align.equals("낮은가격")) {
-		        String inOrder = "asc";
-		        _productInfos = productService.alignByPrice(id, inOrder);
+		    	alignType = "byPrice";
+		        inOrder = "asc";
+		        
 		    } else if (align.equals("높은가격")) {
-		        String inOrder = "desc";
-		        _productInfos = productService.alignByPrice(id, inOrder);
+		    	alignType = "byPrice";
+		        inOrder = "desc";
+		        
 		    } else if (align.equals("별점높은순")) {
-		        _productInfos = productService.alignByHighReviewStar(id);
+		    	alignType = "byHighReviewStar";
+		        
 		    } else {
-		        _productInfos = productService.alignByReviewCnt(id);
+		    	alignType = "byReviewCnt";
 		    }
+		    _productInfos = productService.alignProducts(id, alignType, inOrder);
 		    model.addAttribute("alignProductInfos", _productInfos);
 		}
    }

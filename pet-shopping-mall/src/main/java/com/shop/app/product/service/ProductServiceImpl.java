@@ -177,34 +177,19 @@ public class ProductServiceImpl implements ProductService {
 	public int adminOptionCreate(ProductDetail productDetail) {
 		return productRepository.adminOptionCreate(productDetail);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	// 정렬
 
+	
+	
+	
 	@Override
-	public List<ProductSearchDto> alignByNewProduct(int categoryId) {
-		return productRepository.alignByNewProduct(categoryId);
+	public List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder) {
+		return productRepository.alignProducts(categoryId, alignType, inOrder);
 	}
-
-	@Override
-	public List<ProductSearchDto> alignByPrice(int categoryId, String inOrder) {
-		return productRepository.alignByPrice(categoryId, inOrder);
-	}
-
-
-	@Override
-	public List<ProductSearchDto> alignByHighReviewStar(int categoryId) {
-		return productRepository.alignByHighReviewStar(categoryId);
-	}
-
-	@Override
-	public List<ProductSearchDto> alignByReviewCnt(int categoryId) {
-		return productRepository.alignByReviewCnt(categoryId);
-	}
+	
+	
+	
+	
+	
+	
+	
 }

@@ -274,10 +274,13 @@ document.getElementById('couponSelect').addEventListener('change', function() {
   }
 });
 
-/* 결제 관련 js */
-/* 결제 전 주문 페이지에 주문 정보를 담는다 */
 const proceedPay = () => {
-	/* 주문 테이블에 들어갈 값 */
+    
+	if (!checkAll.checked) {
+        alert("이용약관에 동의해야 결제를 진행할 수 있습니다.");
+        return; 
+    }
+    
 	const checkedButton = document.querySelector('.paybtn input[type="radio"]:checked');
 	
 	let title;
