@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.order.repository.OrderRepository;
+import com.shop.app.order.service.OrderService;
 import com.shop.app.pet.entity.Pet;
 import com.shop.app.pet.repository.PetRepository;
 import com.shop.app.pet.service.PetService;
@@ -23,12 +25,16 @@ import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
 
+import lombok.AllArgsConstructor.AnyAnnotation;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Service
 @Slf4j
 public class ReviewServiceImpl implements ReviewService {
+	
+	@Autowired
+	private OrderService orderService;
 
 	@Autowired
 	private ReviewRepository reviewRepository;
@@ -39,6 +45,9 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private OrderRepository orderRepository;
+	
 	
 	// 리뷰추가
 	@Override
@@ -46,10 +55,7 @@ public class ReviewServiceImpl implements ReviewService {
 		int result = 0;
 		// review 저장
 		result = reviewRepository.insertReview(review);
-		
 		int refId = review.getReviewId();
-		System.out.println("review = " + review);
-		System.out.println("review refId = " + refId);
 		
 		// attachment 저장
 		List<ImageAttachment> attachments = ((ReviewDetails) review).getAttachments();
@@ -58,14 +64,19 @@ public class ReviewServiceImpl implements ReviewService {
 				
 				// 1. 이미지 파일 DB에 저장
 				int result2 = reviewRepository.insertAttachment(attach);
-				
 				// 2. 이미지 파일 DB 저장 후 생성된 이미지 ID 가져오기
 				int imageId = attach.getImageId();
-				
 				// 3. 리뷰 ID와 이미지 ID를 사용하여 매핑 정보를 DB에 저장
 				int reviewIdImageId = reviewRepository.insertMapping(refId, imageId);
+				
 			}
 		}
+		int orderId = review.getOrderId();
+		int productDetailId = review.getProductDetailId();
+		int productId = review.getProductId();
+		int newStatus = 6;
+		orderRepository.updateOrderStatusWithDetail(orderId, productDetailId, newStatus, productId);
+		
 		return result;
 	}
 
@@ -120,7 +131,6 @@ public class ReviewServiceImpl implements ReviewService {
 	    
 	    } 
 	    
-	    log.debug("reviewDetailDto = {}", reviewDetailDto);
 	    return reviewDetailDto;
 	}
 	
@@ -152,8 +162,8 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	// 상품 상세페이지 리뷰 전체 카운트
 	@Override
-	public int findProductTotalReviewCount() {
-		return reviewRepository.findProductTotalReviewCount();
+	public int findProductTotalReviewCount(int productId) {
+		return reviewRepository.findProductTotalReviewCount(productId);
 	}
 
 	// 상품 상세페이지 전체 리뷰 
@@ -209,6 +219,21 @@ public class ReviewServiceImpl implements ReviewService {
 	public int findProductListReviewTotalCount(int productId) {
 		return reviewRepository.findProductListReviewTotalCount(productId);
 	}
+
+	// 별점 퍼센트 구하기 위한 전체 리뷰
+	@Override
+	public List<Review> findProductReviewAllNoPageBar(int productId) {
+		return reviewRepository.findProductReviewAllNoPageBar(productId);
+	}
+
+	@Override
+	public ReviewDetails findProductImageAttachmentsByReviewId2(int reviewId2, int orderId) {
+		return reviewRepository.findProductImageAttachmentsByReviewId2(reviewId2, orderId);
+	}
+//	@Override
+//	public ReviewDetails findProductImageAttachmentsByReviewId2(int reviewId2) {
+//		return reviewRepository.findProductImageAttachmentsByReviewId2(reviewId2);
+//	}
 
 
 }

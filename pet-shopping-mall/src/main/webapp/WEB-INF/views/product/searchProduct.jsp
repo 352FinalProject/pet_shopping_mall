@@ -118,16 +118,15 @@ ul.nav {
                                     <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
                                         <!-- Your product card content here -->
                                         <figure class="product-thumbnail">
-											<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.imageRenamedFileName}">
+											<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.thumbnail}">
 										</figure>
 										<div class="product-desc">
 											<p class="product-name">${productInfo.productName}</p>
 											<p class="product-price"><fmt:formatNumber value="${productInfo.productPrice}" pattern="#,###" /> 원</p>
-											<div class="product-desc2">
-												<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>5.0</span></span>
-												<span> &nbsp;|&nbsp; </span>
-												<span class="review-cnt">후기 113건</span>
-											</div>
+											<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" ><span>${productInfo.reviewStarRate}</span></span>
+											<span> &nbsp;|&nbsp; </span>
+											<span class="review-cnt">후기 ${productInfo.reviewCnt}건</span>
+
 										</div>
                                     </a>
                                 </div>

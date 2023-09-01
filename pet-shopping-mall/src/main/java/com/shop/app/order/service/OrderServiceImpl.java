@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
@@ -25,6 +26,7 @@ import com.shop.app.payment.repository.PaymentRepository;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
+@Transactional(rollbackFor = Exception.class)
 @Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -111,15 +113,17 @@ public class OrderServiceImpl implements OrderService {
 				.orderId(orderId)
 				.build();
 		result = orderRepository.insertCancelOrder(cancel);
-		result = orderRepository.updateOrderStatus(orderNo, 4);
+		result = orderRepository.updateOrderStatus(orderNo, 4);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 			
 		return result;
 	}
 
+	
 	@Override
 	public List<Order> getOrderListByPeriod(String memberId, int period) {
 		return orderRepository.getOrderListByPeriod(memberId, period);
 	}
+	
 
 	@Override
 	public OrderCancelInfoDto getCancelInfo(String orderNo) {
@@ -159,6 +163,9 @@ public class OrderServiceImpl implements OrderService {
 		
 		return orderList;
 	}
+	
+	
+	
 
 	@Override
 	public Order findOrderByOrderNo(String orderNo) {
@@ -183,6 +190,7 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId) {
 		return orderRepository.findOrdersByReviewId(reviewMemberId);
 	}
+	
 	@Override
 	public int updateOrderStatusIfExpired() {
 		int result = 0;
@@ -191,6 +199,11 @@ public class OrderServiceImpl implements OrderService {
             result = orderRepository.updateOrderStatus(order.getOrderNo(), 6);
         }
         return result;
+	}
 
+	// 상품상세 - 리뷰 - 상품
+	@Override
+	public List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId) {
+		return orderRepository.findProductByReviewId(reviewId, productId);
 	}
 }

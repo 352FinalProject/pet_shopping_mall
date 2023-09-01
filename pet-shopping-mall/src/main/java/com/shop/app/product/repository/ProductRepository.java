@@ -68,7 +68,7 @@ public interface ProductRepository {
 	ProductImages findImageAttachmentsByProductId(int productId);
 
 	// 상품 이미지 파일 저장
-	@Insert("insert into image_attachment (image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, image_created_at) values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)")
+	@Insert("insert into image_attachment values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, #{thumbnail}, default)")
 	@SelectKey(
 			before = false,
 			keyProperty = "imageId",
@@ -116,8 +116,11 @@ public interface ProductRepository {
 	@Select("select * from product where product_name like '%' || #{searchKeyword} || '%'")
 	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
-	// (수경)
+	// 상품수정시 옵션 추가등록(수경)
 	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
-	int adminOptionCreate(int productId, ProductDetail productDetail);
+	int adminOptionCreate(ProductDetail productDetail);
+	
+
+	List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder);
 
 }

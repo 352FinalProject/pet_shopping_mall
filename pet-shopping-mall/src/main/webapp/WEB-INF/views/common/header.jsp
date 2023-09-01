@@ -111,6 +111,8 @@
 }
 .search_box {
    position: relative;
+   z-index: 999;
+   cursor: pointer;
 }
 
 .search-input:focus {
@@ -203,7 +205,7 @@
                </div>
             </sec:authorize>
          </ul>
-         <div class="logo_top_wrap">
+		        <div class="logo_top_wrap">
             <div class="logo_wrap">
                <!-- 로고 이미지 -->
                <div class="logo_img">
@@ -212,37 +214,38 @@
                      class="center-image" alt="로고" />
                   </a>
                </div>
-               <div class="cdt">
-                  <!-- 검색 -->
-                  <div class="search_top_btn">
-                     <!-- 검색 창 -->
-                     <div class="search_box">
-                        <form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
-                           <img
-                              src="${pageContext.request.contextPath}/resources/images/home/search.png"
-                              id="search-img" alt="검색" />
-                              <input class="search-input" type="text" value="" placeholder="입력" name="searchQuery" />
-                        </form>
-                     </div>
-                  </div>
-                  <!-- 주문조회 -->
-                  <div class="order_checks_top_btn">
-                     <a href="${pageContext.request.contextPath}/member/myPage.do">
-                        <img
-                        src="${pageContext.request.contextPath}/resources/images/home/login.png"
-                        id="center-image" alt="주문조회" />
-                     </a>
-                  </div>
-                  <!-- 장바구니 -->
-                  <div class="cart_top_btn">
-                     <a href="${pageContext.request.contextPath}/cart/shoppingCart.do">
-                        <img
-                        src="${pageContext.request.contextPath}/resources/images/home/cart.png"
-                        id="center-image" alt="장바구니" />
-                     </a>
-                  </div>
-               </div>
-            </div>
+          </div>
+          <div class="cdt-info">
+              <div class="cdt">
+                 <!-- 검색 -->
+                 <div class="search_top_btn">
+                    <!-- 검색 창 -->
+                    <div class="search_box">
+                       <form name="searchBoxForm" id="searchBoxForm" method="GET" action="${pageContext.request.contextPath}/product/searchProduct.do">
+                          <img
+                             src="${pageContext.request.contextPath}/resources/images/home/search.png"
+                             id="search-img" alt="검색" />
+                             <input class="search-input" type="text" value="" placeholder="입력" name="searchQuery" />
+                       </form>
+                    </div>
+                 </div>
+                 <!-- 주문조회 -->
+                 <div class="order_checks_top_btn">
+                    <a href="${pageContext.request.contextPath}/member/myPage.do">
+                       <img
+                       src="${pageContext.request.contextPath}/resources/images/home/login.png"
+                       id="center-image" alt="주문조회" />
+                    </a>
+                 </div>
+                 <!-- 장바구니 -->
+                 <div class="cart_top_btn">
+                    <a href="${pageContext.request.contextPath}/cart/shoppingCart.do">
+                       <img
+                       src="${pageContext.request.contextPath}/resources/images/home/cart.png"
+                       id="center-image" alt="장바구니" />
+                    </a>
+                 </div>
+              </div>
          </div>
          <div class="menu-container">
             <ul class="nav">
@@ -292,64 +295,28 @@
       </div>
    </div>
 <script>
+const searchBoxForm = document.getElementById("searchBoxForm");
+const searchImg = document.getElementById("search-img");
+const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
 
-$(document).ready(function() {
-     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-     $("#deleteMemberForm-closeModalBtn").click(function() {
-       const deleteMemberPassword = $("#deleteMember-password").val();
-       $.ajax({
-         type: 'POST',
-         url: '${pageContext.request.contextPath}/member/deleteMember.do',
-         data: {
-           'password': deleteMemberPassword
-         },
-         dataType: "text",
-         beforeSend: function(xhr) {
-           xhr.setRequestHeader(csrfHeader, csrfToken); // Add CSRF token to header
-         },
-         success: function(result) {
-           console.log(result);
-           if (result === "no") {
-             alert('비밀번호가 틀렸습니다.');
-           } else {
-             alert('회원 탈퇴완료ㅠㅠ.');
-           }
-         },
-         error: function() {
-           console.log('에러 체크!!');
-         }
-       });
-     });
-
-     const searchBoxForm = document.getElementById("searchBoxForm");
-     const searchImg = document.getElementById("search-img");
-     const searchInput = document.querySelector(".search-input"); // 추가: searchInput 변수 선언
-
-     searchImg.addEventListener("click", function(event) {
-       searchInput.classList.add("on");
-       event.stopPropagation();
-     });
-
-     // 추가: 입력 상자에 대한 keyup 이벤트 처리
-     searchInput.addEventListener("keyup", function(event) {
-       if (event.key === "Enter") {
-         event.preventDefault();
-         searchBoxForm.submit();
-       }
-     });
-
-     document.addEventListener("click", function() {
-       searchInput.classList.remove("on");
-     });
-
-     searchInput.addEventListener("click", function(event) {
-       event.stopPropagation();
-     })
-     
-
+searchImg.addEventListener("click", function(event) {
+  searchInput.classList.add("on");
+  event.stopPropagation();
 });
 
-   
+// 추가: 입력 상자에 대한 keyup 이벤트 처리
+searchInput.addEventListener("keyup", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchBoxForm.submit();
+  }
+});
+
+document.addEventListener("click", function() {
+  searchInput.classList.remove("on");
+});
+
+searchInput.addEventListener("click", function(event) {
+  event.stopPropagation();
+})
 </script>

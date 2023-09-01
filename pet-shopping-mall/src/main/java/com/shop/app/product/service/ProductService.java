@@ -71,6 +71,19 @@ public interface ProductService {
 	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
 	// 옵션추가 (수경)
-	int adminOptionCreate(int productId, ProductDetail productDetail);
+	int adminOptionCreate(ProductDetail productDetail);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 상품 조회 정렬 (담희)
+	List<ProductSearchDto> alignProducts(int id, String alignType, String inOrder);
 
 }

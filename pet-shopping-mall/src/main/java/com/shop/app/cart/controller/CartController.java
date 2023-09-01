@@ -57,6 +57,13 @@ public class CartController {
 
 	}
 	
+	@GetMapping("/getCartList.do")
+	public ResponseEntity<?> getCartList(@AuthenticationPrincipal MemberDetails member) {
+		List<CartInfoDto> cartList = cartService.getCartInfoList(member.getMemberId());
+		return ResponseEntity.ok(cartList);
+	}
+	
+	
 	@PostMapping("/deleteCartOne.do")
 	public String deleteOne(@RequestParam("cartitemId") String _id, RedirectAttributes redirectAttr, 
 			Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
@@ -82,7 +89,6 @@ public class CartController {
 	public List<CartInfoDto> findProductOptionById(@RequestParam("id") String _id) {
 		int id = Integer.parseInt(_id);
 		List<CartInfoDto> productInfo =  cartService.findProductOptionById(id);
-		log.debug("productInfo = {}", productInfo);
 		return productInfo;
 	}
 	
@@ -105,15 +111,10 @@ public class CartController {
 		int quantity = Integer.parseInt(_quantity);
 		int productDetailId = Integer.parseInt(_productDetailId);
 		
-		log.debug("quantity = {}", quantity);
-		log.debug("productDetailId = {}", productDetailId);
-		
 		int result = cartService.insertCart(memberId, productDetailId, quantity);
 		
 		Map<String, Object> map = new HashMap<>();
-		
 		map.put("msg", "상품 추가 완료");
-		
 		return map;
 	}
 }

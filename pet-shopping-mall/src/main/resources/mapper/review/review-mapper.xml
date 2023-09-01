@@ -46,6 +46,24 @@
 	WHERE 
 	    r.review_id = #{reviewId}
 	</select>
+	
+	<select id="findProductImageAttachmentsByReviewId2" resultMap="ReviewDetailsResultMap">
+	SELECT
+	    r.review_id,
+	    r.review_title,
+	    r.review_content,
+	    r.review_star_rate,
+	    ia.image_original_filename,
+	    ia.image_renamed_filename
+	FROM 
+	    review r
+	LEFT JOIN 
+	    image_attachment_mapping iam ON r.review_id = iam.ref_id AND iam.ref_table = 'review'
+	LEFT JOIN
+	    image_attachment ia ON iam.image_id = ia.image_id
+	WHERE 
+	    r.review_id = #{reviewId} and r.order_id = #{orderId}
+	</select>
     
     <resultMap type="Review" id="reviewResultMap">
     	<id property="reviewId" column="review_id"/>
@@ -82,7 +100,7 @@
 	    </collection>
 	</resultMap>
 	
-	<select id="productReviewStarAvg" resultMap="ProductReviewAvgDto">
+	<select id="productReviewStarAvg" resultMap="productReviewAvgDto">
 	SELECT
 	    p.product_id,
 	    ROUND(AVG(r.review_star_rate), 1) as AVG,
@@ -91,16 +109,16 @@
 	    product p join review r 
 	        ON p.product_id = r.product_id
 	WHERE
-	    p.product_id = #{productId} and r.product_id = #{productId}
+	    p.product_id = #{productId}
 	GROUP BY
 	    p.product_id, p.product_name
 	</select>
 	
-	<resultMap type="ProductReviewAvgDto" id="ProductReviewAvgDto">
-		<result column="product_id" property="productId" />
-		<result column="product_name" property="productName" />
-		<result column="review_star_rate" property="reviewStarRate" />
-	</resultMap>
+<resultMap type="ProductReviewAvgDto" id="productReviewAvgDto">
+    <result column="product_id" property="productId" />
+    <result column="product_name" property="productName" />
+    <result column="AVG" property="reviewStarRate" />
+</resultMap>
 	
 	<select id="findReviewAll" resultType="ReviewListDto">
 	SELECT 

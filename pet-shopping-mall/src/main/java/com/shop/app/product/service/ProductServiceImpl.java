@@ -15,6 +15,8 @@ import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.review.dto.ProductReviewAvgDto;
+import com.shop.app.review.repository.ReviewRepository;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
 
@@ -24,6 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class ProductServiceImpl implements ProductService {
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	@Autowired
 	private ProductRepository productRepository;
@@ -38,11 +43,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int insertProduct(ProductImages productImages) {
-		int result =0;
 		Product product = productImages.toProduct();
-		result = productRepository.insertProduct(product);
-		log.debug("product = {}", product);
-		
+		int result = productRepository.insertProduct(product);
+
 		int refId = product.getProductId();
 		int productId = refId;
 		
@@ -50,15 +53,14 @@ public class ProductServiceImpl implements ProductService {
 		List<ImageAttachment> attachments = productImages.getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(ImageAttachment attach : attachments) {
-				
 				// 1. 이미지 파일 저장
 				int result2 = productRepository.insertAttachment(attach);
 				
 				// 2. 이미지파일 DB저장후 생성된 이미지 아이디 가져오기
 				int imageId = attach.getImageId(); 
-				log.debug("imageId = {}", imageId);
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
 				int result3 = productRepository.insertMapping(refId, imageId);
+				
 				// product에 imageId 세팅
 				int result4 = productRepository.updateImageIdByProductId(productId, imageId);
 			}
@@ -141,8 +143,15 @@ public class ProductServiceImpl implements ProductService {
 	// index 검색 (담희)
 	@Override
 	public List<ProductSearchDto> searchProducts(String searchQuery) {
-		return productRepository.searchProducts(searchQuery);
+		List<ProductSearchDto> productList = productRepository.searchProducts(searchQuery);
+		
+		for(ProductSearchDto p : productList) {
+			int cnt = reviewRepository.findProductListReviewTotalCount(p.getProductId());
+			p.setReviewCnt(cnt);
+		}
+		return productList;
 	}
+	
 	
 	// 모든상품 조회(수경)
 	@Override
@@ -164,7 +173,22 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 옵션추가 (수경)
 	@Override
-	public int adminOptionCreate(int productId, ProductDetail productDetail) {
-		return productRepository.adminOptionCreate(productId, productDetail);
+	public int adminOptionCreate(ProductDetail productDetail) {
+		return productRepository.adminOptionCreate(productDetail);
 	}
+
+	
+	
+	
+	@Override
+	public List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder) {
+		return productRepository.alignProducts(categoryId, alignType, inOrder);
+	}
+	
+	
+	
+	
+	
+	
+	
 }

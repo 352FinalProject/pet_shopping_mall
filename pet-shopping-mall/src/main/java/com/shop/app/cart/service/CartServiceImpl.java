@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.PurchaseDto;
 import com.shop.app.cart.entity.Cart;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.repository.CartRepository;
@@ -39,7 +40,6 @@ public class CartServiceImpl implements CartService {
 			product = cartRepository.getCartInfoList(cartItemList.get(i).getProductDetailId());
 			cartInfoList.add(product);
 		}
-
 		return cartInfoList;
 	}
 
@@ -64,7 +64,6 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public int updateCart(CartItem cartitem, String memberId) {
-	    log.debug("cartitem = {}", cartitem);
 	    int detailId = cartitem.getProductDetailId();
 	    List<CartItem> cartList = cartRepository.getCartList(memberId);
 	    int result = 0;
@@ -103,14 +102,12 @@ public class CartServiceImpl implements CartService {
 	    int cartId = findCartById(memberId);
 	    
 	    int result = 0;
-	    boolean found = false; // detailId를 찾았는지 여부를 나타내는 플래그
+	    boolean found = false;
 
 	    for (CartInfoDto c : cartList) {
 	        int detailId = c.getProductDetailId();
 	        if (detailId == productDetailId) {
 	            int cartitemId = c.getCartitemId();
-
-	            log.debug("detailId = {}", detailId);
 
 	            CartItem cartitem = CartItem.builder()
 	                    .cartitemId(cartitemId)
@@ -118,7 +115,6 @@ public class CartServiceImpl implements CartService {
 	                    .quantity(quantity)
 	                    .productDetailId(productDetailId)
 	                    .build();
-	            // 수량 업데이트
 	            result = cartRepository.updateCart(cartitem);
 	            found = true;
 	            break; 
@@ -126,7 +122,6 @@ public class CartServiceImpl implements CartService {
 	    }
 
 	    if (!found) {
-	        log.debug("detailId not found");
 	        
 	        CartItem cartitem = CartItem.builder()
 	                .cartId(cartId)
@@ -137,6 +132,12 @@ public class CartServiceImpl implements CartService {
 	    }
 
 	    return result;
+	}
+
+
+	@Override
+	public PurchaseDto paymentOneInfo(int productDetailId) {
+		return cartRepository.paymentOneInfo(productDetailId);
 	}
 
 }

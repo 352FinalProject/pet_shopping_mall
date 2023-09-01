@@ -92,7 +92,6 @@ public class QuestionController {
 		// 1:1 상세 조회
 
 	    Question questions = questionService.findQuestionByAnwerCount(question);
-	    log.debug("questions = {}", questions);
 	    model.addAttribute("questions", questions);
 	    
 	    int questionId = question.getQuestionId();
@@ -108,7 +107,6 @@ public class QuestionController {
 	    
 	    // 이미지 파일 정보 조회
 	    QuestionDetails questionDetails = questionService.findImageAttachmentsByQuestionId(questionId);
-	    log.debug("questionDetails = {}", questionDetails);
 	    model.addAttribute("questionDetails", questionDetails);
 }
 	
@@ -214,7 +212,6 @@ public class QuestionController {
 	        // 각 질문의 답변 수 계산하여 추가
 	        for (Question q : questions) {
 	            int answerCount = questionService.calculateAnswerCount(q.getQuestionId());
-	            log.debug("answerCount = {}", answerCount);
 	            q.setAnswerCount(answerCount);
 	        }
 	        
@@ -231,8 +228,6 @@ public class QuestionController {
 			throws UnsupportedEncodingException, FileNotFoundException {
 		// 1. db조회
 		ImageAttachment attach = questionService.findAttachmentById(questionId);
-		log.debug("attach = {}", attach);
-		log.debug("multipartLocation = {}", multipartLocation);
 		
 		// 2. Resource객체 생성
 		String saveDirectory = application.getRealPath("/resources/upload/question");

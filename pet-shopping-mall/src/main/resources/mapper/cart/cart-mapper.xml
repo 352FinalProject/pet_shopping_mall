@@ -5,31 +5,67 @@
 <mapper namespace="com.shop.app.cart.repository.CartRepository">
 
    <select id="getCartInfoList" resultMap="cartInfoDto">
-select 
-	ci.cartitem_id,
-    p.product_id,
-    ci.product_detail_id,
-    p.product_name,
-    pd.option_name,
-    pd.option_value,
-    (select sum(product_price) from product where product_id = p.product_id) product_price,
-    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
-    ci.quantity,
-    ia.image_original_filename,
-	ia.image_renamed_filename
-from 
-    product p 
-    left join 
-        product_detail pd on p.product_id = pd.product_id
-    left join 
-        cartitem ci on pd.product_detail_id = ci.product_detail_id
-    left join 
-	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
-    left join
-	    image_attachment ia ON iam.image_id = ia.image_id
-where 
-    ci.product_detail_id = #{productDetailId}
+		select 
+			ci.cartitem_id,
+		    p.product_id,
+		    ci.product_detail_id,
+		    p.product_name,
+		    pd.option_name,
+		    pd.option_value,
+		    (select sum(product_price) from product where product_id = p.product_id) product_price,
+		    (select sum(additional_price) from product_detail where product_detail_id = ci.product_detail_id) additional_price,
+		    ci.quantity,
+			ia.image_renamed_filename as thumbnail
+		from 
+		    product p 
+		    left join 
+		        product_detail pd on p.product_id = pd.product_id
+		    left join 
+		        cartitem ci on pd.product_detail_id = ci.product_detail_id
+		    join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		    join
+			    image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		where 
+		    ci.product_detail_id = #{productDetailId}
   </select>
+  
+  
+     <select id="paymentOneInfo" resultMap="purchaseDto">
+ 		select 
+		    p.product_id,
+		    pd.product_detail_id,
+		    p.product_name,
+		    pd.option_name,
+		    pd.option_value,
+		    p.product_price,
+		    pd.additional_price,
+			ia.image_renamed_filename as thumbnail
+		from 
+		    product p 
+		    left join 
+		        product_detail pd on p.product_id = pd.product_id
+		    left join 
+		        cartitem ci on pd.product_detail_id = ci.product_detail_id
+		    join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		    join
+			    image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		where 
+		    pd.product_detail_id = #{productDetailId}
+  </select>
+  
+  <resultMap type="PurchaseDto" id="purchaseDto">
+  	<result column="product_id" property="productId" />
+  	<result column="product_detail_id" property="productDetailId" />
+  	<result column="product_name" property="productName" />
+  	<result column="option_name" property="optionName" />
+  	<result column="option_value" property="optionValue" />
+  	<result column="product_price" property="productPrice" />
+  	<result column="additional_price" property="additionalPrice" />
+  	<result column="thumbnail" property="thumbnail" />
+  </resultMap>
+  
   
   <resultMap type="CartInfoDto" id="cartInfoDto">
   	<result column="cartitem_id" property="cartitemId" />
@@ -41,31 +77,29 @@ where
   	<result column="product_price" property="productPrice" />
   	<result column="additional_price" property="additionalPrice" />
   	<result column="quantity" property="quantity" />
-  	<result column="image_original_filename" property="imageOriginalFileName" />
-  	<result column="image_renamed_filename" property="imageRenamedFileName" />
+  	<result column="thumbnail" property="thumbnail" />
   </resultMap>
   
      <select id="findProductOptionById" resultMap="cartOptionUpdateDto">
-select 
-    p.product_id,
-    pd.product_detail_id,
-    p.product_name,
-    pd.option_name,
-    pd.option_value,
-    (select sum(product_price) from product where product_id = p.product_id) product_price,
-    (select sum(additional_price) from product_detail where product_detail_id = pd.product_detail_id) additional_price,
-    ia.image_original_filename,
-	ia.image_renamed_filename
-from 
-    product p 
-    left join 
-        product_detail pd on p.product_id = pd.product_id
-    left join 
-	    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
-    left join
-	    image_attachment ia ON iam.image_id = ia.image_id
-where 
-    p.product_id = #{productId}
+	select 
+	    p.product_id,
+	    pd.product_detail_id,
+	    p.product_name,
+	    pd.option_name,
+	    pd.option_value,
+	    (select sum(product_price) from product where product_id = p.product_id) product_price,
+	    (select sum(additional_price) from product_detail where product_detail_id = pd.product_detail_id) additional_price,
+		ia.image_renamed_filename as thumbnail
+	from 
+	    product p 
+	    left join 
+	        product_detail pd on p.product_id = pd.product_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+	where 
+	    p.product_id = #{productId}
   </select>
   
   <resultMap type="CartOptionUpdateDto" id="cartOptionUpdateDto">
@@ -76,7 +110,7 @@ where
   	<result column="option_value" property="optionValue" />
   	<result column="product_price" property="productPrice" />
   	<result column="additional_price" property="additionalPrice" />
-  	<result column="image_renamed_filename" property="imageRenamedFileName" />
+  	<result column="thumbnail" property="thumbnail" />
   </resultMap>
   
 
