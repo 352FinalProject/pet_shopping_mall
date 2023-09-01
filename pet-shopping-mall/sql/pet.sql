@@ -58,52 +58,54 @@ SELECT *  FROM all_tables;
 --drop table member_coupon;
 --drop table sub_member;
 --drop table sub_payment;
+--drop table image_attachment;
+--drop table product_category;
 
------- 외래키 붙어있는 테이블삭제
---drop table member cascade constraints;
---drop table review cascade constraints;
---drop table product cascade constraints;
---drop table product_detail cascade constraints;
---drop table pet cascade constraints;
---drop table breed cascade constraints;
---drop table order_detail cascade constraints;
---drop table notification cascade constraints;
---
---
---drop sequence seq_question_id;
---drop sequence seq_answer_id;
---drop sequence seq_image_attachment_id;
---drop sequence seq_image_attachment_mapping_id;
---drop sequence seq_point_id;
---drop sequence seq_product_category_id;
---drop sequence seq_product_id;
---drop sequence seq_product_detail_id;
---drop sequence seq_cart_id;
---drop sequence seq_payment_id;
---drop sequence seq_cartitem_id;
---drop sequence seq_ordertbl_id;
---drop sequence seq_refund_id;
---drop sequence seq_cancel_order_id;
---drop sequence seq_authority_id;
---drop sequence seq_community_id;
---drop sequence seq_wishlist_id;
---drop sequence seq_pet_id;
---drop sequence seq_persistent_logins_id;
---drop sequence seq_member_id;
---drop sequence seq_review_id;
---drop sequence seq_chat_id;
---drop sequence seq_chat_room_id;
---drop sequence seq_cancel_id;
---drop sequence seq_history_id;
---drop sequence seq_terms_id;
---drop sequence seq_product_option_id;
---drop sequence seq_member_coupon_id;
---drop sequence seq_coupon_id;
---drop sequence seq_category_id;
---drop sequence seq_terms_history_id;
---drop sequence seq_notification_id;
---drop sequence seq_sub_payment_id;
+---- 외래키 붙어있는 테이블삭제
+drop table member cascade constraints;
+drop table review cascade constraints;
+drop table product cascade constraints;
+drop table product_detail cascade constraints;
+drop table pet cascade constraints;
+drop table breed cascade constraints;
+drop table order_detail cascade constraints;
+drop table notification cascade constraints;
 
+
+drop sequence seq_question_id;
+drop sequence seq_answer_id;
+drop sequence seq_image_attachment_id;
+drop sequence seq_image_attachment_mapping_id;
+drop sequence seq_point_id;
+drop sequence seq_product_category_id;
+drop sequence seq_product_id;
+drop sequence seq_product_detail_id;
+drop sequence seq_cart_id;
+drop sequence seq_payment_id;
+drop sequence seq_cartitem_id;
+drop sequence seq_ordertbl_id;
+drop sequence seq_refund_id;
+drop sequence seq_cancel_order_id;
+drop sequence seq_authority_id;
+drop sequence seq_community_id;
+drop sequence seq_wishlist_id;
+drop sequence seq_pet_id;
+drop sequence seq_persistent_logins_id;
+drop sequence seq_member_id;
+drop sequence seq_review_id;
+drop sequence seq_chat_id;
+drop sequence seq_chat_room_id;
+drop sequence seq_cancel_id;
+drop sequence seq_history_id;
+drop sequence seq_terms_id;
+drop sequence seq_product_option_id;
+drop sequence seq_member_coupon_id;
+drop sequence seq_coupon_id;
+drop sequence seq_category_id;
+drop sequence seq_terms_history_id;
+drop sequence seq_notification_id;
+drop sequence seq_sub_payment_id;
+drop sequence seq_sub_subscribe_id;
 
 --==============================
 -- 테이블 생성
@@ -160,14 +162,6 @@ CREATE TABLE pet (
 );
 
 
--- 품종 테이블
-CREATE TABLE breed (
-    breed_id number,
-    pet_kind VARCHAR2(50),
-    pet_breed VARCHAR2(50),
-    CONSTRAINT chk_pet_breed CHECK (pet_breed IN ('C', 'D', 'E'))
-);
-
 -- qna 질문 테이블
 create table question(
     question_id number,
@@ -221,12 +215,6 @@ create table product_category (
     constraints pk_category_id primary key(category_id)
 );
 
--- 상품 카테고리 테이블
-create table product_category (
-    category_id number, -- pk
-    category_name varchar2(100) not null,
-    constraints pk_category_id primary key(category_id)
-);
 
 -- 상품 테이블
 create table product (
@@ -505,7 +493,7 @@ create sequence seq_history_id;
 create sequence seq_category_id;
 create sequence seq_notification_id;
 create sequence seq_sub_payment_id;
-create sequence seq_susubscribe_id;
+create sequence seq_subscribe_id;
 
 
 -- 회원가입시 자동으로 장바구니가 생성되는 트리거

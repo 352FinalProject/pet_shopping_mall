@@ -15,9 +15,9 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: pet
-    password: pet
+#    url: jdbc:oracle:thin:@localhost:1521:xe
+#    username: pet
+#    password: pet
   servlet:
    multipart:
      max-file-size: 10MB
@@ -95,7 +95,3 @@ oauth:
     resource-uri-host: https://openapi.naver.com/v1/nid/me
     token-uri: https://nid.naver.com/oauth2.0/token
     profile-uri: https://openapi.naver.com/v1/nid/me
-
-
-
-    

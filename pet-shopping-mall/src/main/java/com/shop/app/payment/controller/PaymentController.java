@@ -277,8 +277,6 @@ public class PaymentController {
 			@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
-	
-
 
 	@PostMapping("/successPay.do")
 	@ResponseBody

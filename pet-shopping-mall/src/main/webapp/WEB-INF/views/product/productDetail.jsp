@@ -598,5 +598,6 @@ $("#clickHeart").on("click", function() {
 
 <script
    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+   
+<jsp:include page="/WEB-INF/views/common/pageUp.jsp" />
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
