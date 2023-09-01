@@ -84,9 +84,6 @@ public interface ProductService {
 	
 	
 	// 상품 조회 정렬 (담희)
-	List<ProductSearchDto> alignByNewProduct(int categoryId);
-	List<ProductSearchDto> alignByPrice(int categoryId, String inOrder);
-	List<ProductSearchDto> alignByHighReviewStar(int categoryId);
-	List<ProductSearchDto> alignByReviewCnt(int categoryId);
+	List<ProductSearchDto> alignProducts(int id, String alignType, String inOrder);
 
 }

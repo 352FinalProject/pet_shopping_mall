@@ -24,7 +24,6 @@ public class NotificationController {
     @ResponseBody
     @PostMapping("/deleteNotification.do")
     public String deleteNotification(@RequestParam int id) {
-    	log.debug("id = {}", id);
         try {
             notificationService.deleteNotification(id);
             return "success";

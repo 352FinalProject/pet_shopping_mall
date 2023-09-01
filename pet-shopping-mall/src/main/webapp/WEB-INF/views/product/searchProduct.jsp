@@ -118,7 +118,7 @@ ul.nav {
                                     <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
                                         <!-- Your product card content here -->
                                         <figure class="product-thumbnail">
-											<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.imageRenamedFileName}">
+											<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.thumbnail}">
 										</figure>
 										<div class="product-desc">
 											<p class="product-name">${productInfo.productName}</p>

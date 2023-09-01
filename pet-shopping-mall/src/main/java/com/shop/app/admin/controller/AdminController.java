@@ -41,6 +41,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.admin.service.AdminService;
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.servicecenter.inquiry.entity.Question;
 import com.shop.app.member.entity.Subscribe;
@@ -116,7 +117,6 @@ public class AdminController {
 	@GetMapping("/adminMemberList.do")
 	public void adminMemberList(Model model) {
 		List<MemberDetails> members = adminService.adminMemberList();
-		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
 	    for (MemberDetails member : members) {
@@ -139,7 +139,6 @@ public class AdminController {
 	@GetMapping("/adminSubscribeList.do")
 	public void adminSubscribeList(Model model) {
 		List<MemberDetails> subscribedMembers = adminService.adminSubscribeList();
-//		log.debug("members = {}", members);
 		
 		// EnumTypeHandler 사용하여 enum 값 매핑
 	    for (MemberDetails subscribedMember : subscribedMembers) {
@@ -177,8 +176,6 @@ public class AdminController {
 		model.addAttribute("totalPages", totalPages);
 		
 		List<Question> questions = adminService.findQuestionAll(params);
-		log.debug("params = {}", params);
-		log.debug("questions = {}", questions);
 		model.addAttribute("questions", questions);
 	}
 	
@@ -324,11 +321,9 @@ public class AdminController {
 //		@AuthenticationPrincipal MemberDetails member,
 //		Model model
 //			) {
-//		log.debug("member = {}", member);
 //		
 //		// 기본 상품들 조회해서 가져오기.
 //		List<Product> basicProducts = productService.findAllBasicProduct();
-//		log.debug("basicProducts = {}", basicProducts);
 //		model.addAttribute("basicProducts", basicProducts);
 //	}
 	
@@ -383,7 +378,6 @@ public class AdminController {
 					.product(product)
 					.productCategory(productCategory)
 					.attachments(productImages.getAttachments())
-					.attachmentMapping(productImages.getAttachmentMapping())
 					.productDetails(productDetails)
 					.build();
 			// 리스트에 추가
@@ -399,7 +393,6 @@ public class AdminController {
 			@Valid ProductSearchKeywordDto _searchContent,
 			@AuthenticationPrincipal MemberDetails member,
 			Model model) {
-		log.debug("_searchContent = {}", _searchContent); //(searchKeyword=고양, searchCategory=productName, saleState=[0, 1, 2, 3])
 		String searchKeyword = _searchContent.getSearchKeyword();
 		String searchCategory = _searchContent.getSearchCategory();
 		
@@ -452,21 +445,23 @@ public class AdminController {
 	public String adminProductCreate(
 			@Valid ProductCreateDto _product,
 			@AuthenticationPrincipal MemberDetails member, 
-			Model model,
-			@RequestParam(value="upFile", required= false) List<MultipartFile> upFiles) throws IllegalStateException, IOException {
+			Model model) throws IllegalStateException, IOException {
+		log.debug("ProductCreateDto ={}",_product);
+		
+		List<MultipartFile> thumbnailFiles = _product.getThumbnailFile();
+		List<MultipartFile> detailFiles = _product.getDetailFile();
 
-		log.debug("ProductCreateDto = {}", _product);
-		// 1. 파일저장
-		List<ImageAttachment> attachments = new ArrayList<>();
-		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
 
 		String saveDirectory = application.getRealPath("/resources/upload/product");
 		
-		for(MultipartFile upFile : upFiles) {
+		List<ImageAttachment> attachments = new ArrayList<>();
+		// 1. 썸네일 파일 처리
+		for(MultipartFile upFile : thumbnailFiles) {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
 				File destFile = new File(saveDirectory, imageRenamedFilename);
+				
 				upFile.transferTo(destFile);
 
 				int imageType = 1;
@@ -477,24 +472,45 @@ public class AdminController {
 						.imageRenamedFilename(imageRenamedFilename)
 						.imageType(imageType)
 						.imageFileSize(upFile.getSize())
+						.thumbnail(Thumbnail.Y)
 						.build();
-
 				attachments.add(attach);
-				hasImage = true; // 이미지가 있으면 true 
 			}
 		}
+		
+		// 2. 상세이미지 파일 처리
+		for(MultipartFile upFile : detailFiles) {
+			if(!upFile.isEmpty()) {
+				String imageOriginalFilename = upFile.getOriginalFilename();
+				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
+				File destFile = new File(saveDirectory, imageRenamedFilename);
+				
+				upFile.transferTo(destFile);
+				
+				int imageType = 1;
+				
+				ImageAttachment attach =
+						ImageAttachment.builder()
+						.imageOriginalFilename(imageOriginalFilename)
+						.imageRenamedFilename(imageRenamedFilename)
+						.imageType(imageType)
+						.imageFileSize(upFile.getSize())
+						.thumbnail(Thumbnail.N)
+						.build();
+				attachments.add(attach);
+			}
+		}
+		
 
-		// 2. db저장
-		// 2.1. product 객체 저장
+		// 3. db저장
 		ProductImages productImages = ProductImages.builder()
 				.categoryId(_product.getCategoryId())
 				.productName(_product.getProductName())
 				.productPrice(_product.getProductPrice())
 				.attachments(attachments)
 				.build(); // 상품카테고리아이디, 상품명, 가격
-		
 		int productId = productService.insertProduct(productImages); // 여기서 이미지도 저장
-		log.debug("productId = {}", productId);
+		
 		
 		// 2.1. productDetail 객체 저장
 		List<ProductDetail> productDetails = _product.getProductDetail();
@@ -505,7 +521,6 @@ public class AdminController {
 				productDetail.setProductId(productId);
 				int result = productService.insertProductDetail(productDetail);
 				int productDetailId = productDetail.getProductDetailId();
-				log.debug("productDetailId = {}", productDetailId);
 				
 			}
 			
@@ -535,7 +550,6 @@ public class AdminController {
 		log.debug("productImages = {}", productImages);
 		// 상품옵션 가져오기(리스트)
 		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
-		log.debug("productDetails = {}", productDetails);
 		
 		model.addAttribute("categories", categories);
 		model.addAttribute("product", product);
@@ -552,7 +566,6 @@ public class AdminController {
 			@Valid @RequestBody ProductOptionCreateDto _product,
 			@AuthenticationPrincipal MemberDetails member 
 			) {
-		log.debug("ProductOptionCreateDto = {}", _product);
 		int productId = _product.getProductId();
 		ProductDetail productDetail = _product.toProductDetail();
     	
@@ -574,7 +587,6 @@ public class AdminController {
 			@AuthenticationPrincipal MemberDetails member 
 			) {
 		
-		log.debug("ProductUpdateDto = {}", _product);
 		Product product = _product.toProduct();
 		// 상품정보 수정하기
 		int result = productService.updateProduct(product);
@@ -589,7 +601,6 @@ public class AdminController {
 			@Valid @RequestBody ProductDetailUpdateDto _product,
 			@AuthenticationPrincipal MemberDetails member 
 			) {
-		log.debug("ProductDetailUpdateDto = {}", _product);
 		ProductDetail productDetail = _product.toProductDetail();
 		
 		// 상품 옵션 업데이트 로직 수행
@@ -608,7 +619,6 @@ public class AdminController {
 			@Valid @RequestBody ProductDeleteDto _product,
 			@AuthenticationPrincipal MemberDetails member
 			){
-		log.debug("ProductDeleteDto = {}", _product);
 		
 		int result = productService.deleteProduct(_product.getProductId());
 		
@@ -623,7 +633,6 @@ public class AdminController {
 			@Valid @RequestBody ProductOptionDeleteDto _product,
 			@AuthenticationPrincipal MemberDetails member
 	) {
-		log.debug("ProductDeleteDto = {}", _product);
 		int result = productService.deleteProductDetail(_product.getProductDetailId());
 		
 	    return ResponseEntity.ok(result);

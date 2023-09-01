@@ -105,6 +105,8 @@
 }
 .search_box {
    position: relative;
+   z-index: 999;
+   cursor: pointer;
 }
 
 .search-input:focus {

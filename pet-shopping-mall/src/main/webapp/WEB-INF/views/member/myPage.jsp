@@ -26,10 +26,13 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    max-width: 600px; /* 팝업 창 최대 너비 설정 */
-    width: 90%; /* 팝업 창 너비 설정 */
+    max-width: 600px; /
+    width: 90%; 
     text-align: center;
+    align-items: center;
     font-size: 18px;
+    display: flex;
+    flex-direction: column;
 }
 .popup-content img {
 	width: 60%;
@@ -44,7 +47,7 @@
     cursor: pointer;
 }
 
-/* 호버 효과 */
+
 .benefits-link:hover,
 #closePopupBtn:hover {
     background-color: #e0e0e0;

@@ -44,6 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.PurchaseDto;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.coupon.dto.MemberCouponDto;
 import com.shop.app.coupon.entity.Coupon;
@@ -119,20 +120,35 @@ public class PaymentController {
 	 * 결제하기 (담희)
 	 */
 	@GetMapping("/paymentInfo.do")
-	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member) {
+	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam(required=false) Integer productDetailId, @RequestParam(required=false) Integer quantity) {
 		MemberDetails principal = (MemberDetails) authentication.getPrincipal();
-
-		List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
+		
+		if(productDetailId != null) {
+			PurchaseDto purchaseOne = cartService.paymentOneInfo(productDetailId);
+			purchaseOne.setQuantity(quantity);
+			model.addAttribute("purchaseOne", purchaseOne);
+			
+		} else {
+			List<CartInfoDto> cartList = cartService.getCartInfoList(principal.getMemberId());
+			model.addAttribute("cartList", cartList);
+		}
+		
 		Point point = pointService.findCurrentPointById(principal.getMemberId());
-
         MypageDto myPage = memberService.getMyPage(principal.getMemberId());
         int couponCount = myPage.getMemberCoupon();
         
+        model.addAttribute("myPage", myPage);
         model.addAttribute("couponCount", couponCount);
-		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
-
 	}
+	
+	
+	@PostMapping("/paymentInfo.do")
+	public String paymentOne(Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam int quantity, @RequestParam int productDetailId, RedirectAttributes redirectAttr) {
+		return "redirect:/payment/paymentInfo.do?productDetailId="+productDetailId+"&quantity="+quantity;
+	}
+	
+	
 
 	/**
 	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드 (담희)
@@ -144,7 +160,6 @@ public class PaymentController {
 		
 		// 쿠폰 사용 여부 (예라)
 		Boolean useCoupon = _order.getUseCoupon();
-		log.debug("useCoupon = {}", _order.getUseCoupon());
 		
 		Order order = _order.toOder();
 
@@ -178,8 +193,6 @@ public class PaymentController {
 			// 1. 쿠폰 가져오기 (예라)
 			
 			int couponDiscount = _order.getCouponDiscount();
-			
-			log.debug("couponDiscount = {}", couponDiscount);
 	
 			MemberCoupon coupon = new MemberCoupon();
 			coupon.setMemberId(_order.getMemberId());
@@ -218,9 +231,7 @@ public class PaymentController {
 
 			    // 2. 구독자 여부 확인
 			    Member subscribeMember = memberService.findMemberById(order.getMemberId());
-			    log.debug("subscribeMember = {}", subscribeMember);
 			    boolean subscriber = (subscribeMember.getSubscribe() == Subscribe.Y);
-			    log.debug("subscriber = {}", subscriber);
 			    
 				// 3. 결제 성공하면 구매한 금액의 1% 포인트 적립 (일반 회원)
 				int amount = order.getAmount(); // 실제 주문 금액
@@ -248,6 +259,8 @@ public class PaymentController {
 			
 		} else {
 			msg = "주문에 실패하셨습니다. 관리자에게 문의하세요.";
+			
+			
 		}
 
 		resultMap.put("result", result);
@@ -319,7 +332,6 @@ public class PaymentController {
 		Order findOrder = orderService.findByOrder(order);
 
 		String memberId = _order.getMemberId();
-		log.debug("memberId = {}", memberId);
 		int pointsUsed = findOrder.getDiscount();
 
 		if ("failed".equalsIgnoreCase(payment.getStatus())) {
@@ -330,7 +342,7 @@ public class PaymentController {
 		    List<MemberCoupon> usedCoupons = couponService.findUsedCouponsByMemberId(memberId);
 		    handleCancelledCouponRefund(usedCoupons);
 
-		    return ResponseEntity.ok("결제가 취소되었으며 포인트가 환불되었습니다.");
+		    return ResponseEntity.ok("결제가 취소되었습니다.");
 		}
 
 		return ResponseEntity.ok(paymentResponse);
@@ -345,15 +357,13 @@ public class PaymentController {
 
 	    // 2. 현재 포인트 값을 가져온다
 	    Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
-	    log.debug("currentPoints = {}", currentPoints);
 
 	    int currentPoint = currentPoints.getPointCurrent(); // 현재 포인트
 	    int earnedPoint = currentPoints.getPointAmount(); // 적립된 금액
 	    int netPoint = currentPoint - earnedPoint; // 적립된 금액을 제외한 실제 포인트
-	    int updatedPoint = netPoint - usedPoints;
-	    
+
 	    // 3. 계산된 updatedPoint를 rollbackPoint 객체에 설정
-	    rollbackPoint.setPointCurrent(updatedPoint);
+	    rollbackPoint.setPointCurrent(netPoint);
 
 	    // 4. 취소된 포인트를 db에 저장
 	    int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
@@ -396,7 +406,6 @@ public class PaymentController {
         
         try {
             List<MemberCouponDto> coupons = couponService.findCouponsByMemberId(memberId);
-            log.debug("coupons = {}", coupons);
             if (coupons.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 

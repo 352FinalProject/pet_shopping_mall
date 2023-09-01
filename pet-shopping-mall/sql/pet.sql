@@ -56,7 +56,8 @@ SELECT *  FROM all_tables;
 --drop table breed;
 --drop table coupon;
 --drop table member_coupon;
---
+--drop table sub_member;
+--drop table sub_payment;
 --
 ------ 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
@@ -196,6 +197,7 @@ create table image_attachment (
     image_original_filename varchar2(500),
     image_renamed_filename varchar2(500),
     image_file_size number,
+    thumbnail char(1),
     image_created_at timestamp default systimestamp,
     constraint pk_image_attachment_id primary key(image_id)
 );

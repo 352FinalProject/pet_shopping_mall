@@ -131,7 +131,6 @@ public class ReviewServiceImpl implements ReviewService {
 	    
 	    } 
 	    
-	    log.debug("reviewDetailDto = {}", reviewDetailDto);
 	    return reviewDetailDto;
 	}
 	

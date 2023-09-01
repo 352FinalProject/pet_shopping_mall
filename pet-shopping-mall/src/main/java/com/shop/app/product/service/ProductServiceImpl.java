@@ -43,11 +43,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int insertProduct(ProductImages productImages) {
-		int result =0;
 		Product product = productImages.toProduct();
-		result = productRepository.insertProduct(product);
-		log.debug("product = {}", product);
-		
+		int result = productRepository.insertProduct(product);
+
 		int refId = product.getProductId();
 		int productId = refId;
 		
@@ -55,15 +53,14 @@ public class ProductServiceImpl implements ProductService {
 		List<ImageAttachment> attachments = productImages.getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(ImageAttachment attach : attachments) {
-				
 				// 1. 이미지 파일 저장
 				int result2 = productRepository.insertAttachment(attach);
 				
 				// 2. 이미지파일 DB저장후 생성된 이미지 아이디 가져오기
 				int imageId = attach.getImageId(); 
-				log.debug("imageId = {}", imageId);
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
 				int result3 = productRepository.insertMapping(refId, imageId);
+				
 				// product에 imageId 세팅
 				int result4 = productRepository.updateImageIdByProductId(productId, imageId);
 			}
@@ -179,34 +176,19 @@ public class ProductServiceImpl implements ProductService {
 	public int adminOptionCreate(ProductDetail productDetail) {
 		return productRepository.adminOptionCreate(productDetail);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	// 정렬
 
+	
+	
+	
 	@Override
-	public List<ProductSearchDto> alignByNewProduct(int categoryId) {
-		return productRepository.alignByNewProduct(categoryId);
+	public List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder) {
+		return productRepository.alignProducts(categoryId, alignType, inOrder);
 	}
-
-	@Override
-	public List<ProductSearchDto> alignByPrice(int categoryId, String inOrder) {
-		return productRepository.alignByPrice(categoryId, inOrder);
-	}
-
-
-	@Override
-	public List<ProductSearchDto> alignByHighReviewStar(int categoryId) {
-		return productRepository.alignByHighReviewStar(categoryId);
-	}
-
-	@Override
-	public List<ProductSearchDto> alignByReviewCnt(int categoryId) {
-		return productRepository.alignByReviewCnt(categoryId);
-	}
+	
+	
+	
+	
+	
+	
+	
 }
