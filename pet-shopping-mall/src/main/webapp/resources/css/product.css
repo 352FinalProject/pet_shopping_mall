@@ -29,7 +29,7 @@
 }
 
 #product-notice-box {
-   margin-top: 800px;
+   margin-top: 650px;
 }
 
 /* 상품 상세페이지 리뷰박스 */
@@ -100,33 +100,29 @@
 
 
 .review-percent {
-	position: absolute;
-	margin-top:550px;
+	margin: 0 auto;
 }
 
 .review-avg-star {
-	position: absolute; 
 	margin-top:20px;
 	font-size:50px;
 	font-weight:bold;
-	margin-left: 400px;
+	margin: 0 auto;
+	text-align: center;
 	
 }
 
 .review-avg-star2 {
-	position: absolute; 
-	margin-top:20px;
 	font-size:50px;
 	font-weight:bold;
-	margin-left: -90px;
-	margin-top: -10px;
+	margin-bottom: 50px;
 	color: #58ACFA;
 }
 
 
 /* 리뷰 구분선 */
 .review-dividing-line {
-	margin-top: 430px;
+	margin-top: -160px;
 	border-bottom: 1px solid #c8c8c8;
 }
 /* 상품상세 - 리뷰 */

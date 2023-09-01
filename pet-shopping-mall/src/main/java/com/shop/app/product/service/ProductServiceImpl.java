@@ -207,4 +207,16 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductSearchDto> alignByReviewCnt(int categoryId) {
 		return productRepository.alignByReviewCnt(categoryId);
 	}
+
+	// 인덱스 페이지 간식 불러오기 (예라)
+	@Override
+	public List<Product> findSnackAll(int categoryId) {
+		return productRepository.findSnackAll(categoryId);
+	}
+
+	// 인덱스 페이지 패션용품 불러오기 (예라)
+	@Override
+	public List<Product> findFashionAll(int _categoryId) {
+		return productRepository.findFashionAll(_categoryId);
+	}
 }

@@ -56,6 +56,7 @@ SELECT *  FROM all_tables;
 --drop table breed;
 --drop table coupon;
 --drop table member_coupon;
+--drop table sub_payment;
 --
 --
 ------ 외래키 붙어있는 테이블삭제
@@ -100,6 +101,8 @@ SELECT *  FROM all_tables;
 --drop sequence seq_coupon_id;
 --drop sequence seq_category_id;
 --drop sequence seq_terms_history_id;
+--drop sequence seq_notification_id;
+--drop sequence seq_sub_payment_id;
 
 
 --==============================
@@ -218,6 +221,12 @@ create table product_category (
     constraints pk_category_id primary key(category_id)
 );
 
+-- 상품 카테고리 테이블
+create table product_category (
+    category_id number, -- pk
+    category_name varchar2(100) not null,
+    constraints pk_category_id primary key(category_id)
+);
 
 -- 상품 테이블
 create table product (

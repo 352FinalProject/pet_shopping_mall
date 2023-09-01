@@ -9,6 +9,7 @@ select * from coupon;
 select * from member_coupon order by member_coupon_id desc;
 select * from terms;
 select * from terms_history;
+select * from product_category;
 select * from product;
 select * from terms_history;
 select * from image_attachment;
@@ -26,7 +27,7 @@ select * from cartitem;
 select * from cart;
 select * from wishlist;
 select * from notification;    
-
+            
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
 values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);

@@ -130,4 +130,12 @@ public interface ProductRepository {
 
 	List<ProductSearchDto> alignByReviewCnt(int categoryId);
 
+	// 인덱스 페이지 간식 불러오기 (예라)
+	@Select("select * from product where category_id = #{categoryId}")
+	List<Product> findSnackAll(int categoryId);
+
+	// 인덱스 페이지 간식 불러오기 (예라)
+	@Select("select * from product where category_id = #{categoryId}")
+	List<Product> findFashionAll(int _categoryId);
+
 }

@@ -74,19 +74,15 @@ public interface ProductService {
 	int adminOptionCreate(ProductDetail productDetail);
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 상품 조회 정렬 (담희)
 	List<ProductSearchDto> alignByNewProduct(int categoryId);
 	List<ProductSearchDto> alignByPrice(int categoryId, String inOrder);
 	List<ProductSearchDto> alignByHighReviewStar(int categoryId);
 	List<ProductSearchDto> alignByReviewCnt(int categoryId);
-
+	
+	// 인덱스 페이지 간식 불러오기 (예라)
+	List<Product> findSnackAll(int categoryId);
+	
+	// 인덱스 페이지 패션용품 불러오기 (예라)
+	List<Product> findFashionAll(int _categoryId);
 }

@@ -33,7 +33,6 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <section class="common-section" id="#">
-   <section class="common-section" id="#">
       <div class="common-container">
          <div class="product-div">
             <div class="product-img">
@@ -202,7 +201,7 @@
                 </div>
             </c:if>
            </div>
-           <div class="review-percent" style="position: absolute; margin-top:333px; margin-left: 180px;">
+           <div class="review-percent">
                <ul>
                 <li>
                    <div class="star-label-and-progress">
@@ -352,7 +351,7 @@
             <li class="page-item ${page == pageNumber ? 'active' : ''}">
               <a
                 class="page-link"
-                href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
+                href="${pageContext.request.contextPath}/product/productDetail.do?productId=${product.productId}&page=${pageNumber}"
               >
                 <span class="page-number">${pageNumber}</span>
               </a>
@@ -423,7 +422,6 @@
          <button class="btn btn1" onclick="addCart();">장바구니</button>
          <button class="btn btn2">구매하기</button>
       </div>
-   </div>
    </div>
    <form:form id="addCartFrm">
       <input type="hidden" value="1" id="_quantity" name="quantity">
