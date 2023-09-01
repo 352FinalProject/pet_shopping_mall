@@ -99,7 +99,6 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public int insertCart(String memberId, int productDetailId, int quantity) {
 	    List<CartInfoDto> cartList = getCartInfoList(memberId);
-	    log.debug("cartList = {}", cartList);
 	    int cartId = findCartById(memberId);
 	    
 	    int result = 0;
@@ -123,7 +122,6 @@ public class CartServiceImpl implements CartService {
 	    }
 
 	    if (!found) {
-	        log.debug("detailId not found");
 	        
 	        CartItem cartitem = CartItem.builder()
 	                .cartId(cartId)

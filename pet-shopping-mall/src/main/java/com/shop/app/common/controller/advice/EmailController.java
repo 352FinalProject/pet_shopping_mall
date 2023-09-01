@@ -59,7 +59,6 @@ public class EmailController {
 
       Map<String, Object> response = new HashMap<>();
       response.put("success", true);
-      log.debug("Response being sent: " + response);
       return response;
    }
 
