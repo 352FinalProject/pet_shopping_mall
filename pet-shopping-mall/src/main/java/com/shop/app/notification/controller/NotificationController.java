@@ -29,8 +29,10 @@ public class NotificationController {
 	
 	@ResponseBody
 	@GetMapping("/findAllNotification.do")
-	public List<Notification> findAllNotification(@RequestParam String memberId, Model model) {
+	public List<Notification> findAllNotification(@RequestParam String memberId) {
 	    List<Notification> notifications = notificationService.findAllNotification(memberId);
+	    System.out.println("매핑됨!!!");
+	    log.debug("notifications={}", notifications);
 	    return notifications;
 	}
 	

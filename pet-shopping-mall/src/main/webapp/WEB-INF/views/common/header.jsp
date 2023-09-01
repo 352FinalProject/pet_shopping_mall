@@ -18,11 +18,18 @@
 	<script>
 	const memberId = '<sec:authentication property="principal.username"/>';
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
 </sec:authorize>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
+<c:if test="${not empty msg}">
+   <script>
+      alert('${msg}');
+   </script>
+</c:if>
 <style>
 /* 모달 배경 스타일 */
 .deleteMember-class {
@@ -119,11 +126,7 @@
 </style>
 <title>반려동물 쇼핑몰</title>
 
-<c:if test="${not empty msg}">
-   <script>
-      alert('${msg}');
-   </script>
-</c:if>
+
 </head>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/style.css" />
@@ -142,7 +145,6 @@
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-<jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
    <sec:authorize access="isAuthenticated()">
@@ -191,19 +193,16 @@
                href="<%=request.getContextPath()%>/community/communityCreate.do">게시글작성</a>
             </li>
             <sec:authorize access="isAuthenticated()">
-                 <div class="notification-container">
-					<button id="openPopupBtn" onclick="loadNotifications('${memberId}')">
-					    <i class="bi bi-bell"></i>
-					</button>
-                   <div id="notificationPopup" class="popup">
+               <div class="notification-container">
+                  <button id="openPopupBtn" onclick="loadNotifications(memberId)">
+                     <i class="bi bi-bell"></i>
+                  </button>
+                  <div id="notificationPopup" class="popup">
                      <div class="popup-content">
-				        <div class="notification-container" id="notification${notification.id}">
-				            <p class="notification-content">{notification.memberId}님 ${notification.notiContent}${notification.notiCreatedAt}</p>
-				            <button class="notification-delete-button" id="notification${notification.id}" onclick="notificationDelete(${notification.id})">x</button>
-				        </div>
+                        <div class="notification-container" id="notification${notification.id}"></div>
                      </div>
-                   </div>
-                 </div>
+                  </div>
+               </div>
             </sec:authorize>
          </ul>
          <div class="logo_top_wrap">
@@ -351,101 +350,8 @@ $(document).ready(function() {
        event.stopPropagation();
      })
      
-/*    const openPopupBtn = document.getElementById("openPopupBtn");
-    openPopupBtn.addEventListener('click', function() {
-        console.log("팝업창 실행");
-        const notificationPopup = document.getElementById("notificationPopup");
-        notificationPopup.classList.toggle("active");
-	}); */
 
 });
 
-
-
-const renderNotification = (message) => {
-	    const { id, notiCategory, notiContent, notiCreatedAt, memberId } = JSON.parse(message);
-
-	    const $notificationPopup = $("#notificationPopup");
-	    const $popupContent = $notificationPopup.find(".popup-content");
-
-	    const newNotificationContainer = document.createElement("div");
-	    newNotificationContainer.className = "notification-container";
-	    
-	    const newNotification = document.createElement("p");
-	    newNotification.className = "notification-content";
-	    newNotification.textContent = `${memberId}님 ${notiContent}${notiCreatedAt}`;
-
-	    const deleteButton = document.createElement("button");
-	    deleteButton.innerHTML = `X`; // 
-	    deleteButton.className = "notification-delete-button"; 
-	    deleteButton.id = id; 
-
-	    newNotification.appendChild(deleteButton);
-
-	    newNotificationContainer.appendChild(newNotification);
-
-	    $popupContent.prepend(newNotificationContainer);
-
-	    $notificationPopup.addClass("active");
-
-	    console.log(newNotification.textContent);
-	};
-
-	
-	
-
-	/* 팝업창 열고 알림생성 */
-	function loadNotifications(memberId) {
-		const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-	    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-	    const notificationPopup = document.getElementById("notificationPopup");
-	    notificationPopup.classList.add("active");
-	    
-	    $.ajax({
-	        method: "GET",
-	        url: "${pageContext.request.contextPath}/notification/findAllNotification.do",
-	        data: {
-	            memberId: memberId
-	        },
-	        beforeSend: function (xhr) {
-	               xhr.setRequestHeader(csrfHeader, csrfToken);
-	         },
-	        success: function (notifications) {
-	        	
-	        	renderNotification(result);
-	        },
-	        error: function (xhr, textStatus, errorThrown) {
-	            console.log('Error:', textStatus);
-	        }
-	    });
-	}
-
-  /* 알림삭제 */
-  function notificationDelete(notificationId) {
-      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-      const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-      $.ajax({
-    	 async:true,
-         method: "POST",
-         url: "${pageContext.request.contextPath}/notification/deleteNotification.do",
-         data: {
-               "id":notificationId
-         },
-         beforeSend: function (xhr) {
-               xhr.setRequestHeader(csrfHeader, csrfToken);
-         },
-         success: function(result) {
-            // 다시 태그 로드
-            const containerDiv = document.getElementById(`notification${notificationId}`);
-	         if (containerDiv) {
-	            containerDiv.remove();
-	         }
-         }, 
-         error: function(xhr, textStatus, errorThrown) {
-               console.log('Error:');
-         }
-      });
-      
-   };
    
 </script>
