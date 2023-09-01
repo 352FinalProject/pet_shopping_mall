@@ -9,31 +9,31 @@
 		<div class="container-fluid px-4">
 			<h1 class="mt-4">상품 조회</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item">
-				<i class="fas fa-house fa-2x me-3"></i><a href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a>
-				</li>
+				<li class="breadcrumb-item"></li>
 			</ol>
 			<div class="card mb-4">
 				<!-- 상품검색 -->
+				<div class="card-body">
 				<div class="admin-product-search-container">
 				<form:form 
 			    	method="GET" 
 			    	name="adminProductSearch"
 			    	action="${pageContext.request.contextPath}/admin/adminProductSearch.do">
-			        
-		        	<label for="searchKeyword">검색어:</label> 
-		        	<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명"> 
-			        <button type="submit">검색</button>
+			        <div class="input-group">
+						<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명">
+						<input type="submit" value="검색" class ="btn btn-secondary">
+					</div>
 			    </form:form>
 
 				</div><!-- admin-product-search-container -->
+			</div>
 			</div>
 
 
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 기본상품목록
-					<input type="button" value="상품등록" id="btn-add"/>
+					<input type="button" value="상품등록" id="btn-add" class="btn btn-secondary"/>
 				</div>
 				<div class="card-body">
 				<!-- 등록된 상품이 없으면 -->

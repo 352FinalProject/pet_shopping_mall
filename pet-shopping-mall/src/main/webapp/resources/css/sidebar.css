@@ -37,11 +37,6 @@ blockquote:before, blockquote:after, q:before, q:after {
 	content: none;
 }
 
-.indexImg {
-	width: 250px;
-	height: 250px;
-}
-
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -50,7 +45,6 @@ table {
 a {
 	display: block;
 	text-decoration: none;
-	color: #000;
 }
 
 /* style */

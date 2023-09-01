@@ -17,9 +17,10 @@
 						<form:form name="adminMemberSearchFrm"
 							action="${pageContext.request.contextPath}/admin/adminSubscribeSearchByNameOrId.do"
 							method="get">
-							<label for="searchKeyword">회원검색:</label>
-							<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
-							<input type="submit" value="검색">
+							<div class="input-group">
+								<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
+								<input type="submit" value="검색" class ="btn btn-secondary">
+							</div>
 						</form:form>
 					</div>
 				</div>

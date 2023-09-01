@@ -38,6 +38,8 @@ public class CommunityController {
 		
 	}
 	
+	
+	
 //	@PostMapping("/communityCreate.do")
 //	public String communityCreate(
 //			@Valid CommunityCreateDto _community,
