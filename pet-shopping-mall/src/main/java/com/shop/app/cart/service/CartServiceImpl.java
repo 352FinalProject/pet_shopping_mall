@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.PurchaseDto;
 import com.shop.app.cart.entity.Cart;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.repository.CartRepository;
@@ -133,6 +134,12 @@ public class CartServiceImpl implements CartService {
 	    }
 
 	    return result;
+	}
+
+
+	@Override
+	public PurchaseDto paymentOneInfo(int productDetailId) {
+		return cartRepository.paymentOneInfo(productDetailId);
 	}
 
 }

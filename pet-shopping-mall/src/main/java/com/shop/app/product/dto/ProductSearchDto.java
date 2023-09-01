@@ -12,8 +12,6 @@ public class ProductSearchDto {
 	private int productPrice;
 	private String imageRenamedFileName;
 	private Timestamp createDate;
-	// 별점
-	// 리뷰 추가
 	private int reviewCnt;
 	private double reviewStarRate;
 }

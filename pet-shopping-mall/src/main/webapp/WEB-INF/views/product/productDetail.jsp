@@ -135,7 +135,6 @@
 						</div>
 					</div>
 				</c:if>
-
 				<div class="product-price">
 					<div class="product-price-desc">
 						총 상품 금액 <span class="totalPrice" id="totalPrice"></span>원
@@ -349,7 +348,7 @@
 				<span id="likeCnt">${product.likeCnt}</span>
 			</div>
 			<button class="btn btn1" onclick="addCart();">장바구니</button>
-			<button class="btn btn2">구매하기</button>
+			<button class="btn btn2" onclick="purchase();">구매하기</button>
 		</div>
 	</div>
 	</div>
@@ -454,6 +453,13 @@ function addCart() {
           console.error(error);
         },
       }); 
+};
+
+function purchase() {
+	const frm = document.querySelector("#addCartFrm");
+	frm.action = "${pageContext.request.contextPath}/payment/paymentInfo.do";
+	frm.method = "POST";
+	frm.submit();
 };
 
 

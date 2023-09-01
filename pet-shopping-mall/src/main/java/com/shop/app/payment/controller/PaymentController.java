@@ -44,6 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.PurchaseDto;
 import com.shop.app.cart.service.CartService;
 import com.shop.app.coupon.dto.MemberCouponDto;
 import com.shop.app.coupon.entity.Coupon;
@@ -131,8 +132,22 @@ public class PaymentController {
         model.addAttribute("couponCount", couponCount);
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
-
 	}
+	
+	
+	@PostMapping("/paymentInfo.do")
+	public String paymentOne(Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam int quantity, @RequestParam int productDetailId, RedirectAttributes redirectAttr) {
+		PurchaseDto purchaseOne = cartService.paymentOneInfo(productDetailId);
+		purchaseOne.setQuantity(quantity);
+		
+		log.debug("purchaseOne = {}", purchaseOne);
+		
+		redirectAttr.addFlashAttribute("purchaseOne",purchaseOne);
+		
+		return "redirect:/payment/paymentInfo.do";
+	}
+	
+	
 
 	/**
 	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드 (담희)
