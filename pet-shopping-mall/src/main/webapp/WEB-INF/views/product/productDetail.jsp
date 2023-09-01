@@ -37,9 +37,11 @@
       <div class="common-container">
          <div class="product-div">
             <div class="product-img">
+            <c:if test="${not empty thumbnailImages}">
                <img
-                  src="${pageContext.request.contextPath}/resources/upload/product/${productImages.attachments[0].imageRenamedFilename}"
+                  src="${pageContext.request.contextPath}/resources/upload/product/${thumbnailImages[0].imageRenamedFilename}"
                   width="400px" />
+            </c:if>
             </div>
             <div class="product-info">
                <div id="product-title">${product.productName}</div>
@@ -157,13 +159,22 @@
         <li><a href="#">1:1문의</a></li>
       </ul>
     </div>
+    
     <!-- 상세 페이지 -->
-    <div class="common-container2">
-      <div>
-        <img
-          src="${pageContext.request.contextPath}/resources/images/1690801774638.jpg"
-          width="500px"
-        />
+    <div class="common-container2" style="display: grid">
+    	<!-- 상세 이미지가 없다면 -->
+    	<c:if test="${empty detailImages}"></c:if>
+    	<!-- 상세 이미지가 있다면 -->
+    	<c:if test="${not empty detailImages}">
+    		<c:forEach items="${detailImages}" var="image" varStatus="vs">
+    			<div class="product-img">
+			        <img
+			          src="${pageContext.request.contextPath}/resources/upload/product/${image.imageRenamedFilename}"
+			          width="500px" />
+    			</div>
+    		</c:forEach>
+    	</c:if>
+		<div>
       </div>
     </div>
     </div>
