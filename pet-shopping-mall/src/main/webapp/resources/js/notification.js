@@ -86,7 +86,10 @@ function loadNotifications(memberId) {
                xhr.setRequestHeader(csrfHeader, csrfToken);
          },
          success: function(result) {
-			
+			const containerDiv = document.getElementById(`notification${notificationId}`);
+	         if (containerDiv) {
+	            containerDiv.remove();
+	         }
          }, 
          error: function(xhr, textStatus, errorThrown) {
                console.log('Error:');
