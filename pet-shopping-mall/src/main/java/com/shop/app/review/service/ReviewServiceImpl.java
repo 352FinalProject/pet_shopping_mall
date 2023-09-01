@@ -163,8 +163,8 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	// 상품 상세페이지 리뷰 전체 카운트
 	@Override
-	public int findProductTotalReviewCount() {
-		return reviewRepository.findProductTotalReviewCount();
+	public int findProductTotalReviewCount(int productId) {
+		return reviewRepository.findProductTotalReviewCount(productId);
 	}
 
 	// 상품 상세페이지 전체 리뷰 
@@ -220,6 +220,21 @@ public class ReviewServiceImpl implements ReviewService {
 	public int findProductListReviewTotalCount(int productId) {
 		return reviewRepository.findProductListReviewTotalCount(productId);
 	}
+
+	// 별점 퍼센트 구하기 위한 전체 리뷰
+	@Override
+	public List<Review> findProductReviewAllNoPageBar(int productId) {
+		return reviewRepository.findProductReviewAllNoPageBar(productId);
+	}
+
+	@Override
+	public ReviewDetails findProductImageAttachmentsByReviewId2(int reviewId2, int orderId) {
+		return reviewRepository.findProductImageAttachmentsByReviewId2(reviewId2, orderId);
+	}
+//	@Override
+//	public ReviewDetails findProductImageAttachmentsByReviewId2(int reviewId2) {
+//		return reviewRepository.findProductImageAttachmentsByReviewId2(reviewId2);
+//	}
 
 
 }
