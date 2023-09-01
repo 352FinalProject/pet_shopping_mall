@@ -559,7 +559,7 @@ public class AdminController {
         // 상품 옵션 업데이트 로직 수행
         int result = productService.adminOptionCreate(productDetail);
 
-        return ResponseEntity.ok("옵션이 성공적으로 추가되었습니다.");
+        return ResponseEntity.ok(result);
 	}
 	
 	
@@ -626,7 +626,7 @@ public class AdminController {
 		log.debug("ProductDeleteDto = {}", _product);
 		int result = productService.deleteProductDetail(_product.getProductDetailId());
 		
-	    return ResponseEntity.ok("상품옵션을 삭제했습니다.");
+	    return ResponseEntity.ok(result);
 	}
 
 
