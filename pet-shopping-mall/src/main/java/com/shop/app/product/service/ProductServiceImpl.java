@@ -43,10 +43,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int insertProduct(ProductImages productImages) {
-		int result =0;
 		Product product = productImages.toProduct();
-		result = productRepository.insertProduct(product);
-		
+		int result = productRepository.insertProduct(product);
+
 		int refId = product.getProductId();
 		int productId = refId;
 		
@@ -54,7 +53,6 @@ public class ProductServiceImpl implements ProductService {
 		List<ImageAttachment> attachments = productImages.getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(ImageAttachment attach : attachments) {
-				
 				// 1. 이미지 파일 저장
 				int result2 = productRepository.insertAttachment(attach);
 				
@@ -62,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
 				int imageId = attach.getImageId(); 
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
 				int result3 = productRepository.insertMapping(refId, imageId);
+				
 				// product에 imageId 세팅
 				int result4 = productRepository.updateImageIdByProductId(productId, imageId);
 			}
