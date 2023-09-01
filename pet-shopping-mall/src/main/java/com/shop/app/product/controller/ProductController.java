@@ -205,7 +205,9 @@ public class ProductController {
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
 	    /* 찜 등록 여부 가져오기 (선모) */
+		if (member != null) {
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
+		}
 	}
 
    

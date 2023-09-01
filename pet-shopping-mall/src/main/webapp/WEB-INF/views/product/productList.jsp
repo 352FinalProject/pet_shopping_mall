@@ -6,7 +6,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <div class="common-section">
-
 	<!-- 컨테이너 -->
 	<div class="common-container">
 		<section class="product-board">

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -8,14 +7,11 @@
 
 <%@ taglib prefix="sec"
    uri="http://www.springframework.org/security/tags"%>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <%@ pageisELIgnored="false" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <title>우리집동물친구[상품]</title>
-<!-- Bootstrap CSS 포함 -->
-<link rel="stylesheet"
-   href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-
 <style>
    .heart-button {
       border: none;
@@ -30,8 +26,6 @@
     }
 
 </style>
-
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <section class="common-section" id="#">
       <div class="common-container">
          <div class="product-div">
