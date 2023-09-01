@@ -14,7 +14,6 @@ stompClient.connect({}, (frame) => {
 
 const renderMessage = (message) => {
     const { id, notiCategory, notiContent, notiCreatedAt, memberId } = JSON.parse(message);
-
     const $notificationPopup = $("#notificationPopup");
     const $popupContent = $notificationPopup.find(".popup-content");
 
@@ -41,6 +40,5 @@ const renderMessage = (message) => {
     $popupContent.prepend(newNotificationContainer);
 
     $notificationPopup.addClass("active");
-
 };
 

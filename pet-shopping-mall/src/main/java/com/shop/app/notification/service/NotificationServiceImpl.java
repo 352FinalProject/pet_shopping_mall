@@ -40,15 +40,17 @@ public class NotificationServiceImpl implements NotificationService {
 		for (Order order : orders) {
 			
 			String to = order.getMemberId();
-	        Notification notification = Notification.builder()
-	            .id(order.getOrderId())
+	        Notification insertNotification = Notification.builder()
 	            .notiCategory(3)
 	            .notiContent(order.getOrderNo() + "번 주문이 구매확정되었습니다.")
 	            .notiCreatedAt(formatTimestampNow())
 	            .memberId(to) 
 	            .build();
 			
-			result = notificationRepository.insertNotification(notification);
+			result = notificationRepository.insertNotification(insertNotification);
+			
+			Notification notification = notificationRepository.latestNotification();
+			
 			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
 		}
 		return result;
@@ -79,7 +81,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	private String formatTimestamp(Timestamp timestamp) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return dateFormat.format(timestamp);
     }
 

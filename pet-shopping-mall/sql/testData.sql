@@ -1014,3 +1014,5 @@ from
     orderTbl 
 where 
     order_date <= systimestamp - interval '7' day ;
+
+select notification where 

@@ -29,7 +29,6 @@ const renderNotification = (notification) => {
     $popupContent.prepend(newNotificationContainer);
 
     $notificationPopup.addClass("active");
-
 };
 
 // 알림 초기화 메서드
@@ -50,7 +49,7 @@ function loadNotifications(memberId) {
         notificationPopup.classList.add("active");
         $.ajax({
             method: "GET",
-            url: "notification/findAllNotification.do",
+            url: "/pet/notification/findAllNotification.do",
             data: {
                 "memberId": memberId
             },
@@ -70,22 +69,22 @@ function loadNotifications(memberId) {
     }
 }
 
-
   /* 알림삭제 */
   function notificationDelete(notificationId) {
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
     $.ajax({
         method: "POST",
-        url: "notification/deleteNotification.do",
+        url: "/pet/notification/deleteNotification.do",
         data: {
-            "id": notificationId
+            id: notificationId
         },
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (result) {
-            const containerDiv = document.getElementById(`${notificationId}`);
+            console.log(result);
+            const containerDiv = document.getElementById(notificationId);
             containerDiv.remove();
         },
         error: function (xhr, textStatus, errorThrown) {

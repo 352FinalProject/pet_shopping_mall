@@ -37,12 +37,16 @@ public class NotificationController {
 	
 	@ResponseBody
 	@PostMapping("/deleteNotification.do")
-	public void deleteNotification(@RequestParam int id) {
-		try {
-			notificationService.deleteNotification(id);
+	public String deleteNotification(@RequestParam int id) {
+		System.out.println("id = " + id);
+		int result = notificationService.deleteNotification(id);
+		if (result == 1) {
 			System.out.println("삭제완료!!!!");
-		} catch (Exception e) {
-			e.printStackTrace();
+			
+			return "delete 성공";
+		}else {
+			return "delete 오류";
 		}
+		
 	}
 }
