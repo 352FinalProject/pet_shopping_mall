@@ -1,3 +1,5 @@
+
+// 서버에서 날라온 notification 파싱
 const renderNotification = (notification) => {
     const { id, notiCategory, notiContent, notiCreatedAt, memberId } = notification;
 
@@ -6,6 +8,7 @@ const renderNotification = (notification) => {
 
     const newNotificationContainer = document.createElement("div");
     newNotificationContainer.className = "notification-container";
+    newNotificationContainer.id = id;
     
     const newNotification = document.createElement("p");
     newNotification.className = "notification-content";
@@ -27,15 +30,15 @@ const renderNotification = (notification) => {
 
     $notificationPopup.addClass("active");
 
-    console.log(newNotification.textContent);
 };
 
+// 알림 초기화 메서드
 function clearNotifications() {
     const $popupContent = $("#notificationPopup .popup-content");
     $popupContent.empty();
 }
 
-/* 팝업창 열고 알림생성 */
+// 팝업창 열고 알림생성 
 function loadNotifications(memberId) {
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
@@ -43,7 +46,6 @@ function loadNotifications(memberId) {
     
     if (notificationPopup.classList.contains("active")) {
         notificationPopup.classList.remove("active");
-        clearNotifications();
     } else {
         notificationPopup.classList.add("active");
         $.ajax({
@@ -69,31 +71,25 @@ function loadNotifications(memberId) {
 }
 
 
-
-
   /* 알림삭제 */
   function notificationDelete(notificationId) {
-      const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-      const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-      $.ajax({
-    	 async:true,
-         method: "POST",
-		 url: "notification/deleteNotification.do",
-         data: {
-               "id":notificationId
-         },
-         beforeSend: function (xhr) {
-               xhr.setRequestHeader(csrfHeader, csrfToken);
-         },
-         success: function(result) {
-			const containerDiv = document.getElementById(`notification${notificationId}`);
-	         if (containerDiv) {
-	            containerDiv.remove();
-	         }
-         }, 
-         error: function(xhr, textStatus, errorThrown) {
-               console.log('Error:');
-         }
-      });
-      
-   };
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    $.ajax({
+        method: "POST",
+        url: "notification/deleteNotification.do",
+        data: {
+            "id": notificationId
+        },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (result) {
+            const containerDiv = document.getElementById(`${notificationId}`);
+            containerDiv.remove();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error:', textStatus);
+        }
+    });
+}

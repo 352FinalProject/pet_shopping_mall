@@ -198,9 +198,7 @@
                      <i class="bi bi-bell"></i>
                   </button>
                   <div id="notificationPopup" class="popup">
-                     <div class="popup-content">
-                        <div class="notification-container" id="notification${notification.id}"></div>
-                     </div>
+                     <div class="popup-content"></div>
                   </div>
                </div>
             </sec:authorize>

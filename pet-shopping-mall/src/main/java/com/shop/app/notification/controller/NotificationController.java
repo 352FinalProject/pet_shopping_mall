@@ -32,12 +32,8 @@ public class NotificationController {
 	public List<Notification> findAllNotification(@RequestParam String memberId) {
 	    List<Notification> notifications = notificationService.findAllNotification(memberId);
 	    System.out.println("매핑됨!!!");
-	    log.debug("notifications={}", notifications);
 	    return notifications;
 	}
-	
-	
-	
 	
 	@ResponseBody
 	@PostMapping("/deleteNotification.do")
@@ -45,7 +41,6 @@ public class NotificationController {
 		try {
 			notificationService.deleteNotification(id);
 			System.out.println("삭제완료!!!!");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

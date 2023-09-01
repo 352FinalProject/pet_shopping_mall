@@ -984,7 +984,7 @@ JOIN product p ON pd.product_id = p.product_id
 where member_id = 'king';
 
 select * from notification where member_id='king';
-DELETE FROM notification WHERE id BETWEEN 592 AND 666;
+DELETE FROM notification WHERE id BETWEEN 909 AND 933;
 
 select * from orderTbl;
 
