@@ -11,8 +11,13 @@
 		    p.product_name,
 		    p.product_price,
 		    p.product_name,
+		    ia.image_id,
+		    ia.image_type,
 		    ia.image_original_filename,
-		    ia.image_renamed_filename
+		    ia.image_renamed_filename,
+		    ia.image_file_size,
+		    ia.thumbnail,
+		    ia.image_created_at
 		from 
 		    product p
 		left join 
@@ -71,13 +76,14 @@
         <result property="viewCnt" column="view_cnt"/>
 
     <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
-    <collection property="attachments" ofType="imageAttachment">
+    <collection property="attachments" ofType="ImageAttachment">
         <result property="imageId" column="image_id"/>
         <result property="imageType" column="image_type"/>
         <result property="imageCategory" column="image_category"/>
         <result property="imageOriginalFilename" column="image_original_filename"/>
         <result property="imageRenamedFilename" column="image_renamed_filename"/>
         <result property="imageFileSize" column="image_file_size"/>
+        <result property="thumbnail" column="thumbnail"/>
         <result property="imageCreatedAt" column="image_created_at"/>
     </collection>
 </resultMap>

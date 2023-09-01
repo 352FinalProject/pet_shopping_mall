@@ -384,7 +384,6 @@ public class AdminController {
 					.product(product)
 					.productCategory(productCategory)
 					.attachments(productImages.getAttachments())
-					.attachmentMapping(productImages.getAttachmentMapping())
 					.productDetails(productDetails)
 					.build();
 			// 리스트에 추가
