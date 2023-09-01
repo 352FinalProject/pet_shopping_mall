@@ -137,6 +137,7 @@ public class PaymentController {
         MypageDto myPage = memberService.getMyPage(principal.getMemberId());
         int couponCount = myPage.getMemberCoupon();
         
+        model.addAttribute("myPage", myPage);
         model.addAttribute("couponCount", couponCount);
 		model.addAttribute("pointCurrent", point.getPointCurrent());
 	}
