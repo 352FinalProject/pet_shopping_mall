@@ -10,8 +10,7 @@
 		<div class="container-fluid px-4">
 			<h1 class="mt-4">회원 조회</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a
-					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item"></li>
 			</ol>
 			<div class="card mb-4">
 				<div class="card-body">
@@ -19,9 +18,10 @@
 						<form:form name="adminMemberSearchFrm"
 							action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
 							method="get">
-							<label for="searchKeyword">회원검색:</label>
-							<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
-							<input type="submit" value="검색">
+							<div class="input-group">
+								<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
+								<input type="submit" value="검색" class ="btn btn-secondary">
+							</div>
 						</form:form>
 					</div>
 				</div>

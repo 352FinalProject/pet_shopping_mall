@@ -9,8 +9,7 @@
 		<div class="container-md px-4">
 			<h1 class="mt-4">상품 등록</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a
-					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item"></li>
 			</ol>
 
 			<div class="card mb-4">
@@ -162,7 +161,6 @@
 					    </div><!-- container-fluid -->
 					  </div><!-- card-body -->
 				</div><!-- card -->
-			</div>
 			
 		</div>
 	</main>

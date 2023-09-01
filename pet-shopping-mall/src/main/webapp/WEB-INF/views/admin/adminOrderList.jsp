@@ -54,7 +54,7 @@
 				    <label for="refunded">구매확정</label>
 			        <br>
 			        
-			        <button type="submit">검색</button>
+			        <button type="submit" class="btn btn-secondary">검색</button>
 			    </form:form>
 			</div>
 				</div>
