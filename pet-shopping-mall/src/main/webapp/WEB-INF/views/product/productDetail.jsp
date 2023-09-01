@@ -29,35 +29,6 @@
         color: pink; /* 핑크색 하트 */
     }
 
-    .progress {
-        width: 300px;
-        background-color: #f0f0f0;
-        height: 10px;
-        margin-top: 5px;
-    }
-
-    .progress-bar {
-        height: 100%;
-        background-color: #58ACFA;
-        transition: width 0.5s;
-    }
-
-    .star-label {
-        display: inline-block;
-        width: 50px;
-        margin-right: 10px;
-    }
-    .star-label-and-progress {
-	    display: flex;
-	    align-items: center;
-	    margin-bottom: 44px;
-	    
-	}
-	.percentage {
-    margin-left: 10px;
-	}
-
-
 </style>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -186,7 +157,6 @@
         <li><a href="#">1:1문의</a></li>
       </ul>
     </div>
-
     <!-- 상세 페이지 -->
     <div class="common-container2">
       <div>
@@ -197,271 +167,6 @@
       </div>
     </div>
     </div>
-    <br>
-    <!-- 상품 후기 -->
-     <br><div class="util-div" id="product-review-box">
-      <ul class="product-utility" >
-        <li><a href="#">상품정보</a></li>
-        <li><a href="#">상품후기</a></li>
-        <li><a href="#">교환/반품/배송</a></li>
-        <li><a href="#">1:1문의</a></li>
-      </ul>
-    </div>
-    <div class="review-div" > 
-      <ul class="review-product-utility">
-        <c:if test="${empty reviews}"> 
-        	작성된 리뷰가 없습니다. 
-        </c:if>
-        <c:if test="${not empty reviews}">
-        <div class="review-avg-star">
-       	    <c:if test="${productReviewStarAvg.reviewStarRate == null}">
-				<div>0.0</div>
-				<div>☆☆☆☆☆</div> 
-		    </c:if>
-			<c:if test="${productReviewStarAvg.reviewStarRate != null}">
-			    <div>${productReviewStarAvg.reviewStarRate}</div>
-			    <div class="review-avg-star2">
-			        <c:choose>
-			            <c:when test="${productReviewStarAvg.reviewStarRate >= 4.5}">
-			                ★★★★★
-			            </c:when>
-			            <c:when test="${productReviewStarAvg.reviewStarRate >= 3.5}">
-			                ★★★★☆
-			            </c:when>
-			            <c:when test="${productReviewStarAvg.reviewStarRate >= 2.5}">
-			                ★★★☆☆
-			            </c:when>
-			            <c:when test="${productReviewStarAvg.reviewStarRate >= 1.5}">
-			                ★★☆☆☆
-			            </c:when>
-			            <c:otherwise>
-			                ☆☆☆☆☆
-			            </c:otherwise>
-			        </c:choose>
-			    </div>
-			</c:if>
-        </div>
-        <div class="review-percent" style="position: absolute; margin-top:333px; margin-left: 260px;">
-			<ul>
-			    <li>
- 					<div class="star-label-and-progress">
-                		<span class="star-label">1점</span>
-		                <div class="progress">
-							<div class="progress-bar" style="width: ${formattedPercentages[1]}%;"></div>
-		                </div>
-                        <span class="percentage">${formattedPercentages[1]}%</span>
-            		</div>
-			    </li>
-			    <li>
- 					<div class="star-label-and-progress">
-                		<span class="star-label">2점</span>
-		                <div class="progress">
-							<div class="progress-bar" style="width: ${formattedPercentages[2]}%;"></div>
-		                </div>
-                        <span class="percentage">${formattedPercentages[2]}%</span>
-            		</div>
-			    </li>
-			    <li>
- 					<div class="star-label-and-progress">
-                		<span class="star-label">3점</span>
-		                <div class="progress">
-		                    <div class="progress-bar" style="width: ${formattedPercentages[3]}%;"></div>
-		                </div>
-                        <span class="percentage">${formattedPercentages[3]}%</span>
-            		</div>
-			    </li>
-			    <li>
- 					<div class="star-label-and-progress">
-                		<span class="star-label">4점</span>
-		                <div class="progress">
-		                    <div class="progress-bar" style="width: ${formattedPercentages[4]}%;"></div>
-		                </div>
-                        <span class="percentage">${formattedPercentages[4]}%</span>
-            		</div>
-			    </li>
-			    <li>
- 					<div class="star-label-and-progress">
-                		<span class="star-label">5점</span>
-		                <div class="progress">
-		                    <div class="progress-bar" style="width: ${formattedPercentages[5]}%;"></div>
-		                </div>
-                        <span class="percentage">${formattedPercentages[5]}%</span>
-            		</div>
-			    </li>
-			</ul>
-		</div>
-		<div class="review-dividing-line"></div>
-          <c:forEach items="${reviews}" var="review" varStatus="vs">
-            <li>
-              <div class="review-box">
-                <div class="review-info-box">
-                  <em class="review-info-id">${review.reviewMemberId}&nbsp;</em> <!-- 리뷰 작성자 -->
-                  <em class="review-info-date"> <!-- 작성일 -->
-                    <fmt:parseDate
-                      value="${review.reviewCreatedAt}"
-                      pattern="yyyy-MM-dd'T'HH:mm"
-                      var="createdAt"
-                    />
-                    <fmt:formatDate value="${createdAt}" pattern="yyyy.MM.dd" />
-                  </em>
-			    <c:set var="ReviewOrders" value="${reviewProductMap[review.reviewId]}" />
-			    <c:forEach items="${ReviewOrders}" var="orders">
-			        ${orders.productName}
-			        <br>
-			        ${orders.optionName} : ${orders.optionValue}
-			    </c:forEach>
-                </div>
-                <!-- 리뷰 펫 -->
-                <c:set var="pets" value="${reviewPetsMap[review.reviewId]}" />
-                <c:if test="${not empty pets}">
-                  <div class="reivew-pet-box"> <!-- 펫정보 -->
-                    <c:forEach items="${pets}" var="pet">
-                      <em class="review-pet-name">${pet.petName} &nbsp;<em class="review-em">|</em></em>
-                      <em class="review-pet-gender">${pet.petGender} &nbsp;<em class="review-em">|</em></em>
-                      <em class="review-pet-age">${pet.petAge}살 &nbsp;<em class="review-em">|</em></em>
-                      <em class="review-pet-weight">${pet.petWeight}kg &nbsp;<em class="review-em">|</em></em>
-                      <em class="review-pet-breed">${pet.petBreed}</em>
-                    </c:forEach>
-                  </div>
-                </c:if>
-                <!-- 리뷰 별점 -->
-                <c:set var="myReviewId" value="${review.reviewId}" />
-                <div class="review-detail-box">
-                  <em class="review-info-title">${review.reviewTitle}</em> <!-- 리뷰제목 -->
-                  <div class="score_star"> <!-- 별점 -->
-                    <c:choose>
-                      <c:when test="${review.reviewStarRate == 1}">
-                        <span class="star-rating">★☆☆☆☆</span> (1.0)
-	<div class="common-container">
-		<div class="product-div">
-			<div class="product-img">
-				<img
-					src="${pageContext.request.contextPath}/resources/upload/product/${productImages.attachments[0].imageRenamedFilename}"
-					width="400px" />
-			</div>
-			<div class="product-info">
-				<div id="product-title">${product.productName}</div>
-				<div class="product-assist">
-					<div id="price-info">
-						<fmt:formatNumber value="${product.productPrice}" pattern="#,###" />
-						원
-					</div>
-					<div class="product-assist">
-						<img
-							src="${pageContext.request.contextPath}/resources/images/상품/star.png"
-							alt="별점" />
-						<c:if test="${productReviewStarAvg.reviewStarRate == null}">
-							<span>0.0</span>
-							<span>&nbsp;|&nbsp;</span>
-						</c:if>
-						<c:if test="${productReviewStarAvg.reviewStarRate != null}">
-							<span>${productReviewStarAvg.reviewStarRate}</span>
-							<span>&nbsp;|&nbsp;</span>
-						</c:if>
-						<span><a href="#product-review-box">후기
-								${reviewTotalCount}건</a></span>
-					</div>
-				</div>
-				<hr class="hr-line" />
-				<!-- 적립금 -->
-				<div class="won_img">
-					<img
-						src="${pageContext.request.contextPath}/resources/images/product/won.png"
-						width="30px" />
-					<div class="won_text">적립금</div>
-				</div>
-				<div class="won_desc">
-					구매 적립금 110원 <br /> 리뷰 적립금(텍스트) 500원 <br /> 리뷰 적립금(사진) 1,000원 <br />
-				</div>
-				<hr class="hr-line" />
-				<!-- 배송 -->
-				<div class="shipped_img">
-					<img
-						src="${pageContext.request.contextPath}/resources/images/product/shipped.png"
-						width="30px" />
-					<div class="shipped_text">배송</div>
-				</div>
-				<div class="shipped_desc">
-					배송비 3,000원(30,000원이상 구매시 무료배송) <br /> 오후 1시 이전 주문 시 오늘 출발 <br />
-				</div>
-				<hr class="hr-line" />
-				<c:if test="${fn:length(productDetails) eq 1}">
-					<div class="purchase-cnt">
-						<div class="quantity-container">
-							<spna>수량 </spna>
-							<button class="quantity-btn minus">-</button>
-							<input type="text" id="quantity" class="quantity-input" value="1">
-							<button class="quantity-btn plus">+</button>
-						</div>
-					</div>
-					<div class="additional-price-container"
-						id="additional-price-container" style="display: none;">
-						<div class="additional-price"
-							id="${productDetails[0].productDetailId}">${productDetails[0].additionalPrice}</div>
-					</div>
-				</c:if>
-				<c:if test="${fn:length(productDetails) gt 1}">
-					<div>
-						<select name="product-option">
-							<c:forEach items="${productDetails}" var="productDetail"
-								varStatus="vs">
-								<c:if test="${empty productDetail.optionName}">
-									<option class="options"
-										value="${productDetail.productDetailId}">[옵션 선택 안함]</option>
-								</c:if>
-								<c:if test="${not empty productDetail.optionName}">
-									<option class="options"
-										value="${productDetail.productDetailId}">[${productDetail.optionName}]
-										${productDetail.optionValue}</option>
-								</c:if>
-							</c:forEach>
-						</select>
-					</div>
-					<!-- 옵션추가금 -->
-					<div class="additional-price-container"
-						id="additional-price-container" style="display: none;">
-						<c:forEach items="${productDetails}" var="productDetail"
-							varStatus="vs">
-							<div class="additional-price"
-								id="${productDetail.productDetailId}">${productDetail.additionalPrice}</div>
-						</c:forEach>
-					</div>
-					<div class="purchase-cnt">
-						<div class="quantity-container">
-							<span>수량 </span>
-							<button class="quantity-btn minus">-</button>
-							<input type="text" id="quantity" class="quantity-input" value="1">
-							<button class="quantity-btn plus">+</button>
-						</div>
-					</div>
-				</c:if>
-
-				<div class="product-price">
-					<div class="product-price-desc">
-						총 상품 금액 <span class="totalPrice" id="totalPrice"></span>원
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 상품 정보 -->
-		<div class="util-div">
-			<ul class="product-utility">
-				<li><a href="#">상품정보</a></li>
-				<li><a href="#product-review-box">상품후기</a></li>
-				<li><a href="#product-notice-box">교환/반품/배송</a></li>
-				<li><a href="#">1:1문의</a></li>
-			</ul>
-		</div>
-		<!-- 상세 페이지 -->
-		<div class="common-container2">
-			<div>
-				<img
-					src="${pageContext.request.contextPath}/resources/images/1690801774638.jpg"
-					width="500px" />
-			</div>
-		</div>
-	</div>
-	<br>
 	<!-- 상품 후기 -->
 	<br>
 	<div class="util-div" id="product-review-box">
@@ -476,18 +181,90 @@
 		<ul class="review-product-utility">
 			<c:if test="${empty reviews}"> 
         	작성된 리뷰가 없습니다. 
-        </c:if>
+        	</c:if>
 			<c:if test="${not empty reviews}">
+			<div class="review-avg-star">
+				<c:if test="${productReviewStarAvg.reviewStarRate == null}">
+					<div>0.0</div>
+					<div>☆☆☆☆☆</div> 
+		    	</c:if>
+				<c:if test="${productReviewStarAvg.reviewStarRate != null}">
+				    <div>${productReviewStarAvg.reviewStarRate}</div>
+				    <div class="review-avg-star2">
+			        <c:choose>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 4.5}">★★★★★</c:when>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 3.5}">★★★★☆</c:when>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 2.5}">★★★☆☆</c:when>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 1.5}">★★☆☆☆</c:when>
+			            <c:when test="${productReviewStarAvg.reviewStarRate >= 0.1}">★☆☆☆☆</c:when>
+			            <c:otherwise>☆☆☆☆☆</c:otherwise>
+			        </c:choose>
+			    	</div>
+				</c:if>
+        	</div>
+        	<div class="review-percent" style="position: absolute; margin-top:333px; margin-left: 260px;">
+        	 	<ul>
+			    	<li>
+	 					<div class="star-label-and-progress">
+	                		<span class="star-label">1점</span>
+			                <div class="progress">
+			                    <div class="progress-bar" style="width: ${formattedPercentages[1]}%;"></div>
+			                </div>
+			                <span class="percentage">${formattedPercentages[1]}%</span>
+			                </div>
+				    </li>
+				    <li>
+	 					<div class="star-label-and-progress">
+	                		<span class="star-label">2점</span>
+			                <div class="progress">
+			                    <div class="progress-bar" style="width: ${formattedPercentages[2]}%;"></div>
+			                </div>
+			                <span class="percentage">${formattedPercentages[2]}%</span>
+			            </div>
+			    	</li>
+				    <li>
+	 					<div class="star-label-and-progress">
+	                		<span class="star-label">3점</span>
+			                <div class="progress">
+			                    <div class="progress-bar" style="width: ${formattedPercentages[3]}%;"></div>
+			                </div>
+			                <span class="percentage">${formattedPercentages[3]}%</span>
+	            		</div>
+				    </li>
+				    <li>
+	 					<div class="star-label-and-progress">
+	                		<span class="star-label">4점</span>
+			                <div class="progress">
+			                    <div class="progress-bar" style="width: ${formattedPercentages[4]}%;"></div>
+			                </div>
+			                <span class="percentage">${formattedPercentages[4]}%</span>
+	            		</div>
+				    </li>
+				    <li>
+	 					<div class="star-label-and-progress">
+	                		<span class="star-label">5점</span>
+			                <div class="progress">
+			                    <div class="progress-bar" style="width: ${formattedPercentages[5]}%;"></div>
+			                </div>
+			                <span class="percentage">${formattedPercentages[5]}%</span>
+	            		</div>
+				    </li>
+				</ul>
+			</div>				   	
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<div class="review-dividing-line"></div>                
 				<c:forEach items="${reviews}" var="review" varStatus="vs">
 					<li>
 						<div class="review-box">
 							<div class="review-info-box">
 								<em class="review-info-id">${review.reviewMemberId}&nbsp;</em>
 								<!-- 리뷰 작성자 -->
-								<em class="review-info-date"> <!-- 작성일 --> <fmt:parseDate
+								<em class="review-info-date"> <!-- 작성일 --> 
+								<fmt:parseDate
 										value="${review.reviewCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm"
 										var="createdAt" /> <fmt:formatDate
-										value="${createdAt}" pattern="yyyy.MM.dd" />
+										value="${createdAt}" pattern="yyyy.MM.dd" 
+								/>
 								</em>
 							</div>
 							<!-- 리뷰 펫 -->
@@ -518,72 +295,71 @@
 									<c:choose>
 										<c:when test="${review.reviewStarRate == 1}">
 											<span class="star-rating">★☆☆☆☆</span> (1.0)
-                      </c:when>
+                      					</c:when>
 										<c:when test="${review.reviewStarRate == 2}">
 											<span class="star-rating">★★☆☆☆</span> (2.0)
-                      </c:when>
+                      					</c:when>
 										<c:when test="${review.reviewStarRate == 3}">
 											<span class="star-rating">★★★☆☆</span> (3.0)
-                      </c:when>
+                      					</c:when>
 										<c:when test="${review.reviewStarRate == 4}">
 											<span class="star-rating">★★★★☆</span> (4.0)
-                      </c:when>
+                     					</c:when>
 										<c:when test="${review.reviewStarRate == 5}">
 											<span class="star-rating">★★★★★</span> (5.0)
-                      </c:when>
-<<<<<<< HEAD
-                    </c:choose>
-                  </div>
-                  <em class="review-info-content">${review.reviewContent}</em> <!-- 리뷰내용 -->
-                  <span class="product-review-small-space"></span>
-	              <!-- 리뷰 이미지 -->
-	    <div class="review-item">
-	        <div class="review-img">
-	            <div style="display: inline-block;"></div>
-	            <br>
-	            <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
-	            <c:if test="${not empty imageFilenames}">
-	                <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
-	                    <div class="carousel-inner">
-	                        <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
-	                            <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
-	                            <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-	                                <img class="review-img2" alt="Review Image" src="${imagePath}">
-	                            </div>
-	                        </c:forEach>
-	                    </div>
-	                    <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
-	                        <span class="carousel-control-prev-icon"></span>
-	                    </a>
-	                    <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
-	                        <span class="carousel-control-next-icon"></span>
-	                    </a>
-	                </div>
-	            </c:if>
-	        </div>
-	    </div>
-                </div>
-              </div>
-            </li>
-          </c:forEach>
-        </c:if>
-      </ul>
-    </div>
-	<!-- 페이징 바 -->
-<nav aria-label="..." class="product-review-paging">
-  <ul class="pagination pagination-sm">
-    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
-      <li class="page-item ${page == pageNumber ? 'active' : ''}">
-        <a
-          class="page-link"
-          href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
-        >
-          <span class="page-number">${pageNumber}</span>
-        </a>
-      </li>
-    </c:forEach>
-  </ul>
-</nav>
+                      					</c:when>
+                    				</c:choose>
+			                  </div>
+			                  <em class="review-info-content">${review.reviewContent}</em> <!-- 리뷰내용 -->
+			                  <span class="product-review-small-space"></span>
+			              	<!-- 리뷰 이미지 -->
+						    <div class="review-item">
+						        <div class="review-img">
+						            <div style="display: inline-block;"></div>
+						            <br>
+						            <c:set var="imageFilenames" value="${reviewImageMap[review.reviewId]}" />
+						            <c:if test="${not empty imageFilenames}">
+						                <div id="imageCarousel_${review.reviewId}" class="carousel slide" data-interval="false">
+						                    <div class="carousel-inner">
+						                        <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
+						                            <c:set var="imagePath" value="${pageContext.request.contextPath}/resources/upload/review/${filename}" />
+						                            <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+						                                <img class="review-img2" alt="Review Image" src="${imagePath}">
+						                            </div>
+						                        </c:forEach>
+						                    </div>
+						                    <a class="carousel-control-prev" href="#imageCarousel_${review.reviewId}" data-slide="prev">
+						                        <span class="carousel-control-prev-icon"></span>
+						                    </a>
+						                    <a class="carousel-control-next" href="#imageCarousel_${review.reviewId}" data-slide="next">
+						                        <span class="carousel-control-next-icon"></span>
+						                    </a>
+						                </div>
+						            </c:if>
+						        </div>
+						    </div>
+			                </div>
+			              </div>
+			            </li>
+			          </c:forEach>
+			        </c:if>
+			      </ul>
+			    </div>
+			<!-- 페이징 바 -->
+		<nav aria-label="..." class="product-review-paging">
+		  <ul class="pagination pagination-sm">
+		    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+		      <li class="page-item ${page == pageNumber ? 'active' : ''}">
+		        <a
+		          class="page-link"
+		          href="${pageContext.request.contextPath}/product/productDetail.do?page=${pageNumber}"
+		        >
+		          <span class="page-number">${pageNumber}</span>
+		        </a>
+		      </li>
+		    </c:forEach>
+		  </ul>
+		</nav>
 	<!-- 교환/반품/배송 -->
 	<div class="util-div" id="product-notice-box">
 		<ul class="product-utility">
