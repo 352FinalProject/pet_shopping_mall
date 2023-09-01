@@ -362,7 +362,7 @@ const addOption = () => {
 	        <div class="row mb-4">
 	        	<!-- 1열 -->
 	        	<div class="col-md-3">
-		        	<input type="text" name="optionName" id="optionName" class="form-control">
+		        	<input type="text" name="optionName" id="optionName" class="form-control" required>
 	        	</div>
 	        	<div class="col-md-3">
 		        	<input type="text" name="optionValue" id="optionValue" class="form-control">
