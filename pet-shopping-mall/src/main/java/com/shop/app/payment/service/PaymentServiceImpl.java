@@ -49,7 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
 			result = paymentRepository.insertPayment(payment);
 			
 		}
-		result = orderRepository.updateOrderStatus(orderNo, 1);
+		result = orderRepository.updateOrderStatus(orderNo, 0);
 		
 		result =  paymentRepository.updatePayStatus(orderNo);
 		// 장바구니 비우기

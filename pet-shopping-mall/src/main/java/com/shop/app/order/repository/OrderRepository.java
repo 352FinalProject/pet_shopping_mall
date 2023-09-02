@@ -55,8 +55,8 @@ public interface OrderRepository {
 	
 	
 	
-	@Insert("insert into cancel_order (cancel_id, request_date, receipt_date, cancel_status, order_id) values (seq_cancel_id.nextVal, default, null, default, #{orderId})")
-	int insertCancelOrder(CancelOrder cancel);
+	@Insert("insert into cancel_order (cancel_id, request_date, receipt_date, cancel_status, order_id) values (seq_cancel_id.nextVal, default, null, #{i}, #{orderId})")
+	int insertCancelOrder(CancelOrder cancel, int i);
 	
 	
 	@Select("select * from orderTbl where order_no = #{orderNo}")
