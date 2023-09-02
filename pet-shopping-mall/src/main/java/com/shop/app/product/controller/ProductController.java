@@ -78,7 +78,8 @@ public class ProductController {
    @Autowired
    private PetService petService;
 
-   @GetMapping("/productDetail.do")
+
+@GetMapping("/productDetail.do")
    public void productDetail(@RequestParam int productId,
                              @RequestParam(defaultValue = "1") int page,
                              @AuthenticationPrincipal MemberDetails member,
