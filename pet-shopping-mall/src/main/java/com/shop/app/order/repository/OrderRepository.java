@@ -103,12 +103,10 @@ public interface OrderRepository {
 	int findOrderCntByProductId(int productDetailId);
 
 
-	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status= 5")
+	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day // and order_status= 5") // and order_status= 5
 	List<Order> findOrdersWithExpiredStatus();
 
-	
 	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
-
 
 	// 상품 상세 - 리뷰 - 상품
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
