@@ -127,9 +127,9 @@ span duplicate {
 								<input type="text" class="form-control" placeholder="아이디"
 									name="memberId" id="memberId" value=""
 									pattern='[A-Za-z0-9_]{4,}'
-									title="알파벳 대소문자, 숫자, - 를 사용하여 4자 이상 입력하세요." required> <input
-									type="hidden" id="idValid" value="0" /> <span
-									class="guide error">이 아이디는 이미 사용중입니다.</span>
+									title="알파벳 대소문자, 숫자, - 를 사용하여 4자 이상 입력하세요." required><input
+									type="hidden" id="idValid" value="0" />
+									<div style="margin-left:25px"><span class="guide error">이 아이디는 이미 사용중입니다.</span></div>
 							</div>
 						</td>
 					</tr>
@@ -140,8 +140,7 @@ span duplicate {
 							<div class="memberName-container">
 								<input type="text" name="name" id="name" value=""
 									placeholder="이름" pattern="^[가-힣a-zA-Z\s]+$"
-									title="한글 또는 영어 대소문자 두 글자 이상의 길이를 가져야 합니다. " required>
-								<br>
+									title="한글 또는 영어 대소문자 두 글자 이상의 길이를 가져야 합니다." required>
 							</div>
 						</td>
 					</tr>

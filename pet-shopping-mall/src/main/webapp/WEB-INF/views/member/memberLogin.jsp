@@ -287,7 +287,6 @@ background-color: #ccc;
 </style>
 <section class="common-section" id="#">
    <div class="common-container">
-			<div class="common-container">
 		<form:form
 			action="${pageContext.request.contextPath}/member/memberLogin.do"
 			method="post">
@@ -512,7 +511,7 @@ $(".idFinderForm-findId").click(function() {
             if (result === "not_found") {
                 alert('해당 이메일로 등록된 회원이 없습니다');
             } else {
-                alert('해당 이메일로 등록된 id는 : ' + result + '입니다.'); // css 먹여놓은걸로 바꾸기
+                alert('해당 이메일로 등록된 id는 : ' + result + '입니다.');
             }
         },
         error: function() {
@@ -520,9 +519,6 @@ $(".idFinderForm-findId").click(function() {
         }
     });
 });
-
-
-
 
 </script>
 
