@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class PetcareDto {
+public class petcareDto {
 	
 //	private int communityId;
 //	

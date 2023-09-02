@@ -38,8 +38,8 @@
     <div class="place-details">
     	<ul id="placesResultList"></ul>
         <form action="${pageContext.request.contextPath}/petcare/reservation.do" method="GET">
-<button class="reservation-btn" type="submit">예약하기</button>
-</form>
+		<button class="reservation-btn" type="submit">예약하기</button>
+		</form>
     </div>
 </div>  
 </div>
@@ -161,24 +161,28 @@ function displayPlacesResult(data) {
         
         var Rbutton = document.createElement('button'); 
         Rbutton.className = 'reservation-btn'; 
-        Rbutton.type = 'submit'; 
+        Rbutton.type = 'button'; 
         Rbutton.textContent = '예약하기'; 
         
-     // form 엘리먼트 생성
         var form = document.createElement('form');
-        form.action = '${pageContext.request.contextPath}/petcare/reservation.do'; // 이동할 URL 설정
-        form.method = 'GET'; // GET 요청 설정
+        form.action = '${pageContext.request.contextPath}/petcare/reservation.do'; // 이동할 URL
+        form.method = 'GET'; 
         form.appendChild(Rbutton);
+        
+        Rbutton.onclick = function () {
+        	form.submit();
+        };
         
         listItem.appendChild(placeLink);
         listItem.appendChild(placeAddress);
         listItem.appendChild(placePhone);
         listItem.appendChild(Rbutton);
         
+        listItem.appendChild(form);
+
+        
         placesResultList.appendChild(listItem);
         
-        /* 
-        placesResultList.appendChild(Rbutton); */
     }
 }
 
