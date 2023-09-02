@@ -187,7 +187,16 @@
             <sec:authorize access="isAuthenticated()">
                <div class="notification-container">
                   <button id="openPopupBtn" onclick="loadNotifications(memberId)">
-                     <i class="bi bi-bell"></i>
+                    
+	                     <img
+	                     src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png"
+	                     class="notiBellx" alt="알림" />
+                     
+                     <c:if test="${not empty notifications}">
+	                     <img
+	                     src="${pageContext.request.contextPath}/resources/images/home/notiBello.png"
+	                     class="notiBello" alt="알림" />
+                     </c:if>
                   </button>
                   <div id="notificationPopup" class="popup">
                      <div class="popup-content"></div>

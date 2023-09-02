@@ -51,6 +51,11 @@ const emptyNotification = () => {
     $notificationPopup.addClass("active");
 };
 
+// 알림 아이콘 바꾸는 메서드
+
+
+
+
 
 // 알림 초기화 메서드
 function clearNotifications() {
@@ -82,6 +87,7 @@ function loadNotifications(memberId) {
                 if (notifications && notifications.length > 0) {
                     notifications.forEach(notification => {
                         renderNotification(notification);
+                        createImgTagUnderButton()
                     });
                 } else {
                     emptyNotification();

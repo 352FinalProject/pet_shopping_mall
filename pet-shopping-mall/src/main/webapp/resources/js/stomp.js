@@ -9,6 +9,7 @@ stompClient.connect({}, (frame) => {
     stompClient.subscribe(`/pet/notice/${memberId}`, (message) => {
         console.log(`/pet/notice/${memberId} : `, message.body);
         renderMessage(message.body);
+        createImgTagUnderButton()
     });
 });
 

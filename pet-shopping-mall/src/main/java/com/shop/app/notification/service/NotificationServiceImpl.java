@@ -41,7 +41,7 @@ public class NotificationServiceImpl implements NotificationService {
 			// 주문상태를 주문확정으로 바꾸고
 			String to = order.getMemberId();
 	        Notification insertNotification = Notification.builder()
-	            .notiCategory(3)
+	            .notiCategory(1)
 	            .notiContent(order.getOrderNo() + "번 주문이 구매확정되었습니다.")
 	            .notiCreatedAt(formatTimestampNow())
 	            .memberId(to) 
