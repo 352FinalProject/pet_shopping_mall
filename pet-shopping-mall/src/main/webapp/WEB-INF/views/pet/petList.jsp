@@ -11,7 +11,7 @@
 .form-inline {
     display: flex;
     justify-content: center; /* 가운데 정렬 */
-    margin-top: 20px; /* 위쪽 여백 조정 */
+    margin-top: 45px; /* 위쪽 여백 조정 */
 }
 
 .btn-add {
