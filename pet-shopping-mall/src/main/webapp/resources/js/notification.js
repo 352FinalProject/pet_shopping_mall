@@ -18,7 +18,7 @@ const renderNotification = (notification) => {
     deleteButton.innerHTML = `X`;
     deleteButton.className = "notification-delete-button";
     deleteButton.id = id;
-	deleteButton.onclick = function() {
+   deleteButton.onclick = function() {
         notificationDelete(id); 
     };
 
