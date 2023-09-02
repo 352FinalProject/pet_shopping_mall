@@ -36,7 +36,7 @@ public class CouponServiceImpl implements CouponService {
 		return couponRepository.insertDeliveryCoupon(memberCoupon);
 	}
 	
-	@Scheduled(cron = "0 18 23 * * ?")  // 매월 1일 자정에 실행
+	@Scheduled(cron = "0 05 16 * * ?")  // 매월 1일 자정에 실행
 	public void issueBirthdayCoupons() {
 	    
 	    // 오늘 날짜 (매월 1일)
