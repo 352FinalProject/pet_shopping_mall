@@ -1,10 +1,13 @@
 package com.shop.app.coupon.service;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ import com.shop.app.coupon.entity.MemberCoupon;
 import com.shop.app.coupon.repository.CouponRepository;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.repository.MemberRepository;
+import com.shop.app.notification.entity.Notification;
+import com.shop.app.notification.repository.NotificationRepository;
 
 @Service
 public class CouponServiceImpl implements CouponService {
@@ -23,6 +28,12 @@ public class CouponServiceImpl implements CouponService {
 	
 	@Autowired
 	private MemberRepository memberRepository;
+	
+	@Autowired
+	NotificationRepository notificationRepository;
+	
+	@Autowired
+	SimpMessagingTemplate simpMessagingTemplate;
 
 	// 배송비 무료 쿠폰 회원한테 넣어주기 위해서 쿠폰 db 조회 (예라)
 	@Override
@@ -36,7 +47,7 @@ public class CouponServiceImpl implements CouponService {
 		return couponRepository.insertDeliveryCoupon(memberCoupon);
 	}
 	
-	@Scheduled(cron = "0 18 23 * * ?")  // 매월 1일 자정에 실행
+	@Scheduled(cron = "0 03 16 * * ?")  // 매월 1일 자정에 실행
 	public void issueBirthdayCoupons() {
 	    
 	    // 오늘 날짜 (매월 1일)
@@ -59,6 +70,23 @@ public class CouponServiceImpl implements CouponService {
 	        memberCoupon.setUseStatus(0);  // 사용 안함
 	        
 	        int result = couponRepository.insertDeliveryCoupon(memberCoupon);
+	        
+	        // 생일자 알림을 보낸다
+ 			String to = memberCoupon.getMemberId();
+ 			Notification insertNotification = Notification.builder()
+ 					.notiCategory(3)
+ 					.notiContent(memberCoupon.getMemberId() + "님의 생일자 할인쿠폰(10%)이 발급됬습니다.")
+ 					.notiCreatedAt(formatTimestampNow())
+ 					.memberId(to) 
+ 					.build();
+ 			
+ 			// db에 알림저장
+ 			notificationRepository.insertNotification(insertNotification);
+ 			// db에서 가장 최신 알림 꺼내서
+ 			Notification notification = notificationRepository.latestNotification();
+ 			// 메세지 보냄
+ 			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
+	        
 	    }
 	}
 
@@ -107,6 +135,15 @@ public class CouponServiceImpl implements CouponService {
 	public List<MemberCouponDto> findCouponAll(String memberId) {
 		return couponRepository.findCouponAll(memberId);
 	}
-
+	
+	// 알림 날짜변환메소드 (대원)
+	private String formatTimestamp(Timestamp timestamp) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        return dateFormat.format(timestamp);
+    }
+	// 알림 날짜변환메소드 (대원)
+    private String formatTimestampNow() {
+        return formatTimestamp(new Timestamp(System.currentTimeMillis()));
+    }
 
 }

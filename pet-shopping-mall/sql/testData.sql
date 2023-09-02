@@ -1029,7 +1029,6 @@ select * from product;
 select * from product where category_id = 1 order By product_price desc; --  가격 높은순
 select * from product where category_id = 1 order By product_price asc; -- 가격 낮은순
 
-
 select * from product where category_id = 1 order By create_date desc; --  최근 등록순
 
 -- 별점순
@@ -1132,4 +1131,6 @@ desc;
             
             
             select * from product;
-            
+UPDATE member
+SET birthday = '2003-09-03'
+WHERE member_id = 'king';
