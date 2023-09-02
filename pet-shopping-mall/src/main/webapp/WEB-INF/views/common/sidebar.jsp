@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR&family=Noto+Serif+KR:wght@200&display=swap');
 </style>
@@ -11,10 +12,11 @@
 </label>
 <div class="sidebar">
 	<ul class="sidebar-text">
-		<c:if test="${empty loginMember}">
-		<span>MY</span><input type="button" class="sidebar-loginbutton" value="로그인" onclick="location.href='${pageContext.request.contextPath}/member/memberLogin.do'">
+		<span>MY</span>
+		<sec:authorize access="isAnonymous()">
+		<input type="button" class="sidebar-loginbutton" value="로그인" onclick="location.href='${pageContext.request.contextPath}/member/memberLogin.do'">
 		<hr>
-		</c:if>
+		</sec:authorize>
 		<li class="sidebar-title">카테고리</li>
 		<li><a href="${pageContext.request.contextPath}/product/productList.do?id=1">사료</a></li>
 		<li><a href="${pageContext.request.contextPath}/product/productList.do?id=2">간식</a></li>
