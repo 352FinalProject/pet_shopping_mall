@@ -62,50 +62,50 @@ SELECT *  FROM all_tables;
 --drop table product_category;
 
 ---- 외래키 붙어있는 테이블삭제
-drop table member cascade constraints;
-drop table review cascade constraints;
-drop table product cascade constraints;
-drop table product_detail cascade constraints;
-drop table pet cascade constraints;
-drop table breed cascade constraints;
-drop table order_detail cascade constraints;
-drop table notification cascade constraints;
-
-
-drop sequence seq_question_id;
-drop sequence seq_answer_id;
-drop sequence seq_image_attachment_id;
-drop sequence seq_image_attachment_mapping_id;
-drop sequence seq_point_id;
-drop sequence seq_product_category_id;
-drop sequence seq_product_id;
-drop sequence seq_product_detail_id;
-drop sequence seq_cart_id;
-drop sequence seq_payment_id;
-drop sequence seq_cartitem_id;
-drop sequence seq_ordertbl_id;
-drop sequence seq_refund_id;
-drop sequence seq_cancel_order_id;
-drop sequence seq_authority_id;
-drop sequence seq_community_id;
-drop sequence seq_wishlist_id;
-drop sequence seq_pet_id;
-drop sequence seq_persistent_logins_id;
-drop sequence seq_member_id;
-drop sequence seq_review_id;
-drop sequence seq_chat_id;
-drop sequence seq_chat_room_id;
-drop sequence seq_cancel_id;
-drop sequence seq_history_id;
-drop sequence seq_terms_id;
-drop sequence seq_product_option_id;
-drop sequence seq_member_coupon_id;
-drop sequence seq_coupon_id;
-drop sequence seq_category_id;
-drop sequence seq_terms_history_id;
-drop sequence seq_notification_id;
-drop sequence seq_sub_payment_id;
-drop sequence seq_sub_subscribe_id;
+--drop table member cascade constraints;
+--drop table review cascade constraints;
+--drop table product cascade constraints;
+--drop table product_detail cascade constraints;
+--drop table pet cascade constraints;
+--drop table breed cascade constraints;
+--drop table order_detail cascade constraints;
+--drop table notification cascade constraints;
+--
+--
+--drop sequence seq_question_id;
+--drop sequence seq_answer_id;
+--drop sequence seq_image_attachment_id;
+--drop sequence seq_image_attachment_mapping_id;
+--drop sequence seq_point_id;
+--drop sequence seq_product_category_id;
+--drop sequence seq_product_id;
+--drop sequence seq_product_detail_id;
+--drop sequence seq_cart_id;
+--drop sequence seq_payment_id;
+--drop sequence seq_cartitem_id;
+--drop sequence seq_ordertbl_id;
+--drop sequence seq_refund_id;
+--drop sequence seq_cancel_order_id;
+--drop sequence seq_authority_id;
+--drop sequence seq_community_id;
+--drop sequence seq_wishlist_id;
+--drop sequence seq_pet_id;
+--drop sequence seq_persistent_logins_id;
+--drop sequence seq_member_id;
+--drop sequence seq_review_id;
+--drop sequence seq_chat_id;
+--drop sequence seq_chat_room_id;
+--drop sequence seq_cancel_id;
+--drop sequence seq_history_id;
+--drop sequence seq_terms_id;
+--drop sequence seq_product_option_id;
+--drop sequence seq_member_coupon_id;
+--drop sequence seq_coupon_id;
+--drop sequence seq_category_id;
+--drop sequence seq_terms_history_id;
+--drop sequence seq_notification_id;
+--drop sequence seq_sub_payment_id;
+--drop sequence seq_sub_subscribe_id;
 
 --==============================
 -- 테이블 생성

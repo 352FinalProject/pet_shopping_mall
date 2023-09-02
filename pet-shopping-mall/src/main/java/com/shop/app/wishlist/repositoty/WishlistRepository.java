@@ -37,8 +37,9 @@ public interface WishlistRepository {
 			+ "         LEFT OUTER JOIN ("
 			+ "              SELECT iam.ref_id, ia.image_renamed_filename"
 			+ "                FROM image_attachment_mapping iam"
-			+ "                LEFT OUTER JOIN image_attachment ia"
-			+ "                  ON iam.image_id = ia.image_id) imgTbl"
+			+ "               INNER JOIN image_attachment ia"
+			+ "                  ON iam.image_id = ia.image_id"
+			+ "	 			    AND ia.thumbnail = 'Y') imgTbl"
 			+ "           ON pd.product_id = imgTbl.ref_id) pdInfo"
 			+ "    on wl.wishlist_product_id = pdInfo.product_id"
 			+ " WHERE wl.wishlist_member_id = #{memberId}")

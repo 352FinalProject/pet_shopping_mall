@@ -101,20 +101,13 @@
 			<div>
 				<br>
 				<div class="" style="display: flex; align-items: center;">
-					<a href="${pageContext.request.contextPath}/pet/petProfile.do"></a>
-					<a href="${pageContext.request.contextPath}/pet/petProfile.do"
-						style="color: #5886d3; font-size: 20px; ">펫 등록하러 가기</a>
+					<p>로그인 후 이용해주세요.</p>
+					<p>우동친의 다양한 혜택이 준비되어 있습니다.</p>
 				</div>
 				<div class="pet-create">
 					<div>
-						<a href="${pageContext.request.contextPath}/pet/petProfile.do">
-							<img
+						<img
 							src="${pageContext.request.contextPath}/resources/images/chat/chat.png" />
-						</a>
-						<div>
-							<a href="${pageContext.request.contextPath}/member/petList.do"
-								style="color: #5886d3;">펫 등록</a>
-						</div>
 					</div>
 				</div>
 			</div>
