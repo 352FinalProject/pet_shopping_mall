@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-
 <sec:authorize access="isAuthenticated()">
 	<script>
 	const memberId = '<sec:authentication property="principal.username"/>';
@@ -22,7 +21,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 <c:if test="${not empty msg}">
@@ -160,10 +158,10 @@
       <div class="header">
          <span id="notification"></span>
          <ul class="utility">
-         <sec:authorize access="isAuthenticated()">
-            권한 : <sec:authentication property="authorities"/>
-            아이디 : <sec:authentication property="principal.username"/>
-         </sec:authorize>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+			    권한 : <sec:authentication property="authorities"/>
+			    아이디 : <sec:authentication property="principal.username"/>
+			</sec:authorize>
             <sec:authorize access="isAnonymous()">
                <li class="login_li"><a
                   href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a>
@@ -179,7 +177,7 @@
 	            <li class="admin_li"><a
 	               href="${pageContext.request.contextPath}/admin/admin.do">관리자페이지</a>
 	            </li>
-	        </sec:authorize>
+			</sec:authorize>
             <sec:authorize access="isAuthenticated()">
                <li><a class="" type="button" href="#"
                   onclick="document.memberLogoutFrm.submit(); return false;">로그아웃</a>
