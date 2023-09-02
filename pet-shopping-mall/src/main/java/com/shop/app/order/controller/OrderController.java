@@ -89,7 +89,6 @@ public class OrderController {
 	@PostMapping("/cancelOrder.do")
 	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo, @RequestParam String isRefund) {
 		int result = orderService.insertCancelOrder(orderNo, isRefund);
-		
 		return "redirect:/order/orderList.do";
 	}
 	
@@ -176,6 +175,7 @@ public class OrderController {
 	                reviewWriteMap.put(key, reviewWrite);
 	            }
 	        }
+	        log.debug("reviewWriteMap = {}", reviewWriteMap);
 	        model.addAttribute("reviewWrite", reviewWriteMap);
 	    }
 	    

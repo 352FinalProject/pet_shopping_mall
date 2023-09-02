@@ -213,13 +213,10 @@ public class MemberSecurityController {
 
       return new ResponseEntity<>(HttpStatus.OK);
    }
-   
-   
-
+      
    @GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
    public void memberLogin() {}
-
-   
+     
    @GetMapping("/updateMember.do")
    public void memberDetail(Authentication authentication, 
          @AuthenticationPrincipal MemberDetails _member, 
@@ -247,8 +244,6 @@ public class MemberSecurityController {
       model.addAttribute("couponCount", couponCount);
    }
 
-   
-   
    @PostMapping("/updateMember.do")
    public String memberUpdate(@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
          @Valid MemberUpdateDto _member, HttpSession session, BindingResult bindingResult,
@@ -343,8 +338,6 @@ public class MemberSecurityController {
 	private String formatTimestampNow() {
 	    return formatTimestamp(new Timestamp(System.currentTimeMillis()));
 	}
-   
-   
    
    /**
     * 멤버 구독자 업데이트 메소드
