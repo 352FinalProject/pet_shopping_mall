@@ -278,7 +278,6 @@ const updateProductOption = (productDetailId) => {
         optionName: optionName,
         optionValue: optionValue,
         additionalPrice: additionalPrice,
-        saleState: 1
     };
 	console.log(requestData);
     
@@ -341,7 +340,6 @@ const addOption = () => {
 		<!-- 추가옵션 -->
     	<div class="productDetail-container-${productDetail.productDetailId}">
     		<input type="text" name="productId" id="productId" class="form-control" value="${product.productId}" style="display : none;">
-    		<input type="number" name="saleState" id="saleState" class="form-control" value="1" style="display : none;">
     		<!-- 1행 -->
 	        <div class="row mb-1">
 	        	<!-- 1열 -->
@@ -395,7 +393,6 @@ $(document).on('submit', function(e) {
 		    optionName: $('#optionName').val(),
 		    optionValue: $('#optionValue').val(),
 		    additionalPrice: $('#additionalPrice').val(),
-		    saleState: $('#saleState').val()
 		  };
 		
 		  $.ajax({

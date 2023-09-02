@@ -116,21 +116,6 @@
 	        xhr.setRequestHeader(header, token);
 	    });
 	});
-	
-	const selectAllStatus = () => {
-		const checkAll = document.getElementById('saleStatusAll');
-        const productStatusCheckboxes = document.getElementsByName('saleState');
-		console.log(checkAll);
-		if(checkAll.checked == true){
-	        productStatusCheckboxes.forEach((checkbox) => {
-	        	checkbox.checked = true;
-	        });			
-		} else {
-	        productStatusCheckboxes.forEach((checkbox) => {
-	        	checkbox.checked = false;
-	        });						
-		}
-    };
     
 	document.querySelector("#btn-add").onclick = () => {
 		location.href = '${pageContext.request.contextPath}/admin/adminProductCreate.do';

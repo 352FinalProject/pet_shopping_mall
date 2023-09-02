@@ -131,19 +131,6 @@
 							              <input type="number" name="productDetail[0].additionalPrice" id="additionalPrice" class="form-control" value="0">
 							            </div>
 							          </div>
-								    <div class="row mb-3">
-								          <div class="col-md-3">
-								            <label for="saleState" class="form-label">판매상태</label>
-								          </div>
-								          <div class="col-md-3">
-								            <select name="productDetail[0].saleState" id="saleState" class="form-select">
-								              <option value="0">판매대기</option>
-								              <option value="1" selected>판매중</option>
-								              <option value="2">품절</option>
-								              <option value="3">기타</option>
-								            </select>
-								          </div>
-							        </div>
 						        </div>
 					        </div>
 						        
@@ -225,10 +212,6 @@
 				<div class="col-md-3 d-flex justify-content-end" id="option-btn-container">
 	        		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
 				</div>
-			      <!-- 기본으로 판매중 -->
-				  <div style="display : none;">
-				  	<input type="number" name="productDetail[\${optionCnt}].saleState" id="saleState" value="1">
-				  </div>
 		    </div>
 		</div>
     	`;

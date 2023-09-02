@@ -30,8 +30,6 @@ public class Product {
 	private int productPrice;
 	private int imageId;
 	private Timestamp createDate;
-	private Timestamp expireDate; // default: null
 	private int likeCnt;
-	private int viewCnt;
 
 }
