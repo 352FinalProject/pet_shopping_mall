@@ -29,7 +29,7 @@ function emailCheck() {
         }
     };
 
-    xhr.open('POST', `/email/send`, true);
+    xhr.open('POST', `/pet/email/send`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader("X-CSRF-TOKEN", token);
     xhr.send(JSON.stringify({ email: email }));
