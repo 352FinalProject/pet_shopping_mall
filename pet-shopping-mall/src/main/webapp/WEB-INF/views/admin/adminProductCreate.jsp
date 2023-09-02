@@ -7,7 +7,7 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-md px-4">
-			<h1 class="mt-4">상품 등록</h1>
+			<h2 class="mt-3">상품 등록</h2>
 			<ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item"></li>
 			</ol>

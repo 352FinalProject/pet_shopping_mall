@@ -51,6 +51,16 @@ const emptyNotification = () => {
     $notificationPopup.addClass("active");
 };
 
+// 알림 아이콘 바꾸는 메서드
+function createImgTagUnderButton() {
+    let img = document.createElement("img");
+    img.src = `/resources/images/home/notiBello.png`;
+    img.alt = "알림";
+    img.className = "notiBello";
+    let button = document.getElementById("openPopupBtn");
+    button.appendChild(img);
+}
+
 
 // 알림 초기화 메서드
 function clearNotifications() {
@@ -82,6 +92,7 @@ function loadNotifications(memberId) {
                 if (notifications && notifications.length > 0) {
                     notifications.forEach(notification => {
                         renderNotification(notification);
+                        createImgTagUnderButton()
                     });
                 } else {
                     emptyNotification();

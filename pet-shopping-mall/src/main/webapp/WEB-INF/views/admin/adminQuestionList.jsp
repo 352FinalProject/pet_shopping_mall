@@ -7,7 +7,7 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
-			<h1 class="mt-4">1:1 문의 내역 (관리자)</h1>
+			<h2 class="mt-3">1:1 문의 내역 (관리자)</h2>
 			<ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item"><a
 					href="${pageContext.request.contextPath}/admin/adminQuestionSearch.do"></a></li>

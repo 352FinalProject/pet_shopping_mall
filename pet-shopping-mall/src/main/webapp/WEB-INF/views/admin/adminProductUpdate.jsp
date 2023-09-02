@@ -7,7 +7,7 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
-			<h1 class="mt-4">상품 수정</h1>
+			<h2 class="mt-3">상품 수정</h2>
 			<ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item"><a
 					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
