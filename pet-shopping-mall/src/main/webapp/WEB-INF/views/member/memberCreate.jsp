@@ -240,17 +240,22 @@ function emailCheck() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                const data = JSON.parse(xhr.responseText);
-                if (data.success) {
-                    alert('인증 메일이 발송되었습니다. 이메일을 확인해주세요.');
-                } else {
-                    alert('인증 메일이 발송되었습니다. 이메일을 확인해주세요.');
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    if (data.success) {
+                        alert('인증 메일이 발송되었습니다. 이메일을 확인해주세요.');
+                    } else {
+                        alert('인증 메일 발송에 실패했습니다.');
+                    }
+                } catch (error) {
+                    alert('서버 응답 처리 중 오류가 발생했습니다.');
                 }
             } else {
-                alert('인증 메일이 발송되었습니다. 이메일을 확인해주세요.');
+                alert('서버 응답이 올바르지 않습니다.');
             }
         }
     };
+
 
     xhr.open('POST', `${pageContext.request.contextPath}/email/send`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -348,7 +353,7 @@ window.onload = function() {
         if (password === confirmPassword) {
             // 비밀번호 일치 시 스타일 변경
             passwordInput.style.border = "1px solid #5886d3";
-            confirmPasswordInput.style.border = "1px solid #58586d3";
+            confirmPasswordInput.style.border = "1px solid #5886d3";
         } else {
             // 비밀번호 불일치 시 스타일 변경
             passwordInput.style.border = "1px solid red";
