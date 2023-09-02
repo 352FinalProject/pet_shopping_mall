@@ -169,7 +169,7 @@ function validateEmail() {
         emailValidationMessage.style.display = "none";
         emailInput.style.border = "1px solid #58586d3"; // 이메일 형식이 유효할 때 기본 색상으로 변경
     }
-    emailInput.addEventListener("input", validateEmail);
+    emailInput.addEventListener("input", vaslidateEmail);
 };
 
 function sample4_execDaumPostcode() {
