@@ -84,28 +84,24 @@
 									<td><span id="total-price"><fmt:formatNumber
 												value="${entry.key.amount}" groupingUsed="true" />원</span></td>
 									<td>
-									<c:out value="${compositeKey}" />
-									<c:out value="${reviewWrite[compositeKey]}" />
-										<c:if test="${status[index] == '배송완료'}">
-										    <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
-										        <input type="hidden" name="productDetailId" value="${entry.key.productDetailId}">
-										        <input type="hidden" name="productId" value="${entry.key.productId}">
-										        <input type="hidden" name="orderId" value="${entry.key.orderId}">
-										        <c:set var="compositeKey" value="${entry.key.orderId}-${entry.key.productDetailId}-${entry.key.productId}" />
-										  	<c:if test="${reviewWrite[compositeKey] == false}">
-												<p>${status[index]}</p>
-											</c:if>
-										        <c:if test="${reviewWrite[compositeKey] == false}">
+										<c:set var="compositeKey" value="${entry.key.orderId}-${entry.key.productDetailId}-${entry.key.productId}" />
+										<c:choose>
+										    <c:when test="${(status[index] == '배송완료' || status[index] == '구매확정') && reviewWrite[compositeKey] == false}">
+										        <p>${status[index]}</p>
+										        <form action="${pageContext.request.contextPath}/review/reviewCreate.do" method="GET">
+										            <input type="hidden" name="productDetailId" value="${entry.key.productDetailId}">
+										            <input type="hidden" name="productId" value="${entry.key.productId}">
+										            <input type="hidden" name="orderId" value="${entry.key.orderId}">
 										            <button class="review-btn" type="submit">리뷰쓰기</button>
-										        </c:if>
-										    </form>
-											<c:if test="${reviewWrite[compositeKey] == true}">
-												<p>구매확정</p>
-											</c:if>
-										</c:if>
-										<c:if test="${status[index] ne '배송완료'}">
-											<p>${status[index]}</p>
-										</c:if>
+										        </form>
+										    </c:when>
+										    <c:when test="${status[index] == '구매확정' && reviewWrite[compositeKey] == true}">
+										        <p>구매확정</p>
+										    </c:when>
+										    <c:otherwise>
+										        <p>${status[index]}</p>
+										    </c:otherwise>
+										</c:choose>
 									</td>
 								</tr>
 								<c:if test="${payment eq null}">
