@@ -91,6 +91,7 @@ select[name=product-option] {
 }
 
 .btn {
+	cursor: pointer;
 	width: 150px;
 	height: 50px;
 	border-radius: 5px;
@@ -127,6 +128,7 @@ select[name=product-option] {
 }
 
 .btn2 {
+	cursor: pointer;
 	color: #fff;
 	background: #58ACFA;
 }

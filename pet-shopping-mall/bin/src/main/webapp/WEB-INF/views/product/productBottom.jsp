@@ -2,6 +2,7 @@
     pageEncoding="EUC-KR"%>
     <style>
     .btn {
+    cursor: pointer;
 	width:150px;
 	height:50px;
 	border-radius: 5px;
@@ -23,6 +24,7 @@
 	margin-right:40px;
 	}
 	.btn2 {
+	cursor: pointer;
 	background: #58ACFA;
 	}
     </style>

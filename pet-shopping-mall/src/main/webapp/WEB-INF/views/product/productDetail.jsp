@@ -425,7 +425,7 @@
 				<span id="likeCnt">${product.likeCnt}</span>
 			</div>
 			<button class="btn btn1" onclick="addCart();">장바구니</button>
-			<button class="btn btn2">구매하기</button>
+			<button class="btn btn2" onclick="purchase();">구매하기</button>
 		</div>
 	</div>
 	</div>
@@ -447,13 +447,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const updatePrice = () => {
         const updateTotalPrice = (originalPrice + additionalPrice) * currentQuantity;
         if (totalPrice) {
-            totalPrice.innerHTML = formatNumberWithCommas(updateTotalPrice) + " 원";
+            totalPrice.innerHTML = formatNumberWithCommas(updateTotalPrice);
         }
         if (productBottomPrice) {
-            productBottomPrice.innerHTML = formatNumberWithCommas(updateTotalPrice) + " 원";
+            productBottomPrice.innerHTML = formatNumberWithCommas(updateTotalPrice);
         }
         if (productPriceElement) {
-            productPriceElement.innerHTML = formatNumberWithCommas(updateTotalPrice) + " 원";
+            productPriceElement.innerHTML = formatNumberWithCommas(updateTotalPrice);
         }
     };
 
@@ -550,7 +550,7 @@ function purchase() {
     } else {
         alert("취소되었습니다.");
     }
-}
+};
 
 
 // 찜하기
