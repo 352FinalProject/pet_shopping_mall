@@ -22,6 +22,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/stomp.js"></script>
 <jsp:include page="/WEB-INF/views/common/sidebar.jsp"></jsp:include>
 <c:if test="${not empty msg}">
    <script>
@@ -186,7 +187,16 @@
             <sec:authorize access="isAuthenticated()">
                <div class="notification-container">
                   <button id="openPopupBtn" onclick="loadNotifications(memberId)">
-                     <i class="bi bi-bell"></i>
+                    
+	                     <img
+	                     src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png"
+	                     class="notiBellx" alt="알림" />
+                     
+                     <c:if test="${not empty notifications}">
+	                     <img
+	                     src="${pageContext.request.contextPath}/resources/images/home/notiBello.png"
+	                     class="notiBello" alt="알림" />
+                     </c:if>
                   </button>
                   <div id="notificationPopup" class="popup">
                      <div class="popup-content"></div>

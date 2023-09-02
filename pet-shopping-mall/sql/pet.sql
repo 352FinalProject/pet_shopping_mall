@@ -165,7 +165,7 @@ CREATE TABLE pet (
 -- qna 질문 테이블
 create table question(
     question_id number,
-    question_member_id varchar2(20) not null,
+    question_member_id varchar2(50) not null,
     question_category varchar2(50) not null,
     question_email varchar2(200),
     question_title varchar2(500) not null,
@@ -190,10 +190,10 @@ create table answer(
 create table image_attachment (
     image_id number,
     image_type number not null,
-    image_original_filename varchar2(500),
-    image_renamed_filename varchar2(500),
-    image_file_size number,
-    thumbnail char(1),
+    image_original_filename varchar2(500) not null,
+    image_renamed_filename varchar2(500) not null,
+    image_file_size number not null,
+    thumbnail char(1) not null,
     image_created_at timestamp default systimestamp,
     constraint pk_image_attachment_id primary key(image_id)
 );
@@ -224,9 +224,7 @@ create table product (
     product_price number not null,
     image_id number, -- 제품상세 이미지(fk)
     create_date timestamp default systimestamp, -- 등록일
-    expire_date timestamp default null, -- 유통기한
     like_cnt number default 0, -- 좋아요수
-    view_cnt number default 0, -- 조회수
     constraints pk_product_id primary key(product_id),
     constraints fk_category_id foreign key(category_id) references product_category(category_id) on delete cascade
 );
@@ -238,7 +236,6 @@ create table product_detail (
     option_name varchar2(100), -- 옵션명(option은 예약어라 사용불가)
     option_value varchar2(200), -- 옵션속성
     additional_price number default 0, -- 옵션에 따른 추가금
-    sale_state number default 0, -- 0: 판매대기, 1: 판매중, 2: 품절, 3: 기타 
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
 );
@@ -246,7 +243,7 @@ create table product_detail (
 -- 포인트 테이블
 create table point (
     point_id number,
-    point_member_id varchar2(20) not null,
+    point_member_id varchar2(50) not null,
     point_current number not null,
     point_type varchar2(100) not null,
     point_amount number not null,
@@ -301,7 +298,7 @@ create table cancel_order (
 -- 찜한 목록 테이블
 create table wishlist(
     wishlist_id number,
-    wishlist_member_id varchar2(20),
+    wishlist_member_id varchar2(50),
     wishlist_product_id number,
     wishlist_created_at timestamp default systimestamp,
     constraints pk_wishlist_id primary key(wishlist_id),
@@ -329,15 +326,7 @@ create table review (
 );
 
 
-create table community (
-    community_id number,
-    community_member_id varchar2(50),
-    community_title varchar2(500),
-    community_content varchar2(4000),
-    community_created_at timestamp default systimestamp,
-    constraint pk_community_id primary key(community_id),
-    constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
-);
+
 
  -- 결제 테이블
 create table payment (
@@ -409,27 +398,6 @@ create table terms_history (
  constraint pk_terms_id primary key(terms_id)
 );
 
--- 채팅방 테이블
-create table chat_room (
- chat_room_id varchar2(20) not null,
- chat_room_member_id varchar2(50) not null,
- chat_room_admin_roll varchar2(20) not null,
- chat_room_created_at timestamp default systimestamp not null,
- constraint pk_chat_room_id primary key(chat_room_id),
- constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
-);
-
--- 채팅 로그 테이블
-create table chat (
- chat_id number,
- chat_room_id varchar2(20) not null,
- chat_member_id varchar2(50) not null,
- chat_message varchar2(4000) not null,
- chat_created_at timestamp default systimestamp not null,
- chat_unread_count number,
- constraint pk_chat_id primary key(chat_id),
- constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
-);
 
 -- 쿠폰 테이블
 create table coupon (
@@ -546,3 +514,43 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
 
+
+
+
+
+
+
+----------------------------------------------------------
+-- 폐기 테이블
+---------------------------------------------------------
+-- 채팅방 테이블
+create table chat_room (
+ chat_room_id varchar2(20) not null,
+ chat_room_member_id varchar2(50) not null,
+ chat_room_admin_roll varchar2(20) not null,
+ chat_room_created_at timestamp default systimestamp not null,
+ constraint pk_chat_room_id primary key(chat_room_id),
+ constraint fk_chat_room_chat_room_member_id foreign key(chat_room_member_id) references member(member_id) on delete cascade
+);
+
+-- 채팅 로그 테이블
+create table chat (
+ chat_id number,
+ chat_room_id varchar2(20) not null,
+ chat_member_id varchar2(50) not null,
+ chat_message varchar2(4000) not null,
+ chat_created_at timestamp default systimestamp not null,
+ chat_unread_count number,
+ constraint pk_chat_id primary key(chat_id),
+ constraint fk_chat_room_id foreign key (chat_room_id) references chat_room(chat_room_id) on delete cascade
+);
+
+create table community (
+    community_id number,
+    community_member_id varchar2(50),
+    community_title varchar2(500),
+    community_content varchar2(4000),
+    community_created_at timestamp default systimestamp,
+    constraint pk_community_id primary key(community_id),
+    constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
+);

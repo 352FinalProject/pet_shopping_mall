@@ -43,7 +43,7 @@
 						<p id="">${loginMember.name}</p>
 						<p id="phone">${loginMember.phone}</p>
 						<p>
-							[<span id="zip-code">818181</span>]<span id="address">${loginMember.address}</span>
+							 <span id="address">${cancelInfo.address}</span>
 						</p>
 					</div>
 					<div>
