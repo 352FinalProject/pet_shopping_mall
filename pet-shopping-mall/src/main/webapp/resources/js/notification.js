@@ -31,6 +31,27 @@ const renderNotification = (notification) => {
     $notificationPopup.addClass("active");
 };
 
+// 알림없을때 메서드
+const emptyNotification = () => {
+    const $notificationPopup = $("#notificationPopup");
+    const $popupContent = $notificationPopup.find(".popup-content");
+
+    const newNotificationContainer = document.createElement("div");
+    newNotificationContainer.className = "notification-container";
+    newNotificationContainer.id = 'empty';
+    
+    const newNotification = document.createElement("p");
+    newNotification.className = "notification-content";
+    newNotification.textContent = '조회된 알림이 없습니다.';
+
+    newNotificationContainer.appendChild(newNotification);
+
+    $popupContent.prepend(newNotificationContainer);
+
+    $notificationPopup.addClass("active");
+};
+
+
 // 알림 초기화 메서드
 function clearNotifications() {
     const $popupContent = $("#notificationPopup .popup-content");
@@ -58,9 +79,13 @@ function loadNotifications(memberId) {
             },
             success: function (notifications) {
                 clearNotifications();
-                notifications.forEach(notification => {
-                    renderNotification(notification);
-                });
+                if (notifications && notifications.length > 0) {
+                    notifications.forEach(notification => {
+                        renderNotification(notification);
+                    });
+                } else {
+                    emptyNotification();
+                }
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.log('Error:', textStatus);
