@@ -187,64 +187,12 @@
       <result column="monthly_total_sales" property="monthlyTotalSales" />
    </resultMap>
 
-<!--    <select id="getOrderList" resultType="orderHistoryDto">
-   select
-        ot.order_id,
-      ot.order_date,
-      ot.order_no,
-      ot.order_status,
-      pd.product_id,
-      (select product_name from product where product_id = pd.product_id)
-      product_name,
-      od.product_detail_id,
-      od.quantity,
-      ot.amount
-   from
-      orderTbl ot 
-      left join 
-          order_detail od on ot.order_id = od.order_id
-      left join 
-          product_detail pd on od.product_detail_id = pd.product_detail_id
-      left join 
-          product p on p.product_id = pd.product_id
-   where
-      ot.member_id = #{memberId}
-      order by
-      ot.order_date desc
-   </select> -->
-
-<!--    <select id="getOrderListByPeriod" resultType="orderHistoryDto">
-   select
-        ot.order_id,
-      ot.order_date,
-      ot.order_no,
-      ot.order_status,
-      pd.product_id,
-      (select product_name from product where product_id = pd.product_id)
-      product_name,
-      od.product_detail_id,
-      od.quantity,
-      ot.amount
-   from
-      orderTbl ot 
-      left join 
-          order_detail od on ot.order_id = od.order_id
-      left join 
-          product_detail pd on od.product_detail_id = pd.product_detail_id
-      left join 
-          product p on p.product_id = pd.product_id
-   where
-      order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})
-   and
-      ot.member_id = #{memberId}
-      order by
-      ot.order_date desc
-   </select> -->
 
    <select id="getCancelInfo" resultType="OrderCancelInfoDto">
    select
       m.name,
       m.phone,
+      m.address,
       ot.order_no,
       ot.order_date,
       ot.order_status,
@@ -265,6 +213,7 @@
    select
       m.name,
       m.phone,
+      m.address,
       ot.order_no,
       ot.order_date,
       ot.order_status,
@@ -288,6 +237,7 @@
    select
       m.name,
       m.phone,
+      m.address,
       ot.order_no,
       ot.order_date,
       ot.order_status,
@@ -340,6 +290,7 @@
    
    <resultMap type="OrderCancelInfoDto" id="orderCancelnfoDto">
       <result column="name" property="name" />
+      <result column="address" property="address" />
       <result column="phone" property="phone" />
       <result column="order_no" property="orderNo" />
       <result column="order_date" property="orderDate" />

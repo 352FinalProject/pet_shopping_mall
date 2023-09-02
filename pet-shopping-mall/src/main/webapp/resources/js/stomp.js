@@ -9,6 +9,7 @@ stompClient.connect({}, (frame) => {
     stompClient.subscribe(`/pet/notice/${memberId}`, (message) => {
         console.log(`/pet/notice/${memberId} : `, message.body);
         renderMessage(message.body);
+        createImgTagUnderButton()
     });
 });
 
@@ -32,7 +33,8 @@ const renderMessage = (message) => {
 	deleteButton.onclick = function() {
         notificationDelete(id); 
     };
-
+	clearNotifications();
+	
     newNotification.appendChild(deleteButton);
 
     newNotificationContainer.appendChild(newNotification);

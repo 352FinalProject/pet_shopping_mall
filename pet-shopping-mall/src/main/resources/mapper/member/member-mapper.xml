@@ -38,6 +38,7 @@
 	select
 	    m.member_id,
 	    m.name,
+	    m.address,
 	    m.subscribe,
 	    recent_point.point_current,
 	    (
@@ -68,6 +69,7 @@
   <resultMap type="MyPageDto" id="myPageDto">
   	<result column="member_id" property="memberId" />
   	<result column="name" property="name" />
+  	<result column="address" property="address" />
   	<result column="subscribe" property="subscribe" />
   	<result column="point_current" property="pointCurrent" />
   	<result column="coupon_count" property="memberCoupon" />

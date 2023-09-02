@@ -116,7 +116,7 @@
 						<p id="">${loginMember.name}</p>
 						<p id="phone">${loginMember.phone}</p>
 						<p>
-							<span id="address">${loginMember.address}</span>
+							<span id="address">${myPage.address}</span>
 						</p>
 					</div>
 					<div>

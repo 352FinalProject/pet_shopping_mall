@@ -932,7 +932,7 @@ create table member_coupon (
 insert into (id, noti_category, noti_content, noti_created_at, member_id) 
     values (seq_notification_id.nextval, ?, ?, default, ?);
 
-select * from orderTbl where order_no = 1;
+select * from orderTbl;
 
 SELECT ot.order_no, ot.order_id, p.product_name, ot.order_status, ot.member_id
 FROM orderTbl ot
@@ -946,7 +946,7 @@ delete notification where member_id='king';
 
 select * from orderTbl;
 
-update orderTbl set order_date ='23/08/22' where order_no = '1693375836571'; 
+update orderTbl set order_date ='23/08/26' where order_no = '1693628893561'; 
 select * from member;
 select * from sub_member;
 select * from sub_payment;
@@ -966,6 +966,7 @@ select * from member;
 update sub_member set schedule_at = '23/08/29' where member_id='sinsa';
 
 select * from orderTbl;
+
 select 
     * 
 from 
@@ -1027,7 +1028,6 @@ select * from product;
 
 select * from product where category_id = 1 order By product_price desc; --  가격 높은순
 select * from product where category_id = 1 order By product_price asc; -- 가격 낮은순
-
 
 select * from product where category_id = 1 order By create_date desc; --  최근 등록순
 
@@ -1128,7 +1128,14 @@ desc;
             delete from cartitem where cartitem_id = 67;
             
             select * from orderTbl where order_no = '1693539663229';
-            
-            
+            select * from terms;
+            delete from member where member_id= 'qwerty';
+            select * from authority;
+            select * from member;
             select * from product;
-            
+
+select * from member;
+            select * from orderTbl;
+            delete from orderTbl where order_id = '1';
+            update authority set auth = 'ROLE_ADMIN' where member_id = 'honggd';
+
