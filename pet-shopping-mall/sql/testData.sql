@@ -932,7 +932,7 @@ create table member_coupon (
 insert into (id, noti_category, noti_content, noti_created_at, member_id) 
     values (seq_notification_id.nextval, ?, ?, default, ?);
 
-select * from orderTbl where order_no = 1;
+select * from orderTbl;
 
 SELECT ot.order_no, ot.order_id, p.product_name, ot.order_status, ot.member_id
 FROM orderTbl ot
@@ -946,7 +946,7 @@ delete notification where member_id='king';
 
 select * from orderTbl;
 
-update orderTbl set order_date ='23/08/22' where order_no = '1693375836571'; 
+update orderTbl set order_date ='23/08/26' where order_no = '1693628893561'; 
 select * from member;
 select * from sub_member;
 select * from sub_payment;
@@ -966,6 +966,7 @@ select * from member;
 update sub_member set schedule_at = '23/08/29' where member_id='sinsa';
 
 select * from orderTbl;
+
 select 
     * 
 from 

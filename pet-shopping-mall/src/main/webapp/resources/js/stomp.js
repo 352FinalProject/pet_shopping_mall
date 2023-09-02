@@ -32,7 +32,8 @@ const renderMessage = (message) => {
 	deleteButton.onclick = function() {
         notificationDelete(id); 
     };
-
+	clearNotifications();
+	
     newNotification.appendChild(deleteButton);
 
     newNotificationContainer.appendChild(newNotification);
