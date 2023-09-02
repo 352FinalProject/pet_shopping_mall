@@ -339,6 +339,18 @@ create table community (
     constraint fk_community_member_id foreign key(community_member_id) references member(member_id) on delete cascade
 );
 
+-- 펫케어 테이블(커뮤니티 대신)
+create table petcare (
+    petcare_id number,
+    petcare_member_id varchar2(50) not null,
+    petcare_pet_id number,
+    petcare_care_type number not null,
+    petcare_reservation_created_at timestamp default systimestamp,
+    constraint pk_petcare_id primary key(petcare_id),
+    constraint fk_petcare_member_id foreign key(petcare_member_id) references member(member_id) on delete cascade,
+    constraint fk_petcare_pet_id foreign key(petcare_pet_id) references pet(pet_id) on delete cascade
+);
+
  -- 결제 테이블
 create table payment (
     payment_id number,
@@ -465,6 +477,8 @@ create table notification (
     constraint fk_notification_member_id foreign key(member_id) references member(member_id) on delete cascade    
 );
 
+
+
 create sequence seq_orderTbl_id;
 create sequence seq_member_id;
 create sequence seq_answer_id;
@@ -546,3 +560,6 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
 
+
+----
+select * from member;

@@ -145,6 +145,8 @@
    href="${pageContext.request.contextPath}/resources/css/point.css" />
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
+<link rel="stylesheet"
+   href="${pageContext.request.contextPath}/resources/css/petcare.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
@@ -171,6 +173,9 @@
                   href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>
                </li>
             </sec:authorize>
+            <li class="petcare_li"><a
+               href="${pageContext.request.contextPath}/petcare/petcareList.do">병원예약</a>
+            </li>
             <li class="logout_li"><a
                href="${pageContext.request.contextPath}/servicecenter/service.do">고객센터</a>
             </li>
