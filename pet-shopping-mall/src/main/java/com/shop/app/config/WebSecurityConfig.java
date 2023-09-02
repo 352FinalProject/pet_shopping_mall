@@ -76,8 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/index.jsp", "/product/productDetail.do", "/servicecenter/service.do", "/product/productList.do").permitAll() // 모든 사용자 허용
 				.antMatchers("/servicecenter/inquiry/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-				.antMatchers("/member/terms.do","/member/memberCreate.do", "/member/checkIdDuplicate.do", "/stomp/**").anonymous() // 비로그인 사용자만 허용
-				.antMatchers("/oauth/**", "/email/**", "/member/updateTerms.do", "/member/memberCreateComplete.do").permitAll()
+				.antMatchers("/member/terms.do","/member/memberCreate.do", "/member/checkIdDuplicate.do").anonymous() // 비로그인 사용자만 허용
+				.antMatchers("/oauth/**", "/email/**", "/member/updateTerms.do", "/member/memberCreateComplete.do",  "/stomp/**").permitAll()
 				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated(); // 나머지 요청은 인증 필요
 
