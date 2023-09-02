@@ -55,8 +55,8 @@ public interface OrderRepository {
 	
 	
 	
-	@Insert("insert into cancel_order (cancel_id, request_date, receipt_date, cancel_status, order_id) values (seq_cancel_id.nextVal, default, null, default, #{orderId})")
-	int insertCancelOrder(CancelOrder cancel);
+	@Insert("insert into cancel_order (cancel_id, request_date, receipt_date, cancel_status, order_id) values (seq_cancel_id.nextVal, default, null, #{i}, #{orderId})")
+	int insertCancelOrder(CancelOrder cancel, int i);
 	
 	
 	@Select("select * from orderTbl where order_no = #{orderNo}")
@@ -103,12 +103,10 @@ public interface OrderRepository {
 	int findOrderCntByProductId(int productDetailId);
 
 
-	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status= 5")
+	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day // and order_status= 5") // and order_status= 5
 	List<Order> findOrdersWithExpiredStatus();
 
-	
 	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
-
 
 	// 상품 상세 - 리뷰 - 상품
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);

@@ -24,6 +24,6 @@ public class MypageDto {
 	private int memberCoupon; // 쿠폰 카운트
 	
 	private List<Order> orderHistory; // 최근주문내역
-	
+	private String address;
 	SubMember subMember;
 }
