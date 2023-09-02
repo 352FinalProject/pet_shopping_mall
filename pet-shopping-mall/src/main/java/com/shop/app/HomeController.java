@@ -1,27 +1,16 @@
 package com.shop.app;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.shop.app.common.entity.ImageAttachment;
-import com.shop.app.common.entity.ImageAttachmentMapping;
-import com.shop.app.notification.entity.Notification;
-import com.shop.app.notification.service.NotificationService;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.entity.Product;
-import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.service.ProductService;

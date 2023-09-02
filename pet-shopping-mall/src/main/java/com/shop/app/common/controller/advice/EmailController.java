@@ -45,7 +45,7 @@ public class EmailController {
       String email = payload.get("email");
 
       // 토큰 생성
-      String token = UUID.randomUUID().toString();
+      String token = UUID.randomUUID().toString(); 
 
       // 이메일 발송 로직
       MailSender mailSender = new MailSender();

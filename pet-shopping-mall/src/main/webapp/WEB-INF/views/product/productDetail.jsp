@@ -417,7 +417,7 @@
 			<div class="heart-img">
 				<button class="heart-button" id="heartButton">
 					<span class="heart-button pink" id="clickHeart"> <c:choose>
-							<c:when test="${product.likeCnt == 0}">♡</c:when>
+							<c:when test="${likeState == 0}">♡</c:when>
 							<c:otherwise>♥</c:otherwise>
 						</c:choose>
 					</span>
