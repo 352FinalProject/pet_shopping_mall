@@ -138,8 +138,8 @@ span duplicate {
                   <td>
                      <div class="memberName-container">
                         <input type="text" name="name" id="name" value=""
-                           placeholder="이름" pattern="[가-힣A-Za-z]+"
-                           title="한글 또는 영어 대소문자 한 글자 이상의 길이를 가져야 합니다. " required>
+                           placeholder="이름" pattern="/^[가-힣a-zA-Z]{2,}$/"
+                           title="한글 또는 영어 대소문자 두 글자 이상의 길이를 가져야 합니다. " required>
                         <br>
                      </div>
                   </td>
@@ -340,7 +340,7 @@ function validatePassword() {
     const passwordConfirmValue = passwordConfirmInput.value;
 
     // 비밀번호 패턴 검사
-    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+	const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
     if (passwordPattern.test(passwordValue) && passwordValue === passwordConfirmValue) {
         passwordInput.style.borderColor = "blue"; // 유효한 패턴 및 일치하는 경우 테두리 색상을 파란색으로 변경
@@ -352,9 +352,9 @@ function validatePassword() {
         passwordInput.style.borderColor = "red"; // 유효하지 않은 패턴 또는 불일치하는 경우 테두리 색상을 빨간색으로 변경
         passwordConfirmInput.style.borderColor = "red";
     }
-} */
+}  */
 
- window.onload = function() {
+  window.onload = function() {
     // 필요한 요소들을 가져오기
     var passwordInput = document.getElementById("password");
     var confirmPasswordInput = document.getElementById("passwordConfirm");
@@ -374,16 +374,18 @@ function validatePassword() {
             confirmPasswordInput.style.border = "1px solid red";
         }
     };
-     
+    
+
     // 입력이 변경될 때마다 비밀번호 일치 여부 확인
     passwordInput.addEventListener("input", validatePassword);
-    confirmPasswordInput.addEventListener("input", validatePassword);
+    confirmPasswordInput.addEventListener("input", validatePassword); 
 
+    
     // 이름 유효성 검사 함수
     const nameInput = document.getElementById("name");
 
     nameInput.addEventListener("input", function() {
-        const namePattern = /^[가-힣a-zA-Z]+$/;
+        const namePattern = /^[가-힣a-zA-Z]{2,}$/;
         if (nameInput.value === "") {
             nameInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
         } else if (namePattern.test(nameInput.value)) {
@@ -392,7 +394,7 @@ function validatePassword() {
             nameInput.style.borderColor = "red";
         }
     });
-};
+}; 
 
 // 핸드폰 유효성검사 이벤트처리 함수
 const phoneInput = document.getElementById("tel");
@@ -439,31 +441,42 @@ emailInput.addEventListener("input", function() {
     }
 });
 
-// 주소 유효성검사 이벤트처리 함수
-const roadAddressInput = document.getElementById("roadAddress");
-const jibunAddressInput = document.getElementById("jibunAddress");
-const detailAddressInput = document.getElementById("detailAddress");
+// 주소 입력 필드들을 가져옵니다.
+const roadAddressInput = document.getElementById('roadAddress');
+const jibunAddressInput = document.getElementById('jibunAddress');
+const detailAddressInput = document.getElementById('detailAddress');
 
-// 주소 입력란들에 대한 input 이벤트 처리
-roadAddressInput.addEventListener("input", updateAddress);
-jibunAddressInput.addEventListener("input", updateAddress);
-detailAddressInput.addEventListener("input", updateAddress);
+// 각 주소 입력 필드의 입력 이벤트 리스너를 추가합니다.
+roadAddressInput.addEventListener('input', validateAddress);
+jibunAddressInput.addEventListener('input', validateAddress);
+detailAddressInput.addEventListener('input', validateAddress);
 
-function updateAddress() {
+function validateAddress() {
+    // 각 주소 입력 필드의 값을 가져옵니다.
     const roadAddress = roadAddressInput.value;
     const jibunAddress = jibunAddressInput.value;
     const detailAddress = detailAddressInput.value;
 
-    const fullAddress = roadAddress + jibunAddress + " " + detailAddress;
+    // 주소 유효성 검사를 위한 조건 (예: 길이가 5자 이상이어야 함)
+    const addressValidationCondition = /.{4,}/;
 
-    const addressInput = document.getElementById("address");
-    if (fullAddress.trim() === "") {
-        addressInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
-    } else {
-        addressInput.style.borderColor = "#5886d3";
+    // 주소가 유효한지 확인합니다.
+    const isAddressValid = addressValidationCondition.test(roadAddress) &&
+                           addressValidationCondition.test(jibunAddress) &&
+                           addressValidationCondition.test(detailAddress);
+
+    // 유효한 주소인 경우 파란색 테두리를 설정합니다.
+    if (isAddressValid) {
+    	 roadAddressInput.style.border = '1px solid #5886d3';
+         jibunAddressInput.style.border = '1px solid #5886d3';
+         detailAddressInput.style.border = '1px solid #5886d3';
     }
-
-    addressInput.value = fullAddress;
+    // 유효하지 않은 주소인 경우 빨간색 테두리를 설정합니다.
+    else {
+        roadAddressInput.style.border = '1px solid red';
+        jibunAddressInput.style.border = '1px solid red';
+        detailAddressInput.style.border = '1px solid red';
+    }
 }
 
 function sample4_execDaumPostcode() {
