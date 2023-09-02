@@ -1128,9 +1128,17 @@ desc;
             delete from cartitem where cartitem_id = 67;
             
             select * from orderTbl where order_no = '1693539663229';
-            
-            
+            select * from terms;
+            delete from member where member_id= 'qwerty';
+            select * from authority;
+            select * from member;
             select * from product;
+
 UPDATE member
 SET birthday = '2003-09-03'
 WHERE member_id = 'king';
+
+            select * from orderTbl;
+            delete from orderTbl where order_id = '1';
+            update authority set auth = 'ROLE_ADMIN' where member_id = 'honggd';
+
