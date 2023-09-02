@@ -47,7 +47,7 @@ public class CouponServiceImpl implements CouponService {
 		return couponRepository.insertDeliveryCoupon(memberCoupon);
 	}
 	
-	@Scheduled(cron = "0 03 16 * * ?")  // 매월 1일 자정에 실행
+	@Scheduled(cron = "0 08 16 * * ?")  // 매월 1일 자정에 실행
 	public void issueBirthdayCoupons() {
 	    
 	    // 오늘 날짜 (매월 1일)
@@ -75,7 +75,7 @@ public class CouponServiceImpl implements CouponService {
  			String to = memberCoupon.getMemberId();
  			Notification insertNotification = Notification.builder()
  					.notiCategory(3)
- 					.notiContent(memberCoupon.getMemberId() + "님의 생일자 할인쿠폰(10%)이 발급됬습니다.")
+ 					.notiContent("생일자 할인쿠폰(10%)이 발급됬습니다.")
  					.notiCreatedAt(formatTimestampNow())
  					.memberId(to) 
  					.build();

@@ -146,7 +146,7 @@ public class MemberSecurityController {
            String to = memberCoupon.getMemberId();
 			Notification insertNotification = Notification.builder()
 					.notiCategory(3)
-					.notiContent(memberCoupon.getMemberId() + "님의 생일자 할인쿠폰(10%)이 발급됬습니다.")
+					.notiContent("님의 생일자 할인쿠폰(10%)이 발급됬습니다.")
 					.notiCreatedAt(formatTimestampNow())
 					.memberId(to) 
 					.build();
@@ -335,14 +335,14 @@ public class MemberSecurityController {
    }
    
    // 알림 날짜변환메소드 (대원)
-	private String formatTimestamp(Timestamp timestamp) {
+   private String formatTimestamp(Timestamp timestamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
         return dateFormat.format(timestamp);
-    }
+	}
 	// 알림 날짜변환메소드 (대원)
-    private String formatTimestampNow() {
-        return formatTimestamp(new Timestamp(System.currentTimeMillis()));
-    }
+	private String formatTimestampNow() {
+	    return formatTimestamp(new Timestamp(System.currentTimeMillis()));
+	}
    
    
    

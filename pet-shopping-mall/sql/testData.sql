@@ -1134,10 +1134,7 @@ desc;
             select * from member;
             select * from product;
 
-UPDATE member
-SET birthday = '2003-09-03'
-WHERE member_id = 'king';
-
+select * from member;
             select * from orderTbl;
             delete from orderTbl where order_id = '1';
             update authority set auth = 'ROLE_ADMIN' where member_id = 'honggd';
