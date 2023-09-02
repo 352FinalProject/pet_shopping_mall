@@ -138,7 +138,7 @@ span duplicate {
                   <td>
                      <div class="memberName-container">
                         <input type="text" name="name" id="name" value=""
-                           placeholder="이름" pattern="/^[가-힣a-zA-Z]{2,}$/"
+                           placeholder="이름" pattern="^[가-힣a-zA-Z\s]+$"
                            title="한글 또는 영어 대소문자 두 글자 이상의 길이를 가져야 합니다. " required>
                         <br>
                      </div>
@@ -385,7 +385,7 @@ function validatePassword() {
     const nameInput = document.getElementById("name");
 
     nameInput.addEventListener("input", function() {
-        const namePattern = /^[가-힣a-zA-Z]{2,}$/;
+    	const namePattern = /^[가-힣a-zA-Z\s]+$/;
         if (nameInput.value === "") {
             nameInput.style.borderColor = ""; // 초기 테두리 색상 (기본값)으로 변경
         } else if (namePattern.test(nameInput.value)) {
