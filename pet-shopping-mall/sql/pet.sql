@@ -56,9 +56,12 @@ SELECT *  FROM all_tables;
 --drop table breed;
 --drop table coupon;
 --drop table member_coupon;
---
---
------- 외래키 붙어있는 테이블삭제
+--drop table sub_member;
+--drop table sub_payment;
+--drop table image_attachment;
+--drop table product_category;
+
+---- 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
 --drop table product cascade constraints;
@@ -100,7 +103,9 @@ SELECT *  FROM all_tables;
 --drop sequence seq_coupon_id;
 --drop sequence seq_category_id;
 --drop sequence seq_terms_history_id;
-
+--drop sequence seq_notification_id;
+--drop sequence seq_sub_payment_id;
+--drop sequence seq_sub_subscribe_id;
 
 --==============================
 -- 테이블 생성
@@ -157,14 +162,6 @@ CREATE TABLE pet (
 );
 
 
--- 품종 테이블
-CREATE TABLE breed (
-    breed_id number,
-    pet_kind VARCHAR2(50),
-    pet_breed VARCHAR2(50),
-    CONSTRAINT chk_pet_breed CHECK (pet_breed IN ('C', 'D', 'E'))
-);
-
 -- qna 질문 테이블
 create table question(
     question_id number,
@@ -196,6 +193,7 @@ create table image_attachment (
     image_original_filename varchar2(500),
     image_renamed_filename varchar2(500),
     image_file_size number,
+    thumbnail char(1),
     image_created_at timestamp default systimestamp,
     constraint pk_image_attachment_id primary key(image_id)
 );
@@ -494,7 +492,7 @@ create sequence seq_history_id;
 create sequence seq_category_id;
 create sequence seq_notification_id;
 create sequence seq_sub_payment_id;
-create sequence seq_susubscribe_id;
+create sequence seq_subscribe_id;
 
 
 

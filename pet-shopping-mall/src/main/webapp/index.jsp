@@ -1,4 +1,8 @@
 ﻿<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <div class="container">
   <div class="section section_1" id="section_1">
@@ -30,53 +34,33 @@
 				<a href="#"></a>
 			</div>
 		</div>
-	<div class="gallery_wrap2">
-	      <ul class="gallery2">
-	        <li class="gallery_item1">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄
-	            </div>
-	          </a>
-	        </li>
-	        <li class="gallery_item2">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item3">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item4">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	        </li>
-	        <li class="gallery_item5">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄
-	            </div>
-	          </a>
-	        </li>
-	        <li class="gallery_item6">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄 리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item7">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"  class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	      </ul>
-	    </div>
+		<div class="gallery_wrap2">
+		    <ul class="gallery2">
+		        <c:if test="${empty alignProductInfos}">
+		            <c:forEach items="${snackProductInfos}" var="productInfo" varStatus="vs">
+		                <li class="gallery_item1">
+		                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}&reviewId=${reviewId.reviewId}">
+		                        <img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}" class="indexImg">
+		                    </a>
+		                <div class="product-desc">
+							<p class="product-name">${productInfo.product.productName}</p>
+							<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> 원</p>
+		                        <span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" >
+								<c:if test="${productInfo.productReviewStarAvg.reviewStarRate == null}">
+							<span>0.0</span>
+						</c:if>
+						<c:if test="${productInfo.productReviewStarAvg.reviewStarRate != 0}" >
+							<span>${productInfo.productReviewStarAvg.reviewStarRate}</span>
+						</c:if>
+						</span>
+						<span> &nbsp;|&nbsp; </span>
+						<span class="review-cnt">후기 ${productInfo.reviewCnt}건</span>
+						</div>
+		                </li>
+		            </c:forEach>
+		        </c:if>
+		    </ul>
+		</div>
 	    <div class="button_box">
 	      <div class="prev_btn">
 	        <img
@@ -94,7 +78,7 @@
 	  </div>
 	  	<div class="title_group">
 		<div class="title_custom">
-			<div class="title_desc">✨ 예쁘고 귀여운 패션용품
+			<div class="title_desc">✨ 색다른 패션으로 개성을 뽐내세요!
 				<a href="#"></a>
 			</div>
 			<div class="title_plus">더보기
@@ -104,49 +88,15 @@
 		</div>
 	<div class="gallery_wrap3">
 	      <ul class="gallery3">
-	        <li class="gallery_item1">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄
-	            </div>
-	          </a>
-	        </li>
-	        <li class="gallery_item2">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item3">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item4">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	        </li>
-	        <li class="gallery_item5">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄
-	            </div>
-	          </a>
-	        </li>
-	        <li class="gallery_item6">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg" class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄 리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
-	        <li class="gallery_item7">
-	          <a href="#">
-	            <img src="${pageContext.request.contextPath}/resources/images/상품/1.jpeg"  class="indexImg"/>
-	            <div class="gallery_text">리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄리드줄 목줄</div>
-	          </a>
-	        </li>
+		        <c:if test="${empty alignProductInfos}">
+		            <c:forEach items="${fashionProductInfos}" var="productInfo" varStatus="vs">
+		                <li class="gallery_item1">
+		                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}&reviewId=${reviewId.reviewId}">
+		                        <img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}" class="indexImg">
+		                    </a>
+		                </li>
+		            </c:forEach>
+		        </c:if>
 	      </ul>
 	    </div>
 	    <div class="button_box">

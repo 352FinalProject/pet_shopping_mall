@@ -11,8 +11,13 @@
 		    p.product_name,
 		    p.product_price,
 		    p.product_name,
+		    ia.image_id,
+		    ia.image_type,
 		    ia.image_original_filename,
-		    ia.image_renamed_filename
+		    ia.image_renamed_filename,
+		    ia.image_file_size,
+		    ia.thumbnail,
+		    ia.image_created_at
 		from 
 		    product p
 		left join 
@@ -27,24 +32,79 @@
 		select
 		    p.product_id,
 		    p.category_id,
+		    p.create_date,
 		    p.product_name,
 		    p.product_price,
-		    ia.image_renamed_filename
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
 		from 
 		    product p
-		left join 
-		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		left join
-		    image_attachment ia ON iam.image_id = ia.image_id
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id
 		where 
 	    	p.product_name like '%' || #{searchQuery} || '%'
 	</select>
+	
+	<select id="alignProducts" resultMap="productSearchDto">
+	    select
+	        p.product_id,
+	        p.category_id,
+	        p.create_date,
+	        p.product_name,
+	        p.product_price,
+	        ia.image_renamed_filename as thumbnail,
+	        decode(avg_star, null, 0.0, avg_star) as review_star_rate,
+	        (select count(*) from review where product_id = p.product_id) reviewCnt
+	    from
+	        product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+	    left join
+	        (select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+	        ON r.product_id = p.product_id
+	    where
+	        p.category_id = #{categoryId}
+	    <choose>
+	        <when test="alignType == 'byPrice'">
+	            order By
+	                p.product_price
+	                <choose>
+	                    <when test="inOrder == 'asc'">ASC</when>
+	                    <otherwise>DESC</otherwise>
+	                </choose>
+	        </when>
+	        <when test="alignType == 'byNewDate'">
+	            order By p.create_date DESC
+	        </when>
+	        <when test="alignType == 'byHighReviewStar'">
+	            order By review_star_rate DESC
+	        </when>
+	        <when test="alignType == 'byReviewCnt'">
+	            order By reviewCnt DESC
+	        </when>
+	        <otherwise>
+	        	order By create_date desc
+	        </otherwise>
+	    </choose>
+	</select>
+
 	<resultMap type="ProductSearchDto" id="productSearchDto">
         <result property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>
+        <result property="createDate" column="create_date"/>
         <result property="productName" column="product_name"/>
         <result property="productPrice" column="product_price"/>
-        <result property="imageRenamedFileName" column="image_renamed_filename"/>
+        <result property="reviewCnt" column="reviewCnt"/>
+        <result property="thumbnail" column="thumbnail"/>
+        <result property="reviewStarRate" column="review_star_rate"/>
     </resultMap>
 
     <resultMap type="Product" id="productResultMap">
@@ -59,7 +119,7 @@
         <result property="viewCnt" column="view_cnt"/>
     </resultMap>
     
-<resultMap type="ProductImages" id="ProductImagesResultMap">
+	<resultMap type="ProductImages" id="ProductImagesResultMap">
         <id property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>
         <result property="productName" column="product_name"/>
@@ -71,13 +131,13 @@
         <result property="viewCnt" column="view_cnt"/>
 
     <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
-    <collection property="attachments" ofType="imageAttachment">
+    <collection property="attachments" ofType="ImageAttachment">
         <result property="imageId" column="image_id"/>
         <result property="imageType" column="image_type"/>
-        <result property="imageCategory" column="image_category"/>
         <result property="imageOriginalFilename" column="image_original_filename"/>
         <result property="imageRenamedFilename" column="image_renamed_filename"/>
         <result property="imageFileSize" column="image_file_size"/>
+        <result property="thumbnail" column="thumbnail"/>
         <result property="imageCreatedAt" column="image_created_at"/>
     </collection>
 </resultMap>

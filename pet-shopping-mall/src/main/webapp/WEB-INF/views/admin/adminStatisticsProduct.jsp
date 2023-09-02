@@ -9,10 +9,13 @@
 	<main>
 		<div class="container-fluid px-4">
 			<h1 class="mt-4">상품별 매출</h1>
+			<ol class="breadcrumb mb-4">
+				<li class="breadcrumb-item"></li>
+			</ol>
 			
 			<div class="card mb-4">
 				<div class="card-body">
-					카테고리별 매출 top5 이런식으로 보여주고,테이블로 카테고리별로 나워서 상품하나하나 정확한 통계치를 보여줘야됨 
+					상품별 판매순위 및 판매액 매출순위
 				</div>
 			</div>
 			<div class="row">

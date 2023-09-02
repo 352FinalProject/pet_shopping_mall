@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.PurchaseDto;
 import com.shop.app.cart.entity.Cart;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.product.entity.ProductDetail;
@@ -46,5 +47,5 @@ public interface CartRepository {
 	@Select("select * from cartitem i left join cart c on i.cart_id = c.cart_id where i.cart_id= #{cartId}")
 	List<CartItem> getCartListByCartId(int cartId);
 
-	int insertCart(int cartId, int optionId, int productDetailId, int quantity);
+	PurchaseDto paymentOneInfo(int productDetailId);
 }

@@ -6,11 +6,10 @@
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
 <div id="layoutSidenav_content">
 	<main>
-		<div class="container-fluid px-4">
+		<div class="container-md px-4">
 			<h1 class="mt-4">상품 등록</h1>
 			<ol class="breadcrumb mb-4">
-				<li class="breadcrumb-item"><a
-					href="${pageContext.request.contextPath}/admin/admin.do">관리자 홈</a></li>
+				<li class="breadcrumb-item"></li>
 			</ol>
 
 			<div class="card mb-4">
@@ -18,26 +17,26 @@
 					<i class="fas fa-table me-1"></i> 기본상품목록
 				</div>
 				<div class="card-body">
-				<div class="container-fluid px-4">
+				<div class=".container-md px-4 mx-auto">
 					<form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" 
 					    name ="createProductFrm"
-					    enctype="multipart/form-data" method="post" class="mt-4">
+					    enctype="multipart/form-data" 
+					    method="post" class="mt-4">
 					        
 					        <!-- 1행 -->
 					        <div class="row mb-1">
-					          <!-- 1열 -->
-					          <div class="col-md-3">
-					            <label for="categoryId" class="form-label">상품 카테고리</label>
-					          </div>
+					          <!-- 1. 상품카테고리 -->
+					          <label for="categoryId" class="col-sm-2 col-form-label visually-hidden">상품 카테고리</label>
+					          
 					          <!-- 2열 -->
-					          <div class="col-md-3">
+					          <div class="col-md-6">
 					            <label for="productName" class="form-label">상품명</label>
 					          </div>
 					        </div>
 					        <!-- 2행 -->
 					        <div class="row mb-5">
 					          <!-- 1열 -->
-					          <div class="col-md-3">
+					          <div class="col-md-6">
 					            <select name="categoryId" id="categoryId" class="form-select">
 					              <c:if test="${empty categories}">
 					                <option value="1">카테고리가 없습니다. 카테고리를 추가해주세요</option>
@@ -50,7 +49,7 @@
 					            </select>
 					          </div>
 					          <!-- 2열 -->
-					          <div class="col-md-3">
+					          <div class="col-md-6">
 					            <input type="text" name="productName" id="productName" class="form-control" required>
 					          </div>
 					        </div>
@@ -58,38 +57,59 @@
 					        <!-- 3행 -->
 					        <div class="row mb-1">
 					        	<!-- 1열 -->
-					          <div class="col-md-3">
-					            <label for="file" class="form-label">제품 사진</label>
+					          <div class="col-md-6">
+					            <label for="file" class="form-label">썸네일 사진(필수)</label>
 					          </div>
 					          <!-- 2열 -->
-					          <div class="col-md-3">
+					          <div class="col-md-6">
 					        	<label for="productPrice" class="form-label">상품금액</label>
 					          </div>
 					        </div>
 					        <!-- 4행 -->
 					        <div class="row mb-5">
 								<!-- 1열 -->					        
-					        	<div class="col-md-3">
-					            	<input type="file" name="upFile" id="file" class="form-control">
+					        	<div class="col-md-6">
+					            	<input type="file" name="thumbnailFile" id="file" class="form-control" multiple required>
 					        	</div>
 					        	<!-- 2열 -->
-					        	<div class="col-md-3">
-					            	<input type="number" name="productPrice" id="productPrice" class="form-control" required>
+					        	<div class="col-md-6">
+					            	<input type="number" name="productPrice" id="productPrice" class="form-control" value="0" required>
 					        	</div>
 					        </div>
 					        
 					        <!-- 5행 -->
 					        <div class="row mb-1">
 					        	<!-- 1열 -->
-					        	<div class="col-md-3">
+					          <div class="col-md-6">
+					            <label for="file" class="form-label">제품상세 이미지</label>
+					          </div>
+					          <!-- 2열 -->
+					          <div class="col-md-6">
+					          </div>
+					        </div>
+					        <!-- 6행 -->
+					        <div class="row mb-5">
+								<!-- 1열 -->					        
+					        	<div class="col-md-6">
+					            	<input type="file" name="detailFile" id="file" class="form-control" multiple required>
+					        	</div>
+					        	<!-- 2열 -->
+					        	<div class="col-md-6">
+					        	</div>
+					        </div>
+					        
+					        <!-- 7행 -->
+					        <div class="row mb-1">
+					        	<!-- 1열 -->
+					        	<div class="col-md-6">
 					        		<label for="addOptions" class="form-label">옵션</label>
 					        	</div>
 					        </div>
 					        <!-- 6행 -->
 					        <div class="row mb-5">
 								<!-- 1열 -->					        
-					        	<div class="col-md-3">
-					            	<input type="button" id="addOptions" value="옵션 추가" class="form-control">
+					        	<div class="col-md-2">
+						        	<input class="btn btn-outline-secondary" id="addOptions" type="button" value="옵션 추가">
 					        	</div>
 					        </div>
 					        
@@ -98,24 +118,24 @@
 							<div class="viewOption" id="viewOption" style="display : none;">
 								<div class="optionValueDefault" id="optionValueDefault">
 							          <div class="row mb-3">
-								          <div class="col-md-2">
+								          <div class="col-md-3">
 								            <label for="optionName" class="form-label">옵션명</label>
-								            <input type="text" name="productDetail[0].optionName" id="optionName" class="form-control">
+								            <input type="text" name="productDetail[0].optionName" id="optionName" class="form-control" value="옵션없음">
 								          </div>
-							            <div class="col-md-2">
+							            <div class="col-md-3">
 							              <label for="optionValue" class="form-label">옵션값</label>
 							              <input type="text" name="productDetail[0].optionValue" id="optionValue" class="form-control">
 							            </div>
-							            <div class="col-md-2">
+							            <div class="col-md-3">
 							              <label for="additionalPrice" class="form-label">옵션추가금</label>
 							              <input type="number" name="productDetail[0].additionalPrice" id="additionalPrice" class="form-control" value="0">
 							            </div>
 							          </div>
 								    <div class="row mb-3">
-								          <div class="col-md-1">
+								          <div class="col-md-3">
 								            <label for="saleState" class="form-label">판매상태</label>
 								          </div>
-								          <div class="col-md-2">
+								          <div class="col-md-3">
 								            <select name="productDetail[0].saleState" id="saleState" class="form-select">
 								              <option value="0">판매대기</option>
 								              <option value="1" selected>판매중</option>
@@ -141,7 +161,6 @@
 					    </div><!-- container-fluid -->
 					  </div><!-- card-body -->
 				</div><!-- card -->
-			</div>
 			
 		</div>
 	</main>
@@ -188,31 +207,29 @@
     	
     	const newOption = `
     	<div class="addedOption" id="addedOption\${optionCnt}">
+    		<!-- 1행 -->
 			<div class="row mb-3">
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<label for="optionName" class="form-label">옵션명</label>
-					<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control">
+					<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control" required>
 				</div>
-		        <div class="col-md-2">
+		        <div class="col-md-3">
 		              <label for="optionValue" class="form-label">옵션값</label>
 		              <input type="text" name="productDetail[\${optionCnt}].optionValue" id="optionValue" class="form-control">
 		        </div>
-		        <div class="col-md-2">
+		        <div class="col-md-3">
 		              <label for="additionalPrice" class="form-label">옵션추가금</label>
 		              <input type="number" name="productDetail[\${optionCnt}].additionalPrice" id="additionalPrice" class="form-control" value="0">
-		            </div>
-		      </div>
-		      <!-- 기본으로 판매중 -->
-			  <div style="display : none;">
-			  	<input type="number" name="productDetail[\${optionCnt}].saleState" id="saleState" value="1">
-			  </div>
-			
-			<!-- 옵션삭제 버튼 -->
-			<div class="row mb-3" id="option-btn-container">
-				<div class="col-md-5 d-flex justify-content-end" >
-		        	<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
+		        </div>
+				<!-- 옵션삭제 버튼 -->
+				<div class="col-md-3 d-flex justify-content-end" id="option-btn-container">
+	        		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
 				</div>
-			</div>
+			      <!-- 기본으로 판매중 -->
+				  <div style="display : none;">
+				  	<input type="number" name="productDetail[\${optionCnt}].saleState" id="saleState" value="1">
+				  </div>
+		    </div>
 		</div>
     	`;
     	
@@ -235,15 +252,15 @@
     addOptionBtn.addEventListener("click", addOptions);
 	
 	// 파일추가 
-	document.querySelectorAll("[name=upFile]").forEach((input) => {
+	document.querySelectorAll("[id=file]").forEach((input) => {
 		input.onchange = (e) => {
-			const label = e.target.previousElementSibling;
 			const files = e.target.files;
+			console.log("files=", files);
 			if(files[0]) {
-				label.innerHTML = files[0].name;
+				console.log("파일선택됨");
 			}
 			else {
-				label.innerHTML = "파일을 선택하세요";
+				console.log("파일선택 안됨");
 			}
 		}
 	});

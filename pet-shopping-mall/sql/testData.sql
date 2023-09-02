@@ -9,6 +9,7 @@ select * from coupon;
 select * from member_coupon order by member_coupon_id desc;
 select * from terms;
 select * from terms_history;
+select * from product_category;
 select * from product;
 select * from terms_history;
 select * from image_attachment;
@@ -26,7 +27,7 @@ select * from cartitem;
 select * from cart;
 select * from wishlist;
 select * from notification;    
-
+            
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
 values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
@@ -970,3 +971,163 @@ from
     orderTbl 
 where 
     order_date <= systimestamp - interval '7' day ;
+    
+
+
+
+
+
+
+
+
+SELECT
+    p.product_id,
+    p.category_id,
+    p.create_date,
+    p.product_name,
+    p.product_price,
+    ia.image_renamed_filename,
+    DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate
+FROM
+    product p
+LEFT JOIN
+    image_attachment_mapping iam ON p.product_id = iam.ref_id AND iam.ref_table = 'product'
+LEFT JOIN
+    image_attachment ia ON iam.image_id = ia.image_id
+LEFT JOIN
+    (SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+    ON p.product_id = r.product_id
+WHERE
+    p.product_name LIKE '%' || '옵' || '%';
+ 
+select * from product;
+
+        
+
+
+		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename
+		from 
+		    product p
+		left join 
+		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		left join
+		    image_attachment ia ON iam.image_id = ia.image_id
+        where
+            p.category_id=1
+        order by
+            p.product_price desc;
+
+
+select * from product where category_id = 1 order By product_price desc; --  가격 높은순
+select * from product where category_id = 1 order By product_price asc; -- 가격 낮은순
+
+
+select * from product where category_id = 1 order By create_date desc; --  최근 등록순
+
+-- 별점순
+select 
+p.*,
+DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate
+from 
+product p left join
+(SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+on r.product_id = p.product_id
+where 
+category_id = 1 
+order By 
+review_star_rate
+ desc;
+ 
+ -- 리뷰많은 순
+ select 
+p.*,
+(select count(*) from review where product_id = p.product_id) reviewCnt
+from 
+product p
+where 
+category_id = 1
+order by
+reviewCnt
+desc;
+
+
+ 
+ 
+ select * from orderTbl;
+ update orderTbl set order_status = 3 where order_no = '1693467409526'; 
+ 
+ select * from review;
+ 
+ 
+ 
+ 
+ 		select 
+		    p.product_id,
+		    pd.product_detail_id,
+		    p.product_name,
+		    pd.option_name,
+		    pd.option_value,
+		    p.product_price,
+		    pd.additional_price,
+			ia.image_renamed_filename
+		from 
+		    product p 
+		    left join 
+		        product_detail pd on p.product_id = pd.product_id
+		    left join 
+		        cartitem ci on pd.product_detail_id = ci.product_detail_id
+		    left join 
+			    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		    left join
+			    image_attachment ia ON iam.image_id = ia.image_id
+		where 
+		    pd.product_detail_id = 1;
+            
+            
+            update orderTbl set order_status=3 where order_no='1693535898716';
+            
+            
+            
+            select * from product_detail;
+            
+            
+            
+		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename,
+            DECODE(avg_star, NULL, 0.0, avg_star) AS review_star_rate,
+            (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+		left join 
+		    image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		left join
+		    image_attachment ia ON iam.image_id = ia.image_id
+        left join
+	        	(SELECT product_id, ROUND(AVG(review_star_rate)) AS avg_star FROM review GROUP BY product_id) r
+	            on r.product_id = p.product_id
+        where
+            p.category_id= 1
+        order by
+            p.product_price;
+            
+            select * from member;
+            
+            select * from cartitem;
+            delete from cartitem where cartitem_id = 67;
+            
+            select * from orderTbl where order_no = '1693539663229';
+            
+            
+            select * from product;
+            

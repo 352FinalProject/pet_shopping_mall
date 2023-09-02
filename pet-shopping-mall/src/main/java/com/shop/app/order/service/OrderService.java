@@ -77,6 +77,9 @@ public interface OrderService {
 
 	int updateOrderStatusIfExpired();
 
+	// 상품상세 - 리뷰 - 상품 뿌리기
+	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
+
 	
 	// 리뷰-상품연결 테스트
 //	List<Order> findOrdersByReviewId(int reviewId);

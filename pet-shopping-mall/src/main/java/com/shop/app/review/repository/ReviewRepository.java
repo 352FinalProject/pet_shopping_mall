@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
@@ -39,8 +40,6 @@ public interface ReviewRepository {
 	int insertMapping(int reviewId, int imageId);
 
 	// 내가 쓴 리뷰 조회
-//	@Select("SELECT * FROM review WHERE review_member_id = #{reviewMemberId, jdbcType=VARCHAR} ORDER BY review_id DESC")
-//	@Select("select r.review_id, r.review_star_rate, r.review_created_at, pd.option_name, pd.option_value, p.product_name from review r join product_detail pd on r.product_detail_id = pd.product_detail_id join product p on p.product_id = pd.product_id where r.review_member_id = #{reviewMemberId}")
 	List<ReviewListDto> findReviewAll(String reviewMemberId, RowBounds rowBounds);
 
 	// 리뷰 전체 카운트
@@ -70,8 +69,8 @@ public interface ReviewRepository {
 	ReviewDetails getDeleteReviewById(int reviewId);
 
 	// 상품 상세페이지 리뷰 전체 카운트
-	@Select("select count(*) from review")
-	int findProductTotalReviewCount();
+	@Select("select count(*) from review where product_id = #{productId}")
+	int findProductTotalReviewCount(int productId);
 	
 	// 상품 상세페이지 전체 리뷰
 	@Select("select * from review where product_id = #{productId}")
@@ -101,6 +100,13 @@ public interface ReviewRepository {
 	// 상품 리스트 - 리뷰 전체개수 확인
 	@Select("select count(*) from review where product_id = #{productId}")
 	int findProductListReviewTotalCount(int productId);
+
+	// 별점 퍼센트 구하기 위한 전체 리뷰
+	@Select("select * from review where product_id = #{productId}")
+	List<Review> findProductReviewAllNoPageBar(int productId);
+
+	ReviewDetails findProductImageAttachmentsByReviewId2(@Param("reviewId")int reviewId2, @Param("orderId")int orderId);
+//	ReviewDetails findProductImageAttachmentsByReviewId2(int reviewId2);
 
 	
 	

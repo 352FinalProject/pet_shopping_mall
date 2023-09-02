@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.cart.dto.CartInfoDto;
+import com.shop.app.cart.dto.PurchaseDto;
 import com.shop.app.cart.entity.Cart;
 import com.shop.app.cart.entity.CartItem;
 import com.shop.app.cart.repository.CartRepository;
@@ -98,7 +99,6 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public int insertCart(String memberId, int productDetailId, int quantity) {
 	    List<CartInfoDto> cartList = getCartInfoList(memberId);
-	    log.debug("cartList = {}", cartList);
 	    int cartId = findCartById(memberId);
 	    
 	    int result = 0;
@@ -122,7 +122,6 @@ public class CartServiceImpl implements CartService {
 	    }
 
 	    if (!found) {
-	        log.debug("detailId not found");
 	        
 	        CartItem cartitem = CartItem.builder()
 	                .cartId(cartId)
@@ -133,6 +132,12 @@ public class CartServiceImpl implements CartService {
 	    }
 
 	    return result;
+	}
+
+
+	@Override
+	public PurchaseDto paymentOneInfo(int productDetailId) {
+		return cartRepository.paymentOneInfo(productDetailId);
 	}
 
 }

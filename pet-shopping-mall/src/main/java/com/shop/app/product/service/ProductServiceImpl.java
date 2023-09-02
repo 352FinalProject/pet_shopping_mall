@@ -15,6 +15,7 @@ import com.shop.app.product.entity.ProductCategory;
 import com.shop.app.product.entity.ProductDetail;
 import com.shop.app.product.entity.ProductImages;
 import com.shop.app.product.repository.ProductRepository;
+import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.repository.ReviewRepository;
 import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.servicecenter.inquiry.repository.QuestionRepository;
@@ -42,11 +43,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int insertProduct(ProductImages productImages) {
-		int result =0;
 		Product product = productImages.toProduct();
-		result = productRepository.insertProduct(product);
-		log.debug("product = {}", product);
-		
+		int result = productRepository.insertProduct(product);
+
 		int refId = product.getProductId();
 		int productId = refId;
 		
@@ -54,15 +53,14 @@ public class ProductServiceImpl implements ProductService {
 		List<ImageAttachment> attachments = productImages.getAttachments();
 		if(attachments != null && !attachments.isEmpty()) {
 			for(ImageAttachment attach : attachments) {
-				
 				// 1. 이미지 파일 저장
 				int result2 = productRepository.insertAttachment(attach);
 				
 				// 2. 이미지파일 DB저장후 생성된 이미지 아이디 가져오기
 				int imageId = attach.getImageId(); 
-				log.debug("imageId = {}", imageId);
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
 				int result3 = productRepository.insertMapping(refId, imageId);
+				
 				// product에 imageId 세팅
 				int result4 = productRepository.updateImageIdByProductId(productId, imageId);
 			}
@@ -146,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductSearchDto> searchProducts(String searchQuery) {
 		List<ProductSearchDto> productList = productRepository.searchProducts(searchQuery);
-				
+		
 		for(ProductSearchDto p : productList) {
 			int cnt = reviewRepository.findProductListReviewTotalCount(p.getProductId());
 			p.setReviewCnt(cnt);
@@ -177,5 +175,25 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int adminOptionCreate(ProductDetail productDetail) {
 		return productRepository.adminOptionCreate(productDetail);
+	}
+
+	
+	
+	
+	@Override
+	public List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder) {
+		return productRepository.alignProducts(categoryId, alignType, inOrder);
+	}
+
+	// 인덱스 페이지 간식 불러오기 (예라)
+	@Override
+	public List<Product> findSnackAll(int categoryId) {
+		return productRepository.findSnackAll(categoryId);
+	}
+
+	// 인덱스 페이지 패션용품 불러오기 (예라)
+	@Override
+	public List<Product> findFashionAll(int _categoryId) {
+		return productRepository.findFashionAll(_categoryId);
 	}
 }
