@@ -65,7 +65,7 @@ public interface OrderRepository {
 
 	
 	@Select("select * from orderTbl where member_id = #{memberId} and order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period}) order by order_date desc")
-	List<Order> getOrderListByPeriod(String memberId, int period);
+	List<Order> getOrderListByPeriod(String memberId, int period, RowBounds rowBounds);
 
 
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
@@ -119,6 +119,7 @@ public interface OrderRepository {
 	
 	@Select("select count (*) from orderTbl where member_id = #{memberId}")
 	int findTotalOrderCount(String memberId);
+
 
 	
 }

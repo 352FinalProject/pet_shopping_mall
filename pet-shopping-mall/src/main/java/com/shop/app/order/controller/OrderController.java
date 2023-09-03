@@ -67,14 +67,11 @@ public class OrderController {
 	    String memberId = member.getMemberId();
 	    List<Order> orderList;
 	    
-	    // 페이징바 처리
 	    int limit = 5;
-	    
 	    Map<String, Object> params = Map.of(
 	    		"page", page,
 	    		"limit", limit
 	    		);
-	    
 	    int totalCount = orderService.findTotalOrderCount(memberId);
 	    int totalPages = (int) Math.ceil((double) totalCount / limit);
 	    model.addAttribute("totalPages", totalPages);

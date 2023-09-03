@@ -126,7 +126,11 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public List<Order> getOrderListByPeriod(String memberId, int period, Map<String, Object> params) {
-		return orderRepository.getOrderListByPeriod(memberId, period);
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return orderRepository.getOrderListByPeriod(memberId, period, rowBounds);
 	}
 	
 
