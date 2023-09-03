@@ -115,4 +115,18 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return result; 
 	}
+
+	@Override
+	public MypageDto getMyPage(String memberId) {
+		MypageDto myPage = memberRepository.getMyPage(memberId);
+		
+		SubMember subMember = null;
+		
+		if((myPage.getSubscribe()).equals("Y")) {
+			subMember = memberRepository.findSubMemberByMemberId(memberId);
+		}
+		
+		myPage.setSubMember(subMember);
+		return myPage;
+	}
 }

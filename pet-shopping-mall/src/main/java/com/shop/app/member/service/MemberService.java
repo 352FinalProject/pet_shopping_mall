@@ -39,5 +39,7 @@ public interface MemberService extends UserDetailsService {
 
 	int updateCancelSubscribers();
 
+	MypageDto getMyPage(String memberId);
+
 
 }
