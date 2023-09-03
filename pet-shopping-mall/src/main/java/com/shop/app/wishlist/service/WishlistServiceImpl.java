@@ -3,6 +3,7 @@ package com.shop.app.wishlist.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,10 +38,21 @@ public class WishlistServiceImpl implements WishlistService {
 	public int deletePick(int productId, String memberId) {
 		return wishlistRepository.deletePick(productId, memberId);
 	}
-
+	
 	// 내 찜 목록 가져오기
 	@Override
-	public List<Map<String, Object>> getMyWishList(String memberId) {
-		return wishlistRepository.getMyWishList(memberId);
+	public int getListCount(Map<String, Object> paramMap) {
+		return wishlistRepository.getListCount(paramMap);
+	}	
+	
+	// 내 찜 목록 가져오기
+	@Override
+	public List<Map<String, Object>> getMyWishList(Map<String, Object> paramMap) {
+		int limit = (int) paramMap.get("limit");
+		int page = (int) paramMap.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return wishlistRepository.getMyWishList(rowBounds, paramMap);
 	}	
 }

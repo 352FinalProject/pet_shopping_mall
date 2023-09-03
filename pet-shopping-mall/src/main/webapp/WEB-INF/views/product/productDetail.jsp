@@ -565,9 +565,10 @@ $(function() {
     });
 });
 
-$("#clickHeart").on("click", function() {
-    var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // 이전 상태에 따라 반대로 설정
+$("#clickHeart").on("click", function() { // clickHeart라는 id를 가진 태그를 클릭 시 이벤트 발생하는 함수
+    var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // clickHeart라는 id를 가진 태그의 class 목록에서 delete와 insert 위치 찾기 : 없으면 -1 return
     
+    // ajax 정규 문법 -> 구글링
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/product/insertPick.do",
@@ -577,14 +578,14 @@ $("#clickHeart").on("click", function() {
         data: JSON.stringify({
             "productId": ${product.productId},
             "state": state
-        }),
+        }), // JSON.stringify("키": "값") : json 값을 string으로 변환하는 함수
         success: function(result) {
-            if (result.rs == "insertS") {
-               $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-                $("#clickHeart").text("♥");
-            } else if (result.rs == "deleteS") {
-               $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-                $("#clickHeart").text("♡");
+            if (result.rs == "insertS") { // insert 성공일 때
+               $("#likeCnt").text(Number($("#likeCnt").text()) + 1); // 찜 숫자 증가
+                $("#clickHeart").text("♥"); // 하트 텍스트 변경
+            } else if (result.rs == "deleteS") { // delete 성공일 때
+               $("#likeCnt").text(Number($("#likeCnt").text()) - 1); // 찜 숫자 감소
+                $("#clickHeart").text("♡"); // 하트 텍스트 변경
             }
             
             alert(result.msg);

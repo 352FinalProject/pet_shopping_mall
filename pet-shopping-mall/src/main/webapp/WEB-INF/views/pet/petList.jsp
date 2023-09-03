@@ -71,7 +71,7 @@
                     <tbody>
                         <c:forEach items="${pets}" var="pet" varStatus="vs">
                             <tr class="pet-row">
-                                <td>${vs.index + 1}</td>
+                                <td>${vs.index + 1}</td>                                
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petKind}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petBreed}</a></td>
                                 <td><a href="${pageContext.request.contextPath}/pet/petDetail.do?petId=${pet.petId}">${pet.petGender == 'M' ? '♂' : '♀'}</a></td>

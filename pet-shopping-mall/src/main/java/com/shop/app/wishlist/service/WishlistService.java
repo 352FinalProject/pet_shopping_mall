@@ -16,6 +16,15 @@ public interface WishlistService {
 	// 찜 제거 
 	int deletePick(int productId, String memberId);
 	
+	// 내 찜 목록 개수 가져오기
+	int getListCount(Map<String, Object> paramMap);
+	
 	// 내 찜 목록 가져오기 
-	List<Map<String, Object>> getMyWishList(String memberId);
+	List<Map<String, Object>> getMyWishList(Map<String, Object> paramMap);
+	
+	//페이징바
+	static int findTotalWishlistCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
