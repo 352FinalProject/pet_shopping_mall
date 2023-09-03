@@ -30,12 +30,12 @@ public interface OrderService {
 	Order findByOrder(Order order);
 
 	// 주문내역 조회 (담희)
-	List<Order> getOrderList(String memberId);
+	List<Order> getOrderList(String memberId, Map<String, Object> params);
 
 	// 주문 취소
 	int insertCancelOrder(String orderNo, String isRefund);
 
-	List<Order> getOrderListByPeriod(String memberId, int period);
+	List<Order> getOrderListByPeriod(String memberId, int period, Map<String, Object> params);
 
 
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
@@ -79,6 +79,9 @@ public interface OrderService {
 
 	// 상품상세 - 리뷰 - 상품 뿌리기
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
+
+	
+	int findTotalOrderCount(String memberId);
 
 	
 	// 리뷰-상품연결 테스트
