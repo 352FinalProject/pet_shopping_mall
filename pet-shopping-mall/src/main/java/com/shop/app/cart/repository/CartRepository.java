@@ -21,7 +21,7 @@ public interface CartRepository {
 	@Select("select * from cartitem i left join cart c on i.cart_id = c.cart_id where c.member_id= #{memberId}")
 	List<CartItem> getCartList(String memberId);
 	
-	CartInfoDto getCartInfoList(int productDetailId);
+	CartInfoDto getCartInfoList(int productDetailId, int cartitemId);
 
 	@Select("select * from cart where member_id = #{memberId}")
 	int getMemberCart(String memberId);

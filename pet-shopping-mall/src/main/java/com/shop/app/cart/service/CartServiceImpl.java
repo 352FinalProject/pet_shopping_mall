@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
 		CartInfoDto product = null;
 		
 		for(int i=0; i <cartItemList.size(); i++) {
-			product = cartRepository.getCartInfoList(cartItemList.get(i).getProductDetailId());
+			product = cartRepository.getCartInfoList(cartItemList.get(i).getProductDetailId(), cartItemList.get(i).getCartitemId());
 			cartInfoList.add(product);
 		}
 		return cartInfoList;
