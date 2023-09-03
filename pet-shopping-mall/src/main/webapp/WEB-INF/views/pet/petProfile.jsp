@@ -6,39 +6,39 @@
 <jsp:include page="/WEB-INF/views/common/sidebar2.jsp" />
 <style>
 .common-section{
-	display: flex;
+   display: flex;
     flex-direction: column;
     margin:100px;
 }
 .common-div {
-	justify-content: center;
-	align-items: left;
-	display: flex;
+   justify-content: center;
+   align-items: left;
+   display: flex;
 } 
 
 /* 회원가입 타이틀 */
 .common-title {
-	font-size:24px;
-	justify-content: center;
-	display: flex;
+   font-size:24px;
+   justify-content: center;
+   display: flex;
 }
 
 /* input 글씨 왼쪽정렬 */
 .common-div table th {
-	text-align: left;
+   text-align: left;
 }
 
 /* 테이블 사이 간격 */
 .common-div table td {
-	padding: 5px;
+   padding: 5px;
 }
 
 /* input-button 태그 */
 .common-div table td input{
-	height: 30px;
- 	border-radius: 10px;
- 	border: 1px solid lightgray;
- 	background-color: white;
+   height: 30px;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    background-color: white;
 }
 
 .common-div table td input[type="email"] {
@@ -51,48 +51,48 @@
 .common-div table td input[type="tel"], 
 .common-div table td input[type="date"],
 .common-div table td input[type="email"] {
-		margin-right: 10px;
-		margin-left: 10px;
-		width: 250px;
-		border-radius: 20px;
-		height: 40px;
-		border: 1px solid lightgray;
-		padding: 2px 15px; /* 위아래 2px 좌우 15px 패딩 조정 */
+      margin-right: 10px;
+      margin-left: 10px;
+      width: 250px;
+      border-radius: 20px;
+      height: 40px;
+      border: 1px solid lightgray;
+      padding: 2px 15px; /* 위아래 2px 좌우 15px 패딩 조정 */
 }
 
 /* 돌아가기&가입하기 버튼 */
 .resetAndSubmit {
-	text-align: center;
+   text-align: center;
 }
 
 /* 돌아가기 버튼 */
 .resetAndSubmit input[type="reset"] {
-	background-color: #c8c8c8;
-	margin-right: 10px;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	color: white;
-	border: 1px solid #e7e7e7;
-	margin-top: 30px;
+   background-color: #c8c8c8;
+   margin-right: 10px;
+   width: 120px;
+   height: 40px;
+   border-radius: 20px;
+   color: white;
+   border: 1px solid #e7e7e7;
+   margin-top: 30px;
 }
 
 /* 등록하기 버튼 */
 .resetAndSubmit input[type="submit"] {
-	background-color: #5886d3;
-	width: 120px;
-	height: 40px;
-	border-radius: 20px;
-	border: 1px solid #e7e7e7;
-	color: white;
-	
+   background-color: #5886d3;
+   width: 120px;
+   height: 40px;
+   border-radius: 20px;
+   border: 1px solid #e7e7e7;
+   color: white;
+   
 }
 
 /* 성별선택 버튼 */
 
 .gender-button-container {
     display: flex;
-	ustify-content: flex-start;
+   ustify-content: flex-start;
     margin-top: 10px; /* 버튼과의 간격을 설정하거나 필요에 따라 조정하세요 */
     margin-left: 10px; 
 }
@@ -144,13 +144,13 @@
     <div class="common-container">
         <div class="common-div">
             <form:form action="${pageContext.request.contextPath}/pet/petProfile.do" method="POST"> <!-- 2. 이부분 ${pageContext.request.contextPath} 추가 
-            																								3. 상단에 시큐리티 태그 링크, form:form 추가 -->
+                                                                                    3. 상단에 시큐리티 태그 링크, form:form 추가 -->
             
                 <table>
                   <tr>
                         <th>아이디</th>
                         <td>
-                            <input type="text" name="memberId" id="memberId" value="<sec:authentication property="name"/>" required="readonly">
+                            <input type="text" name="memberId" id="memberId" value="<sec:authentication property="name"/>" readonly>
                         </td>
                     </tr>
                     
@@ -195,18 +195,18 @@
                     </tr>
                     <tr>
                         <th>성별</th>
-					<td>
-					    <input type="hidden" name="petGender" id="genderInput" value="${petInfo.petGender}">
-					    <div class="gender-button-container">
-					        <input type="button" name="gender" value="M" onclick="selectGender('M')" ${petInfo.petGender == 'M' ? 'class="selected"' : ''}>
-					        <input type="button" name="gender" value="F" onclick="selectGender('F')" ${petInfo.petGender == 'F' ? 'class="selected"' : ''}>
-					    </div>
-					</td>
+               <td>
+                   <input type="hidden" name="petGender" id="genderInput" value="${petInfo.petGender}">
+                   <div class="gender-button-container">
+                       <input type="button" name="gender" value="M" onclick="selectGender('M')" ${petInfo.petGender == 'M' ? 'class="selected"' : ''}>
+                       <input type="button" name="gender" value="F" onclick="selectGender('F')" ${petInfo.petGender == 'F' ? 'class="selected"' : ''}>
+                   </div>
+               </td>
                     </tr>
                     <tr>
-						<td class="resetAndSubmit" colspan="2"><input type="reset" value="돌아가기"
-							onclick="location.href='${pageContext.request.contextPath}/'">
-							<input type="submit" value="등록하기">
+                  <td class="resetAndSubmit" colspan="2"><input type="reset" value="돌아가기"
+                     onclick="location.href='${pageContext.request.contextPath}/'">
+                     <input type="submit" value="등록하기">
                         </td>
                     </tr>
                 </table>
