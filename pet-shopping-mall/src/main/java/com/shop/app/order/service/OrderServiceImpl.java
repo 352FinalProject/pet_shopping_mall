@@ -107,12 +107,12 @@ public class OrderServiceImpl implements OrderService {
 	public int insertCancelOrder(String orderNo, String isRefund) {
 		int result = 0;
 		Order order = orderRepository.findOrderByOrderNo(orderNo);
-		
+		log.debug("order = {}", order);
 		int orderId = order.getOrderId();
 		CancelOrder cancel = CancelOrder.builder()
 				.orderId(orderId)
 				.build();
-		result = orderRepository.insertCancelOrder(cancel, 1);
+		result = orderRepository.insertCancelOrder(cancel, 1, orderId);
 		result = orderRepository.updateOrderStatus(orderNo, 4);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 			
 		return result;
