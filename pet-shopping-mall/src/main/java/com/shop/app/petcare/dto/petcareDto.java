@@ -1,11 +1,11 @@
-package com.shop.app.community.dto;
+package com.shop.app.petcare.dto;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 
-import com.shop.app.community.entity.Community;
+import com.shop.app.petcare.entity.Petcare;
 import com.shop.app.review.dto.ReviewCreateDto;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class CommunityCreateDto {
+public class petcareDto {
 	
 //	private int communityId;
 //	

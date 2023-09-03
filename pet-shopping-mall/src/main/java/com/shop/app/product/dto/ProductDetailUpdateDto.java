@@ -16,7 +16,6 @@ public class ProductDetailUpdateDto {
     private String optionName;
     private String optionValue;
     private int additionalPrice;
-    private int saleState;
     
     public ProductDetail toProductDetail() {
     	return ProductDetail.builder()
@@ -24,7 +23,6 @@ public class ProductDetailUpdateDto {
     			.optionName(optionName)
     			.optionValue(optionValue)
     			.additionalPrice(additionalPrice)
-    			.saleState(saleState)
     			.build();
     }
 }

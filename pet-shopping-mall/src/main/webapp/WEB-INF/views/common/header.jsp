@@ -145,6 +145,8 @@
    href="${pageContext.request.contextPath}/resources/css/point.css" />
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/cartOrder.css" />
+<link rel="stylesheet"
+   href="${pageContext.request.contextPath}/resources/css/petcare.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
@@ -171,6 +173,9 @@
                   href="${pageContext.request.contextPath}/member/terms.do">회원가입</a>
                </li>
             </sec:authorize>
+            <li class="petcare_li"><a
+               href="${pageContext.request.contextPath}/petcare/petcareList.do">병원예약</a>
+            </li>
             <li class="logout_li"><a
                href="${pageContext.request.contextPath}/servicecenter/service.do">고객센터</a>
             </li>
@@ -187,7 +192,16 @@
             <sec:authorize access="isAuthenticated()">
                <div class="notification-container">
                   <button id="openPopupBtn" onclick="loadNotifications(memberId)">
-                     <i class="bi bi-bell"></i>
+                    
+	                     <img
+	                     src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png"
+	                     class="notiBellx" alt="알림" />
+                     
+                     <c:if test="${not empty notifications}">
+	                     <img
+	                     src="${pageContext.request.contextPath}/resources/images/home/notiBello.png"
+	                     class="notiBello" alt="알림" />
+                     </c:if>
                   </button>
                   <div id="notificationPopup" class="popup">
                      <div class="popup-content"></div>

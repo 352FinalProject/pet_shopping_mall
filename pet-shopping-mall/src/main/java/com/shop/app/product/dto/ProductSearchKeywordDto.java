@@ -8,6 +8,5 @@ import lombok.ToString;
 public class ProductSearchKeywordDto {
 	private String searchKeyword;
 	private String searchCategory;
-	private int[] saleState;
 	
 }

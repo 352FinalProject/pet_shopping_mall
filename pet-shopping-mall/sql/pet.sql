@@ -190,10 +190,10 @@ create table answer(
 create table image_attachment (
     image_id number,
     image_type number not null,
-    image_original_filename varchar2(500),
-    image_renamed_filename varchar2(500),
-    image_file_size number,
-    thumbnail char(1),
+    image_original_filename varchar2(500) not null,
+    image_renamed_filename varchar2(500) not null,
+    image_file_size number not null,
+    thumbnail char(1) not null,
     image_created_at timestamp default systimestamp,
     constraint pk_image_attachment_id primary key(image_id)
 );

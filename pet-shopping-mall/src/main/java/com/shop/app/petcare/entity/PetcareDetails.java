@@ -1,4 +1,4 @@
-package com.shop.app.community.entity;
+package com.shop.app.petcare.entity;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CommunityDetails extends Community {
+public class PetcareDetails extends Petcare {
 	
 	private List<ImageAttachment> attachments;
 	private List<ImageAttachmentMapping> attachmentMapping;

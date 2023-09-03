@@ -175,6 +175,7 @@ public class OrderController {
 	                reviewWriteMap.put(key, reviewWrite);
 	            }
 	        }
+	        log.debug("reviewWriteMap = {}", reviewWriteMap);
 	        model.addAttribute("reviewWrite", reviewWriteMap);
 	    }
 	    

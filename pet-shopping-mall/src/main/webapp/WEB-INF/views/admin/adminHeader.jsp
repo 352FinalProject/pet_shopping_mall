@@ -34,52 +34,52 @@
 						<a class="nav-link"	href="${pageContext.request.contextPath}/admin/admin.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
-							</div> 대시보드
+							</div> <div class="navContent">대시보드</div>
 						</a>
 						<div class="sb-sidenav-menu-heading">회원목록</div>
 						<a class="nav-link"
 							href="${pageContext.request.contextPath}/admin/adminMemberList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
-							</div> 전체 회원목록
+							</div> <div class="navContent">전체 회원목록</div>
 						</a> <a class="nav-link"
 							href="${pageContext.request.contextPath}/admin/adminSubscribeList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
-							</div> 구독 회원목록
+							</div> <div class="navContent">구독 회원목록</div>
 						</a>
 						<div class="sb-sidenav-menu-heading">상품</div>
 						<a class="nav-link"
 							href="${pageContext.request.contextPath}/admin/adminProductList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
-							</div> 상품목록
+							</div> <div class="navContent">상품목록</div>
 						</a>
 						<div class="sb-sidenav-menu-heading">주문</div>
 						<a class="nav-link"
 							href="${pageContext.request.contextPath}/admin/adminOrderList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
-							</div> 주문목록
+							</div> <div class="navContent">주문목록</div>
 						</a>
 						<div class="sb-sidenav-menu-heading">매출</div>
 						<a class="nav-link"
 							href="${pageContext.request.contextPath}/admin/adminStatisticsProduct.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-chart-area"></i>
-							</div> 상품별 매출
+							</div> <div class="navContent">상품별 매출</div>
 						</a> 
 						<a class="nav-link"
 							href="${pageContext.request.contextPath}/admin/adminStatisticsByDate.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-chart-area"></i>
-							</div> 날짜별 매출
+							</div> <div class="navContent">날짜별 매출</div>
 						</a> 
 						<div class="sb-sidenav-menu-heading">문의관련</div>
 						<a class="nav-link" href="${pageContext.request.contextPath}/admin/adminQuestionList.do">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
-							</div> 문의 관리
+							</div> <div class="navContent">문의 관리</div>
 						</a>
 					</div>
 				</div>

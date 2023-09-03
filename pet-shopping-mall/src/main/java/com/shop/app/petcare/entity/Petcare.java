@@ -1,4 +1,4 @@
-package com.shop.app.community.entity;
+package com.shop.app.petcare.entity;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -14,14 +14,12 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Community {
+public class Petcare {
 	
-	private int communityId;
-	private String communityMemberId;
-	private String communityTitle;
-	private String communityContent;
-	private LocalDateTime communityCreatedAt;
-	
-	private int imageId;
+	private int petcareId;
+	private String petcareMemberId;
+	private int petcarePetId;
+	private int petcareCareType; // 1.일반진료 2.예방접종 3.건강검진 4.상담진료
+	private LocalDateTime petcareReservationCreatedAt;
 	
 }

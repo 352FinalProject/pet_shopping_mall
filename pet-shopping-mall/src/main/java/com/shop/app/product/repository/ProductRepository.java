@@ -28,7 +28,7 @@ public interface ProductRepository {
 	@Select("select * from product_category where category_id = #{categoryId}")
 	ProductCategory findProductCategoryById(int categoryId);
 
-	@Insert("insert into product(product_id, category_id, product_name, product_price, image_id, create_date, expire_date, like_cnt, view_cnt) values (seq_product_id.nextval, #{categoryId}, #{productName}, #{productPrice}, #{imageId}, default, null, default, default)")
+	@Insert("insert into product(product_id, category_id, product_name, product_price, image_id, create_date, like_cnt) values (seq_product_id.nextval, #{categoryId}, #{productName}, #{productPrice}, #{imageId}, default, default)")
 	@SelectKey(
 			before = false,
 			keyProperty = "productId",
@@ -52,7 +52,7 @@ public interface ProductRepository {
 	@Delete("delete from product where product_id = #{productId}")
 	int deleteProduct(int productId);
 
-	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId, jdbcType=INTEGER}, #{optionName, jdbcType=VARCHAR}, #{optionValue, jdbcType=VARCHAR}, #{additionalPrice, jdbcType=INTEGER}, #{saleState, jdbcType=INTEGER})")
+	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId, jdbcType=INTEGER}, #{optionName, jdbcType=VARCHAR}, #{optionValue, jdbcType=VARCHAR}, #{additionalPrice, jdbcType=INTEGER})")
 	@SelectKey(
 			before = false,
 			keyProperty = "productDetailId",
@@ -84,7 +84,7 @@ public interface ProductRepository {
 	@Select("select * from product_detail where product_id = #{productId}")
 	List<ProductDetail> findAllProductDetailsByProductId(int productId);
 
-	@Insert("update product_detail set option_name = #{optionName}, option_value = #{optionValue}, additional_price = #{additionalPrice}, sale_state = #{saleState} where product_detail_id = #{productDetailId}")
+	@Insert("update product_detail set option_name = #{optionName}, option_value = #{optionValue}, additional_price = #{additionalPrice} where product_detail_id = #{productDetailId}")
 	int updateProductDetail(ProductDetail productDetail);
 
 	@Delete("delete from product_detail where product_detail_id = #{productDetailId}")
@@ -117,7 +117,7 @@ public interface ProductRepository {
 	List<Product> adminProductSearch(String searchKeyword, String searchCategory);
 
 	// 상품수정시 옵션 추가등록(수경)
-	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice}, #{saleState})")
+	@Insert("insert into product_detail values (seq_product_detail_id.nextval, #{productId}, #{optionName}, #{optionValue}, #{additionalPrice})")
 	int adminOptionCreate(ProductDetail productDetail);
 	
 
