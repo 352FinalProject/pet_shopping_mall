@@ -191,10 +191,8 @@
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                <div class="notification-container">
-                  <button id="openPopupBtn" onclick="loadNotifications(memberId)">
-	                  <img
-	                  src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png"
-	                  class="notiBell" alt="알림" />
+               	  <button id="openPopupBtn" onclick="loadNotifications(memberId)">
+					 <img src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png" id="notificationBell" alt="Notification" />
                   </button>
                   <div id="notificationPopup" class="popup">
                      <div class="popup-content"></div>
