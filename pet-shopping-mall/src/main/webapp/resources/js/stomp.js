@@ -41,5 +41,11 @@ const renderMessage = (message) => {
     $popupContent.prepend(newNotificationContainer);
 
     $notificationPopup.addClass("active");
+    
+    const notificationBellImg = document.getElementById("notificationBell");
+    notificationBellImg.setAttribute("src", `resources/images/home/notiBello.png`); 
+    notificationBellImg.classList.add("pulse-button");
+    
+    
 };
 

@@ -264,7 +264,7 @@ public class ReviewController {
 		int newPointResult = pointService.insertPoint(newPoint);
 		
 		
-		// 생일자 알림을 보낸다
+		// 리뷰작성포인트 알림을 보낸다
 		String to = newPoint.getPointMemberId();
 		Notification insertNotification = Notification.builder()
 				.notiCategory(3)
