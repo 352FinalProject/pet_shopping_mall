@@ -400,6 +400,11 @@ const proceedPay = () => {
 };
 
 const requestPaymentByCard = (data) => {
+    const frm = document.querySelector("#orderDeleteFrm");
+    frm.orderNo.value = data.orderNo;
+    frm.pointsUsed.value = data.pointsUsed;
+    frm.useCoupon.value = data.useCoupon;
+    frm.couponId.value = data.couponId;
 	
 	IMP.init('imp60204862');
 	/* 2. 결제 데이터 정의 */
@@ -441,6 +446,8 @@ const requestPaymentByCard = (data) => {
 	        }).done((data) =>  {
 	            alert("결제가 취소되었습니다.");
 	        });
+	        confirm("결제가 취소되었습니다. 장바구니로 이동합니다.");
+	        frm.submit();
 	        return;
 	    } // if문 끝
 	    
