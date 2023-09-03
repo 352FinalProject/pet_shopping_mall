@@ -1,6 +1,7 @@
 package com.shop.app.point.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.shop.app.order.entity.OrderDetail;
 import com.shop.app.point.entity.Point;
@@ -9,7 +10,7 @@ import com.shop.app.review.entity.ReviewDetails;
 public interface PointService	 {
 
 	// 포인트 전체 조회 (예라)
-	List<Point> findPointAll(Point point);
+	List<Point> findPointAll(Map<String, Object> params);
 
 	// 회원가입 포인트 적립 (예라)
 	int insertPoint(Point point);
@@ -34,6 +35,8 @@ public interface PointService	 {
 
 	// 포인트 롤백 (예라)
 	List<Point> findRollbackPointCurrentById(Point rollbackPoint);
+
+	int findTotalPointCount();
 
 	
 }

@@ -149,7 +149,7 @@
         <li><a href="#">상품정보</a></li>
         <li><a href="#product-review-box">상품후기</a></li>
         <li><a href="#product-notice-box">교환/반품/배송</a></li>
-        <li><a href="#">1:1문의</a></li>
+        <li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
       </ul>
     </div>
     
@@ -178,7 +178,7 @@
 			<li><a href="#">상품정보</a></li>
 			<li><a href="#">상품후기</a></li>
 			<li><a href="#">교환/반품/배송</a></li>
-			<li><a href="#">1:1문의</a></li>
+			<li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
 		</ul>
 	</div>
 	<div class="review-div">
@@ -370,7 +370,7 @@
 			<li><a href="#">상품정보</a></li>
 			<li><a href="#product-review-box">상품후기</a></li>
 			<li><a href="#product-notice-box">교환/반품/배송</a></li>
-			<li><a href="#">1:1문의</a></li>
+			<li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
 		</ul>
 	</div>
 	<div class="processing-wrap">

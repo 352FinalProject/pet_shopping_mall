@@ -150,7 +150,7 @@ public class MemberSecurityController {
            String to = memberCoupon.getMemberId();
 			Notification insertNotification = Notification.builder()
 					.notiCategory(3)
-					.notiContent("님의 생일자 할인쿠폰(10%)이 발급됬습니다.")
+					.notiContent("회원가입 할인쿠폰(10%)이 발급됐습니다.")
 					.notiCreatedAt(formatTimestampNow())
 					.memberId(to) 
 					.build();

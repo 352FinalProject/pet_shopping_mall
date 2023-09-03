@@ -29,9 +29,9 @@ public class NotificationController {
 	
 	@ResponseBody
 	@GetMapping("/findAllNotification.do")
-	public List<Notification> findAllNotification(@RequestParam String memberId) {
+	public List<Notification> findAllNotification(@RequestParam String memberId, Model model) {
 	    List<Notification> notifications = notificationService.findAllNotification(memberId);
-	    System.out.println("매핑됨!!!");
+	    model.addAttribute("notifications", notifications);
 	    return notifications;
 	}
 	
@@ -41,8 +41,6 @@ public class NotificationController {
 		System.out.println("id = " + id);
 		int result = notificationService.deleteNotification(id);
 		if (result == 1) {
-			System.out.println("삭제완료!!!!");
-			
 			return "delete 성공";
 		}else {
 			return "delete 오류";
