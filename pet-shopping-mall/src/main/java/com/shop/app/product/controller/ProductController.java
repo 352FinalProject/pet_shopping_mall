@@ -57,6 +57,7 @@ import com.shop.app.wishlist.service.WishlistService;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @Validated
 @RequestMapping("/product")
@@ -205,7 +206,10 @@ public class ProductController {
 	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
-	    /* 찜 등록 여부 가져오기 (선모) */
+		/**
+		 * @author 강선모
+	   	 * -찜 등록 여부 가져오기 
+		 */
 		if (member != null) {
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
@@ -292,7 +296,10 @@ public class ProductController {
    }
    
    
-   /* 하트 클릭 (선모) */
+	/**
+	 * @author 강선모
+   	 * -하트 클릭 이벤트
+	 */
    @ResponseBody
    @PostMapping("/insertPick.do")
    public Map insertPick(@Valid @RequestBody Map<String, Object> param, @AuthenticationPrincipal MemberDetails member) {

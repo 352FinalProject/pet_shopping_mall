@@ -25,7 +25,7 @@ public class WishlistController {
 	@Autowired
     private WishlistService wishlistService;
     
-	// 찜목록 페이지 이동 (선모)
+	// 찜목록 페이지 이동 
     @GetMapping("/myWishlist.do")
     public void myWishlist( @AuthenticationPrincipal MemberDetails member,Model model) {
     	// 찜 목록 가져오기

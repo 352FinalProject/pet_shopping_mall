@@ -406,6 +406,8 @@
 		</div>
 	</div>
 	</div>
+	
+
 	<div class="product-bottom">
 		<div class="product-bottom2">
 			<div>

@@ -20,25 +20,25 @@ public class WishlistServiceImpl implements WishlistService {
 	@Autowired
 	private WishlistRepository wishlistRepository;
 	
-	// 찜 여부 체크 (선모)
+	// 찜 여부 체크 
 	@Override
 	public int getLikeProduct(int productId, String memberId) {
 		return wishlistRepository.getLikeProduct(productId, memberId);
 	}
 
-	// 찜 등록 (선모)
+	// 찜 등록 
 	@Override
 	public int insertPick(int productId, String memberId) {
 		return wishlistRepository.insertPick(productId, memberId);
 	}
 	
-	// 찜 제거 (선모)
+	// 찜 제거 
 	@Override
 	public int deletePick(int productId, String memberId) {
 		return wishlistRepository.deletePick(productId, memberId);
 	}
 
-	// 내 찜 목록 가져오기 (선모)
+	// 내 찜 목록 가져오기
 	@Override
 	public List<Map<String, Object>> getMyWishList(String memberId) {
 		return wishlistRepository.getMyWishList(memberId);
