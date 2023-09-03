@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberRole;
 import com.shop.app.member.entity.Subscribe;
@@ -138,11 +139,13 @@ public class QuestionController {
 		        upFile.transferTo(destFile);	
 
 		        int imageType = 1; 
+		        Thumbnail thumbnail = Thumbnail.valueOf("N");
 
 		        ImageAttachment attach = 
 		            ImageAttachment.builder()
 		            .imageOriginalFilename(imageOriginalFilename)
 		            .imageRenamedFilename(imageRenamedFilename)
+		            .thumbnail(thumbnail)
 		            .imageType(imageType)
 		            .imageFileSize(upFile.getSize())
 		            .build();

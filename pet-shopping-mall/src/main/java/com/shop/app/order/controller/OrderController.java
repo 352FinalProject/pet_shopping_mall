@@ -63,17 +63,28 @@ public class OrderController {
 	 * 멤버 개인이 주문 내역 조회
 	 */
 	@GetMapping("/orderList.do")
-	public void getOrderList(Model model, @RequestParam(name = "period", required = false) Integer period, @AuthenticationPrincipal MemberDetails member) {
+	public void getOrderList(@RequestParam(defaultValue = "1") int page, Model model, @RequestParam(name = "period", required = false) Integer period, @AuthenticationPrincipal MemberDetails member) {
 	    String memberId = member.getMemberId();
 	    List<Order> orderList;
+	    
+	    int limit = 5;
+	    Map<String, Object> params = Map.of(
+	    		"page", page,
+	    		"limit", limit
+	    		);
+	    int totalCount = orderService.findTotalOrderCount(memberId);
+	    int totalPages = (int) Math.ceil((double) totalCount / limit);
+	    model.addAttribute("totalPages", totalPages);
+
 
 	    if (period != null) 
-	    	orderList = orderService.getOrderListByPeriod(memberId, period);
+	    	orderList = orderService.getOrderListByPeriod(memberId, period, params);
 	    else 
-	    	orderList = orderService.getOrderList(memberId);
+	    	orderList = orderService.getOrderList(memberId, params);
 			
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderList);
+		
 	}
 	
 	@GetMapping("/cancelOrderDetail.do")
