@@ -51,16 +51,14 @@ const emptyNotification = () => {
     $notificationPopup.addClass("active");
 };
 
-// 알림 아이콘 바꾸는 메서드
-
-
-
-
 
 // 알림 초기화 메서드
 function clearNotifications() {
     const $popupContent = $("#notificationPopup .popup-content");
     $popupContent.empty();
+    const notificationBellImg = document.getElementById("notificationBell");
+    notificationBellImg.setAttribute("src", `resources/images/home/notiBellx.png`);
+    notificationBellImg.classList.remove("pulse-button");
 }
 
 // 팝업창 열고 알림생성 
@@ -71,6 +69,9 @@ function loadNotifications(memberId) {
     
     if (notificationPopup.classList.contains("active")) {
         notificationPopup.classList.remove("active");
+        const notificationBellImg = document.getElementById("notificationBell");
+    	notificationBellImg.setAttribute("src", `resources/images/home/notiBellx.png`);
+    	notificationBellImg.classList.remove("pulse-button");
     } else {
         notificationPopup.classList.add("active");
         $.ajax({
@@ -87,7 +88,6 @@ function loadNotifications(memberId) {
                 if (notifications && notifications.length > 0) {
                     notifications.forEach(notification => {
                         renderNotification(notification);
-                        createImgTagUnderButton()
                     });
                 } else {
                     emptyNotification();

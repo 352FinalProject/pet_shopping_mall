@@ -170,9 +170,16 @@
 							</div>
 							<div class="product-price">
 								<span>배송비</span>
-								<p>
-									<span>(+)</span><span id="deliveryFee">3,000</span>원
-								</p>
+								<c:choose>
+									<c:when test="${myPage.subscribe == 'N'}">
+										<p>
+											<span>(+)</span><span id="deliveryFee">3,000</span>원
+										</p>
+									</c:when>
+									<c:when test="${myPage.subscribe == 'Y'}">
+										<p>💡우동친 등급 배송비 무료 혜택</p>
+									</c:when>
+								</c:choose>
 							</div>
 							<div class="product-price">
 								<span>포인트</span>
@@ -192,7 +199,7 @@
 						<div class="product-price">
 							<strong class="price-title">최종 결제 금액</strong>
 							<p class="price">
-								<span id="amount"><fmt:formatNumber value="${amount + 3000}"
+								<span id="amount"><fmt:formatNumber value="${amount}"
 										groupingUsed="true" /></span>원
 							</p>
 						</div>
@@ -299,7 +306,6 @@ const proceedPay = () => {
 	
 	// 배송비 3000원 추가 (예라)
     let amountNumber = parseInt('${amount}'.replace(/,/g, ''));
-    amountNumber += 3000;
     
     // 쿠폰 할인값 계산
     let enteredPoints = parseInt(document.getElementById('discount').innerText.replace(/,/g, '').replace('원', '')) || 0;
@@ -338,7 +344,7 @@ const proceedPay = () => {
 		deliveryFee: delfee,
 		discount: pointValue + couponDiscount,
 		couponId: $("#couponSelect").val(),
-		amount: amountNumber - pointValue - couponDiscount,
+		amount: amountNumber - pointValue - couponDiscount + delfee,
 		pointsUsed: pointValue,
 		useCoupon: useCoupon,
 		couponDiscount: couponDiscount,
@@ -398,6 +404,11 @@ const proceedPay = () => {
 };
 
 const requestPaymentByCard = (data) => {
+    const frm = document.querySelector("#orderDeleteFrm");
+    frm.orderNo.value = data.orderNo;
+    frm.pointsUsed.value = data.pointsUsed;
+    frm.useCoupon.value = data.useCoupon;
+    frm.couponId.value = data.couponId;
 	
 	IMP.init('imp60204862');
 	/* 2. 결제 데이터 정의 */
@@ -439,6 +450,8 @@ const requestPaymentByCard = (data) => {
 	        }).done((data) =>  {
 	            alert("결제가 취소되었습니다.");
 	        });
+	        confirm("결제가 취소되었습니다. 장바구니로 이동합니다.");
+	        frm.submit();
 	        return;
 	    } // if문 끝
 	    
