@@ -29,11 +29,11 @@ const renderMessage = (message) => {
     deleteButton.innerHTML = `X`;
     deleteButton.className = "notification-delete-button"; 
     deleteButton.id = id; 
-	deleteButton.onclick = function() {
+   deleteButton.onclick = function() {
         notificationDelete(id); 
     };
-	clearNotifications();
-	
+   clearNotifications();
+   
     newNotification.appendChild(deleteButton);
 
     newNotificationContainer.appendChild(newNotification);
@@ -43,9 +43,8 @@ const renderMessage = (message) => {
     $notificationPopup.addClass("active");
     
     const notificationBellImg = document.getElementById("notificationBell");
-    notificationBellImg.setAttribute("src", `resources/images/home/notiBello.png`); 
+    notificationBellImg.setAttribute("src", "/pet/resources/images/home/notiBello.png"); 
     notificationBellImg.classList.add("pulse-button");
     
     
 };
-

@@ -57,7 +57,7 @@ function clearNotifications() {
     const $popupContent = $("#notificationPopup .popup-content");
     $popupContent.empty();
     const notificationBellImg = document.getElementById("notificationBell");
-    notificationBellImg.setAttribute("src", `resources/images/home/notiBellx.png`);
+    notificationBellImg.setAttribute("src", "/pet/resources/images/home/notiBellx.png");
     notificationBellImg.classList.remove("pulse-button");
 }
 
@@ -70,8 +70,8 @@ function loadNotifications(memberId) {
     if (notificationPopup.classList.contains("active")) {
         notificationPopup.classList.remove("active");
         const notificationBellImg = document.getElementById("notificationBell");
-    	notificationBellImg.setAttribute("src", `resources/images/home/notiBellx.png`);
-    	notificationBellImg.classList.remove("pulse-button");
+       notificationBellImg.setAttribute("src", "/pet/resources/images/home/notiBellx.png");
+       notificationBellImg.classList.remove("pulse-button");
     } else {
         notificationPopup.classList.add("active");
         $.ajax({
