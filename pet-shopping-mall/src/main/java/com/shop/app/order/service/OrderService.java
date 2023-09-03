@@ -44,9 +44,9 @@ public interface OrderService {
 	// 주문 취소 내역 조회
 	OrderCancelInfoDto getCancelInfo(String orderNo);
 
-	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
+	List<OrderCancelInfoDto> getCancelInfoAll(String memberId, Map<String, Object> params);
 
-	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period, Map<String, Object> params);
 	
 	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
 	List<OrderAdminProductStatisticsDto> adminStatisticsProduct();
