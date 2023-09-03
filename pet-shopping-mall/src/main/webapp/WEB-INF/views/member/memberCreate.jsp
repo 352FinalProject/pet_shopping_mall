@@ -429,8 +429,8 @@ function validateAddress() {
     const jibunAddress = jibunAddressInput.value;
     const detailAddress = detailAddressInput.value;
 
-    // 주소 유효성 검사를 위한 조건 (예: 길이가 5자 이상이어야 함)
-    const addressValidationCondition = /.{4,}/;
+    // 주소 유효성 검사를 위한 조건 (예: 길이가 2자 이상이어야 함)
+    const addressValidationCondition = /.{2,}/;
 
     // 주소가 유효한지 확인합니다.
     const isAddressValid = addressValidationCondition.test(roadAddress) &&
