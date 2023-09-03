@@ -130,7 +130,6 @@ public class ReviewController {
 		// 리뷰에 보여줄 내용들
 		List<ReviewListDto> reviews = reviewService.findReviewAll(params);
 		
-		log.debug("reviews = {}", reviews);
 		
 		model.addAttribute("reviews", reviews);
 	}

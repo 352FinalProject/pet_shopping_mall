@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
@@ -47,7 +48,7 @@ public interface OrderRepository {
 	int updateOrderStatus(String orderNo, int i);
 
 	@Select("select * from orderTbl where member_id = #{memberId} order by order_date desc")
-	List<Order> getOrderList(String memberId);
+	List<Order> getOrderList(String memberId, RowBounds rowBounds);
 	
 	
 	@Insert("insert into order_detail (order_id, product_detail_id, quantity) values (#{orderId}, #{productDetailId}, #{quantity})")
@@ -64,7 +65,7 @@ public interface OrderRepository {
 
 	
 	@Select("select * from orderTbl where member_id = #{memberId} and order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period}) order by order_date desc")
-	List<Order> getOrderListByPeriod(String memberId, int period);
+	List<Order> getOrderListByPeriod(String memberId, int period, RowBounds rowBounds);
 
 
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
@@ -114,6 +115,11 @@ public interface OrderRepository {
 	// 리뷰 작성 시 구매확정으로 바뀌기 (예라)
 	@Update("update orderTbl set order_status = 6 where order_id in (select o.order_id from orderTbl o join order_detail od on o.order_id = od.order_id join product_detail pd on od.product_detail_id = pd.product_detail_id join product p on pd.product_id = p.product_id where o.order_id = #{orderId} and od.product_detail_id = #{productDetailId} and p.product_id = #{productId})")
 	void updateOrderStatusWithDetail(int orderId, int productDetailId, int newStatus, int productId);
+
+	
+	@Select("select count (*) from orderTbl where member_id = #{memberId}")
+	int findTotalOrderCount(String memberId);
+
 
 	
 }

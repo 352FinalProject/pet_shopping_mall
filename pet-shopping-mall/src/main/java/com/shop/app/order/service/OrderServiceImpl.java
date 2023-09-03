@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
@@ -98,8 +99,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getOrderList(String memberId) {
-		return orderRepository.getOrderList(memberId);
+	public List<Order> getOrderList(String memberId, Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return orderRepository.getOrderList(memberId, rowBounds);
 	}
 
 	
@@ -120,8 +125,12 @@ public class OrderServiceImpl implements OrderService {
 
 	
 	@Override
-	public List<Order> getOrderListByPeriod(String memberId, int period) {
-		return orderRepository.getOrderListByPeriod(memberId, period);
+	public List<Order> getOrderListByPeriod(String memberId, int period, Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return orderRepository.getOrderListByPeriod(memberId, period, rowBounds);
 	}
 	
 
@@ -205,5 +214,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId) {
 		return orderRepository.findProductByReviewId(reviewId, productId);
+	}
+
+	@Override
+	public int findTotalOrderCount(String memberId) {
+		return orderRepository.findTotalOrderCount(memberId);
 	}
 }

@@ -83,6 +83,17 @@
 			<div class="empty-message">조회된 주문 내역이 없습니다.</div>
 		</c:if>
 	</div>
+<nav aria-label="...">
+  	<ul class="pagination pagination-sm">
+	    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+	        <li class="page-item ${page == pageNumber ? 'active' : ''}">
+	            <a class="page-link" href="${pageContext.request.contextPath}/order/orderList.do?page=${pageNumber}">
+                    <span class="page-number">${pageNumber}</span>
+                </a>
+	        </li>
+	    </c:forEach>
+	</ul>
+</nav>
 </section>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
