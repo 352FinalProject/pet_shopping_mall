@@ -29,10 +29,11 @@
 			<div class="title_desc">💪 털복숭이 친구들을 위한 영양간식
 				<a href="#"></a>
 			</div>
+			<a href="${pageContext.request.contextPath}/product/productList.do?id=2">
 			<div class="title_plus">더보기
 				<img src="${pageContext.request.contextPath}/resources/images/home/right-arrow.png" alt="홈 배경4" />
-				<a href="#"></a>
 			</div>
+			</a>
 		</div>
 		<div class="gallery_wrap2">
 		    <ul class="gallery2">
@@ -81,10 +82,10 @@
 			<div class="title_desc">✨ 색다른 패션으로 개성을 뽐내세요!
 				<a href="#"></a>
 			</div>
+			<a href="${pageContext.request.contextPath}/product/productList.do?id=3">
 			<div class="title_plus">더보기
 				<img src="${pageContext.request.contextPath}/resources/images/home/right-arrow.png" alt="홈 배경4" />
-				<a href="#"></a>
-			</div>
+			</div></a>
 		</div>
 	<div class="gallery_wrap3">
 	      <ul class="gallery3">
