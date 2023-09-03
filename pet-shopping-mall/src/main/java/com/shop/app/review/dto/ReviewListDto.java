@@ -2,6 +2,8 @@ package com.shop.app.review.dto;
 
 import java.time.LocalDateTime;
 
+import com.shop.app.common.entity.Thumbnail;
+
 import lombok.Data;
 
 @Data
@@ -19,7 +21,9 @@ public class ReviewListDto {
 	private String optionName; // product_detail
 	private String optionValue; // product_detail
 
-	private String imageOriginalFileName;
-	private String imageRenamedFileName;
+//	private String imageOriginalFileName;
+//	private String imageRenamedFileName;
+	
+	private String thumbnail;
 	
 }

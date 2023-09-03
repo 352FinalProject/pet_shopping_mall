@@ -2,10 +2,13 @@ package com.shop.app.servicecenter.inquiry.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.controller.advice.MailSender;
+import com.shop.app.notification.entity.Notification;
+import com.shop.app.notification.repository.NotificationRepository;
 import com.shop.app.servicecenter.inquiry.dto.AnswerCreateDto;
 import com.shop.app.servicecenter.inquiry.dto.AnswerUpdateDto;
 import com.shop.app.servicecenter.inquiry.dto.QuestionCreateDto;
@@ -44,6 +49,12 @@ public class AnswerController {
 	@Autowired
 	private MailSender mailSender;
 	
+	@Autowired
+	NotificationRepository notificationRepository;
+	
+	@Autowired
+	SimpMessagingTemplate simpMessagingTemplate;
+	
 	// 관리자 1:1 문의 댓글 작성 (예라)
 	@PostMapping("/inquiry/answerCreate.do")
 	public String adminAnswerCreate(@RequestParam int questionId, @RequestParam String questionEmail, AnswerCreateDto _answer) {
@@ -67,6 +78,24 @@ public class AnswerController {
 		// questionId 조회
 		Question questions = questionService.findQuestionById(question);
 		
+		if (result > 0) {
+	        // 답변이 등록되면 알림을 보낸다
+			String to = questions.getQuestionMemberId();
+			Notification insertNotification = Notification.builder()
+					.notiCategory(3)
+					.notiContent(questions.getQuestionTitle()+ "질문에 답변이 달렸습니다.")
+					.notiCreatedAt(formatTimestampNow())
+					.memberId(to) 
+					.build();
+			
+			// db에 알림저장
+			notificationRepository.insertNotification(insertNotification);
+			// db에서 가장 최신 알림 꺼내서
+			Notification notification = notificationRepository.latestNotification();
+			// 메세지 보냄
+			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
+	    }
+		
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
 	}
 	
@@ -89,4 +118,17 @@ public class AnswerController {
 		Question questions = _question.toQuestion();
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}
+	
+	// 알림 날짜변환메소드 (대원)
+	private String formatTimestamp(Timestamp timestamp) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        return dateFormat.format(timestamp);
+    }
+	// 알림 날짜변환메소드 (대원)
+    private String formatTimestampNow() {
+        return formatTimestamp(new Timestamp(System.currentTimeMillis()));
+    }
+	
+	
+	
 }
