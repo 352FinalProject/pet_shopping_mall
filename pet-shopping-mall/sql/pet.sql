@@ -60,7 +60,7 @@ SELECT *  FROM all_tables;
 --drop table sub_payment;
 --drop table image_attachment;
 --drop table product_category;
-
+--
 ---- 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
 --drop table review cascade constraints;
@@ -239,6 +239,8 @@ create table product_detail (
     constraints pk_product_detail_id primary key(product_detail_id),
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
 );
+
+
 
 -- 포인트 테이블
 create table point (
