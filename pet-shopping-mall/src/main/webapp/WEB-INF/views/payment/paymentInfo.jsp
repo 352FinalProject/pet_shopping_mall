@@ -311,7 +311,7 @@ const proceedPay = () => {
 
     if (selectedCouponValue !== "") {
         if (selectedCouponType === '회원가입 배송비 무료 쿠폰') {
-            couponDiscount = deliveryFee;
+            couponDiscount = parseInt(document.getElementById('deliveryFee').innerText.replace(/,/g, ''));
         } else if (selectedCouponType === '생일축하 10% 할인 쿠폰') {
             couponDiscount = Math.floor((totalPrice - pointsDiscount) * 0.1);
         }
@@ -319,6 +319,10 @@ const proceedPay = () => {
     
 	const memberRole = '${myPage.subscribe}';
 	const delfee = (memberRole === 'Y' ? 0 : 3000);
+	
+	console.log("amountNumber:", amountNumber);
+	console.log("pointValue:", pointValue);
+	console.log("couponDiscount:", couponDiscount);
 	
     const forms = document.querySelectorAll('[name="orderDetailFrm"]');
 	const data = {
