@@ -1029,7 +1029,6 @@ select * from product;
 select * from product where category_id = 1 order By product_price desc; --  가격 높은순
 select * from product where category_id = 1 order By product_price asc; -- 가격 낮은순
 
-
 select * from product where category_id = 1 order By create_date desc; --  최근 등록순
 
 -- 별점순
@@ -1134,6 +1133,9 @@ desc;
             select * from authority;
             select * from member;
             select * from product;
+
+select * from member;
             select * from orderTbl;
             delete from orderTbl where order_id = '1';
             update authority set auth = 'ROLE_ADMIN' where member_id = 'honggd';
+

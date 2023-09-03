@@ -8,7 +8,7 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
-					<h1 class="mt-4">관리자 홈</h1>
+					<h2 class="mt-3">관리자 홈</h2>
 					<ol class="breadcrumb mb-4">
 					</ol>
 					<div class="row">

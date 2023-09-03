@@ -428,3 +428,9 @@ footer p {
     font-size: 19px;
     font-weight: 500;
 }
+
+.notification-container img {
+	width: 30px;
+	margin-top: 5px;
+}
+

@@ -3,6 +3,8 @@ package com.shop.app.review.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,10 +37,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.Order;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.notification.entity.Notification;
+import com.shop.app.notification.repository.NotificationRepository;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.service.OrderService;
 import com.shop.app.payment.entity.Payment;
@@ -87,6 +93,13 @@ public class ReviewController {
 	@Autowired
 	private ServletContext application;
 
+	@Autowired
+	NotificationRepository notificationRepository;
+	
+	@Autowired
+	SimpMessagingTemplate simpMessagingTemplate;
+
+	
 	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
 	@GetMapping("/reviewList.do")
 	public void reviewList(
@@ -95,7 +108,7 @@ public class ReviewController {
 			Model model
 			) {
 
-		int limit = 2;
+		int limit = 5;
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String reviewMemberId = authentication.getName();
@@ -116,6 +129,8 @@ public class ReviewController {
 
 		// 리뷰에 보여줄 내용들
 		List<ReviewListDto> reviews = reviewService.findReviewAll(params);
+		
+		log.debug("reviews = {}", reviews);
 		
 		model.addAttribute("reviews", reviews);
 	}
@@ -164,12 +179,14 @@ public class ReviewController {
 				upFile.transferTo(destFile);
 
 				int imageType = 1;
+				Thumbnail thumbnail = Thumbnail.N;
 
 				ImageAttachment attach =
 						ImageAttachment.builder()
 						.imageOriginalFilename(imageOriginalFilename)
 						.imageRenamedFilename(imageRenamedFilename)
 						.imageType(imageType)
+						.thumbnail(thumbnail)
 						.imageFileSize(upFile.getSize())
 						.build();
 				attachments.add(attach);
@@ -245,6 +262,25 @@ public class ReviewController {
 		newPoint.setReviewId(pointReviewId.getReviewId());
 
 		int newPointResult = pointService.insertPoint(newPoint);
+		
+		
+		// 생일자 알림을 보낸다
+		String to = newPoint.getPointMemberId();
+		Notification insertNotification = Notification.builder()
+				.notiCategory(3)
+				.notiContent("리뷰작성 포인트가 적립되었습니다.")
+				.notiCreatedAt(formatTimestampNow())
+				.memberId(to) 
+				.build();
+		
+		// db에 알림저장
+		notificationRepository.insertNotification(insertNotification);
+		// db에서 가장 최신 알림 꺼내서
+		Notification notification = notificationRepository.latestNotification();
+		// 메세지 보냄
+		simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
+		
+		
 
 		return "redirect:/review/reviewList.do";
 	}
@@ -321,6 +357,14 @@ public class ReviewController {
 
 	}
 
-
+	// 알림 날짜변환메소드 (대원)
+	private String formatTimestamp(Timestamp timestamp) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        return dateFormat.format(timestamp);
+	}
+	// 알림 날짜변환메소드 (대원)
+	private String formatTimestampNow() {
+	    return formatTimestamp(new Timestamp(System.currentTimeMillis()));
+	}
 
 }

@@ -1,5 +1,7 @@
 package com.shop.app.member.controller;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,6 +44,8 @@ import com.shop.app.member.entity.Member;
 import com.shop.app.member.entity.MemberDetails;
 import com.shop.app.member.entity.TermsHistory;
 import com.shop.app.member.service.MemberService;
+import com.shop.app.notification.entity.Notification;
+import com.shop.app.notification.repository.NotificationRepository;
 import com.shop.app.payment.dto.SubScheduleDto;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
@@ -71,7 +76,12 @@ public class MemberSecurityController {
    @Autowired
    private CouponService couponService; // 회원가입시 쿠폰 발급
 
-   
+   @Autowired
+	NotificationRepository notificationRepository; // 알림 레파
+	
+	@Autowired
+	SimpMessagingTemplate simpMessagingTemplate; // 알림
+
    
    @GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
    public void memberCreate() {
@@ -132,6 +142,24 @@ public class MemberSecurityController {
 
            // memberCoupon db 추가
            int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
+           
+           String to = memberCoupon.getMemberId();
+			Notification insertNotification = Notification.builder()
+					.notiCategory(3)
+					.notiContent("님의 생일자 할인쿠폰(10%)이 발급됬습니다.")
+					.notiCreatedAt(formatTimestampNow())
+					.memberId(to) 
+					.build();
+			
+			// db에 알림저장
+			notificationRepository.insertNotification(insertNotification);
+			// db에서 가장 최신 알림 꺼내서
+			Notification notification = notificationRepository.latestNotification();
+			// 메세지 보냄
+			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
+           
+           
+           
        }
       
        // 약관 동의 정보 가져오기
@@ -300,6 +328,16 @@ public class MemberSecurityController {
    @GetMapping("/petUpdate.do")
    public void petUpdate() {
    }
+   
+   // 알림 날짜변환메소드 (대원)
+   private String formatTimestamp(Timestamp timestamp) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        return dateFormat.format(timestamp);
+	}
+	// 알림 날짜변환메소드 (대원)
+	private String formatTimestampNow() {
+	    return formatTimestamp(new Timestamp(System.currentTimeMillis()));
+	}
    
    /**
     * 멤버 구독자 업데이트 메소드

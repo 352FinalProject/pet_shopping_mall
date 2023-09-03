@@ -209,7 +209,8 @@
 }
 
 .active {
-	background-color: #5886d3;
+	padding: 10px;
+	border-radius: 6px;
 }
 
 .paybtn input[type="radio"] {

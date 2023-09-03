@@ -34,11 +34,11 @@
                        <c:forEach items="${reviews}" var="review" varStatus="vs">
                         <tr>
                            <td>
-                              <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">${review.reviewId}</a>
+                              <a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">${review.reviewSequence}</a>
                            </td>
                            <td>
                            		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
-                           			<img class="reviewList-img" src="${pageContext.request.contextPath}/resources/upload/product/${review.imageRenamedFileName}">
+                           			<img class="reviewList-img" src="${pageContext.request.contextPath}/resources/upload/product/${review.thumbnail}">
                            		</a>
                            </td>
                            <td>

@@ -8,7 +8,7 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
-			<h1 class="mt-4">주문 조회</h1>
+			<h2 class="mt-3">주문 조회</h2>
 			<ol class="breadcrumb mb-4">
 				<li class="breadcrumb-item"></li>
 			</ol>
