@@ -450,3 +450,10 @@ footer p {
   animation: pulseAnimation 1s infinite; 
   transform-origin: center;
 }
+
+.notification-delete-button{
+	background: white;
+    border: none;
+    margin-left: 80px;
+}
+}
