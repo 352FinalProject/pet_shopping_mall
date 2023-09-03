@@ -393,7 +393,7 @@ footer p {
   position: relative;
 }
 
-.popup {
+.notiPopup {
   position: absolute;
   top: calc(100% + 5px); /* Adjust the spacing as needed */
   left: 0;
@@ -404,7 +404,7 @@ footer p {
   width: 300px; /* Adjust the width as needed */
 }
 
-.popup.active {
+.notiPopup.active {
   display: block;
 }
 
