@@ -37,6 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.order.dto.OrderHistoryDto;
 import com.shop.app.order.dto.OrderReviewListDto;
 import com.shop.app.order.entity.Order;
@@ -107,7 +108,7 @@ public class ReviewController {
 			Model model
 			) {
 
-		int limit = 2;
+		int limit = 5;
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String reviewMemberId = authentication.getName();
@@ -128,6 +129,8 @@ public class ReviewController {
 
 		// 리뷰에 보여줄 내용들
 		List<ReviewListDto> reviews = reviewService.findReviewAll(params);
+		
+		log.debug("reviews = {}", reviews);
 		
 		model.addAttribute("reviews", reviews);
 	}
@@ -176,12 +179,14 @@ public class ReviewController {
 				upFile.transferTo(destFile);
 
 				int imageType = 1;
+				Thumbnail thumbnail = Thumbnail.N;
 
 				ImageAttachment attach =
 						ImageAttachment.builder()
 						.imageOriginalFilename(imageOriginalFilename)
 						.imageRenamedFilename(imageRenamedFilename)
 						.imageType(imageType)
+						.thumbnail(thumbnail)
 						.imageFileSize(upFile.getSize())
 						.build();
 				attachments.add(attach);

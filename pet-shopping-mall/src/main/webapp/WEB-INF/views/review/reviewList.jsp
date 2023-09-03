@@ -38,7 +38,7 @@
                            </td>
                            <td>
                            		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
-                           			<img class="reviewList-img" src="${pageContext.request.contextPath}/resources/upload/product/${review.imageRenamedFileName}">
+                           			<img class="reviewList-img" src="${pageContext.request.contextPath}/resources/upload/product/${review.thumbnail}">
                            		</a>
                            </td>
                            <td>

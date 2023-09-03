@@ -7,8 +7,8 @@
     <insert id="insertAttachment" useGeneratedKeys="true" keyProperty="imageId" keyColumn="image_id">
     insert into 
     	image_attachment 
-    	(image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, image_created_at) 
-    	values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, default)
+    	(image_id, image_type, image_original_filename, image_renamed_filename, image_file_size, thumbnail, image_created_at) 
+    	values(seq_image_attachment_id.nextval, #{imageType}, #{imageOriginalFilename}, #{imageRenamedFilename}, #{imageFileSize}, #{thumbnail}, default)
 	</insert>
 	
 	<select id="findImageAttachmentsByReviewId" resultMap="ReviewDetailsResultMap">
@@ -96,6 +96,7 @@
 	        <result property="imageOriginalFilename" column="image_original_filename"/>
 	        <result property="imageRenamedFilename" column="image_renamed_filename"/>
 	        <result property="imageFileSize" column="image_file_size"/>
+	        <result property="thumbnail" column="thumbnail"/>
 	        <result property="imageCreatedAt" column="image_created_at"/>
 	    </collection>
 	</resultMap>
@@ -121,7 +122,7 @@
 </resultMap>
 	
 	<select id="findReviewAll" resultType="ReviewListDto">
-	SELECT 
+    SELECT 
 		r.review_id,
 	    r.order_id,
 	    r.review_star_rate,
@@ -131,8 +132,7 @@
 	    pd.option_name, 
 	    pd.option_value,
 	    pd.product_detail_id,
-	    ia.image_original_filename,
-	    ia.image_renamed_filename    
+        ia.image_renamed_filename as thumbnail
 	FROM 
 	    review r 
 	    left join product_detail pd 
@@ -141,10 +141,10 @@
 	        on p.product_id = pd.product_id 
 	    left join orderTbl o
 	        on r.review_id = o.order_id
-	    join image_attachment_mapping iam 
+	    left join image_attachment_mapping iam 
 	        on p.product_id = iam.ref_id and iam.ref_table = 'product'
 	    join image_attachment ia 
-	        ON iam.image_id = ia.image_id
+	        ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 	WHERE 
 	    r.review_member_id = #{reviewMemberId}
 	</select>	

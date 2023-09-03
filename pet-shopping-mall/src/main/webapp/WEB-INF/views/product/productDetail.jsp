@@ -520,6 +520,9 @@ function addCart() {
         },
         success(response) {
             alert(response.msg);
+            if(confirm("장바구니로 이동하시겠습니까?")) {
+            	window.location.href = "${pageContext.request.contextPath}/cart/shoppingCart.do";
+            }
         },
         error(error) {
           console.error(error);

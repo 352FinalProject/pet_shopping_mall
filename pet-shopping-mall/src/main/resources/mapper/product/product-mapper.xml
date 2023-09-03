@@ -114,7 +114,6 @@
         <result property="productPrice" column="product_price"/>
         <result property="imageId" column="image_id"/>
         <result property="createDate" column="create_date"/>
-        <result property="expireDate" column="expire_date"/>
         <result property="likeCnt" column="like_cnt"/>
         <result property="viewCnt" column="view_cnt"/>
     </resultMap>
@@ -126,7 +125,6 @@
         <result property="productPrice" column="product_price"/>
         <result property="imageId" column="image_id"/>
         <result property="createDate" column="create_date"/>
-        <result property="expireDate" column="expire_date"/>
         <result property="likeCnt" column="like_cnt"/>
         <result property="viewCnt" column="view_cnt"/>
 
