@@ -277,14 +277,14 @@
 								<div class="reivew-pet-box">
 									<!-- 펫정보 -->
 									<c:forEach items="${pets}" var="pet">
-										<em class="review-pet-name">${pet.petName} &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-gender">${pet.petGender} &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-age">${pet.petAge}살 &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-weight">${pet.petWeight}kg &nbsp;<em
-											class="review-em">|</em></em>
+										<em class="review-pet-name">${pet.petName} &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-gender">${pet.petGender} &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-age">${pet.petAge}살 &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-weight">${pet.petWeight}kg &nbsp;
+										<em class="review-em">|</em></em>
 										<em class="review-pet-breed">${pet.petBreed}</em>
 									</c:forEach>
 								</div>

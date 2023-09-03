@@ -35,15 +35,21 @@ a {
 		<br>
 		<%-- 리뷰제목 --%>
 		<div id="review-div"></div>
-<%-- 			<div class="review-detail-title input[type="text"]" style="display: inline-block;">
-				<input type="text" name="reviewTitle" id="reivewTitle" value="${reviews.reviewTitle}" readonly required>
-			</div> --%>
 			<span class="review-div-title">${reviews.reviewTitle}</span><span class="small-space"></span>
 		<br>
 		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
  		<div id="review-div"></div>
 			<div id="review-div">
-				    ${reviews.petName} | ${reviews.petAge}살 | ${reviews.petWeight}kg | ${reviews.petBreed}
+				<c:if test="${not empty petId}">
+				     <em class="review-pet-name">${reviews.petName} &nbsp; <em class="review-em">|</em></em>
+				     <em class="review-pet-gender">${reviews.petGender} &nbsp;<em class="review-em">|</em></em>
+				     <em class="review-pet-age">${reviews.petAge}살 &nbsp;<em class="review-em">|</em></em>
+				     <em class="review-pet-weight">${reviews.petWeight}kg &nbsp;<em class="review-em">|</em></em>
+				     <em class="review-pet-breed">${reviews.petBreed} &nbsp;<em class="review-em">|</em></em>
+				</c:if>
+				<c:if test="${empty petId}">
+				   <em class="review-pet-name">등록된 펫 정보가 없습니다.</em>
+				</c:if>
 			</div><span class="small-space"></span>
 		<br><span class="small-space"></span>
 		<%-- 상품 옵션 --%>
@@ -51,7 +57,11 @@ a {
 			<div id="review-div">
 			구매한 상품 : ${reviewProduct.productName}
 			<br>
-			${reviewProduct.optionName}:${reviewProduct.optionValue}
+			<c:if test="${reviewProduct.optionName eq null}">
+				선택된 옵션이 없습니다.
+			</c:if>
+				${reviewProduct.optionName}:${reviewProduct.optionValue}
+			
 			</div><span class="small-space"></span>
 		<br>
 		<%-- 별점 --%>
