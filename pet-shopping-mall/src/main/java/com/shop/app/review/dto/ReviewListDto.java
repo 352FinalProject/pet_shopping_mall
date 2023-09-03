@@ -26,4 +26,6 @@ public class ReviewListDto {
 	
 	private String thumbnail;
 	
+	private int reviewSequence;
+	
 }
