@@ -29,10 +29,10 @@
 		<hr>
 		<li><a href="#">마이페이지</a>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/member/myPage.do">회원정보 수정</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/petList.do">펫 목록</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/petProfile.do">펫 등록</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/petUpdate">펫 정보 수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/updateMember.do">회원정보 수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/pet/petList.do">펫 목록</a></li>
+				<li><a href="${pageContext.request.contextPath}/pet/petProfile.do">펫 등록</a></li>
+				<li><a href="${pageContext.request.contextPath}/pet/petUpdate.do">펫 정보 수정</a></li>
 			</ul>
 		</li>
 		<li><a href="#">고객센터</a>
