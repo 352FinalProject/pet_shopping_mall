@@ -87,7 +87,6 @@ function loadNotifications(memberId) {
                 if (notifications && notifications.length > 0) {
                     notifications.forEach(notification => {
                         renderNotification(notification);
-                        createImgTagUnderButton()
                     });
                 } else {
                     emptyNotification();

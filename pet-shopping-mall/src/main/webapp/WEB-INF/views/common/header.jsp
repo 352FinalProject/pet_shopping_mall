@@ -194,7 +194,7 @@
                   <button id="openPopupBtn" onclick="loadNotifications(memberId)">
 	                  <img
 	                  src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png"
-	                  class="notiBellx" alt="알림" />
+	                  class="notiBell" alt="알림" />
                   </button>
                   <div id="notificationPopup" class="popup">
                      <div class="popup-content"></div>

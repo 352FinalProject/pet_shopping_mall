@@ -41,5 +41,8 @@ const renderMessage = (message) => {
     $popupContent.prepend(newNotificationContainer);
 
     $notificationPopup.addClass("active");
+    
+    const notificationBellImg = document.querySelector(".notiBell");
+    notificationBellImg.setAttribute("src", `${pageContext.request.contextPath}/resources/images/home/notiBello.png`);
 };
 
