@@ -17,7 +17,7 @@ grant create table to pet;
 -- 모든 테이블 조회
 SELECT *  FROM all_tables;
 
-
+select * from member;
 --==============================
 -- 초기화 블럭
 --==============================
@@ -499,7 +499,6 @@ values (1, '회원가입 배송비 무료 쿠폰', 3000, null);
 insert into coupon (coupon_id, coupon_name, discount_amount, discount_percentage)
 values (2, '생일축하 10% 할인 쿠폰', null, 10);
 
-
 ----------------------------------------------
 -- 카테고리
 ----------------------------------------------
@@ -511,13 +510,6 @@ insert into product_category (category_id, category_name) values (seq_product_ca
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '장난감');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '고양이');
 insert into product_category (category_id, category_name) values (seq_product_category_id.nextval, '기타용품');
-
-
-
-
-
-
-
 ----------------------------------------------------------
 -- 폐기 테이블
 ---------------------------------------------------------

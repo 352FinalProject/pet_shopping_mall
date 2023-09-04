@@ -74,7 +74,11 @@
 .product-utility {
 	display: flex;
 	gap: 200px;
-	justify-content: center
+	justify-content: center;
+}
+
+#product-notice-box {
+	margin-top:50px;
 }
 
 select[name=product-option] {
