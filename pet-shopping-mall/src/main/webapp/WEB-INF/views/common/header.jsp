@@ -174,7 +174,7 @@
                </li>
             </sec:authorize>
             <li class="petcare_li"><a
-               href="${pageContext.request.contextPath}/petcare/petcareList.do">병원예약</a>
+               href="${pageContext.request.contextPath}/petcare/petcareList.do">펫케어</a>
             </li>
             <li class="logout_li"><a
                href="${pageContext.request.contextPath}/servicecenter/service.do">고객센터</a>

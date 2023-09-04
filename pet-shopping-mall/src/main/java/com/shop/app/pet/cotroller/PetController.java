@@ -23,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.app.pet.dto.PetCreateDto;
 import com.shop.app.pet.dto.PetUpdateDto;
 import com.shop.app.pet.entity.Pet;
-import com.shop.app.pet.entity.PetDetails;
 import com.shop.app.pet.service.PetService; // 패키지명 수정
 import com.shop.app.servicecenter.inquiry.entity.Question;
 
@@ -36,7 +35,6 @@ public class PetController {
 	@Autowired
 	private PetService petService;
 
-	// 1. 펫 디테일 클래스 만들기. 2.펫에 빌더 추가하기. 3.펫 컨트롤러에 빌더 가져오기. 4.인서트 쿼리문 작성 레파지토리에(했고)
 
 	@GetMapping("/petProfile.do")
 	
@@ -88,14 +86,7 @@ public class PetController {
 	    return "pet/petUpdate"; // petDetail.jsp로 이동
 	}
 	
-//	@RequestMapping(value = "/petDetail.do", method = {RequestMethod.POST})
-//	@ResponseBody
-//	public Map<String, Object> petDetail(@RequestParam Map<String, Object> param) {
-//		Map<String, Object> returnMap = new HashMap<>();
-//		
-//	    return returnMap;
-//    }
-//	
+
 	@PostMapping("/petDelete.do")
 	public String petDelete(@Valid int petId, RedirectAttributes redirectAttributes) {		
 		int cnt = petService.petDelete(petId);

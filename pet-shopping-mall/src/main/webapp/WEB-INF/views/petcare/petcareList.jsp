@@ -18,7 +18,7 @@
         <div class="option">
             <div>
                 <form id="searchForm" onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="동물병원" id="keyword" size="15"> 
+                    키워드 : <input type="text" value="동물병원" id="keyword"> 
                     <button type="submit">검색하기</button> 
                 </form>
             </div>
@@ -90,7 +90,6 @@ searchPlaces();
 // 키워드 검색을 요청하는 함수입니다
 async function searchPlaces() {
 
-    console.log("searchPlaces 실행!!!");
     var keyword = document.getElementById('keyword').value;
     const currentCoordinate = await getCurrentCoordinate();
     console.log(currentCoordinate);
