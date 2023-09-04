@@ -115,7 +115,6 @@
         <result property="imageId" column="image_id"/>
         <result property="createDate" column="create_date"/>
         <result property="likeCnt" column="like_cnt"/>
-        <result property="viewCnt" column="view_cnt"/>
     </resultMap>
     
 	<resultMap type="ProductImages" id="ProductImagesResultMap">
@@ -126,7 +125,6 @@
         <result property="imageId" column="image_id"/>
         <result property="createDate" column="create_date"/>
         <result property="likeCnt" column="like_cnt"/>
-        <result property="viewCnt" column="view_cnt"/>
 
     <!-- image_attachment 테이블의 내용을 imageAttachment 객체에 매핑 -->
     <collection property="attachments" ofType="ImageAttachment">
