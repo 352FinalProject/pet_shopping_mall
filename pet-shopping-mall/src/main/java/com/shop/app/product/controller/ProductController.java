@@ -98,11 +98,11 @@ public class ProductController {
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 
-		// 상품Id에 대한 모든 리뷰 가져오기
+		// 상품Id에 대한 모든 리뷰 가져오기 (이혜령)
 		List<Review> reviews = reviewService.findProductReviewAll(params, productId);
 		model.addAttribute("reviews", reviews);
 
-		// 별점 퍼센트
+		// 리뷰 평균 별점에 대한 퍼센트 구하기 (이혜령)
 		List<Review> allReviews = reviewService.findProductReviewAllNoPageBar(productId);
 
 		int[] starCounts = new int[6];
@@ -154,12 +154,15 @@ public class ProductController {
 		model.addAttribute("detailImages", detailImages); 
 		model.addAttribute("productDetails", productDetails); 
 
+		// 상품 상세 페이지 리뷰 - 펫 정보  (이혜령)
 		Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 		for (Review review : reviews) {
 			List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
 			reviewPetsMap.put(review.getReviewId(), pets);
 		}
 
+
+		// 상품 상세 페이지 리뷰 - 이미지 파일 (이혜령)
 		Map<Integer, List<String>> reviewImageMap = new HashMap<>();
 		for (Review review : reviews) {
 			int reviewId2 = review.getReviewId();
@@ -175,7 +178,7 @@ public class ProductController {
 			}
 		}
 
-		model.addAttribute("reviewImageMap", reviewImageMap); 
+		model.addAttribute("reviewImageMap", reviewImageMap);
 
 		Map<Integer, List<OrderReviewListDto>> reviewProductMap = new HashMap<>();
 		for (Review review : reviews) {
@@ -185,10 +188,11 @@ public class ProductController {
 
 		model.addAttribute("reviewPetsMap", reviewPetsMap); 
 		model.addAttribute("reviewProductMap", reviewProductMap); 
-
+		// 상품 상세 페이지 리뷰 - 리뷰 전체개수 확인 (이혜령)
 		int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 		model.addAttribute("reviewTotalCount", reveiwTotalCount);
 
+		// 리뷰 별점 평균 (이혜령)
 		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 

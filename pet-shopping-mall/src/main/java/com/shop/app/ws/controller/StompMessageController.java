@@ -26,20 +26,18 @@ public class StompMessageController {
    // 메세지 브로커는 발행자가 보낸 메세지를 구독자에게 전달해주는 역할
    
    @Autowired
-   private MemberService memberService; // 빈 생성 가능
-			   // 디비에서 조회해서 메세지로 출력도 가능하다는 의미
+   private MemberService memberService;
    
    @Autowired
    private NotificationService notificationService;
    
    /**
-    * 개개인에게
+    * @author 김대원
+    * 개개인에게 알림을 보내는 메서드
     */
    @MessageMapping("/notice/{memberId}")
    @SendTo("/pet/notice/{memberId}")
    public Notification noticeEach(@DestinationVariable String memberId, Notification message) {
-                        // 경로변수
-      System.out.println("message: "  + message);
       return message;
    	}
 }

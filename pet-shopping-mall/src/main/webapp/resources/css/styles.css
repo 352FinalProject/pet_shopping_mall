@@ -11309,3 +11309,8 @@ body {
 .adminOrderStatus label, .adminOrderMethod label {
   border-radius: 10px;
 }
+
+.question-row > td > a span {
+    color: #c8c8c8;
+}
+    
