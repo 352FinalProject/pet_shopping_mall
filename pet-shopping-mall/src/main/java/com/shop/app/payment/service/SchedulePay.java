@@ -48,6 +48,10 @@ public class SchedulePay {
     @Autowired
     private ObjectMapper objectMapper;
 
+    
+    /**
+     * @author 김담희
+     */
     public String schedulePay(String merchantUid, String customerUid, int amount) {
     	
     	String token = iamportApi.getImportToken();
@@ -123,7 +127,10 @@ public class SchedulePay {
     
     
     
-
+    
+    /**
+     * @author 김담희
+     */
 	public String cancelSchedule(SubMember subMember) {
     	String token = iamportApi.getImportToken();
 
@@ -149,8 +156,6 @@ public class SchedulePay {
 
     	String result = restTemplate.postForObject(IMPORT_UNSCHEDULE_URL, entity, String.class);
     	
-    	// 스케쥴이 지나면 sub_member 테이블에서 삭제하기
-    	// member 테이블에서 구독 N 처리
     	String memberId = subMember.getMemberId();
     	memberService.cancelSubscribe(memberId);
 		return result;
