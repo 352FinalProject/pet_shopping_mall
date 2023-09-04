@@ -85,5 +85,9 @@ public interface ProductService {
 	// 인덱스 페이지 패션용품 불러오기 (예라)
 	List<Product> findFashionAll(int _categoryId);
 	
-	List<ProductSearchDto> searchProductsById(int categoryId);
+	// 페이지수에 맞는 상품가져오기
+	List<ProductSearchDto> searchProductsById(Map<String, Object> params);
+	
+	int findTotalProductCountByCategory(int categoryId);
+
 }
