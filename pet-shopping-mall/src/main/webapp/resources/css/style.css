@@ -180,7 +180,6 @@ body {
 	max-width: 1200px;
 	justify-content: flex-end;
 	margin: 0 auto;
-	padding: 11px;
 	gap: 25px;
 	font-size: 14px;
 	align-items: center;
@@ -262,7 +261,7 @@ body {
 	width: 25px;
 	height: 35px;
 	position: absolute;
-	margin-top: -260px;
+	margin-top: -340px;
 	margin-left: -50px;
 }
 
@@ -270,7 +269,7 @@ body {
 	width: 25px;
 	height: 35px;
 	position: absolute;
-	margin-top: -260px;
+	margin-top: -340px;
 	margin-left: 1219px;
 }
 

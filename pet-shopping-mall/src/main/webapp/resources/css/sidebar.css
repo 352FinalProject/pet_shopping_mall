@@ -139,7 +139,9 @@ body {
 }
 
 .sidebar-text {
+	width: 220px;
 	top: 105px;
+	left:10px;
 	position: relative;
 	font-family: 'Noto Sans KR', sans-serif;
 }
@@ -166,7 +168,7 @@ body {
 .sidebar ul>li>a {
 	display: block;
 	color: black;
-	font-size: 20px;
+	font-size: 16px;
 	padding: 10px 20px;
 }
 
@@ -178,10 +180,28 @@ body {
   display: block;
 }
 
+.my-title {
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.sidebar-title2 {
+	border-top: 1px solid #e7e7e7;
+	margin-top: 30px;
+	padding: 5px;
+}
+
+.sidebar-title1 {
+	border-top: 1px solid #e7e7e7;
+	padding-top: 5px;
+}
+
 .sidebar-title{
 	left:20px;
-	font-size: 30px;
+	font-size: 25px;
 	font-family: 'Noto Sans KR', sans-serif;
+	padding-bottom: 8px;
+	margin-bottom: 10px;
+	
 }
 
 .overlay {
