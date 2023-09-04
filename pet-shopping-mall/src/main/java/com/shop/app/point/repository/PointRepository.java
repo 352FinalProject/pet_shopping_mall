@@ -17,8 +17,8 @@ import com.shop.app.review.entity.ReviewDetails;
 @Mapper
 public interface PointRepository {
 
-	@Select("select * from point order by point_id desc")
-	List<Point> findPointAll(RowBounds rowBounds);
+	@Select("select * from point where point_member_id = #{pointMemberId}")
+	List<Point> findPointAll(RowBounds rowBounds, String pointMemberId);
 
 	@Insert("insert into point (point_id, point_member_id, point_current, point_type, point_amount, point_date, review_id) values (seq_point_id.nextval, #{pointMemberId}, #{pointCurrent}, #{pointType}, #{pointAmount}, default, #{reviewId})")
 	int insertPoint(Point point);
