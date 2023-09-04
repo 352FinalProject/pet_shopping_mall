@@ -240,8 +240,6 @@ create table product_detail (
     constraints fk_product_id foreign key(product_id) references product(product_id) on delete cascade
 );
 
-
-
 -- 포인트 테이블
 create table point (
     point_id number,
@@ -327,9 +325,6 @@ create table review (
     constraint ck_review_review_star_rate check(review_star_rate >= 1 and review_star_rate <= 5)
 );
 
-
-
-
  -- 결제 테이블
 create table payment (
     payment_id number,
@@ -380,6 +375,7 @@ create table cartitem (
     constraint pk_cartitem_id primary key(cartitem_id),
     constraint fk_cart_id foreign key(cart_id) references cart (cart_id)
 );
+
  -- 약관 테이블
 create table terms (
  history_id number,
@@ -399,7 +395,6 @@ create table terms_history (
  required char(1) not null,
  constraint pk_terms_id primary key(terms_id)
 );
-
 
 -- 쿠폰 테이블
 create table coupon (

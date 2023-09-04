@@ -55,7 +55,8 @@ public class IamportApi {
 	public static final String IMPORT_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
 
 	/**
-	 * 아임포트 토큰을 받아오는 함수 (담희)
+	 * @author 김담희
+	 * 아임포트 토큰을 받아오는 메소드
 	 */
 	public String getImportToken() {
 		String result = "";
@@ -65,8 +66,6 @@ public class IamportApi {
 
 		map.put("imp_key", this.getApiKey());
 		map.put("imp_secret", this.getApiSecret());
-		
-		log.debug("map = {}", map);
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(convertParameter(map)));
@@ -85,7 +84,11 @@ public class IamportApi {
 	}
 	
 	
-	
+	/**
+	 * @author 김담희
+	 * 환불하기 요청을 받았을 경우, 해당 주문 번호에 대하여 아임포트에 환불하기 요청을 보냄
+	 * 환불 요청 결과가 정상 반환될 경우 로컬DB의 주문 취소 테이블에 insert
+	 */
 	@PostMapping("/refundOrder.do")
 	public String refundOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr,
 			@RequestParam String isRefund) {
@@ -105,8 +108,6 @@ public class IamportApi {
 			String enty = EntityUtils.toString(res.getEntity());
 			JsonNode rootNode = mapper.readTree(enty);
 			
-			log.debug("rootNode = {}", rootNode);
-			
 			result = rootNode.get("response").asText();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,7 +126,8 @@ public class IamportApi {
 	
 	
 	/**
-	 * Map을 List<NameValuePair>으로 형변환하는 메소드 (담희)
+	 * @author 김담희
+	 * Map을 List<NameValuePair>으로 형변환하는 메소드
 	 */
 	public List<NameValuePair> convertParameter(Map<String, String> paramMap) {
 		List<NameValuePair> params = new ArrayList<>();

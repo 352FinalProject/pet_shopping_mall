@@ -59,7 +59,7 @@
   	<ul class="pagination pagination-sm">
 	    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
 	        <li class="page-item ${page == pageNumber ? 'active' : ''}">
-	            <a class="page-link" href="${pageContext.request.contextPath}/servicecenter/inquiry/questionList.do?page=${pageNumber}">
+	            <a class="page-link" href="${pageContext.request.contextPath}/point/pointList.do?page=${pageNumber}">
                     <span class="page-number">${pageNumber}</span>
                 </a>
 	        </li>

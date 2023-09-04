@@ -4,7 +4,7 @@ const renderNotification = (notification) => {
     const { id, notiCategory, notiContent, notiCreatedAt, memberId } = notification;
 
     const $notificationPopup = $("#notificationPopup");
-    const $popupContent = $notificationPopup.find(".popup-content");
+    const $popupContent = $notificationPopup.find(".notiPopup-content");
 
     const newNotificationContainer = document.createElement("div");
     newNotificationContainer.className = "notification-container";
@@ -34,7 +34,7 @@ const renderNotification = (notification) => {
 // 알림없을때 메서드
 const emptyNotification = () => {
     const $notificationPopup = $("#notificationPopup");
-    const $popupContent = $notificationPopup.find(".popup-content");
+    const $popupContent = $notificationPopup.find(".notiPopup-content");
 
     const newNotificationContainer = document.createElement("div");
     newNotificationContainer.className = "notification-container";
@@ -51,16 +51,13 @@ const emptyNotification = () => {
     $notificationPopup.addClass("active");
 };
 
-// 알림 아이콘 바꾸는 메서드
-
-
-
-
-
 // 알림 초기화 메서드
 function clearNotifications() {
-    const $popupContent = $("#notificationPopup .popup-content");
+    const $popupContent = $("#notificationPopup .notiPopup-content");
     $popupContent.empty();
+    const notificationBellImg = document.getElementById("notificationBell");
+    notificationBellImg.setAttribute("src", "/pet/resources/images/home/notiBellx.png");
+    notificationBellImg.classList.remove("pulse-button");
 }
 
 // 팝업창 열고 알림생성 
@@ -71,6 +68,9 @@ function loadNotifications(memberId) {
     
     if (notificationPopup.classList.contains("active")) {
         notificationPopup.classList.remove("active");
+        const notificationBellImg = document.getElementById("notificationBell");
+    	notificationBellImg.setAttribute("src", "/pet/resources/images/home/notiBellx.png");
+    	notificationBellImg.classList.remove("pulse-button");
     } else {
         notificationPopup.classList.add("active");
         $.ajax({
@@ -87,7 +87,6 @@ function loadNotifications(memberId) {
                 if (notifications && notifications.length > 0) {
                     notifications.forEach(notification => {
                         renderNotification(notification);
-                        createImgTagUnderButton()
                     });
                 } else {
                     emptyNotification();

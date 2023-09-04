@@ -1,7 +1,9 @@
 package com.shop.app.point.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,13 @@ public class PointServiceImpl implements PointService {
 	private PointRepository pointRepository;
 	
 	@Override
-	public List<Point> findPointAll(Point point) {
-		return pointRepository.findPointAll(point);
+	public List<Point> findPointAll(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return pointRepository.findPointAll(rowBounds);
 	}
 
 	// 회원가입 포인트 적립 (예라)
@@ -66,5 +73,10 @@ public class PointServiceImpl implements PointService {
 	@Override
 	public List<Point> findRollbackPointCurrentById(Point rollbackPoint) {
 		return pointRepository.findRollbackPointCurrentById(rollbackPoint);
+	}
+
+	@Override
+	public int findTotalPointCount() {
+		return pointRepository.findTotalPointCount();
 	}
 }

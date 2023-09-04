@@ -149,7 +149,7 @@
         <li><a href="#">상품정보</a></li>
         <li><a href="#product-review-box">상품후기</a></li>
         <li><a href="#product-notice-box">교환/반품/배송</a></li>
-        <li><a href="#">1:1문의</a></li>
+        <li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
       </ul>
     </div>
     
@@ -178,7 +178,7 @@
 			<li><a href="#">상품정보</a></li>
 			<li><a href="#">상품후기</a></li>
 			<li><a href="#">교환/반품/배송</a></li>
-			<li><a href="#">1:1문의</a></li>
+			<li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
 		</ul>
 	</div>
 	<div class="review-div">
@@ -277,14 +277,14 @@
 								<div class="reivew-pet-box">
 									<!-- 펫정보 -->
 									<c:forEach items="${pets}" var="pet">
-										<em class="review-pet-name">${pet.petName} &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-gender">${pet.petGender} &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-age">${pet.petAge}살 &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-weight">${pet.petWeight}kg &nbsp;<em
-											class="review-em">|</em></em>
+										<em class="review-pet-name">${pet.petName} &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-gender">${pet.petGender} &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-age">${pet.petAge}살 &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-weight">${pet.petWeight}kg &nbsp;
+										<em class="review-em">|</em></em>
 										<em class="review-pet-breed">${pet.petBreed}</em>
 									</c:forEach>
 								</div>
@@ -370,7 +370,7 @@
 			<li><a href="#">상품정보</a></li>
 			<li><a href="#product-review-box">상품후기</a></li>
 			<li><a href="#product-notice-box">교환/반품/배송</a></li>
-			<li><a href="#">1:1문의</a></li>
+			<li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
 		</ul>
 	</div>
 	<div class="processing-wrap">
@@ -406,6 +406,8 @@
 		</div>
 	</div>
 	</div>
+	
+
 	<div class="product-bottom">
 		<div class="product-bottom2">
 			<div>
@@ -566,9 +568,10 @@ $(function() {
     });
 });
 
-$("#clickHeart").on("click", function() {
-    var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // 이전 상태에 따라 반대로 설정
+$("#clickHeart").on("click", function() { // clickHeart라는 id를 가진 태그를 클릭 시 이벤트 발생하는 함수
+    var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // clickHeart라는 id를 가진 태그의 class 목록에서 delete와 insert 위치 찾기 : 없으면 -1 return
     
+    // ajax 정규 문법 -> 구글링
     $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/product/insertPick.do",
@@ -578,14 +581,14 @@ $("#clickHeart").on("click", function() {
         data: JSON.stringify({
             "productId": ${product.productId},
             "state": state
-        }),
+        }), // JSON.stringify("키": "값") : json 값을 string으로 변환하는 함수
         success: function(result) {
-            if (result.rs == "insertS") {
-               $("#likeCnt").text(Number($("#likeCnt").text()) + 1);
-                $("#clickHeart").text("♥");
-            } else if (result.rs == "deleteS") {
-               $("#likeCnt").text(Number($("#likeCnt").text()) - 1);
-                $("#clickHeart").text("♡");
+            if (result.rs == "insertS") { // insert 성공일 때
+               $("#likeCnt").text(Number($("#likeCnt").text()) + 1); // 찜 숫자 증가
+                $("#clickHeart").text("♥"); // 하트 텍스트 변경
+            } else if (result.rs == "deleteS") { // delete 성공일 때
+               $("#likeCnt").text(Number($("#likeCnt").text()) - 1); // 찜 숫자 감소
+                $("#clickHeart").text("♡"); // 하트 텍스트 변경
             }
             
             alert(result.msg);
