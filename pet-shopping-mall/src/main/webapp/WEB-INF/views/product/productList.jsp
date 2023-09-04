@@ -47,7 +47,7 @@
 			<c:if test="${empty alignProductInfos}">
 			<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
 				<div class="product-card">
-                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}&reviewId=${reviewId.reviewId}">
+                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
 					</figure>
@@ -73,7 +73,7 @@
 			<c:if test="${not empty alignProductInfos}">
 				<c:forEach items="${alignProductInfos}" var="productInfo" varStatus="vs">
 				<div class="product-card">
-                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
+                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.thumbnail}">
 					</figure>
@@ -90,11 +90,11 @@
 				</div>
 			</c:forEach>
 			</c:if>
+			</ul><!-- gallery -->
 			
-			</ul>
 			<!-- 페이징바 -->
-			<nav aria-label="...">
-			  	<ul class="pagination pagination-sm">
+			<nav class="product-nav" aria-label="...">
+			  	<ul class="pagination-product pagination-sm">
 				    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
 				        <li class="page-item ${page == pageNumber ? 'active' : ''}">
 				            <a class="page-link" href="${pageContext.request.contextPath}/product/productList.do?id=${productCategory.categoryId}&page=${pageNumber}">
@@ -104,8 +104,8 @@
 				    </c:forEach>
 				</ul>
 			</nav>
-		</div>
-	</div>
+		</div><!-- product-gallery -->
+	</div><!-- common-container -->
 </div><!-- common-section -->
 <script>
 function setSortOption(sortOption) {
