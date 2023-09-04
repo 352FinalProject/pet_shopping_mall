@@ -17,7 +17,7 @@
 					상품 등록
 				</div>
 				<div class="card-body">
-				<div class=".container-md px-4 mx-auto">
+				<div class="container-md px-4 mx-auto">
 					<form:form action="${pageContext.request.contextPath}/admin/adminProductCreate.do" 
 					    name ="createProductFrm"
 					    enctype="multipart/form-data" 
@@ -68,7 +68,7 @@
 					            	<label for="file" class="form-label">썸네일 사진</label>
 					        	</div>
 					        	<div class="col-auto">
-					            	<input type="file" name="detailFile" id="file" class="form-control" required>
+					            	<input type="file" name="thumbnailFile" id="file" class="form-control" required>
 					        	</div>
 					        </div>
 					        
@@ -78,7 +78,7 @@
 					            	<label for="file" class="form-label">상세 이미지</label>
 					        	</div>
 					        	<div class="col-auto">
-					            	<input type="file" name="thumbnailFile" id="file" class="form-control" required>
+					            	<input type="file" name="detailFile" id="file" class="form-control" required>
 					        	</div>
 					        </div>
 
@@ -116,9 +116,7 @@
 			        <!-- 옵션추가 위치 -->
 		        	<div class="row mb-5" id="optionValueInput"></div>
 		
-<!-- 		        	
     	<div class="addedOption row mb-5 align-items-center" id="addedOption\${optionCnt}">
-    	<div class="row">
 			<div class="col-sm-3">
 				<div class="form-floating">
 					<label for="optionName" class="form-label">옵션명</label>
@@ -145,12 +143,10 @@
 					<input type="number" name="productDetail[\${optionCnt}].additionalPrice" id="additionalPrice" class="form-control" value="0">
 				</div>
 			</div>
-    	</div>
 			<div class="col-sm" >
 	       		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
 			</div>
 		</div>
-		 -->
 		
 		
 					<!--상품등록버튼 -->
