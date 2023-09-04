@@ -42,21 +42,21 @@ public class PetController {
 	
 	@PostMapping("/petProfile.do") 
 	public String petCreate(@ModelAttribute @Valid PetCreateDto pet, RedirectAttributes redirectAttributes) {
-	    // 펫 등록 db 저장
+	
 	    int result = petService.petCreate(pet);
 	    
 	    if (result > 0) {
-	        // 펫 등록 로직 수행   	
+
 	        redirectAttributes.addFlashAttribute("successMessage", "등록성공!");
 	    }
 	    
-	    return "redirect:/pet/petList.do"; // 등록 후 다시 폼으로 리다이렉트
+	    return "redirect:/pet/petList.do"; 
 	}
 
 	@GetMapping("/petList.do")
 	public String petList(Principal principal, Model model) {
-	    String memberId = principal.getName(); // 로그인한 멤버의 ID
-	    List<Pet> pets = petService.findPetsByMemberId(memberId); // 해당 멤버의 펫 정보 조회
+	    String memberId = principal.getName(); 
+	    List<Pet> pets = petService.findPetsByMemberId(memberId);
 	    model.addAttribute("pets", pets);
 
 	    return "pet/petList";
@@ -68,10 +68,10 @@ public class PetController {
 	            .petId(petId)
 	            .build();
 
-	    Pet petInfo = petService.findPetById(petId); // petId에 해당하는 펫 정보 가져오기
-	    model.addAttribute("petInfo", petInfo); // 펫 정보를 모델에 추가
+	    Pet petInfo = petService.findPetById(petId);
+	    model.addAttribute("petInfo", petInfo);
 
-	    return "pet/petDetail"; // petDetail.jsp로 이동
+	    return "pet/petDetail";
 	}
 	
 	@GetMapping("/petGoDetail.do")
