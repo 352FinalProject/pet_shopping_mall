@@ -53,7 +53,7 @@
 	</select>
 	
 	<select id="findAdminProductsBySearch" resultMap="adminProductDto">
-			select
+		select
 		    p.product_id,
 		    p.category_id,
             pd.*,

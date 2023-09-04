@@ -64,7 +64,6 @@ public interface ReviewRepository {
 	@Update("update review set review_title = #{reviewTitle}, review_content = #{reviewContent}, review_star_rate = #{reviewStarRate} where review_id = #{reviewId}")
 	int updateReview(Review review);
 
-	// 삭제되는 리뷰 정보 가져오기 (예라)
 	@Select("select * from review where review_id = #{reviewId}")
 	ReviewDetails getDeleteReviewById(int reviewId);
 
@@ -83,7 +82,6 @@ public interface ReviewRepository {
 
 	String findImageFilenameByReviewId(int reviewId2);
 
-	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
 	@Select("select * from review where review_id = #{reviewId}")
 	Review findPoductListReviewId(int reviewId);
 

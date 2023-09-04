@@ -157,7 +157,8 @@ public class AdminController {
 	
 
 	/**
-	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바 (예라)
+	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바
+	 * @author 전예라
 	 * @param page
 	 * @param question
 	 * @param model
@@ -181,7 +182,8 @@ public class AdminController {
 	
 	
 	/**
-	 *  관리자 1:1 문의 제목, 내용 검색 (예라)
+	 *  관리자 1:1 문의 제목, 내용 검색
+	 * @author 전예라
 	 * @param searchKeyword
 	 * @param model
 	 * @return
@@ -381,13 +383,11 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록
 	 */
-	
 	@PostMapping("/adminProductCreate.do")
 	public String adminProductCreate(
 			@Valid ProductCreateDto _product,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model) throws IllegalStateException, IOException {
-		log.debug("ProductCreateDto ={}",_product);
 		
 		List<MultipartFile> thumbnailFiles = _product.getThumbnailFile();
 		List<MultipartFile> detailFiles = _product.getDetailFile();
@@ -451,7 +451,6 @@ public class AdminController {
 				.attachments(attachments)
 				.build(); // 상품카테고리아이디, 상품명, 가격
 		int productId = productService.insertProduct(productImages); // 여기서 이미지도 저장
-		log.debug("productId = {}", productId);
 		
 		// 2.1. productDetail 객체 저장
 		List<ProductDetail> productDetails = _product.getProductDetail();
@@ -488,7 +487,6 @@ public class AdminController {
 		// 상품이미지 가져오기
 		ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
 		List<ImageAttachment> attachments = productImages.getAttachments();
-		log.debug("productImages = {}", productImages);
 		// 상품옵션 가져오기(리스트)
 		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		

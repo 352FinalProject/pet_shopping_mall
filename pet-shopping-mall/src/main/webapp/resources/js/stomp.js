@@ -23,17 +23,17 @@ const renderMessage = (message) => {
     
     const newNotification = document.createElement("p");
     newNotification.className = "notification-content";
-    newNotification.textContent = `${memberId}님 ${notiContent}${notiCreatedAt}`;
+    newNotification.textContent = `${notiContent}\n${notiCreatedAt}`;
 
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = `X`;
     deleteButton.className = "notification-delete-button"; 
     deleteButton.id = id; 
-	deleteButton.onclick = function() {
+   deleteButton.onclick = function() {
         notificationDelete(id); 
     };
-	clearNotifications();
-	
+   clearNotifications();
+   
     newNotification.appendChild(deleteButton);
 
     newNotificationContainer.appendChild(newNotification);
@@ -48,4 +48,3 @@ const renderMessage = (message) => {
     
     
 };
-

@@ -28,10 +28,5 @@ public class TermsController {
 	private TermsService termsService;
 	
 	@GetMapping("/terms.do")
-	public void termsList (Terms terms, Model model) {
-//		List<Terms> termss = termsService.findTermsAll(terms);
-		
-//		model.addAttribute("termss", termss);
-		
-	}
+	public void termsList (Terms terms, Model model) {}
 }

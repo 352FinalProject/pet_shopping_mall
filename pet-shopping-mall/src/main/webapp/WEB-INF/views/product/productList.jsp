@@ -13,6 +13,7 @@
 	        <div class="board-title">
 		        <span>
 		        <c:set var="categoryName" value="${productInfos[0].categoryName}"/>
+		        <c:set var="categoryId" value="${productInfos[0].categoryId}" />
 		        ${categoryName}
 		        </span>
 	        </div>
@@ -39,7 +40,7 @@
 			</ul>
 		</div>
 		<form:form id="alignFrm" name="alignFrm" method="get" action="${pageContext.request.contextPath}/product/productList.do">
-		    <input type="hidden" name="categoryId" value="${productCategory.categoryId}"/>
+		    <input type="hidden" name="categoryId" value="${categoryId}"/>
 		    <input type="hidden" name="align" id="align" value=""/>
 		</form:form>
 		<!-- 상품사진 갤러리 -->

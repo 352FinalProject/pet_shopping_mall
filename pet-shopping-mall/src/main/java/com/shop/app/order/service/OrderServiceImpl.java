@@ -101,8 +101,6 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.adminStatisticsByMonthly();
 	}
 	
-	
-	// 2. db에서 주문 정보 가져오기 (예라)
 	@Override
 	public Order findByOrder(Order order) {
 		return orderRepository.findByOrder(order);
@@ -215,7 +213,6 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.findOrderByOrderNo(orderNo);
 	}
 
-	// 리뷰 작성하면 리뷰버튼 없애기
 	@Override
 	public boolean reviewWrite(String memberId, int orderId, int productDetailId, int productId) {
 		return orderRepository.reviewWrite(memberId, orderId, productDetailId, productId);

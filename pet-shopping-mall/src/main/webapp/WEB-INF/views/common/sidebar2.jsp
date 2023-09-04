@@ -3,20 +3,38 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style>
+/* 모달 배경 스타일 */
+
+#deleteMember-password {
+	margin-top: 10px;
+}
+.deleteMemberForm-btn {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.deleteMember-class {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
+    z-index: 9999; /* 다른 요소보다 위에 표시 */
+}
+
 .deleteMember {
 	background-color: white;
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-	width: 700px;
+	width: 500px;
 	height: 300px;
-	justify-content: center; /* 수평 가운데 정렬 */
-	align-items: center; /* 수직 가운데 정렬 */
 	text-align: center; /* 내부 요소를 가운데 정렬 */
 	z-index: 9999; /* 다른 요소 위에 표시되도록 설정 */
-	margin-top: 500px;
-	margin-left: 900px;
-	justify-content: center;
+	margin-top: 320px;
+	margin-left: 700px;
 }
 
 deleteMember h2 {
@@ -39,20 +57,17 @@ deleteMember h2 {
 	padding: 8px 16px;
 	border-radius: 4px;
 	cursor: pointer;
-	margin-right: 570px;
 }
 
 #deleteMemberForm-closeModalBtn {
-	background-color: #007bff;
+	background-color: #5886d3;
 	color: white;
 	border: none;
 	padding: 8px 16px;
 	border-radius: 4px;
-	margin-top: 670px;
-	margin-right: 690px;
-	height: 35px;
+	height: 34px;
 	cursor: pointer;
-	font-size: 18px;
+	font-size: 14px;
 }
 </style>
 <div class="sidebar2">
@@ -111,19 +126,26 @@ deleteMember h2 {
 			</form>
 	</ul>
 </div>
-<div id="deleteMember-div" class="deleteMember-class"
-	style="display: none;">
-	<div class="deleteMember">
-		<h2>회원 탈퇴</h2>
-		<p>정말 탈퇴하시겠습니까??</p>
-		<form id="deleteMemberForm">
-			<label for="deleteMember-password">비밀번호입력:</label> <input
-				class="deleteMemberForm-input-password" type="password"
-				id="deleteMember-password" name="password" required>
-			<button class="deleteMemberForm-button" type="button">회원탈퇴</button>
-			<button type="button" id="deleteMemberForm-closeModalBtn"
-				onclick="closeDeleteMemberModal();">닫기</button>
-		</form>
+<div class="deleteMember-wrap">
+	<div id="deleteMember-div" class="deleteMember-class"
+		style="display: none;">
+		<div class="deleteMember">
+			<h2>회원 탈퇴</h2>
+			<p>정말 탈퇴하시겠습니까?</p>
+			<form id="deleteMemberForm">
+				<label for="deleteMember-password">비밀번호 입력:</label> <input
+					class="deleteMemberForm-input-password" type="password"
+					id="deleteMember-password" name="password" required>
+				<div class="deleteMemberForm-btn">
+					<div class="deleteMemberForm-btn1">
+						<button class="deleteMemberForm-button" type="button">회원탈퇴</button>
+					</div>
+					<div class="deleteMemberForm-btn2">
+						<button type="button" id="deleteMemberForm-closeModalBtn"
+							onclick="closeDeleteMemberModal();">닫기</button></div>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 <script>

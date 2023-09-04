@@ -30,27 +30,9 @@
    </script>
 </c:if>
 <style>
-/* 모달 배경 스타일 */
-.deleteMember-class {
-    display: none; /* 초기에는 보이지 않도록 설정 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
-    z-index: 9999; /* 다른 요소보다 위에 표시 */
-    justify-content: center;
-    align-items: center;
-}
 
-/* 모달 내부 컨테이너 스타일 */
-.deleteMember {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    width: 300px;
+deleteMember-class.active {
+    display: flex; /* 모달이 보이도록 변경 */
 }
 
 /* 모달 내부 요소 스타일 */
@@ -84,7 +66,6 @@
 /* 닫기 버튼 스타일 */
 .deleteMemberForm-close,
 #deleteMemberForm-closeModalBtn {
-    position: absolute;
     top: 10px;
     right: 10px;
     font-size: 20px;
@@ -195,7 +176,8 @@
 					 <img src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png" id="notificationBell" alt="Notification" />
                   </button>
                   <div id="notificationPopup" class="notiPopup">
-                     <div class="notiPopup-content"></div>
+                     <div class="notiPopup-content">
+                     </div>
                   </div>
                </div>
             </sec:authorize>

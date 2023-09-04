@@ -40,6 +40,9 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 	 * @param userRequest OAuth2User의 요청 정보, IDP 정보, 액세스 토큰 등을 포함.
 	 * @return OAuth2User 정보. 여기서는 MemberDetails 객체를 반환.
 	 * @throws OAuth2AuthenticationException 인증 오류 시 발생
+	 * 
+	 * @author 전예라
+	 * 소셜로그인 회원가입 시 포인트 적립
 	 */
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -84,8 +87,6 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 
 		            int result = memberService.insertMember(memberCreateDto);
 		            member = (MemberDetails) memberService.loadUserByUsername(memberId);
-		            
-					// 포인트 테이블에 디비 저장 (예라)
 					
 					Point point = new Point();
 					point.setPointMemberId(member.getMemberId());
@@ -112,8 +113,6 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService{
 
 			            int result = memberService.insertMember(memberCreateDto);
 			            member = (MemberDetails) memberService.loadUserByUsername(memberId);
-			            
-						// 포인트 테이블에 디비 저장 (예라)
 						
 						Point point = new Point();
 						point.setPointMemberId(member.getMemberId());

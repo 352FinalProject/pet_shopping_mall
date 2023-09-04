@@ -24,7 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MailSender {
 
-	// 질문 답변 메소드
+   /**
+    * @author 전예라
+    * QNA 질문 답변 이메일 발송
+    */
 	public void sendEmailOnAnswerRegistration(String userEmail, String answerContent, int questionId) {
 		String subject = "[우리집동물친구] 문의하신 내용에 답변이 등록되었습니다.";
 		String link = "http://localhost:8080/pet/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
@@ -44,7 +47,10 @@ public class MailSender {
 		sendEmail(userEmail, subject, htmlMessage);
 	}
 
-	// 이메일 인증 메소드
+   /**
+    * @author 전예라
+    * 회원가입 이메일 인증
+    */
 	public void sendEmailOnUserVerification(String userEmail, String verificationCode) {
 		String subject = "[우리집동물친구] 회원가입 이메일 인증";
 		String verificationUrl = "http://localhost:8080/pet/email/verifyEmail?email=" + userEmail + "&token="
@@ -63,7 +69,10 @@ public class MailSender {
 		sendEmail(userEmail, subject, htmlMessage);
 	}
 
-	// 실제 이메일 발송 처리 메소드
+   /**
+    * @author 전예라
+    * 실제 이메일 발송 메소드
+    */
 	public void sendEmail(String recipient, String subject, String message) {
 		Properties p = System.getProperties();
 		p.put("mail.smtp.starttls.enable", "true");
@@ -95,7 +104,10 @@ public class MailSender {
 
 	
 	
-	// 임시 비밀번호 생성 메소드
+   /**
+    * @author 김상훈
+    * 임시 비밀번호 생성
+    */
 	public String generateTemporaryPassword(int length) {
 		String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		StringBuilder temporaryPassword = new StringBuilder();
@@ -111,9 +123,11 @@ public class MailSender {
 	
 	
 
-	// 임시 비밀번호 이메일 전송 메소드
+   /**
+    * @author 김상훈
+    * 이메일 인증 메일 발송
+    */
 	public void sendTemporaryPasswordEmail(String userEmail, String temporaryPassword) {
-		// 임시 비밀번호 생성
 		String subject = "[우리집동물친구] 임시 비밀번호를 발급해드립니다.\n";
 	
 		String htmlMessage = "<html><body><div style='width: 800px; margin: auto;'>";
@@ -138,7 +152,7 @@ class MyAuthentication extends Authenticator {
 
 		String id = "ari_0_0@naver.com"; // 네이버 이메일 아이디
 		String pw = "dnehdcls!"; // 네이버 비밀번호
-		// ID와 비밀번호를 입력한다.
+
 		pa = new PasswordAuthentication(id, pw);
 	}
 
