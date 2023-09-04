@@ -580,7 +580,7 @@ $(function() {
 });
 $("#clickHeart").on("click", function() { // clickHeart라는 id를 가진 태그를 클릭 시 이벤트 발생하는 함수
     var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // clickHeart라는 id를 가진 태그의 class 목록에서 delete와 insert 위치 찾기 : 없으면 -1 return
-    
+
     // ajax 정규 문법 -> 구글링
     $.ajax({
         type: "POST",

@@ -17,6 +17,7 @@
         .container {
             margin: 0 auto;
             max-width: 1200px;
+            
         }
 
         /* 소제목 스타일 */
@@ -99,14 +100,11 @@
             margin-left: 10%;
         }
         
-        /* 페이징 바 스타일 */
-		nav.pagination {
-		    position: fixed; /* 고정 위치 설정 */
-		    top: 1000px; /* 상단으로의 거리 설정 */
-		    left: 50%; /* 가운데 정렬 설정 (가로 중앙) */
-		    transform: translateX(-50%); /* 가로 중앙 정렬을 위한 보정 */
-		    height: 1000px; /* 페이징 바의 높이 설정 */
-}
+		/* 페이징 바 스타일 */
+		.pagination2 {
+		    display: flex; /* 페이지 번호 목록을 가로로 표시 */
+		}
+			
     </style>
 </head>
 
@@ -131,7 +129,7 @@
 	</div>
 	
 	<nav aria-label="..." >
-        <ul class="pagination pagination-sm">
+       <ul class="pagination2 pagination-sm">
             <c:forEach begin="1" end="${totalPages}" var="pageNumber">
                 <li class="page-item ${page == pageNumber ? 'active' : ''}">
                     <a class="page-link" href="${pageContext.request.contextPath}/wishlist/myWishlist.do?page=${pageNumber}">

@@ -389,6 +389,8 @@ public class AdminController {
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model) throws IllegalStateException, IOException {
 		
+		log.debug("ProductCreateDto = ", _product);
+		
 		List<MultipartFile> thumbnailFiles = _product.getThumbnailFile();
 		List<MultipartFile> detailFiles = _product.getDetailFile();
 

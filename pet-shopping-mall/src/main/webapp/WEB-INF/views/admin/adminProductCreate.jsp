@@ -79,7 +79,7 @@
 					            	<label for="file" class="form-label">상세 이미지</label>
 					        	</div>
 					        	<div class="col-auto">
-					            	<input type="file" name="thumbnailFile" id="file" class="form-control" required>
+					            	<input type="file" name="detailFile" id="file" class="form-control" required>
 					        	</div>
 					        </div>
 
