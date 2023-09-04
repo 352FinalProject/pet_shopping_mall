@@ -84,7 +84,7 @@
 
 					        
 					        <!-- 5행 : 옵션추가 버튼 -->
-					        <div class="row mb-3 align-items-center">
+					        <div class="row mb-5 align-items-center">
 					        	<div class="col-auto">
 					            	<input class="btn btn-outline-secondary" id="addOptions" type="button" value="옵션 추가">
 					        	</div>
@@ -113,49 +113,16 @@
 						        </div>
 					        </div>
 						        
-			        <!-- 옵션추가 위치 -->
-		        	<div class="row mb-5" id="optionValueInput"></div>
+					        <!-- 옵션추가 위치 -->
+				        	<div class="row mb-3" id="optionValueInput"></div>
 		
-    	<div class="addedOption row mb-5 align-items-center" id="addedOption\${optionCnt}">
-			<div class="col-sm-3">
-				<div class="form-floating">
-					<label for="optionName" class="form-label">옵션명</label>
-					<input type="text" 
-						list="datalistOptions" 
-						class="form-control" 
-						name="productDetail[\${optionCnt}].optionName" id="optionName" required>
-						<datalist id="datalistOptions">
-							<option value="색상">
-							<option value="사이즈">
-							<option value="무게">
-						</datalist>
-				</div>
-			</div>
-			<div class="col-sm-3">
-				<div class="form-floating">
-					<label for="optionValue" class="form-label">옵션값</label>
-					<input type="text" name="productDetail[\${optionCnt}].optionValue" id="optionValue" class="form-control">
-				</div>
-			</div>
-			<div class="col-sm-3" id="option-btn-container">
-				<div class="input-group mb-3">
-					<span class="input-group-text">옵션추가금</span>
-					<input type="number" name="productDetail[\${optionCnt}].additionalPrice" id="additionalPrice" class="form-control" value="0">
-				</div>
-			</div>
-			<div class="col-sm" >
-	       		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
-			</div>
-		</div>
-		
-		
-					<!--상품등록버튼 -->
-					<div class="row mb-5">
-						<div class="col-md-5 d-flex justify-content-end">
-							<button class="btn btn-secondary me-2" type="reset">초기화</button>
-					        <button class="btn btn-primary" type="submit">상품등록</button>
-						</div>
-					</div>
+							<!--상품등록버튼 -->
+							<div class="row mb-5 align-items-center justify-content-around">
+								<div class="col-md-5 align-self-center">
+									<button class="btn btn-secondary me-2" type="reset">초기화</button>
+							        <button class="btn btn-primary" type="submit">상품등록</button>
+								</div>
+							</div>
 					     </form:form> 
 					    </div><!-- container-fluid -->
 					  </div><!-- card-body -->
@@ -205,26 +172,28 @@
     const addOptions = () => {
     	
     	const newOption = `
-    	<div class="addedOption" id="addedOption\${optionCnt}">
-    		<!-- 1행 -->
-			<div class="row mb-3">
-				<div class="col-md-3">
-					<label for="optionName" class="form-label">옵션명</label>
-					<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control" required>
-				</div>
-		        <div class="col-md-3">
-		              <label for="optionValue" class="form-label">옵션값</label>
-		              <input type="text" name="productDetail[\${optionCnt}].optionValue" id="optionValue" class="form-control">
-		        </div>
-		        <div class="col-md-3">
-		              <label for="additionalPrice" class="form-label">옵션추가금</label>
-		              <input type="number" name="productDetail[\${optionCnt}].additionalPrice" id="additionalPrice" class="form-control" value="0">
-		        </div>
-				<!-- 옵션삭제 버튼 -->
-				<div class="col-md-3 d-flex justify-content-end" id="option-btn-container">
-	        		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
-				</div>
-		    </div>
+    	<div class="addedOption row mb-3 align-items-end" id="addedOption\${optionCnt}">
+			<div class="col-sm-3">
+				<label for="optionName" class="form-label">옵션명</label>
+				<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control" list="datalistOptions" required>
+					<datalist id="datalistOptions">
+						<option value="색상">
+						<option value="사이즈">
+						<option value="무게">
+					</datalist>
+			</div>
+	        <div class="col-sm-3">
+	              <label for="optionValue" class="form-label">옵션값</label>
+	              <input type="text" name="productDetail[\${optionCnt}].optionValue" id="optionValue" class="form-control">
+	        </div>
+	        <div class="col-sm-3">
+	              <label for="additionalPrice" class="form-label">옵션추가금</label>
+	              <input type="number" name="productDetail[\${optionCnt}].additionalPrice" id="additionalPrice" class="form-control" value="0">
+	        </div>
+			<!-- 옵션삭제 버튼 -->
+			<div class="col-sm-3" id="option-btn-container">
+        		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
+			</div>
 		</div>
     	`;
     	
