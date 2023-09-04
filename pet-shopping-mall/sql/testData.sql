@@ -67,7 +67,11 @@ delete from product where product_id = 1;
 
 delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 3 where order_id = 29;
+update orderTbl set order_status = 4 where order_id = 76;
+
+select * from orderTbl order by order_id desc;
+UPDATE orderTbl SET order_date = '2023-05-02 00:00:00' WHERE order_id = 40;
+
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;

@@ -290,8 +290,6 @@ public class PaymentController {
 	/**
 	 * @author 김담희
 	 * 결제가 완료 처리되면 결제 완료 페이지로 매핑
-	 * 
-	 * @author 김대원
 	 */
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted(@RequestParam String orderNo, Model model) {

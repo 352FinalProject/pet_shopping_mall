@@ -27,6 +27,10 @@ public class NotificationController {
 	@Autowired
 	private NotificationService notificationService;
 	
+	/**
+    * @author 김대원
+    * 뷰 헤더에 알림내역 조회 메서드
+    */
 	@ResponseBody
 	@GetMapping("/findAllNotification.do")
 	public List<Notification> findAllNotification(@RequestParam String memberId, Model model) {
@@ -35,6 +39,10 @@ public class NotificationController {
 	    return notifications;
 	}
 	
+	/**
+    * @author 김대원
+    * 알림확인 후 알림삭제 메서드
+    */
 	@ResponseBody
 	@PostMapping("/deleteNotification.do")
 	public String deleteNotification(@RequestParam int id) {

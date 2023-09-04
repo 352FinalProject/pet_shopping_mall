@@ -95,8 +95,8 @@ public class AdminController {
 	
 	
 	/**
-	 * 주문 조회
-	 * @param model
+	 * @author 김대원
+	 * 주문목록, 통계 조회
 	 */
 	@GetMapping("/admin.do")
 	public void admin(Model model) {
@@ -116,9 +116,8 @@ public class AdminController {
 	}
 	
 	/**
-	 * 회원목록
-	 * @param page
-	 * @param model
+	 * @author 김대원
+	 * 회원목록 조회
 	 */
 	@GetMapping("/adminMemberList.do")
 	public void adminMemberList(Model model) {
@@ -138,9 +137,8 @@ public class AdminController {
 	}
 	
 	/**
-	 * 구독자목록
-	 * @param page
-	 * @param model
+	 * @author 김대원
+	 * 구독회원목록 조회
 	 */
 	@GetMapping("/adminSubscribeList.do")
 	public void adminSubscribeList(Model model) {
@@ -242,10 +240,8 @@ public class AdminController {
 	}
 	
 	/**
+	 * @author 김대원
 	 *  전체회원 이름,아이디 검색
-	 * @param searchKeyword
-	 * @param model
-	 * @return
 	 */
 	@GetMapping("/adminMemberSearchByNameOrId.do")
 	public String adminMemberSearchByNameOrId(
@@ -269,11 +265,8 @@ public class AdminController {
 	}
 	
 	/**
-	 *  구독자 이름,아이디 검색
-	 * @param searchKeyword
-	 * @param page
-	 * @param model
-	 * @return
+	 * @author 김대원
+	 *  구독회원 이름,아이디 검색
 	 */
 	@GetMapping("/adminSubscribeSearchByNameOrId.do")
 	public String adminSubscribeSearchByNameOrId(
@@ -303,8 +296,8 @@ public class AdminController {
 	}
 	
 	/**
-	 * 주문 조회
-	 * @param model
+	 * @author 김대원
+	 * 주문목록 조회
 	 */
 	@GetMapping("/adminOrderList.do")
 	public void adminOrderList(Model model) {
@@ -318,8 +311,8 @@ public class AdminController {
 	}
 	
 	/**
-	 * 주문검색 조회
-	 * @param model
+	 * @author 김대원
+	 * 주문 검색 조회
 	 */
 	@GetMapping("/adminOrderSearch.do")
 	public String adminOrderSearch(
@@ -347,7 +340,8 @@ public class AdminController {
 
 	
 	/**
-	 * 상품별 판매량통계
+	 * @author 김대원
+	 * 상품별 판매량 통계 조회
 	 */
 	@GetMapping("/adminStatisticsProduct.do")
 	public void adminStatisticsProduct(Model model) {
@@ -359,7 +353,8 @@ public class AdminController {
 	
 	
 	/**
-	 * 날짜별 판매량통계
+	 * @author 김대원
+	 * 날짜별 판매량 통계 조회
 	 */
 	@GetMapping("/adminStatisticsByDate.do")
 	public void adminStatisticsByDate(Model model) {
@@ -529,10 +524,10 @@ public class AdminController {
 		model.addAttribute("productDetails", productDetails);
 	}
 	
-	
-	
-	
-	// 상품옵션 추가 (수경)
+	/**
+	 * @author 전수경
+	 * 상품옵션 추가
+	 */
 	@PostMapping("/adminOptionCreate.do")
 	public ResponseEntity<?> adminOptionCreate(
 			@Valid @RequestBody ProductOptionCreateDto _product,
@@ -566,8 +561,10 @@ public class AdminController {
 		return ResponseEntity.ok(result);
 	}
 	
-	
-	// 상품옵션 수정
+	/**
+	 * @author 전수경
+	 * 상품옵션 수정
+	 */
 	@PostMapping("/adminProductDetailUpdate.do")
 	public ResponseEntity<?> adminProductDetailUpdate(
 			@Valid @RequestBody ProductDetailUpdateDto _product,
@@ -598,7 +595,10 @@ public class AdminController {
 	}
 
 
-	// 상품옵션 삭제
+	/**
+	 * @author 전수경
+	 * 상품옵션 삭제
+	 */
 	@PostMapping("/adminProductOptionDelete.do")
 	@ResponseBody
 	public ResponseEntity<?> adminProductOptionDelete(
@@ -609,19 +609,6 @@ public class AdminController {
 		
 	    return ResponseEntity.ok(result);
 	}
-
-
-
-	/**
-	 * 시간남으면하는기능(포인트주입)
-	 */
-//	@PostMapping("/adminPointUpdate.do")
-//	public String adminPointUpdate(
-//			@RequestParam String memberId,
-//	        @RequestParam int pointChange) {
-//	    adminService.updateMemberPoints(memberId, pointChange);
-//		return "admin/adminMemberList";
-//	}
 
 }
 
