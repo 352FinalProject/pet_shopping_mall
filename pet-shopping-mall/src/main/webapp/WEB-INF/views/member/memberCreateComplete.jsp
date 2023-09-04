@@ -101,8 +101,8 @@
 			<div>
 				<br>
 				<div class="" style="display: flex; align-items: center;">
-					<p>로그인 후 이용해주세요.</p>
-					<p>우동친의 다양한 혜택이 준비되어 있습니다.</p>
+					<p>로그인 후 이용해주세요.
+					<br>우동친의 다양한 혜택이 준비되어 있습니다.</p>
 				</div>
 				<div class="pet-create">
 					<div>
