@@ -53,6 +53,7 @@ import com.shop.app.review.dto.ProductReviewAvgDto;
 import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.service.ReviewService;
+import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 import com.shop.app.wishlist.service.WishlistService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -217,18 +218,40 @@ public class ProductController {
 
    
 	/**
-	 * @author 전수경
-	 * - 상품게시판 연결
+	 * @author 전수경, 이혜령
+	 * - 상품게시판 연결 (페이징바 처리)
 	 */
 	@GetMapping("/productList.do")
 	public void productList(
-			@RequestParam int id,
+			@RequestParam int id, // 카테고리아이디
+			@RequestParam(defaultValue = "1") int page, // 페이지번호
 			Model model,
 			@RequestParam(required = false) String align
 			) {
 
-		ProductCategory productCategory = productService.findProductCategoryById(id); 
-		List<Product> products = productService.findProductsByCategoryId(id);
+		int limit = 5;
+		
+		Map<String, Object> params = Map.of(
+				"page", page,
+				"limit", limit,
+				"categoryId", id
+			);
+		log.debug("params = {}", params);
+		
+		// 카테고리 아이디에 해당하는 상품의 수 조회
+		int totalCount = productService.findTotalProductCountByCategory(id);
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		log.debug("totalCount = {}", totalCount);
+		log.debug("totalPages = {}", totalPages);
+		model.addAttribute("totalPages", totalPages);
+		
+		// 카테고리명 가져옴
+		ProductCategory productCategory = productService.findProductCategoryById(id);
+		model.addAttribute("productCategory", productCategory);
+		
+		// 해당 카테고리, 페이지에 해당하는 상품들 가져옴
+		List<Product> products = productService.findProductsAll(params);
+		log.debug("products = {}", products);
 		
 		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
 		for(Product product : products) {
@@ -252,7 +275,7 @@ public class ProductController {
 		}
 
 		model.addAttribute("productInfos", productInfos);
-		model.addAttribute("productCategory", productCategory);
+		
 		
 		// 리뷰 전체개수, 리뷰 별점 평균 (혜령)
 		for (ProductInfoDto productInfo : productInfos) {
