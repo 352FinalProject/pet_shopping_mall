@@ -40,7 +40,6 @@
 							<th>가입일</th>
 							<th>주소</th>
 							<th>생일</th>
-							<th>관리</th>
 						</thead>
 						<tbody>
 							<c:forEach items="${subscribedMembers}" var="member" varStatus="vs">
@@ -52,7 +51,6 @@
 									<td>${member.enrollDate}</td>
 									<td>${member.address}</td>
 									<td>${member.birthday}</td>
-									<td><button onclick="submit">포인트관리</button></td>
 								</tr>
 							</c:forEach>
 						</tbody>

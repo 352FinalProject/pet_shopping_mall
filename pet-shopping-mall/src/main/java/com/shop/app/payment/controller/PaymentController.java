@@ -319,18 +319,6 @@ public class PaymentController {
 	public void paymentCompleted(@RequestParam String orderNo, Model model) {
 		Order order = orderService.findOrderByOrderNo(orderNo);
 		model.addAttribute("order", order);
-		
-		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
-	    
-		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
-	            .orderId(paymentCompleteNotificationDto.getOrderId())
-	            .orderNo(paymentCompleteNotificationDto.getOrderNo())
-	            .productName(paymentCompleteNotificationDto.getProductName())
-	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
-	            .memberId(paymentCompleteNotificationDto.getMemberId())
-	            .build();
-	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
-		
 	}
 	
 	

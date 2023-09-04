@@ -26,8 +26,7 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
-select * from notification;    
-            
+select * from notification;     
 select * from authority;
 
 

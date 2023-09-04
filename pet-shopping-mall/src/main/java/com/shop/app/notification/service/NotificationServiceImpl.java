@@ -57,21 +57,6 @@ public class NotificationServiceImpl implements NotificationService {
 		return result;
 	}
 	
-	@Override
-	public int paymentCompleteNotification(PaymentCompleteNotificationDto paymentCompleteNotificationDto) {
-		
-		String to = paymentCompleteNotificationDto.getMemberId();
-		Notification notification = Notification.builder()
-	        .id(paymentCompleteNotificationDto.getOrderId())
-	        .notiCategory(1)
-	        .notiContent(paymentCompleteNotificationDto.getProductName() + "상품 주문완료 되었습니다.")
-	        .notiCreatedAt(formatTimestampNow())
-	        .memberId(to) 
-	        .build();
-		
-		return notificationRepository.insertNotification(notification);
-	}
-	
 	@Override // db에서 알림 가져오기
 	public List<Notification> findAllNotification(String memberId) {
 	    List<Notification> notifications = notificationRepository.findAllNotification(memberId);
