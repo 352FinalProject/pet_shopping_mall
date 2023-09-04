@@ -160,12 +160,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	
-	// 모든상품 조회(수경)
-	@Override
-	public List<Product> findAllProducts() {
-		return productRepository.findAllProducts();
-	}
-	
 	// 상품아이디에 해당하는 모든 상품디테일 조회(수경)
 	@Override
 	public List<ProductDetail> findProductDetailsByProductId(int productId) {
@@ -222,5 +216,15 @@ public class ProductServiceImpl implements ProductService {
 		int categoryId = (int) params.get("categoryId");
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return productRepository.searchProductsById(rowBounds, categoryId);
+	}
+
+	@Override
+	public List<ProductSearchDto> findProductsAll() {
+		return productRepository.findProductsAll();
+	}
+
+	@Override
+	public List<ProductSearchDto> searchHomeProductsById(int categoryId) {
+		return productRepository.searchHomeProductsById(categoryId);
 	}
 }

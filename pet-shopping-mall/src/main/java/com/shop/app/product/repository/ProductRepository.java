@@ -140,7 +140,10 @@ public interface ProductRepository {
 	int findTotalProductCountByCategory(int categoryId);
 
 	// 쿼리수정 필요
-	@Select("select * from product where category_id = #{categoryId}")
 	List<ProductSearchDto> searchProductsById(RowBounds rowBounds, int categoryId);
+
+	List<ProductSearchDto> findProductsAll();
+
+	List<ProductSearchDto> searchHomeProductsById(int categoryId);
 
 }
