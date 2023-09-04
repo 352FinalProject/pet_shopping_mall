@@ -447,10 +447,14 @@ public class PaymentController {
         
     }
 	
+	
+	/**
+	 * @author 김담희
+	 * 구독 해지
+	 * customerUid(회원 아이디)로 sub_member 조회를 해서 그 정보를 바탕으로 구독 해지 처리
+	 */
 	@PostMapping("/unsubscribe.do")
 	public String unsubscribe (@RequestParam String customerUid, RedirectAttributes redirectAttr) {
-		// sub_member 조회를 해서, 거기서 가져온 merchant_uid를 포스트 요청 보내야 함.
-		// member 테이블에서 구독 N 처리
 		SubMember subMember = memberService.findSubMemberByMemberId(customerUid);
 		String result = schedulePay.cancelSchedule(subMember);
 		

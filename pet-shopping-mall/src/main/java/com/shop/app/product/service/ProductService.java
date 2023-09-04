@@ -77,7 +77,7 @@ public interface ProductService {
 	int adminOptionCreate(ProductDetail productDetail);
 	
 	// 상품 조회 정렬 (담희)
-	List<ProductSearchDto> alignProducts(int id, String alignType, String inOrder);
+	List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder);
 	
 	// 인덱스 페이지 간식 불러오기 (예라)
 	List<Product> findSnackAll(int categoryId);
@@ -85,11 +85,5 @@ public interface ProductService {
 	// 인덱스 페이지 패션용품 불러오기 (예라)
 	List<Product> findFashionAll(int _categoryId);
 	
-	// 카테고리에 해당하는 총 상품의 갯수 (수경)
-	int findTotalProductCountByCategory(int categoryId);
-	
-	// 페이지에 해당하는 상품들 조회 (수경)
-	List<Product> findProductsAll(Map<String, Object> params);
-	
-	
+	List<ProductSearchDto> searchProductsById(int categoryId);
 }

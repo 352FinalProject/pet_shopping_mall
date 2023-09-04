@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.product.dto.ProductInfoDto;
@@ -132,12 +131,6 @@ public interface ProductRepository {
 	@Select("select * from product where category_id = #{categoryId}")
 	List<Product> findFashionAll(int _categoryId);
 
-	// 카테고리에 해당하는 총 상품의 갯수 (수경)
-	@Select("select count (*) from product where category_id = #{categoryId}")
-	int findTotalProductCountByCategory(int categoryId);
-
-	// 페이지에 해당하는 상품들 조회 (수경)
-	@Select("select * from product where category_id = #{categoryId}")
-	List<Product> findProductsAll(RowBounds rowBounds, int categoryId);
+	List<ProductSearchDto> searchProductsById(int id);
 
 }
