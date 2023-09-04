@@ -229,7 +229,7 @@
    where
       ot.member_id = #{memberId}
       and
-      ot.order_status = 4
+      ot.order_status = 5
    </select>
    
    
@@ -254,7 +254,7 @@
    where
       ot.member_id = #{memberId} and c.request_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period})
       and
-      ot.order_status >=5
+      ot.order_status = 5
    </select>
    
    <select id="getOrderDetail" resultType="orderHistoryDto">
@@ -384,8 +384,5 @@
 	WHERE 
 	    r.review_id = #{reviewId} and r.product_id = #{productId} and p.product_id = #{productId}
 	</select>
-
-
-
    
 </mapper>

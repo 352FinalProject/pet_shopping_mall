@@ -192,8 +192,11 @@ public class OrderController {
 	}
 	
 	/**
-	 * @author 김담희, 이혜령
+	 * @author 김담희
 	 * 주문 상세 내역 조회
+	 * 
+	 * @author 이혜령
+	 * 배송완료시 리뷰작성버튼 활성화, 리뷰 작성시 구매완료로 주문상태 변경
 	 */
 	@GetMapping("/orderDetail.do")
 	public void getOrderDetail(Model model, @RequestParam String orderNo, @AuthenticationPrincipal MemberDetails member) {
