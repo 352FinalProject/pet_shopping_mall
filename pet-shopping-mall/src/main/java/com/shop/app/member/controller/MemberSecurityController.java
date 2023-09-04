@@ -69,13 +69,13 @@ public class MemberSecurityController {
    private PasswordEncoder passwordEncoder;
 
    @Autowired
-   private PointService pointService; // 회원가입시 포인트 3000원 적립
+   private PointService pointService;
 
    @Autowired
-   private TermsService termsService; // 회원가입시 약관동의
+   private TermsService termsService;
    
    @Autowired
-   private CouponService couponService; // 회원가입시 쿠폰 발급
+   private CouponService couponService;
    
    @Autowired
    private OrderService orderService;
@@ -95,11 +95,21 @@ public class MemberSecurityController {
 
    Map<Integer, Accept> userAgreements = new HashMap<>();
 
+   
+   /**
+    * @author 김상훈
+    * 회원가입 (비밀번호 암호화 처리)
+    * 
+    * @author 전예라
+    * 이메일 인증 api, 회원가입 포인트 지급, 회원가입 쿠폰 발급, 이용약관 처리
+    * 
+    * @author 김대원
+    * 회원가입 쿠폰이 발급되면 회원에게 알림 발송
+    */
    @PostMapping("/memberCreate.do")
    public String memberCreate(@Valid MemberCreateDto member, BindingResult bindingResult,
          RedirectAttributes redirectAttr, HttpSession session) {
 
-      // 이메일 인증 확인 (예라)
       Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
       if (isVerified == null || !isVerified) {
          redirectAttr.addFlashAttribute("msg", "이메일 인증을 해주세요.");
@@ -112,15 +122,12 @@ public class MemberSecurityController {
          return "redirect:/member/memberCreate.do";
       }
 
-      // 비밀번호 암호화 처리
       String rawPassword = member.getPassword();
       String encodedPassword = passwordEncoder.encode(rawPassword);
       member.setPassword(encodedPassword);
 
-      // 회원 정보 DB에 저장
       int result = memberService.insertMember(member);
 
-      // 포인트 테이블에 디비 저장 (예라)
       Point point = new Point();
       point.setPointMemberId(member.getMemberId());
       point.setPointCurrent(3000);
@@ -129,14 +136,12 @@ public class MemberSecurityController {
       
       int resultPoint = pointService.insertPoint(point);
       
-       // 회원가입시 무료배송 쿠폰 발급 (예라)
        List<Coupon> resultCoupon = couponService.findCoupon();
        for (Coupon coupon : resultCoupon) {
            MemberCoupon memberCoupon = new MemberCoupon();
            memberCoupon.setCouponId(coupon.getCouponId());
            memberCoupon.setMemberId(member.getMemberId());
 
-           // 발급받은 날짜로부터 한달 뒤의 날짜 계산
            LocalDateTime issuanceDate = LocalDateTime.now();
            LocalDateTime endDate = issuanceDate.plusMonths(1);
            
@@ -144,7 +149,6 @@ public class MemberSecurityController {
            memberCoupon.setEndDate(endDate); 
            memberCoupon.setUseStatus(0);
 
-           // memberCoupon db 추가
            int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
            
            String to = memberCoupon.getMemberId();
@@ -155,26 +159,18 @@ public class MemberSecurityController {
 					.memberId(to) 
 					.build();
 			
-			// db에 알림저장
 			notificationRepository.insertNotification(insertNotification);
-			// db에서 가장 최신 알림 꺼내서
 			Notification notification = notificationRepository.latestNotification();
-			// 메세지 보냄
 			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
-           
-           
            
        }
       
-       // 약관 동의 정보 가져오기
        Object obj = session.getAttribute("userAgreements");
-       // Terms 객체 생성
        Terms terms = new Terms();
 
       if (obj instanceof HashMap) {
          HashMap<Integer, Accept> userAgreements = (HashMap<Integer, Accept>) obj;
 
-         // 회원 id 설정 (회원가입이 완료된 후에 설정)
          terms.setMemberId(member.getMemberId());
 
          List<TermsHistory> findTermsHistory = termsService.fineTermsHistory();
@@ -188,7 +184,6 @@ public class MemberSecurityController {
             int result2 = termsService.insertTerms(terms);
          }
 
-         // 약관 동의 세션 제거
          session.removeAttribute("terms");
 
       } else {
@@ -200,7 +195,10 @@ public class MemberSecurityController {
       return "redirect:/member/memberCreateComplete.do";
    }
    
-
+   /**
+    * @author 전예라
+    * 회원이 체크한 Y/N을 구분
+    */
    @PostMapping("/updateTerms.do")
    public ResponseEntity<?> updateTerms(@RequestParam Map<String, String> data, HttpSession session) {
 
@@ -208,7 +206,6 @@ public class MemberSecurityController {
       String privacy = data.get("privacyAccept");
       String promotion = data.get("emailAccept");
 
-      // 사용자가 동의한 항목에 대해 Map에 저장
       userAgreements.put(1, "Y".equals(term) ? Accept.Y : Accept.N);
       userAgreements.put(2, "Y".equals(privacy) ? Accept.Y : Accept.N);
       userAgreements.put(3, "Y".equals(promotion) ? Accept.Y : Accept.N);
@@ -218,7 +215,7 @@ public class MemberSecurityController {
       return new ResponseEntity<>(HttpStatus.OK);
    }
       
-   @GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
+   @GetMapping("/memberLogin.do")
    public void memberLogin() {}
      
    @GetMapping("/updateMember.do")
@@ -236,10 +233,13 @@ public class MemberSecurityController {
    }
    
    
+   /**
+    * @author 김담희
+    * 마이 페이지에서 최근 1개월간 주문 내역 및 구독 정보 등 조회
+    */
    @GetMapping("/myPage.do")
    public void myPage(Model model, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "1") int page) {
       String memberId = member.getMemberId();
-      // 페이징바 처리
       int limit = 5;
       Map<String, Object> params = Map.of(
     		  "page", page,
@@ -259,14 +259,13 @@ public class MemberSecurityController {
    }
 
    @PostMapping("/updateMember.do")
-   public String memberUpdate(@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
+   public String memberUpdate(@AuthenticationPrincipal MemberDetails principal,
          @Valid MemberUpdateDto _member, HttpSession session, BindingResult bindingResult,
          RedirectAttributes redirectAttr, Model model) {
       Member member = _member.toMember();
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
       
-      log.debug("member = {}", member);
       
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
          String rawPassword = _member.getPassword();
@@ -276,7 +275,6 @@ public class MemberSecurityController {
       
       int result = memberService.updateMember(member);
 
-      log.debug("update result = {}", result);
       
       UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(memberDetails,

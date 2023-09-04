@@ -22,9 +22,15 @@
         
     }
     .pink {
-        color: pink; /* 핑크색 하트 */
+        color: #ff8a9e;
     }
 
+	.heart-img {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-right: -400px;
+	margin-top: 3px;
 </style>
 <section class="common-section" id="#">
       <div class="common-container">
@@ -410,13 +416,13 @@
 
 	<div class="product-bottom">
 		<div class="product-bottom2">
-			<div>
-				<span id="product-bottom-title" style="font-size: 24px;">${product.productName}</span>
-				<br /> <span id="product-price" style="font-size: 18px; font-weight: 600;"> <fmt:formatNumber
+			<div class="product-bottom3">
+				<span id="product-bottom-title" style="font-size: 15px;">${product.productName}</span>
+				<br /> <span id="product-price" style="font-size: 15px; font-weight: 600;"> <fmt:formatNumber
 						value="${product.productPrice}" pattern="#,###" /> 원
 				</span>
 			</div>
-			<div class="heart-img">
+			<div class="heart-img" style="margin-top: -1px;">
 				<button class="heart-button" id="heartButton">
 					<span class="heart-button pink" id="clickHeart"> <c:choose>
 							<c:when test="${likeState == 0}">♡</c:when>
@@ -426,10 +432,11 @@
 				</button>
 				<span id="likeCnt">${product.likeCnt}</span>
 			</div>
-			<button class="btn btn1" onclick="addCart();">장바구니</button>
-			<button class="btn btn2" onclick="purchase();">구매하기</button>
+			<div class="cart-btn1" style="display:flex; gap: 10px;">
+				<button class="btn btn1" style="margin:auto;" onclick="addCart();">장바구니</button>
+				<button class="btn btn2" style="margin:auto;" onclick="purchase();">구매하기</button>
+			</div>
 		</div>
-	</div>
 	</div>
 	<form:form id="addCartFrm">
 		<input type="hidden" value="1" id="_quantity" name="quantity">

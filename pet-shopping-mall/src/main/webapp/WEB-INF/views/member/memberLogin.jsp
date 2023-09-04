@@ -169,7 +169,7 @@ button, input {
    margin: 10% auto;
    padding: 20px;
    border: 1px solid #888;
-   width: 70%;
+   width: 30%;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
    border-radius: 5px;
 }
@@ -234,7 +234,7 @@ button, input {
    margin: 10% auto;
    padding: 20px;
    border: 1px solid #888;
-   width: 70%;
+   width: 30%;
    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
    border-radius: 5px;
 }

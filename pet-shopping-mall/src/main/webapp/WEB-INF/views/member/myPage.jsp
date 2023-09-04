@@ -176,12 +176,12 @@
 		</div>
 	</div>
 	<nav aria-label="...">
-		<ul class="pagination pagination-sm">
+		<ul class="">
 			<c:forEach begin="1" end="${totalPages}" var="pageNumber">
-				<li class="page-item ${page == pageNumber ? 'active' : ''}"><a
-					class="page-link"
+				<li class="myPage-item ${page == pageNumber ? 'active' : ''}"><a
+					class="myPage-link"
 					href="${pageContext.request.contextPath}/member/myPage.do?page=${pageNumber}">
-						<span class="page-number">${pageNumber}</span>
+						<span class="myPage-number">${pageNumber}</span>
 				</a></li>
 			</c:forEach>
 		</ul>

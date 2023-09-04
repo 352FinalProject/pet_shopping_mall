@@ -9,5 +9,5 @@ import lombok.Data;
 public class ImageCreateDto {
 	private String imageOriginalFilename;
 	private String imageRenamedFilename;
-	private Thumbnail thumbnail; // Y, N
+	private Thumbnail thumbnail;
 }

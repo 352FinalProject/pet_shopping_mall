@@ -22,9 +22,7 @@
     <li>Spring Boot</li>
     <li>JAVA</li>
     <li>JSP</li>
-    <li>Database
-      <ul marker>RDBMS: Oracle 11g XE</ul>
-    </li>
+    <li>Oracle</li>   
   </ul>
   
   ### Tools
@@ -52,49 +50,55 @@
    <li>네이버 로그인 API</li>
    <li>카카오 주소검색 API</li>
    <li>아임포트 결제 API</li>
-   <li>카카오 위치기반 지도 API</li>
+   <li>카카오맵 API</li>
+   <li>위치기반 API</li>
 </ul>
 <br>
+
 ## 팀원별 구현코드
 
 <h3>김담희</h3>
-<h4>결제, 장바구니</h4>
+<h4>결제,장바구니,구독,상품등록/조회</h4>
 <ul>
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="http://localhost:8080/pet/cart/shoppingCart.do">장바구니</a></li> 
 </ul>
 
 <h3>전예라</h3>
-<h4>호두엄마</h4>
+<h4>Q&A,쿠폰,포인트,상품조회</h4>
 <ul>
   <li><a href="http://localhost:8080/pet"></a></li> 
 </ul>
 
 <h3>김대원</h3>
-<h4>관리자 게시판</h4>
+<h4>관리자 페이지CRUD, 실시간알림</h4>
 <ul>
   <li><a href="http://localhost:8080/pet"></a></li> 
 </ul>
 
 <h3>이혜령</h3>
-<h4>리뷰</h4>
+<h4>리뷰 CRUD,병원조회</h4>
 <ul> 
   <li><a href="http://localhost:8080/pet"></a></li> 
 </ul>
 
 <h3>전수경</h3>
-<h4>상품 CRUD</h4>
+<h4>상품 등록/수정/삭제</h4>
 <ul> 
   <li><a href="http://localhost:8080/pet"></a></li> 
 </ul>
 
 <h3>강선모</h3>
-<h4>펫 CRUD</h4>
+<h4>펫 CRUD, 찜하기</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="http://localhost:8080/pet/petProfile.do">펫 등록</a></li>
+  <li><a href="http://localhost:8080/pet/pet/petList.do">찜 목록</a></li>
+  <li><a href="http://localhost:8080/pet/pet/petDetail.do?petId=1">펫 상세조회</a></li>
+  <li><a href="http://localhost:8000/pet/pet/petGoDetail.do?>펫 수정</a></li>
+  <li><a href="http://localhost:8080/pet/wishlist/myWishlist.do">찜 목록</a></li> 
 </ul>
 
 <h3>김상훈</h3>
 <h4>회원CRUD, 로그인</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="http://localhost:8080/pet/member/memberLogin.do"></a></li> 
 </ul>

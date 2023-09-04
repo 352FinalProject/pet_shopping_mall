@@ -27,10 +27,10 @@ public class OrderCreateDto {
 		
 	private List<OrderDetail> forms;
 	
-	private int pointsUsed; // 사용하려는 포인트 (예라)
-	private int couponId; // 사용하려는 쿠폰 (예라)
-	private Boolean useCoupon; // 쿠폰 사용 여부 (예라)
-	private int couponDiscount; // 쿠폰 할인 가격 (예라)
+	private int pointsUsed;
+	private int couponId;
+	private Boolean useCoupon;
+	private int couponDiscount;
 	
 	public Order toOder() {
 	    
@@ -49,9 +49,9 @@ public class OrderCreateDto {
 				.memberId(memberId)
 				.totalPrice(totalPrice)
 				.deliveryFee(deliveryFee)
-				.discount(pointsUsed + couponDiscount)  // 사용된 포인트, 쿠폰을 할인 금액으로 설정 (예라)
+				.discount(pointsUsed + couponDiscount)
 				.discountDetail(discountDetailValue)
-				.amount(amount)        // 할인된 금액을 반영하여 결제 금액 설정 (예라)
+				.amount(amount)
 				.memberCouponId(memberCouponId)
 				.build();
 	}

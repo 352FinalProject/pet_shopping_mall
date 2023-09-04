@@ -20,10 +20,8 @@ public interface CartService {
 
 	int updateCart(CartItem cartitem, String memberId);
 
-	// 장바구니 찾기 (예라)
 	int findCartById(String member);
 
-	// 장바구니 담기 (담희)
 	int insertCart(String memberId, int productDetailId, int quantity);
 
 	PurchaseDto paymentOneInfo(int productDetailId);

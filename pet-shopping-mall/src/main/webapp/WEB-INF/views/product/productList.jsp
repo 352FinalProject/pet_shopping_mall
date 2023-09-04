@@ -13,6 +13,7 @@
 	        <div class="board-title">
 		        <span>
 		        <c:set var="categoryName" value="${productInfos[0].categoryName}"/>
+		        <c:set var="categoryId" value="${productInfos[0].categoryId}" />
 		        ${categoryName}
 		        </span>
 	        </div>
