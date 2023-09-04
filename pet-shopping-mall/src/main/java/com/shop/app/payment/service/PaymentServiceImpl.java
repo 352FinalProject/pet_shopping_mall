@@ -30,6 +30,15 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	MemberRepository memberRepository;
 	
+	
+	
+	/**
+	 * @author 김담희
+	 * 결제가 완료되면 결제 테이블에 insert
+	 * 주문 테이블 주문 상태 변경 (0이 결제완료)
+	 * 결제 완료 여부 업데이트
+	 * 장바구니 전체 비우기
+	 */
 	@Override
 	public int updatePayStatus(String orderNo, String pgProvider) {
 		
@@ -52,7 +61,6 @@ public class PaymentServiceImpl implements PaymentService {
 		result = orderRepository.updateOrderStatus(orderNo, 0);
 		
 		result =  paymentRepository.updatePayStatus(orderNo);
-		// 장바구니 비우기
 		result= cartRepository.deleteCartAll(order.getMemberId());
 		
 		if(result == 1) {
@@ -73,6 +81,11 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentRepository.getPaymentInfo(orderId);
 	}
 	
+	
+	/**
+	 * @author 김담희
+	 * 구독자 결제 테이블에 결제 정보 저장
+	 */
 	@Override
 	public int insertSubPayment(String customerUid) {
 		int result = memberRepository.memberSubscribe(customerUid);
@@ -80,8 +93,9 @@ public class PaymentServiceImpl implements PaymentService {
 		return result;
 	}
 	
+	
+	
 	// 알림 (productName가져오기위한 메서드 - 대원)
-
 	@Override
 	public PaymentCompleteNotificationDto notificationFindOrderByOrderNo(String orderNo) {
 		return paymentRepository.notificationFindOrderByOrderNo(orderNo);

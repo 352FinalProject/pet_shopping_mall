@@ -134,7 +134,10 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductsByCategoryId(categoryId);
 	}
 
-	// 찜 수 증감 (선모)
+	/**
+	 * @author 강선모
+   	 * -찜 수 증감 
+	 */
 	@Override
 	public int updateLikeCnt(Map<String, Object> param) {
 		return productRepository.updateLikeCnt(param);

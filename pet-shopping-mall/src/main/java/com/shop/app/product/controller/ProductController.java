@@ -58,6 +58,7 @@ import com.shop.app.wishlist.service.WishlistService;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @Validated
 @RequestMapping("/product")
@@ -79,7 +80,8 @@ public class ProductController {
    @Autowired
    private PetService petService;
 
-   @GetMapping("/productDetail.do")
+
+@GetMapping("/productDetail.do")
    public void productDetail(@RequestParam int productId,
                              @RequestParam(defaultValue = "1") int page,
                              @AuthenticationPrincipal MemberDetails member,
@@ -205,7 +207,10 @@ public class ProductController {
 	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
-	    /* 찜 등록 여부 가져오기 (선모) */
+		/**
+		 * @author 강선모
+	   	 * -찜 등록 여부 가져오기 
+		 */
 		if (member != null) {
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
@@ -314,13 +319,16 @@ public class ProductController {
    }
    
    
-   /* 하트 클릭 (선모) */
+	/**
+	 * @author 강선모
+   	 * -하트 클릭 이벤트
+	 */
    @ResponseBody
    @PostMapping("/insertPick.do")
    public Map insertPick(@Valid @RequestBody Map<String, Object> param, @AuthenticationPrincipal MemberDetails member) {
       Map<String, Object> resultMap = new HashMap<>();
-      String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제";
-      String getProductId = param.get("productId").toString();
+      String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제"; // 화면에서 받은 state 값으로 등록/삭제 여부 판단 -> 화면상 코드 : var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert";
+      String getProductId = param.get("productId").toString(); // 화면에서 받은 상품 Id
       int productId = getProductId.isEmpty() ? 0 : Integer.parseInt(getProductId);
       resultMap.put("rs", "fail");
       resultMap.put("msg", "찜 " + state + "에 실패하였습니다.");
@@ -330,19 +338,19 @@ public class ProductController {
          param.put("productId", productId);
          
          if("insert".equals(param.get("state").toString())) {
-            param.put("cnt", 1);
+            param.put("cnt", 1); // 쿼리에서 해당 상품의 찜 증가에 사용될 변수
             
-            if(wishlistService.insertPick(productId, member.getMemberId()) > 0) {
-               if(productService.updateLikeCnt(param) > 0) {
+            if(wishlistService.insertPick(productId, member.getMemberId()) > 0) { // wishList 테이블에 값 Insert : return값 : Insert 쿼리로 추가된 행 개수
+               if(productService.updateLikeCnt(param) > 0) { // product 테이블의 찜 컬럼 변경
                   resultMap.put("rs", "insertS");
                   resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
                }
             }
          } else if("delete".equals(param.get("state").toString())) {
-            param.put("cnt", -1);
+            param.put("cnt", -1); // 쿼리에서 해당 상품의 찜 감소에 사용될 변수
             
-            if(wishlistService.deletePick(productId, member.getMemberId()) > 0) {
-               if(productService.updateLikeCnt(param) > 0) {
+            if(wishlistService.deletePick(productId, member.getMemberId()) > 0) { // wishList 테이블에 값 Delete : return값 : Delete 쿼리로 제거된 행 개수
+               if(productService.updateLikeCnt(param) > 0) { // product 테이블의 찜 컬럼 변경
                   resultMap.put("rs", "deleteS");
                   resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
                }

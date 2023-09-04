@@ -56,11 +56,12 @@ public class OrderController {
 	CouponService couponService;
 	
 	
-	@GetMapping("/orderExchange.do")
-	public void orderExchange() {}
-	
 	/**
+	 * @author 김담희
 	 * 멤버 개인이 주문 내역 조회
+	 * period 매개변수가 null 이면 전체 조회,
+	 * period 값이 넘어왔으면 최근 3개월/6개월/12개월 조회
+	 * 
 	 */
 	@GetMapping("/orderList.do")
 	public void getOrderList(@RequestParam(defaultValue = "1") int page, Model model, @RequestParam(name = "period", required = false) Integer period, @AuthenticationPrincipal MemberDetails member) {
@@ -84,9 +85,13 @@ public class OrderController {
 			
 	    model.addAttribute("status", status);
 	    model.addAttribute("orderHistories", orderList);
-		
 	}
 	
+	
+	/**
+	 * @author 김담희
+	 * 주문 취소 상세 내역 조회
+	 */
 	@GetMapping("/cancelOrderDetail.do")
 	public void cancelOrder(Model model, @RequestParam String orderNo) {
 		OrderCancelInfoDto cancelInfos = orderService.getCancelInfo(orderNo);
@@ -95,7 +100,10 @@ public class OrderController {
 	
 	
 	/**
-	 * 미입금 주문의 주문 취소 (환불은 paymentController)
+	 * @author 김담희
+	 * 미입금 주문의 주문 취소 
+	 * (환불은 paymentController에 있음)
+	 * isRefund가 Y / N에 따라서 환불/단순 취소를 분기 처리
 	 */
 	@PostMapping("/cancelOrder.do")
 	public String insertCancelOrder(RedirectAttributes redirectAttr, @RequestParam String orderNo, @RequestParam String isRefund) {
@@ -103,7 +111,13 @@ public class OrderController {
 		return "redirect:/order/orderList.do";
 	}
 	
-	
+
+	/**
+	 * @author 김담희
+	 * 주문 취소 내역 조회
+	 * period 매개변수가 null 이면 전체 조회,
+	 * period 값이 넘어왔으면 최근 3개월/6개월/12개월 조회
+	 */
 	@GetMapping("/cancelOrderList.do")
 	public void getCancelOrderList(@RequestParam(defaultValue = "1") int page, Model model, @RequestParam(name = "period", required = false) Integer period, @AuthenticationPrincipal MemberDetails member) {
 		String memberId = member.getMemberId();
@@ -127,7 +141,12 @@ public class OrderController {
 		model.addAttribute("cancelInfoList", cancelInfos);
 	}
 	
-	// 결제창이 넘어가기 전에 취소하면 주문 테이블 자체에서 삭제
+	
+	/**
+	 * @author 김담희, 전예라
+	 * 결제 버튼을 누르면 무조건 orderTbl 테이블에 먼저 insert되는데,
+	 * 주문을 진행 중 사용자의 취소 시 주문 내역 테이블 자체에서 삭제
+	 */
 	@PostMapping("/deleteOrder.do")
 	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member, 
 			@RequestParam(name = "pointsUsed", required = false) Integer pointsUsed, 
@@ -164,7 +183,6 @@ public class OrderController {
 	        coupon.setUseStatus(0); // 사용 안 함으로 변경
 	        coupon.setUseDate(null); // 사용 날짜를 null로 설정
 	        
-	        log.debug("coupon = {}", coupon);
 	        int updateCoupon = couponService.updateCoupon(coupon); 
 	    	}
 		}
@@ -172,6 +190,10 @@ public class OrderController {
 		
 	}
 	
+	/**
+	 * @author 김담희, 이혜령
+	 * 주문 상세 내역 조회
+	 */
 	@GetMapping("/orderDetail.do")
 	public void getOrderDetail(Model model, @RequestParam String orderNo, @AuthenticationPrincipal MemberDetails member) {
 	    
@@ -195,7 +217,6 @@ public class OrderController {
 	                reviewWriteMap.put(key, reviewWrite);
 	            }
 	        }
-	        log.debug("reviewWriteMap = {}", reviewWriteMap);
 	        model.addAttribute("reviewWrite", reviewWriteMap);
 	    }
 	    

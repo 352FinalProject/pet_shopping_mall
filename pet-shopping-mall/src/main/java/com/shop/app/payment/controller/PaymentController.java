@@ -117,7 +117,10 @@ public class PaymentController {
 	}
 
 	/**
-	 * 결제하기 (담희)
+	 * @author 김담희
+	 * 구매 요청 페이지 조회
+	 * 장바구니에서 요청이 넘어올 시, 장바구니에 있는 상품 구매 페이지로 넘어감
+	 * 상품 상세 페이지에서 요청이 넘어올 시, 해당 상품의 옵션 값과 수량에 대해서 구매 페이지로 넘어감
 	 */
 	@GetMapping("/paymentInfo.do")
 	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam(required=false) Integer productDetailId, @RequestParam(required=false) Integer quantity) {
@@ -143,6 +146,11 @@ public class PaymentController {
 	}
 	
 	
+	/**
+	 * @author 김담희
+	 * 상품 상세페이지에서 hidden 폼에 넣어서 구매 요청을 보내기 때문에 POST로 받은 값을
+	 * GET으로 변환해서 넘김
+	 */
 	@PostMapping("/paymentInfo.do")
 	public String paymentOne(Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam int quantity, @RequestParam int productDetailId, RedirectAttributes redirectAttr) {
 		return "redirect:/payment/paymentInfo.do?productDetailId="+productDetailId+"&quantity="+quantity;
@@ -151,7 +159,13 @@ public class PaymentController {
 	
 
 	/**
-	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드 (담희)
+	 * @author 김담희
+	 * 결제 API 실행 전 주문 테이블과 주문 상세 테이블에 먼저 주문 정보 insert
+	 * (결제 취소 요청이 들어오거나 실패 시, 바로 delete 처리함)
+	 * 
+	 * 
+	 * @author 전예라
+	 * 
 	 */
 	@ResponseBody
 	@PostMapping("/proceed.do")
@@ -260,16 +274,18 @@ public class PaymentController {
 		} else {
 			msg = "주문에 실패하셨습니다. 관리자에게 문의하세요.";
 			
-			
 		}
 
 		resultMap.put("result", result);
 		resultMap.put("msg", msg);
 		return resultMap;
 	}
+	
+	
 
 	/**
-	 * 결제 검증 (담희)
+	 * @author 김담희
+	 * 아임포트 서버에서 결제 검증
 	 */
 	@PostMapping("/verifyIamport/{imp_uid}")
 	@ResponseBody
@@ -278,16 +294,27 @@ public class PaymentController {
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
 
+	
+	/**
+	 * @author 김담희
+	 * 결제 성공 시 결제 내역 테이블 저장, 주문 테이블에 결제 방법 및 결제 완료 여부 업데이트
+	 */
 	@PostMapping("/successPay.do")
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid,
 			@AuthenticationPrincipal MemberDetails member, @RequestParam("pg_provider") String pgProvider) {
 		String orderNo = merchantUid;
-		// payment 테이블에 삽입 및 orderTbl 상태 업데이트
 		int result = paymentService.updatePayStatus(orderNo, pgProvider);
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of("result", 1));
 	}
+	
 
+	/**
+	 * @author 김담희
+	 * 결제가 완료 처리되면 결제 완료 페이지로 매핑
+	 * 
+	 * @author 김대원
+	 */
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted(@RequestParam String orderNo, Model model) {
 		Order order = orderService.findOrderByOrderNo(orderNo);
@@ -305,6 +332,8 @@ public class PaymentController {
 	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
 		
 	}
+	
+	
 	
 	/*
 	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)
@@ -380,6 +409,8 @@ public class PaymentController {
 	        int updateCoupon = couponService.updateCoupon(coupon); 
 	    }
 	}
+	
+	
 	
 	@ResponseBody
 	@PostMapping("/startScheduler.do")

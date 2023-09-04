@@ -1,11 +1,6 @@
 package com.shop.app.cart.dto;
 
 
-import java.util.List;
-
-import com.shop.app.common.entity.ImageAttachment;
-import com.shop.app.common.entity.ImageAttachmentMapping;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,13 +13,13 @@ import lombok.NoArgsConstructor;
 public class CartInfoDto{
 	private int cartitemId;
 	private int productId;
-	private int productDetailId; //product_detail
-	private String productName; // product
-	private String optionName; // product_detail
-	private String optionValue; // product_detail
+	private int productDetailId;
+	private String productName; 
+	private String optionName; 
+	private String optionValue; 
 	private int productPrice;
-	private int additionalPrice; // product.getProductPrice +  productDetail.additionalPrice
-	private int quantity; // cartitemId
+	private int additionalPrice; 
+	private int quantity;
 	
 	private String thumbnail;
 }

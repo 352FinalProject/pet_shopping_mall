@@ -55,7 +55,10 @@ public interface ProductService {
 	// 수경
 	List<Product> findProductsByCategoryId(int categoryId);
 	
-	// 찜 수 증감 (선모)
+	/**
+	 * @author 강선모
+   	 * -찜 증감
+	 */
 	int updateLikeCnt(Map<String, Object> param);
 	
 	// index페이지 상품 검색 담희
