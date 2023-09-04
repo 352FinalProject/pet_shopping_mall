@@ -266,7 +266,6 @@ public class MemberSecurityController {
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
       
-      log.debug("member = {}", member);
       
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
          String rawPassword = _member.getPassword();
@@ -276,7 +275,6 @@ public class MemberSecurityController {
       
       int result = memberService.updateMember(member);
 
-      log.debug("update result = {}", result);
       
       UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(memberDetails,

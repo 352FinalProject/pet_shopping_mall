@@ -88,14 +88,12 @@ public class ProductController {
 
 		int totalCount = reviewService.findProductTotalReviewCount(productId);
 
-		log.debug("totalCount 몇개임 = {}", totalCount);
 
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 
 		// 상품Id에 대한 모든 리뷰 가져오기
 		List<Review> reviews = reviewService.findProductReviewAll(params, productId);
-		log.debug("reviews = {}", reviews);
 		model.addAttribute("reviews", reviews);
 
 		// 별점 퍼센트
@@ -164,7 +162,6 @@ public class ProductController {
 			int reviewId2 = review.getReviewId();
 			ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 
-			log.debug("reviewDetails = {}", reviewDetails);
 
 			if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
 				List<String> imageFilenames = new ArrayList<>();
@@ -185,7 +182,6 @@ public class ProductController {
 			reviewProductMap.put(review.getReviewId(), ReviewOrders);
 		}
 
-		log.debug("reviewImageMap = {}", reviewImageMap);
 
 		model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 		model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보

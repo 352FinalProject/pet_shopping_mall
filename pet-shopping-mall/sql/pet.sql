@@ -60,6 +60,7 @@ SELECT *  FROM all_tables;
 --drop table sub_payment;
 --drop table image_attachment;
 --drop table product_category;
+--drop table notification;
 --
 ---- 외래키 붙어있는 테이블삭제
 --drop table member cascade constraints;
@@ -98,7 +99,7 @@ SELECT *  FROM all_tables;
 --drop sequence seq_cancel_id;
 --drop sequence seq_history_id;
 --drop sequence seq_terms_id;
---drop sequence seq_product_option_id;
+drop sequence seq_product_option_id;
 --drop sequence seq_member_coupon_id;
 --drop sequence seq_coupon_id;
 --drop sequence seq_category_id;
