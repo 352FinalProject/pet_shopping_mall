@@ -216,8 +216,8 @@ public class ProductController {
 			@RequestParam(required = false) String align
 			) {
 		
+		
 		List<ProductSearchDto> productInfos = productService.searchProductsById(categoryId);
-		log.debug("productInfos = {}", productInfos);
 		model.addAttribute("productInfos", productInfos);
 		
 		// 정렬
