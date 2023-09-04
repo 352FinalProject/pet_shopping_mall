@@ -95,8 +95,7 @@ public class CartServiceImpl implements CartService {
 	    }
 	    return result;
 	}
-
-
+	
 	@Override
 	public int findCartById(String member) {
 		return cartRepository.findCartById(member);

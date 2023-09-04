@@ -54,7 +54,6 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
-	// 고객센터 (선모)
 	@GetMapping("/service.do")
 	public void serviceCenter() {}
 	
@@ -64,11 +63,14 @@ public class QuestionController {
 	@Autowired
 	private ServletContext application;
 	
-	// application.yml 변수 가져오기
 	@Value("${spring.servlet.multipart.location}")
 	private String multipartLocation;
 	
-	// 1:1 목록 조회 + 페이징바 (예라)
+	
+	/**
+	 * @author 전예라
+	 * 1:1 문의 전체 조회 + 페이징바
+	 */
 	@GetMapping("/inquiry/questionList.do")
 	public void questionList(@RequestParam(defaultValue = "1") int page, Question question, Model model) {
 		int limit = 5;
@@ -86,18 +88,18 @@ public class QuestionController {
 		model.addAttribute("questions", questions);
 	}
 	
-	// 1:1 목록 상세 조회 + 답변 (예라)
+	/**
+	 * @author 전예라
+	 * 1:1 문의 상세 조회
+	 */
 	@GetMapping("/inquiry/questionDetail.do")
 	public void questionDetail(Question question, Model model) {
-	    
-		// 1:1 상세 조회
 
 	    Question questions = questionService.findQuestionByAnwerCount(question);
 	    model.addAttribute("questions", questions);
 	    
 	    int questionId = question.getQuestionId();
-	    
-	    // 1:1 답변 조회
+
 	    Answer answer = Answer
 	    		.builder()
 	    		.answerQuestionId(questionId)
@@ -105,13 +107,11 @@ public class QuestionController {
 
 	    Answer answers = questionService.findQuestionAnswersById(answer);
 	    model.addAttribute("answers", answers);
-	    
-	    // 이미지 파일 정보 조회
+
 	    QuestionDetails questionDetails = questionService.findImageAttachmentsByQuestionId(questionId);
 	    model.addAttribute("questionDetails", questionDetails);
 }
 	
-	// 1:1 문의 작성 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionCreate.do")
 	public void qreateCuestion(Question question, Model model) {
 
@@ -119,16 +119,18 @@ public class QuestionController {
 	    model.addAttribute("questions", questions);
 	}
 	
-	// 1:1 문의 작성 (예라)
+	/**
+	 * @author 전예라
+	 * 이미지 업로드 하는 메소드
+	 * 
+	 */
 	@PostMapping("/inquiry/questionCreate.do")
 	public String questionCreate(QuestionCreateDto _question, 
 			@RequestParam(value = "upFile", required = false) List<MultipartFile> upFiles) 
 					throws IllegalStateException, IOException {
 		
-		// 1. 파일 저장
 		List<ImageAttachment> attachments = new ArrayList<>();
-		
-		// 이미지 상대경로 지정
+
 		String saveDirectory = application.getRealPath("/resources/upload/question");
 				
 		for(MultipartFile upFile : upFiles) {			
@@ -154,7 +156,6 @@ public class QuestionController {
 		    }
 		}
 		
-		// 2. db 저장
 		QuestionDetails questions = QuestionDetails.builder()
 				.questionMemberId(_question.getQuestionMemberId())
 				.questionTitle(_question.getQuestionTitle())
@@ -164,13 +165,11 @@ public class QuestionController {
 				.attachments(attachments)
 				.build();
 		
-		// 질문을 먼저 db에 저장
 		int questionId = questionService.insertQuestion(questions);
 		
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
 	
-	// 1:1 문의 삭제 (예라)
 	@PostMapping("/inquiry/DeleteQuestion.do")
 	public String questionDelete(@RequestParam int questionId) {
 		
@@ -179,7 +178,6 @@ public class QuestionController {
 		return "redirect:/servicecenter/inquiry/questionList.do";
 	}
 	
-	// 1:1 문의 수정 연결 + 조회 (예라)
 	@GetMapping("/inquiry/questionUpdate.do")
 	public void questionUpdate(@RequestParam int questionId, Model model) {
 
@@ -192,7 +190,6 @@ public class QuestionController {
 	    model.addAttribute("questions", questions);
 	}
 	
-	// 1:1 문의 수정 (예라)
 	@PostMapping("/inquiry/questionUpdate.do")
 	public String updateQuestion(QuestionUpdateDto _question) {
 		
@@ -202,7 +199,10 @@ public class QuestionController {
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}
 	
-	// 1:1 문의 실시간 검색 (예라)
+	/**
+	 * @author 전예라
+	 * 문의 내역을 비동기로 검색
+	 */
 	@GetMapping("/inquiry/questionSearch.do")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> questionSearch(
@@ -211,8 +211,7 @@ public class QuestionController {
 	    
 	    if (searchKeyword != null && !searchKeyword.isEmpty()) {
 	        List<Question> questions = questionService.questionSearch(searchKeyword);
-	        
-	        // 각 질문의 답변 수 계산하여 추가
+	     
 	        for (Question q : questions) {
 	            int answerCount = questionService.calculateAnswerCount(q.getQuestionId());
 	            q.setAnswerCount(answerCount);
@@ -226,13 +225,17 @@ public class QuestionController {
 	    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
 	}
 	
+	
+	/**
+	 * @author 전예라
+	 * 첨부했던 파일 다운로드
+	 */
 	@GetMapping("/fileDownload.do")
 	public ResponseEntity<Resource> fileDownload(@RequestParam int questionId) 
 			throws UnsupportedEncodingException, FileNotFoundException {
-		// 1. db조회
+
 		ImageAttachment attach = questionService.findAttachmentById(questionId);
 		
-		// 2. Resource객체 생성
 		String saveDirectory = application.getRealPath("/resources/upload/question");
 	    File downFile = new File(saveDirectory, attach.getImageRenamedFilename());
 		
@@ -241,8 +244,7 @@ public class QuestionController {
 		
 		String location = "file:" + downFile;
 		Resource resource = resourceLoader.getResource(location);
-		
-		// 3. 응답헤더 작성
+
 		String filename = URLEncoder.encode(attach.getImageOriginalFilename(), "utf-8");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);

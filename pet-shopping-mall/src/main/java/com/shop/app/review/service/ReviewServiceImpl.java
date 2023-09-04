@@ -153,7 +153,6 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.updateReview(review);
 	}
 
-	// 삭제되는 리뷰 정보 가져오기 (예라)
 	@Override
 	public ReviewDetails getDeleteReviewById(int reviewId) {
 		return reviewRepository.getDeleteReviewById(reviewId);
@@ -192,7 +191,6 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.findImageFilenameByReviewId(reviewId2);
 	}
 
-	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
 	@Override
 	public Review findPoductListReviewId(int reviewId) {
 		return reviewRepository.findPoductListReviewId(reviewId);

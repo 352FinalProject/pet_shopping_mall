@@ -55,11 +55,17 @@ public class AnswerController {
 	@Autowired
 	SimpMessagingTemplate simpMessagingTemplate;
 	
-	// 관리자 1:1 문의 댓글 작성 (예라)
+	/**
+	 * @author 전예라
+	 * 관리자 1:1 문의 댓글 작성
+	 * 답변이 등록되면 이메일 api 사용해서 답변 내용이 담긴 이메일 발송
+	 * 
+	 * @author 김대원
+	 * 답변이 달리면 답변 완료 알림 발송
+	 */
 	@PostMapping("/inquiry/answerCreate.do")
 	public String adminAnswerCreate(@RequestParam int questionId, @RequestParam String questionEmail, AnswerCreateDto _answer) {
 		
-		// 관리자 답변 등록
 		AnswerDetails answers = AnswerDetails.builder()
 				.answerContent(_answer.getAnswerContent())
 				.answerAdminName(_answer.getAnswerAdminName())
@@ -69,37 +75,29 @@ public class AnswerController {
 		int result = answerService.insertAnswer(answers);
 		
 	    if (result > 0) {
-	        // 답변이 등록되면 이메일을 보낸다
 	        mailSender.sendEmailOnAnswerRegistration(questionEmail, _answer.getAnswerContent(), questionId);
 	    }
 		
-		// questionId 객체 생성
 		Question question = Question.builder().questionId(questionId).build();
-		// questionId 조회
 		Question questions = questionService.findQuestionById(question);
 		
 		if (result > 0) {
-	        // 답변이 등록되면 알림을 보낸다
 			String to = questions.getQuestionMemberId();
 			Notification insertNotification = Notification.builder()
 					.notiCategory(3)
-					.notiContent(questions.getQuestionTitle()+ "질문에 답변이 달렸습니다.")
+					.notiContent(questions.getQuestionTitle()+ " 질문에 답변이 달렸습니다.")
 					.notiCreatedAt(formatTimestampNow())
 					.memberId(to) 
 					.build();
 			
-			// db에 알림저장
 			notificationRepository.insertNotification(insertNotification);
-			// db에서 가장 최신 알림 꺼내서
 			Notification notification = notificationRepository.latestNotification();
-			// 메세지 보냄
 			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
 	    }
 		
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
 	}
-	
-	// 관리자 1:1 문의 댓글 삭제 (예라)
+
 	@PostMapping("/inquiry/answerDelete.do")
 	public String adminAnswerDelete(@RequestParam int answerId, @RequestParam int questionId) {
 		
@@ -108,7 +106,6 @@ public class AnswerController {
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
 	}
 	
-	// 관리자 1:1 문의 댓글 수정 (예라)
 	@PostMapping("/inquiry/answerUpdate.do")
 	public String adminAnswerUpdate(AnswerUpdateDto _answer, QuestionUpdateDto _question) {
 		
@@ -119,12 +116,10 @@ public class AnswerController {
 		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
 	}
 	
-	// 알림 날짜변환메소드 (대원)
 	private String formatTimestamp(Timestamp timestamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
         return dateFormat.format(timestamp);
     }
-	// 알림 날짜변환메소드 (대원)
     private String formatTimestampNow() {
         return formatTimestamp(new Timestamp(System.currentTimeMillis()));
     }

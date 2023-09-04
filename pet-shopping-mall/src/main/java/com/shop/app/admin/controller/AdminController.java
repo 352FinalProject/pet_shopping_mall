@@ -157,7 +157,8 @@ public class AdminController {
 	
 
 	/**
-	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바 (예라)
+	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바
+	 * @author 전예라
 	 * @param page
 	 * @param question
 	 * @param model
@@ -181,7 +182,8 @@ public class AdminController {
 	
 	
 	/**
-	 *  관리자 1:1 문의 제목, 내용 검색 (예라)
+	 *  관리자 1:1 문의 제목, 내용 검색
+	 * @author 전예라
 	 * @param searchKeyword
 	 * @param model
 	 * @return
