@@ -12,7 +12,8 @@
 			<!-- 게시판 이름 -->
 	        <div class="board-title">
 		        <span>
-		        ${productCategory.categoryName} 
+		        <c:set var="categoryName" value="${productInfos[0].categoryName}"/>
+		        ${categoryName}
 		        </span>
 	        </div>
 		</section>
@@ -38,42 +39,15 @@
 			</ul>
 		</div>
 		<form:form id="alignFrm" name="alignFrm" method="get" action="${pageContext.request.contextPath}/product/productList.do">
-		    <input type="hidden" name="id" value="${productCategory.categoryId}"/>
+		    <input type="hidden" name="categoryId" value="${productCategory.categoryId}"/>
 		    <input type="hidden" name="align" id="align" value=""/>
 		</form:form>
 		<!-- 상품사진 갤러리 -->
 		<div class="product-gallery">
 			<ul class="gallery">
-			<c:if test="${empty alignProductInfos}">
-			<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
+				<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
 				<div class="product-card">
-                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.product.productId}&reviewId=${reviewId.reviewId}">
-					<figure class="product-thumbnail">
-						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.attachments[0].imageRenamedFilename}">
-					</figure>
-					<div class="product-desc">
-						<p class="product-name">${productInfo.product.productName}</p>
-						<p class="product-price"><fmt:formatNumber value="${productInfo.product.productPrice}" pattern="#,###" /> 원</p>
-						<span class="review-star"><img src="${pageContext.request.contextPath}/resources/images/상품/star.png" alt="별점" >
-						<c:if test="${productInfo.productReviewStarAvg.reviewStarRate == null}">
-							<span>0.0</span>
-						</c:if>
-						<c:if test="${productInfo.productReviewStarAvg.reviewStarRate != 0}" >
-							<span>${productInfo.productReviewStarAvg.reviewStarRate}</span>
-						</c:if>
-						</span>
-						
-						<span> &nbsp;|&nbsp; </span>
-						<span class="review-cnt">후기 ${productInfo.reviewCnt}건</span>
-					</div>
-					</a>
-				</div>
-			</c:forEach>
-			</c:if>
-			<c:if test="${not empty alignProductInfos}">
-				<c:forEach items="${alignProductInfos}" var="productInfo" varStatus="vs">
-				<div class="product-card">
-                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
+                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.thumbnail}">
 					</figure>
@@ -88,9 +62,19 @@
 					</div>
 					</a>
 				</div>
-			</c:forEach>
-			</c:if>
+				</c:forEach>
 			</ul>
+			<nav class="product-nav" aria-label="...">
+				<ul class="pagination-product pagination-sm">
+				  <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+					  <li class="page-item ${page == pageNumber ? 'active' : ''}">
+						  <a class="page-link" href="${pageContext.request.contextPath}/product/productList.do?id=${productCategory.categoryId}&page=${pageNumber}">
+							  <span class="page-number">${pageNumber}</span>
+						  </a>
+					  </li>
+				  </c:forEach>
+			  </ul>
+		  </nav>
 		</div>
 	</div>
 </div>

@@ -78,36 +78,50 @@ public interface OrderRepository {
 
 	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period, RowBounds rowBounds);
 
+	
 	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
 	List<OrderAdminProductStatisticsDto> adminStatisticsProduct();
 
+	
 	// 관리자페이지 상품매출통계 조회 - 매출액 (대원)
 	List<OrderAdminProductStatisticsDto> adminStatisticsPrice();
 
+	
 	// 관리자페이지 날짜별 상품매출통계 조회 -일별 (대원)
 	List<OrderAdminStatisticsByDateDto> adminStatisticsByDaily();
 
+	
 	// 관리자페이지 날짜별 상품매출통계 조회 - 월별 (대원)
 	List<OrderAdminStatisticsByDateDto> adminStatisticsByMonthly();
 
+	
 	@Delete("delete from orderTbl where order_no = #{orderNo}")
 	int deleteOrder(String orderNo);
 
+	
 	List<OrderHistoryDto> getOrderDetail(String orderNo);
 
+	
 	@Select("SELECT count(*) FROM orderTbl o LEFT JOIN order_detail od ON o.order_id = od.order_id LEFT JOIN review r ON od.product_detail_id = r.product_detail_id WHERE r.order_id = #{orderId} and r.product_detail_id = #{productDetailId} and o.member_id = #{memberId} and r.product_id = #{productId}")
 	boolean reviewWrite(String memberId, int orderId, int productDetailId, int productId);
 
+	
 	// 상품별 주문확정 주문 수 조회 (수경)
 	@Select("select count(*) from order_detail where product_detail_id = #{productDetailId}")
 	int findOrderCntByProductId(int productDetailId);
 
 
-	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status= 5") // and order_status= 5
+	/**
+	 * @author 김담희
+	 * 현재 시간에서 7일 전이면서 주문 상태가 배송 완료인 주문 내역을 조회
+	 */
+	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status= 5")
 	List<Order> findOrdersWithExpiredStatus();
 
+	
 	List<OrderReviewListDto> findOrdersByReviewId(String reviewMemberId);
 
+	
 	// 상품 상세 - 리뷰 - 상품
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
 

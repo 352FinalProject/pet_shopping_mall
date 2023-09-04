@@ -3,6 +3,7 @@ package com.shop.app.product.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,13 +42,17 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findAll();
 	}
 
+	/**
+	 *  @author 전수경
+	 *  - 상품등록 메서드 (상품정보 + 이미지 등록)
+	 */
 	@Override
 	public int insertProduct(ProductImages productImages) {
 		Product product = productImages.toProduct();
 		int result = productRepository.insertProduct(product);
-
-		int refId = product.getProductId();
-		int productId = refId;
+		
+		// productId = refId
+		int productId = product.getProductId();
 		
 		// 첨부이미지 저장
 		List<ImageAttachment> attachments = productImages.getAttachments();
@@ -55,11 +60,10 @@ public class ProductServiceImpl implements ProductService {
 			for(ImageAttachment attach : attachments) {
 				// 1. 이미지 파일 저장
 				int result2 = productRepository.insertAttachment(attach);
-				
 				// 2. 이미지파일 DB저장후 생성된 이미지 아이디 가져오기
 				int imageId = attach.getImageId(); 
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
-				int result3 = productRepository.insertMapping(refId, imageId);
+				int result3 = productRepository.insertMapping(productId, imageId);
 				
 				// product에 imageId 세팅
 				int result4 = productRepository.updateImageIdByProductId(productId, imageId);
@@ -196,5 +200,25 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findFashionAll(int _categoryId) {
 		return productRepository.findFashionAll(_categoryId);
+	}
+
+	@Override
+	public int findTotalProductCountByCategory(int categoryId) {
+		return productRepository.findTotalProductCountByCategory(categoryId);
+	}
+
+	public List<ProductSearchDto> searchProductsById(int categoryId) {
+		return productRepository.searchProductsById(categoryId);
+
+	}
+
+	@Override
+	public List<ProductSearchDto> searchProductsById(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		int categoryId = (int) params.get("categoryId");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return productRepository.searchProductsById(rowBounds, categoryId);
 	}
 }

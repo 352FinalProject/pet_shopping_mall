@@ -512,7 +512,7 @@ public class AdminController {
 				.attachments(attachments)
 				.build(); // 상품카테고리아이디, 상품명, 가격
 		int productId = productService.insertProduct(productImages); // 여기서 이미지도 저장
-		
+		log.debug("productId = {}", productId);
 		
 		// 2.1. productDetail 객체 저장
 		List<ProductDetail> productDetails = _product.getProductDetail();

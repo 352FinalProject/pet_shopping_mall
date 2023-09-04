@@ -117,7 +117,10 @@ public class PaymentController {
 	}
 
 	/**
-	 * 결제하기 (담희)
+	 * @author 김담희
+	 * 구매 요청 페이지 조회
+	 * 장바구니에서 요청이 넘어올 시, 장바구니에 있는 상품 구매 페이지로 넘어감
+	 * 상품 상세 페이지에서 요청이 넘어올 시, 해당 상품의 옵션 값과 수량에 대해서 구매 페이지로 넘어감
 	 */
 	@GetMapping("/paymentInfo.do")
 	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam(required=false) Integer productDetailId, @RequestParam(required=false) Integer quantity) {
@@ -143,6 +146,11 @@ public class PaymentController {
 	}
 	
 	
+	/**
+	 * @author 김담희
+	 * 상품 상세페이지에서 hidden 폼에 넣어서 구매 요청을 보내기 때문에 POST로 받은 값을
+	 * GET으로 변환해서 넘김
+	 */
 	@PostMapping("/paymentInfo.do")
 	public String paymentOne(Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam int quantity, @RequestParam int productDetailId, RedirectAttributes redirectAttr) {
 		return "redirect:/payment/paymentInfo.do?productDetailId="+productDetailId+"&quantity="+quantity;
@@ -152,7 +160,8 @@ public class PaymentController {
 
 	/**
 	 * @author 김담희
-	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드
+	 * 결제 API 실행 전 주문 테이블과 주문 상세 테이블에 먼저 주문 정보 insert
+	 * (결제 취소 요청이 들어오거나 실패 시, 바로 delete 처리함)
 	 * 
 	 * @author 전예라
 	 * 포인트/쿠폰 사용과 포인트 적립(일반 1% / 구독자 3%, 포인트 사용하면 적립 안됨)
@@ -243,16 +252,18 @@ public class PaymentController {
 		} else {
 			msg = "주문에 실패하셨습니다. 관리자에게 문의하세요.";
 			
-			
 		}
 
 		resultMap.put("result", result);
 		resultMap.put("msg", msg);
 		return resultMap;
 	}
+	
+	
 
 	/**
-	 * 결제 검증 (담희)
+	 * @author 김담희
+	 * 아임포트 서버에서 결제 검증
 	 */
 	@PostMapping("/verifyIamport/{imp_uid}")
 	@ResponseBody
@@ -261,16 +272,27 @@ public class PaymentController {
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
 
+	
+	/**
+	 * @author 김담희
+	 * 결제 성공 시 결제 내역 테이블 저장, 주문 테이블에 결제 방법 및 결제 완료 여부 업데이트
+	 */
 	@PostMapping("/successPay.do")
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid,
 			@AuthenticationPrincipal MemberDetails member, @RequestParam("pg_provider") String pgProvider) {
 		String orderNo = merchantUid;
-		// payment 테이블에 삽입 및 orderTbl 상태 업데이트
 		int result = paymentService.updatePayStatus(orderNo, pgProvider);
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of("result", 1));
 	}
+	
 
+	/**
+	 * @author 김담희
+	 * 결제가 완료 처리되면 결제 완료 페이지로 매핑
+	 * 
+	 * @author 김대원
+	 */
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted(@RequestParam String orderNo, Model model) {
 		Order order = orderService.findOrderByOrderNo(orderNo);
@@ -288,7 +310,7 @@ public class PaymentController {
 	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
 		
 	}
-	
+
 	/**
 	 * @author 전예라
 	 * 결제 중에 취소했을 때 사용했던 포인트, 쿠폰을 롤백 처리하는 메소드
@@ -357,6 +379,8 @@ public class PaymentController {
 	    }
 	}
 	
+	
+	
 	@ResponseBody
 	@PostMapping("/startScheduler.do")
 	public ResponseEntity<?> startMembership(@RequestBody SubScheduleDto subScheduleDto, RedirectAttributes redirectAttr) {
@@ -391,10 +415,14 @@ public class PaymentController {
         
     }
 	
+	
+	/**
+	 * @author 김담희
+	 * 구독 해지
+	 * customerUid(회원 아이디)로 sub_member 조회를 해서 그 정보를 바탕으로 구독 해지 처리
+	 */
 	@PostMapping("/unsubscribe.do")
 	public String unsubscribe (@RequestParam String customerUid, RedirectAttributes redirectAttr) {
-		// sub_member 조회를 해서, 거기서 가져온 merchant_uid를 포스트 요청 보내야 함.
-		// member 테이블에서 구독 N 처리
 		SubMember subMember = memberService.findSubMemberByMemberId(customerUid);
 		String result = schedulePay.cancelSchedule(subMember);
 		

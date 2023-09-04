@@ -227,28 +227,28 @@ deleteMember-class.active {
             <ul class="nav">
                <ul>
                   <li class="on"><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=1"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=1"
                      class="font">사료</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=2"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=2"
                      class="font">간식</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=3"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=3"
                      class="font">패션용품</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=4"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=4"
                      class="font">산책용품</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=5"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=5"
                      class="font">위생용품</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=6"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=6"
                      class="font">장난감</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=7"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=7"
                      class="font">고양이</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=8"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=8"
                      class="font">기타용품</a></li>
                </ul>
             </ul>
