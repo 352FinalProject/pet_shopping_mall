@@ -229,7 +229,7 @@
    where
       ot.member_id = #{memberId}
       and
-      ot.order_status = 4
+      ot.order_status = 5
    </select>
    
    
