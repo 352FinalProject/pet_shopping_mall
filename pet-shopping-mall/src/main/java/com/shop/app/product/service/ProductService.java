@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
@@ -82,7 +83,6 @@ public interface ProductService {
 	// 인덱스 페이지 패션용품 불러오기 (예라)
 	List<Product> findFashionAll(int _categoryId);
 	
-	List<ProductSearchDto> searchProductsById(int categoryId);
 	
 	// 페이지수에 맞는 상품가져오기
 	List<ProductSearchDto> searchProductsById(Map<String, Object> params);
@@ -90,9 +90,9 @@ public interface ProductService {
 	int findTotalProductCountByCategory(int categoryId);
 	
 
-	List<ProductSearchDto> findProductsAll();
-	
+	List<AdminProductDto> findProductsAll();
 	List<ProductSearchDto> searchHomeProductsById(int categoryId);
+	List<AdminProductDto> findAdminProductsBySearch(String searchKeyword);
 
 
 
