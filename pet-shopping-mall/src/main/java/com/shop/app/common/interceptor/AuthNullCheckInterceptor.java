@@ -21,7 +21,6 @@ public class AuthNullCheckInterceptor implements HandlerInterceptor {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Authentication authentication = securityContext.getAuthentication();
 		Object principal = authentication.getPrincipal();
-		log.debug("principal = {}", principal);
 		if(principal instanceof MemberDetails) {
 			MemberDetails member = (MemberDetails) principal;
 			if(member.getMemberId() == null) {

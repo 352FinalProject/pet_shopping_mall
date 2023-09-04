@@ -95,7 +95,7 @@ public class AnswerController {
 			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
 	    }
 		
-		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
+		return "redirect:/admin/adminQuestionDetail.do?questionId=" + questionId;
 	}
 
 	@PostMapping("/inquiry/answerDelete.do")
@@ -103,7 +103,7 @@ public class AnswerController {
 		
 		int result = answerService.deleteAnswer(answerId);
 		
-		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questionId;
+		return "redirect:/admin/adminQuestionDetail.do?questionId=" + questionId;
 	}
 	
 	@PostMapping("/inquiry/answerUpdate.do")
@@ -113,7 +113,7 @@ public class AnswerController {
 		int result = answerService.updateAnswer(answers);
 		
 		Question questions = _question.toQuestion();
-		return "redirect:/servicecenter/inquiry/questionDetail.do?questionId=" + questions.getQuestionId();
+		return "redirect:/admin/adminQuestionDetail.do?questionId=" + questions.getQuestionId();
 	}
 	
 	private String formatTimestamp(Timestamp timestamp) {

@@ -68,6 +68,8 @@ public class OrderController {
 	    String memberId = member.getMemberId();
 	    List<Order> orderList;
 	    
+	    log.debug("period = {}", period);
+	    
 	    int limit = 5;
 	    Map<String, Object> params = Map.of(
 	    		"page", page,

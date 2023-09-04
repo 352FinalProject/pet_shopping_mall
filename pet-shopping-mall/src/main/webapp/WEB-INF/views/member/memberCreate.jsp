@@ -127,9 +127,9 @@ span duplicate {
 								<input type="text" class="form-control" placeholder="아이디"
 									name="memberId" id="memberId" value=""
 									pattern='[A-Za-z0-9_]{4,}'
-									title="알파벳 대소문자, 숫자, - 를 사용하여 4자 이상 입력하세요." required> <input
-									type="hidden" id="idValid" value="0" /> <span
-									class="guide error">이 아이디는 이미 사용중입니다.</span>
+									title="알파벳 대소문자, 숫자, - 를 사용하여 4자 이상 입력하세요." required><input
+									type="hidden" id="idValid" value="0" />
+									<div style="margin-left:25px"><span class="guide error">이 아이디는 이미 사용중입니다.</span></div>
 							</div>
 						</td>
 					</tr>
@@ -140,8 +140,7 @@ span duplicate {
 							<div class="memberName-container">
 								<input type="text" name="name" id="name" value=""
 									placeholder="이름" pattern="^[가-힣a-zA-Z\s]+$"
-									title="한글 또는 영어 대소문자 두 글자 이상의 길이를 가져야 합니다. " required>
-								<br>
+									title="한글 또는 영어 대소문자 두 글자 이상의 길이를 가져야 합니다." required>
 							</div>
 						</td>
 					</tr>
@@ -430,8 +429,8 @@ function validateAddress() {
     const jibunAddress = jibunAddressInput.value;
     const detailAddress = detailAddressInput.value;
 
-    // 주소 유효성 검사를 위한 조건 (예: 길이가 5자 이상이어야 함)
-    const addressValidationCondition = /.{4,}/;
+    // 주소 유효성 검사를 위한 조건 (예: 길이가 2자 이상이어야 함)
+    const addressValidationCondition = /.{2,}/;
 
     // 주소가 유효한지 확인합니다.
     const isAddressValid = addressValidationCondition.test(roadAddress) &&
@@ -491,7 +490,7 @@ function sample4_execDaumPostcode() {
             document.getElementById('roadAddress').value = roadAddr;
            
             // 도로명 주소와 지번 주소, 상세 주소를 합쳐서 전체 주소로 설정한다.
-            var jibunAddress = data.jibunAddress; // Add this line
+            var jibunAddress = data.jibunAddress;
             var fullAddress = roadAddr + jibunAddress + " " + document.getElementById("detailAddress").value;
             document.getElementById("address").value = fullAddress;
         }

@@ -131,7 +131,7 @@ public class OrderServiceImpl implements OrderService {
 				.orderId(orderId)
 				.build();
 		result = orderRepository.insertCancelOrder(cancel, 1, orderId);
-		result = orderRepository.updateOrderStatus(orderNo, 4);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+		result = orderRepository.updateOrderStatus(orderNo, 5);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 			
 		return result;
 	}

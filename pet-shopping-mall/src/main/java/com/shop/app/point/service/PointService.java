@@ -9,7 +9,7 @@ import com.shop.app.review.entity.ReviewDetails;
 
 public interface PointService	 {
 
-	List<Point> findPointAll(Map<String, Object> params);
+	List<Point> findPointAll(Map<String, Object> params, String pointMemberId);
 
 	int insertPoint(Point point);
 	
@@ -27,7 +27,7 @@ public interface PointService	 {
 
 	List<Point> findRollbackPointCurrentById(Point rollbackPoint);
 
-	int findTotalPointCount();
+	int findTotalPointCount(String pointMemberId);
 
 	
 }
