@@ -31,7 +31,6 @@
  	<select id="searchProducts" resultMap="productSearchDto">
 		select
 		    p.product_id,
-		    pd.product_detail_id,
 		    p.category_id,
 		    (select category_name from product_category where category_id = p.category_id) category_name,
 		    p.create_date,
@@ -42,8 +41,6 @@
 		    (select count(*) from review where product_id = p.product_id) reviewCnt
 		from 
 		    product p
-		join 
-            product_detail pd on p.product_id = pd.product_id
 		join 
 			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
 		join
