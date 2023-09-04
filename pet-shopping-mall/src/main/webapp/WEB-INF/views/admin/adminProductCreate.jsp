@@ -68,7 +68,7 @@
 					            	<label for="file" class="form-label">썸네일 사진</label>
 					        	</div>
 					        	<div class="col-auto">
-					            	<input type="file" name="thumbnailFile" id="file" class="form-control" required>
+					            	<input type="file" name="detailFile" id="file" class="form-control" required>
 					        	</div>
 					        </div>
 					        
@@ -115,7 +115,8 @@
 						        
 			        <!-- 옵션추가 위치 -->
 		        	<div class="row mb-5" id="optionValueInput"></div>
-		        	
+		
+<!-- 		        	
     	<div class="addedOption row mb-5 align-items-center" id="addedOption\${optionCnt}">
     	<div class="row">
 			<div class="col-sm-3">
@@ -149,7 +150,7 @@
 	       		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
 			</div>
 		</div>
-		
+		 -->
 		
 		
 					<!--상품등록버튼 -->
