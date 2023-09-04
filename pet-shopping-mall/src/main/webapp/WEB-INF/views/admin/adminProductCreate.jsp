@@ -81,7 +81,6 @@
 					            	<input type="file" name="detailFile" id="file" class="form-control" required>
 					        	</div>
 					        </div>
-
 					        
 					        <!-- 5행 : 옵션추가 버튼 -->
 					        <div class="row mb-5 align-items-center">
