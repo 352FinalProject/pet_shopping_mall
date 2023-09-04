@@ -199,4 +199,9 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findFashionAll(int _categoryId) {
 		return productRepository.findFashionAll(_categoryId);
 	}
+
+	@Override
+	public List<ProductSearchDto> searchProductsById(int categoryId) {
+		return productRepository.searchProductsById(categoryId);
+	}
 }

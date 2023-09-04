@@ -1134,8 +1134,72 @@ desc;
             select * from member;
             select * from product;
 
-select * from member;
-            select * from orderTbl;
-            delete from orderTbl where order_id = '1';
-            update authority set auth = 'ROLE_ADMIN' where member_id = 'honggd';
+            
+            
+      		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
+            
+            select * from member;
+            select * from authority;
+            update authority set auth = 'ROLE_ADMIN' where member_id = '2999960622@kakao'; 
+            select * from product where category_id = 4;
+            delete from product where category_id = 4;
+            
+            drop 
+            
+            
+            select * from product;
+         select
+		    p.product_id,
+            pd.product_detail_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+        join 
+            product_detail pd on p.product_id = pd.product_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
 
+select * from product;
+select * from product_detail;
+
+
+
+
+select * from product_category;
+
+Insert into PRODUCT_CATEGORY values (1,'사료');
+Insert into PRODUCT_CATEGORY values (2,'간식');
+Insert into PRODUCT_CATEGORY values (3,'패션용품');
+Insert into PRODUCT_CATEGORY values (4,'산책용품');
+Insert into PRODUCT_CATEGORY values (5,'위생용품');
+Insert into PRODUCT_CATEGORY values (6,'장난감');
+Insert into PRODUCT_CATEGORY values (7,'고양이');
+Insert into PRODUCT_CATEGORY values (8,'기타용품');
