@@ -89,5 +89,8 @@ public interface ProductService {
 	List<ProductSearchDto> searchProductsById(Map<String, Object> params);
 	
 	int findTotalProductCountByCategory(int categoryId);
+	
+	// 
+	List<ProductSearchDto> searchProductsById(int categoryId);
 
 }
