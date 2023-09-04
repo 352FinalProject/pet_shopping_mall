@@ -209,19 +209,18 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findTotalProductCountByCategory(categoryId);
 	}
 
-	// 페이지에 해당하는 상품들 조회 (수경)
+	public List<ProductSearchDto> searchProductsById(int categoryId) {
+		return productRepository.searchProductsById(categoryId);
+
+	}
+
 	@Override
-	public List<Product> findProductsAll(Map<String, Object> params) {
+	public List<ProductSearchDto> searchProductsById(Map<String, Object> params) {
 		int limit = (int) params.get("limit");
 		int page = (int) params.get("page");
 		int offset = (page - 1) * limit;
 		int categoryId = (int) params.get("categoryId");
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return productRepository.findProductsAll(rowBounds, categoryId);
-	}
-
-	public List<ProductSearchDto> searchProductsById(int categoryId) {
-		return productRepository.searchProductsById(categoryId);
-
+		return productRepository.searchProductsById(rowBounds, categoryId);
 	}
 }
