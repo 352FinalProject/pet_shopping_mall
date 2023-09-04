@@ -18,8 +18,6 @@
 		        </span>
 	        </div>
 		</section>
-		
-		<!-- 정렬 선택란 -->
 		<div class="product-sort">
 			<ul class="nav">
 				<li>
