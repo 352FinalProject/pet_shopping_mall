@@ -89,7 +89,9 @@ public interface ProductService {
 	
 	int findTotalProductCountByCategory(int categoryId);
 	
+
 	List<ProductSearchDto> findProductsAll();
+
 
 
 }
