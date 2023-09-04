@@ -81,45 +81,6 @@
 								readonly style="height: 160px; resize: none;">${answers.answerContent}</textarea></td>
 					</tr>
 				</table>
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<!-- 답변 1개 이상 달리면 댓글창 안 보이게 -->
-				<!-- 댓글 기능 -->
-						<div class="anw-create-btn">
-				<!-- 댓글 삭제 -->
-							<button type="button" onclick="AnswerDelete();"
-								class="anw-btn-reset">댓글삭제</button>
-				<!-- 댓글 수정 -->
-							<button class="anw-btn-create" type="button"
-								onclick="showEditBox();">댓글수정</button>
-							<form:form
-								action="${pageContext.request.contextPath}/servicecenter/inquiry/answerUpdate.do?questionId=${questions.questionId}"
-								method="post">
-							<div class="hidden-textbox" style="display: none;">
-							    <textarea id="editComment" name="answerContent" style=" position: absolute; border : 1px solid #c8c8c8; background : #f5f5f5; margin-left: -621px; margin-top: -130px; width: 700px; height: 110px;"></textarea>
-								<input type="hidden" name="questionId" value="${questions.questionId}" />
-								<input type="hidden" name="answerId" value="${answers.answerId}" />
-							    <button onclick="submitEdit();" name="" class="editComment">수정하기</button>
-								</div>
-							</form:form>
-						</div>
-				<!-- 댓글 작성 -->
-					<c:if test="${questions.answerCount <= 0}">
-						<form:form
-							action="${pageContext.request.contextPath}/servicecenter/inquiry/answerCreate.do"
-							method="post">
-							<td><textarea name="answerContent" id="answerContent"
-									style="height: 100px; resize: none;"></textarea></td>
-							<input type="hidden" name="questionId"
-								value="${questions.questionId}">
-							<input type="hidden" name="answerAdminName"
-								value="${answers.answerAdminName}">
-							<div class="anw-create2">
-							<input type="hidden" name="questionEmail" value="${questions.questionEmail}" />
-								<button class="anw-btn-create2" type="submit">댓글작성</button>
-							</div>
-						</form:form>
-					</c:if>
-				</sec:authorize>
 			</div>
 		</div>
 		<!-- 사용자 버튼 -->

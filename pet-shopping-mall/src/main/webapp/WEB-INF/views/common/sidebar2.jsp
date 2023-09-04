@@ -29,8 +29,8 @@
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-	width: 500px;
-	height: 300px;
+	width: 600px;
+	height: 350px;
 	text-align: center; /* 내부 요소를 가운데 정렬 */
 	z-index: 9999; /* 다른 요소 위에 표시되도록 설정 */
 	margin-top: 320px;
@@ -131,9 +131,10 @@ deleteMember h2 {
 		style="display: none;">
 		<div class="deleteMember">
 			<h2>회원 탈퇴</h2>
+			<img class="checkimg" src="${pageContext.request.contextPath}/resources/images/존나우는어피치.png" width="100px" height="100px" />
 			<p>정말 탈퇴하시겠습니까?</p>
 			<form id="deleteMemberForm">
-				<label for="deleteMember-password">비밀번호 입력:</label> <input
+			<label for="deleteMember-password">비밀번호 입력:</label> <input
 					class="deleteMemberForm-input-password" type="password"
 					id="deleteMember-password" name="password" required>
 				<div class="deleteMemberForm-btn">

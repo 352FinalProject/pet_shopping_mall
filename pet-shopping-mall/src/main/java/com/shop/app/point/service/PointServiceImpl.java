@@ -18,13 +18,13 @@ public class PointServiceImpl implements PointService {
 	private PointRepository pointRepository;
 	
 	@Override
-	public List<Point> findPointAll(Map<String, Object> params) {
+	public List<Point> findPointAll(Map<String, Object> params, String pointMemberId) {
 		int limit = (int) params.get("limit");
 		int page = (int) params.get("page");
 		int offset = (page - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return pointRepository.findPointAll(rowBounds);
+		return pointRepository.findPointAll(rowBounds, pointMemberId);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class PointServiceImpl implements PointService {
 	}
 
 	@Override
-	public int findTotalPointCount() {
-		return pointRepository.findTotalPointCount();
+	public int findTotalPointCount(String pointMemberId) {
+		return pointRepository.findTotalPointCount(pointMemberId);
 	}
 }

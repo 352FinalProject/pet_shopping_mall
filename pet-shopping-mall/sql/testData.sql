@@ -26,14 +26,11 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
-select * from notification;     
-select * from authority;
-
-
-
+select * from notification;    
+            
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
-values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
+values ( seq_member_coupon_id.nextval, '1', 'null@naver', sysdate, add_months(sysdate, 1), 0, null);
 
 delete from member_coupon where member_id = '2971776209@kakao'; 
 
@@ -70,7 +67,11 @@ delete from product where product_id = 1;
 
 delete from cartitem where cartitem_id = '111';
 delete from orderTbl where order_id = '2';
-update orderTbl set order_status = 3 where order_id = 29;
+update orderTbl set order_status = 4 where order_id = 76;
+
+select * from orderTbl order by order_id desc;
+UPDATE orderTbl SET order_date = '2023-05-02 00:00:00' WHERE order_id = 40;
+
 
 update product set product_id = 1 where product_id = 21;
 update product_detail set product_id = 1 where product_id = 22;
@@ -159,7 +160,7 @@ insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
-insert into authority values ('king', 'ROLE_ADMIN');
+insert into authority values ('member1', 'ROLE_ADMIN');
 
 ------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
@@ -1234,7 +1235,9 @@ select * from product_detail;
 			on p.product_id = r.product_id;
 
 select * from member;
-
+update orderTbl set order_status = 3 where order_no = '1693809377750';
+update authority set auth = 'ROLE_ADMIN' where member_id= 'sinsa1234';
+select * from cancel_order;
 		select
 		    p.product_id,
 		    p.category_id,
@@ -1254,6 +1257,61 @@ select * from member;
 			on p.product_id = r.product_id;
 
 select * from product_category;
+
+
+create table cancel_order (
+    cancel_id number,
+    request_date timestamp default systimestamp not null,
+    receipt_date timestamp,
+    cancel_status number default 0 not null,
+    order_id number,
+    constraint pk_cancel_id primary key(cancel_id),
+    constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+);
+
+select * from cancel_order;
+
+select 
+    c.* 
+from 
+    cancel_order c
+where
+    c.order_id in (select order_id from orderTbl where member_id='dami');
+    
+select * from orderTbl where member_id='dami';
+
+select * from product;
+delete from product where product_id = 68;
+update orderTbl set order_status=3 where order_no='1693815010798';
+update orderTbl set order_date='23/02/18' order_no='1693815010798';
+select * from orderTbl where member_id='hulk1512';
+select * from member;
+update orderTbl set order_status = 3 where member_id = 'hulk1512' and order_status=0;
+delete from member where member_id = 'honggd';
+update member set email = 'sinsa11@daum.net' where member_id = 'sinsa1234';
+select * from member;
+select count(*) from(select * from orderTbl where order_status = 4 and member_id='sinsa1234');
+    select * from member;
+   select
+      m.name,
+      m.phone,
+      m.address,
+      ot.order_no,
+      ot.order_date,
+      ot.order_status,
+      ot.total_price,
+      p.payment_method,
+      p.payment_date,
+      ot.payment_status,
+      ot.amount,
+      ot.discount
+   from
+      orderTbl ot left join member m on ot.member_id = m.member_id
+      left join payment p on p.order_id = ot.order_id
+   where
+      ot.member_id = 'sinsa1234'
+      and
+      ot.order_status = 4;
 
 Insert into PRODUCT_CATEGORY values (1,'사료');
 Insert into PRODUCT_CATEGORY values (2,'간식');

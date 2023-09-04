@@ -32,7 +32,7 @@
 
 			<div class="card mb-4">
 				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 기본상품목록
+					<i class="fas fa-table me-1"></i> 판매상품목록  
 					<input type="button" value="상품등록" id="btn-add" class="btn btn-secondary"/>
 				</div>
 				<div class="card-body">

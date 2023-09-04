@@ -68,6 +68,8 @@ public class OrderController {
 	    String memberId = member.getMemberId();
 	    List<Order> orderList;
 	    
+	    log.debug("period = {}", period);
+	    
 	    int limit = 5;
 	    Map<String, Object> params = Map.of(
 	    		"page", page,
@@ -128,7 +130,7 @@ public class OrderController {
 	    		"page", page,
 	    		"limit", limit
 	    		);
-	    int totalCount = orderService.findTotalOrderCount(memberId);
+	    int totalCount = orderService.findTotalCancelOrderCount(memberId);
 	    int totalPages = (int) Math.ceil((double) totalCount / limit);
 	    model.addAttribute("totalPages", totalPages);
 		
@@ -148,6 +150,7 @@ public class OrderController {
 
 	 * @author 전예라
 	 * 결제창이 넘어가기 전에 취소하면 사용했던 포인트, 쿠폰 롤백
+	 */
 	@PostMapping("/deleteOrder.do")
 	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member, 
 			@RequestParam(name = "pointsUsed", required = false) Integer pointsUsed, 
@@ -189,8 +192,11 @@ public class OrderController {
 	}
 	
 	/**
-	 * @author 김담희, 이혜령
+	 * @author 김담희
 	 * 주문 상세 내역 조회
+	 * 
+	 * @author 이혜령
+	 * 배송완료시 리뷰작성버튼 활성화, 리뷰 작성시 구매완료로 주문상태 변경
 	 */
 	@GetMapping("/orderDetail.do")
 	public void getOrderDetail(Model model, @RequestParam String orderNo, @AuthenticationPrincipal MemberDetails member) {

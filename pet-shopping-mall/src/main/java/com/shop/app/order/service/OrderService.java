@@ -33,12 +33,13 @@ public interface OrderService {
 
 	// 주문 취소
 	int insertCancelOrder(String orderNo, String isRefund);
+	
 
 	List<Order> getOrderListByPeriod(String memberId, int period, Map<String, Object> params);
 
 
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
-			List<String> paymentMethod, List<String> orderStatus);
+												List<String> paymentMethod, List<String> orderStatus);
 
 	// 주문 취소 내역 조회
 	OrderCancelInfoDto getCancelInfo(String orderNo);
@@ -78,8 +79,10 @@ public interface OrderService {
 	// 상품상세 - 리뷰 - 상품 뿌리기
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
 
-	
+
 	int findTotalOrderCount(String memberId);
 
-	
+	int findTotalCancelOrderCount(String memberId);
+
+
 }

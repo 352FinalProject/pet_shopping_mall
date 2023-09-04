@@ -4,6 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/admin/adminHeader.jsp"></jsp:include>
+<link rel="stylesheet"
+   href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" />
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
@@ -48,20 +50,17 @@
 				<tbody>
 					<c:forEach items="${questions}" var="question" varStatus="vs">
 						<tr class="question-row">
-							<td><a
-								href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionId}</a>
+							<td><a href="${pageContext.request.contextPath}/admin/adminQuestionDetail.do?questionId=${question.questionId}">${question.questionId}</a>
 							</td>
+							<td><a href="${pageContext.request.contextPath}/admin/adminQuestionDetail.do?questionId=${question.questionId}">
+				                <c:if test="${question.answerCount <= 0}"><span style="color: #c8c8c8;">답변대기</span></c:if>
+				                <c:if test="${question.answerCount >= 1}">답변완료</c:if>
 							<td><a
-								href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
-									<c:if test="${question.answerCount <= 0}">
-										<span>답변대기</span>
-									</c:if> <c:if test="${question.answerCount >= 1}">답변완료</c:if></td>
+								href="${pageContext.request.contextPath}/admin/adminQuestionDetail.do?questionId=${question.questionId}">${question.questionMemberId}</a></td>
 							<td><a
-								href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionMemberId}</a></td>
-							<td><a
-								href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
+								href="${pageContext.request.contextPath}/admin/adminQuestionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
 							<td class="qna-date"><a
-								href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
+								href="${pageContext.request.contextPath}/admin/adminQuestionDetail.do?questionId=${question.questionId}">
 									<fmt:parseDate value="${question.questionCreatedAt}"
 										pattern="yyyy-MM-dd'T'HH:mm" var="questionCreatedAt" /> <fmt:formatDate
 										value="${questionCreatedAt}" pattern="yy/MM/dd" />

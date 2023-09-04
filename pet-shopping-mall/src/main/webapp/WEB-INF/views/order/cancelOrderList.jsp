@@ -58,7 +58,7 @@
 				</tbody>
 			</table>
 			<c:if test="${empty cancelInfoList}">
-				<div class="empty-message">조회된 주문 내역이 없습니다.</div>
+				<div class="empty-message">조회된 취소 내역이 없습니다.</div>
 			</c:if>
 		</div>
 	</div>
@@ -80,7 +80,7 @@ const table = document.querySelector("#order-table tbody")
 	
 const handleSelectChange = () => {
     const period = periodSelect.value;
-    location.href="${pageContext.request.contextPath}/order/cancelOrderList.do?period=" + period;
+    window.location.href="${pageContext.request.contextPath}/order/cancelOrderList.do?period=" + period;
 };
 
 periodSelect.addEventListener('change', handleSelectChange);
