@@ -22,9 +22,7 @@
     <li>Spring Boot</li>
     <li>JAVA</li>
     <li>JSP</li>
-    <li>Database
-      <ul marker>RDBMS: Oracle 11g XE</ul>
-    </li>
+    <li>Oracle</li>   
   </ul>
   
   ### Tools
@@ -58,13 +56,13 @@
 ## 팀원별 구현코드
 
 <h3>김담희</h3>
-<h4>결제, 장바구니</h4>
+<h4>결제,장바구니,구독</h4>
 <ul>
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="http://localhost:8080/pet">장바구니</a></li> 
 </ul>
 
 <h3>전예라</h3>
-<h4>호두엄마</h4>
+<h4>Q&A,쿠폰,포인트</h4>
 <ul>
   <li><a href="http://localhost:8080/pet"></a></li> 
 </ul>
@@ -96,5 +94,5 @@
 <h3>김상훈</h3>
 <h4>회원CRUD, 로그인</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="http://localhost:8080/pet/member/memberLogin.do"></a></li> 
 </ul>
