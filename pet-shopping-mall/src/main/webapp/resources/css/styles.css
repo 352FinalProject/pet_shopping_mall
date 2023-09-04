@@ -612,8 +612,8 @@ progress {
   background-color: #fff;
   border: 1px solid var(--bs-border-color);
   border-radius: 0.375rem;
-  max-width: 100%;
   height: auto;
+  width: 150px;
 }
 
 .figure {

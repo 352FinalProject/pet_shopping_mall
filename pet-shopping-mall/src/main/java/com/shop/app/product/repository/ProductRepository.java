@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
@@ -132,8 +133,6 @@ public interface ProductRepository {
 	@Select("select * from product where category_id = #{categoryId}")
 	List<Product> findFashionAll(int _categoryId);
 
-	List<ProductSearchDto> searchProductsById(int categoryId);
-
 	// 카테고리에 해당하는 총 상품의 갯수 (수경)
 	@Select("select count (*) from product where category_id = #{categoryId}")
 	int findTotalProductCountByCategory(int categoryId);
@@ -141,8 +140,10 @@ public interface ProductRepository {
 	// 쿼리수정 필요
 	List<ProductSearchDto> searchProductsById(RowBounds rowBounds, int categoryId);
 
-	List<ProductSearchDto> findProductsAll();
+	List<AdminProductDto> findProductsAll();
 
 	List<ProductSearchDto> searchHomeProductsById(int categoryId);
+
+	List<AdminProductDto> findAdminProductsBySearch(String searchKeyword);
 
 }
