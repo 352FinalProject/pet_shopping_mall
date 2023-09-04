@@ -133,6 +133,8 @@ public interface ProductRepository {
 	@Select("select * from product where category_id = #{categoryId}")
 	List<Product> findFashionAll(int _categoryId);
 
+	List<ProductSearchDto> searchProductsById(int categoryId);
+
 	// 카테고리에 해당하는 총 상품의 갯수 (수경)
 	@Select("select count (*) from product where category_id = #{categoryId}")
 	int findTotalProductCountByCategory(int categoryId);
