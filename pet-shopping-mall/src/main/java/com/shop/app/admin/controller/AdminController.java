@@ -43,7 +43,10 @@ import com.shop.app.common.HelloSpringUtils;
 import com.shop.app.common.entity.ImageAttachment;
 import com.shop.app.common.entity.Thumbnail;
 import com.shop.app.member.entity.MemberDetails;
+import com.shop.app.servicecenter.inquiry.entity.Answer;
 import com.shop.app.servicecenter.inquiry.entity.Question;
+import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
+import com.shop.app.servicecenter.inquiry.service.QuestionService;
 import com.shop.app.member.entity.Subscribe;
 
 import com.shop.app.order.dto.OrderAdminListDto;
@@ -86,6 +89,9 @@ public class AdminController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private QuestionService questionService;
 	
 	
 	/**
@@ -180,6 +186,36 @@ public class AdminController {
 		model.addAttribute("questions", questions);
 	}
 	
+	/**
+	 * @author 전예라
+	 * 1:1 문의 상세 조회
+	 */
+	@GetMapping("/adminQuestionDetail.do")
+	public void adminQuestionDetail(Question question, Model model) {
+
+	    Question questions = questionService.findQuestionByAnwerCount(question);
+	    model.addAttribute("questions", questions);
+	    
+	    int questionId = question.getQuestionId();
+
+	    Answer answer = Answer
+	    		.builder()
+	    		.answerQuestionId(questionId)
+	    		.build();
+
+	    Answer answers = questionService.findQuestionAnswersById(answer);
+	    model.addAttribute("answers", answers);
+
+	    QuestionDetails questionDetails = questionService.findImageAttachmentsByQuestionId(questionId);
+	    model.addAttribute("questionDetails", questionDetails);
+}
+	
+	@GetMapping("/inquiry/questionCreate.do")
+	public void qreateCuestion(Question question, Model model) {
+
+		Question questions = questionService.findQuestionById(question);
+	    model.addAttribute("questions", questions);
+	}
 	
 	/**
 	 *  관리자 1:1 문의 제목, 내용 검색
