@@ -218,12 +218,16 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<AdminProductDto> findProductsAll() {
 		List<AdminProductDto> products = productRepository.findProductsAll();
-		log.debug("products = {}", products);
 		return productRepository.findProductsAll();
 	}
 
 	@Override
 	public List<ProductSearchDto> searchHomeProductsById(int categoryId) {
 		return productRepository.searchHomeProductsById(categoryId);
+	}
+
+	@Override
+	public List<AdminProductDto> findAdminProductsBySearch(String searchKeyword) {
+		return productRepository.findAdminProductsBySearch(searchKeyword);
 	}
 }

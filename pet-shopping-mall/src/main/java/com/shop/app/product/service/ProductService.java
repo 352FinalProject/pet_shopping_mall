@@ -91,8 +91,8 @@ public interface ProductService {
 	
 
 	List<AdminProductDto> findProductsAll();
-	
 	List<ProductSearchDto> searchHomeProductsById(int categoryId);
+	List<AdminProductDto> findAdminProductsBySearch(String searchKeyword);
 
 
 

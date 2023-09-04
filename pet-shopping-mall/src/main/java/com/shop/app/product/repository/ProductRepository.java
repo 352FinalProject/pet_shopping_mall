@@ -144,4 +144,6 @@ public interface ProductRepository {
 
 	List<ProductSearchDto> searchHomeProductsById(int categoryId);
 
+	List<AdminProductDto> findAdminProductsBySearch(String searchKeyword);
+
 }
