@@ -48,7 +48,7 @@
 			        </div>
 
 			        <!-- 3행: 가격 입력 -->
-			        <div class="row mb-3 align-items-center">
+			        <div class="row mb-4 align-items-center">
 				        <div class="col-sm-3">
 							<label for="productPrice" class="form-label">상품금액</label>
 						</div>
@@ -58,7 +58,7 @@
 			        </div>
 			        
 					<!--상품수정 버튼 -->
-					<div class="row mb-5 align-items-center justify-content-around">
+					<div class="row mb-4 align-items-center justify-content-around">
 						<div class="col-md-4 align-self-center">
 							<button type="button" class="btn btn-secondary" onclick='updateProduct();'>상품 수정</button>
 					        <button type="button" class="btn btn-danger" onclick="deleteProduct();">상품 삭제</button>
@@ -66,7 +66,7 @@
 					</div>
 
 				    <!-- 옵션추가 버튼 -->
-				    <div class="row mb-5">
+				    <div class="row mb-4">
 						<div class="col-md-4">
 							<button type="button" class="btn btn-secondary" onclick="addOption();">옵션 추가</button>
 						</div>
@@ -169,7 +169,9 @@ $(function() {
     });
 });
 
-//상품 업데이트(수경)
+/**
+ * 상품 업데이트(수경)
+ */
 const updateProduct = () => {
     const productId = '${product.productId}'; // 상품 ID
     const productName = document.getElementById('productName').value; // 상품명 입력란의 값
@@ -184,8 +186,7 @@ const updateProduct = () => {
 	    categoryId: categoryId,
         imageId : '${product.imageId}'
     };
-	console.log(requestData);
-    // Ajax 요청
+    
     $.ajax({
         url: '${pageContext.request.contextPath}/admin/adminProductUpdate.do',
         type: 'POST',
@@ -199,12 +200,13 @@ const updateProduct = () => {
     });
 };
 
-// 상품 삭제(수경)
+/**
+ * 상품 삭제(수경)
+ */
 const deleteProduct = () => {
     const requestData = {
             productId: '${product.productId}'
         };
-    console.log(requestData);
     
 	if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
         $.ajax({
@@ -215,18 +217,20 @@ const deleteProduct = () => {
             contentType: 'application/json',
             success: function(response) {
             	console.log(response);
-                alert('삭제 성공했습니다');
+                alert('${product.productName} 삭제 성공했습니다');
                 window.location.href = '${pageContext.request.contextPath}/admin/adminProductList.do';
             },
             error: function(xhr, textStatus, errorThrown) {
-                alert('${product.productName}상품 삭제 실패했습니다');
+                alert('${product.productName} 상품 삭제 실패했습니다');
             }
         });
     }
 };
 
 
-//상품 옵션 업데이트 함수
+/**
+ * 상품옵션 업데이트 함수
+ */
 const updateProductOption = (productDetailId) => {
     const optionName = document.getElementById(`optionName_\${productDetailId}`).value;
     const optionValue = document.getElementById(`optionValue_\${productDetailId}`).value;
@@ -238,8 +242,7 @@ const updateProductOption = (productDetailId) => {
         optionValue: optionValue,
         additionalPrice: additionalPrice,
     };
-	console.log(requestData);
-    
+
     // Ajax 요청
     $.ajax({
         url: '${pageContext.request.contextPath}/admin/adminProductDetailUpdate.do',
@@ -259,7 +262,10 @@ const updateProductOption = (productDetailId) => {
         }
     });
 };
-// 상품옵션 삭제 요청
+
+/**
+ * 상품옵션 삭제 함수
+ */
 const deleteProductOption = (productDetailId) => {
     const requestData = {
     	productDetailId: `\${productDetailId}`	
@@ -274,7 +280,6 @@ const deleteProductOption = (productDetailId) => {
             data: JSON.stringify(requestData),
             success: function(response) {
                 if (response === 1) {
-                	console.log(response);
                     alert('옵션이 성공적으로 삭제되었습니다.');
                 	const optionDiv = document.querySelector(`.productDetail-container-\${productDetailId}`);
                 	optionDiv.remove();
@@ -286,7 +291,9 @@ const deleteProductOption = (productDetailId) => {
     }
 };
 
-// 옵션추가
+/**
+ * 옵션추가 (페이지 동적처리)
+ */
 const addOption = () => {
 	const addOptionDiv = document.getElementById("addOptionDiv");
 	
@@ -298,9 +305,7 @@ const addOption = () => {
 		<!-- 추가옵션 -->
     	<div class="productDetail-container-${productDetail.productDetailId}">
     		<input type="text" name="productId" id="productId" class="form-control" value="${product.productId}" style="display : none;">
-    		<!-- 1행 -->
 	        <div class="row mb-1">
-	        	<!-- 1열 -->
 	        	<div class="col-md-3">
 	        		<label for="optionName" class="form-label">옵션명</label>
 	        	</div>
@@ -313,9 +318,7 @@ const addOption = () => {
 	        	<div class="col-md-3">
 	        	</div>
 	        </div>
-			<!-- 2행 -->
 	        <div class="row mb-4">
-	        	<!-- 1열 -->
 	        	<div class="col-md-3">
 		        	<input type="text" name="optionName" id="optionName" class="form-control" required>
 	        	</div>
@@ -332,12 +335,12 @@ const addOption = () => {
 		</div>
     </form:form>
 	`;
-	
 	addOptionDiv.insertAdjacentHTML("beforeend", newOption);
 }
 
-
-//폼 제출 시 동작
+/**
+ * 폼 제출 시 동작
+ */
 $(document).on('submit', function(e) {
 	// 동적으로 폼을 추가할 때는 일일이 핸들러를 추가해주어야 한다. 그렇게 하기는 번거롭기 때문에 상위 요소에서 접근해서 처리한다.
 	const createFrm = e.target.matches('[name=optionCreateFrm]');
@@ -368,8 +371,6 @@ $(document).on('submit', function(e) {
 		    }
 		});
 	}
-
-	
 });
 
 
