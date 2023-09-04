@@ -183,6 +183,7 @@ body {
 	gap: 25px;
 	font-size: 14px;
 	align-items: center;
+	padding: 8px;
 }
 
 .utility li a{
@@ -390,6 +391,7 @@ footer p {
 
 .notification-container {
   position: relative;
+  background-color: white;
 }
 
 .notiPopup {
@@ -400,19 +402,26 @@ footer p {
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   z-index: 999; /* Adjust as needed */
-  width: 300px; /* Adjust the width as needed */
+  width: 345px; /* Adjust the width as needed */
 }
 
 .notiPopup.active {
   display: block;
 }
 
-
 .notification-content {
   margin: 0; 
   overflow: hidden;
   text-overflow: ellipsis; 
   font-size: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#notificationPopup{
+	background-color: #f5f6f8;
 }
 
 /* 인덱스 페이지 슬라이드 */
@@ -453,5 +462,11 @@ footer p {
 .notification-delete-button{
 	background: white;
     border: none;
-    margin-left: 80px;
+    margin-top: -62px;
+    cursor: pointer;
+}
+
+.delete-button-container {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 설정 */
 }

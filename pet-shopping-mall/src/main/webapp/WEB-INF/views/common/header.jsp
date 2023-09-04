@@ -176,7 +176,8 @@ deleteMember-class.active {
 					 <img src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png" id="notificationBell" alt="Notification" />
                   </button>
                   <div id="notificationPopup" class="notiPopup">
-                     <div class="notiPopup-content"></div>
+                     <div class="notiPopup-content">
+                     </div>
                   </div>
                </div>
             </sec:authorize>

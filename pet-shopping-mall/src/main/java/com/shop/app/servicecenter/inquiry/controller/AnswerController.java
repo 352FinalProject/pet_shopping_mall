@@ -85,7 +85,7 @@ public class AnswerController {
 			String to = questions.getQuestionMemberId();
 			Notification insertNotification = Notification.builder()
 					.notiCategory(3)
-					.notiContent(questions.getQuestionTitle()+ "질문에 답변이 달렸습니다.")
+					.notiContent(questions.getQuestionTitle()+ " 질문에 답변이 달렸습니다.")
 					.notiCreatedAt(formatTimestampNow())
 					.memberId(to) 
 					.build();

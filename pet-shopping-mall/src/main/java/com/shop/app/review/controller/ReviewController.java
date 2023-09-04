@@ -155,6 +155,9 @@ public class ReviewController {
 	 * 
 	 * @author 전예라
 	 * 리뷰 작성 시 텍스트 500원, 사진 1000원 포인트 적립
+	 * 
+	 * @author 김대원
+	 * 리뷰 작성 시 회원에게 포인트 적립 알림
 	 */
 	@PostMapping("/reviewCreate.do")
 	public String reviewCreate(
@@ -169,7 +172,7 @@ public class ReviewController {
 
 		// 1. 파일저장
 		List<ImageAttachment> attachments = new ArrayList<>();
-		boolean hasImage = false; // 이미지 있는지 확인하는 변수 (예라)
+		boolean hasImage = false;
 
 		// 이미지 상대경로 지정
 		String saveDirectory = application.getRealPath("/resources/upload/review");
@@ -195,7 +198,7 @@ public class ReviewController {
 						.imageFileSize(upFile.getSize())
 						.build();
 				attachments.add(attach);
-				hasImage = true; // 이미지가 있으면 true (예라)
+				hasImage = true;
 			}
 		}
 		
@@ -242,7 +245,6 @@ public class ReviewController {
 		
 		ReviewDetailDto pointReviewId = reviewService.findReviewId(reviews.getReviewId());
 
-		// 3. 리뷰의 멤버 ID 값을 포인트 객체의 멤버 ID로 설정
 		point.setPointMemberId(_review.getReviewMemberId());
 		point.setReviewId(_review.getReviewId());
 
@@ -264,24 +266,17 @@ public class ReviewController {
 
 		int newPointResult = pointService.insertPoint(newPoint);
 		
-		
-		// 리뷰작성포인트 알림을 보낸다
 		String to = newPoint.getPointMemberId();
 		Notification insertNotification = Notification.builder()
 				.notiCategory(3)
-				.notiContent("리뷰작성 포인트가 적립되었습니다.")
+				.notiContent("리뷰 작성 포인트가 적립되었습니다.")
 				.notiCreatedAt(formatTimestampNow())
 				.memberId(to) 
 				.build();
 		
-		// db에 알림저장
 		notificationRepository.insertNotification(insertNotification);
-		// db에서 가장 최신 알림 꺼내서
 		Notification notification = notificationRepository.latestNotification();
-		// 메세지 보냄
 		simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
-		
-		
 
 		return "redirect:/review/reviewList.do";
 	}
@@ -363,12 +358,10 @@ public class ReviewController {
 
 	}
 
-	// 알림 날짜변환메소드 (대원)
 	private String formatTimestamp(Timestamp timestamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
         return dateFormat.format(timestamp);
 	}
-	// 알림 날짜변환메소드 (대원)
 	private String formatTimestampNow() {
 	    return formatTimestamp(new Timestamp(System.currentTimeMillis()));
 	}
