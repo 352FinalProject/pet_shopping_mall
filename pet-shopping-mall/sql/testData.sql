@@ -1231,7 +1231,9 @@ select * from product_detail;
 			on p.product_id = r.product_id;
 
 select * from member;
-
+update orderTbl set order_status = 3 where order_no = '1693809377750';
+update authority set auth = 'ROLE_ADMIN' where member_id= 'sinsa1234';
+select * from cancel_order;
 		select
 		    p.product_id,
 		    p.category_id,
@@ -1251,6 +1253,45 @@ select * from member;
 			on p.product_id = r.product_id;
 
 select * from product_category;
+
+
+create table cancel_order (
+    cancel_id number,
+    request_date timestamp default systimestamp not null,
+    receipt_date timestamp,
+    cancel_status number default 0 not null,
+    order_id number,
+    constraint pk_cancel_id primary key(cancel_id),
+    constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+);
+
+select
+*
+from
+    cancel_order
+where
+    (select * from orderTbl where order_status = 4 and member_id='sinsa1234');
+    
+   select
+      m.name,
+      m.phone,
+      m.address,
+      ot.order_no,
+      ot.order_date,
+      ot.order_status,
+      ot.total_price,
+      p.payment_method,
+      p.payment_date,
+      ot.payment_status,
+      ot.amount,
+      ot.discount
+   from
+      orderTbl ot left join member m on ot.member_id = m.member_id
+      left join payment p on p.order_id = ot.order_id
+   where
+      ot.member_id = 'sinsa1234'
+      and
+      ot.order_status = 4;
 
 Insert into PRODUCT_CATEGORY values (1,'사료');
 Insert into PRODUCT_CATEGORY values (2,'간식');

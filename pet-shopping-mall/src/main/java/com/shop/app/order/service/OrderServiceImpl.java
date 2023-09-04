@@ -260,4 +260,11 @@ public class OrderServiceImpl implements OrderService {
 	public int findTotalOrderCount(String memberId) {
 		return orderRepository.findTotalOrderCount(memberId);
 	}
+
+
+	@Override
+	public int findTotalCancelOrderCount(String memberId) {
+		return orderRepository.findTotalCacncelOrderCount(memberId);
+	}
+
 }
