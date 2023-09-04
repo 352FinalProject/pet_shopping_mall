@@ -34,7 +34,6 @@ public class CouponController {
 
 		String memberId = member.getMemberId();
 		List<MemberCouponDto> memberCoupons = couponService.findCouponAll(memberId);
-		log.debug("memberCoupons = {}", memberCoupons);
 		model.addAttribute("memberCoupons", memberCoupons);
 	}
 

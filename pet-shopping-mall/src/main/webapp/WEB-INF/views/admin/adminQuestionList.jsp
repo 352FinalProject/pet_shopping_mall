@@ -22,9 +22,10 @@
 						<form:form name="adminMemberSearchFrm"
 							action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
 							method="get">
-							<label for="searchKeyword">문의검색:</label>
-							<input type="text" id="searchKeyword" name="searchKeyword" placeholder="제목 또는 내용">
-							<input type="submit" value="검색">
+							<div class="input-group">
+								<input type="text" id="searchKeyword" name="searchKeyword" placeholder="제목 또는 내용" class="adminInput">
+								<input type="submit" value="검색" class ="btn btn-secondary">
+							</div>
 						</form:form>
 					</div>
 				</form:form>
