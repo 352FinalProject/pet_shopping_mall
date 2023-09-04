@@ -418,28 +418,30 @@
          <br />
       </div>
    </div>
-   <div class="product-bottom">
-      <div class="product-bottom2">
-         <div>
-            <span id="product-bottom-title" style="font-size: 24px;">${product.productName}</span>
-            <br /> <span id="product-price" style="font-size: 18px; font-weight: 600;"> <fmt:formatNumber
-                  value="${product.productPrice}" pattern="#,###" /> 원
-            </span>
-         </div>
-         <div class="heart-img">
-            <button class="heart-button" id="heartButton">
-               <span class="heart-button pink" id="clickHeart"> <c:choose>
-                     <c:when test="${likeState == 0}">♡</c:when>
-                     <c:otherwise>♥</c:otherwise>
-                  </c:choose>
-               </span>
-            </button>
-            <span id="likeCnt">${product.likeCnt}</span>
-         </div>
-         <button class="btn btn1" onclick="addCart();">장바구니</button>
-         <button class="btn btn2" onclick="purchase();">구매하기</button>
-      </div>
-   </div>
+ 	<div class="product-bottom">
+		<div class="product-bottom2">
+			<div class="product-bottom3">
+				<span id="product-bottom-title" style="font-size: 15px;">${product.productName}</span>
+				<br /> <span id="product-price" style="font-size: 15px; font-weight: 600;"> <fmt:formatNumber
+						value="${product.productPrice}" pattern="#,###" /> 원
+				</span>
+			</div>
+			<div class="heart-img" style="margin-top: -1px;">
+				<button class="heart-button" id="heartButton">
+					<span class="heart-button pink" id="clickHeart"> <c:choose>
+							<c:when test="${likeState == 0}">♡</c:when>
+							<c:otherwise>♥</c:otherwise>
+						</c:choose>
+					</span>
+				</button>
+				<span id="likeCnt">${product.likeCnt}</span>
+			</div>
+			<div class="cart-btn1" style="display:flex; gap: 10px;">
+				<button class="btn btn1" style="margin:auto;" onclick="addCart();">장바구니</button>
+				<button class="btn btn2" style="margin:auto;" onclick="purchase();">구매하기</button>
+			</div>
+		</div>
+	</div>
    <form:form id="addCartFrm">
       <input type="hidden" value="1" id="_quantity" name="quantity">
       <input type="hidden" value="${productDetails[0].productDetailId}"

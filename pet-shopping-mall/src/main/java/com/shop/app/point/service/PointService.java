@@ -27,7 +27,7 @@ public interface PointService	 {
 
 	List<Point> findRollbackPointCurrentById(Point rollbackPoint);
 
-	int findTotalPointCount();
+	int findTotalPointCount(String pointMemberId);
 
 	
 }

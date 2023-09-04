@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.shop.app.point.entity.Point;
@@ -49,8 +48,8 @@ public interface PointRepository {
 	@Select("select * from point where point_member_id = #{pointMemberId} order by point_date desc")
 	List<Point> findRollbackPointCurrentById(Point rollbackPoint);
 
-	@Select("select count (*) from point")
-	int findTotalPointCount();
+	@Select("select count (*) from point where point_member_id = #{pointMemberId}")
+	int findTotalPointCount(String pointMemberId);
 
 
 

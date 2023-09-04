@@ -68,7 +68,7 @@ public class PointServiceImpl implements PointService {
 	}
 
 	@Override
-	public int findTotalPointCount() {
-		return pointRepository.findTotalPointCount();
+	public int findTotalPointCount(String pointMemberId) {
+		return pointRepository.findTotalPointCount(pointMemberId);
 	}
 }
