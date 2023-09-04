@@ -86,4 +86,5 @@ public interface ProductService {
 	List<Product> findFashionAll(int _categoryId);
 	
 	List<ProductSearchDto> searchProductsById(int categoryId);
+	
 }
