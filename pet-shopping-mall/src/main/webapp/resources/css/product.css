@@ -29,7 +29,7 @@
 }
 
 #product-notice-box {
-   margin-top: 650px;
+   margin-top: 350px;
 }
 
 /* 상품 상세페이지 리뷰박스 */
@@ -89,7 +89,7 @@
 
 /* 리뷰 페이징 바 */
 .product-review-paging{
-   margin-bottom: 50px;
+   margin-bottom: 10px;
 }
 
 .review-box {
