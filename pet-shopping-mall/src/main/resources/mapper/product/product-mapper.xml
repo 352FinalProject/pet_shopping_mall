@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shop.app.product.repository.ProductRepository">
 	
-	<select id="findImageAttachmentsByProductId" resultMap="ProductImagesResultMap">
+	<select id="findImageAttachmentsByProductId" resultMap="productImagesResultMap">
 		select
 		    p.product_id,
 		    p.category_id,
@@ -53,7 +53,7 @@
 	</select>
 	
 	<select id="findAdminProductsBySearch" resultMap="adminProductDto">
-			select
+		select
 		    p.product_id,
 		    p.category_id,
             pd.*,
@@ -238,7 +238,7 @@
         <result property="likeCnt" column="like_cnt"/>
     </resultMap>
     
-	<resultMap type="ProductImages" id="ProductImagesResultMap">
+	<resultMap type="ProductImages" id="productImagesResultMap">
         <id property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>
         <result property="productName" column="product_name"/>

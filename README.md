@@ -54,10 +54,11 @@
    <li>위치기반 API</li>
 </ul>
 <br>
+
 ## 팀원별 구현코드
 
 <h3>김담희</h3>
-<h4>결제,장바구니,구독,상품등록/수정/조회</h4>
+<h4>결제,장바구니,구독,상품등록/조회</h4>
 <ul>
   <li><a href="http://localhost:8080/pet/cart/shoppingCart.do">장바구니</a></li> 
 </ul>
@@ -81,7 +82,7 @@
 </ul>
 
 <h3>전수경</h3>
-<h4>상품 삭제</h4>
+<h4>상품 등록/수정/삭제</h4>
 <ul> 
   <li><a href="http://localhost:8080/pet"></a></li> 
 </ul>
@@ -89,7 +90,11 @@
 <h3>강선모</h3>
 <h4>펫 CRUD, 찜하기</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="http://localhost:8080/pet/petProfile.do">펫 등록</a></li>
+  <li><a href="http://localhost:8080/pet/pet/petList.do">찜 목록</a></li>
+  <li><a href="http://localhost:8080/pet/pet/petDetail.do?petId=1">펫 상세조회</a></li>
+  <li><a href="http://localhost:8000/pet/pet/petGoDetail.do?>펫 수정</a></li>
+  <li><a href="http://localhost:8080/pet/wishlist/myWishlist.do">찜 목록</a></li> 
 </ul>
 
 <h3>김상훈</h3>

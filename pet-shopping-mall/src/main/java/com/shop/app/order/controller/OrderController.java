@@ -163,7 +163,6 @@ public class OrderController {
 		    rollbackPoint.setPointMemberId(memberId);
 		    rollbackPoint.setPointType("구매취소");
 		    rollbackPoint.setPointAmount(pointsUsed);
-		    log.debug("rollbackPoint = {}", rollbackPoint);
 	
 		    Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
 	
