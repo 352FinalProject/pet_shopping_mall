@@ -19,44 +19,51 @@
 			    	method="GET" 
 			    	name="adminOrderSearch"
 			    	action="${pageContext.request.contextPath}/admin/adminOrderSearch.do">
+			        <div class="adminSearchKeyword">
+			        <input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드" class="adminSearch">
+			        </div>
 			        
-			        <input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드" class="adminSearch"><br>
 			        <div class="adminDateSearch-info">
 			        	<input type="date" name="startDate" class="adminDateSearch"> &nbsp; ~ &nbsp; <input type="date" name="endDate" class="adminDateSearch">
 			    	</div>
 			    	
-					<label for="all" class="btn btn-secondary">전체 결제방법
-				    	<input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
-					</label>
+			    	<div class="adminOrderMethod">
+			    	<input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)" class="chBox">
+					<label for="paymentMethodAll" class="btn btn-secondary">전체 결제방법</label>
+		    	
+			    	<input type="checkbox" id="deposit" name="paymentMethod" value="0" class="chBox">
+				    <label for="deposit" class="btn btn-secondary">신용카드</label>
 				    
-				    <label for="deposit" class="btn btn-secondary">신용카드
-				    	<input type="checkbox" id="deposit" name="paymentMethod" value="0">
-				    </label>
-				    
-				    <label for="creditcard" class="btn btn-secondary">카카오페이
-				    	<input type="checkbox" id="creditcard" name="paymentMethod" value="1">
-				    </label>
-			        <br>
+				    <input type="checkbox" id="creditcard" name="paymentMethod" value="1" class="chBox">
+				    <label for="creditcard" class="btn btn-secondary">카카오페이</label>
+				    </div>
 			        
-				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
-				    <label for="orderStatusAll">전체 주문상태</label>
-				    <input type="checkbox" id="waiting" name="orderStatus" value="0">
-				    <label for="waiting">결제완료</label>
-				    <input type="checkbox" id="completeDeposit" name="orderStatus" value="1">
-				    <label for="completePayment">배송준비</label>
-				    <input type="checkbox" id="readyDelivery" name="orderStatus" value="2">
-				    <label for="readyDelivery">배송중</label>
-				    <input type="checkbox" id="delivering" name="orderStatus" value="3">
-				    <label for="delivering">배송완료</label>
-				    <input type="checkbox" id="delivered" name="orderStatus" value="4">
-				    <label for="delivered">주문취소</label>
-				    <input type="checkbox" id="canceled" name="orderStatus" value="5">
-				    <label for="canceled">환불완료</label>
-				    <input type="checkbox" id="refunded" name="orderStatus" value="6">
-				    <label for="refunded">구매확정</label>
-			        <br>
-			        
-			        <button type="submit" class="btn btn-secondary">검색</button>
+			        <div class="adminOrderStatus">
+					    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)" class="chBox">
+					    <label for="orderStatusAll" class="btn btn-secondary">전체 주문상태</label>
+					    
+					    <input type="checkbox" id="waiting" name="orderStatus" value="0" class="chBox">
+					    <label for="waiting" class="btn btn-secondary">결제완료</label>
+					    
+					    <input type="checkbox" id="readyDelivery" name="orderStatus" value="1" class="chBox">
+					    <label for="readyDelivery" class="btn btn-secondary">배송준비</label>
+					    
+					    <input type="checkbox" id="delivering" name="orderStatus" value="2" class="chBox">
+					    <label for="delivering" class="btn btn-secondary">배송중</label>
+					    
+					    <input type="checkbox" id="delivered" name="orderStatus" value="3" class="chBox">
+					    <label for="delivered" class="btn btn-secondary">배송완료</label>
+					    
+					    <input type="checkbox" id="canceled" name="orderStatus" value="4" class="chBox">
+					    <label for="canceled" class="btn btn-secondary">주문취소</label>
+					    
+					    <input type="checkbox" id="refunded" name="orderStatus" value="5" class="chBox">
+					    <label for="refunded" class="btn btn-secondary">환불완료</label>
+					    
+					    <input type="checkbox" id="complete" name="orderStatus" value="6" class="chBox">
+					    <label for="complete" class="btn btn-secondary">구매확정</label>
+			        </div>
+			        <button type="submit" class="btn btn-secondary" id="adminOrderSearchButton">검색</button>
 			    </form:form>
 			</div>
 				</div>
@@ -135,7 +142,7 @@
       const checkboxes = document.getElementsByName('paymentMethod');
       
       checkboxes.forEach((checkbox) => {
-        checkbox.checked = selectAll.checked; // Use the selectAll argument here
+        checkbox.checked = selectAll.checked;
       });
     }
     

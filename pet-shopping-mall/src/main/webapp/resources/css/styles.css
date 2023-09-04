@@ -250,8 +250,8 @@ sup {
 }
 
 a {
-  color: var(--bs-link-color);
-  text-decoration: underline;
+  color: black;
+  text-decoration: none;
 }
 a:hover {
   color: var(--bs-link-hover-color);
@@ -356,8 +356,7 @@ button:focus:not(:focus-visible) {
 input,
 button,
 select,
-optgroup,
-textarea {
+optgroup {
   margin: 0;
   font-family: inherit;
   line-height: inherit;
@@ -2884,10 +2883,10 @@ textarea.form-control-lg {
 
 .btn-secondary {
   --bs-btn-color: #070707;
-  --bs-btn-bg: #fbfbfc;
+  --bs-btn-bg: #fff;
   --bs-btn-border-color: #c8c8c8;
   --bs-btn-hover-color: #070707;
-  --bs-btn-hover-bg: #daddcf;
+  --bs-btn-hover-bg: #fff;
   --bs-btn-hover-border-color: #c8c8c8;
   --bs-btn-focus-shadow-rgb: 130, 138, 145;
   --bs-btn-active-color: #fff;
@@ -11292,4 +11291,21 @@ body {
   font-size: 1rem;
   display: flex;
   line-height: inherit;
+}
+.chBox{
+  display: none;
+}
+
+
+.chBox:checked + label {
+  background-color: #c8c8c8; 
+  color: black; 
+}
+
+.adminDateSearch-info, .adminOrderMethod, .adminOrderStatus, #adminOrderSearchButton{
+  margin-top: 5px;
+}
+
+.adminOrderStatus label, .adminOrderMethod label {
+  border-radius: 10px;
 }

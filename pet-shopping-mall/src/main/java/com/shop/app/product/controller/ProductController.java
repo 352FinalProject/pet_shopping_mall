@@ -81,14 +81,15 @@ public class ProductController {
 	/**
 	 * @author 전수경
 	 * 
-	 * @author 이혜령
+	 * @author 이혜령 리뷰
 	 * 
 	 * @author 강선모 찜하기
 	 */
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int productId, @RequestParam(defaultValue = "1") int page,
 			@AuthenticationPrincipal MemberDetails member, Model model) {
-		int limit = 5;
+
+		int limit = 3;
 
 		Map<String, Object> params = Map.of("page", page, "limit", limit, "productId", productId);
 
@@ -222,6 +223,11 @@ public class ProductController {
 		int totalCount = productService.findTotalProductCountByCategory(categoryId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 
+		model.addAttribute("totalPages", totalPages);
+		
+		ProductCategory category = productService.findProductCategoryById(categoryId);
+		model.addAttribute("category", category);
+		
 		List<ProductSearchDto> productInfos = productService.searchProductsById(params);
 		model.addAttribute("productInfos", productInfos);
 
