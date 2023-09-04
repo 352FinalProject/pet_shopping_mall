@@ -40,14 +40,14 @@ a {
 		<%-- 펫 이름, 성별, 나이, 몸무게, 품종 --%>
  		<div id="review-div"></div>
 			<div id="review-div">
-				<c:if test="${not empty petId}">
+				<c:if test="${not empty reviews.petId}">
 				     <em class="review-pet-name">${reviews.petName} &nbsp; <em class="review-em">|</em></em>
 				     <em class="review-pet-gender">${reviews.petGender} &nbsp;<em class="review-em">|</em></em>
 				     <em class="review-pet-age">${reviews.petAge}살 &nbsp;<em class="review-em">|</em></em>
 				     <em class="review-pet-weight">${reviews.petWeight}kg &nbsp;<em class="review-em">|</em></em>
 				     <em class="review-pet-breed">${reviews.petBreed} &nbsp;<em class="review-em">|</em></em>
 				</c:if>
-				<c:if test="${empty petId}">
+				<c:if test="${empty reviews.petId}">
 				   <em class="review-pet-name">등록된 펫 정보가 없습니다.</em>
 				</c:if>
 			</div><span class="small-space"></span>
