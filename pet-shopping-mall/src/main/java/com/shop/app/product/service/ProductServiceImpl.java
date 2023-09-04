@@ -3,6 +3,7 @@ package com.shop.app.product.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -176,8 +177,6 @@ public class ProductServiceImpl implements ProductService {
 	public int adminOptionCreate(ProductDetail productDetail) {
 		return productRepository.adminOptionCreate(productDetail);
 	}
-
-	
 	
 	
 	@Override
@@ -195,5 +194,23 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findFashionAll(int _categoryId) {
 		return productRepository.findFashionAll(_categoryId);
+	}
+
+	// 카테고리에 해당하는 총 상품의 갯수 (수경)
+	@Override
+	public int findTotalProductCountByCategory(int categoryId) {
+		return productRepository.findTotalProductCountByCategory(categoryId);
+	}
+
+	// 페이지에 해당하는 상품들 조회 (수경)
+	@Override
+	public List<Product> findProductsAll(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		int categoryId = (int) params.get("categoryId");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		log.debug("rowBounds = {}", rowBounds);
+		return productRepository.findProductsAll(rowBounds, categoryId);
 	}
 }

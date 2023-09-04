@@ -90,10 +90,23 @@
 				</div>
 			</c:forEach>
 			</c:if>
+			
 			</ul>
+			<!-- 페이징바 -->
+			<nav aria-label="...">
+			  	<ul class="pagination pagination-sm">
+				    <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+				        <li class="page-item ${page == pageNumber ? 'active' : ''}">
+				            <a class="page-link" href="${pageContext.request.contextPath}/product/productList.do?id=${productCategory.categoryId}&page=${pageNumber}">
+			                    <span class="page-number">${pageNumber}</span>
+			                </a>
+				        </li>
+				    </c:forEach>
+				</ul>
+			</nav>
 		</div>
 	</div>
-</div>
+</div><!-- common-section -->
 <script>
 function setSortOption(sortOption) {
     document.getElementById('align').value = sortOption;
