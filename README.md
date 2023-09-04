@@ -89,7 +89,11 @@
 <h3>강선모</h3>
 <h4>펫 CRUD, 찜하기</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="http://localhost:8080/pet/petProfile.do">펫 등록</a></li>
+  <li><a href="http://localhost:8080/pet/pet/petList.do">찜 목록</a></li>
+  <li><a href="http://localhost:8080/pet/pet/petDetail.do?petId=1">펫 상세조회</a></li>
+  <li><a href="http://localhost:8000/pet/pet/petGoDetail.do?>펫 수정</a></li>
+  <li><a href="http://localhost:8080/pet/wishlist/myWishlist.do">찜 목록</a></li> 
 </ul>
 
 <h3>김상훈</h3>
