@@ -217,7 +217,7 @@ public class ProductServiceImpl implements ProductService {
 		int categoryId = (int) params.get("categoryId");
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return productRepository.findProductsAll(rowBounds, categoryId);
-
+	}	
 
 	public List<ProductSearchDto> searchProductsById(int categoryId) {
 		return productRepository.searchProductsById(categoryId);

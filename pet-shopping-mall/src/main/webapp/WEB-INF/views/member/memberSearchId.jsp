@@ -3,10 +3,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />	
 <style>
  #modal.modal-overlay {
-    /* 스타일 내용 */
+ 
  }
  
- /* ... 중략 ... */
+
 </style>
 </head>
 

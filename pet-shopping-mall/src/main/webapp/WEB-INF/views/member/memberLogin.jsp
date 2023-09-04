@@ -462,7 +462,7 @@ $(document).ready(function() {
             },
             dataType: "text",
             beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken); // 헤더에 CSRF 토큰 추가
+                xhr.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function(result) {
                console.log(result);
