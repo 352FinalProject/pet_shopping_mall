@@ -77,6 +77,9 @@
                             </td>
                         </tr>
                         </c:forEach>
+                        
+                        
+                        
                         </c:if>
                     </tbody>
                 </table>
@@ -84,7 +87,7 @@
         </div>
     </div>
     <!-- 페이징 바 -->
-   <nav aria-label="..." >
+   <nav aria-label="..." style="margin-top:200px;">
         <ul class="pagination pagination-sm">
           <c:forEach begin="1" end="${totalPages}" var="pageNumber">
               <li class="page-item ${page == pageNumber ? 'active' : ''}">
