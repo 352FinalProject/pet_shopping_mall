@@ -19,7 +19,7 @@
 							method="get">
 							<div class="input-group">
 								<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
-								<input type="submit" value="검색" class ="btn btn-secondary">
+								<input type="submit" value="검색" class ="btn btn-secondary" >
 							</div>
 						</form:form>
 					</div>
@@ -40,7 +40,6 @@
 							<th>가입일</th>
 							<th>주소</th>
 							<th>생일</th>
-							<th>관리</th>
 						</thead>
 						<tbody>
 							<c:forEach items="${subscribedMembers}" var="member" varStatus="vs">
@@ -52,7 +51,6 @@
 									<td>${member.enrollDate}</td>
 									<td>${member.address}</td>
 									<td>${member.birthday}</td>
-									<td><button onclick="submit">포인트관리</button></td>
 								</tr>
 							</c:forEach>
 						</tbody>

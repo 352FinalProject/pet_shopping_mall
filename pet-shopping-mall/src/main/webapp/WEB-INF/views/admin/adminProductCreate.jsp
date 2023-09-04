@@ -14,7 +14,7 @@
 
 			<div class="card mb-4">
 				<div class="card-header">
-					<i class="fas fa-table me-1"></i> 기본상품목록
+					상품 등록
 				</div>
 				<div class="card-body">
 				<div class=".container-md px-4 mx-auto">
@@ -23,105 +23,84 @@
 					    enctype="multipart/form-data" 
 					    method="post" class="mt-4">
 					        
-					        <!-- 1행 -->
-					        <div class="row mb-1">
-					          <!-- 1. 상품카테고리 -->
-					          <label for="categoryId" class="col-sm-2 col-form-label visually-hidden">상품 카테고리</label>
-					          
-					          <!-- 2열 -->
-					          <div class="col-md-6">
-					            <label for="productName" class="form-label">상품명</label>
-					          </div>
+					        <!-- 1행 : 카테고리 선택 -->
+					        <div class="row g-12 mb-3 align-items-center">
+								<div class="col-sm-3">
+									<label for="categoryId" class="col-form-label">상품 카테고리</label>
+								</div>
+								<div class="col-auto">
+						            <select name="categoryId" id="categoryId" class="form-select">
+						              <c:if test="${empty categories}">
+						                <option value="1">카테고리가 없습니다. 카테고리를 추가해주세요</option>
+						              </c:if>
+						              <c:if test="${not empty categories}">
+						                <c:forEach items="${categories}" var="category" varStatus="vs">
+						                  <option value="${category.categoryId}">${category.categoryName}</option>
+						                </c:forEach>
+						              </c:if>
+						            </select>
+					          	</div>
+							</div>
+					        
+					        <!-- 2행: 상품명 입력 -->
+					        <div class="row mb-3 align-items-center">
+						        <div class="col-sm-3">
+									<label for="productName" class="form-label">상품명</label>
+								</div>
+								<div class="col-auto">
+									<input type="text" name="productName" id="productName" class="form-control" required>
+					          	</div>
 					        </div>
-					        <!-- 2행 -->
-					        <div class="row mb-5">
-					          <!-- 1열 -->
-					          <div class="col-md-6">
-					            <select name="categoryId" id="categoryId" class="form-select">
-					              <c:if test="${empty categories}">
-					                <option value="1">카테고리가 없습니다. 카테고리를 추가해주세요</option>
-					              </c:if>
-					              <c:if test="${not empty categories}">
-					                <c:forEach items="${categories}" var="category" varStatus="vs">
-					                  <option value="${category.categoryId}">${category.categoryName}</option>
-					                </c:forEach>
-					              </c:if>
-					            </select>
-					          </div>
-					          <!-- 2열 -->
-					          <div class="col-md-6">
-					            <input type="text" name="productName" id="productName" class="form-control" required>
-					          </div>
+
+					        <!-- 3행: 가격 입력 -->
+					        <div class="row mb-3 align-items-center">
+						        <div class="col-sm-3">
+									<label for="productPrice" class="form-label">상품금액</label>
+								</div>
+								<div class="col-auto">
+									<input type="number" name="productPrice" id="productPrice" class="form-control" value="0" required>
+					          	</div>
 					        </div>
 					        
-					        <!-- 3행 -->
-					        <div class="row mb-1">
-					        	<!-- 1열 -->
-					          <div class="col-md-6">
-					            <label for="file" class="form-label">썸네일 사진(필수)</label>
-					          </div>
-					          <!-- 2열 -->
-					          <div class="col-md-6">
-					        	<label for="productPrice" class="form-label">상품금액</label>
-					          </div>
-					        </div>
-					        <!-- 4행 -->
-					        <div class="row mb-5">
-								<!-- 1열 -->					        
-					        	<div class="col-md-6">
-					            	<input type="file" name="thumbnailFile" id="file" class="form-control" multiple required>
+					        <!-- 3행 : 썸네일 사진 입력-->
+					        <div class="row mb-3">
+					        	<div class="col-sm-3">
+					            	<label for="file" class="form-label">썸네일 사진</label>
 					        	</div>
-					        	<!-- 2열 -->
-					        	<div class="col-md-6">
-					            	<input type="number" name="productPrice" id="productPrice" class="form-control" value="0" required>
+					        	<div class="col-auto">
+					            	<input type="file" name="thumbnailFile" id="file" class="form-control" required>
 					        	</div>
 					        </div>
 					        
-					        <!-- 5행 -->
-					        <div class="row mb-1">
-					        	<!-- 1열 -->
-					          <div class="col-md-6">
-					            <label for="file" class="form-label">제품상세 이미지</label>
-					          </div>
-					          <!-- 2열 -->
-					          <div class="col-md-6">
-					          </div>
-					        </div>
-					        <!-- 6행 -->
+					        <!-- 4행 : 상세사진 입력 -->
 					        <div class="row mb-5">
-								<!-- 1열 -->					        
-					        	<div class="col-md-6">
-					            	<input type="file" name="detailFile" id="file" class="form-control" multiple required>
+					        	<div class="col-sm-3">
+					            	<label for="file" class="form-label">상세 이미지</label>
 					        	</div>
-					        	<!-- 2열 -->
-					        	<div class="col-md-6">
+					        	<div class="col-auto">
+					            	<input type="file" name="thumbnailFile" id="file" class="form-control" required>
+					        	</div>
+					        </div>
+
+					        
+					        <!-- 5행 : 옵션추가 버튼 -->
+					        <div class="row mb-3 align-items-center">
+					        	<div class="col-auto">
+					            	<input class="btn btn-outline-secondary" id="addOptions" type="button" value="옵션 추가">
+					        	</div>
+					        	<div class="col-auto">
+					            	<span id="passwordHelpInline" class="addOptions">버튼을 눌러 옵션을 추가할 수 있습니다.</span>
 					        	</div>
 					        </div>
 					        
-					        <!-- 7행 -->
-					        <div class="row mb-1">
-					        	<!-- 1열 -->
-					        	<div class="col-md-6">
-					        		<label for="addOptions" class="form-label">옵션</label>
-					        	</div>
-					        </div>
-					        <!-- 6행 -->
-					        <div class="row mb-5">
-								<!-- 1열 -->					        
-					        	<div class="col-md-2">
-						        	<input class="btn btn-outline-secondary" id="addOptions" type="button" value="옵션 추가">
-					        	</div>
-					        </div>
-					        
-							
 							<!-- 기본옵션(default) -->
 							<div class="viewOption" id="viewOption" style="display : none;">
 								<div class="optionValueDefault" id="optionValueDefault">
-							          <div class="row mb-3">
-								          <div class="col-md-3">
-								            <label for="optionName" class="form-label">옵션명</label>
-								            <input type="text" name="productDetail[0].optionName" id="optionName" class="form-control" value="옵션없음">
-								          </div>
+									<div class="row mb-3">
+									<div class="col-md-3">
+										<label for="optionName" class="form-label">옵션명</label>
+										<input type="text" name="productDetail[0].optionName" id="optionName" class="form-control" value="옵션없음">
+									</div>
 							            <div class="col-md-3">
 							              <label for="optionValue" class="form-label">옵션값</label>
 							              <input type="text" name="productDetail[0].optionValue" id="optionValue" class="form-control">
@@ -136,7 +115,43 @@
 						        
 			        <!-- 옵션추가 위치 -->
 		        	<div class="row mb-5" id="optionValueInput"></div>
-
+		        	
+    	<div class="addedOption row mb-5 align-items-center" id="addedOption\${optionCnt}">
+    	<div class="row">
+			<div class="col-sm-3">
+				<div class="form-floating">
+					<label for="optionName" class="form-label">옵션명</label>
+					<input type="text" 
+						list="datalistOptions" 
+						class="form-control" 
+						name="productDetail[\${optionCnt}].optionName" id="optionName" required>
+						<datalist id="datalistOptions">
+							<option value="색상">
+							<option value="사이즈">
+							<option value="무게">
+						</datalist>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-floating">
+					<label for="optionValue" class="form-label">옵션값</label>
+					<input type="text" name="productDetail[\${optionCnt}].optionValue" id="optionValue" class="form-control">
+				</div>
+			</div>
+			<div class="col-sm-3" id="option-btn-container">
+				<div class="input-group mb-3">
+					<span class="input-group-text">옵션추가금</span>
+					<input type="number" name="productDetail[\${optionCnt}].additionalPrice" id="additionalPrice" class="form-control" value="0">
+				</div>
+			</div>
+    	</div>
+			<div class="col-sm" >
+	       		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션삭제</button>
+			</div>
+		</div>
+		
+		
+		
 					<!--상품등록버튼 -->
 					<div class="row mb-5">
 						<div class="col-md-5 d-flex justify-content-end">

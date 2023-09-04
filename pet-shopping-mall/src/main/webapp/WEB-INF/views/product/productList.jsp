@@ -13,12 +13,11 @@
 	        <div class="board-title">
 		        <span>
 		        <c:set var="categoryName" value="${productInfos[0].categoryName}"/>
+		        <c:set var="categoryId" value="${productInfos[0].categoryId}" />
 		        ${categoryName}
 		        </span>
 	        </div>
 		</section>
-		
-		<!-- 정렬 선택란 -->
 		<div class="product-sort">
 			<ul class="nav">
 				<li>
@@ -39,7 +38,7 @@
 			</ul>
 		</div>
 		<form:form id="alignFrm" name="alignFrm" method="get" action="${pageContext.request.contextPath}/product/productList.do">
-		    <input type="hidden" name="categoryId" value="${productCategory.categoryId}"/>
+		    <input type="hidden" name="categoryId" value="${category.categoryId}"/>
 		    <input type="hidden" name="align" id="align" value=""/>
 		</form:form>
 		<!-- 상품사진 갤러리 -->
@@ -64,11 +63,11 @@
 				</div>
 				</c:forEach>
 			</ul>
-			<nav aria-label="...">
-				<ul class="pagination pagination-sm">
+			<nav class="product-nav" aria-label="...">
+				<ul class="pagination-product pagination-sm">
 				  <c:forEach begin="1" end="${totalPages}" var="pageNumber">
 					  <li class="page-item ${page == pageNumber ? 'active' : ''}">
-						  <a class="page-link" href="${pageContext.request.contextPath}/product/productList.do?id=${productCategory.categoryId}&page=${pageNumber}">
+						  <a class="page-link" href="${pageContext.request.contextPath}/product/productList.do?categoryId=${category.categoryId}&page=${pageNumber}">
 							  <span class="page-number">${pageNumber}</span>
 						  </a>
 					  </li>

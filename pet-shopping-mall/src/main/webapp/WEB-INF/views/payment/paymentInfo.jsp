@@ -266,7 +266,7 @@ terms.forEach(term => {
 });
 
 const updateButtonColor = () => {
-    checkAll.checked ? orderButton.classList.add("active") : orderButton.classList.remove("active")
+    checkAll.checked ? orderButton.classList.add("btncolor") : orderButton.classList.remove("btncolor")
 };
 
 let useCoupon = false;  // 쿠폰 사용 여부, 기본값은 false

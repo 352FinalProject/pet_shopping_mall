@@ -78,8 +78,10 @@ public interface OrderService {
 	// 상품상세 - 리뷰 - 상품 뿌리기
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
 
-	
+
 	int findTotalOrderCount(String memberId);
 
-	
+	int findTotalCancelOrderCount(String memberId);
+
+
 }

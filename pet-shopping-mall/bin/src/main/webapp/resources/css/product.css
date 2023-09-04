@@ -74,7 +74,11 @@
 .product-utility {
 	display: flex;
 	gap: 200px;
-	justify-content: center
+	justify-content: center;
+}
+
+#product-notice-box {
+	margin-top:50px;
 }
 
 select[name=product-option] {
@@ -133,9 +137,6 @@ select[name=product-option] {
 	background: #58ACFA;
 }
 
-#product-bottom-title {
-
-}
 
 .product-price-desc {
 	font-size: 16px;

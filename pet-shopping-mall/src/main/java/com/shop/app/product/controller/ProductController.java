@@ -78,23 +78,22 @@ public class ProductController {
 	@Autowired
 	private PetService petService;
 
-   /**
-    * @author 전수경
-    * 
-    * @author 이혜령
-    * 
-    * @author 강선모
-    * 찜하기
-    */
+	/**
+	 * @author 전수경
+	 * 
+	 * @author 이혜령 리뷰
+	 * 
+	 * @author 강선모 찜하기
+	 */
 	@GetMapping("/productDetail.do")
 	public void productDetail(@RequestParam int productId, @RequestParam(defaultValue = "1") int page,
 			@AuthenticationPrincipal MemberDetails member, Model model) {
-		int limit = 5;
+
+		int limit = 3;
 
 		Map<String, Object> params = Map.of("page", page, "limit", limit, "productId", productId);
 
 		int totalCount = reviewService.findProductTotalReviewCount(productId);
-
 
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
@@ -169,7 +168,6 @@ public class ProductController {
 			int reviewId2 = review.getReviewId();
 			ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
 
-
 			if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
 				List<String> imageFilenames = new ArrayList<>();
 
@@ -188,7 +186,6 @@ public class ProductController {
 			List<OrderReviewListDto> ReviewOrders = orderService.findProductByReviewId(review.getReviewId(), productId);
 			reviewProductMap.put(review.getReviewId(), ReviewOrders);
 		}
-
 
 		model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
 		model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보
@@ -210,55 +207,64 @@ public class ProductController {
 	 * @author 김담희
 	 * 
 	 * 
-	 * 
 	 * @author 전수경
 	 * 
 	 */
 	@GetMapping("/productList.do")
-	public void productList(@RequestParam int categoryId, @RequestParam(defaultValue = "1") int page,
+	public void productList(@RequestParam("categoryId") String _categoryId, @RequestParam(defaultValue = "1") int page,
 			Model model, @RequestParam(required = false) String align) {
 
+		int categoryId = Integer.parseInt(_categoryId);
+
 		int limit = 8;
-		
-		Map<String, Object> params = Map.of(
-				"page", page,
-				"limit", limit,
-				"categoryId", categoryId
-			);
-		
+
+		Map<String, Object> params = Map.of("page", page, "limit", limit, "categoryId", categoryId);
+
 		int totalCount = productService.findTotalProductCountByCategory(categoryId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
+
+		model.addAttribute("totalPages", totalPages);
+		
+		ProductCategory category = productService.findProductCategoryById(categoryId);
+		model.addAttribute("category", category);
 		
 		List<ProductSearchDto> productInfos = productService.searchProductsById(params);
 		model.addAttribute("productInfos", productInfos);
-		
+
 		// 정렬
 		String alignType = "";
 		String inOrder = "";
-		
+
 		if (align != null) {
-		    List<ProductSearchDto> _productInfos = null;
-		    if (align.equals("신상품")) {
-		    	alignType = "byNewDate";
-		        
-		    } else if (align.equals("낮은가격")) {
-		    	alignType = "byPrice";
-		        inOrder = "asc";
-		        
-		    } else if (align.equals("높은가격")) {
-		    	alignType = "byPrice";
-		        inOrder = "desc";
-		        
-		    } else if (align.equals("별점높은순")) {
-		    	alignType = "byHighReviewStar";
-		        
-		    } else {
-		    	alignType = "byReviewCnt";
-		    }
-		    _productInfos = productService.alignProducts(categoryId, alignType, inOrder);
-		    model.addAttribute("productInfos", _productInfos);
+			List<ProductSearchDto> _productInfos = null;
+			if (align.equals("신상품")) {
+				alignType = "byNewDate";
+
+			} else if (align.equals("낮은가격")) {
+				alignType = "byPrice";
+				inOrder = "asc";
+
+			} else if (align.equals("높은가격")) {
+				alignType = "byPrice";
+				inOrder = "desc";
+
+			} else if (align.equals("별점높은순")) {
+				alignType = "byHighReviewStar";
+
+			} else {
+				alignType = "byReviewCnt";
+			}
+			_productInfos = productService.alignProducts(categoryId, alignType, inOrder);
+			model.addAttribute("productInfos", _productInfos);
 		}
-   }
+	}
+	
+	@PostMapping("/productList.do")
+	public String productList(@RequestParam("categoryId") String categoryId, @RequestParam("align") String align) {
+		return "redirect:/product/productList.do?categoryId=" + categoryId + "&align=" + align;
+	}
+	
+	
 
 	/**
 	 * @author 강선모 -하트 클릭 이벤트

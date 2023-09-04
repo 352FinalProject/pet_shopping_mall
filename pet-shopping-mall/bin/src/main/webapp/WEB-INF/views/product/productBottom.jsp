@@ -7,6 +7,7 @@
 	height:50px;
 	border-radius: 5px;
 	border:none;
+	margin: auto;
 	}
 	.product-bottom {
 	display: flex;
@@ -26,9 +27,11 @@
 	.btn2 {
 	cursor: pointer;
 	background: #58ACFA;
+	margin: auto;
 	}
 	.cart-btn1 {
 	gap: 10px;
+	display: flex;
 	}
     </style>
     <section>
