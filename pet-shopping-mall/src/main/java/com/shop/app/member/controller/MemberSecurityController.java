@@ -233,10 +233,13 @@ public class MemberSecurityController {
    }
    
    
+   /**
+    * @author 김담희
+    * 마이 페이지에서 최근 1개월간 주문 내역 및 구독 정보 등 조회
+    */
    @GetMapping("/myPage.do")
    public void myPage(Model model, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "1") int page) {
       String memberId = member.getMemberId();
-      // 페이징바 처리
       int limit = 5;
       Map<String, Object> params = Map.of(
     		  "page", page,
