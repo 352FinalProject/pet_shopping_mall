@@ -87,4 +87,11 @@ public interface ProductService {
 	
 	List<ProductSearchDto> searchProductsById(int categoryId);
 	
+
+	// 페이지수에 맞는 상품가져오기
+	List<ProductSearchDto> searchProductsById(Map<String, Object> params);
+	
+	int findTotalProductCountByCategory(int categoryId);
+
+
 }

@@ -47,7 +47,7 @@
 			<ul class="gallery">
 				<c:forEach items="${productInfos}" var="productInfo" varStatus="vs">
 				<div class="product-card">
-                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}&reviewId=${reviewId.reviewId}">
+                    <a href="${pageContext.request.contextPath}/product/productDetail.do?productId=${productInfo.productId}">
 					<figure class="product-thumbnail">
 						<img alt="썸네일이미지" src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.thumbnail}">
 					</figure>
@@ -64,6 +64,17 @@
 				</div>
 				</c:forEach>
 			</ul>
+			<nav class="product-nav" aria-label="...">
+				<ul class="pagination-product pagination-sm">
+				  <c:forEach begin="1" end="${totalPages}" var="pageNumber">
+					  <li class="page-item ${page == pageNumber ? 'active' : ''}">
+						  <a class="page-link" href="${pageContext.request.contextPath}/product/productList.do?id=${productCategory.categoryId}&page=${pageNumber}">
+							  <span class="page-number">${pageNumber}</span>
+						  </a>
+					  </li>
+				  </c:forEach>
+			  </ul>
+		  </nav>
 		</div>
 	</div>
 </div>
