@@ -208,16 +208,28 @@ public class ProductController {
 
 	/**
 	 * @author 김담희
+	 * 
+	 * 
+	 * 
+	 * @author 전수경
+	 * 
 	 */
 	@GetMapping("/productList.do")
-	public void productList(
-			@RequestParam int categoryId,
-			Model model,
-			@RequestParam(required = false) String align
-			) {
+	public void productList(@RequestParam int categoryId, @RequestParam(defaultValue = "1") int page,
+			Model model, @RequestParam(required = false) String align) {
+
+		int limit = 8;
 		
-		List<ProductSearchDto> productInfos = productService.searchProductsById(categoryId);
-		log.debug("productInfos = {}", productInfos);
+		Map<String, Object> params = Map.of(
+				"page", page,
+				"limit", limit,
+				"categoryId", categoryId
+			);
+		
+		int totalCount = productService.findTotalProductCountByCategory(categoryId);
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		
+		List<ProductSearchDto> productInfos = productService.searchProductsById(params);
 		model.addAttribute("productInfos", productInfos);
 		
 		// 정렬

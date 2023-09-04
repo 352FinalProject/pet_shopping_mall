@@ -52,6 +52,30 @@
 	    	p.product_name like '%' || #{searchQuery} || '%'
 	</select>
 	
+	<select id="findAdminProductsBySearch" resultMap="adminProductDto">
+			select
+		    p.product_id,
+		    p.category_id,
+            pd.*,
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail
+		from 
+		    product p
+        join
+            product_detail pd on p.product_id = pd.product_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id
+		where 
+	    	p.product_name like '%' || #{searchQuery} || '%'
+	</select>
+	
 	<select id="alignProducts" resultMap="productSearchDto">
 	    select
 	        p.product_id,
@@ -121,7 +145,78 @@
 		where 
 	    	p.category_id = #{categoryId}
 	</select>
-
+	
+	<select id="searchHomeProductsById" resultMap="productSearchDto">
+		select
+		    p.product_id,
+		    p.category_id,
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id
+		where 
+	    	p.category_id = #{categoryId}
+	</select>
+	
+	<select id="findProductsAll" resultMap="adminProductDto">
+		select
+		    p.product_id,
+		    p.category_id,
+            pd.*,
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail
+		from 
+		    product p
+        join
+            product_detail pd on p.product_id = pd.product_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id
+	</select>
+	
+	<resultMap type="AdminProductDto" id="adminProductDto">
+		<result property="productId" column="product_id"/>
+	    <result property="categoryId" column="category_id"/>
+	    <result property="productName" column="product_name"/>
+	    <result property="productPrice" column="product_price"/>
+	    <result property="thumbnail" column="thumbnail"/>
+	    <result property="categoryName" column="category_name"/>
+		<collection property="productOptions" ofType="ProductDetail">
+	        <result property="productId" column="product_id"/>
+	        <result property="productDetailId" column="product_detail_id"/>
+	        <result property="optionName" column="option_name"/>
+	        <result property="optionValue" column="option_value"/>
+	        <result property="additionalPrice" column="additional_price"/>
+	    </collection>
+	</resultMap>
+	
+	<resultMap type="ProductDetail" id="productOptionsMap">
+		<result property="productId" column="product_id"/>
+	    <result property="productDetailId" column="product_detail_id"/>
+	    <result property="optionName" column="option_name"/>
+	    <result property="optionValue" column="option_value"/>
+	    <result property="additionalPrice" column="additional_price"/>
+	</resultMap>
+	
+	
 	<resultMap type="ProductSearchDto" id="productSearchDto">
         <result property="productId" column="product_id"/>
         <result property="categoryId" column="category_id"/>

@@ -3,11 +3,13 @@ package com.shop.app.product.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
@@ -159,12 +161,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	
-	// 모든상품 조회(수경)
-	@Override
-	public List<Product> findAllProducts() {
-		return productRepository.findAllProducts();
-	}
-	
 	// 상품아이디에 해당하는 모든 상품디테일 조회(수경)
 	@Override
 	public List<ProductDetail> findProductDetailsByProductId(int productId) {
@@ -208,19 +204,30 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findTotalProductCountByCategory(categoryId);
 	}
 
-	// 페이지에 해당하는 상품들 조회 (수경)
+
 	@Override
-	public List<Product> findProductsAll(Map<String, Object> params) {
+	public List<ProductSearchDto> searchProductsById(Map<String, Object> params) {
 		int limit = (int) params.get("limit");
 		int page = (int) params.get("page");
 		int offset = (page - 1) * limit;
 		int categoryId = (int) params.get("categoryId");
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return productRepository.findProductsAll(rowBounds, categoryId);
-	}	
+		return productRepository.searchProductsById(rowBounds, categoryId);
+	}
 
-	public List<ProductSearchDto> searchProductsById(int categoryId) {
-		return productRepository.searchProductsById(categoryId);
+	@Override
+	public List<AdminProductDto> findProductsAll() {
+		List<AdminProductDto> products = productRepository.findProductsAll();
+		return productRepository.findProductsAll();
+	}
 
+	@Override
+	public List<ProductSearchDto> searchHomeProductsById(int categoryId) {
+		return productRepository.searchHomeProductsById(categoryId);
+	}
+
+	@Override
+	public List<AdminProductDto> findAdminProductsBySearch(String searchKeyword) {
+		return productRepository.findAdminProductsBySearch(searchKeyword);
 	}
 }
