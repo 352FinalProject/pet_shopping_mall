@@ -58,7 +58,7 @@
 <h3>김담희</h3>
 <h4>결제,장바구니,구독</h4>
 <ul>
-  <li><a href="http://localhost:8080/pet">장바구니</a></li> 
+  <li><a href="http://localhost:8080/pet/cart/shoppingCart.do">장바구니</a></li> 
 </ul>
 
 <h3>전예라</h3>
