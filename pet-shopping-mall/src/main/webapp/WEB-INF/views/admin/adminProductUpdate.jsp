@@ -7,11 +7,10 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
-			<h1 class="mt-4">상품 수정</h1>
 			<ol class="breadcrumb mb-4"></ol>
 
 
-			<div class="card mb-4">
+			<div class="card mb-4 mt-4">
 				<div class="card-header">
 					등록 상품
 				</div>
@@ -312,7 +311,6 @@ const addOption = () => {
 		        	<label for="additionalPrice}" class="form-label">옵션추가금</label>
 	        	</div>
 	        	<div class="col-md-3">
-					
 	        	</div>
 	        </div>
 			<!-- 2행 -->
