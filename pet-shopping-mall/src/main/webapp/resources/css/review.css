@@ -68,7 +68,7 @@
 
 /* 상품상세 - 리뷰 */
 .review-product-utility li {
-	margin-bottom: -100px; 
+ 	margin-bottom: -100px;  
 }
 
 /* 평균별점 게이지 전체박스 */
@@ -481,3 +481,11 @@
 	border-top-right-radius: .2rem;
 	border-bottom-right-radius: .2rem
 }
+
+.review_gallery_wrap3 {
+	position: relative;
+	height: 277px;
+	overflow: hidden;
+	margin-top: 20px;
+}
+

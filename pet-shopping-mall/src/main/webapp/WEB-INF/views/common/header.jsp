@@ -156,7 +156,6 @@
          method="POST">
       </form:form>
    </sec:authorize>
-   
    <header>
       <div class="header">
          <span id="notification"></span>
