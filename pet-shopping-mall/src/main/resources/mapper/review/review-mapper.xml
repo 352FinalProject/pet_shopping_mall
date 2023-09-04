@@ -132,7 +132,8 @@
 	    pd.option_name, 
 	    pd.option_value,
 	    pd.product_detail_id,
-        ia.image_renamed_filename as thumbnail
+        ia.image_renamed_filename as thumbnail,
+        ROW_NUMBER() OVER (PARTITION BY r.review_member_id ORDER BY r.review_id DESC) as review_sequence
 	FROM 
 	    review r 
 	    left join product_detail pd 
@@ -147,6 +148,8 @@
 	        ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 	WHERE 
 	    r.review_member_id = #{reviewMemberId}
+	order by
+		r.review_id asc
 	</select>	
 	
 	<resultMap type="ReviewListDto" id="reviewListDto">

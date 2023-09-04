@@ -27,7 +27,7 @@
 		    join
 			    image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		where 
-		    ci.product_detail_id = #{productDetailId}
+		    ci.product_detail_id = #{productDetailId} and ci.cartitem_id = #{cartitemId}
   </select>
   
   

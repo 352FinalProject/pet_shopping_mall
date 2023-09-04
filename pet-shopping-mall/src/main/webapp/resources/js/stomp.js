@@ -9,14 +9,13 @@ stompClient.connect({}, (frame) => {
     stompClient.subscribe(`/pet/notice/${memberId}`, (message) => {
         console.log(`/pet/notice/${memberId} : `, message.body);
         renderMessage(message.body);
-        createImgTagUnderButton()
     });
 });
 
 const renderMessage = (message) => {
     const { id, notiCategory, notiContent, notiCreatedAt, memberId } = JSON.parse(message);
     const $notificationPopup = $("#notificationPopup");
-    const $popupContent = $notificationPopup.find(".popup-content");
+    const $popupContent = $notificationPopup.find(".notiPopup-content");
 
     const newNotificationContainer = document.createElement("div");
     newNotificationContainer.className = "notification-container";
@@ -42,5 +41,11 @@ const renderMessage = (message) => {
     $popupContent.prepend(newNotificationContainer);
 
     $notificationPopup.addClass("active");
+    
+    const notificationBellImg = document.getElementById("notificationBell");
+    notificationBellImg.setAttribute("src", "/pet/resources/images/home/notiBello.png"); 
+    notificationBellImg.classList.add("pulse-button");
+    
+    
 };
 

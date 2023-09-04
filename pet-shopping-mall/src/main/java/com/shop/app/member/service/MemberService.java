@@ -1,6 +1,8 @@
 package com.shop.app.member.service;
 
 
+import java.util.Map;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 
@@ -25,7 +27,7 @@ public interface MemberService extends UserDetailsService {
 
 	Member findByEmail(String email);
 
-	MypageDto getMyPage(String memberId);
+	MypageDto getMyPage(String memberId,  Map<String, Object> params);
 
 	int memberSubscribe(String memberId);
 
@@ -36,6 +38,8 @@ public interface MemberService extends UserDetailsService {
 	int cancelSubscribe(String memberId);
 
 	int updateCancelSubscribers();
+
+	MypageDto getMyPage(String memberId);
 
 
 }

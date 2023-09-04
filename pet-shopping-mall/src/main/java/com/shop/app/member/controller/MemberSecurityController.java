@@ -46,6 +46,7 @@ import com.shop.app.member.entity.TermsHistory;
 import com.shop.app.member.service.MemberService;
 import com.shop.app.notification.entity.Notification;
 import com.shop.app.notification.repository.NotificationRepository;
+import com.shop.app.order.service.OrderService;
 import com.shop.app.payment.dto.SubScheduleDto;
 import com.shop.app.point.entity.Point;
 import com.shop.app.point.service.PointService;
@@ -75,6 +76,9 @@ public class MemberSecurityController {
    
    @Autowired
    private CouponService couponService; // 회원가입시 쿠폰 발급
+   
+   @Autowired
+   private OrderService orderService;
 
    @Autowired
 	NotificationRepository notificationRepository; // 알림 레파
@@ -146,7 +150,7 @@ public class MemberSecurityController {
            String to = memberCoupon.getMemberId();
 			Notification insertNotification = Notification.builder()
 					.notiCategory(3)
-					.notiContent("님의 생일자 할인쿠폰(10%)이 발급됬습니다.")
+					.notiContent("회원가입 할인쿠폰(10%)이 발급됐습니다.")
 					.notiCreatedAt(formatTimestampNow())
 					.memberId(to) 
 					.build();
@@ -233,9 +237,19 @@ public class MemberSecurityController {
    
    
    @GetMapping("/myPage.do")
-   public void myPage(Model model, @AuthenticationPrincipal MemberDetails member) {
+   public void myPage(Model model, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "1") int page) {
       String memberId = member.getMemberId();
-      MypageDto myPage = memberService.getMyPage(memberId);
+      // 페이징바 처리
+      int limit = 5;
+      Map<String, Object> params = Map.of(
+    		  "page", page,
+    		  "limit", limit
+    		  );
+      int totalCount = orderService.findTotalOrderCount(memberId);
+      int totalPages = (int) Math.ceil((double) totalCount / limit);
+      model.addAttribute("totalPages", totalPages);
+      
+      MypageDto myPage = memberService.getMyPage(memberId, params);
       
       int couponCount = myPage.getMemberCoupon();
   

@@ -174,7 +174,7 @@
                </li>
             </sec:authorize>
             <li class="petcare_li"><a
-               href="${pageContext.request.contextPath}/petcare/petcareList.do">병원예약</a>
+               href="${pageContext.request.contextPath}/petcare/petcareList.do">펫케어</a>
             </li>
             <li class="logout_li"><a
                href="${pageContext.request.contextPath}/servicecenter/service.do">고객센터</a>
@@ -191,20 +191,11 @@
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                <div class="notification-container">
-                  <button id="openPopupBtn" onclick="loadNotifications(memberId)">
-                    
-	                     <img
-	                     src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png"
-	                     class="notiBellx" alt="알림" />
-                     
-                     <c:if test="${not empty notifications}">
-	                     <img
-	                     src="${pageContext.request.contextPath}/resources/images/home/notiBello.png"
-	                     class="notiBello" alt="알림" />
-                     </c:if>
+               	  <button id="openPopupBtn" onclick="loadNotifications(memberId)">
+					 <img src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png" id="notificationBell" alt="Notification" />
                   </button>
-                  <div id="notificationPopup" class="popup">
-                     <div class="popup-content"></div>
+                  <div id="notificationPopup" class="notiPopup">
+                     <div class="notiPopup-content"></div>
                   </div>
                </div>
             </sec:authorize>

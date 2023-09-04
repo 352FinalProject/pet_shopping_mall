@@ -62,8 +62,12 @@
 	margin-top: -750px;
 }
 
-/* .boomo {
-    position: absolute;
+.reservation {
 	display: flex;
-} */
-
+    justify-content: center;
+    align-items: center;
+    height: 650px;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 50px;
+}

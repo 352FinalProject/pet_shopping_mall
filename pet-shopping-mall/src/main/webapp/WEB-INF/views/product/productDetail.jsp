@@ -149,7 +149,7 @@
         <li><a href="#">상품정보</a></li>
         <li><a href="#product-review-box">상품후기</a></li>
         <li><a href="#product-notice-box">교환/반품/배송</a></li>
-        <li><a href="#">1:1문의</a></li>
+        <li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
       </ul>
     </div>
     
@@ -178,7 +178,7 @@
 			<li><a href="#">상품정보</a></li>
 			<li><a href="#">상품후기</a></li>
 			<li><a href="#">교환/반품/배송</a></li>
-			<li><a href="#">1:1문의</a></li>
+			<li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
 		</ul>
 	</div>
 	<div class="review-div">
@@ -277,14 +277,14 @@
 								<div class="reivew-pet-box">
 									<!-- 펫정보 -->
 									<c:forEach items="${pets}" var="pet">
-										<em class="review-pet-name">${pet.petName} &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-gender">${pet.petGender} &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-age">${pet.petAge}살 &nbsp;<em
-											class="review-em">|</em></em>
-										<em class="review-pet-weight">${pet.petWeight}kg &nbsp;<em
-											class="review-em">|</em></em>
+										<em class="review-pet-name">${pet.petName} &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-gender">${pet.petGender} &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-age">${pet.petAge}살 &nbsp;
+										<em class="review-em">|</em></em>
+										<em class="review-pet-weight">${pet.petWeight}kg &nbsp;
+										<em class="review-em">|</em></em>
 										<em class="review-pet-breed">${pet.petBreed}</em>
 									</c:forEach>
 								</div>
@@ -370,7 +370,7 @@
 			<li><a href="#">상품정보</a></li>
 			<li><a href="#product-review-box">상품후기</a></li>
 			<li><a href="#product-notice-box">교환/반품/배송</a></li>
-			<li><a href="#">1:1문의</a></li>
+			<li><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionCreate.do">1:1문의</a></li>
 		</ul>
 	</div>
 	<div class="processing-wrap">
@@ -522,6 +522,9 @@ function addCart() {
         },
         success(response) {
             alert(response.msg);
+            if(confirm("장바구니로 이동하시겠습니까?")) {
+            	window.location.href = "${pageContext.request.contextPath}/cart/shoppingCart.do";
+            }
         },
         error(error) {
           console.error(error);

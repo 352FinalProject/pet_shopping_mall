@@ -130,7 +130,6 @@ public class ReviewController {
 		// 리뷰에 보여줄 내용들
 		List<ReviewListDto> reviews = reviewService.findReviewAll(params);
 		
-		log.debug("reviews = {}", reviews);
 		
 		model.addAttribute("reviews", reviews);
 	}
@@ -264,7 +263,7 @@ public class ReviewController {
 		int newPointResult = pointService.insertPoint(newPoint);
 		
 		
-		// 생일자 알림을 보낸다
+		// 리뷰작성포인트 알림을 보낸다
 		String to = newPoint.getPointMemberId();
 		Notification insertNotification = Notification.builder()
 				.notiCategory(3)
@@ -325,6 +324,8 @@ public class ReviewController {
 		
 		ReviewDetailDto reviews = reviewService.findReviewId(reviewId);
 		model.addAttribute("reviews", reviews);
+		
+		log.debug("펫정보 reviews = {}", reviews);
 		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
