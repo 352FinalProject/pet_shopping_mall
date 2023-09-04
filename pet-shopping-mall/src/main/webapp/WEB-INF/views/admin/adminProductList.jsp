@@ -58,35 +58,24 @@
 							<tr>
 								<td>${productInfo.productId}</td>
 								<td>
-									<c:if test="${empty productInfo.attachments}">
+									<c:if test="${empty productInfo.thumbnail}">
 										<div class="card text-center" style="width: 10rem; height: 10rem;">
 											<p class="h4 align-middle">이미지 없음</p>
 										</div>
 									</c:if>
-										<c:if test="${not empty productInfo.attachments}">
-										<!-- 썸네일이미지만 출력 -->
-										<c:forEach items="${productInfo.attachments}" var="attachment" varStatus="fileCnt">
-										<c:if test="${attachment.thumbnail eq 'Y'}">
-										<div id="thumbnail${vs.count}-${fileCnt.count}" class="carousel slide" data-bs-ride="carousel">
-											<div class="carousel-inner">
-											<div class="card carousel-item ${ fileCnt.count==1 ? 'active' : ''}" data-bs-interval="2000" style="width: 10rem;">
-												<img alt="상품이미지" 
-			                                        class="img-thumbnail d-block w-100"
-			                                        src="${pageContext.request.contextPath}/resources/upload/product/${attachment.imageRenamedFilename}">
-											</div>
-											</div>
+										<div class="carousel-inner">
+											<img alt="상품이미지" 
+			                                     class="img-thumbnail"
+			                                     src="${pageContext.request.contextPath}/resources/upload/product/${productInfo.thumbnail}">
 										</div>
-										</c:if>
-										</c:forEach>
-									</c:if>
 								</td>
 								<td>
-									<a href="${pageContext.request.contextPath}/admin/adminProductUpdate.do?productId=${productInfo.product.productId}">${productInfo.product.productName}</a>
+									<a href="${pageContext.request.contextPath}/admin/adminProductUpdate.do?productId=${productInfo.productId}">${productInfo.productName}</a>
 								</td>
-								<td>${productInfo.productCategory.categoryName}</td>
-								<td>${productInfo.product.productPrice}</td>
-								<td>
-									<c:forEach  items="${productInfo.productDetails}" var="productDetail" varStatus="pvs">
+								<td>${productInfo.categoryName}</td>
+								<td>${productInfo.productPrice}</td>
+ 								<td>
+									<c:forEach  items="${productInfo.productOptions}" var="productDetail" varStatus="pvs">
 										<c:if test="${empty productDetail.optionName || ''}">
 											<p>옵션비어있음</p>
 										</c:if>
