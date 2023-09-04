@@ -42,7 +42,7 @@ public class HomeController {
 	}
 
 	private List<ProductSearchDto> processProductCategory(int categoryId) {
-		List<ProductSearchDto> productInfos = productService.searchProductsById(categoryId);
+		List<ProductSearchDto> productInfos = productService.searchHomeProductsById(categoryId);
 		return productInfos;
 	}
 }
