@@ -26,11 +26,8 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
-select * from notification;     
-select * from authority;
-
-
-
+select * from notification;    
+            
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
 values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
@@ -159,7 +156,7 @@ insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
-insert into authority values ('king', 'ROLE_ADMIN');
+insert into authority values ('member1', 'ROLE_ADMIN');
 
 ------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
@@ -1267,14 +1264,16 @@ create table cancel_order (
     constraint pk_cancel_id primary key(cancel_id),
     constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
 );
-
-select
-*
-from
-    cancel_order
-where
-    (select * from orderTbl where order_status = 4 and member_id='sinsa1234');
-    
+update orderTbl set order_status=3 where order_no='1693815010798';
+update orderTbl set order_date='23/02/18' order_no='1693815010798';
+select * from orderTbl;
+select * from member;
+update orderTbl set order_status = 3 where member_id = 'hulk577';
+delete from member where member_id = 'honggd';
+update member set email = 'sinsa11@daum.net' where member_id = 'sinsa1234';
+select * from member;
+select count(*) from(select * from orderTbl where order_status = 4 and member_id='sinsa1234');
+    select * from member;
    select
       m.name,
       m.phone,

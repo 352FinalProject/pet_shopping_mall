@@ -66,7 +66,6 @@ public interface OrderRepository {
 	@Select("select * from orderTbl where member_id = #{memberId} and order_date >= ADD_MONTHS(TRUNC(SYSDATE), -#{period}) order by order_date desc")
 	List<Order> getOrderListByPeriod(String memberId, int period, RowBounds rowBounds);
 
-
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
 			List<String> paymentMethod, List<String> orderStatus);
 
@@ -115,7 +114,7 @@ public interface OrderRepository {
 	 * @author 김담희
 	 * 현재 시간에서 7일 전이면서 주문 상태가 배송 완료인 주문 내역을 조회
 	 */
-	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status= 5")
+	@Select("select * from orderTbl where order_date <= systimestamp - interval '7' day and order_status= 3")
 	List<Order> findOrdersWithExpiredStatus();
 
 	

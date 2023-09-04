@@ -16,7 +16,7 @@
 <br>
 	<div class="common-container">
     	<div class="common-div">
-        <form:form action="${pageContext.request.contextPath}/review/reviewCreate.do"
+        <form:form id="reviewFrm" action="${pageContext.request.contextPath}/review/reviewCreate.do"
         enctype="multipart/form-data" method="post">
             <table class="review-write-table">
                 <tr>
@@ -69,7 +69,7 @@
 				    <input type="hidden" name="productDetailId" value="${productDetailId}" />
 				    <input type="hidden" name="productId" value="${productId}" />
 				    <input type="hidden" name="orderId" value="${orderId}" />
-				<button class="review-btn-submit" type="submit" >작성하기</button>
+				<button class="review-btn-submit" onclick="submitFrm();" >작성하기</button>
             </div>
         </form:form>
     </div>
@@ -89,6 +89,34 @@ function setRating(rating) {
         }
     }
     reviewStarRateInput.value = rating;
-}
+};
+
+const submitFrm = () => {
+	const frm = document.querySelector("#reviewFrm");
+    const reviewStarRateInput = document.getElementById('reviewStarRate');
+    const reviewTitleInput = document.getElementById('reviewTitle');
+    const upFileInput = document.getElementById('upFile1');
+
+    if (reviewStarRateInput.value === '') {
+        event.preventDefault(); 
+        alert('별점을 선택해주세요.');
+        return; 
+    }
+
+    if (reviewTitleInput.value.trim() === '') {
+        event.preventDefault();
+        alert('제목을 입력해주세요.');
+        return;
+    }
+    
+    if (reviewTitleInput.value.trim().length > 25) {
+        event.preventDefault();
+        alert('제목은 25글자 이하여야 합니다.');
+        return; // Stop form submission if validation fails
+    }
+    
+    frm.submit();
+};
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

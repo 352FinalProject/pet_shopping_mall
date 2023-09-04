@@ -80,7 +80,7 @@ const table = document.querySelector("#order-table tbody")
 	
 const handleSelectChange = () => {
     const period = periodSelect.value;
-    location.href="${pageContext.request.contextPath}/order/cancelOrderList.do?period=" + period;
+    window.location.href="${pageContext.request.contextPath}/order/cancelOrderList.do?period=" + period;
 };
 
 periodSelect.addEventListener('change', handleSelectChange);
