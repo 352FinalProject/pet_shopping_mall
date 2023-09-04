@@ -30,7 +30,6 @@ public class TermsServiceImpl implements TermsService  {
 		return termsRepository.insertTermsHistory(termsHistory);
 	}
 
-	// 약관동의 이력 테이블 참조하여 회원 동의 이력 추가
 	@Override
 	public List<TermsHistory> fineTermsHistory() {
 		return termsRepository.fineTermsHistory();

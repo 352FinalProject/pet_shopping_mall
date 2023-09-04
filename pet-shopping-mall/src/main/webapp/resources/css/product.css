@@ -247,11 +247,6 @@ select[name=product-option] {
 }
 
 
-.heart-img {
-   margin-left: 620px; */
-   
-}
-
 .product-price-desc {
    font-size: 18px;
    padding-top: 25px;
@@ -449,8 +444,8 @@ ul.nav {
     padding-bottom: 75%;
     border-radius: 0;
     overflow: hidden;
-    width: 280px;
-    height: 280px;
+    width: 270px;
+    height: 270px;
     margin-right: 20px;
     
 }

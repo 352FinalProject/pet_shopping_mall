@@ -426,10 +426,11 @@
 				</button>
 				<span id="likeCnt">${product.likeCnt}</span>
 			</div>
-			<button class="btn btn1" onclick="addCart();">장바구니</button>
-			<button class="btn btn2" onclick="purchase();">구매하기</button>
+			<div class="cart-btn1">
+				<button class="btn btn1" onclick="addCart();">장바구니</button>
+				<button class="btn btn2" onclick="purchase();">구매하기</button>
+			</div>
 		</div>
-	</div>
 	</div>
 	<form:form id="addCartFrm">
 		<input type="hidden" value="1" id="_quantity" name="quantity">

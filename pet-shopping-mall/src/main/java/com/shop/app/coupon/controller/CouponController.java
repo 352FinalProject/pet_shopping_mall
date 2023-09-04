@@ -25,12 +25,15 @@ public class CouponController {
 	@Autowired
 	private CouponService couponService;
 
+   /**
+    * @author 전예라
+    * 쿠폰 전체 내역 조회
+    */
 	@GetMapping("/couponList.do")
 	public void couponList(Model model, @AuthenticationPrincipal MemberDetails member, MemberCouponDto memberCoupon) {
 
 		String memberId = member.getMemberId();
 		List<MemberCouponDto> memberCoupons = couponService.findCouponAll(memberId);
-		log.debug("memberCoupons = {}", memberCoupons);
 		model.addAttribute("memberCoupons", memberCoupons);
 	}
 

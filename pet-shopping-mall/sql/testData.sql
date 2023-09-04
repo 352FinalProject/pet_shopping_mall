@@ -1190,8 +1190,65 @@ desc;
 select * from product;
 select * from product_detail;
 
+		select
+		    p.product_id,
+		    p.category_id,
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
+            
+		select
+		    p.product_id,
+		    p.category_id,
+            pd.*,
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail
+		from 
+		    product p
+        join
+            product_detail pd on p.product_id = pd.product_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
 
+select * from member;
 
+		select
+		    p.product_id,
+		    p.category_id,
+            
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail
+		from 
+		    product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
 
 select * from product_category;
 

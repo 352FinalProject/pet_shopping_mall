@@ -62,32 +62,32 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberSecurityController {
 
-   @Autowired 
+   @Autowired // MemberService 자동 주입
    private MemberService memberService;
 
-   @Autowired 
+   @Autowired // 비밀번호 암호화 도구 자동 주입
    private PasswordEncoder passwordEncoder;
 
    @Autowired
-   private PointService pointService; 
+   private PointService pointService;
 
    @Autowired
-   private TermsService termsService; 
+   private TermsService termsService;
    
    @Autowired
-   private CouponService couponService; 
+   private CouponService couponService;
    
    @Autowired
    private OrderService orderService;
 
    @Autowired
-	NotificationRepository notificationRepository;
+	NotificationRepository notificationRepository; // 알림 레파
 	
 	@Autowired
-	SimpMessagingTemplate simpMessagingTemplate;
+	SimpMessagingTemplate simpMessagingTemplate; // 알림
 
    
-   @GetMapping("/memberCreate.do") 
+   @GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
    public void memberCreate() {
    }
 
@@ -95,6 +95,17 @@ public class MemberSecurityController {
 
    Map<Integer, Accept> userAgreements = new HashMap<>();
 
+   
+   /**
+    * @author 김상훈
+    * 회원가입 (비밀번호 암호화 처리)
+    * 
+    * @author 전예라
+    * 이메일 인증 api, 회원가입 포인트 지급, 회원가입 쿠폰 발급, 이용약관 처리
+    * 
+    * @author 김대원
+    * 회원가입 쿠폰이 발급되면 회원에게 알림 발송
+    */
    @PostMapping("/memberCreate.do")
    public String memberCreate(@Valid MemberCreateDto member, BindingResult bindingResult,
          RedirectAttributes redirectAttr, HttpSession session) {
@@ -111,15 +122,12 @@ public class MemberSecurityController {
          return "redirect:/member/memberCreate.do";
       }
 
-      // 비밀번호 암호화 처리
       String rawPassword = member.getPassword();
       String encodedPassword = passwordEncoder.encode(rawPassword);
       member.setPassword(encodedPassword);
 
-      // 회원 정보 DB에 저장
       int result = memberService.insertMember(member);
 
-      // 포인트 테이블에 디비 저장 (예라)
       Point point = new Point();
       point.setPointMemberId(member.getMemberId());
       point.setPointCurrent(3000);
@@ -128,14 +136,12 @@ public class MemberSecurityController {
       
       int resultPoint = pointService.insertPoint(point);
       
-       // 회원가입시 무료배송 쿠폰 발급 (예라)
        List<Coupon> resultCoupon = couponService.findCoupon();
        for (Coupon coupon : resultCoupon) {
            MemberCoupon memberCoupon = new MemberCoupon();
            memberCoupon.setCouponId(coupon.getCouponId());
            memberCoupon.setMemberId(member.getMemberId());
 
-           // 발급받은 날짜로부터 한달 뒤의 날짜 계산
            LocalDateTime issuanceDate = LocalDateTime.now();
            LocalDateTime endDate = issuanceDate.plusMonths(1);
            
@@ -143,7 +149,6 @@ public class MemberSecurityController {
            memberCoupon.setEndDate(endDate); 
            memberCoupon.setUseStatus(0);
 
-           // memberCoupon db 추가
            int memberInsertCoupon = couponService.insertDeliveryCoupon(memberCoupon);
            
            String to = memberCoupon.getMemberId();
@@ -154,26 +159,18 @@ public class MemberSecurityController {
 					.memberId(to) 
 					.build();
 			
-			// db에 알림저장
 			notificationRepository.insertNotification(insertNotification);
-			// db에서 가장 최신 알림 꺼내서
 			Notification notification = notificationRepository.latestNotification();
-			// 메세지 보냄
 			simpMessagingTemplate.convertAndSend("/pet/notice/" + to, notification);
-           
-           
            
        }
       
-       // 약관 동의 정보 가져오기
        Object obj = session.getAttribute("userAgreements");
-       // Terms 객체 생성
        Terms terms = new Terms();
 
       if (obj instanceof HashMap) {
          HashMap<Integer, Accept> userAgreements = (HashMap<Integer, Accept>) obj;
 
-         // 회원 id 설정 (회원가입이 완료된 후에 설정)
          terms.setMemberId(member.getMemberId());
 
          List<TermsHistory> findTermsHistory = termsService.fineTermsHistory();
@@ -187,7 +184,6 @@ public class MemberSecurityController {
             int result2 = termsService.insertTerms(terms);
          }
 
-         // 약관 동의 세션 제거
          session.removeAttribute("terms");
 
       } else {
@@ -199,7 +195,10 @@ public class MemberSecurityController {
       return "redirect:/member/memberCreateComplete.do";
    }
    
-
+   /**
+    * @author 전예라
+    * 회원이 체크한 Y/N을 구분
+    */
    @PostMapping("/updateTerms.do")
    public ResponseEntity<?> updateTerms(@RequestParam Map<String, String> data, HttpSession session) {
 
@@ -207,7 +206,6 @@ public class MemberSecurityController {
       String privacy = data.get("privacyAccept");
       String promotion = data.get("emailAccept");
 
-      // 사용자가 동의한 항목에 대해 Map에 저장
       userAgreements.put(1, "Y".equals(term) ? Accept.Y : Accept.N);
       userAgreements.put(2, "Y".equals(privacy) ? Accept.Y : Accept.N);
       userAgreements.put(3, "Y".equals(promotion) ? Accept.Y : Accept.N);
@@ -217,10 +215,9 @@ public class MemberSecurityController {
       return new ResponseEntity<>(HttpStatus.OK);
    }
       
-   @GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
+   @GetMapping("/memberLogin.do")
    public void memberLogin() {}
      
-   
    @GetMapping("/updateMember.do")
    public void memberDetail(Authentication authentication, 
          @AuthenticationPrincipal MemberDetails _member, 
@@ -236,10 +233,13 @@ public class MemberSecurityController {
    }
    
    
+   /**
+    * @author 김담희
+    * 마이 페이지에서 최근 1개월간 주문 내역 및 구독 정보 등 조회
+    */
    @GetMapping("/myPage.do")
    public void myPage(Model model, @AuthenticationPrincipal MemberDetails member, @RequestParam(defaultValue = "1") int page) {
       String memberId = member.getMemberId();
-      // 페이징바 처리
       int limit = 5;
       Map<String, Object> params = Map.of(
     		  "page", page,
@@ -258,18 +258,14 @@ public class MemberSecurityController {
       model.addAttribute("couponCount", couponCount);
    }
 
-   /**
-    * 
-    * @author 김상훈
-    * 회원정보 수정
-    */
    @PostMapping("/updateMember.do")
-   public String memberUpdate(@AuthenticationPrincipal MemberDetails principal, 
+   public String memberUpdate(@AuthenticationPrincipal MemberDetails principal,
          @Valid MemberUpdateDto _member, HttpSession session, BindingResult bindingResult,
          RedirectAttributes redirectAttr, Model model) {
       Member member = _member.toMember();
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
+      
       
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
          String rawPassword = _member.getPassword();
@@ -279,6 +275,7 @@ public class MemberSecurityController {
       
       int result = memberService.updateMember(member);
 
+      
       UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(memberDetails,
             memberDetails.getPassword(), memberDetails.getAuthorities());
@@ -289,25 +286,19 @@ public class MemberSecurityController {
    }
    
    
-   /**
-    * @author 김상훈
-    * 회원삭제
-    */
+
    @PostMapping("/deleteMember.do")
    public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr,
          HttpSession session) {
       String memberId = principal.getMemberId();
-      memberService.deleteMember(memberId); 
-      session.invalidate(); 
+      memberService.deleteMember(memberId); // 회원 삭제 서비스 호출
+      session.invalidate(); // 세션 종료
 
-      return "redirect:/"; 
+      return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
    }
    
-   /**
-    * @author 김상훈
-    * 아이디 중복검사 
-    */
    
+
    @GetMapping("/checkIdDuplicate.do")
    public ResponseEntity<?> checkIdDuplicate(@RequestParam String memberId) {
       boolean available = false;

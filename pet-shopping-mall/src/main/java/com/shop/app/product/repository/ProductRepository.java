@@ -125,13 +125,13 @@ public interface ProductRepository {
 
 	List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder);
 
-	// 인덱스 페이지 간식 불러오기 (예라)
 	@Select("select * from product where category_id = #{categoryId}")
 	List<Product> findSnackAll(int categoryId);
 
-	// 인덱스 페이지 간식 불러오기 (예라)
 	@Select("select * from product where category_id = #{categoryId}")
 	List<Product> findFashionAll(int _categoryId);
+
+	List<ProductSearchDto> searchProductsById(int categoryId);
 
 	// 카테고리에 해당하는 총 상품의 갯수 (수경)
 	@Select("select count (*) from product where category_id = #{categoryId}")

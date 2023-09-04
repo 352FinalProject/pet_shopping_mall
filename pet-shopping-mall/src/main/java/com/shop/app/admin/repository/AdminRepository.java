@@ -28,11 +28,9 @@ public interface AdminRepository {
 	@Select("select * from member where (name like '%' || #{searchKeyword} || '%' or member_id like '%' || #{searchKeyword} || '%') and subscribe = 'Y'")
 	List<MemberDetails> adminSubscribeSearchByNameOrId(String searchKeyword);
 	
-	// 관리자 1:1 문의 전체 내역 조회 + 페이징바(예라)
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) awnser_count from question q order by question_id desc")
 	List<Question> findQuestionAll(RowBounds rowBounds);
 
-	// 관리자 1:1 문의 전체 카운트 (예라)
 	@Select("select count (*) from question")
 	int findTotalQuestionCount();
 	

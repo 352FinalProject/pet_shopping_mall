@@ -18,7 +18,7 @@ public class ImageAttachment {
 	private String imageOriginalFilename;
 	private String imageRenamedFilename;
 	private Long imageFileSize;
-	private Thumbnail thumbnail; // Y, N
+	private Thumbnail thumbnail;
 	private LocalDateTime imageCreatedAt;
 	
 }

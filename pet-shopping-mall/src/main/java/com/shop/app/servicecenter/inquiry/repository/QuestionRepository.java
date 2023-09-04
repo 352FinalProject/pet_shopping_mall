@@ -18,7 +18,6 @@ import com.shop.app.servicecenter.inquiry.entity.QuestionDetails;
 @Mapper
 public interface QuestionRepository {
 	
-
 	@Select("select q.*, (select count(*) from answer where answer_question_id = q.question_id) answer_count from question q order by question_id desc")
 	List<QuestionDetails> findQuestionAll(RowBounds rowBounds);
 
@@ -29,7 +28,7 @@ public interface QuestionRepository {
 	Answer findQuestionAnswersById(Answer answer);
 
 	int insertQuestion(Question question);
-	
+
 	int insertAttachment(ImageAttachment attach);
 
 	@Delete("delete from question where question_id = #{questionId}")
