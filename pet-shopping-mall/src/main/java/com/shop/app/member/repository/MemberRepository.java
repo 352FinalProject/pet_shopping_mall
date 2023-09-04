@@ -57,9 +57,6 @@ public interface MemberRepository {
 
 	@Select("select * from sub_member where member_id = #{memberId} order by  schedule_at desc fetch first 1 row only")
 	SubMember findSubMemberByMemberId(String memberId);
-
-	
-	
 	
 	@Update("update sub_member set schedule_status = 'cancel' where member_id = #{memberId}")
 	int cancelSubscribe(String memberId);

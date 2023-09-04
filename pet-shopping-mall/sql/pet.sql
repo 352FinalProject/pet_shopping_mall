@@ -17,7 +17,7 @@ grant create table to pet;
 -- 모든 테이블 조회
 SELECT *  FROM all_tables;
 
-
+select * from member;
 --==============================
 -- 초기화 블럭
 --==============================

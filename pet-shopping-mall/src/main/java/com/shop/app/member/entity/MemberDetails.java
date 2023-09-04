@@ -17,7 +17,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public class MemberDetails extends Member implements UserDetails, OAuth2User  { //OAuth2User 클래스 추가해야함
+public class MemberDetails extends Member implements UserDetails, OAuth2User  { 
 	
 	/**
 	 * WAS상에서 MemberDetails객체 단위로 입출력 진행시의 식별번호

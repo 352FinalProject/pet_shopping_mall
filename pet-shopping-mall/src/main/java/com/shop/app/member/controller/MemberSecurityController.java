@@ -62,32 +62,32 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberSecurityController {
 
-   @Autowired // MemberService 자동 주입
+   @Autowired 
    private MemberService memberService;
 
-   @Autowired // 비밀번호 암호화 도구 자동 주입
+   @Autowired 
    private PasswordEncoder passwordEncoder;
 
    @Autowired
-   private PointService pointService; // 회원가입시 포인트 3000원 적립
+   private PointService pointService; 
 
    @Autowired
-   private TermsService termsService; // 회원가입시 약관동의
+   private TermsService termsService; 
    
    @Autowired
-   private CouponService couponService; // 회원가입시 쿠폰 발급
+   private CouponService couponService; 
    
    @Autowired
    private OrderService orderService;
 
    @Autowired
-	NotificationRepository notificationRepository; // 알림 레파
+	NotificationRepository notificationRepository;
 	
 	@Autowired
-	SimpMessagingTemplate simpMessagingTemplate; // 알림
+	SimpMessagingTemplate simpMessagingTemplate;
 
    
-   @GetMapping("/memberCreate.do") // 회원 생성 페이지로 이동하는 맵핑
+   @GetMapping("/memberCreate.do") 
    public void memberCreate() {
    }
 
@@ -99,7 +99,6 @@ public class MemberSecurityController {
    public String memberCreate(@Valid MemberCreateDto member, BindingResult bindingResult,
          RedirectAttributes redirectAttr, HttpSession session) {
 
-      // 이메일 인증 확인 (예라)
       Boolean isVerified = (Boolean) session.getAttribute("emailVerified");
       if (isVerified == null || !isVerified) {
          redirectAttr.addFlashAttribute("msg", "이메일 인증을 해주세요.");
@@ -221,6 +220,7 @@ public class MemberSecurityController {
    @GetMapping("/memberLogin.do") // 로그인 페이지로 이동하는 맵핑
    public void memberLogin() {}
      
+   
    @GetMapping("/updateMember.do")
    public void memberDetail(Authentication authentication, 
          @AuthenticationPrincipal MemberDetails _member, 
@@ -258,15 +258,18 @@ public class MemberSecurityController {
       model.addAttribute("couponCount", couponCount);
    }
 
+   /**
+    * 
+    * @author 김상훈
+    * 회원정보 수정
+    */
    @PostMapping("/updateMember.do")
-   public String memberUpdate(@AuthenticationPrincipal MemberDetails principal, // 현재 인증된 멤버 정보
+   public String memberUpdate(@AuthenticationPrincipal MemberDetails principal, 
          @Valid MemberUpdateDto _member, HttpSession session, BindingResult bindingResult,
          RedirectAttributes redirectAttr, Model model) {
       Member member = _member.toMember();
       String memberId = principal.getMemberId();
       member.setMemberId(memberId);
-      
-      log.debug("member = {}", member);
       
       if (_member.getPassword() != null && !_member.getPassword().isEmpty()) {
          String rawPassword = _member.getPassword();
@@ -276,8 +279,6 @@ public class MemberSecurityController {
       
       int result = memberService.updateMember(member);
 
-      log.debug("update result = {}", result);
-      
       UserDetails memberDetails = memberService.loadUserByUsername(memberId);
       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(memberDetails,
             memberDetails.getPassword(), memberDetails.getAuthorities());
@@ -288,19 +289,25 @@ public class MemberSecurityController {
    }
    
    
-
+   /**
+    * @author 김상훈
+    * 회원삭제
+    */
    @PostMapping("/deleteMember.do")
    public String deleteMember(@AuthenticationPrincipal MemberDetails principal, RedirectAttributes redirectAttr,
          HttpSession session) {
       String memberId = principal.getMemberId();
-      memberService.deleteMember(memberId); // 회원 삭제 서비스 호출
-      session.invalidate(); // 세션 종료
+      memberService.deleteMember(memberId); 
+      session.invalidate(); 
 
-      return "redirect:/"; // 로그아웃 후 메인 페이지로 리다이렉트
+      return "redirect:/"; 
    }
    
+   /**
+    * @author 김상훈
+    * 아이디 중복검사 
+    */
    
-
    @GetMapping("/checkIdDuplicate.do")
    public ResponseEntity<?> checkIdDuplicate(@RequestParam String memberId) {
       boolean available = false;

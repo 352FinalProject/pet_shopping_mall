@@ -27,10 +27,10 @@ public class MemberCreateDto {
 	@NotBlank(message = "비밀번호는 필수입니다.")
 	private String password;
 	
-	@NotBlank(message = "이름은 필수입니다.") // null, "", "  " 모두 허용하지 않음
+	@NotBlank(message = "이름은 필수입니다.")
 	private String name;
 	
-	@NotBlank(message = "핸드폰 번호는 필수입니다.") // null, "", "  " 모두 허용하지 않음
+	@NotBlank(message = "핸드폰 번호는 필수입니다.") 
 	private String phone;
 	
 	private String address;

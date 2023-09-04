@@ -490,7 +490,7 @@ function sample4_execDaumPostcode() {
             document.getElementById('roadAddress').value = roadAddr;
            
             // 도로명 주소와 지번 주소, 상세 주소를 합쳐서 전체 주소로 설정한다.
-            var jibunAddress = data.jibunAddress; // Add this line
+            var jibunAddress = data.jibunAddress;
             var fullAddress = roadAddr + jibunAddress + " " + document.getElementById("detailAddress").value;
             document.getElementById("address").value = fullAddress;
         }
