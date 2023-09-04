@@ -39,7 +39,6 @@ public interface OrderRepository {
 	
 	List<OrderAdminListDto> adminOrderList();
 
-	// 2. db에서 주문 정보 가져오기 (예라)
 	@Select("select * from (select * from orderTbl where member_id = #{memberId} order by order_id desc) where rownum <= 1")
 	Order findByOrder(Order order);
 
@@ -112,7 +111,6 @@ public interface OrderRepository {
 	// 상품 상세 - 리뷰 - 상품
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
 
-	// 리뷰 작성 시 구매확정으로 바뀌기 (예라)
 	@Update("update orderTbl set order_status = 6 where order_id in (select o.order_id from orderTbl o join order_detail od on o.order_id = od.order_id join product_detail pd on od.product_detail_id = pd.product_detail_id join product p on pd.product_id = p.product_id where o.order_id = #{orderId} and od.product_detail_id = #{productDetailId} and p.product_id = #{productId})")
 	void updateOrderStatusWithDetail(int orderId, int productDetailId, int newStatus, int productId);
 

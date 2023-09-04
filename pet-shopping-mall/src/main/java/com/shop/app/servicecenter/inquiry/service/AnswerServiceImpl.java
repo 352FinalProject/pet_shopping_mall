@@ -19,19 +19,16 @@ public class AnswerServiceImpl implements AnswerService {
 	@Autowired
 	private AnswerRepository answerRepository;
 
-	// 관리자 1:1 문의 댓글 작성 (예라)
 	@Override
 	public int insertAnswer(AnswerDetails answers) {
 		return answerRepository.insertAnswer(answers);
 	}
 
-	// 관리자 1:1 문의 댓글 삭제 (예라)
 	@Override
 	public int deleteAnswer(int answerId) {
 		return answerRepository.deleteAnswer(answerId);
 	}
 
-	// 관리자 1:1 문의 댓글 수정 (예라)
 	@Override
 	public int updateAnswer(Answer answers) {
 		return answerRepository.updateAnswer(answers);

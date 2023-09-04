@@ -37,7 +37,6 @@ public interface CartRepository {
 	@Update("update cartitem set product_detail_id = #{productDetailId}, quantity = #{quantity} where cartitem_id = #{cartitemId}")
 	int updateCart(CartItem cartitem);
 
-	// 장바구니 찾기 (예라)
 	@Select("select c.cart_id from cart c join member m ON c.member_id = m.member_id where m.member_id = #{memberId}")
 	int findCartById(String member);
 

@@ -88,8 +88,6 @@ public class CartServiceImpl implements CartService {
 	    return result;
 	}
 
-
-	// 장바구니 찾기 (예라)
 	@Override
 	public int findCartById(String member) {
 		return cartRepository.findCartById(member);

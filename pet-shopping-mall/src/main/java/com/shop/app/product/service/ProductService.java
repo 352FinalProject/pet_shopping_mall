@@ -78,10 +78,8 @@ public interface ProductService {
 	
 	// 상품 조회 정렬 (담희)
 	List<ProductSearchDto> alignProducts(int id, String alignType, String inOrder);
-	
-	// 인덱스 페이지 간식 불러오기 (예라)
+
 	List<Product> findSnackAll(int categoryId);
-	
-	// 인덱스 페이지 패션용품 불러오기 (예라)
+
 	List<Product> findFashionAll(int _categoryId);
 }

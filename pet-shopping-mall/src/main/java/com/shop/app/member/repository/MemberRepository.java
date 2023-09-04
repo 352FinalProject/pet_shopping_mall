@@ -39,12 +39,10 @@ public interface MemberRepository {
 	@Select("select * from member where birthday = #{birthday}")
 	List<Member> findBirthdayMember();
 
-	// 그달 생일인 회원을 찾아서 쿠폰 넣어주기
 	@Select("select * from member Where to_char(birthday, 'MM') = to_char(SYSDATE, 'MM')")
 	List<Member> findThisMonthBirthdayMembers(int currentMonth);
 
 	MypageDto getMyPage(String memberId);
-
 	
 	@Update("update member set subscribe = 'Y' where member_id = #{memberId}")
 	int memberSubscribe(String memberId);
@@ -58,9 +56,6 @@ public interface MemberRepository {
 	@Select("select * from sub_member where member_id = #{memberId} order by  schedule_at desc fetch first 1 row only")
 	SubMember findSubMemberByMemberId(String memberId);
 
-	
-	
-	
 	@Update("update sub_member set schedule_status = 'cancel' where member_id = #{memberId}")
 	int cancelSubscribe(String memberId);
 

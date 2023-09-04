@@ -149,7 +149,13 @@ public class ReviewController {
 	   
 	}
 
-	// 리뷰 작성
+	/**
+	 * @author 이혜령
+	 * 리뷰 작성
+	 * 
+	 * @author 전예라
+	 * 리뷰 작성 시 텍스트 500원, 사진 1000원 포인트 적립
+	 */
 	@PostMapping("/reviewCreate.do")
 	public String reviewCreate(
 			@ModelAttribute
@@ -240,19 +246,15 @@ public class ReviewController {
 		point.setPointMemberId(_review.getReviewMemberId());
 		point.setReviewId(_review.getReviewId());
 
-		// 4. memberId값으로 현재 사용자의 포인트 가져오기 (예라)
 		Point currentPoints = pointService.findReviewPointCurrentById(point); 
 
-		// 5. 리뷰 작성하면 현재 포인트에 추가로 포인트 적립 (텍스트 500원, 이미지 1000원)
 		int pointAmount = 500;
 		if (hasImage) {
 			pointAmount += 500;
 		}
 
-		// 6. 현재 포인트를 가져온 후 포인트 적립 계산
 		int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
 
-		// 7. 포인트 테이블에 행 추가
 		Point newPoint = new Point();
 		newPoint.setPointCurrent(updatedPointAmount); 
 		newPoint.setPointAmount(pointAmount); 
@@ -284,19 +286,22 @@ public class ReviewController {
 		return "redirect:/review/reviewList.do";
 	}
 
-	// 리뷰 삭제
+	/**
+	 * @author 이혜령
+	 * 리뷰 삭제
+	 * 
+	 * @author 전예라
+	 * 리뷰 삭제 시 적립된 포인트 반환
+	 */
 	@PostMapping("/reviewDelete.do")
 	public String reviewDelete(@RequestParam int reviewId) {
 
-		// 1. 리뷰 id로 적립된 포인트 찾기
 		Point earnedPoint = pointService.getPointByReviewId(reviewId);
 
 		if (earnedPoint != null) {
-			// 2. 현재 포인트에서 적립된 포인트 빼기
 			Point currentPoints = pointService.findReviewPointCurrentById(earnedPoint); 
 			int updatedPointAmount = currentPoints.getPointCurrent() - earnedPoint.getPointAmount();
 
-			// 3. 포인트 테이블에 행 추가 또는 업데이트
 			Point rollbackPoint = new Point();
 			rollbackPoint.setPointCurrent(updatedPointAmount);
 			rollbackPoint.setPointAmount(-earnedPoint.getPointAmount());

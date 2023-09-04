@@ -80,7 +80,15 @@ public class ProductController {
    private PetService petService;
 
 
-@GetMapping("/productDetail.do")
+   /**
+    * @author 전수경
+    * 
+    * @author 이혜령
+    * 
+    * @author 강선모
+    * 찜하기
+    */
+   @GetMapping("/productDetail.do")
    public void productDetail(@RequestParam int productId,
                              @RequestParam(defaultValue = "1") int page,
                              @AuthenticationPrincipal MemberDetails member,
@@ -206,10 +214,6 @@ public class ProductController {
 	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 		
-		/**
-		 * @author 강선모
-	   	 * -찜 등록 여부 가져오기 
-		 */
 		if (member != null) {
 		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
