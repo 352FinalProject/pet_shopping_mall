@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CartItem {
 	private int cartitemId;
-	private int cartId; // 참조하고 있는 장바구니 아이디
+	private int cartId;
 	private int productDetailId;
 	private int quantity;
 }

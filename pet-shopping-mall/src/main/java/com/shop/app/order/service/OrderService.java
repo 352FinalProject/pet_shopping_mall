@@ -84,8 +84,4 @@ public interface OrderService {
 	int findTotalOrderCount(String memberId);
 
 	
-	// 리뷰-상품연결 테스트
-//	List<Order> findOrdersByReviewId(int reviewId);
-
-	
 }
