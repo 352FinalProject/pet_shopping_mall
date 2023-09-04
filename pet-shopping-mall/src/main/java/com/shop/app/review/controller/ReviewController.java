@@ -322,6 +322,8 @@ public class ReviewController {
 		ReviewDetailDto reviews = reviewService.findReviewId(reviewId);
 		model.addAttribute("reviews", reviews);
 		
+		log.debug("펫정보 reviews = {}", reviews);
+		
 		// 이미지 파일 정보 조회
 		ReviewDetails reviewDetails = reviewService.findImageAttachmentsByReviewId(reviewId);
 		model.addAttribute("reviewDetails", reviewDetails);
@@ -329,7 +331,6 @@ public class ReviewController {
 		// 구매한 상품 정보 조회
 		ReviewProductDto reviewProduct = reviewService.findProductReviewId(reviewId);
 		model.addAttribute("reviewProduct", reviewProduct);
-		
 		
 	}
 
