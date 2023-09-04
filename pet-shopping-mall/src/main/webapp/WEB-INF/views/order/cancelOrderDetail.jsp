@@ -122,14 +122,14 @@
 					<div id="button-div">
 					<c:set var="index" value="${cancelInfo.orderStatus}"/>
 					<c:choose>
-						<c:when test="${index eq 0}">
-							<button class="btn" id="cancel-btn" onclick="cancelOrder('cancel');">취소신청</button>
+						<c:when test="${index eq 5}">
+							<div id="refund-success-div">환불이 완료된 주문입니다.</div>
 						</c:when>
-						<c:when test="${index ge 1 && index le 4}">
-							<button class="btn" id="cancel-btn" onclick="cancelOrder('refund');">취소/환불신청</button>
+						<c:when test="${index eq 6}">
+							<div id="refund-success-div">구매 확정된 주문이라 환불이 불가능합니다.</div>
 						</c:when>
 						<c:otherwise>
-							<div id="refund-success-div">환불이 완료된 주문입니다.</div>
+							<button class="btn" id="cancel-btn" onclick="cancelOrder('refund');">취소/환불신청</button>
 						</c:otherwise>
 					</c:choose>
 					</div>

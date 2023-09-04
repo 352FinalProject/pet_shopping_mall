@@ -40,6 +40,7 @@
 		<form:form id="alignFrm" name="alignFrm" method="get" action="${pageContext.request.contextPath}/product/productList.do">
 		    <input type="hidden" name="categoryId" value="${category.categoryId}"/>
 		    <input type="hidden" name="align" id="align" value=""/>
+	    	<input type="hidden" name="page" value="1"/>
 		</form:form>
 		<!-- 상품사진 갤러리 -->
 		<div class="product-gallery">

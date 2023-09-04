@@ -54,25 +54,6 @@
 							        </tr>
 							    </c:if>
 						</c:forEach>
-							<c:forEach items="${questions}" var="question" varStatus="vs">
-								<sec:authorize access="hasRole('ROLE_ADMIN')">
-							        <tr class="question-row">
-							            <td>
-							                <a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionId}</a>
-							            </td>
-							            <td>
-							                <a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">
-							                <c:if test="${question.answerCount <= 0}"><span>답변대기</span></c:if>
-							                <c:if test="${question.answerCount >= 1}">답변완료</c:if>
-							            </td>
-							            <td><a href="${pageContext.request.contextPath}/servicecenter/inquiry/questionDetail.do?questionId=${question.questionId}">${question.questionTitle}</a></td>
-							            <td class="qna-date">
-							              	<fmt:parseDate value="${question.questionCreatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="questionCreatedAt" />
-											<fmt:formatDate value="${questionCreatedAt}" pattern="yy/MM/dd" />
-							            </td>
-							        </tr>
-							   </sec:authorize>
-						</c:forEach>
 					</tbody>
 				</table>
 			</div>
