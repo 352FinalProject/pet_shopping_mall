@@ -232,6 +232,8 @@
 let token = $("meta[name='_csrf']").attr("content");
 let header = $("meta[name='_csrf_header']").attr("content");
 
+updateFinalAmount();
+
 $(function() {
     $(document).ajaxSend(function(e, xhr, options) {
         xhr.setRequestHeader(header, token);
@@ -590,11 +592,19 @@ function updateFinalAmount() {
             couponDiscount = Math.floor((totalPrice - pointsDiscount) * 0.1);
         }
     }
-
-    let finalAmount = totalPrice + deliveryFee - couponDiscount - pointsDiscount;
+	
+    const memberRole = '${myPage.subscribe}';
+    const delfee = (memberRole === 'Y' ? 0 : 3000);
+    
+    let finalAmount = totalPrice + delfee - couponDiscount - pointsDiscount;
+    console.log(totalPrice, enteredPoints, selectedCouponType, selectedCouponValue, memberRole);
+    console.log("delfee: ", delfee);
+    console.log("Final Amount: ", finalAmount);
     $('#couponDiscount').text(couponDiscount.toLocaleString() + '원');
     $('#pointsDiscount').text(pointsDiscount.toLocaleString() + '원');
     $('#amount').text(finalAmount.toLocaleString());
+    console.log("updateFinalAmount 콜콜");
+
 }
 
 // 쿠폰 선택 변경 시
