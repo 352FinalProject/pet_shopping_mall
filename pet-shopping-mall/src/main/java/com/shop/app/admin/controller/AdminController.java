@@ -353,7 +353,7 @@ public class AdminController {
 	
 
 	/**
-	 * @author 전수경
+	 * @author 김담희
 	 * 상품정보 조회 
 	 */
 	@GetMapping("/adminProductList.do")

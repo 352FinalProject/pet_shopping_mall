@@ -91,6 +91,8 @@ public interface ProductService {
 	
 
 	List<ProductSearchDto> findProductsAll();
+	
+	List<ProductSearchDto> searchHomeProductsById(int categoryId);
 
 
 

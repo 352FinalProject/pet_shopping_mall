@@ -222,4 +222,9 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductSearchDto> findProductsAll() {
 		return productRepository.findProductsAll();
 	}
+
+	@Override
+	public List<ProductSearchDto> searchHomeProductsById(int categoryId) {
+		return productRepository.searchHomeProductsById(categoryId);
+	}
 }
