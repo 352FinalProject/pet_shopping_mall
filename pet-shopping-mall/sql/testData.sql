@@ -30,7 +30,7 @@ select * from notification;
             
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
-values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
+values ( seq_member_coupon_id.nextval, '1', 'null@naver', sysdate, add_months(sysdate, 1), 0, null);
 
 delete from member_coupon where member_id = '2971776209@kakao'; 
 

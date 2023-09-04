@@ -29,7 +29,7 @@
 	left join 
 	    image_attachment_mapping iam on q.question_id = iam.ref_id and iam.ref_table = 'question'
 	left join
-	    image_attachment ia ON iam.image_id = ia.image_id
+	    image_attachment ia on iam.image_id = ia.image_id
 	where 
     	q.question_id = #{questionId}
 	</select>
@@ -40,9 +40,9 @@
 	from 
 		question q
 	join 
-		image_attachment_mapping iam ON q.question_id = iam.ref_id
+		image_attachment_mapping iam on q.question_id = iam.ref_id
 	join 
-		image_attachment ia ON iam.image_id = ia.image_id
+		image_attachment ia on iam.image_id = ia.image_id
 	where 
 		q.question_id = #{questionId} and iam.ref_table = 'question'
 	</select>
