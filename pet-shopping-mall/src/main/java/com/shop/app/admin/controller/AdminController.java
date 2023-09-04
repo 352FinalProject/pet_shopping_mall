@@ -165,9 +165,6 @@ public class AdminController {
 	/**
 	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바
 	 * @author 전예라
-	 * @param page
-	 * @param question
-	 * @param model
 	 */
 	@GetMapping("/adminQuestionList.do")
 	public void adminQuestionList(@RequestParam(defaultValue = "1") int page, Question question, Model model) {
@@ -182,7 +179,7 @@ public class AdminController {
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);
 		
-		List<Question> questions = adminService.findQuestionAll(params);
+		List<QuestionDetails> questions = questionService.findQuestionAll(params);
 		model.addAttribute("questions", questions);
 	}
 	
