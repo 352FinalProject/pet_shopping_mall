@@ -312,7 +312,7 @@ public class AdminController {
 	
 	/**
 	 * @author 김대원
-	 * 주문 검색 조회
+	 * 다중조건 검색 주문 조회
 	 */
 	@GetMapping("/adminOrderSearch.do")
 	public String adminOrderSearch(
@@ -322,9 +322,9 @@ public class AdminController {
 	        @RequestParam(required = false) List<String> paymentMethod,
 	        @RequestParam(required = false) List<String> orderStatus,
 			Model model) {
-		
-		if(paymentMethod == null || paymentMethod.size() == 3) {
-			paymentMethod = Arrays.asList("0", "1");
+		// paymentMethod 전체선택 or 선택X 이면 전체paymentMethod 검색
+		if (paymentMethod == null || paymentMethod.size() == 3) {
+		    paymentMethod = Arrays.asList("0", "1");
 		}
 		if(orderStatus == null || orderStatus.size() == 8) {
 			orderStatus = Arrays.asList("0", "1", "2", "3", "4", "5", "6");
