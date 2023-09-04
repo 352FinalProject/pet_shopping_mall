@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
@@ -203,10 +204,6 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findTotalProductCountByCategory(categoryId);
 	}
 
-	public List<ProductSearchDto> searchProductsById(int categoryId) {
-		return productRepository.searchProductsById(categoryId);
-
-	}
 
 	@Override
 	public List<ProductSearchDto> searchProductsById(Map<String, Object> params) {
@@ -219,7 +216,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductSearchDto> findProductsAll() {
+	public List<AdminProductDto> findProductsAll() {
+		List<AdminProductDto> products = productRepository.findProductsAll();
+		log.debug("products = {}", products);
 		return productRepository.findProductsAll();
 	}
 

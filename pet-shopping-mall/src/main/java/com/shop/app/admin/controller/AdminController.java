@@ -50,7 +50,7 @@ import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.service.OrderService;
-
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
@@ -359,7 +359,7 @@ public class AdminController {
 	@GetMapping("/adminProductList.do")
 	public void adminProductList(
 		@AuthenticationPrincipal MemberDetails member,Model model) {
-		List<ProductSearchDto> productInfos = productService.findProductsAll();
+		List<AdminProductDto> productInfos = productService.findProductsAll();
 		model.addAttribute("productInfos", productInfos);
 	}
 	
