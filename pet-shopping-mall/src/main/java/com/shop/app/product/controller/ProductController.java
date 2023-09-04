@@ -210,7 +210,6 @@ public class ProductController {
 	 * @author 김담희
 	 * 
 	 * 
-	 * 
 	 * @author 전수경
 	 * 
 	 */
@@ -228,6 +227,10 @@ public class ProductController {
 		
 		int totalCount = productService.findTotalProductCountByCategory(categoryId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		model.addAttribute("totalPages", totalPages);
+		
+		ProductCategory category = productService.findProductCategoryById(categoryId);
+		model.addAttribute("category", category);
 		
 		List<ProductSearchDto> productInfos = productService.searchProductsById(params);
 		model.addAttribute("productInfos", productInfos);
