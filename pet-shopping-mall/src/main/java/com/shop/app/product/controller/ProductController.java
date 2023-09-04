@@ -212,16 +212,17 @@ public class ProductController {
 
 	/**
 	 * @author 김담희
+	 * 
+	 * 
+	 * 
+	 * @author 전수경
+	 * 
 	 */
 	@GetMapping("/productList.do")
-	public void productList(
-			@RequestParam int categoryId,
-			@RequestParam(defaultValue = "1") int page, // 페이지번호
-			Model model,
-			@RequestParam(required = false) String align
-			) {
+	public void productList(@RequestParam int categoryId, @RequestParam(defaultValue = "1") int page,
+			Model model, @RequestParam(required = false) String align) {
 
-		int limit = 5;
+		int limit = 8;
 		
 		Map<String, Object> params = Map.of(
 				"page", page,
@@ -229,10 +230,8 @@ public class ProductController {
 				"categoryId", categoryId
 			);
 		
-		// 카테고리 아이디에 해당하는 상품의 수 조회
 		int totalCount = productService.findTotalProductCountByCategory(categoryId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
-
 		
 		List<ProductSearchDto> productInfos = productService.searchProductsById(params);
 		model.addAttribute("productInfos", productInfos);

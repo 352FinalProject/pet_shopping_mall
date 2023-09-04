@@ -64,8 +64,8 @@
 				</div>
 				</c:forEach>
 			</ul>
-			<nav class="product-nav" aria-label="...">
-				<ul class="pagination-product pagination-sm">
+			<nav aria-label="...">
+				<ul class="pagination pagination-sm">
 				  <c:forEach begin="1" end="${totalPages}" var="pageNumber">
 					  <li class="page-item ${page == pageNumber ? 'active' : ''}">
 						  <a class="page-link" href="${pageContext.request.contextPath}/product/productList.do?id=${productCategory.categoryId}&page=${pageNumber}">
