@@ -84,7 +84,7 @@ public class ProductController {
                              @AuthenticationPrincipal MemberDetails member,
                              Model model) {
 
-       int limit = 5;
+       int limit = 3;
        
        Map<String, Object> params = Map.of(
     		   "page", page, 
