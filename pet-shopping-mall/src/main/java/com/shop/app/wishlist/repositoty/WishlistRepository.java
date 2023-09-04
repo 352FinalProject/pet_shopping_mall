@@ -11,11 +11,16 @@ import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface WishlistRepository {
-	// 찜 여부 체크 (선모)
+	/**
+	 * @author 강선모
+	 * 찜 여부 체크   
+	 */
 	@Select("SELECT COUNT(*) FROM wishlist WHERE WISHLIST_PRODUCT_ID = #{productId} AND WISHLIST_MEMBER_ID = #{memberId}")
 	int getLikeProduct(int productId, String memberId);
-	
-	// 찜 등록 (선모)
+	/**
+	 * @author 강선모
+	 * 찜 등록  
+	 */
 	@Insert("INSERT INTO wishlist VALUES (seq_wishlist_id.nextval, #{memberId}, #{productId}, SYSDATE)")
 	@SelectKey(
 			before = false,
@@ -24,12 +29,16 @@ public interface WishlistRepository {
 			statement = "select seq_wishlist_id.currval from dual"
 			)
 	int insertPick(int productId, String memberId);
-	
-	// 찜 제거 (선모)
+	/**
+	 * @author 강선모
+	 * 찜 제거  
+	 */
 	@Insert("DELETE FROM wishlist WHERE WISHLIST_MEMBER_ID = #{memberId} AND WISHLIST_PRODUCT_ID = #{productId}")
 	int deletePick(int productId, String memberId);
-	
-	// 내 찜 목록 가져오기 (선모)
+	/**
+	 * @author 강선모
+	 * 내 찜 목록 가져오기 
+	 */
 	@Select("SELECT COUNT(*)"
 			+ "  FROM wishlist wl"
 			+ "  LEFT OUTER JOIN ("
@@ -46,7 +55,10 @@ public interface WishlistRepository {
 			+ " WHERE wl.wishlist_member_id = #{memberId}")
 	int getListCount(Map<String, Object> paramMap);
 	
-	// 내 찜 목록 가져오기 (선모)
+	/**
+	 * @author 강선모
+	 * 내 찜 목록 가져오기
+	 */
 	@Select("SELECT *"
 			+ "  FROM wishlist wl"
 			+ "  LEFT OUTER JOIN ("

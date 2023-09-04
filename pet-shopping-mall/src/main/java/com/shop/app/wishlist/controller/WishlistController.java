@@ -30,8 +30,10 @@ public class WishlistController {
 	
 	@Autowired
     private ReviewService reviewService;
-    
-	// 찜목록 페이지 이동 
+	/**
+	 * @author 강선모
+	 * 찜목록 페이지 이동 
+	 */
     @GetMapping("/myWishlist.do")
     public void myWishlist(@RequestParam(defaultValue = "1") int page, @AuthenticationPrincipal MemberDetails member,Model model) {
     	int limit = 5;
@@ -52,8 +54,10 @@ public class WishlistController {
 			ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(Integer.parseInt(list.get(i).get("PRODUCT_ID").toString()));
 	        list.get(i).put("avg", productReviewStarAvg != null ? productReviewStarAvg.getReviewStarRate() : "0.0");
 		}
-		
-    	// 찜 목록 가져오기
+		/**
+		 * @author 강선모
+    	 * 찜 목록 가져오기 
+		 */
     	model.addAttribute("myWishList", list);
     	
     }

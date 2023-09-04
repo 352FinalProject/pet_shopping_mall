@@ -40,7 +40,7 @@ public class PetController {
 	
 	public void petProfile() {}
 	
-	@PostMapping("/petProfile.do") // 1. 이부분 .do 추가
+	@PostMapping("/petProfile.do") 
 	public String petCreate(@ModelAttribute @Valid PetCreateDto pet, RedirectAttributes redirectAttributes) {
 	    // 펫 등록 db 저장
 	    int result = petService.petCreate(pet);
