@@ -56,6 +56,16 @@
 	padding: 9px;
 }
 
+.editComment {
+    width: 75px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background: #58ACFA;
+    cursor: pointer;
+ }
+
 .qna-create input[type="file"] {
 	margin-left: -167px;
 }
