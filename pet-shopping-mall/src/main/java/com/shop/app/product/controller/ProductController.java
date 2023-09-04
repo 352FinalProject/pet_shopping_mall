@@ -57,7 +57,6 @@ import com.shop.app.wishlist.service.WishlistService;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @Validated
 @RequestMapping("/product")
@@ -66,206 +65,160 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private OrderService orderService;
 
-   @Autowired
-   private ReviewService reviewService;
-   
-   @Autowired
-   private WishlistService wishlistService;
+	@Autowired
+	private ReviewService reviewService;
 
-   @Autowired
-   private PetService petService;
+	@Autowired
+	private WishlistService wishlistService;
 
+	@Autowired
+	private PetService petService;
 
-@GetMapping("/productDetail.do")
-   public void productDetail(@RequestParam int productId,
-                             @RequestParam(defaultValue = "1") int page,
-                             @AuthenticationPrincipal MemberDetails member,
-                             Model model) {
+	@GetMapping("/productDetail.do")
+	public void productDetail(@RequestParam int productId, @RequestParam(defaultValue = "1") int page,
+			@AuthenticationPrincipal MemberDetails member, Model model) {
 
-       int limit = 5;
-       
-       Map<String, Object> params = Map.of(
-    		   "page", page, 
-    		   "limit", limit,
-    		   "productId", productId);
+		int limit = 5;
 
-       int totalCount = reviewService.findProductTotalReviewCount(productId);
-       
-       log.debug("totalCount 몇개임 = {}", totalCount);
-       
-       int totalPages = (int) Math.ceil((double) totalCount / limit);
-       model.addAttribute("totalPages", totalPages);
-       
-       // 상품Id에 대한 모든 리뷰 가져오기
-       List<Review> reviews = reviewService.findProductReviewAll(params, productId);
-       log.debug("reviews = {}", reviews);
-       model.addAttribute("reviews", reviews);
-       
-       // 별점 퍼센트
-       List<Review> allReviews = reviewService.findProductReviewAllNoPageBar(productId);
-       
-       int[] starCounts = new int[6];  
-       for (Review review : allReviews) {
-           int star = review.getReviewStarRate();
-           starCounts[star]++;
-       }
+		Map<String, Object> params = Map.of("page", page, "limit", limit, "productId", productId);
 
-       int totalReviews = allReviews.size();
+		int totalCount = reviewService.findProductTotalReviewCount(productId);
 
-       double[] starPercentages = new double[6];  // 각 별점별 백분율을 저장할 배열
-       
-       for (int i = 1; i <= 5; i++) {
-           starPercentages[i] = (double) starCounts[i] / totalReviews * 100;
-       }
+		log.debug("totalCount 몇개임 = {}", totalCount);
 
-       model.addAttribute("starPercentages", starPercentages);
+		int totalPages = (int) Math.ceil((double) totalCount / limit);
+		model.addAttribute("totalPages", totalPages);
 
-       // starPercentages 배열을 계산하고, 백분율로 변환하여 소수점 없이 포맷팅한 리스트를 생성
-       List<String> formattedPercentages = new ArrayList<>();
-       for (double percentage : starPercentages) {
-           String formatted = new DecimalFormat("###").format(percentage); // 소수점 없이 포맷팅
-           formattedPercentages.add(formatted);
-       }
+		// 상품Id에 대한 모든 리뷰 가져오기
+		List<Review> reviews = reviewService.findProductReviewAll(params, productId);
+		log.debug("reviews = {}", reviews);
+		model.addAttribute("reviews", reviews);
 
-       model.addAttribute("formattedPercentages", formattedPercentages);
+		// 별점 퍼센트
+		List<Review> allReviews = reviewService.findProductReviewAllNoPageBar(productId);
 
-       // 상품 아이디로 상품정보 가져오기
-       Product product = productService.findProductById(productId);
-       List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
-       ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
-       
-       // 썸네일이미지와 상세이미지 분리
-       List<ImageAttachment> attachments = productImages.getAttachments();
-       List<ImageAttachment> thumbnailImages = new ArrayList<>();
-       List<ImageAttachment> detailImages = new ArrayList<>();
-       for(ImageAttachment attach : attachments) {
-    	   if(attach != null && attach.getImageOriginalFilename() != null) {
-    		   if(attach.getThumbnail() == Thumbnail.Y) {
-    			   thumbnailImages.add(attach);
-    		   } else {
-    			   detailImages.add(attach);
-    		   }
-    	   }
-       }
-       
-       // 상품정보 담아주기
-       model.addAttribute("product", product); // 상품정보
-       model.addAttribute("thumbnailImages", thumbnailImages); // 썸네일이미지
-       model.addAttribute("detailImages", detailImages); // 상세이미지
-       model.addAttribute("productDetails", productDetails); // 상품옵션
-       
-       // 상품 상세 페이지에 펫 정보 뿌려주기
-       Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
-	    for (Review review : reviews) {
-	        List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
-	        reviewPetsMap.put(review.getReviewId(), pets);
-	    }
-	    
-       // 상품 상세 페이지에 이미지 파일 뿌려주기
-       Map<Integer, List<String>> reviewImageMap = new HashMap<>();
-       for (Review review : reviews) {
-           int reviewId2 = review.getReviewId();
-           ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
-           
-           log.debug("reviewDetails = {}", reviewDetails);
-           
-           if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
-               List<String> imageFilenames = new ArrayList<>();
-               
-               for (ImageAttachment attachment : reviewDetails.getAttachments()) {
-                   imageFilenames.add(attachment.getImageRenamedFilename());
-               }
-               reviewImageMap.put(reviewId2, imageFilenames);
-           }
-       }
+		int[] starCounts = new int[6];
+		for (Review review : allReviews) {
+			int star = review.getReviewStarRate();
+			starCounts[star]++;
+		}
 
-	    model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
-	    
-	    // 리뷰 작성자 - 상품 
-	    Map<Integer, List<OrderReviewListDto>> reviewProductMap = new HashMap<>();
-	    	for (Review review : reviews) {
-	    		List<OrderReviewListDto> ReviewOrders = orderService.findProductByReviewId(review.getReviewId(), productId);
-	    		reviewProductMap.put(review.getReviewId(), ReviewOrders);
-	    	}
-	    
-	    
-	    log.debug("reviewImageMap = {}", reviewImageMap);
+		int totalReviews = allReviews.size();
 
-	    model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
-	    model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보
-	    
-	    // 상품 상세 페이지 - 리뷰 전체개수 확인
-	    int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
-	    model.addAttribute("reviewTotalCount", reveiwTotalCount);
-	    
-	    // 리뷰 별점 평균
-	    ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
+		double[] starPercentages = new double[6]; // 각 별점별 백분율을 저장할 배열
+
+		for (int i = 1; i <= 5; i++) {
+			starPercentages[i] = (double) starCounts[i] / totalReviews * 100;
+		}
+
+		model.addAttribute("starPercentages", starPercentages);
+
+		// starPercentages 배열을 계산하고, 백분율로 변환하여 소수점 없이 포맷팅한 리스트를 생성
+		List<String> formattedPercentages = new ArrayList<>();
+		for (double percentage : starPercentages) {
+			String formatted = new DecimalFormat("###").format(percentage); // 소수점 없이 포맷팅
+			formattedPercentages.add(formatted);
+		}
+
+		model.addAttribute("formattedPercentages", formattedPercentages);
+
+		// 상품 아이디로 상품정보 가져오기
+		Product product = productService.findProductById(productId);
+		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
+		ProductImages productImages = productService.findImageAttachmentsByProductId(productId);
+
+		// 썸네일이미지와 상세이미지 분리
+		List<ImageAttachment> attachments = productImages.getAttachments();
+		List<ImageAttachment> thumbnailImages = new ArrayList<>();
+		List<ImageAttachment> detailImages = new ArrayList<>();
+		for (ImageAttachment attach : attachments) {
+			if (attach != null && attach.getImageOriginalFilename() != null) {
+				if (attach.getThumbnail() == Thumbnail.Y) {
+					thumbnailImages.add(attach);
+				} else {
+					detailImages.add(attach);
+				}
+			}
+		}
+
+		// 상품정보 담아주기
+		model.addAttribute("product", product); // 상품정보
+		model.addAttribute("thumbnailImages", thumbnailImages); // 썸네일이미지
+		model.addAttribute("detailImages", detailImages); // 상세이미지
+		model.addAttribute("productDetails", productDetails); // 상품옵션
+
+		// 상품 상세 페이지에 펫 정보 뿌려주기
+		Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
+		for (Review review : reviews) {
+			List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
+			reviewPetsMap.put(review.getReviewId(), pets);
+		}
+
+		// 상품 상세 페이지에 이미지 파일 뿌려주기
+		Map<Integer, List<String>> reviewImageMap = new HashMap<>();
+		for (Review review : reviews) {
+			int reviewId2 = review.getReviewId();
+			ReviewDetails reviewDetails = reviewService.findProductImageAttachmentsByReviewId(reviewId2);
+
+			log.debug("reviewDetails = {}", reviewDetails);
+
+			if (reviewDetails.getAttachments() != null && !reviewDetails.getAttachments().isEmpty()) {
+				List<String> imageFilenames = new ArrayList<>();
+
+				for (ImageAttachment attachment : reviewDetails.getAttachments()) {
+					imageFilenames.add(attachment.getImageRenamedFilename());
+				}
+				reviewImageMap.put(reviewId2, imageFilenames);
+			}
+		}
+
+		model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
+
+		// 리뷰 작성자 - 상품
+		Map<Integer, List<OrderReviewListDto>> reviewProductMap = new HashMap<>();
+		for (Review review : reviews) {
+			List<OrderReviewListDto> ReviewOrders = orderService.findProductByReviewId(review.getReviewId(), productId);
+			reviewProductMap.put(review.getReviewId(), ReviewOrders);
+		}
+
+		log.debug("reviewImageMap = {}", reviewImageMap);
+
+		model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
+		model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보
+
+		// 상품 상세 페이지 - 리뷰 전체개수 확인
+		int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
+		model.addAttribute("reviewTotalCount", reveiwTotalCount);
+
+		// 리뷰 별점 평균
+		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
-		
+
 		/**
-		 * @author 강선모
-	   	 * -찜 등록 여부 가져오기 
+		 * @author 강선모 -찜 등록 여부 가져오기
 		 */
 		if (member != null) {
-		model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
+			model.addAttribute("likeState", wishlistService.getLikeProduct(productId, member.getMemberId()));
 		}
 	}
 
-   
 	/**
-	 * @author 전수경
-	 * - 상품게시판 연결
+	 * @author 김담희
 	 */
 	@GetMapping("/productList.do")
 	public void productList(
-			@RequestParam int id,
+			@RequestParam int categoryId,
 			Model model,
 			@RequestParam(required = false) String align
 			) {
-
-		ProductCategory productCategory = productService.findProductCategoryById(id); 
-		List<Product> products = productService.findProductsByCategoryId(id);
 		
-		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
-		for(Product product : products) {
-			// 이미지 가져오기
-			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
-			List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(product.getProductId());
-			// 상품 주문정보 가져오기
-			int orderCnt = 0;
-			for(ProductDetail productDetail : productDetails) {
-				orderCnt += orderService.findOrderCntByProductId(productDetail.getProductDetailId());
-			}
-			
-			productInfos.add(ProductInfoDto.builder()
-					.product(product)
-					.productDetails(productDetails)
-					.productId(product.getProductId()) // productId 받아오기 (혜령)
-					.orderCnt(orderCnt) // 주문수
-					.attachments(productImages.getAttachments())
-					.attachmentMapping(productImages.getAttachmentMapping())
-					.build());
-		}
-
+		List<ProductSearchDto> productInfos = productService.searchProductsById(categoryId);
+		log.debug("productInfos = {}", productInfos);
 		model.addAttribute("productInfos", productInfos);
-		model.addAttribute("productCategory", productCategory);
-		
-		// 리뷰 전체개수, 리뷰 별점 평균 (혜령)
-		for (ProductInfoDto productInfo : productInfos) {
-		    int productId = productInfo.getProductId();
-
-		    int productListReviewTotalCount = reviewService.findProductListReviewTotalCount(productId);
-		    productInfo.setReviewCnt(productListReviewTotalCount);
-		    
-	        ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
-	        productInfo.setProductReviewStarAvg(productReviewStarAvg);
-		}
-		
-		model.addAttribute("productInfos", productInfos); 
 		
 		// 정렬
 		String alignType = "";
@@ -290,60 +243,62 @@ public class ProductController {
 		    } else {
 		    	alignType = "byReviewCnt";
 		    }
-		    _productInfos = productService.alignProducts(id, alignType, inOrder);
-		    model.addAttribute("alignProductInfos", _productInfos);
+		    _productInfos = productService.alignProducts(categoryId, alignType, inOrder);
+		    model.addAttribute("productInfos", _productInfos);
 		}
    }
-   
-   
-	/**
-	 * @author 강선모
-   	 * -하트 클릭 이벤트
-	 */
-   @ResponseBody
-   @PostMapping("/insertPick.do")
-   public Map insertPick(@Valid @RequestBody Map<String, Object> param, @AuthenticationPrincipal MemberDetails member) {
-      Map<String, Object> resultMap = new HashMap<>();
-      String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제"; // 화면에서 받은 state 값으로 등록/삭제 여부 판단 -> 화면상 코드 : var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert";
-      String getProductId = param.get("productId").toString(); // 화면에서 받은 상품 Id
-      int productId = getProductId.isEmpty() ? 0 : Integer.parseInt(getProductId);
-      resultMap.put("rs", "fail");
-      resultMap.put("msg", "찜 " + state + "에 실패하였습니다.");
-      
-      if(productId != 0) {
-         // 데이터 Setting
-         param.put("productId", productId);
-         
-         if("insert".equals(param.get("state").toString())) {
-            param.put("cnt", 1); // 쿼리에서 해당 상품의 찜 증가에 사용될 변수
-            
-            if(wishlistService.insertPick(productId, member.getMemberId()) > 0) { // wishList 테이블에 값 Insert : return값 : Insert 쿼리로 추가된 행 개수
-               if(productService.updateLikeCnt(param) > 0) { // product 테이블의 찜 컬럼 변경
-                  resultMap.put("rs", "insertS");
-                  resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
-               }
-            }
-         } else if("delete".equals(param.get("state").toString())) {
-            param.put("cnt", -1); // 쿼리에서 해당 상품의 찜 감소에 사용될 변수
-            
-            if(wishlistService.deletePick(productId, member.getMemberId()) > 0) { // wishList 테이블에 값 Delete : return값 : Delete 쿼리로 제거된 행 개수
-               if(productService.updateLikeCnt(param) > 0) { // product 테이블의 찜 컬럼 변경
-                  resultMap.put("rs", "deleteS");
-                  resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
-               }
-            }
-         }
-      }
-      return resultMap;
-   }
-   
-   @GetMapping("/searchProduct.do")
-   public void searchProducts(Model model, @RequestParam String searchQuery) {
-      List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
-      model.addAttribute("productInfos",productInfos);
-      
-   }
-   
 
-   
+	/**
+	 * @author 강선모 -하트 클릭 이벤트
+	 */
+	@ResponseBody
+	@PostMapping("/insertPick.do")
+	public Map insertPick(@Valid @RequestBody Map<String, Object> param,
+			@AuthenticationPrincipal MemberDetails member) {
+		Map<String, Object> resultMap = new HashMap<>();
+		String state = "insert".equals(param.get("state").toString()) ? "등록" : "삭제"; // 화면에서 받은 state 값으로 등록/삭제 여부 판단 ->
+																						// 화면상 코드 : var state =
+																						// $("#clickHeart").text().indexOf("♥")
+																						// > -1 ? "delete" : "insert";
+		String getProductId = param.get("productId").toString(); // 화면에서 받은 상품 Id
+		int productId = getProductId.isEmpty() ? 0 : Integer.parseInt(getProductId);
+		resultMap.put("rs", "fail");
+		resultMap.put("msg", "찜 " + state + "에 실패하였습니다.");
+
+		if (productId != 0) {
+			// 데이터 Setting
+			param.put("productId", productId);
+
+			if ("insert".equals(param.get("state").toString())) {
+				param.put("cnt", 1); // 쿼리에서 해당 상품의 찜 증가에 사용될 변수
+
+				if (wishlistService.insertPick(productId, member.getMemberId()) > 0) { // wishList 테이블에 값 Insert :
+																						// return값 : Insert 쿼리로 추가된 행 개수
+					if (productService.updateLikeCnt(param) > 0) { // product 테이블의 찜 컬럼 변경
+						resultMap.put("rs", "insertS");
+						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+					}
+				}
+			} else if ("delete".equals(param.get("state").toString())) {
+				param.put("cnt", -1); // 쿼리에서 해당 상품의 찜 감소에 사용될 변수
+
+				if (wishlistService.deletePick(productId, member.getMemberId()) > 0) { // wishList 테이블에 값 Delete :
+																						// return값 : Delete 쿼리로 제거된 행 개수
+					if (productService.updateLikeCnt(param) > 0) { // product 테이블의 찜 컬럼 변경
+						resultMap.put("rs", "deleteS");
+						resultMap.put("msg", "찜 " + state + "에 성공하였습니다.");
+					}
+				}
+			}
+		}
+		return resultMap;
+	}
+
+	@GetMapping("/searchProduct.do")
+	public void searchProducts(Model model, @RequestParam String searchQuery) {
+		List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);
+		model.addAttribute("productInfos", productInfos);
+
+	}
+
 }
