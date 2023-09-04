@@ -17,14 +17,14 @@
 		<hr>
 		</sec:authorize>
 		<li class="sidebar-title">카테고리</li>
-			<li class="sidebar-title1"><a href="${pageContext.request.contextPath}/product/productList.do?id=1">사료</a></li>
-			<li><a href="${pageContext.request.contextPath}/product/productList.do?id=2">간식</a></li>
-			<li><a href="${pageContext.request.contextPath}/product/productList.do?id=3">패션용품</a></li>
-			<li><a href="${pageContext.request.contextPath}/product/productList.do?id=4">산책용품</a></li>
-			<li><a href="${pageContext.request.contextPath}/product/productList.do?id=5">위생용품</a></li>
-			<li><a href="${pageContext.request.contextPath}/product/productList.do?id=6">장난감</a></li>
-			<li><a href="${pageContext.request.contextPath}/product/productList.do?id=7">고양이</a></li>
-			<li><a href="${pageContext.request.contextPath}/product/productList.do?id=8">기타용품</a></li>
+			<li class="sidebar-title1"><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=1">사료</a></li>
+			<li><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=2">간식</a></li>
+			<li><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=3">패션용품</a></li>
+			<li><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=4">산책용품</a></li>
+			<li><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=5">위생용품</a></li>
+			<li><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=6">장난감</a></li>
+			<li><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=7">고양이</a></li>
+			<li><a href="${pageContext.request.contextPath}/product/productList.do?categoryId=8">기타용품</a></li>
 		<li class="sidebar-title2"><a href="#">마이페이지</a>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/member/updateMember.do">회원정보 수정</a></li>
