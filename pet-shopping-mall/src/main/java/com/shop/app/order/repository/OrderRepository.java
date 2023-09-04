@@ -132,6 +132,9 @@ public interface OrderRepository {
 	@Select("select count (*) from orderTbl where member_id = #{memberId}")
 	int findTotalOrderCount(String memberId);
 
+	@Select("select count(*) from(select * from orderTbl where order_status = 4 and member_id = #{memberId})")
+	int findTotalCacncelOrderCount(String memberId);
+
 
 	
 }

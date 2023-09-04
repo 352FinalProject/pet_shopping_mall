@@ -128,7 +128,7 @@ public class OrderController {
 	    		"page", page,
 	    		"limit", limit
 	    		);
-	    int totalCount = orderService.findTotalOrderCount(memberId);
+	    int totalCount = orderService.findTotalCancelOrderCount(memberId);
 	    int totalPages = (int) Math.ceil((double) totalCount / limit);
 	    model.addAttribute("totalPages", totalPages);
 		
@@ -148,6 +148,7 @@ public class OrderController {
 
 	 * @author 전예라
 	 * 결제창이 넘어가기 전에 취소하면 사용했던 포인트, 쿠폰 롤백
+	 */
 	@PostMapping("/deleteOrder.do")
 	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member, 
 			@RequestParam(name = "pointsUsed", required = false) Integer pointsUsed, 
