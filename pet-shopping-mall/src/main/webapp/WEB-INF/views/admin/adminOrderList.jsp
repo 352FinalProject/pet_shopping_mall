@@ -19,25 +19,27 @@
 			    	method="GET" 
 			    	name="adminOrderSearch"
 			    	action="${pageContext.request.contextPath}/admin/adminOrderSearch.do">
-			        <label for="searchKeyword">상품검색:</label>
-			        	<input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드"><br>
-
-			        기간검색: <input type="date" name="startDate">
-			    	~ <input type="date" name="endDate">
-			    	<br>
+			        
+			        <input type="text" id="searchKeyword" name="searchKeyword" placeholder="상품명 또는 주문코드" class="adminSearch"><br>
+			        <div class="adminDateSearch-info">
+			        	<input type="date" name="startDate" class="adminDateSearch"> &nbsp; ~ &nbsp; <input type="date" name="endDate" class="adminDateSearch">
+			    	</div>
 			    	
-			        <label>결제방법:</label>
-				    <input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
-					<label for="all">전체</label>
-				    <input type="checkbox" id="deposit" name="paymentMethod" value="0">
-				    <label for="deposit">신용카드</label>
-				    <input type="checkbox" id="creditcard" name="paymentMethod" value="1">
-				    <label for="creditcard">카카오페이</label>
+					<label for="all" class="btn btn-secondary">전체 결제방법
+				    	<input type="checkbox" id="paymentMethodAll" name="paymentMethod" value="all" onclick="selectAllpaymentMethod(this)">
+					</label>
+				    
+				    <label for="deposit" class="btn btn-secondary">신용카드
+				    	<input type="checkbox" id="deposit" name="paymentMethod" value="0">
+				    </label>
+				    
+				    <label for="creditcard" class="btn btn-secondary">카카오페이
+				    	<input type="checkbox" id="creditcard" name="paymentMethod" value="1">
+				    </label>
 			        <br>
 			        
-			        <label>주문상태:</label>
 				    <input type="checkbox" id="orderStatusAll" name="orderStatus" value="orderStatusAll" onclick="selectAllOrderStatus(this)">
-				    <label for="orderStatusAll">전체</label>
+				    <label for="orderStatusAll">전체 주문상태</label>
 				    <input type="checkbox" id="waiting" name="orderStatus" value="0">
 				    <label for="waiting">결제완료</label>
 				    <input type="checkbox" id="completeDeposit" name="orderStatus" value="1">
