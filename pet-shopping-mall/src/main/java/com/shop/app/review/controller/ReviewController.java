@@ -100,7 +100,10 @@ public class ReviewController {
 	SimpMessagingTemplate simpMessagingTemplate;
 
 	
-	// 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
+	/**
+	 * @author 혜령
+	 * - 내가 쓴 리뷰 조회 페이지 불러오기 + 페이징바
+	 */
 	@GetMapping("/reviewList.do")
 	public void reviewList(
 			@RequestParam(defaultValue = "1") int page,
@@ -130,12 +133,13 @@ public class ReviewController {
 		// 리뷰에 보여줄 내용들
 		List<ReviewListDto> reviews = reviewService.findReviewAll(params);
 		
-		
 		model.addAttribute("reviews", reviews);
 	}
 
-
-	// 리뷰 작성 페이지 불러오기
+	/**
+	 * @author 혜령
+	 * - 리뷰 작성 페이지 불러오기
+	 */
 	@GetMapping("/reviewCreate.do")
 	public void reviewCreate(
 			@RequestParam("productDetailId") int productDetailId, 
@@ -181,7 +185,6 @@ public class ReviewController {
 			if(!upFile.isEmpty()) {
 				String imageOriginalFilename = upFile.getOriginalFilename();
 				String imageRenamedFilename = HelloSpringUtils.getRenameFilename(imageOriginalFilename);
-//				File destFile = new File(imageRenamedFilename);
 				File destFile = new File(saveDirectory, imageRenamedFilename);
 				
 				upFile.transferTo(destFile);
@@ -228,16 +231,7 @@ public class ReviewController {
 			reviews.setPetId(null);
 		}
 			
-		
-		// 상품 - 리뷰 연결
-		// Product 객체 생성
-//		Product product = new Product();
-//		List<Product> findProduct = productService.findProduct(); // 모든 product 가져오기
-//		for(Product p : findProduct) {
-//			product.setProductId(p.getProductId());
-//		}
-		//List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
-		
+	
 		int reviewId = reviewService.insertReview(reviews);
 		int orderId = reviews.getOrderId();
 		int productDetailId = reviews.getProductDetailId();
@@ -314,7 +308,10 @@ public class ReviewController {
 	}
 
 
-	// 리뷰 상세조회 
+	/**
+	 * @author 이혜령
+	 * 리뷰 상세조회
+	 */
 	@GetMapping("/reviewDetail.do")
 	public void reviewDetail(
 			@RequestParam(required=true) int reviewId, 
@@ -336,7 +333,10 @@ public class ReviewController {
 	}
 
 
-	// 리뷰 수정 페이지 이동
+	/**
+	 * @author 이혜령
+	 *  리뷰 수정 페이지 이동
+	 */
 	@GetMapping("/reviewUpdate.do")
 	public void reviewUpdate(@RequestParam int reviewId, Model model) {
 
@@ -345,7 +345,10 @@ public class ReviewController {
 
 	}
 
-	// 리뷰 수정
+	/**
+	 * @author 이혜령
+	 *  리뷰 수정
+	 */
 	@PostMapping("/reviewUpdate.do")
 	public String updateReview(ReviewUpdateDto _review) {
 
