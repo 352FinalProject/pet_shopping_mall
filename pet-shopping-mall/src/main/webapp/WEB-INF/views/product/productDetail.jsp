@@ -22,9 +22,16 @@
         
     }
     .pink {
-        color: pink; /* 핑크색 하트 */
+        color: #ff8a9e;
     }
 
+	.heart-img {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-right: -490px;
+	margin-top: -1px;
+	}
 </style>
 <section class="common-section" id="#">
       <div class="common-container">
@@ -416,7 +423,7 @@
 						value="${product.productPrice}" pattern="#,###" /> 원
 				</span>
 			</div>
-			<div class="heart-img">
+			<div class="heart-img" style="margin-top: -1px;">
 				<button class="heart-button" id="heartButton">
 					<span class="heart-button pink" id="clickHeart"> <c:choose>
 							<c:when test="${likeState == 0}">♡</c:when>
