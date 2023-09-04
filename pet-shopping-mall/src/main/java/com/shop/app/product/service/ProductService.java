@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
@@ -63,9 +64,6 @@ public interface ProductService {
 	
 	// index페이지 상품 검색 담희
 	List<ProductSearchDto> searchProducts(String searchQuery);
-
-	// 모든 상품 조회(수경)
-	List<Product> findAllProducts();
 	
 	// 상품아이디로 모든 상품디테일 조회(수경)
 	List<ProductDetail> findProductDetailsByProductId(int productId);
@@ -77,7 +75,7 @@ public interface ProductService {
 	int adminOptionCreate(ProductDetail productDetail);
 	
 	// 상품 조회 정렬 (담희)
-	List<ProductSearchDto> alignProducts(int id, String alignType, String inOrder);
+	List<ProductSearchDto> alignProducts(int categoryId, String alignType, String inOrder);
 	
 	// 인덱스 페이지 간식 불러오기 (예라)
 	List<Product> findSnackAll(int categoryId);
@@ -85,11 +83,17 @@ public interface ProductService {
 	// 인덱스 페이지 패션용품 불러오기 (예라)
 	List<Product> findFashionAll(int _categoryId);
 	
-	// 카테고리에 해당하는 총 상품의 갯수 (수경)
+	
+	// 페이지수에 맞는 상품가져오기
+	List<ProductSearchDto> searchProductsById(Map<String, Object> params);
+	
 	int findTotalProductCountByCategory(int categoryId);
 	
-	// 페이지에 해당하는 상품들 조회 (수경)
-	List<Product> findProductsAll(Map<String, Object> params);
-	
-	
+
+	List<AdminProductDto> findProductsAll();
+	List<ProductSearchDto> searchHomeProductsById(int categoryId);
+	List<AdminProductDto> findAdminProductsBySearch(String searchKeyword);
+
+
+
 }

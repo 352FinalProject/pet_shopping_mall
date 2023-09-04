@@ -13,7 +13,6 @@ public interface TermsService {
 
 	int insertTermsHistory(TermsHistory termsHistory);
 
-	// 약관동의 이력 테이블 참조하여 회원 동의 이력 추가
 	List<TermsHistory> fineTermsHistory();
 
 

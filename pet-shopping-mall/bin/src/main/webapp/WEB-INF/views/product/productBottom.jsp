@@ -27,6 +27,9 @@
 	cursor: pointer;
 	background: #58ACFA;
 	}
+	.cart-btn1 {
+	gap: 10px;
+	}
     </style>
     <section>
     	<div class="product-bottom">
@@ -40,7 +43,7 @@
     			<br />
     			<span>1,562</span>
     		</div>
-    		<div>
+    		<div class="cart-btn1">
     			<button class="btn btn1">장바구니</button>
     			<button class="btn btn2">구매하기</button>
     		</div>

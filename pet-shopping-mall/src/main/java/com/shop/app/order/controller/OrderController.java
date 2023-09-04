@@ -141,12 +141,13 @@ public class OrderController {
 		model.addAttribute("cancelInfoList", cancelInfos);
 	}
 	
-	
 	/**
-	 * @author 김담희, 전예라
+	 * @author 김담희
 	 * 결제 버튼을 누르면 무조건 orderTbl 테이블에 먼저 insert되는데,
 	 * 주문을 진행 중 사용자의 취소 시 주문 내역 테이블 자체에서 삭제
-	 */
+
+	 * @author 전예라
+	 * 결제창이 넘어가기 전에 취소하면 사용했던 포인트, 쿠폰 롤백
 	@PostMapping("/deleteOrder.do")
 	public String deleteOrder(@RequestParam String orderNo, RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member, 
 			@RequestParam(name = "pointsUsed", required = false) Integer pointsUsed, 
@@ -157,7 +158,6 @@ public class OrderController {
 			String memberId = member.getMemberId();
 			int result = orderService.deleteOrder(orderNo);
 		
-	    // 포인트 반환 로직
 		if (pointsUsed != null) {
 		    Point rollbackPoint = new Point();
 		    rollbackPoint.setPointMemberId(memberId);
@@ -167,21 +167,20 @@ public class OrderController {
 	
 		    Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
 	
-		    int currentPoint = currentPoints.getPointCurrent(); // 현재 포인트
-		    int earnedPoint = currentPoints.getPointAmount(); // 적립된 금액
-		    int netPoint = currentPoint - earnedPoint; // 적립된 금액을 제외한 실제 포인트
+		    int currentPoint = currentPoints.getPointCurrent();
+		    int earnedPoint = currentPoints.getPointAmount();
+		    int netPoint = currentPoint - earnedPoint;
 		    rollbackPoint.setPointCurrent(netPoint);
 		    
 		    int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
 		}
 			
-	    // 쿠폰 반환 로직
 		if (useCoupon != null && !useCoupon.isEmpty() && couponId != null) {
 	    MemberCoupon coupon = new MemberCoupon();
 	    	coupon.setCouponId(couponId);
 	    	coupon.setMemberId(memberId);
-	        coupon.setUseStatus(0); // 사용 안 함으로 변경
-	        coupon.setUseDate(null); // 사용 날짜를 null로 설정
+	        coupon.setUseStatus(0);
+	        coupon.setUseDate(null);
 	        
 	        int updateCoupon = couponService.updateCoupon(coupon); 
 	    	}

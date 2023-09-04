@@ -23,7 +23,10 @@ public class PointController {
 	@Autowired
 	private PointService pointService;
 	
-	// 포인트 전체 조회 (예라)
+	/**
+	 * @author 전예라
+	 * 포인트 사용 내역 전체 조회 + 페이징바
+	 */
 	@GetMapping("/pointList.do")
 	public void pointList (@RequestParam(defaultValue = "1") int page, Point point, Model model) {
 		int limit = 5;
