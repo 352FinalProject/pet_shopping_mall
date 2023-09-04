@@ -359,8 +359,8 @@ public class AdminController {
 	@GetMapping("/adminProductList.do")
 	public void adminProductList(
 		@AuthenticationPrincipal MemberDetails member,Model model) {
-	//	List<ProductSearchDto> productInfos = productService.findProductsAll();
-	//	model.addAttribute("productInfos", productInfos);
+		List<ProductSearchDto> productInfos = productService.findProductsAll();
+		model.addAttribute("productInfos", productInfos);
 	}
 	
 

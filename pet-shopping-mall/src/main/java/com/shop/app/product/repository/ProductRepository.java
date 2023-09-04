@@ -142,4 +142,6 @@ public interface ProductRepository {
 	@Select("select * from product where category_id = #{categoryId}")
 	List<ProductSearchDto> searchProductsById(RowBounds rowBounds, int categoryId);
 
+	List<ProductSearchDto> findProductsAll();
+
 }
