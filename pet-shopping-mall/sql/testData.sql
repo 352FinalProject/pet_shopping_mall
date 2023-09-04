@@ -26,8 +26,11 @@ select * from answer;
 select * from cartitem;
 select * from cart;
 select * from wishlist;
-select * from notification;    
-            
+select * from notification;     
+select * from authority;
+
+
+
 -- 멤버 쿠폰 입력
 insert into member_coupon (member_coupon_id, coupon_id, member_id, create_date, end_date, use_status, use_date)
 values ( seq_member_coupon_id.nextval, '1', '2971776209@kakao', sysdate, add_months(sysdate, 1), 0, null);
@@ -156,7 +159,7 @@ insert into authority values ('qwerty', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_USER');
 insert into authority values ('admin', 'ROLE_ADMIN');
 insert into authority values ('member1', 'ROLE_USER');
-insert into authority values ('member1', 'ROLE_ADMIN');
+insert into authority values ('king', 'ROLE_ADMIN');
 
 ------------------ qna insert ---------------------------
 insert into question (question_id, question_title, question_category, question_member_id, question_email, question_content, question_created_at)
@@ -1134,8 +1137,170 @@ desc;
             select * from member;
             select * from product;
 
-select * from member;
-            select * from orderTbl;
-            delete from orderTbl where order_id = '1';
-            update authority set auth = 'ROLE_ADMIN' where member_id = 'honggd';
+            
+            
+      		select
+		    p.product_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
+            
+            select * from member;
+            select * from authority;
+            update authority set auth = 'ROLE_ADMIN' where member_id = '2999960622@kakao'; 
+            select * from product where category_id = 4;
+            delete from product where category_id = 4;
+            
+            drop 
+            
+            
+            select * from product;
+         select
+		    p.product_id,
+            pd.product_detail_id,
+		    p.category_id,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+        join 
+            product_detail pd on p.product_id = pd.product_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
 
+select * from product;
+select * from product_detail;
+
+		select
+		    p.product_id,
+		    p.category_id,
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.create_date,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail,
+		    decode(avg_star, NULL, 0.0, avg_star) as review_star_rate,
+		    (select count(*) from review where product_id = p.product_id) reviewCnt
+		from 
+		    product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
+            
+		select
+		    p.product_id,
+		    p.category_id,
+            pd.*,
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail
+		from 
+		    product p
+        join
+            product_detail pd on p.product_id = pd.product_id
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
+
+select * from member;
+update orderTbl set order_status = 3 where order_no = '1693809377750';
+update authority set auth = 'ROLE_ADMIN' where member_id= 'sinsa1234';
+select * from cancel_order;
+		select
+		    p.product_id,
+		    p.category_id,
+            
+		    (select category_name from product_category where category_id = p.category_id) category_name,
+		    p.product_name,
+		    p.product_price,
+		    ia.image_renamed_filename as thumbnail
+		from 
+		    product p
+		join 
+			image_attachment_mapping iam on p.product_id = iam.ref_id and iam.ref_table = 'product'
+		join
+			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
+		left join
+			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			on p.product_id = r.product_id;
+
+select * from product_category;
+
+
+create table cancel_order (
+    cancel_id number,
+    request_date timestamp default systimestamp not null,
+    receipt_date timestamp,
+    cancel_status number default 0 not null,
+    order_id number,
+    constraint pk_cancel_id primary key(cancel_id),
+    constraint fk_cancel_order_id foreign key(order_id) references orderTbl(order_id) on delete cascade
+);
+
+select
+*
+from
+    cancel_order
+where
+    (select * from orderTbl where order_status = 4 and member_id='sinsa1234');
+    
+   select
+      m.name,
+      m.phone,
+      m.address,
+      ot.order_no,
+      ot.order_date,
+      ot.order_status,
+      ot.total_price,
+      p.payment_method,
+      p.payment_date,
+      ot.payment_status,
+      ot.amount,
+      ot.discount
+   from
+      orderTbl ot left join member m on ot.member_id = m.member_id
+      left join payment p on p.order_id = ot.order_id
+   where
+      ot.member_id = 'sinsa1234'
+      and
+      ot.order_status = 4;
+
+Insert into PRODUCT_CATEGORY values (1,'사료');
+Insert into PRODUCT_CATEGORY values (2,'간식');
+Insert into PRODUCT_CATEGORY values (3,'패션용품');
+Insert into PRODUCT_CATEGORY values (4,'산책용품');
+Insert into PRODUCT_CATEGORY values (5,'위생용품');
+Insert into PRODUCT_CATEGORY values (6,'장난감');
+Insert into PRODUCT_CATEGORY values (7,'고양이');
+Insert into PRODUCT_CATEGORY values (8,'기타용품');

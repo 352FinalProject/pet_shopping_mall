@@ -480,3 +480,28 @@ div.modal-div {
 	font-size:18px;
 	font-weight: 600;
 }
+
+
+.myPage-link {
+	position: relative;
+	display: block;
+	padding: .3rem 0.35rem;
+	margin-left: -1px;
+	line-height: 1.25;
+	color: #007bff;
+	background-color: #fff;
+	border: 1px solid #dee2e6
+}
+
+
+.myPage-link:hover {
+	z-index: 2;
+	color: #0056b3;
+	text-decoration: none;
+	background-color: #e9ecef;
+	border-color: #dee2e6
+}
+
+.btncolor {
+	background: #5886d3;
+}

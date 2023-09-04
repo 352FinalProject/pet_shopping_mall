@@ -143,7 +143,6 @@ const checkAll = document.querySelector("#checkAll");
 const checkboxes = document.querySelectorAll('.checkbox');
 
  // 모든 체크박스
-
 checkAll.addEventListener("change", () => {
     const isChecked = checkAll.checked;
     productNameCheckboxes.forEach(checkbox => {
@@ -161,10 +160,10 @@ function updateSubmitButtonStatus() {
     const isChecked = Array.from(checkboxes)
         .some(checkbox => {
             if (checkbox.checked) {
-                orderButton.classList.add('active');
+                orderButton.classList.add('btncolor');
                 return true;
             } else {
-                orderButton.classList.remove('active');
+                orderButton.classList.remove('btncolor');
                 return false;
             }
         });

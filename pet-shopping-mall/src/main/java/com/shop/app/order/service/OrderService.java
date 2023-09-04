@@ -26,7 +26,6 @@ public interface OrderService {
 	// 관리자페이지 주문조회(대원)
 	List<OrderAdminListDto> adminOrderList();
 
-	// 2. db에서 주문 정보 가져오기 (예라)
 	Order findByOrder(Order order);
 
 	// 주문내역 조회 (담희)
@@ -66,7 +65,6 @@ public interface OrderService {
 
 	Order findOrderByOrderNo(String orderNo);
 
-	// 리뷰 작성하면 리뷰버튼 없애기 
 	boolean reviewWrite(String memberId, int productDetailId, int orderId, int productId);
 
 	// 상품별 주문확정 주문 수 조회 (수경)
@@ -80,12 +78,10 @@ public interface OrderService {
 	// 상품상세 - 리뷰 - 상품 뿌리기
 	List<OrderReviewListDto> findProductByReviewId(int reviewId, int productId);
 
-	
+
 	int findTotalOrderCount(String memberId);
 
-	
-	// 리뷰-상품연결 테스트
-//	List<Order> findOrdersByReviewId(int reviewId);
+	int findTotalCancelOrderCount(String memberId);
 
-	
+
 }

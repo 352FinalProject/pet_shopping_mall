@@ -22,9 +22,15 @@
         
     }
     .pink {
-        color: pink; /* 핑크색 하트 */
+        color: #ff8a9e;
     }
 
+	.heart-img {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-right: -400px;
+	margin-top: 3px;
 </style>
 <section class="common-section" id="#">
       <div class="common-container">

@@ -222,6 +222,11 @@ select[name=product-option] {
    z-index: 1000;
    display: flex;
 }
+
+.product-bottom3 {
+	width: 400px;
+	margin-top: 7px;
+}
 .product-bottom2 {
    display: flex;
    width: 1200px;
@@ -230,7 +235,6 @@ select[name=product-option] {
 }
 
 .product-bottom div {
-   margin-top: 10px;
    font-size: 16px;
 }
 
@@ -240,16 +244,6 @@ select[name=product-option] {
 .btn2 {
    color: #fff;
    background: #5886d3;
-}
-
-#product-bottom-title {
-   font-size: 20px;
-}
-
-
-.heart-img {
-   margin-left: 620px; */
-   
 }
 
 .product-price-desc {
@@ -449,8 +443,8 @@ ul.nav {
     padding-bottom: 75%;
     border-radius: 0;
     overflow: hidden;
-    width: 280px;
-    height: 280px;
+    width: 270px;
+    height: 270px;
     margin-right: 20px;
     
 }
@@ -542,4 +536,24 @@ z-index: 0;
 bottom: -18px;
 left: 107px;
 }
+
+/* 상품게시판 페이징바 */
+nav.product-nav {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+
+.pagination-product {
+	display: -ms-flexbox;
+	display: flex;
+	padding-left: 0;
+	list-style: none;
+	border-radius: .25rem;
+	position: absolute;
+	margin-top: 105px;
+}
+
 

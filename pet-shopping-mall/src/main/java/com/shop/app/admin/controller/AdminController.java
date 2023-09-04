@@ -50,7 +50,7 @@ import com.shop.app.order.dto.OrderAdminListDto;
 import com.shop.app.order.dto.OrderAdminProductStatisticsDto;
 import com.shop.app.order.dto.OrderAdminStatisticsByDateDto;
 import com.shop.app.order.service.OrderService;
-
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductCreateDto;
 import com.shop.app.product.dto.ProductDeleteDto;
 import com.shop.app.product.dto.ProductDetailUpdateDto;
@@ -157,7 +157,8 @@ public class AdminController {
 	
 
 	/**
-	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바 (예라)
+	 *  관리자 1:1 문의 전체 내역 조회 + 페이징바
+	 * @author 전예라
 	 * @param page
 	 * @param question
 	 * @param model
@@ -181,7 +182,8 @@ public class AdminController {
 	
 	
 	/**
-	 *  관리자 1:1 문의 제목, 내용 검색 (예라)
+	 *  관리자 1:1 문의 제목, 내용 검색
+	 * @author 전예라
 	 * @param searchKeyword
 	 * @param model
 	 * @return
@@ -309,23 +311,7 @@ public class AdminController {
 	}
 	
 	
-	
-//	/**
-//	 * 상품정보 조회 
-//	 * 
-//	 * @param member
-//	 * @param model
-//	 */
-//	@GetMapping("/adminProductList.do")
-//	public void adminProductList(
-//		@AuthenticationPrincipal MemberDetails member,
-//		Model model
-//			) {
-//		
-//		// 기본 상품들 조회해서 가져오기.
-//		List<Product> basicProducts = productService.findAllBasicProduct();
-//		model.addAttribute("basicProducts", basicProducts);
-//	}
+
 	
 	/**
 	 * 상품별 판매량통계
@@ -353,71 +339,28 @@ public class AdminController {
 	
 
 	/**
-	 * @author 전수경
+	 * @author 김담희
 	 * 상품정보 조회 
 	 */
 	@GetMapping("/adminProductList.do")
 	public void adminProductList(
-		@AuthenticationPrincipal MemberDetails member,
-		Model model
-			) {
-		// 등록된 상품 가져오기
-		List<Product> products = productService.findAllProducts();
-		
-		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
-		for(Product product : products) {
-			// 상품이미지
-			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
-			// 카테고리
-			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
-			// 해당 상품의 옵션들
-			List<ProductDetail> productDetails = productService.findProductDetailsByProductId(product.getProductId());
-			
-			ProductInfoDto productInfo = ProductInfoDto.builder()
-					.productId(product.getProductId())
-					.product(product)
-					.productCategory(productCategory)
-					.attachments(productImages.getAttachments())
-					.productDetails(productDetails)
-					.build();
-			// 리스트에 추가
-			productInfos.add(productInfo);
-		}
-		
+		@AuthenticationPrincipal MemberDetails member,Model model) {
+		List<AdminProductDto> productInfos = productService.findProductsAll();
 		model.addAttribute("productInfos", productInfos);
 	}
+	
 
-	// 상품검색 (수경)
+	/**
+	 * @author 김담희
+	 * 상품정보 검색
+	 */
 	@GetMapping("adminProductSearch.do")
 	public String adminProductSearch(
-			@Valid ProductSearchKeywordDto _searchContent,
+			@RequestParam("searchKeyword") String searchKeyword,
 			@AuthenticationPrincipal MemberDetails member,
 			Model model) {
-		String searchKeyword = _searchContent.getSearchKeyword();
-		String searchCategory = _searchContent.getSearchCategory();
 		
-		// 키워드로 상품찾기
-		List<Product> products = productService.adminProductSearch(searchKeyword, searchCategory);
-		
-		List<ProductInfoDto> productInfos = new ArrayList<ProductInfoDto>();
-		for(Product product : products) {
-			// 상품이미지
-			ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
-			// 카테고리
-			ProductCategory productCategory = productService.findProductCategoryById(product.getCategoryId());
-			// 해당 상품의 옵션들
-			List<ProductDetail> productDetails = productService.findProductDetailsByProductId(product.getProductId());
-			ProductInfoDto productInfo = ProductInfoDto.builder()
-					.productId(product.getProductId())
-					.product(product)
-					.productCategory(productCategory)
-					.attachments(productImages.getAttachments())
-					.attachmentMapping(productImages.getAttachmentMapping())
-					.productDetails(productDetails)
-					.build();
-			// 리스트에 추가
-			productInfos.add(productInfo);
-		}
+		List<AdminProductDto> productInfos = productService.findAdminProductsBySearch(searchKeyword);
 		model.addAttribute("productInfos", productInfos);
 		return "admin/adminProductList";
 	}
@@ -440,13 +383,11 @@ public class AdminController {
 	 * @author 전수경
 	 * - 상품등록
 	 */
-	
 	@PostMapping("/adminProductCreate.do")
 	public String adminProductCreate(
 			@Valid ProductCreateDto _product,
 			@AuthenticationPrincipal MemberDetails member, 
 			Model model) throws IllegalStateException, IOException {
-		log.debug("ProductCreateDto ={}",_product);
 		
 		List<MultipartFile> thumbnailFiles = _product.getThumbnailFile();
 		List<MultipartFile> detailFiles = _product.getDetailFile();
@@ -511,7 +452,6 @@ public class AdminController {
 				.build(); // 상품카테고리아이디, 상품명, 가격
 		int productId = productService.insertProduct(productImages); // 여기서 이미지도 저장
 		
-		
 		// 2.1. productDetail 객체 저장
 		List<ProductDetail> productDetails = _product.getProductDetail();
 		for(ProductDetail productDetail : productDetails) {
@@ -547,7 +487,6 @@ public class AdminController {
 		// 상품이미지 가져오기
 		ProductImages productImages = productService.findImageAttachmentsByProductId(product.getProductId());
 		List<ImageAttachment> attachments = productImages.getAttachments();
-		log.debug("productImages = {}", productImages);
 		// 상품옵션 가져오기(리스트)
 		List<ProductDetail> productDetails = productService.findAllProductDetailsByProductId(productId);
 		

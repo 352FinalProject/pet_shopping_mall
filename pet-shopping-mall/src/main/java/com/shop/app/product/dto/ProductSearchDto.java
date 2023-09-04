@@ -14,4 +14,5 @@ public class ProductSearchDto {
 	private Timestamp createDate;
 	private int reviewCnt;
 	private double reviewStarRate;
+	private String categoryName;
 }

@@ -117,7 +117,10 @@ public class PaymentController {
 	}
 
 	/**
-	 * 결제하기 (담희)
+	 * @author 김담희
+	 * 구매 요청 페이지 조회
+	 * 장바구니에서 요청이 넘어올 시, 장바구니에 있는 상품 구매 페이지로 넘어감
+	 * 상품 상세 페이지에서 요청이 넘어올 시, 해당 상품의 옵션 값과 수량에 대해서 구매 페이지로 넘어감
 	 */
 	@GetMapping("/paymentInfo.do")
 	public void payment(Model model, Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam(required=false) Integer productDetailId, @RequestParam(required=false) Integer quantity) {
@@ -143,6 +146,11 @@ public class PaymentController {
 	}
 	
 	
+	/**
+	 * @author 김담희
+	 * 상품 상세페이지에서 hidden 폼에 넣어서 구매 요청을 보내기 때문에 POST로 받은 값을
+	 * GET으로 변환해서 넘김
+	 */
 	@PostMapping("/paymentInfo.do")
 	public String paymentOne(Authentication authentication, @AuthenticationPrincipal MemberDetails member, @RequestParam int quantity, @RequestParam int productDetailId, RedirectAttributes redirectAttr) {
 		return "redirect:/payment/paymentInfo.do?productDetailId="+productDetailId+"&quantity="+quantity;
@@ -151,46 +159,44 @@ public class PaymentController {
 	
 
 	/**
-	 * 결제 API 실행 전 주문 테이블에 먼저 주문 정보 insert 하기 위한 메소드 (담희)
+	 * @author 김담희
+	 * 결제 API 실행 전 주문 테이블과 주문 상세 테이블에 먼저 주문 정보 insert
+	 * (결제 취소 요청이 들어오거나 실패 시, 바로 delete 처리함)
+	 * 
+	 * @author 전예라
+	 * 포인트/쿠폰 사용과 포인트 적립(일반 1% / 구독자 3%, 포인트 사용하면 적립 안됨)
 	 */
 	@ResponseBody
 	@PostMapping("/proceed.do")
 	public Map<String, Object> paymentProceed(@Valid @RequestBody OrderCreateDto _order) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
-		// 쿠폰 사용 여부 (예라)
 		Boolean useCoupon = _order.getUseCoupon();
-		
 		Order order = _order.toOder();
 
 		List<OrderDetail> orderDetails = _order.getForms();
 
-		// 0. 사용된 포인트 가져오기 (예라)
 		int pointsUsed = _order.getPointsUsed();
 
-		// 1. (사용) 현재 포인트를 가져오기
 		Point points = new Point();
 		points.setPointMemberId(_order.getMemberId());
 		Point currentPoints = pointService.findPointCurrentById(points);
 		
 		if(pointsUsed != 0) {
-		// 2. 포인트 사용 정보 저장
+
 		Point usedPoint = new Point();
 		usedPoint.setPointMemberId(_order.getMemberId());
 		usedPoint.setPointType("구매사용");
-		usedPoint.setPointAmount(-pointsUsed); // 사용된 포인트 금액
+		usedPoint.setPointAmount(-pointsUsed);
 
-	    // 3. 사용된 포인트 업데이트
 	    int currentPoint = currentPoints.getPointCurrent();
 	    usedPoint.setPointCurrent(currentPoint - pointsUsed);
 
-		// 4. db에 포인트 사용 정보 저장
 		int usedPointResult = pointService.insertUsedPoint(usedPoint);
 		
 		}
 		
 		if (useCoupon) {
-			// 1. 쿠폰 가져오기 (예라)
 			
 			int couponDiscount = _order.getCouponDiscount();
 	
@@ -199,22 +205,16 @@ public class PaymentController {
 			coupon.setCouponId(_order.getCouponId());
 			coupon.setMemberCouponId(_order.getMemberCouponId());
 			List<MemberCoupon> currentCoupons = couponService.findCouponCurrendById(coupon);
-			
-			// 2. 쿠폰 사용
 			  
-			// 2-1. 쿠폰 유효성 검사 
 			List<MemberCoupon> validCoupons = couponService.validateCoupon(_order.getCouponId(), _order.getMemberId(), _order.getMemberCouponId());
 	
-			if (validCoupons != null && !validCoupons.isEmpty()) { // 유효한 쿠폰인 경우
-			    MemberCoupon validCoupon = validCoupons.get(0); // 첫 번째 유효한 쿠폰을 선택
-			    
-			    // 2-2. 쿠폰 상태 업데이트 (사용됨)
+			if (validCoupons != null && !validCoupons.isEmpty()) { 
+			    MemberCoupon validCoupon = validCoupons.get(0); 
 			    validCoupon.setUseStatus(1);
 			    int usedCouponResult = couponService.updateCouponStatus(validCoupon);
 			    
 			    order.setMemberCouponId(validCoupon.getMemberCouponId());
 			} else {
-				// 2-3. 쿠폰을 사용하지 않을 경우 member_coupon_id 값을 null로 설정
 				order.setMemberCouponId(null);
 			}
 		}
@@ -226,40 +226,31 @@ public class PaymentController {
 		if (result > 0) {
 			msg = "주문에 성공하셨습니다.";
 
-			// 1. 사용한 포인트가 0이면 적립하기 -> 포인트 사용하면 적립 안 되게 (예라)
 			if (pointsUsed <= 0) {
 
-			    // 2. 구독자 여부 확인
 			    Member subscribeMember = memberService.findMemberById(order.getMemberId());
 			    boolean subscriber = (subscribeMember.getSubscribe() == Subscribe.Y);
 			    
-				// 3. 결제 성공하면 구매한 금액의 1% 포인트 적립 (일반 회원)
-				int amount = order.getAmount(); // 실제 주문 금액
-				double pointRate  = subscriber ? 0.03 : 0.01; // 주문 금액의 1% 적립
-				int pointAmount = (int) (amount * pointRate); // 주문 금액의 적립 비율 적용
+				int amount = order.getAmount();
+				double pointRate  = subscriber ? 0.03 : 0.01;
+				int pointAmount = (int) (amount * pointRate);
 
-				// 3. 적립할 포인트 정보 저장
 				Point point = new Point();
 				point.setPointMemberId(order.getMemberId());
-				point.setPointType("구매적립"); // 포인트 유형
-				point.setPointAmount(pointAmount); // 적립된 포인트
+				point.setPointType("구매적립");
+				point.setPointAmount(pointAmount);
 
-				// 4. memberId값으로 현재 사용자의 포인트 가져오기
 				Point currentPoints2 = pointService.findReviewPointCurrentById(point);
 
-				// 5. 현재 포인트를 가져온 후 포인트 적립 계산
 				int updatedPointAmount = currentPoints.getPointCurrent() + pointAmount;
 
-				// 6. 업데이트된 포인트 값 설정
 				point.setPointCurrent(updatedPointAmount);
 
-				// 7. 적립된 포인트를 db에 저장
 				int pointResult = pointService.insertPoint(point);
 			}
 			
 		} else {
 			msg = "주문에 실패하셨습니다. 관리자에게 문의하세요.";
-			
 			
 		}
 
@@ -267,9 +258,12 @@ public class PaymentController {
 		resultMap.put("msg", msg);
 		return resultMap;
 	}
+	
+	
 
 	/**
-	 * 결제 검증 (담희)
+	 * @author 김담희
+	 * 아임포트 서버에서 결제 검증
 	 */
 	@PostMapping("/verifyIamport/{imp_uid}")
 	@ResponseBody
@@ -278,43 +272,42 @@ public class PaymentController {
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
 
+	
+	/**
+	 * @author 김담희
+	 * 결제 성공 시 결제 내역 테이블 저장, 주문 테이블에 결제 방법 및 결제 완료 여부 업데이트
+	 */
 	@PostMapping("/successPay.do")
 	@ResponseBody
 	public ResponseEntity<?> updatePayStatus(@RequestParam("merchant_uid") String merchantUid,
 			@AuthenticationPrincipal MemberDetails member, @RequestParam("pg_provider") String pgProvider) {
 		String orderNo = merchantUid;
-		// payment 테이블에 삽입 및 orderTbl 상태 업데이트
 		int result = paymentService.updatePayStatus(orderNo, pgProvider);
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of("result", 1));
 	}
+	
 
+	/**
+	 * @author 김담희
+	 * 결제가 완료 처리되면 결제 완료 페이지로 매핑
+	 * 
+	 * @author 김대원
+	 */
 	@GetMapping("/paymentCompleted.do")
 	public void paymentCompleted(@RequestParam String orderNo, Model model) {
 		Order order = orderService.findOrderByOrderNo(orderNo);
 		model.addAttribute("order", order);
-		
-		PaymentCompleteNotificationDto paymentCompleteNotificationDto = paymentService.notificationFindOrderByOrderNo(orderNo);
-	    
-		paymentCompleteNotificationDto = PaymentCompleteNotificationDto.builder()
-	            .orderId(paymentCompleteNotificationDto.getOrderId())
-	            .orderNo(paymentCompleteNotificationDto.getOrderNo())
-	            .productName(paymentCompleteNotificationDto.getProductName())
-	            .orderStatus(paymentCompleteNotificationDto.getOrderStatus())
-	            .memberId(paymentCompleteNotificationDto.getMemberId())
-	            .build();
-	    int result = notificationService.paymentCompleteNotification(paymentCompleteNotificationDto);
-		
 	}
-	
-	/*
-	 * 결제 취소를 확인하고 포인트 환불 처리하는 메소드 (예라)
+
+	/**
+	 * @author 전예라
+	 * 결제 중에 취소했을 때 사용했던 포인트, 쿠폰을 롤백 처리하는 메소드
 	 */
 	@PostMapping("/verifyAndHandleCancelledPayment/{imp_uid}")
 	@ResponseBody
 	public ResponseEntity<?> verifyAndHandleCancelledPayment(@Valid @RequestBody OrderCreateDto _order, 
 			@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
 
-		// 1. 결제 정보 가져오기
 		IamportResponse<Payment> paymentResponse = iamportClient.paymentByImpUid(imp_uid);
 
 		if (paymentResponse == null || paymentResponse.getResponse() == null) {
@@ -326,17 +319,14 @@ public class PaymentController {
 
 		Order order = _order.toOder();
 
-		// 2. db에서 주문 정보 가져오기
 		Order findOrder = orderService.findByOrder(order);
 
 		String memberId = _order.getMemberId();
 		int pointsUsed = findOrder.getDiscount();
 
 		if ("failed".equalsIgnoreCase(payment.getStatus())) {
-		    // 4. 'failed' 상태라면 사용자의 포인트를 다시 반환
 		    handleCancelledPayment(memberId, pointsUsed);
 
-		    // 5. 쿠폰 환불 처리 추가
 		    List<MemberCoupon> usedCoupons = couponService.findUsedCouponsByMemberId(memberId);
 		    handleCancelledCouponRefund(usedCoupons);
 
@@ -346,24 +336,22 @@ public class PaymentController {
 		return ResponseEntity.ok(paymentResponse);
 	}
 
+	// 포인트 환불 처리 메소드
 	private void handleCancelledPayment(String memberId, int usedPoints) {
-	    // 1. 포인트 반환 로직
+		
 	    Point rollbackPoint = new Point();
 	    rollbackPoint.setPointMemberId(memberId);
 	    rollbackPoint.setPointType("구매취소");
 	    rollbackPoint.setPointAmount(usedPoints);
 
-	    // 2. 현재 포인트 값을 가져온다
 	    Point currentPoints = pointService.findPointCurrentById(rollbackPoint);
 
 	    int currentPoint = currentPoints.getPointCurrent(); // 현재 포인트
 	    int earnedPoint = currentPoints.getPointAmount(); // 적립된 금액
 	    int netPoint = currentPoint - earnedPoint; // 적립된 금액을 제외한 실제 포인트
 
-	    // 3. 계산된 updatedPoint를 rollbackPoint 객체에 설정
 	    rollbackPoint.setPointCurrent(netPoint);
 
-	    // 4. 취소된 포인트를 db에 저장
 	    int pointRollback = pointService.insertRollbackPoint(rollbackPoint);
 
 	}
@@ -372,14 +360,14 @@ public class PaymentController {
 	private void handleCancelledCouponRefund(List<MemberCoupon> usedCoupons) {
 	    for (MemberCoupon coupon : usedCoupons) {
 	        
-	        // 1. 쿠폰 사용 상태를 원래대로 변경 (use_status를 0으로, use_date를 null로)
-	        coupon.setUseStatus(0); // 사용 안 함으로 변경
-	        coupon.setUseDate(null); // 사용 날짜를 null로 설정
-	        
-	        // 2. 쿠폰 업데이트
+	        coupon.setUseStatus(0);
+	        coupon.setUseDate(null);
+	  
 	        int updateCoupon = couponService.updateCoupon(coupon); 
 	    }
 	}
+	
+	
 	
 	@ResponseBody
 	@PostMapping("/startScheduler.do")
@@ -397,7 +385,6 @@ public class PaymentController {
 	}
 	
 	
-	// 결제할 때 쿠폰 목록 보여주기 (예라)
 	@GetMapping("/findCoupon.do")
     public ResponseEntity<?> getCoupons(Authentication authentication) {
         String memberId = authentication.getName();
@@ -416,10 +403,14 @@ public class PaymentController {
         
     }
 	
+	
+	/**
+	 * @author 김담희
+	 * 구독 해지
+	 * customerUid(회원 아이디)로 sub_member 조회를 해서 그 정보를 바탕으로 구독 해지 처리
+	 */
 	@PostMapping("/unsubscribe.do")
 	public String unsubscribe (@RequestParam String customerUid, RedirectAttributes redirectAttr) {
-		// sub_member 조회를 해서, 거기서 가져온 merchant_uid를 포스트 요청 보내야 함.
-		// member 테이블에서 구독 N 처리
 		SubMember subMember = memberService.findSubMemberByMemberId(customerUid);
 		String result = schedulePay.cancelSchedule(subMember);
 		

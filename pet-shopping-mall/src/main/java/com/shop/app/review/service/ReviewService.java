@@ -38,7 +38,6 @@ public interface ReviewService {
 	// 리뷰 전체 카운트
 	int findTotalReviewCount(String reviewMemberId);
 	
-	// 삭제되는 리뷰 정보 가져오기 (예라)
 	ReviewDetails getDeleteReviewById(int reviewId);
 
 	// 상품 상세페이지 리뷰 전체 카운트
@@ -55,7 +54,6 @@ public interface ReviewService {
 
 	String findImageFilenameByReviewId(int reviewId2);
 
-	// 상품 게시판에서 리뷰 아이디 가지고 상품 디테일로 넘어가기 (예라)
 	Review findPoductListReviewId(int reviewId);
 
 	// 상품 - 리뷰 전체개수 확인

@@ -7,6 +7,7 @@
 	height:50px;
 	border-radius: 5px;
 	border:none;
+	margin: auto;
 	}
 	.product-bottom {
 	display: flex;
@@ -26,6 +27,11 @@
 	.btn2 {
 	cursor: pointer;
 	background: #58ACFA;
+	margin: auto;
+	}
+	.cart-btn1 {
+	gap: 10px;
+	display: flex;
 	}
     </style>
     <section>
@@ -40,7 +46,7 @@
     			<br />
     			<span>1,562</span>
     		</div>
-    		<div>
+    		<div class="cart-btn1">
     			<button class="btn btn1">장바구니</button>
     			<button class="btn btn2">구매하기</button>
     		</div>

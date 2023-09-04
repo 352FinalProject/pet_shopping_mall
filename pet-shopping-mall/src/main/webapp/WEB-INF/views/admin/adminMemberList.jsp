@@ -19,7 +19,7 @@
 							action="${pageContext.request.contextPath}/admin/adminMemberSearchByNameOrId.do"
 							method="get">
 							<div class="input-group">
-								<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디">
+								<input type="text" id="searchKeyword" name="searchKeyword" placeholder="회원명 또는 아이디" class="adminInput">
 								<input type="submit" value="검색" class ="btn btn-secondary">
 							</div>
 						</form:form>

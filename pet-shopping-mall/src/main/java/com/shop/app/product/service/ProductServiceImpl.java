@@ -3,11 +3,13 @@ package com.shop.app.product.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.app.common.entity.ImageAttachment;
+import com.shop.app.product.dto.AdminProductDto;
 import com.shop.app.product.dto.ProductInfoDto;
 import com.shop.app.product.dto.ProductSearchDto;
 import com.shop.app.product.entity.Product;
@@ -41,13 +43,17 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findAll();
 	}
 
+	/**
+	 *  @author 전수경
+	 *  - 상품등록 메서드 (상품정보 + 이미지 등록)
+	 */
 	@Override
 	public int insertProduct(ProductImages productImages) {
 		Product product = productImages.toProduct();
 		int result = productRepository.insertProduct(product);
-
-		int refId = product.getProductId();
-		int productId = refId;
+		
+		// productId = refId
+		int productId = product.getProductId();
 		
 		// 첨부이미지 저장
 		List<ImageAttachment> attachments = productImages.getAttachments();
@@ -55,11 +61,10 @@ public class ProductServiceImpl implements ProductService {
 			for(ImageAttachment attach : attachments) {
 				// 1. 이미지 파일 저장
 				int result2 = productRepository.insertAttachment(attach);
-				
 				// 2. 이미지파일 DB저장후 생성된 이미지 아이디 가져오기
 				int imageId = attach.getImageId(); 
 				// 3. 상품 ID와 이미지 ID를 사용하여 매핑 정보를 데이터베이스에 저장
-				int result3 = productRepository.insertMapping(refId, imageId);
+				int result3 = productRepository.insertMapping(productId, imageId);
 				
 				// product에 imageId 세팅
 				int result4 = productRepository.updateImageIdByProductId(productId, imageId);
@@ -133,7 +138,10 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProductsByCategoryId(categoryId);
 	}
 
-	// 찜 수 증감 (선모)
+	/**
+	 * @author 강선모
+   	 * -찜 수 증감 
+	 */
 	@Override
 	public int updateLikeCnt(Map<String, Object> param) {
 		return productRepository.updateLikeCnt(param);
@@ -152,12 +160,6 @@ public class ProductServiceImpl implements ProductService {
 		return productList;
 	}
 	
-	
-	// 모든상품 조회(수경)
-	@Override
-	public List<Product> findAllProducts() {
-		return productRepository.findAllProducts();
-	}
 	
 	// 상품아이디에 해당하는 모든 상품디테일 조회(수경)
 	@Override
@@ -185,15 +187,45 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.alignProducts(categoryId, alignType, inOrder);
 	}
 
-	// 인덱스 페이지 간식 불러오기 (예라)
 	@Override
 	public List<Product> findSnackAll(int categoryId) {
 		return productRepository.findSnackAll(categoryId);
 	}
 
-	// 인덱스 페이지 패션용품 불러오기 (예라)
 	@Override
 	public List<Product> findFashionAll(int _categoryId) {
 		return productRepository.findFashionAll(_categoryId);
+	}
+
+	@Override
+	public int findTotalProductCountByCategory(int categoryId) {
+		return productRepository.findTotalProductCountByCategory(categoryId);
+	}
+
+
+	@Override
+	public List<ProductSearchDto> searchProductsById(Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		int categoryId = (int) params.get("categoryId");
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return productRepository.searchProductsById(rowBounds, categoryId);
+	}
+
+	@Override
+	public List<AdminProductDto> findProductsAll() {
+		List<AdminProductDto> products = productRepository.findProductsAll();
+		return productRepository.findProductsAll();
+	}
+
+	@Override
+	public List<ProductSearchDto> searchHomeProductsById(int categoryId) {
+		return productRepository.searchHomeProductsById(categoryId);
+	}
+
+	@Override
+	public List<AdminProductDto> findAdminProductsBySearch(String searchKeyword) {
+		return productRepository.findAdminProductsBySearch(searchKeyword);
 	}
 }

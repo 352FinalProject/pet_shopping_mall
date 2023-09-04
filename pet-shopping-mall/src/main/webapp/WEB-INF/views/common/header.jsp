@@ -30,27 +30,9 @@
    </script>
 </c:if>
 <style>
-/* 모달 배경 스타일 */
-.deleteMember-class {
-    display: none; /* 초기에는 보이지 않도록 설정 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 색상 */
-    z-index: 9999; /* 다른 요소보다 위에 표시 */
-    justify-content: center;
-    align-items: center;
-}
 
-/* 모달 내부 컨테이너 스타일 */
-.deleteMember {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    width: 300px;
+deleteMember-class.active {
+    display: flex; /* 모달이 보이도록 변경 */
 }
 
 /* 모달 내부 요소 스타일 */
@@ -84,7 +66,6 @@
 /* 닫기 버튼 스타일 */
 .deleteMemberForm-close,
 #deleteMemberForm-closeModalBtn {
-    position: absolute;
     top: 10px;
     right: 10px;
     font-size: 20px;
@@ -194,7 +175,8 @@
 					 <img src="${pageContext.request.contextPath}/resources/images/home/notiBellx.png" id="notificationBell" alt="Notification" />
                   </button>
                   <div id="notificationPopup" class="notiPopup">
-                     <div class="notiPopup-content"></div>
+                     <div class="notiPopup-content">
+                     </div>
                   </div>
                </div>
             </sec:authorize>
@@ -245,28 +227,28 @@
             <ul class="nav">
                <ul>
                   <li class="on"><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=1"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=1"
                      class="font">사료</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=2"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=2"
                      class="font">간식</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=3"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=3"
                      class="font">패션용품</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=4"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=4"
                      class="font">산책용품</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=5"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=5"
                      class="font">위생용품</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=6"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=6"
                      class="font">장난감</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=7"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=7"
                      class="font">고양이</a></li>
                   <li><a
-                     href="${pageContext.request.contextPath}/product/productList.do?id=8"
+                     href="${pageContext.request.contextPath}/product/productList.do?categoryId=8"
                      class="font">기타용품</a></li>
                </ul>
             </ul>

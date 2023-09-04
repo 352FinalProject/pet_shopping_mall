@@ -39,22 +39,19 @@ public class EmailController {
    
    private final Map<String, String> tokenStore = new HashMap<>();
 
-   // 인증 이메일 발송
+   /**
+    * @author 전예라
+    * 이메일 인증 메일 발송
+    */
    @PostMapping("/email/send")
    public Map<String, Object> sendEmail(@RequestBody Map<String, String> payload, HttpSession session) {
       String email = payload.get("email");
 
-      // 토큰 생성
       String token = UUID.randomUUID().toString(); 
 
-      // 이메일 발송 로직
       MailSender mailSender = new MailSender();
       mailSender.sendEmailOnUserVerification(email, token);
-
-      // 토큰 저장
       tokenStore.put(email, token);
-
-      // 세션에 인증 정보 저장
       session.setAttribute("emailVerified", true);
 
       Map<String, Object> response = new HashMap<>();
@@ -62,21 +59,26 @@ public class EmailController {
       return response;
    }
 
-   // 인증 처리 하는 링크
+   /**
+    * @author 전예라
+    * 이메일 인증 처리
+    */
    @GetMapping("/email/verifyEmail")
    public ResponseEntity<String> verifyEmail(@RequestParam String email, @RequestParam String token) {
 
-      // 토큰 검증 로직
       String storedToken = tokenStore.get(email);
       boolean isValid = token.equals(storedToken);
       if (isValid) {
-         // 인증 완료 처리
          return new ResponseEntity<>("이메일 인증이 완료되었습니다.", HttpStatus.OK);
       } else {
          return new ResponseEntity<>("이메일 인증이 실패했습니다.", HttpStatus.BAD_REQUEST);
       }
    }
 
+   /**
+    * @author 김상훈
+    * 이메일 발송 전 아이디 찾기
+    */
    @ResponseBody
    @GetMapping("/email/findMemberIdByEmail.do")
    public String findMemberIdByEmail(@RequestParam String email) {
@@ -87,20 +89,20 @@ public class EmailController {
          return member.getMemberId(); // 회원의 ID를 반환합니다.
       }
    }
-
    
    
-   
+   /**
+    * @author 김상훈
+    * 임시비밀번호가 담긴 이메일 전송
+    */
 	@PostMapping("/email/sendTemporaryPassword.do")
 	public ResponseEntity<String> sendTemporaryPassword(@RequestParam String email, HttpSession session) {
 		
-		// 이메일 전송 로직
 		MailSender mailSender = new MailSender();
 		String temporaryPassword = mailSender.generateTemporaryPassword(10);
 		
 		mailSender.sendTemporaryPasswordEmail(email, temporaryPassword); 
 		
-		// 임시 비밀번호 저장
 		tokenStore.put(email, temporaryPassword);
 		Member member = memberService.findByEmail(email);
 		
@@ -110,10 +112,9 @@ public class EmailController {
 		
 		if (member != null) {
 			member.setPassword(passwordEncoder.encode(temporaryPassword));
-			memberService.updateMember(member); // 데이터베이스 업데이트
+			memberService.updateMember(member);
 		}
 
-		// 세션에 임시 비밀번호 발송 완료 상태 저장
 		session.setAttribute("temporaryPasswordSent", true);
 
 		return ResponseEntity.status(HttpStatus.FOUND)
