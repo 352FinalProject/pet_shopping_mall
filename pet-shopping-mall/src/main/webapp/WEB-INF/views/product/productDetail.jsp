@@ -558,7 +558,10 @@ function purchase() {
 };
 
 
-// 찜하기
+/**
+ * @author 강선모
+ * 찜하기, 하트 클릭 이벤트
+ */
 let token = $("meta[name='_csrf']").attr("content");
 let header = $("meta[name='_csrf_header']").attr("content");
 
@@ -567,10 +570,6 @@ $(function() {
         xhr.setRequestHeader(header, token);
     });
 });
-/**
- * @author 강선모
- * 하트 클릭 이벤트
- */
 $("#clickHeart").on("click", function() { // clickHeart라는 id를 가진 태그를 클릭 시 이벤트 발생하는 함수
     var state = $("#clickHeart").text().indexOf("♥") > -1 ? "delete" : "insert"; // clickHeart라는 id를 가진 태그의 class 목록에서 delete와 insert 위치 찾기 : 없으면 -1 return
     

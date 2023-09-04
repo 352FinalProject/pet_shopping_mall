@@ -37,7 +37,8 @@ public interface WishlistRepository {
 	int deletePick(int productId, String memberId);
 	/**
 	 * @author 강선모
-	 * 내 찜 목록 가져오기 
+	 * -찜 되어 있는 요소의 갯수  
+	 * -int 타입의 값을 반환, 이 값은 찜 목록에 저장된 아이템의 총 개수를 나타냅니다.
 	 */
 	@Select("SELECT COUNT(*)"
 			+ "  FROM wishlist wl"
@@ -57,7 +58,10 @@ public interface WishlistRepository {
 	
 	/**
 	 * @author 강선모
-	 * 내 찜 목록 가져오기
+	 * -찜 되어 있는 요소 가져오기
+	 * -List<Map<String, Object>> 타입의 리스트를 반환합니다.
+	 *  각 항목은 찜 목록에 저장된 아이템의 상세 정보를 나타내는 맵(Map)입니다.
+	 *  이 메서드는 페이징을 지원하며, RowBounds를 사용하여 특정 페이지의 아이템을 가져올 수 있습니다.
 	 */
 	@Select("SELECT *"
 			+ "  FROM wishlist wl"

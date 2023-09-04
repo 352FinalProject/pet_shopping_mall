@@ -98,6 +98,15 @@
             float: left;
             margin-left: 10%;
         }
+        
+        /* 페이징 바 스타일 */
+		nav.pagination {
+		    position: fixed; /* 고정 위치 설정 */
+		    top: 1000px; /* 상단으로의 거리 설정 */
+		    left: 50%; /* 가운데 정렬 설정 (가로 중앙) */
+		    transform: translateX(-50%); /* 가로 중앙 정렬을 위한 보정 */
+		    height: 1000px; /* 페이징 바의 높이 설정 */
+}
     </style>
 </head>
 
