@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 	// 관리자페이지 주문검색 조회 (대원)
 	@Override
 	public List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
-			List<String> paymentMethod, List<String> orderStatus) {
+													List<String> paymentMethod, List<String> orderStatus) {
 		return orderRepository.adminOrderSearch(searchKeyword, startDate, endDate, paymentMethod, orderStatus);
 	}
 	
@@ -132,12 +132,11 @@ public class OrderServiceImpl implements OrderService {
 				.build();
 		result = orderRepository.insertCancelOrder(cancel, 1, orderId);
 		result = orderRepository.updateOrderStatus(orderNo, 5);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-			
 		return result;
 	}
 
 	
-
+	
 	@Override
 	public List<Order> getOrderListByPeriod(String memberId, int period, Map<String, Object> params) {
 		int limit = (int) params.get("limit");
