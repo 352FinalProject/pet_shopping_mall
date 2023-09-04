@@ -74,10 +74,10 @@ public interface OrderRepository {
 	OrderCancelInfoDto getCancelInfo(String orderNo);
 
 
-	List<OrderCancelInfoDto> getCancelInfoAll(String memberId);
+	List<OrderCancelInfoDto> getCancelInfoAll(String memberId, RowBounds rowBounds);
 
 
-	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period);
+	List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period, RowBounds rowBounds);
 
 	// 관리자페이지 상품매출통계 조회 - 판매수량 (대원)
 	List<OrderAdminProductStatisticsDto> adminStatisticsProduct();

@@ -101,10 +101,14 @@ deleteMember h2 {
 		</li>
 		<li class="sidebar2-member">
 			<h2 class="sidebar2-title2"></h2>
+			<ul>
+				<li><a
+					href="${pageContext.request.contextPath}/petcare/petcareList.do">펫케어</a></li>
+				</li>
+			</ul>
 			<form id="deleteMemberForm" action="">
 				<a id="deleteMemberBtn" type="button" href="#" onclick="">회원 탈퇴</a>
 			</form>
-		</li>
 	</ul>
 </div>
 <div id="deleteMember-div" class="deleteMember-class"

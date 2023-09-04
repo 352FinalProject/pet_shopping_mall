@@ -149,7 +149,7 @@
 	WHERE 
 	    r.review_member_id = #{reviewMemberId}
 	order by
-		r.review_id desc
+		r.review_id asc
 	</select>	
 	
 	<resultMap type="ReviewListDto" id="reviewListDto">

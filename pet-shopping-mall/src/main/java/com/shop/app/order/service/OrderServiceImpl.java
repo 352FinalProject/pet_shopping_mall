@@ -140,13 +140,21 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderCancelInfoDto> getCancelInfoAll(String memberId) {
-		return orderRepository.getCancelInfoAll(memberId);
+	public List<OrderCancelInfoDto> getCancelInfoAll(String memberId, Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return orderRepository.getCancelInfoAll(memberId, rowBounds);
 	}
 
 	@Override
-	public List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period) {
-		return orderRepository.getCancelInfoByPeriod(memberId, period);
+	public List<OrderCancelInfoDto> getCancelInfoByPeriod(String memberId, int period, Map<String, Object> params) {
+		int limit = (int) params.get("limit");
+		int page = (int) params.get("page");
+		int offset = (page - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return orderRepository.getCancelInfoByPeriod(memberId, period, rowBounds);
 	}
 
 	@Override
