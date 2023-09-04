@@ -149,20 +149,17 @@ public class ProductController {
 			}
 		}
 
-		// 상품정보 담아주기
-		model.addAttribute("product", product); // 상품정보
-		model.addAttribute("thumbnailImages", thumbnailImages); // 썸네일이미지
-		model.addAttribute("detailImages", detailImages); // 상세이미지
-		model.addAttribute("productDetails", productDetails); // 상품옵션
+		model.addAttribute("product", product);
+		model.addAttribute("thumbnailImages", thumbnailImages);
+		model.addAttribute("detailImages", detailImages); 
+		model.addAttribute("productDetails", productDetails); 
 
-		// 상품 상세 페이지에 펫 정보 뿌려주기
 		Map<Integer, List<Pet>> reviewPetsMap = new HashMap<>();
 		for (Review review : reviews) {
 			List<Pet> pets = petService.findReviewPetByMemberId(review.getReviewMemberId());
 			reviewPetsMap.put(review.getReviewId(), pets);
 		}
 
-		// 상품 상세 페이지에 이미지 파일 뿌려주기
 		Map<Integer, List<String>> reviewImageMap = new HashMap<>();
 		for (Review review : reviews) {
 			int reviewId2 = review.getReviewId();
@@ -178,23 +175,20 @@ public class ProductController {
 			}
 		}
 
-		model.addAttribute("reviewImageMap", reviewImageMap); // 이미지 정보
+		model.addAttribute("reviewImageMap", reviewImageMap); 
 
-		// 리뷰 작성자 - 상품
 		Map<Integer, List<OrderReviewListDto>> reviewProductMap = new HashMap<>();
 		for (Review review : reviews) {
 			List<OrderReviewListDto> ReviewOrders = orderService.findProductByReviewId(review.getReviewId(), productId);
 			reviewProductMap.put(review.getReviewId(), ReviewOrders);
 		}
 
-		model.addAttribute("reviewPetsMap", reviewPetsMap); // 펫정보
-		model.addAttribute("reviewProductMap", reviewProductMap); // 구매자 상품정보
+		model.addAttribute("reviewPetsMap", reviewPetsMap); 
+		model.addAttribute("reviewProductMap", reviewProductMap); 
 
-		// 상품 상세 페이지 - 리뷰 전체개수 확인
 		int reveiwTotalCount = reviewService.findReviewTotalCount(productId);
 		model.addAttribute("reviewTotalCount", reveiwTotalCount);
 
-		// 리뷰 별점 평균
 		ProductReviewAvgDto productReviewStarAvg = reviewService.productReviewStarAvg(productId);
 		model.addAttribute("productReviewStarAvg", productReviewStarAvg);
 
@@ -205,10 +199,11 @@ public class ProductController {
 
 	/**
 	 * @author 김담희
-	 * 
+	 * 상품 조회 후 반환
+	 * 사용자가 정렬 기능을 선택했을 때, 정렬에 맞춰 값 반환
 	 * 
 	 * @author 전수경
-	 * 
+	 * 페이지네이션 처리
 	 */
 	@GetMapping("/productList.do")
 	public void productList(@RequestParam("categoryId") String _categoryId, @RequestParam(defaultValue = "1") int page,
@@ -231,7 +226,8 @@ public class ProductController {
 		List<ProductSearchDto> productInfos = productService.searchProductsById(params);
 		model.addAttribute("productInfos", productInfos);
 
-		// 정렬
+		
+		
 		String alignType = "";
 		String inOrder = "";
 
@@ -312,6 +308,12 @@ public class ProductController {
 		return resultMap;
 	}
 
+	
+	
+	/**
+	 * @author 김담희
+	 * index 페이지에서 상품명 전체 검색 후 결과 반환
+	 */
 	@GetMapping("/searchProduct.do")
 	public void searchProducts(Model model, @RequestParam String searchQuery) {
 		List<ProductSearchDto> productInfos = productService.searchProducts(searchQuery);

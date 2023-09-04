@@ -1268,18 +1268,21 @@ create table cancel_order (
 select * from cancel_order;
 
 select 
-    * 
+    c.* 
 from 
-    cancel_order
+    cancel_order c
+where
+    c.order_id in (select order_id from orderTbl where member_id='dami');
     
-select order_id from orderTbl where member_id='dami';
+select * from orderTbl where member_id='dami';
 
-
+select * from product;
+delete from product where product_id = 68;
 update orderTbl set order_status=3 where order_no='1693815010798';
 update orderTbl set order_date='23/02/18' order_no='1693815010798';
-select * from orderTbl;
+select * from orderTbl where member_id='hulk1512';
 select * from member;
-update orderTbl set order_status = 3 where member_id = 'hulk577';
+update orderTbl set order_status = 3 where member_id = 'hulk1512' and order_status=0;
 delete from member where member_id = 'honggd';
 update member set email = 'sinsa11@daum.net' where member_id = 'sinsa1234';
 select * from member;

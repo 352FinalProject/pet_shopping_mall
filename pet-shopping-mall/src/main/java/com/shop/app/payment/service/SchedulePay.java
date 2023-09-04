@@ -40,7 +40,6 @@ public class SchedulePay {
 	
 	public static final String IMPORT_SCHEDULE_URL = "https://api.iamport.kr/subscribe/payments/schedule";
 	public static final String IMPORT_UNSCHEDULE_URL = "https://api.iamport.kr/subscribe/payments/unschedule";
-
 	
 	@Autowired
 	MemberRepository memberRepository;
@@ -51,6 +50,8 @@ public class SchedulePay {
     
     /**
      * @author 김담희
+     * 정기결제를 위해 아임포트에 스케쥴러 요청을 보냄
+     * 다음 달에 결제 예약인 예약 번호, 결제 예정일, 금액, 사용자 고유 번호(customerUid) 등을 담아 POST 요청
      */
     public String schedulePay(String merchantUid, String customerUid, int amount) {
     	
@@ -92,7 +93,6 @@ public class SchedulePay {
 
     	String result = restTemplate.postForObject(IMPORT_SCHEDULE_URL, entity, String.class);
     	
-    	
     	SubMember newSubMember = new SubMember();
     	try {
     	    Map<String, Object> responseMap = objectMapper.readValue(result, new TypeReference<Map<String, Object>>() {});
@@ -130,6 +130,8 @@ public class SchedulePay {
     
     /**
      * @author 김담희
+     * 환불 요청
+     * 예약 되어 있는 예약 번호(merchantUid), 사용자 고유 번호(customerUid)를 예약 취소 url에 POST 요청
      */
 	public String cancelSchedule(SubMember subMember) {
     	String token = iamportApi.getImportToken();

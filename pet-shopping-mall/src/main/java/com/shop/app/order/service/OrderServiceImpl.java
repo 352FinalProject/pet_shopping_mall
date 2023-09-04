@@ -132,12 +132,11 @@ public class OrderServiceImpl implements OrderService {
 				.build();
 		result = orderRepository.insertCancelOrder(cancel, 1, orderId);
 		result = orderRepository.updateOrderStatus(orderNo, 5);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-			
 		return result;
 	}
 
 	
-
+	
 	@Override
 	public List<Order> getOrderListByPeriod(String memberId, int period, Map<String, Object> params) {
 		int limit = (int) params.get("limit");
