@@ -2,7 +2,6 @@
 // 서버에서 날라온 notification 파싱
 const renderNotification = (notification) => {
     const { id, notiCategory, notiContent, notiCreatedAt, memberId } = notification;
-
     const $notificationPopup = $("#notificationPopup");
     const $popupContent = $notificationPopup.find(".notiPopup-content");
 

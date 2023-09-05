@@ -36,9 +36,7 @@ public class CartServiceImpl implements CartService {
 	public List<CartInfoDto> getCartInfoList(String memberId) {
 		List<CartItem> cartItemList = cartRepository.getCartList(memberId);
 		List<CartInfoDto> cartInfoList = new ArrayList<>();
-		
 		CartInfoDto product = null;
-		
 		for(int i=0; i <cartItemList.size(); i++) {
 			product = cartRepository.getCartInfoList(cartItemList.get(i).getProductDetailId(), cartItemList.get(i).getCartitemId());
 			cartInfoList.add(product);

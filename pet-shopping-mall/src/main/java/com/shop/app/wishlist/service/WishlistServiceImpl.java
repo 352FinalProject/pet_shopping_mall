@@ -20,32 +20,45 @@ import lombok.extern.slf4j.Slf4j;
 public class WishlistServiceImpl implements WishlistService {
 	@Autowired
 	private WishlistRepository wishlistRepository;
-	
-	// 찜 여부 체크 
+	/**
+	 * @author 강선모
+	 * 찜 여부 체크 
+	 */
 	@Override
 	public int getLikeProduct(int productId, String memberId) {
 		return wishlistRepository.getLikeProduct(productId, memberId);
 	}
-
-	// 찜 등록 
+	/**
+	 * @author 강선모
+	 * 찜 등록
+	 */
 	@Override
 	public int insertPick(int productId, String memberId) {
 		return wishlistRepository.insertPick(productId, memberId);
 	}
-	
-	// 찜 제거 
+	/**
+	 * @author 강선모
+	 * 찜 제거
+	 */ 
 	@Override
 	public int deletePick(int productId, String memberId) {
 		return wishlistRepository.deletePick(productId, memberId);
 	}
-	
-	// 내 찜 목록 가져오기
+	/**
+	 * @author 강선모
+	 * 내 찜 목록 가져오기
+	 */
 	@Override
 	public int getListCount(Map<String, Object> paramMap) {
 		return wishlistRepository.getListCount(paramMap);
 	}	
-	
-	// 내 찜 목록 가져오기
+	/**
+	 * @author 강선모
+	 * 내 찜 목록 가져오기(페이징바)
+	 * limit 페이지당 보여줄 아이템 숫자
+	 * page 페이지 번호
+	 * offset 페이지를 위한 오프셋, 현재 페이지에 따라 계산되며 페이지당 limit를 곱해줌으로 시작 위치를 계산
+	 */
 	@Override
 	public List<Map<String, Object>> getMyWishList(Map<String, Object> paramMap) {
 		int limit = (int) paramMap.get("limit");

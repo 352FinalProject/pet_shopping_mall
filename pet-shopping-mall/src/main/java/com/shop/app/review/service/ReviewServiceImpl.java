@@ -25,7 +25,6 @@ import com.shop.app.review.entity.Review;
 import com.shop.app.review.entity.ReviewDetails;
 import com.shop.app.review.repository.ReviewRepository;
 
-import lombok.AllArgsConstructor.AnyAnnotation;
 import lombok.extern.slf4j.Slf4j;
 
 

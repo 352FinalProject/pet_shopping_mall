@@ -197,7 +197,7 @@ public class MemberSecurityController {
    
    /**
     * @author 전예라
-    * 회원이 체크한 Y/N을 구분
+    * 회원이 체크한 Y/N을 임시 세션에 저장
     */
    @PostMapping("/updateTerms.do")
    public ResponseEntity<?> updateTerms(@RequestParam Map<String, String> data, HttpSession session) {

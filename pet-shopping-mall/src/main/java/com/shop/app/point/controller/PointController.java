@@ -41,7 +41,6 @@ public class PointController {
 				"limit", limit
 			);
 		
-		
 		int totalCount = pointService.findTotalPointCount(pointMemberId);
 		int totalPages = (int) Math.ceil((double) totalCount / limit);
 		model.addAttribute("totalPages", totalPages);

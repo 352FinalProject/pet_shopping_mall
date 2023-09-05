@@ -39,7 +39,7 @@ public interface OrderService {
 
 
 	List<OrderAdminListDto> adminOrderSearch(String searchKeyword, String startDate, String endDate,
-			List<String> paymentMethod, List<String> orderStatus);
+												List<String> paymentMethod, List<String> orderStatus);
 
 	// 주문 취소 내역 조회
 	OrderCancelInfoDto getCancelInfo(String orderNo);
