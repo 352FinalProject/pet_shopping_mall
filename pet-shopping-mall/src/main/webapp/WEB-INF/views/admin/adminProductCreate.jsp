@@ -166,6 +166,7 @@
     	
     }
 
+    
     let optionCnt = 1;
     // 옵션추가 함수
     const addOptions = () => {
@@ -174,7 +175,8 @@
     	<div class="addedOption row mb-3 align-items-end" id="addedOption\${optionCnt}">
 			<div class="col-sm-3">
 				<label for="optionName" class="form-label">옵션명</label>
-				<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" class="form-control" list="datalistOptions" required>
+				<input type="text" name="productDetail[\${optionCnt}].optionName" id="optionName" 
+					class="form-control" list="datalistOptions" required>
 					<datalist id="datalistOptions">
 						<option value="색상">
 						<option value="사이즈">
@@ -200,6 +202,8 @@
     	optionCnt += 1;
 
     };
+    addOptionBtn.addEventListener("click", addOptions);
+    
     
     // 옵션삭제 함수
     const delOptions = (optionCnt) => {
@@ -212,7 +216,6 @@
     
     productNameInput.addEventListener("input", validateProductName);
     productPriceInput.addEventListener("input", validateProductPrice);
-    addOptionBtn.addEventListener("click", addOptions);
 	
 	// 파일추가 
 	document.querySelectorAll("[id=file]").forEach((input) => {
