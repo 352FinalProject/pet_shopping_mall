@@ -61,7 +61,7 @@
 ## 팀원별 구현코드
 
 <h3>김담희</h3>
-<h4>결제, 정기결제, 장바구니, 주문 CRUD, 구독, 상품등록/조회</h4>
+<h4>결제, 정기결제, 장바구니, 주문 CRUD, 구독, 상품조회</h4>
 <ul>
   <li><a href="http://localhost:8080/pet/cart/shoppingCart.do">장바구니</a></li> 
 </ul>
