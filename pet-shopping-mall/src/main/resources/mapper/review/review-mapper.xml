@@ -133,7 +133,7 @@
 	    pd.option_value,
 	    pd.product_detail_id,
         ia.image_renamed_filename as thumbnail,
-        ROW_NUMBER() OVER (PARTITION BY r.review_member_id ORDER BY r.review_id DESC) as review_sequence
+        ROW_NUMBER() OVER (PARTITION BY r.review_member_id ORDER BY r.review_id ASC) as review_sequence
 	FROM 
 	    review r 
 	    left join product_detail pd 
@@ -149,7 +149,7 @@
 	WHERE 
 	    r.review_member_id = #{reviewMemberId}
 	order by
-		r.review_id asc
+		r.review_id desc
 	</select>	
 	
 	<resultMap type="ReviewListDto" id="reviewListDto">
