@@ -11,11 +11,16 @@ import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface WishlistRepository {
-	// 찜 여부 체크 (선모)
+	/**
+	 * @author 강선모
+	 * 찜 여부 체크   
+	 */
 	@Select("SELECT COUNT(*) FROM wishlist WHERE WISHLIST_PRODUCT_ID = #{productId} AND WISHLIST_MEMBER_ID = #{memberId}")
 	int getLikeProduct(int productId, String memberId);
-	
-	// 찜 등록 (선모)
+	/**
+	 * @author 강선모
+	 * 찜 등록  
+	 */
 	@Insert("INSERT INTO wishlist VALUES (seq_wishlist_id.nextval, #{memberId}, #{productId}, SYSDATE)")
 	@SelectKey(
 			before = false,
@@ -24,12 +29,17 @@ public interface WishlistRepository {
 			statement = "select seq_wishlist_id.currval from dual"
 			)
 	int insertPick(int productId, String memberId);
-	
-	// 찜 제거 (선모)
+	/**
+	 * @author 강선모
+	 * 찜 제거  
+	 */
 	@Insert("DELETE FROM wishlist WHERE WISHLIST_MEMBER_ID = #{memberId} AND WISHLIST_PRODUCT_ID = #{productId}")
 	int deletePick(int productId, String memberId);
-	
-	// 내 찜 목록 가져오기 (선모)
+	/**
+	 * @author 강선모
+	 * -찜 되어 있는 요소의 갯수  
+	 * -int 타입의 값을 반환, 이 값은 찜 목록에 저장된 아이템의 총 개수를 나타냅니다.
+	 */
 	@Select("SELECT COUNT(*)"
 			+ "  FROM wishlist wl"
 			+ "  LEFT OUTER JOIN ("
@@ -46,7 +56,13 @@ public interface WishlistRepository {
 			+ " WHERE wl.wishlist_member_id = #{memberId}")
 	int getListCount(Map<String, Object> paramMap);
 	
-	// 내 찜 목록 가져오기 (선모)
+	/**
+	 * @author 강선모
+	 * -찜 되어 있는 요소 가져오기
+	 * -List<Map<String, Object>> 타입의 리스트를 반환합니다.
+	 *  각 항목은 찜 목록에 저장된 아이템의 상세 정보를 나타내는 맵(Map)입니다.
+	 *  이 메서드는 페이징을 지원하며, RowBounds를 사용하여 특정 페이지의 아이템을 가져올 수 있습니다.
+	 */
 	@Select("SELECT *"
 			+ "  FROM wishlist wl"
 			+ "  LEFT OUTER JOIN ("

@@ -52,6 +52,10 @@
 .benefits-link:hover, #closePopupBtn:hover {
 	background-color: #e0e0e0;
 }
+
+.myPage-info{
+	display: flex;
+}
 </style>
 <section class="common-section" id="#">
 	<div class="common-title">마이페이지</div>
@@ -176,7 +180,7 @@
 		</div>
 	</div>
 	<nav aria-label="...">
-		<ul class="">
+		<ul class="myPage-info">
 			<c:forEach begin="1" end="${totalPages}" var="pageNumber">
 				<li class="myPage-item ${page == pageNumber ? 'active' : ''}"><a
 					class="myPage-link"

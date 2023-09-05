@@ -17,6 +17,7 @@
         .container {
             margin: 0 auto;
             max-width: 1200px;
+            
         }
 
         /* 소제목 스타일 */
@@ -98,6 +99,12 @@
             float: left;
             margin-left: 10%;
         }
+        
+		/* 페이징 바 스타일 */
+		.pagination2 {
+		    display: flex; /* 페이지 번호 목록을 가로로 표시 */
+		}
+			
     </style>
 </head>
 
@@ -122,7 +129,7 @@
 	</div>
 	
 	<nav aria-label="..." >
-        <ul class="pagination pagination-sm">
+       <ul class="pagination2 pagination-sm">
             <c:forEach begin="1" end="${totalPages}" var="pageNumber">
                 <li class="page-item ${page == pageNumber ? 'active' : ''}">
                     <a class="page-link" href="${pageContext.request.contextPath}/wishlist/myWishlist.do?page=${pageNumber}">
