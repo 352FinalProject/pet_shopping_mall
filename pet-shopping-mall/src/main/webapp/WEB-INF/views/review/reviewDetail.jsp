@@ -47,7 +47,7 @@ a {
 				     <em class="review-pet-weight">${reviews.petWeight}kg &nbsp;<em class="review-em">|</em></em>
 				     <em class="review-pet-breed">${reviews.petBreed} &nbsp;<em class="review-em">|</em></em>
 				</c:if>
-				<c:if test="${{reviews.petId == 0}">
+				<c:if test="${reviews.petId == 0}">
 				   <em class="review-pet-name">등록된 펫 정보가 없습니다.</em>
 				</c:if>
 			</div><span class="small-space"></span>
