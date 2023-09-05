@@ -46,7 +46,7 @@
 		join
 			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		left join
-			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			(select product_id, round(avg(review_star_rate), 1) as avg_star from review group by product_id) r
 			on p.product_id = r.product_id
 		where 
 	    	p.product_name like '%' || #{searchQuery} || '%'
@@ -70,7 +70,7 @@
 		join
 			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		left join
-			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			(select product_id, round(avg(review_star_rate), 1) as avg_star from review group by product_id) r
 			on p.product_id = r.product_id
 		where 
 	    	p.product_name like '%' || #{searchQuery} || '%'
@@ -94,7 +94,7 @@
 		join
 			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 	    left join
-	        (select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+	        (select product_id, round(avg(review_star_rate), 1) as avg_star from review group by product_id) r
 	        ON r.product_id = p.product_id
 	    where
 	        p.category_id = #{categoryId}
@@ -140,7 +140,7 @@
 		join
 			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		left join
-			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			(select product_id, round(avg(review_star_rate), 1) as avg_star from review group by product_id) r
 			on p.product_id = r.product_id
 		where 
 	    	p.category_id = #{categoryId}
@@ -164,7 +164,7 @@
 		join
 			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		left join
-			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			(select product_id, round(avg(review_star_rate), 1) as avg_star from review group by product_id) r
 			on p.product_id = r.product_id
 		where 
 	    	p.category_id = #{categoryId}
@@ -188,7 +188,7 @@
 		join
 			image_attachment ia ON iam.image_id = ia.image_id and ia.thumbnail = 'Y'
 		left join
-			(select product_id, round(avg(review_star_rate)) as avg_star from review group by product_id) r
+			(select product_id, round(avg(review_star_rate),1 ) as avg_star from review group by product_id) r
 			on p.product_id = r.product_id
 	</select>
 	

@@ -12,10 +12,10 @@
 <!-- layer popup content -->
 <div class="layerPopup" id="layer_popup" style="visibility: visible;">
     <div class="layerBox">
-        <h4 class="title">우리집동물친구 긴급 공지사항🚨</h4>
+        <h4 class="title">🌟우리집동물친구 공지사항🌟</h4>
         <div class="cont">
             <p>
-				<img class="popup" src="${pageContext.request.contextPath}/resources/images/home/popup.png" width=350 height=500 usemap="#popup" alt="공지사항">
+				<img class="popup" src="${pageContext.request.contextPath}/resources/images/home/newservice_.gif" width=550 height=500 usemap="#popup" alt="공지사항">
             </p>
         </div>
           <form name="pop_form">

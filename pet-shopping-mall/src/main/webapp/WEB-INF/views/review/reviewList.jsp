@@ -45,7 +45,12 @@
                            		<a href="${pageContext.request.contextPath}/review/reviewDetail.do?reviewId=${review.reviewId}">
 	                          		${review.productName}
 	                          		<br>
+	                          		<c:if test="${review.optionValue eq null }">
+	                          			선택된 옵션이 없습니다.
+	                          		</c:if>
+	                          		<c:if test="${review.optionValue ne null }">
 	                          		${review.optionName}:${review.optionValue}
+	                          		</c:if>
                           		</a>
                            </td>
                             <td>
