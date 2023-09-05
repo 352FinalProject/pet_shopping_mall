@@ -75,30 +75,33 @@
 					<!-- 상품옵션 정보 -->
 					<c:forEach items="${productDetails}" var="productDetail" varStatus="vs">
 						<c:if test="${not empty productDetail.optionName}">
+							<!-- 옵션명이 옵션없음이면 보여주지 않음 -->
 							<c:if test="${productDetail.optionName eq '옵션없음'}"></c:if>
-							
-							<!-- 옵션정보 -->
-					    	<div class="productDetail-container-${productDetail.productDetailId}">
-								<div class="addedOption row mb-3 align-items-end" id="addedOption\${optionCnt}">
-									<div class="col-sm-3">
-										<label for="optionName" class="form-label">옵션명</label>
-										<input type="text" name="optionName" id="optionName_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionName}" required>
-									</div>
-							        <div class="col-sm-3">
-							              <label for="optionValue" class="form-label">옵션값</label>
-							              <input type="text" name="optionValue" id="optionValue_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionValue}">
-							        </div>
-							        <div class="col-sm-3">
-							              <label for="additionalPrice" class="form-label">옵션추가금</label>
-							              <input type="number" name="additionalPrice" id="additionalPrice_${productDetail.productDetailId}" class="form-control" value="${productDetail.additionalPrice}">
-							        </div>
-									<!-- 옵션 수정, 삭제 버튼 -->
-									<div class="col-sm-3" id="option-btn-container">
-										<button type="button" class="btn btn-secondary" onclick='updateProductOption(${productDetail.productDetailId});'>옵션 수정</button>
-						        		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="delOptions(\${optionCnt})">옵션 삭제</button>
+							<!-- 그 외 -->
+							<c:if test="${productDetail.optionName ne '옵션없음'}">
+								<!-- 옵션정보 -->
+						    	<div class="productDetail-container-${productDetail.productDetailId}">
+									<div class="addedOption row mb-3 align-items-end" id="addedOption\${optionCnt}">
+										<div class="col-sm-3">
+											<label for="optionName" class="form-label">옵션명</label>
+											<input type="text" name="optionName" id="optionName_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionName}" required>
+										</div>
+								        <div class="col-sm-3">
+								              <label for="optionValue" class="form-label">옵션값</label>
+								              <input type="text" name="optionValue" id="optionValue_${productDetail.productDetailId}" class="form-control" value="${productDetail.optionValue}">
+								        </div>
+								        <div class="col-sm-3">
+								              <label for="additionalPrice" class="form-label">옵션추가금</label>
+								              <input type="number" name="additionalPrice" id="additionalPrice_${productDetail.productDetailId}" class="form-control" value="${productDetail.additionalPrice}">
+								        </div>
+										<!-- 옵션 수정, 삭제 버튼 -->
+										<div class="col-sm-3" id="option-btn-container">
+											<button type="button" class="btn btn-secondary" onclick='updateProductOption(${productDetail.productDetailId});'>옵션 수정</button>
+							        		<button type="button" class="btn btn-secondary" id="option-del-btn" onclick="deleteProductOption(${productDetail.productDetailId})">옵션 삭제</button>
+										</div>
 									</div>
 								</div>
-							</div>
+							</c:if>
 						</c:if>
 					</c:forEach>
 				
