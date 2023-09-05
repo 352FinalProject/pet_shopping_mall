@@ -9,6 +9,48 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=996ecdd9f48b29fc6a4f2ee5c20e6d3c&libraries=services"></script>
 
+<style>
+.reservation-btn {
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	border: none;
+	font-size: 15px;
+	color: #fff;
+	background: #58ACFA;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+#keyword {
+  width: 80px;
+}
+
+.hospital-search-btn {
+	width: 60px;
+	height: 20px;
+	border: none;
+	font-size: 10px;
+	color: #fff;
+	background: #c8c8c8;
+	cursor: pointer;
+}
+
+#searchForm {
+  display: flex; /* Flexbox 사용 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  flex-wrap: nowrap; /* 줄 바꿈 방지 */
+  height: 35px;
+}
+
+#searchForm input[type="text"],
+#searchForm button {
+  margin: 0; /* 마진 초기화 */
+}
+
+
+</style>
 
 <section class="common-section" id="common-section-List" style="padding-bottom: 350px;" >
 <div class="common-title">내 주변 동물병원</div>
@@ -18,8 +60,8 @@
         <div class="option">
             <div>
                 <form id="searchForm" onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="동물병원" id="keyword"> 
-                    <button type="submit">검색하기</button> 
+                    키워드 : &nbsp;<input type="text" value="동물병원" id="keyword"> 
+                    <button class="hospital-search-btn" type="submit">검색하기</button> 
                 </form>
             </div>
         </div>
@@ -38,7 +80,6 @@
     <div class="place-details">
     	<ul id="placesResultList"></ul>
         <form action="${pageContext.request.contextPath}/petcare/reservation.do" method="GET">
-		<button class="reservation-btn" type="submit">예약하기</button>
 		</form>
     </div>
 </div>  
@@ -178,10 +219,7 @@ function displayPlacesResult(data) {
         listItem.appendChild(Rbutton);
         
         listItem.appendChild(form);
-
-        
         placesResultList.appendChild(listItem);
-        
     }
 }
 
