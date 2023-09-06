@@ -107,5 +107,9 @@
 <h3>김상훈</h3>
 <h4>회원 CRUD, 로그인, 임시비밀번호 이메일 API, 주소 API</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet/member/memberLogin.do"></a></li> 
+  <li>로그인</li>
+  <li>회원가입</li>
+  <li>소셜 로그인</li>
+  <li>주소검색</li>
+  <li>임시비밀번호 메일전송</li>
 </ul>
