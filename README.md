@@ -68,12 +68,13 @@
 
 <h3>전예라</h3>
 <ul>
-  <li><a href="https://drive.google.com/file/d/1EmtVtj6pp9oXkqKgShDcwS72sfpMGsHY/view?usp=sharing">쿠폰</li>
-  <li>포인트</li>
-  <li>회원가입 이메일 인증 API</li>
-  <li>답변 이메일 전송 API</li>
-  <li>이용약관</li>
-  <li>Q&A CRUD</li>
+  <li><a href="https://drive.google.com/file/d/1dYBA0rNdZYeePq2pFeOLavzRAPF5TwhI/view?usp=sharing">쿠폰</li>
+  <li><a href="https://drive.google.com/file/d/1CP9niuxq52DJAmY6wTuaEX027ev3eOaz/view?usp=sharing">포인트</li>
+  <li><a href="https://drive.google.com/file/d/1P2z7fCZeyc2lBaHyBGe4BEi5Yjyl5OmZ/view?usp=sharing">회원가입 이메일 인증 API</li>
+  <li><a href="https://drive.google.com/file/d/1h-5bBrOX62TdK_i02j-TACLdYEDjcrnJ/view?usp=sharing">답변 이메일 전송 API</li>
+  <li><a href="https://drive.google.com/file/d/18Z9GoSWqfxth9scj5CCaoPxDAWfTogXJ/view?usp=sharing">Q&A 회원 CRUD</li>
+  <li><a href="https://drive.google.com/file/d/1ROliHPpR___A8kRH64cvd0nHFV5bKT1e/view?usp=sharing">Q&A 관리자 CRUD</li>
+  <li><a href="https://drive.google.com/file/d/1prvlyLEq0BN-93VoNVhilKDHPvJzrqgZ/view?usp=sharing">이용약관</li>
 </ul>
 
 <h3>김대원</h3>
