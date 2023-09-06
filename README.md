@@ -67,9 +67,13 @@
 </ul>
 
 <h3>전예라</h3>
-<h4>Q&A CRUD, 쿠폰, 포인트, 회원가입 이메일 인증 API, 답변 이메일 전송 API, 이용약관</h4>
 <ul>
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li>쿠폰</li>
+  <li>포인트</li>
+  <li>회원가입 이메일 인증 API</li>
+  <li>답변 이메일 전송 API</li>
+  <li>이용약관</li>
+  <li>Q&A CRUD</li>
 </ul>
 
 <h3>김대원</h3>
