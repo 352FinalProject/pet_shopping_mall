@@ -68,7 +68,7 @@
 
 <h3>전예라</h3>
 <ul>
-  <li>쿠폰</li>
+  <li><a href="https://drive.google.com/file/d/1EmtVtj6pp9oXkqKgShDcwS72sfpMGsHY/view?usp=sharing">쿠폰</li>
   <li>포인트</li>
   <li>회원가입 이메일 인증 API</li>
   <li>답변 이메일 전송 API</li>
