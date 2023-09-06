@@ -96,7 +96,6 @@
 </ul>
 
 <h3>강선모</h3>
-<h4>펫 CRUD, 찜하기</h4>
 <ul> 
   <li><a href="https://drive.google.com/file/d/1dFLEZQpOFn-N336lfIsjgKOj5Q2z78mj/view?usp=sharing">찜 기능</a></li>
   <li><a href="http://localhost:8080/pet/pet/petDetail.do?petId=1">펫 상세조회</a></li>
