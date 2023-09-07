@@ -87,13 +87,13 @@
 <h3>김대원</h3>
 <h4>관리자 페이지 CRUD, 실시간알림</h4>
 <ul>
-  <li><a href="https://drive.google.com/file/d/1UomDY5qXZBf2nugLmcx2f3fB8Of8_-dB/view?usp=sharing"></a>관리자페이지</li>
-  <li><a href="https://drive.google.com/file/d/129RRL3wiYm5K9eb5dgL11vNi8Mvr4gob/view?usp=sharing"></a>구독회원 조회</li>
-  <li><a href="https://drive.google.com/file/d/15a7Rfn8LZZ2wFUMa0IBYzRh_RsAjoeXp/view?usp=sharing"></a>날짜별 매출 통계</li>
-  <li><a href="https://drive.google.com/file/d/1IxxoP1lP1noCX4noSFoRWXjUDd0Xu-9B/view?usp=sharing"></a>상품별 매출 통계</li>
-  <li><a href="https://drive.google.com/file/d/1ROKcnH1qj3AEAp0os7vAkxHo8gYhlyRx/view?usp=sharing"></a>알림</li>
-  <li><a href="https://drive.google.com/file/d/1hEvN6mhnEpAdlX-1EyBNH0DBNf2a7B0N/view?usp=sharing"></a>전체회원 조회</li>
-  <li><a href="https://drive.google.com/file/d/1RT3LlL_21RsjvJGKyjfn2Nq3wJMtj5_n/view?usp=sharing"></a>주문 조회</li>
+  <li><a href="https://drive.google.com/file/d/1UomDY5qXZBf2nugLmcx2f3fB8Of8_-dB/view?usp=sharing">관리자페이지</a></li>
+  <li><a href="https://drive.google.com/file/d/129RRL3wiYm5K9eb5dgL11vNi8Mvr4gob/view?usp=sharing">구독회원 조회</a></li>
+  <li><a href="https://drive.google.com/file/d/15a7Rfn8LZZ2wFUMa0IBYzRh_RsAjoeXp/view?usp=sharing">날짜별 매출 통계</a></li>
+  <li><a href="https://drive.google.com/file/d/1IxxoP1lP1noCX4noSFoRWXjUDd0Xu-9B/view?usp=sharing">상품별 매출 통계</a></li>
+  <li><a href="https://drive.google.com/file/d/1ROKcnH1qj3AEAp0os7vAkxHo8gYhlyRx/view?usp=sharing">알림</a></li>
+  <li><a href="https://drive.google.com/file/d/1hEvN6mhnEpAdlX-1EyBNH0DBNf2a7B0N/view?usp=sharing">전체회원 조회</a></li>
+  <li><a href="https://drive.google.com/file/d/1RT3LlL_21RsjvJGKyjfn2Nq3wJMtj5_n/view?usp=sharing">주문 조회</a></li>
 </ul>
 
 <h3>이혜령</h3>
