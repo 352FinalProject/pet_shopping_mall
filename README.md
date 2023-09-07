@@ -100,7 +100,9 @@
 <h3>전수경</h3>
 <h4>상품 등록/수정/삭제</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet"></a></li> 
+    <li><a href="https://drive.google.com/file/d/16ZGIntlufe67uuBmtecEwctLxkdN3KgK/view?usp=sharing">(관리자)상품 조회</li>
+    <li><a href="https://drive.google.com/file/d/13u7YAd-tmjEYmGs4SCaSzgGpV8c8TCqx/view?usp=sharing">(관리자)상품 등록</li>
+    <li><a href="https://drive.google.com/file/d/1_YtTB3V6z4uCm8lwbmRHCnPfcAL5UnYz/view?usp=sharing">(관리자)상품 수정 및 삭제</li>
 </ul>
 
 <h3>강선모</h3>
