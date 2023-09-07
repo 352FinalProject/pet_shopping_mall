@@ -178,7 +178,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 	        scales: {//x,y축 설정
 				yAxes: [{
 					ticks: {
-						stepSize: 50000, //y축 간격
+						stepSize: 200000, //y축 간격
 						suggestedMin: 0,//y축 최소 값
 					},
 					gridLines: {//y축 라인 스타일 설정

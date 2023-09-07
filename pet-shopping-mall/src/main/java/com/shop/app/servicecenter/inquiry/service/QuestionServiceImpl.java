@@ -49,7 +49,6 @@ public class QuestionServiceImpl implements QuestionService {
 	    result = questionRepository.insertQuestion(question);
 	    
 	    int refId = question.getQuestionId();
-	    System.out.println("refId = " + refId);
 	    
 	    List<ImageAttachment> attachments = ((QuestionDetails) question).getAttachments();
 	    if(attachments != null && !attachments.isEmpty()) {

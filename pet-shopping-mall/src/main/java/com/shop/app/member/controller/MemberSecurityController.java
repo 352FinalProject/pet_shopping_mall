@@ -154,7 +154,7 @@ public class MemberSecurityController {
            String to = memberCoupon.getMemberId();
 			Notification insertNotification = Notification.builder()
 					.notiCategory(3)
-					.notiContent("회원가입 할인쿠폰(10%)이 발급됐습니다.")
+					.notiContent("회원가입 배송비 할인 쿠폰이 발급됐습니다.")
 					.notiCreatedAt(formatTimestampNow())
 					.memberId(to) 
 					.build();
@@ -197,7 +197,7 @@ public class MemberSecurityController {
    
    /**
     * @author 전예라
-    * 회원이 체크한 Y/N을 구분
+    * 회원이 체크한 Y/N을 임시 세션에 저장
     */
    @PostMapping("/updateTerms.do")
    public ResponseEntity<?> updateTerms(@RequestParam Map<String, String> data, HttpSession session) {

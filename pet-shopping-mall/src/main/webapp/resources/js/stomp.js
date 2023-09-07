@@ -21,20 +21,28 @@ const renderMessage = (message) => {
     newNotificationContainer.className = "notification-container";
     newNotificationContainer.id = id;
     
-    const newNotification = document.createElement("p");
+    const newNotification = document.createElement("div");
     newNotification.className = "notification-content";
-    newNotification.textContent = `${notiContent}\n${notiCreatedAt}`;
+
+    const notificationText = document.createElement("p");
+    notificationText.innerHTML = `${notiContent}<br>${notiCreatedAt}`;
+
+    const deleteButtonContainer = document.createElement("div"); // 추가: 버튼을 감싸는 div
+    deleteButtonContainer.className = "delete-button-container"; // 스타일을 위한 클래스
 
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = `X`;
-    deleteButton.className = "notification-delete-button"; 
-    deleteButton.id = id; 
-   deleteButton.onclick = function() {
+    deleteButton.className = "notification-delete-button";
+    deleteButton.id = id;
+    deleteButton.onclick = function() {
         notificationDelete(id); 
     };
-   clearNotifications();
+    clearNotifications();
    
-    newNotification.appendChild(deleteButton);
+    deleteButtonContainer.appendChild(deleteButton); // 버튼을 div 안에 추가
+
+    newNotification.appendChild(notificationText);
+    newNotification.appendChild(deleteButtonContainer); // 변경: div로 감싼 버튼을 추가
 
     newNotificationContainer.appendChild(newNotification);
 
@@ -45,6 +53,5 @@ const renderMessage = (message) => {
     const notificationBellImg = document.getElementById("notificationBell");
     notificationBellImg.setAttribute("src", "/pet/resources/images/home/notiBello.png"); 
     notificationBellImg.classList.add("pulse-button");
-    
     
 };

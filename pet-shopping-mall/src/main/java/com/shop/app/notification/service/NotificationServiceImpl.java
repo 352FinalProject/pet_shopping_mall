@@ -26,10 +26,11 @@ public class NotificationServiceImpl implements NotificationService {
 	@Autowired
 	OrderRepository orderRepository;
 	
+	
 	/**
-	 * 1. 실시간알림
-	 * 2. notification db 저장
-	 */
+    * @author 김대원
+    * 주문확정되면 알림을 보내는 메서드
+    */
 	@Override
 	public int updateOrderStatusNotification() {
 		// 실시간 알림을 보낸다.
@@ -57,6 +58,10 @@ public class NotificationServiceImpl implements NotificationService {
 		return result;
 	}
 	
+	/**
+    * @author 김대원
+    * 알림 조회
+    */
 	@Override // db에서 알림 가져오기
 	public List<Notification> findAllNotification(String memberId) {
 	    List<Notification> notifications = notificationRepository.findAllNotification(memberId);
