@@ -92,7 +92,7 @@
 <h3>이혜령</h3>
 <h4>리뷰 CRUD, 병원조회</h4>
 <ul> 
-  <li><a href="http://localhost:8080/pet"></a></li> 
+  <li><a href="https://drive.google.com/file/d/17oKwylVQEUVWDjXHfqOgoK6UkrJ5cYXl/view?usp=drive_link">리뷰 CRUD</li> 
 </ul>
 
 <h3>전수경</h3>
