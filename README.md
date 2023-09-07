@@ -63,8 +63,13 @@
 <h3>김담희</h3>
 <h4>결제, 정기결제, 장바구니, 주문 CRUD, 구독, 상품조회</h4>
 <ul>
-  <li><a href="http://localhost:8080/pet/cart/shoppingCart.do">장바구니</a></li>
-  <li><a href="https://drive.google.com/file/d/1RvMFOGjVGbtZROnHsdXBZ5SDJABK3yXB/view?usp=drive_link">안녕안녕</a></li>
+  <li><a href="https://drive.google.com/file/d/13WOphcLwsRIfdUYdfxyjjFRtMpd0ttex/view?usp=sharing">전체검색</a></li>
+  <li><a href="https://drive.google.com/file/d/1RvMFOGjVGbtZROnHsdXBZ5SDJABK3yXB/view?usp=sharing">상품정렬</a></li>
+  <li><a href="https://drive.google.com/file/d/1LX0dNYmL7c9rFQhzugRghEtg6dWymPoy/view?usp=sharing">장바구니</a></li>
+  <li><a href="https://drive.google.com/file/d/16660EhuH9Tbh03fYrva7MnvlHjkk_x_e/view?usp=sharing">상품구매</a></li>
+  <li><a href="https://drive.google.com/file/d/14NypNyXSWsmBhBjqJ12hfEBxZY10vlyd/view?usp=sharing">상품결제</a></li>
+  <li><a href="https://drive.google.com/file/d/1Z38oN_e9d9u4g-PdBZ4xzevE6NS_ySAZ/view?usp=sharing">주문확인 및 결제취소</a></li>
+  <li><a href="https://drive.google.com/file/d/1IO9SxdHSztuC8jQB8TDggaHcrnq13V05/view?usp=sharing">마이페이지 및 구독</a></li>
 </ul>
 
 <h3>전예라</h3>
