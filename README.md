@@ -2,7 +2,7 @@
 # Final 프로젝트
 ## 팀명: 잠은죽어서자조
 ### 주제: 반려동물 쇼핑몰, 커뮤니티
-#### PPT: https://drive.google.com/file/d/1Huohx6fEIlXLX2L540SE3Q1ItAPJ9uid/view?usp=sharing
+#### PPT: https://drive.google.com/file/d/1kytqYIjUpgQjjj8AnKvww0v0J8fm6Gz9/view?usp=sharing
 ##### ERD : https://www.erdcloud.com/d/um2YSc9wPtSd8jqPi
 
   ## 팀원
