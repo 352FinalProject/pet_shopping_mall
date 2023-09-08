@@ -73,7 +73,7 @@
 </ul>
 
 <h3>전예라</h3>
-<h4>쿠폰, 포인트, 이메일 API, QNA 회원/관리자 CRUD, 이용약관</h4>
+<h4>웹 디자인, 쿠폰, 포인트, 이메일 API, QNA 회원/관리자 CRUD, 이용약관</h4>
 <ul>
   <li><a href="https://drive.google.com/file/d/1dYBA0rNdZYeePq2pFeOLavzRAPF5TwhI/view?usp=sharing">쿠폰</li>
   <li><a href="https://drive.google.com/file/d/1CP9niuxq52DJAmY6wTuaEX027ev3eOaz/view?usp=sharing">포인트</li>
