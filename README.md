@@ -7,8 +7,8 @@
 
   ## 팀원
   <ul>
-  <li><b>김담희</b> (조장)</li>
-  <li><b>전예라</b></li>
+  <li><b>김담희</b> (Team Leader, PM, PE)</li>
+  <li><b>전예라</b> (PL, PE)</li>
   <li><b>김대원</b></li>
   <li><b>이혜령</b></li>
   <li><b>전수경</b></li>
