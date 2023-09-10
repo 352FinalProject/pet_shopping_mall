@@ -7,13 +7,13 @@
 
   ## 팀원
   <ul>
-  <li><b>김담희</b> (Team Leader, PL, PM, PE)</li>
+  <li><b>김담희</b> (Team Leader, PL, PM, PE, DBE)</li>
   <li><b>전예라</b> (PM, PE, Designer)</li>
-  <li><b>김대원</b></li>
-  <li><b>이혜령</b></li>
-  <li><b>전수경</b></li>
-  <li><b>강선모</b></li>
-  <li><b>김상훈</b></li>
+  <li><b>김대원</b> (BE)</li>
+  <li><b>이혜령</b> (BE)</li>
+  <li><b>전수경</b> (BE)</li>
+  <li><b>강선모</b> (BE)</li>
+  <li><b>김상훈</b> (BE) </li>
 </ul>
 
   ## Stack
