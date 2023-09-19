@@ -7,8 +7,8 @@
 
   ## 팀원
   <ul>
-  <li><b>김담희</b> (Team Leader, PL, PM, PE, DBE, BE)</li>
-  <li><b>전예라</b> (PM, PE, BE, Designer)</li>
+  <li><b>김담희</b> (PM, PL, PE, DBE, BE, FE)</li>
+  <li><b>전예라</b> (PL, PE, BE, FE, Designer)</li>
   <li><b>김대원</b> (BE)</li>
   <li><b>이혜령</b> (BE)</li>
   <li><b>전수경</b> (BE)</li>
